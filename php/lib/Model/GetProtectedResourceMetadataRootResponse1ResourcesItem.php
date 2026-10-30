@@ -380,7 +380,7 @@ class GetProtectedResourceMetadataRootResponse1ResourcesItem implements ModelInt
     /**
      * Sets authorizationServers
      *
-     * @param string[] $authorizationServers authorizationServers
+     * @param string[] $authorizationServers The organization's issuer identifier (RFC 8414).
      *
      * @return self
      */

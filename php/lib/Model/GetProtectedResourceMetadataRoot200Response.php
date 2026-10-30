@@ -384,7 +384,7 @@ class GetProtectedResourceMetadataRoot200Response implements ModelInterface, Arr
     /**
      * Sets authorizationServers
      *
-     * @param string[] $authorizationServers authorizationServers
+     * @param string[] $authorizationServers The organization's issuer identifier (RFC 8414).
      *
      * @return self
      */

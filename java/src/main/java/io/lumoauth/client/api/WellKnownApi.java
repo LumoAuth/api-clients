@@ -147,7 +147,7 @@ public class WellKnownApi {
 
     /**
      * OAuth 2.0 authorization server metadata (RFC 8414)
-     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active. RFC 8414 clients read it from /.well-known/oauth-authorization-server/orgs/{orgId}/api/v1 (the issuer&#39;s path-inserted location) and, on a verified custom domain, from /.well-known/oauth-authorization-server.
      * @param orgId  (required)
      * @return AuthorizationServerMetadata
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -166,7 +166,7 @@ public class WellKnownApi {
 
     /**
      * OAuth 2.0 authorization server metadata (RFC 8414)
-     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active. RFC 8414 clients read it from /.well-known/oauth-authorization-server/orgs/{orgId}/api/v1 (the issuer&#39;s path-inserted location) and, on a verified custom domain, from /.well-known/oauth-authorization-server.
      * @param orgId  (required)
      * @return ApiResponse&lt;AuthorizationServerMetadata&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -186,7 +186,7 @@ public class WellKnownApi {
 
     /**
      * OAuth 2.0 authorization server metadata (RFC 8414) (asynchronously)
-     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active. RFC 8414 clients read it from /.well-known/oauth-authorization-server/orgs/{orgId}/api/v1 (the issuer&#39;s path-inserted location) and, on a verified custom domain, from /.well-known/oauth-authorization-server.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -409,7 +409,7 @@ public class WellKnownApi {
 
     /**
      * OpenID Provider configuration (OIDC Discovery 1.0)
-     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active. The same document is served at the RFC 8414 location /.well-known/openid-configuration/orgs/{orgId}/api/v1 and, on a verified custom domain (whose issuer is the bare domain), at /.well-known/openid-configuration.
      * @param orgId  (required)
      * @return OpenIdConfiguration
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -428,7 +428,7 @@ public class WellKnownApi {
 
     /**
      * OpenID Provider configuration (OIDC Discovery 1.0)
-     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active. The same document is served at the RFC 8414 location /.well-known/openid-configuration/orgs/{orgId}/api/v1 and, on a verified custom domain (whose issuer is the bare domain), at /.well-known/openid-configuration.
      * @param orgId  (required)
      * @return ApiResponse&lt;OpenIdConfiguration&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -448,7 +448,7 @@ public class WellKnownApi {
 
     /**
      * OpenID Provider configuration (OIDC Discovery 1.0) (asynchronously)
-     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active. The same document is served at the RFC 8414 location /.well-known/openid-configuration/orgs/{orgId}/api/v1 and, on a verified custom domain (whose issuer is the bare domain), at /.well-known/openid-configuration.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call

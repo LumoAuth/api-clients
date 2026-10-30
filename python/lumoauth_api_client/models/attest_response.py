@@ -38,8 +38,8 @@ class AttestResponse(BaseModel):
     @field_validator('token_type')
     def token_type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['Bearer']):
-            raise ValueError("must be one of enum values ('Bearer')")
+        if value not in set(['Bearer', 'DPoP']):
+            raise ValueError("must be one of enum values ('Bearer', 'DPoP')")
         return value
 
     model_config = ConfigDict(

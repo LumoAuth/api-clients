@@ -254,6 +254,7 @@ class AttestResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     public const TOKEN_TYPE_BEARER = 'Bearer';
+    public const TOKEN_TYPE_DPO_P = 'DPoP';
 
     /**
      * Gets allowable values of the enum
@@ -264,6 +265,7 @@ class AttestResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return [
             self::TOKEN_TYPE_BEARER,
+            self::TOKEN_TYPE_DPO_P,
         ];
     }
 

@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **access_token** | **str** |  | [optional] 
 **token_type** | **str** |  | [optional] 
 **expires_in** | **int** |  | [optional] 
+**jti** | **str** | The token id. Written to the agent.token_issued audit event; the kill switch and a capability reduction deny-list it. | [optional] 
 **scopes** | **List[str]** |  | [optional] 
 **resource** | **str** | The MCP server the token is bound to, when &#x60;resource&#x60; was sent. | [optional] 
 

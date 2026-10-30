@@ -39,13 +39,15 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="accessToken">accessToken.</param>
         /// <param name="tokenType">tokenType.</param>
         /// <param name="expiresIn">expiresIn.</param>
+        /// <param name="jti">The token id. Written to the agent.token_issued audit event; the kill switch and a capability reduction deny-list it..</param>
         /// <param name="scopes">scopes.</param>
         /// <param name="resource">The MCP server the token is bound to, when &#x60;resource&#x60; was sent..</param>
-        public AdminAgentsGenerateTokenResponseData(string accessToken = default, string tokenType = default, int expiresIn = default, List<string> scopes = default, string resource = default)
+        public AdminAgentsGenerateTokenResponseData(string accessToken = default, string tokenType = default, int expiresIn = default, string jti = default, List<string> scopes = default, string resource = default)
         {
             this.AccessToken = accessToken;
             this.TokenType = tokenType;
             this.ExpiresIn = expiresIn;
+            this.Jti = jti;
             this.Scopes = scopes;
             this.Resource = resource;
         }
@@ -78,6 +80,13 @@ namespace LumoAuth.ApiClient.Model
         public int ExpiresIn { get; set; }
 
         /// <summary>
+        /// The token id. Written to the agent.token_issued audit event; the kill switch and a capability reduction deny-list it.
+        /// </summary>
+        /// <value>The token id. Written to the agent.token_issued audit event; the kill switch and a capability reduction deny-list it.</value>
+        [DataMember(Name = "jti", EmitDefaultValue = false)]
+        public string Jti { get; set; }
+
+        /// <summary>
         /// Gets or Sets Scopes
         /// </summary>
         /*
@@ -104,6 +113,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  AccessToken: ").Append(AccessToken).Append("\n");
             sb.Append("  TokenType: ").Append(TokenType).Append("\n");
             sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
+            sb.Append("  Jti: ").Append(Jti).Append("\n");
             sb.Append("  Scopes: ").Append(Scopes).Append("\n");
             sb.Append("  Resource: ").Append(Resource).Append("\n");
             sb.Append("}\n");

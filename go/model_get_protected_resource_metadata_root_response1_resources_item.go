@@ -25,6 +25,7 @@ type GetProtectedResourceMetadataRootResponse1ResourcesItem struct {
 	Resource string `json:"resource"`
 	// Per-server protected resource metadata URL.
 	ResourceMetadataUrl string `json:"resource_metadata_url"`
+	// The organization's issuer identifier (RFC 8414).
 	AuthorizationServers []string `json:"authorization_servers"`
 }
 

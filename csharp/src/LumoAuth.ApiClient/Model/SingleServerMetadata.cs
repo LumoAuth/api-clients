@@ -45,7 +45,7 @@ namespace LumoAuth.ApiClient.Model
         /// Initializes a new instance of the <see cref="SingleServerMetadata" /> class.
         /// </summary>
         /// <param name="resource">resource (required).</param>
-        /// <param name="authorizationServers">authorizationServers (required).</param>
+        /// <param name="authorizationServers">The organization&#39;s issuer identifier (RFC 8414). (required).</param>
         /// <param name="bearerMethodsSupported">bearerMethodsSupported (required).</param>
         /// <param name="scopesSupported">scopesSupported.</param>
         /// <param name="dpopBoundAccessTokensRequired">dpopBoundAccessTokensRequired.</param>
@@ -83,8 +83,9 @@ namespace LumoAuth.ApiClient.Model
         public string Resource { get; set; }
 
         /// <summary>
-        /// Gets or Sets AuthorizationServers
+        /// The organization&#39;s issuer identifier (RFC 8414).
         /// </summary>
+        /// <value>The organization&#39;s issuer identifier (RFC 8414).</value>
         [DataMember(Name = "authorization_servers", IsRequired = true, EmitDefaultValue = true)]
         public List<string> AuthorizationServers { get; set; }
 

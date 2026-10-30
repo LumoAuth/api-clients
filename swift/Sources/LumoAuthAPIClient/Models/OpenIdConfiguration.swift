@@ -39,7 +39,7 @@ public struct OpenIdConfiguration: Codable, JSONEncodable, Hashable {
     public var requireSignedRequestObject: Bool?
     public var requestObjectSigningAlgValuesSupported: [String]?
     public var uiLocalesSupported: [String]?
-    /** The four MFA tier ACR values, unless overridden in organization settings. */
+    /** The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings. */
     public var acrValuesSupported: [String]?
     public var codeChallengeMethodsSupported: [String]?
     public var authorizationResponseIssParameterSupported: Bool?

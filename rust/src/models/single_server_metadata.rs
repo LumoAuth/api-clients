@@ -15,6 +15,7 @@ use serde::{Deserialize, Serialize};
 pub struct SingleServerMetadata {
     #[serde(rename = "resource")]
     pub resource: String,
+    /// The organization's issuer identifier (RFC 8414).
     #[serde(rename = "authorization_servers")]
     pub authorization_servers: Vec<String>,
     #[serde(rename = "bearer_methods_supported")]

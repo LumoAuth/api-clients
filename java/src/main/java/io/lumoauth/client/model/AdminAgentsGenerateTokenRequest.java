@@ -51,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminAgentsGenerateTokenRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T18:39:38.311678905Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-30T07:09:37.528972290-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class AdminAgentsGenerateTokenRequest {
   public static final String SERIALIZED_NAME_EXPIRES_IN = "expiresIn";
   @SerializedName(SERIALIZED_NAME_EXPIRES_IN)
@@ -77,7 +77,7 @@ public class AdminAgentsGenerateTokenRequest {
   }
 
   /**
-   * Token lifetime in seconds. Default 3600, at most 2592000 (30 days).
+   * Token lifetime in seconds. Default 3600, minimum 60, at most 86400 (24 hours). Above 3600 only together with &#x60;resource&#x60;: a long-lived token is always bound to one MCP server, never to the organization API.
    * @return expiresIn
    */
   @javax.annotation.Nullable

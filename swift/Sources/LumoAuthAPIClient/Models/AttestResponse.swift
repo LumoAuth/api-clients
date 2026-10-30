@@ -14,6 +14,7 @@ public struct AttestResponse: Codable, JSONEncodable, Hashable {
 
     public enum TokenType: String, Codable, CaseIterable {
         case bearer = "Bearer"
+        case dpop = "DPoP"
     }
     public var accessToken: String
     public var tokenType: TokenType

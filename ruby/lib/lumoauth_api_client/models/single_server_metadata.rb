@@ -17,6 +17,7 @@ module LumoAuthApiClient
   class SingleServerMetadata
     attr_accessor :resource
 
+    # The organization's issuer identifier (RFC 8414).
     attr_accessor :authorization_servers
 
     attr_accessor :bearer_methods_supported

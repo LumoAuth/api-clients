@@ -33,7 +33,7 @@ export interface GetProtectedResourceMetadataRootResponse1ResourcesItem {
      */
     'resource_metadata_url': string;
     /**
-     * 
+     * The organization\'s issuer identifier (RFC 8414).
      * @type {Array<string>}
      * @memberof GetProtectedResourceMetadataRootResponse1ResourcesItem
      */

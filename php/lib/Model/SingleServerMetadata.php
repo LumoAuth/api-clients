@@ -374,7 +374,7 @@ class SingleServerMetadata implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets authorizationServers
      *
-     * @param string[] $authorizationServers authorizationServers
+     * @param string[] $authorizationServers The organization's issuer identifier (RFC 8414).
      *
      * @return self
      */

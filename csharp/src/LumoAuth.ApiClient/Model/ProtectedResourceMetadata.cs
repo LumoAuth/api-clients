@@ -45,7 +45,7 @@ namespace LumoAuth.ApiClient.Model
         /// Initializes a new instance of the <see cref="ProtectedResourceMetadata" /> class.
         /// </summary>
         /// <param name="resource">The MCP server&#39;s resource identifier. (required).</param>
-        /// <param name="authorizationServers">This organization&#39;s authorization server metadata URL. (required).</param>
+        /// <param name="authorizationServers">The organization&#39;s issuer identifier (RFC 8414), the same value as &#x60;issuer&#x60; in its discovery documents. Clients read the authorization server metadata from {issuer}/.well-known/openid-configuration. (required).</param>
         /// <param name="bearerMethodsSupported">bearerMethodsSupported (required).</param>
         /// <param name="scopesSupported">scopesSupported.</param>
         /// <param name="dpopBoundAccessTokensRequired">Present (true) only when the server accepts DPoP-bound tokens exclusively..</param>
@@ -84,9 +84,9 @@ namespace LumoAuth.ApiClient.Model
         public string Resource { get; set; }
 
         /// <summary>
-        /// This organization&#39;s authorization server metadata URL.
+        /// The organization&#39;s issuer identifier (RFC 8414), the same value as &#x60;issuer&#x60; in its discovery documents. Clients read the authorization server metadata from {issuer}/.well-known/openid-configuration.
         /// </summary>
-        /// <value>This organization&#39;s authorization server metadata URL.</value>
+        /// <value>The organization&#39;s issuer identifier (RFC 8414), the same value as &#x60;issuer&#x60; in its discovery documents. Clients read the authorization server metadata from {issuer}/.well-known/openid-configuration.</value>
         [DataMember(Name = "authorization_servers", IsRequired = true, EmitDefaultValue = true)]
         public List<string> AuthorizationServers { get; set; }
 

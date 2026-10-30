@@ -18,7 +18,7 @@ module LumoAuthApiClient
     # The MCP server's resource identifier.
     attr_accessor :resource
 
-    # This organization's authorization server metadata URL.
+    # The organization's issuer identifier (RFC 8414), the same value as `issuer` in its discovery documents. Clients read the authorization server metadata from {issuer}/.well-known/openid-configuration.
     attr_accessor :authorization_servers
 
     attr_accessor :bearer_methods_supported

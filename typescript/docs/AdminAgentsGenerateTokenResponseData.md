@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **accessToken** | **string** |  | [optional] [default to undefined]
 **tokenType** | **string** |  | [optional] [default to undefined]
 **expiresIn** | **number** |  | [optional] [default to undefined]
+**jti** | **string** | The token id. Written to the agent.token_issued audit event; the kill switch and a capability reduction deny-list it. | [optional] [default to undefined]
 **scopes** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **resource** | **string** | The MCP server the token is bound to, when &#x60;resource&#x60; was sent. | [optional] [default to undefined]
 
@@ -20,6 +21,7 @@ const instance: AdminAgentsGenerateTokenResponseData = {
     accessToken,
     tokenType,
     expiresIn,
+    jti,
     scopes,
     resource,
 };

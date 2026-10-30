@@ -317,7 +317,7 @@ class AdminAgentsGenerateTokenRequest implements ModelInterface, ArrayAccess, \J
     /**
      * Sets expiresIn
      *
-     * @param int|null $expiresIn Token lifetime in seconds. Default 3600, at most 2592000 (30 days).
+     * @param int|null $expiresIn Token lifetime in seconds. Default 3600, minimum 60, at most 86400 (24 hours). Above 3600 only together with `resource`: a long-lived token is always bound to one MCP server, never to the organization API.
      *
      * @return self
      */

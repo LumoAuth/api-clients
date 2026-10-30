@@ -28,7 +28,7 @@ class ProtectedResourceMetadata(BaseModel):
     ProtectedResourceMetadata
     """ # noqa: E501
     resource: StrictStr = Field(description="The MCP server's resource identifier.")
-    authorization_servers: List[StrictStr] = Field(description="This organization's authorization server metadata URL.")
+    authorization_servers: List[StrictStr] = Field(description="The organization's issuer identifier (RFC 8414), the same value as `issuer` in its discovery documents. Clients read the authorization server metadata from {issuer}/.well-known/openid-configuration.")
     bearer_methods_supported: List[StrictStr]
     scopes_supported: Optional[List[StrictStr]] = None
     dpop_bound_access_tokens_required: Optional[StrictBool] = Field(default=None, description="Present (true) only when the server accepts DPoP-bound tokens exclusively.")

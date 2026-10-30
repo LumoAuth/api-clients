@@ -30,7 +30,7 @@ Name | Type | Description | Notes
 **require_signed_request_object** | **bool** |  | [optional] 
 **request_object_signing_alg_values_supported** | **List[str]** |  | [optional] 
 **ui_locales_supported** | **List[str]** |  | [optional] 
-**acr_values_supported** | **List[str]** | The four MFA tier ACR values, unless overridden in organization settings. | [optional] 
+**acr_values_supported** | **List[str]** | The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings. | [optional] 
 **code_challenge_methods_supported** | **List[str]** |  | [optional] 
 **authorization_response_iss_parameter_supported** | **bool** |  | [optional] 
 **pushed_authorization_request_endpoint** | **str** |  | [optional] 

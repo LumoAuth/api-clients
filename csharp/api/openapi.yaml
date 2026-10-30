@@ -98,8 +98,9 @@ paths:
         Per Section 9: The agent token endpoint is the auth server's endpoint
         agents use to request auth tokens.
 
-        Required HTTP signature covering: @method, @target-uri, content-type,
-        content-digest, authorization
+        Required HTTP signature covering: @method, @authority, @path,
+        signature-key (plus @query when the URL has one), content-digest,
+        content-type, authorization
       operationId: issueAgentToken
       parameters:
       - explode: false
@@ -1872,7 +1873,8 @@ paths:
           description: A generated agent token. The token value is returned ONCE.
         "400":
           description: "Inactive agent, requested scopes outside the agent's capabilities,\
-            \ or a resource that is not an active MCP server of this organization."
+            \ a resource that is not an active MCP server of this organization, or\
+            \ expiresIn above 3600 without a resource."
         "401":
           description: Authentication required.
         "403":
@@ -7868,7 +7870,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/AttestResponse"
           description: "Attestation accepted: a short-lived (15 minute) LumoAuth access\
-            \ token scoped to the agent's capabilities."
+            \ token scoped to the agent's capabilities, or to the subset named by\
+            \ the optional `scope` field of the request body. Sent with a `DPoP` header,\
+            \ the token is DPoP-bound (token_type DPoP, cnf.jkt)."
         "400":
           description: invalid_json or missing_attestation_token.
         "401":
@@ -10321,7 +10325,8 @@ paths:
     get:
       description: "Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).\
         \ Endpoint URLs are rewritten to the organization's custom domain when one\
-        \ is active."
+        \ is active. The same document is served at the RFC 8414 location /.well-known/openid-configuration/orgs/{orgId}/api/v1\
+        \ and, on a verified custom domain (whose issuer is the bare domain), at /.well-known/openid-configuration."
       operationId: getOpenidConfiguration
       parameters:
       - explode: false
@@ -10352,7 +10357,9 @@ paths:
     get:
       description: "Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).\
         \ Endpoint URLs are rewritten to the organization's custom domain when one\
-        \ is active."
+        \ is active. RFC 8414 clients read it from /.well-known/oauth-authorization-server/orgs/{orgId}/api/v1\
+        \ (the issuer's path-inserted location) and, on a verified custom domain,\
+        \ from /.well-known/oauth-authorization-server."
       operationId: getAuthorizationServerMetadata
       parameters:
       - explode: false
@@ -14015,8 +14022,9 @@ components:
         - invoices.read
       properties:
         expiresIn:
-          description: "Token lifetime in seconds. Default 3600, at most 2592000 (30\
-            \ days)."
+          description: "Token lifetime in seconds. Default 3600, minimum 60, at most\
+            \ 86400 (24 hours). Above 3600 only together with `resource`: a long-lived\
+            \ token is always bound to one MCP server, never to the organization API."
           example: 600
           type: integer
         scopes:
@@ -14045,6 +14053,7 @@ components:
         - invoices.read
         accessToken: eyJ...
         tokenType: Bearer
+        jti: jti
       properties:
         accessToken:
           example: eyJ...
@@ -14055,6 +14064,10 @@ components:
         expiresIn:
           example: 600
           type: integer
+        jti:
+          description: The token id. Written to the agent.token_issued audit event;
+            the kill switch and a capability reduction deny-list it.
+          type: string
         scopes:
           example:
           - invoices.read
@@ -14076,6 +14089,7 @@ components:
           - invoices.read
           accessToken: eyJ...
           tokenType: Bearer
+          jti: jti
       properties:
         data:
           $ref: "#/components/schemas/AdminAgentsGenerateTokenResponseData"
@@ -19381,6 +19395,7 @@ components:
         token_type:
           enum:
           - Bearer
+          - DPoP
           type: string
         expires_in:
           example: 900
@@ -20423,7 +20438,9 @@ components:
           format: uri
           type: string
         authorization_servers:
-          description: This organization's authorization server metadata URL.
+          description: "The organization's issuer identifier (RFC 8414), the same\
+            \ value as `issuer` in its discovery documents. Clients read the authorization\
+            \ server metadata from {issuer}/.well-known/openid-configuration."
           items:
             format: uri
             type: string
@@ -20474,6 +20491,7 @@ components:
           format: uri
           type: string
         authorization_servers:
+          description: The organization's issuer identifier (RFC 8414).
           items:
             format: uri
             type: string
@@ -20508,6 +20526,7 @@ components:
           format: uri
           type: string
         authorization_servers:
+          description: The organization's issuer identifier (RFC 8414).
           items:
             format: uri
             type: string
@@ -22036,8 +22055,8 @@ components:
             type: string
           type: array
         acr_values_supported:
-          description: "The four MFA tier ACR values, unless overridden in organization\
-            \ settings."
+          description: "The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd\
+            \ (any signed-in session), unless overridden in organization settings."
           items:
             type: string
           type: array

@@ -49,7 +49,7 @@ type OpenIdConfiguration struct {
 	RequireSignedRequestObject *bool `json:"require_signed_request_object,omitempty"`
 	RequestObjectSigningAlgValuesSupported []string `json:"request_object_signing_alg_values_supported,omitempty"`
 	UiLocalesSupported []string `json:"ui_locales_supported,omitempty"`
-	// The four MFA tier ACR values, unless overridden in organization settings.
+	// The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty"`
 	CodeChallengeMethodsSupported []string `json:"code_challenge_methods_supported,omitempty"`
 	AuthorizationResponseIssParameterSupported *bool `json:"authorization_response_iss_parameter_supported,omitempty"`

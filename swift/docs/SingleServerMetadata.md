@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **resource** | **String** |  | 
-**authorizationServers** | **[String]** |  | 
+**authorizationServers** | **[String]** | The organization&#39;s issuer identifier (RFC 8414). | 
 **bearerMethodsSupported** | **[String]** |  | 
 **scopesSupported** | **[String]** |  | [optional] 
 **dpopBoundAccessTokensRequired** | **Bool** |  | [optional] 

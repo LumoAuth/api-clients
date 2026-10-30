@@ -20,6 +20,7 @@ module LumoAuthApiClient
     # Per-server protected resource metadata URL.
     attr_accessor :resource_metadata_url
 
+    # The organization's issuer identifier (RFC 8414).
     attr_accessor :authorization_servers
 
     # Attribute mapping from ruby-style variable name to JSON key.

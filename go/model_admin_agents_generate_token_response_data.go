@@ -23,6 +23,8 @@ type AdminAgentsGenerateTokenResponseData struct {
 	AccessToken *string `json:"accessToken,omitempty"`
 	TokenType *string `json:"tokenType,omitempty"`
 	ExpiresIn *int32 `json:"expiresIn,omitempty"`
+	// The token id. Written to the agent.token_issued audit event; the kill switch and a capability reduction deny-list it.
+	Jti *string `json:"jti,omitempty"`
 	Scopes []string `json:"scopes,omitempty"`
 	// The MCP server the token is bound to, when `resource` was sent.
 	Resource NullableString `json:"resource,omitempty"`
@@ -141,6 +143,38 @@ func (o *AdminAgentsGenerateTokenResponseData) SetExpiresIn(v int32) {
 	o.ExpiresIn = &v
 }
 
+// GetJti returns the Jti field value if set, zero value otherwise.
+func (o *AdminAgentsGenerateTokenResponseData) GetJti() string {
+	if o == nil || IsNil(o.Jti) {
+		var ret string
+		return ret
+	}
+	return *o.Jti
+}
+
+// GetJtiOk returns a tuple with the Jti field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminAgentsGenerateTokenResponseData) GetJtiOk() (*string, bool) {
+	if o == nil || IsNil(o.Jti) {
+		return nil, false
+	}
+	return o.Jti, true
+}
+
+// HasJti returns a boolean if a field has been set.
+func (o *AdminAgentsGenerateTokenResponseData) HasJti() bool {
+	if o != nil && !IsNil(o.Jti) {
+		return true
+	}
+
+	return false
+}
+
+// SetJti gets a reference to the given string and assigns it to the Jti field.
+func (o *AdminAgentsGenerateTokenResponseData) SetJti(v string) {
+	o.Jti = &v
+}
+
 // GetScopes returns the Scopes field value if set, zero value otherwise.
 func (o *AdminAgentsGenerateTokenResponseData) GetScopes() []string {
 	if o == nil || IsNil(o.Scopes) {
@@ -233,6 +267,9 @@ func (o AdminAgentsGenerateTokenResponseData) ToMap() (map[string]interface{}, e
 	}
 	if !IsNil(o.ExpiresIn) {
 		toSerialize["expiresIn"] = o.ExpiresIn
+	}
+	if !IsNil(o.Jti) {
+		toSerialize["jti"] = o.Jti
 	}
 	if !IsNil(o.Scopes) {
 		toSerialize["scopes"] = o.Scopes

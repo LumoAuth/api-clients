@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **resource** | **string** |  | [default to undefined]
-**authorization_servers** | **Array&lt;string&gt;** |  | [default to undefined]
+**authorization_servers** | **Array&lt;string&gt;** | The organization\&#39;s issuer identifier (RFC 8414). | [default to undefined]
 **bearer_methods_supported** | **Array&lt;string&gt;** |  | [default to undefined]
 **scopes_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **dpop_bound_access_tokens_required** | **boolean** |  | [optional] [default to undefined]

@@ -23,7 +23,7 @@ var _ MappedNullable = &ProtectedResourceMetadata{}
 type ProtectedResourceMetadata struct {
 	// The MCP server's resource identifier.
 	Resource string `json:"resource"`
-	// This organization's authorization server metadata URL.
+	// The organization's issuer identifier (RFC 8414), the same value as `issuer` in its discovery documents. Clients read the authorization server metadata from {issuer}/.well-known/openid-configuration.
 	AuthorizationServers []string `json:"authorization_servers"`
 	BearerMethodsSupported []string `json:"bearer_methods_supported"`
 	ScopesSupported []string `json:"scopes_supported,omitempty"`

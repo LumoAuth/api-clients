@@ -83,6 +83,15 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'Jti'
+        /// </summary>
+        [Fact]
+        public void JtiTest()
+        {
+            // TODO unit test for the property 'Jti'
+        }
+
+        /// <summary>
         /// Test the property 'Scopes'
         /// </summary>
         [Fact]

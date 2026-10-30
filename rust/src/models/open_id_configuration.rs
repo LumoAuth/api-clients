@@ -65,7 +65,7 @@ pub struct OpenIdConfiguration {
     pub request_object_signing_alg_values_supported: Option<Vec<String>>,
     #[serde(rename = "ui_locales_supported", skip_serializing_if = "Option::is_none")]
     pub ui_locales_supported: Option<Vec<String>>,
-    /// The four MFA tier ACR values, unless overridden in organization settings.
+    /// The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
     #[serde(rename = "acr_values_supported", skip_serializing_if = "Option::is_none")]
     pub acr_values_supported: Option<Vec<String>>,
     #[serde(rename = "code_challenge_methods_supported", skip_serializing_if = "Option::is_none")]

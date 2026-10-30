@@ -386,7 +386,7 @@ export const AAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Per Section 9: The agent token endpoint is the auth server\'s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+         * Per Section 9: The agent token endpoint is the auth server\'s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
          * @summary Agent Token Endpoint
          * @param {string} orgId 
          * @param {IssueAgentTokenRequest} issueAgentTokenRequest 
@@ -824,7 +824,7 @@ export const AAuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Per Section 9: The agent token endpoint is the auth server\'s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+         * Per Section 9: The agent token endpoint is the auth server\'s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
          * @summary Agent Token Endpoint
          * @param {string} orgId 
          * @param {IssueAgentTokenRequest} issueAgentTokenRequest 
@@ -1021,7 +1021,7 @@ export const AAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getResourceMetadataById(requestParameters.orgId, requestParameters.resourceId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Per Section 9: The agent token endpoint is the auth server\'s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+         * Per Section 9: The agent token endpoint is the auth server\'s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
          * @summary Agent Token Endpoint
          * @param {AAuthApiIssueAgentTokenRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1189,7 +1189,7 @@ export interface AAuthApiInterface {
     getResourceMetadataById(requestParameters: AAuthApiGetResourceMetadataByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<object>;
 
     /**
-     * Per Section 9: The agent token endpoint is the auth server\'s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+     * Per Section 9: The agent token endpoint is the auth server\'s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
      * @summary Agent Token Endpoint
      * @param {AAuthApiIssueAgentTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1676,7 +1676,7 @@ export class AAuthApi extends BaseAPI implements AAuthApiInterface {
     }
 
     /**
-     * Per Section 9: The agent token endpoint is the auth server\'s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+     * Per Section 9: The agent token endpoint is the auth server\'s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
      * @summary Agent Token Endpoint
      * @param {AAuthApiIssueAgentTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

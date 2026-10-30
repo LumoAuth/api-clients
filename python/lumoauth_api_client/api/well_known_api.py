@@ -60,7 +60,7 @@ class WellKnownApi:
     ) -> AuthorizationServerMetadata:
         """OAuth 2.0 authorization server metadata (RFC 8414)
 
-        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
+        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active. RFC 8414 clients read it from /.well-known/oauth-authorization-server/orgs/{orgId}/api/v1 (the issuer's path-inserted location) and, on a verified custom domain, from /.well-known/oauth-authorization-server.
 
         :param org_id: (required)
         :type org_id: str
@@ -128,7 +128,7 @@ class WellKnownApi:
     ) -> ApiResponse[AuthorizationServerMetadata]:
         """OAuth 2.0 authorization server metadata (RFC 8414)
 
-        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
+        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active. RFC 8414 clients read it from /.well-known/oauth-authorization-server/orgs/{orgId}/api/v1 (the issuer's path-inserted location) and, on a verified custom domain, from /.well-known/oauth-authorization-server.
 
         :param org_id: (required)
         :type org_id: str
@@ -196,7 +196,7 @@ class WellKnownApi:
     ) -> RESTResponseType:
         """OAuth 2.0 authorization server metadata (RFC 8414)
 
-        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
+        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active. RFC 8414 clients read it from /.well-known/oauth-authorization-server/orgs/{orgId}/api/v1 (the issuer's path-inserted location) and, on a verified custom domain, from /.well-known/oauth-authorization-server.
 
         :param org_id: (required)
         :type org_id: str
@@ -586,7 +586,7 @@ class WellKnownApi:
     ) -> OpenIdConfiguration:
         """OpenID Provider configuration (OIDC Discovery 1.0)
 
-        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
+        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active. The same document is served at the RFC 8414 location /.well-known/openid-configuration/orgs/{orgId}/api/v1 and, on a verified custom domain (whose issuer is the bare domain), at /.well-known/openid-configuration.
 
         :param org_id: (required)
         :type org_id: str
@@ -654,7 +654,7 @@ class WellKnownApi:
     ) -> ApiResponse[OpenIdConfiguration]:
         """OpenID Provider configuration (OIDC Discovery 1.0)
 
-        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
+        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active. The same document is served at the RFC 8414 location /.well-known/openid-configuration/orgs/{orgId}/api/v1 and, on a verified custom domain (whose issuer is the bare domain), at /.well-known/openid-configuration.
 
         :param org_id: (required)
         :type org_id: str
@@ -722,7 +722,7 @@ class WellKnownApi:
     ) -> RESTResponseType:
         """OpenID Provider configuration (OIDC Discovery 1.0)
 
-        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
+        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active. The same document is served at the RFC 8414 location /.well-known/openid-configuration/orgs/{orgId}/api/v1 and, on a verified custom domain (whose issuer is the bare domain), at /.well-known/openid-configuration.
 
         :param org_id: (required)
         :type org_id: str

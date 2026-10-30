@@ -1356,7 +1356,7 @@ class OpenIdConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets acrValuesSupported
      *
-     * @param string[]|null $acrValuesSupported The four MFA tier ACR values, unless overridden in organization settings.
+     * @param string[]|null $acrValuesSupported The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
      *
      * @return self
      */

@@ -171,7 +171,7 @@ export interface OpenIdConfiguration {
      */
     'ui_locales_supported'?: Array<string>;
     /**
-     * The four MFA tier ACR values, unless overridden in organization settings.
+     * The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
      * @type {Array<string>}
      * @memberof OpenIdConfiguration
      */

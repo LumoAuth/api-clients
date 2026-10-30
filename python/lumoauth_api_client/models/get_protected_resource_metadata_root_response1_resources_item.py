@@ -29,7 +29,7 @@ class GetProtectedResourceMetadataRootResponse1ResourcesItem(BaseModel):
     """ # noqa: E501
     resource: StrictStr
     resource_metadata_url: StrictStr = Field(description="Per-server protected resource metadata URL.")
-    authorization_servers: List[StrictStr]
+    authorization_servers: List[StrictStr] = Field(description="The organization's issuer identifier (RFC 8414).")
     __properties: ClassVar[List[str]] = ["resource", "resource_metadata_url", "authorization_servers"]
 
     model_config = ConfigDict(

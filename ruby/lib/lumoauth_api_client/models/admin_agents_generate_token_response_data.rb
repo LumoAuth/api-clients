@@ -21,6 +21,9 @@ module LumoAuthApiClient
 
     attr_accessor :expires_in
 
+    # The token id. Written to the agent.token_issued audit event; the kill switch and a capability reduction deny-list it.
+    attr_accessor :jti
+
     attr_accessor :scopes
 
     # The MCP server the token is bound to, when `resource` was sent.
@@ -32,6 +35,7 @@ module LumoAuthApiClient
         :'access_token' => :'accessToken',
         :'token_type' => :'tokenType',
         :'expires_in' => :'expiresIn',
+        :'jti' => :'jti',
         :'scopes' => :'scopes',
         :'resource' => :'resource'
       }
@@ -53,6 +57,7 @@ module LumoAuthApiClient
         :'access_token' => :'String',
         :'token_type' => :'String',
         :'expires_in' => :'Integer',
+        :'jti' => :'String',
         :'scopes' => :'Array<String>',
         :'resource' => :'String'
       }
@@ -93,6 +98,10 @@ module LumoAuthApiClient
         self.expires_in = attributes[:'expires_in']
       end
 
+      if attributes.key?(:'jti')
+        self.jti = attributes[:'jti']
+      end
+
       if attributes.key?(:'scopes')
         if (value = attributes[:'scopes']).is_a?(Array)
           self.scopes = value
@@ -127,6 +136,7 @@ module LumoAuthApiClient
           access_token == o.access_token &&
           token_type == o.token_type &&
           expires_in == o.expires_in &&
+          jti == o.jti &&
           scopes == o.scopes &&
           resource == o.resource
     end
@@ -140,7 +150,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [access_token, token_type, expires_in, scopes, resource].hash
+      [access_token, token_type, expires_in, jti, scopes, resource].hash
     end
 
     # Builds the object from hash

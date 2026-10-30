@@ -29,7 +29,7 @@ export interface ProtectedResourceMetadata {
      */
     'resource': string;
     /**
-     * This organization\'s authorization server metadata URL.
+     * The organization\'s issuer identifier (RFC 8414), the same value as `issuer` in its discovery documents. Clients read the authorization server metadata from {issuer}/.well-known/openid-configuration.
      * @type {Array<string>}
      * @memberof ProtectedResourceMetadata
      */

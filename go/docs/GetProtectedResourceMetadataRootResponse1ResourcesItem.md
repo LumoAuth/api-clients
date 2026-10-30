@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Resource** | **string** |  | 
 **ResourceMetadataUrl** | **string** | Per-server protected resource metadata URL. | 
-**AuthorizationServers** | **[]string** |  | 
+**AuthorizationServers** | **[]string** | The organization&#39;s issuer identifier (RFC 8414). | 
 
 ## Methods
 

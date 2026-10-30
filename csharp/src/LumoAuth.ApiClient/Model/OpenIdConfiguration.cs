@@ -66,7 +66,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="requireSignedRequestObject">requireSignedRequestObject.</param>
         /// <param name="requestObjectSigningAlgValuesSupported">requestObjectSigningAlgValuesSupported.</param>
         /// <param name="uiLocalesSupported">uiLocalesSupported.</param>
-        /// <param name="acrValuesSupported">The four MFA tier ACR values, unless overridden in organization settings..</param>
+        /// <param name="acrValuesSupported">The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings..</param>
         /// <param name="codeChallengeMethodsSupported">codeChallengeMethodsSupported.</param>
         /// <param name="authorizationResponseIssParameterSupported">authorizationResponseIssParameterSupported.</param>
         /// <param name="pushedAuthorizationRequestEndpoint">pushedAuthorizationRequestEndpoint.</param>
@@ -364,9 +364,9 @@ namespace LumoAuth.ApiClient.Model
         public List<string> UiLocalesSupported { get; set; }
 
         /// <summary>
-        /// The four MFA tier ACR values, unless overridden in organization settings.
+        /// The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
         /// </summary>
-        /// <value>The four MFA tier ACR values, unless overridden in organization settings.</value>
+        /// <value>The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.</value>
         [DataMember(Name = "acr_values_supported", EmitDefaultValue = false)]
         public List<string> AcrValuesSupported { get; set; }
 

@@ -52,7 +52,7 @@ class OpenIdConfiguration(BaseModel):
     require_signed_request_object: Optional[StrictBool] = None
     request_object_signing_alg_values_supported: Optional[List[StrictStr]] = None
     ui_locales_supported: Optional[List[StrictStr]] = None
-    acr_values_supported: Optional[List[StrictStr]] = Field(default=None, description="The four MFA tier ACR values, unless overridden in organization settings.")
+    acr_values_supported: Optional[List[StrictStr]] = Field(default=None, description="The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.")
     code_challenge_methods_supported: Optional[List[StrictStr]] = None
     authorization_response_iss_parameter_supported: Optional[StrictBool] = None
     pushed_authorization_request_endpoint: Optional[StrictStr] = None

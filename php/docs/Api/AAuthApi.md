@@ -529,7 +529,7 @@ issueAgentToken($orgId, $issueAgentTokenRequest): \LumoAuth\ApiClient\Model\Issu
 
 Agent Token Endpoint
 
-Per Section 9: The agent token endpoint is the auth server's endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+Per Section 9: The agent token endpoint is the auth server's endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
 
 ### Example
 

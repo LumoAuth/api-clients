@@ -19,6 +19,9 @@ pub struct AdminAgentsGenerateTokenResponseData {
     pub token_type: Option<String>,
     #[serde(rename = "expiresIn", skip_serializing_if = "Option::is_none")]
     pub expires_in: Option<i32>,
+    /// The token id. Written to the agent.token_issued audit event; the kill switch and a capability reduction deny-list it.
+    #[serde(rename = "jti", skip_serializing_if = "Option::is_none")]
+    pub jti: Option<String>,
     #[serde(rename = "scopes", skip_serializing_if = "Option::is_none")]
     pub scopes: Option<Vec<String>>,
     /// The MCP server the token is bound to, when `resource` was sent.
@@ -32,6 +35,7 @@ impl AdminAgentsGenerateTokenResponseData {
             access_token: None,
             token_type: None,
             expires_in: None,
+            jti: None,
             scopes: None,
             resource: None,
         }

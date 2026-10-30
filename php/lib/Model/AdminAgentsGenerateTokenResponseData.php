@@ -61,6 +61,7 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
         'accessToken' => 'string',
         'tokenType' => 'string',
         'expiresIn' => 'int',
+        'jti' => 'string',
         'scopes' => 'string[]',
         'resource' => 'string'
     ];
@@ -76,6 +77,7 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
         'accessToken' => null,
         'tokenType' => null,
         'expiresIn' => null,
+        'jti' => null,
         'scopes' => null,
         'resource' => null
     ];
@@ -89,6 +91,7 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
         'accessToken' => false,
         'tokenType' => false,
         'expiresIn' => false,
+        'jti' => false,
         'scopes' => false,
         'resource' => true
     ];
@@ -182,6 +185,7 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
         'accessToken' => 'accessToken',
         'tokenType' => 'tokenType',
         'expiresIn' => 'expiresIn',
+        'jti' => 'jti',
         'scopes' => 'scopes',
         'resource' => 'resource'
     ];
@@ -195,6 +199,7 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
         'accessToken' => 'setAccessToken',
         'tokenType' => 'setTokenType',
         'expiresIn' => 'setExpiresIn',
+        'jti' => 'setJti',
         'scopes' => 'setScopes',
         'resource' => 'setResource'
     ];
@@ -208,6 +213,7 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
         'accessToken' => 'getAccessToken',
         'tokenType' => 'getTokenType',
         'expiresIn' => 'getExpiresIn',
+        'jti' => 'getJti',
         'scopes' => 'getScopes',
         'resource' => 'getResource'
     ];
@@ -272,6 +278,7 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
         $this->setIfExists('accessToken', $data ?? [], null);
         $this->setIfExists('tokenType', $data ?? [], null);
         $this->setIfExists('expiresIn', $data ?? [], null);
+        $this->setIfExists('jti', $data ?? [], null);
         $this->setIfExists('scopes', $data ?? [], null);
         $this->setIfExists('resource', $data ?? [], null);
     }
@@ -395,6 +402,33 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
             throw new \InvalidArgumentException('non-nullable expiresIn cannot be null');
         }
         $this->container['expiresIn'] = $expiresIn;
+
+        return $this;
+    }
+
+    /**
+     * Gets jti
+     *
+     * @return string|null
+     */
+    public function getJti()
+    {
+        return $this->container['jti'];
+    }
+
+    /**
+     * Sets jti
+     *
+     * @param string|null $jti The token id. Written to the agent.token_issued audit event; the kill switch and a capability reduction deny-list it.
+     *
+     * @return self
+     */
+    public function setJti($jti)
+    {
+        if (is_null($jti)) {
+            throw new \InvalidArgumentException('non-nullable jti cannot be null');
+        }
+        $this->container['jti'] = $jti;
 
         return $this;
     }

@@ -65,6 +65,14 @@ public class AdminAgentsGenerateTokenResponseDataTest {
     }
 
     /**
+     * Test the property 'jti'
+     */
+    @Test
+    public void jtiTest() {
+        // TODO: test jti
+    }
+
+    /**
      * Test the property 'scopes'
      */
     @Test

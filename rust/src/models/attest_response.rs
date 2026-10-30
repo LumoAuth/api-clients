@@ -42,6 +42,8 @@ impl AttestResponse {
 pub enum TokenType {
     #[serde(rename = "Bearer")]
     Bearer,
+    #[serde(rename = "DPoP")]
+    DpoP,
 }
 
 impl Default for TokenType {

@@ -393,7 +393,7 @@ open class AAuthAPI {
     /**
      Agent Token Endpoint
      - POST /orgs/{orgId}/api/v1/aauth/agent/token
-     - Per Section 9: The agent token endpoint is the auth server's endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+     - Per Section 9: The agent token endpoint is the auth server's endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
      - Bearer Token:
        - type: http
        - name: AAuthSigned

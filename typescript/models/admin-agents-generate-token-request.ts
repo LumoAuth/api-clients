@@ -21,7 +21,7 @@
  */
 export interface AdminAgentsGenerateTokenRequest {
     /**
-     * Token lifetime in seconds. Default 3600, at most 2592000 (30 days).
+     * Token lifetime in seconds. Default 3600, minimum 60, at most 86400 (24 hours). Above 3600 only together with `resource`: a long-lived token is always bound to one MCP server, never to the organization API.
      * @type {number}
      * @memberof AdminAgentsGenerateTokenRequest
      */

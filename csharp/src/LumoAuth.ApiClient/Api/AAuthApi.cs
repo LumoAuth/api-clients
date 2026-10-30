@@ -205,7 +205,7 @@ namespace LumoAuth.ApiClient.Api
         /// Agent Token Endpoint
         /// </summary>
         /// <remarks>
-        /// Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+        /// Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -217,7 +217,7 @@ namespace LumoAuth.ApiClient.Api
         /// Agent Token Endpoint
         /// </summary>
         /// <remarks>
-        /// Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+        /// Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -584,7 +584,7 @@ namespace LumoAuth.ApiClient.Api
         /// Agent Token Endpoint
         /// </summary>
         /// <remarks>
-        /// Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+        /// Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -597,7 +597,7 @@ namespace LumoAuth.ApiClient.Api
         /// Agent Token Endpoint
         /// </summary>
         /// <remarks>
-        /// Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+        /// Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2068,7 +2068,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Agent Token Endpoint Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+        /// Agent Token Endpoint Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2081,7 +2081,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Agent Token Endpoint Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+        /// Agent Token Endpoint Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2137,7 +2137,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Agent Token Endpoint Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+        /// Agent Token Endpoint Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2151,7 +2151,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Agent Token Endpoint Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+        /// Agent Token Endpoint Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

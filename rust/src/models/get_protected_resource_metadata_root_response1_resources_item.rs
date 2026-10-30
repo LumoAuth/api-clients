@@ -18,6 +18,7 @@ pub struct GetProtectedResourceMetadataRootResponse1ResourcesItem {
     /// Per-server protected resource metadata URL.
     #[serde(rename = "resource_metadata_url")]
     pub resource_metadata_url: String,
+    /// The organization's issuer identifier (RFC 8414).
     #[serde(rename = "authorization_servers")]
     pub authorization_servers: Vec<String>,
 }

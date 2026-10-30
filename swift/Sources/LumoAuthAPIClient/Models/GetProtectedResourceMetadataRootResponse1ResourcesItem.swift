@@ -15,6 +15,7 @@ public struct GetProtectedResourceMetadataRootResponse1ResourcesItem: Codable, J
     public var resource: String
     /** Per-server protected resource metadata URL. */
     public var resourceMetadataUrl: String
+    /** The organization's issuer identifier (RFC 8414). */
     public var authorizationServers: [String]
 
     public init(resource: String, resourceMetadataUrl: String, authorizationServers: [String]) {

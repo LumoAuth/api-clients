@@ -43,7 +43,13 @@ namespace LumoAuth.ApiClient.Model
             /// Enum Bearer for value: Bearer
             /// </summary>
             [EnumMember(Value = "Bearer")]
-            Bearer = 1
+            Bearer = 1,
+
+            /// <summary>
+            /// Enum DPoP for value: DPoP
+            /// </summary>
+            [EnumMember(Value = "DPoP")]
+            DPoP = 2
         }
 
 

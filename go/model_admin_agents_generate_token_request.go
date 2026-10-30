@@ -20,7 +20,7 @@ var _ MappedNullable = &AdminAgentsGenerateTokenRequest{}
 
 // AdminAgentsGenerateTokenRequest struct for AdminAgentsGenerateTokenRequest
 type AdminAgentsGenerateTokenRequest struct {
-	// Token lifetime in seconds. Default 3600, at most 2592000 (30 days).
+	// Token lifetime in seconds. Default 3600, minimum 60, at most 86400 (24 hours). Above 3600 only together with `resource`: a long-lived token is always bound to one MCP server, never to the organization API.
 	ExpiresIn *int32 `json:"expiresIn,omitempty"`
 	// Optional subset of the agent's capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400.
 	Scopes []string `json:"scopes,omitempty"`

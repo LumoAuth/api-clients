@@ -39,6 +39,12 @@ export interface AdminAgentsGenerateTokenResponseData {
      */
     'expiresIn'?: number;
     /**
+     * The token id. Written to the agent.token_issued audit event; the kill switch and a capability reduction deny-list it.
+     * @type {string}
+     * @memberof AdminAgentsGenerateTokenResponseData
+     */
+    'jti'?: string;
+    /**
      * 
      * @type {Array<string>}
      * @memberof AdminAgentsGenerateTokenResponseData

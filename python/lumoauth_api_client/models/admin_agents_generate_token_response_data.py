@@ -30,9 +30,10 @@ class AdminAgentsGenerateTokenResponseData(BaseModel):
     access_token: Optional[StrictStr] = Field(default=None, alias="accessToken")
     token_type: Optional[StrictStr] = Field(default=None, alias="tokenType")
     expires_in: Optional[StrictInt] = Field(default=None, alias="expiresIn")
+    jti: Optional[StrictStr] = Field(default=None, description="The token id. Written to the agent.token_issued audit event; the kill switch and a capability reduction deny-list it.")
     scopes: Optional[List[StrictStr]] = None
     resource: Optional[StrictStr] = Field(default=None, description="The MCP server the token is bound to, when `resource` was sent.")
-    __properties: ClassVar[List[str]] = ["accessToken", "tokenType", "expiresIn", "scopes", "resource"]
+    __properties: ClassVar[List[str]] = ["accessToken", "tokenType", "expiresIn", "jti", "scopes", "resource"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,6 +94,7 @@ class AdminAgentsGenerateTokenResponseData(BaseModel):
             "accessToken": obj.get("accessToken"),
             "tokenType": obj.get("tokenType"),
             "expiresIn": obj.get("expiresIn"),
+            "jti": obj.get("jti"),
             "scopes": obj.get("scopes"),
             "resource": obj.get("resource")
         })

@@ -167,7 +167,7 @@ module LumoAuthApiClient
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @access_token.nil?
       return false if @token_type.nil?
-      token_type_validator = EnumAttributeValidator.new('String', ["Bearer"])
+      token_type_validator = EnumAttributeValidator.new('String', ["Bearer", "DPoP"])
       return false unless token_type_validator.valid?(@token_type)
       return false if @expires_in.nil?
       return false if @scope.nil?
@@ -188,7 +188,7 @@ module LumoAuthApiClient
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] token_type Object to be assigned
     def token_type=(token_type)
-      validator = EnumAttributeValidator.new('String', ["Bearer"])
+      validator = EnumAttributeValidator.new('String', ["Bearer", "DPoP"])
       unless validator.valid?(token_type)
         fail ArgumentError, "invalid value for \"token_type\", must be one of #{validator.allowable_values}."
       end

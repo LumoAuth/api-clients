@@ -51,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminAgentsGenerateTokenResponseData
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T18:39:38.311678905Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-30T07:09:37.528972290-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class AdminAgentsGenerateTokenResponseData {
   public static final String SERIALIZED_NAME_ACCESS_TOKEN = "accessToken";
   @SerializedName(SERIALIZED_NAME_ACCESS_TOKEN)
@@ -67,6 +67,11 @@ public class AdminAgentsGenerateTokenResponseData {
   @SerializedName(SERIALIZED_NAME_EXPIRES_IN)
   @javax.annotation.Nullable
   private Integer expiresIn;
+
+  public static final String SERIALIZED_NAME_JTI = "jti";
+  @SerializedName(SERIALIZED_NAME_JTI)
+  @javax.annotation.Nullable
+  private String jti;
 
   public static final String SERIALIZED_NAME_SCOPES = "scopes";
   @SerializedName(SERIALIZED_NAME_SCOPES)
@@ -138,6 +143,25 @@ public class AdminAgentsGenerateTokenResponseData {
   }
 
 
+  public AdminAgentsGenerateTokenResponseData jti(@javax.annotation.Nullable String jti) {
+    this.jti = jti;
+    return this;
+  }
+
+  /**
+   * The token id. Written to the agent.token_issued audit event; the kill switch and a capability reduction deny-list it.
+   * @return jti
+   */
+  @javax.annotation.Nullable
+  public String getJti() {
+    return jti;
+  }
+
+  public void setJti(@javax.annotation.Nullable String jti) {
+    this.jti = jti;
+  }
+
+
   public AdminAgentsGenerateTokenResponseData scopes(@javax.annotation.Nullable List<String> scopes) {
     this.scopes = scopes;
     return this;
@@ -197,6 +221,7 @@ public class AdminAgentsGenerateTokenResponseData {
     return Objects.equals(this.accessToken, adminAgentsGenerateTokenResponseData.accessToken) &&
         Objects.equals(this.tokenType, adminAgentsGenerateTokenResponseData.tokenType) &&
         Objects.equals(this.expiresIn, adminAgentsGenerateTokenResponseData.expiresIn) &&
+        Objects.equals(this.jti, adminAgentsGenerateTokenResponseData.jti) &&
         Objects.equals(this.scopes, adminAgentsGenerateTokenResponseData.scopes) &&
         Objects.equals(this.resource, adminAgentsGenerateTokenResponseData.resource);
   }
@@ -207,7 +232,7 @@ public class AdminAgentsGenerateTokenResponseData {
 
   @Override
   public int hashCode() {
-    return Objects.hash(accessToken, tokenType, expiresIn, scopes, resource);
+    return Objects.hash(accessToken, tokenType, expiresIn, jti, scopes, resource);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -224,6 +249,7 @@ public class AdminAgentsGenerateTokenResponseData {
     sb.append("    accessToken: ").append(toIndentedString(accessToken)).append("\n");
     sb.append("    tokenType: ").append(toIndentedString(tokenType)).append("\n");
     sb.append("    expiresIn: ").append(toIndentedString(expiresIn)).append("\n");
+    sb.append("    jti: ").append(toIndentedString(jti)).append("\n");
     sb.append("    scopes: ").append(toIndentedString(scopes)).append("\n");
     sb.append("    resource: ").append(toIndentedString(resource)).append("\n");
     sb.append("}");
@@ -247,7 +273,7 @@ public class AdminAgentsGenerateTokenResponseData {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("accessToken", "tokenType", "expiresIn", "scopes", "resource"));
+    openapiFields = new HashSet<String>(Arrays.asList("accessToken", "tokenType", "expiresIn", "jti", "scopes", "resource"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -279,6 +305,9 @@ public class AdminAgentsGenerateTokenResponseData {
       }
       if ((jsonObj.get("tokenType") != null && !jsonObj.get("tokenType").isJsonNull()) && !jsonObj.get("tokenType").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `tokenType` to be a primitive type in the JSON string but got `%s`", jsonObj.get("tokenType").toString()));
+      }
+      if ((jsonObj.get("jti") != null && !jsonObj.get("jti").isJsonNull()) && !jsonObj.get("jti").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `jti` to be a primitive type in the JSON string but got `%s`", jsonObj.get("jti").toString()));
       }
       // ensure the optional json data is an array if present
       if (jsonObj.get("scopes") != null && !jsonObj.get("scopes").isJsonNull() && !jsonObj.get("scopes").isJsonArray()) {

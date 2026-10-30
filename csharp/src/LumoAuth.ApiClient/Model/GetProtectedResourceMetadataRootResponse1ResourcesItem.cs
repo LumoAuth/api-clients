@@ -43,7 +43,7 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         /// <param name="resource">resource (required).</param>
         /// <param name="resourceMetadataUrl">Per-server protected resource metadata URL. (required).</param>
-        /// <param name="authorizationServers">authorizationServers (required).</param>
+        /// <param name="authorizationServers">The organization&#39;s issuer identifier (RFC 8414). (required).</param>
         public GetProtectedResourceMetadataRootResponse1ResourcesItem(string resource = default, string resourceMetadataUrl = default, List<string> authorizationServers = default)
         {
             // to ensure "resource" is required (not null)
@@ -80,8 +80,9 @@ namespace LumoAuth.ApiClient.Model
         public string ResourceMetadataUrl { get; set; }
 
         /// <summary>
-        /// Gets or Sets AuthorizationServers
+        /// The organization&#39;s issuer identifier (RFC 8414).
         /// </summary>
+        /// <value>The organization&#39;s issuer identifier (RFC 8414).</value>
         [DataMember(Name = "authorization_servers", IsRequired = true, EmitDefaultValue = true)]
         public List<string> AuthorizationServers { get; set; }
 

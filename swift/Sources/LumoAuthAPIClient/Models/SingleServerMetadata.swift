@@ -13,6 +13,7 @@ import AnyCodable
 public struct SingleServerMetadata: Codable, JSONEncodable, Hashable {
 
     public var resource: String
+    /** The organization's issuer identifier (RFC 8414). */
     public var authorizationServers: [String]
     public var bearerMethodsSupported: [String]
     public var scopesSupported: [String]?

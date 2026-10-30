@@ -60,7 +60,8 @@ export interface AttestResponse {
     * @enum {string}
     */
 export enum AttestResponseTokenType {
-    BEARER = 'Bearer'
+    BEARER = 'Bearer',
+    DPO_P = 'DPoP'
 }
 
 

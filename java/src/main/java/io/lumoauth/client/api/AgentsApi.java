@@ -242,7 +242,7 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities, or to the subset named by the optional &#x60;scope&#x60; field of the request body. Sent with a &#x60;DPoP&#x60; header, the token is DPoP-bound (token_type DPoP, cnf.jkt). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_json or missing_attestation_token. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> access_policy_denied — a conditional access policy refused the agent (reason code included). </td><td>  -  </td></tr>
@@ -330,7 +330,7 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities, or to the subset named by the optional &#x60;scope&#x60; field of the request body. Sent with a &#x60;DPoP&#x60; header, the token is DPoP-bound (token_type DPoP, cnf.jkt). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_json or missing_attestation_token. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> access_policy_denied — a conditional access policy refused the agent (reason code included). </td><td>  -  </td></tr>
@@ -355,7 +355,7 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities, or to the subset named by the optional &#x60;scope&#x60; field of the request body. Sent with a &#x60;DPoP&#x60; header, the token is DPoP-bound (token_type DPoP, cnf.jkt). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_json or missing_attestation_token. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> access_policy_denied — a conditional access policy refused the agent (reason code included). </td><td>  -  </td></tr>
@@ -382,7 +382,7 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities, or to the subset named by the optional &#x60;scope&#x60; field of the request body. Sent with a &#x60;DPoP&#x60; header, the token is DPoP-bound (token_type DPoP, cnf.jkt). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_json or missing_attestation_token. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> access_policy_denied — a conditional access policy refused the agent (reason code included). </td><td>  -  </td></tr>

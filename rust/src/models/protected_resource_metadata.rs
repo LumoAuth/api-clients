@@ -16,7 +16,7 @@ pub struct ProtectedResourceMetadata {
     /// The MCP server's resource identifier.
     #[serde(rename = "resource")]
     pub resource: String,
-    /// This organization's authorization server metadata URL.
+    /// The organization's issuer identifier (RFC 8414), the same value as `issuer` in its discovery documents. Clients read the authorization server metadata from {issuer}/.well-known/openid-configuration.
     #[serde(rename = "authorization_servers")]
     pub authorization_servers: Vec<String>,
     #[serde(rename = "bearer_methods_supported")]

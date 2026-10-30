@@ -593,7 +593,7 @@ module LumoAuthApiClient
     end
 
     # Agent Token Endpoint
-    # Per Section 9: The agent token endpoint is the auth server's endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+    # Per Section 9: The agent token endpoint is the auth server's endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
     # @param org_id [String] 
     # @param issue_agent_token_request [IssueAgentTokenRequest] 
     # @param [Hash] opts the optional parameters
@@ -604,7 +604,7 @@ module LumoAuthApiClient
     end
 
     # Agent Token Endpoint
-    # Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @target-uri, content-type, content-digest, authorization
+    # Per Section 9: The agent token endpoint is the auth server&#39;s endpoint agents use to request auth tokens.  Required HTTP signature covering: @method, @authority, @path, signature-key (plus @query when the URL has one), content-digest, content-type, authorization
     # @param org_id [String] 
     # @param issue_agent_token_request [IssueAgentTokenRequest] 
     # @param [Hash] opts the optional parameters

@@ -22,6 +22,7 @@ var _ MappedNullable = &SingleServerMetadata{}
 // SingleServerMetadata struct for SingleServerMetadata
 type SingleServerMetadata struct {
 	Resource string `json:"resource"`
+	// The organization's issuer identifier (RFC 8414).
 	AuthorizationServers []string `json:"authorization_servers"`
 	BearerMethodsSupported []string `json:"bearer_methods_supported"`
 	ScopesSupported []string `json:"scopes_supported,omitempty"`

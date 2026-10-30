@@ -29,7 +29,7 @@ export interface SingleServerMetadata {
      */
     'resource': string;
     /**
-     * 
+     * The organization\'s issuer identifier (RFC 8414).
      * @type {Array<string>}
      * @memberof SingleServerMetadata
      */

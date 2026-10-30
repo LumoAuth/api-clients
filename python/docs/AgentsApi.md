@@ -195,7 +195,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities. |  -  |
+**200** | Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities, or to the subset named by the optional &#x60;scope&#x60; field of the request body. Sent with a &#x60;DPoP&#x60; header, the token is DPoP-bound (token_type DPoP, cnf.jkt). |  -  |
 **400** | invalid_json or missing_attestation_token. |  -  |
 **401** | attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. |  -  |
 **403** | access_policy_denied — a conditional access policy refused the agent (reason code included). |  -  |

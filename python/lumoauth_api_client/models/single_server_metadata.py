@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,7 +28,7 @@ class SingleServerMetadata(BaseModel):
     SingleServerMetadata
     """ # noqa: E501
     resource: StrictStr
-    authorization_servers: List[StrictStr]
+    authorization_servers: List[StrictStr] = Field(description="The organization's issuer identifier (RFC 8414).")
     bearer_methods_supported: List[StrictStr]
     scopes_supported: Optional[List[StrictStr]] = None
     dpop_bound_access_tokens_required: Optional[StrictBool] = None

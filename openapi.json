@@ -31,7 +31,7 @@
                     "AAuth"
                 ],
                 "summary": "Agent Token Endpoint",
-                "description": "Per Section 9: The agent token endpoint is the auth server's endpoint\nagents use to request auth tokens.\n\nRequired HTTP signature covering: @method, @target-uri, content-type,\ncontent-digest, authorization",
+                "description": "Per Section 9: The agent token endpoint is the auth server's endpoint\nagents use to request auth tokens.\n\nRequired HTTP signature covering: @method, @authority, @path,\nsignature-key (plus @query when the URL has one), content-digest,\ncontent-type, authorization",
                 "operationId": "issueAgentToken",
                 "parameters": [
                     {
@@ -2404,7 +2404,7 @@
                         }
                     },
                     "400": {
-                        "description": "Inactive agent, or requested scopes outside the agent's capabilities."
+                        "description": "Inactive agent, requested scopes outside the agent's capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource."
                     },
                     "401": {
                         "description": "Authentication required."
@@ -4179,7 +4179,7 @@
                     "Admin: Mcp"
                 ],
                 "summary": "Register an MCP server",
-                "description": "Body:\nname (required) — display name\nresource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment\nendpoint_url (optional) — actual MCP endpoint\ndescription (optional)\nscopes_supported (optional) — array OR space/comma-separated string\ntransport (optional) — defaults to \"http_streamable\"\nauth_mode (optional) — defaults to \"oauth\"\ntoken_lifetime (optional, default 3600) — clamped to [60, 86400]\nallowed_client_ids (optional) — array of this organization's OAuth client ids;\n    unknown ids are a 422 (never persisted as policy)\nrequire_pkce (optional, default true)\nrequire_resource_param (optional, default true)\nrequire_dpop (optional, default false) — RFC 9449 sender-constrained tokens only",
+                "description": "Body:\nname (required) — display name\nresource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for\n    loopback), no fragment, no user info, not a LumoAuth host, unique\n    per organization after normalisation (same rules as the portal)\nendpoint_url (optional) — actual MCP endpoint\ndescription (optional)\nscopes_supported (optional) — array OR space/comma-separated string; omnibus\n    scopes, offline_access and admin/scim scopes are refused (422)\nbasic_scopes (optional) — subset of scopes_supported advertised in the\n    401 challenge and Protected Resource Metadata; no wildcards\ntransport (optional) — defaults to \"http_streamable\" (\"http_sse\" is\n    deprecated in MCP 2026-07-28)\nauth_mode (optional) — defaults to \"oauth\"\ntoken_lifetime (optional, default 3600) — 60..86400, else 422\ntool_authorizer_client_ids (optional) — the MCP server's own OAuth clients\n    that may call the per-tool authorization endpoint\nallowed_client_ids (optional) — array of this organization's OAuth client ids;\n    unknown ids are a 422 (never persisted as policy)\nrequire_pkce (optional, default true)\nrequire_resource_param (optional, default true)\nrequire_dpop (optional, default false) — RFC 9449 sender-constrained tokens only",
                 "operationId": "adminMcpServersCreate",
                 "parameters": [
                     {
@@ -10138,7 +10138,7 @@
                     "Agents"
                 ],
                 "summary": "Per-MCP-tool authorization for the authenticated agent (dx B3).",
-                "description": "The real request-path caller of {@see \\McpToolAuthorizationService::canInvoke()}\n— the piece that connects MCP authorization to agent identity. An MCP\ngateway/server asks \"may THIS agent invoke <server>/<tool>?\" and gets a\nZanzibar-backed allow/deny (tool-level or server-wide grant). Denials and\ngrants are both audited, closing the MCP-authorization audit blind spot.\n\nPOST /orgs/{orgId}/api/v1/agents/me/mcp/authorize\nBody: { \"server_id\": \"invoices\", \"tool\": \"send_payment_reminder\" }",
+                "description": "An AGENT asks about itself: \"may I invoke <server>/<tool>?\" — with its\nown credential, before it calls the tool. Zanzibar-backed allow/deny\n(tool-level or server-wide grant), audited either way.\n\nAn MCP SERVER must not use this endpoint: it would have to forward the\nagent's token (MCP 2026-07-28 forbids token passthrough). Servers call\nPOST /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize with\ntheir own client-credentials token instead\n({@see \\McpAuthorizationController::authorizeTool()}).\n\nPOST /orgs/{orgId}/api/v1/agents/me/mcp/authorize\nBody: { \"server_id\": \"mcp_0123…\", \"tool\": \"send_payment_reminder\" }",
                 "operationId": "authorizeMcp",
                 "parameters": [
                     {
@@ -10175,7 +10175,10 @@
                         "description": "Denied — no matching per-tool or server-wide grant."
                     },
                     "400": {
-                        "description": "server_id and tool are required, or contain forbidden characters."
+                        "description": "server_id and tool are required, or contain forbidden characters, or are too long together."
+                    },
+                    "404": {
+                        "description": "unknown_server — server_id is not an active MCP server of this organization."
                     }
                 }
             }
@@ -10375,7 +10378,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent's capabilities.",
+                        "description": "Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent's capabilities, or to the subset named by the optional `scope` field of the request body. Sent with a `DPoP` header, the token is DPoP-bound (token_type DPoP, cnf.jkt).",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -11573,6 +11576,71 @@
                     },
                     []
                 ]
+            }
+        },
+        "/orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize": {
+            "post": {
+                "tags": [
+                    "Mcp"
+                ],
+                "summary": "Per-tool authorization for an MCP server (server credential)",
+                "description": "Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server's tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller's token.",
+                "operationId": "mcpServerToolAuthorize",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "serverId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/McpServerToolAuthorizeRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Allowed.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/McpServerToolAuthorizeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid_request — malformed subject or tool."
+                    },
+                    "401": {
+                        "description": "invalid_token — no valid client-credentials token of this organization."
+                    },
+                    "403": {
+                        "description": "Denied (allowed=false), or insufficient_scope / not an authorizer client of this server."
+                    },
+                    "404": {
+                        "description": "not_found — unknown organization, or unknown / inactive MCP server."
+                    },
+                    "429": {
+                        "description": "too_many_requests (Retry-After header)."
+                    }
+                }
             }
         },
         "/orgs/{orgId}/api/v1/mcp/servers": {
@@ -13336,7 +13404,7 @@
                     "WellKnown"
                 ],
                 "summary": "OpenID Provider configuration (OIDC Discovery 1.0)",
-                "description": "Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.",
+                "description": "Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active. The same document is served at the RFC 8414 location /.well-known/openid-configuration/orgs/{orgId}/api/v1 and, on a verified custom domain (whose issuer is the bare domain), at /.well-known/openid-configuration.",
                 "operationId": "getOpenidConfiguration",
                 "parameters": [
                     {
@@ -13372,7 +13440,7 @@
                     "WellKnown"
                 ],
                 "summary": "OAuth 2.0 authorization server metadata (RFC 8414)",
-                "description": "Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.",
+                "description": "Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active. RFC 8414 clients read it from /.well-known/oauth-authorization-server/orgs/{orgId}/api/v1 (the issuer's path-inserted location) and, on a verified custom domain, from /.well-known/oauth-authorization-server.",
                 "operationId": "getAuthorizationServerMetadata",
                 "parameters": [
                     {
@@ -15898,6 +15966,10 @@
                     "transport": {
                         "type": "string"
                     },
+                    "transport_deprecated": {
+                        "description": "True for http_sse, deprecated in MCP 2026-07-28; migrate to http_streamable.",
+                        "type": "boolean"
+                    },
                     "auth_mode": {
                         "type": "string"
                     },
@@ -15916,7 +15988,21 @@
                             "type": "string"
                         }
                     },
+                    "basic_scopes": {
+                        "description": "Subset of scopes_supported advertised in the 401 challenge and in protected resource metadata. Empty = the whole vocabulary.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
                     "allowed_client_ids": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "tool_authorizer_client_ids": {
+                        "description": "The MCP server's own OAuth clients allowed to call the per-tool authorization endpoint.",
                         "type": "array",
                         "items": {
                             "type": "string"
@@ -17269,7 +17355,7 @@
             "AdminAgentsGenerateTokenRequest": {
                 "properties": {
                     "expiresIn": {
-                        "description": "Token lifetime in seconds. Default 3600, at most 2592000 (30 days).",
+                        "description": "Token lifetime in seconds. Default 3600, minimum 60, at most 86400 (24 hours). Above 3600 only together with `resource`: a long-lived token is always bound to one MCP server, never to the organization API.",
                         "type": "integer",
                         "example": 600
                     },
@@ -17282,6 +17368,12 @@
                         "example": [
                             "invoices.read"
                         ]
+                    },
+                    "resource": {
+                        "description": "Optional resource URI of an active MCP server of this organization. The token is then audience-bound to that server (and no longer works on the LumoAuth API) and lives at most the server's token lifetime. Servers that require DPoP are refused with 400.",
+                        "type": "string",
+                        "format": "uri",
+                        "example": "https://invoices.example.com/mcp"
                     }
                 },
                 "type": "object"
@@ -17300,6 +17392,10 @@
                         "type": "integer",
                         "example": 600
                     },
+                    "jti": {
+                        "description": "The token id. Written to the agent.token_issued audit event; the kill switch and a capability reduction deny-list it.",
+                        "type": "string"
+                    },
                     "scopes": {
                         "type": "array",
                         "items": {
@@ -17308,6 +17404,11 @@
                         "example": [
                             "invoices.read"
                         ]
+                    },
+                    "resource": {
+                        "description": "The MCP server the token is bound to, when `resource` was sent.",
+                        "type": "string",
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -19760,8 +19861,9 @@
             "AuthorizeMcpRequest": {
                 "properties": {
                     "server_id": {
+                        "description": "Id of an active MCP server registered in this organization.",
                         "type": "string",
-                        "example": "invoices"
+                        "example": "mcp_0123456789abcdef01234567"
                     },
                     "tool": {
                         "type": "string",
@@ -19974,7 +20076,8 @@
                     "token_type": {
                         "type": "string",
                         "enum": [
-                            "Bearer"
+                            "Bearer",
+                            "DPoP"
                         ]
                     },
                     "expires_in": {
@@ -20940,7 +21043,7 @@
                         "format": "uri"
                     },
                     "authorization_servers": {
-                        "description": "This organization's authorization server metadata URL.",
+                        "description": "The organization's issuer identifier (RFC 8414), the same value as `issuer` in its discovery documents. Clients read the authorization server metadata from {issuer}/.well-known/openid-configuration.",
                         "type": "array",
                         "items": {
                             "type": "string",
@@ -20990,6 +21093,7 @@
                         "format": "uri"
                     },
                     "authorization_servers": {
+                        "description": "The organization's issuer identifier (RFC 8414).",
                         "type": "array",
                         "items": {
                             "type": "string",
@@ -21038,6 +21142,7 @@
                         "format": "uri"
                     },
                     "authorization_servers": {
+                        "description": "The organization's issuer identifier (RFC 8414).",
                         "type": "array",
                         "items": {
                             "type": "string",
@@ -21081,6 +21186,57 @@
                     },
                     "server_id": {
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "McpServerToolAuthorizeRequestSubject": {
+                "required": [
+                    "type",
+                    "id"
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "user",
+                            "agent"
+                        ]
+                    },
+                    "id": {
+                        "description": "User UUID, or agent id (agt_…). For an MCP token, the user id is `sub`; for an agent token `sub` is `agent_<id>`.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "McpServerToolAuthorizeRequest": {
+                "required": [
+                    "subject",
+                    "tool"
+                ],
+                "properties": {
+                    "subject": {
+                        "$ref": "#/components/schemas/McpServerToolAuthorizeRequestSubject"
+                    },
+                    "tool": {
+                        "type": "string",
+                        "example": "send_payment_reminder"
+                    }
+                },
+                "type": "object"
+            },
+            "McpServerToolAuthorizeResponse": {
+                "properties": {
+                    "allowed": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "subject": {
+                        "type": "object"
+                    },
+                    "resource": {
+                        "type": "object"
                     }
                 },
                 "type": "object"
@@ -22466,7 +22622,7 @@
                         ]
                     },
                     "acr_values_supported": {
-                        "description": "The four MFA tier ACR values, unless overridden in organization settings.",
+                        "description": "The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.",
                         "type": "array",
                         "items": {
                             "type": "string"

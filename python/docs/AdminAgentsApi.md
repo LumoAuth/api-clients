@@ -725,7 +725,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A generated agent token. The token value is returned ONCE. |  -  |
-**400** | Inactive agent, requested scopes outside the agent&#39;s capabilities, or a resource that is not an active MCP server of this organization. |  -  |
+**400** | Inactive agent, requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. |  -  |
 **401** | Authentication required. |  -  |
 **403** | Admin privileges required. |  -  |
 **404** | Tenant or agent not found. |  -  |

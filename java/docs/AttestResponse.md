@@ -20,6 +20,7 @@
 | Name | Value |
 |---- | -----|
 | BEARER | &quot;Bearer&quot; |
+| DPO_P | &quot;DPoP&quot; |
 
 
 

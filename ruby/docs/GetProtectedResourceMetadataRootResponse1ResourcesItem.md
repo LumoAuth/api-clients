@@ -6,7 +6,7 @@
 | ---- | ---- | ----------- | ----- |
 | **resource** | **String** |  |  |
 | **resource_metadata_url** | **String** | Per-server protected resource metadata URL. |  |
-| **authorization_servers** | **Array&lt;String&gt;** |  |  |
+| **authorization_servers** | **Array&lt;String&gt;** | The organization&#39;s issuer identifier (RFC 8414). |  |
 
 ## Example
 

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **resource** | **string** |  | [default to undefined]
 **resource_metadata_url** | **string** | Per-server protected resource metadata URL. | [default to undefined]
-**authorization_servers** | **Array&lt;string&gt;** |  | [default to undefined]
+**authorization_servers** | **Array&lt;string&gt;** | The organization\&#39;s issuer identifier (RFC 8414). | [default to undefined]
 
 ## Example
 

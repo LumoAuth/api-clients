@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **resource** | **str** | The MCP server&#39;s resource identifier. | 
-**authorization_servers** | **List[str]** | This organization&#39;s authorization server metadata URL. | 
+**authorization_servers** | **List[str]** | The organization&#39;s issuer identifier (RFC 8414), the same value as &#x60;issuer&#x60; in its discovery documents. Clients read the authorization server metadata from {issuer}/.well-known/openid-configuration. | 
 **bearer_methods_supported** | **List[str]** |  | 
 **scopes_supported** | **List[str]** |  | [optional] 
 **dpop_bound_access_tokens_required** | **bool** | Present (true) only when the server accepts DPoP-bound tokens exclusively. | [optional] 

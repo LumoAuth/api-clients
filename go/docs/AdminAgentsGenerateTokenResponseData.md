@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **AccessToken** | Pointer to **string** |  | [optional] 
 **TokenType** | Pointer to **string** |  | [optional] 
 **ExpiresIn** | Pointer to **int32** |  | [optional] 
+**Jti** | Pointer to **string** | The token id. Written to the agent.token_issued audit event; the kill switch and a capability reduction deny-list it. | [optional] 
 **Scopes** | Pointer to **[]string** |  | [optional] 
 **Resource** | Pointer to **NullableString** | The MCP server the token is bound to, when &#x60;resource&#x60; was sent. | [optional] 
 
@@ -103,6 +104,31 @@ SetExpiresIn sets ExpiresIn field to given value.
 `func (o *AdminAgentsGenerateTokenResponseData) HasExpiresIn() bool`
 
 HasExpiresIn returns a boolean if a field has been set.
+
+### GetJti
+
+`func (o *AdminAgentsGenerateTokenResponseData) GetJti() string`
+
+GetJti returns the Jti field if non-nil, zero value otherwise.
+
+### GetJtiOk
+
+`func (o *AdminAgentsGenerateTokenResponseData) GetJtiOk() (*string, bool)`
+
+GetJtiOk returns a tuple with the Jti field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetJti
+
+`func (o *AdminAgentsGenerateTokenResponseData) SetJti(v string)`
+
+SetJti sets Jti field to given value.
+
+### HasJti
+
+`func (o *AdminAgentsGenerateTokenResponseData) HasJti() bool`
+
+HasJti returns a boolean if a field has been set.
 
 ### GetScopes
 

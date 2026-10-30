@@ -152,8 +152,9 @@ to its authorization page.
 	Per Section 9: The agent token endpoint is the auth server's endpoint
 agents use to request auth tokens.
 
-Required HTTP signature covering: @method, @target-uri, content-type,
-content-digest, authorization
+Required HTTP signature covering: @method, @authority, @path,
+signature-key (plus @query when the URL has one), content-digest,
+content-type, authorization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -1217,8 +1218,9 @@ IssueAgentToken Agent Token Endpoint
 Per Section 9: The agent token endpoint is the auth server's endpoint
 agents use to request auth tokens.
 
-Required HTTP signature covering: @method, @target-uri, content-type,
-content-digest, authorization
+Required HTTP signature covering: @method, @authority, @path,
+signature-key (plus @query when the URL has one), content-digest,
+content-type, authorization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId

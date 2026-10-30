@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **resource** | **String** |  | 
-**authorization_servers** | **Vec<String>** |  | 
+**authorization_servers** | **Vec<String>** | The organization's issuer identifier (RFC 8414). | 
 **bearer_methods_supported** | **Vec<String>** |  | 
 **scopes_supported** | Option<**Vec<String>**> |  | [optional]
 **dpop_bound_access_tokens_required** | Option<**bool**> |  | [optional]
