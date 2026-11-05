@@ -5,6 +5,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
 | [**admin_clients_cimd_check**](AdminOAuthClientsApi.md#admin_clients_cimd_check) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document |
+| [**admin_clients_get_branding**](AdminOAuthClientsApi.md#admin_clients_get_branding) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Get an OAuth client&#39;s login and consent page branding |
 | [**create_client**](AdminOAuthClientsApi.md#create_client) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client |
 | [**delete_client**](AdminOAuthClientsApi.md#delete_client) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client |
 | [**disable_client**](AdminOAuthClientsApi.md#disable_client) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client |
@@ -12,7 +13,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**get_client**](AdminOAuthClientsApi.md#get_client) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get an OAuth client |
 | [**list_client_scopes**](AdminOAuthClientsApi.md#list_client_scopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | List the scopes granted to an OAuth client |
 | [**list_clients**](AdminOAuthClientsApi.md#list_clients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List OAuth clients |
+| [**patch_admin_clients_update_branding**](AdminOAuthClientsApi.md#patch_admin_clients_update_branding) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Change keys of an OAuth client&#39;s login and/or consent page branding |
 | [**patch_client**](AdminOAuthClientsApi.md#patch_client) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client |
+| [**put_admin_clients_update_branding**](AdminOAuthClientsApi.md#put_admin_clients_update_branding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client&#39;s login and/or consent page branding |
 | [**rotate_client_secret**](AdminOAuthClientsApi.md#rotate_client_secret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret |
 | [**set_client_scopes**](AdminOAuthClientsApi.md#set_client_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client |
 | [**update_client**](AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client |
@@ -91,6 +94,82 @@ end
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## admin_clients_get_branding
+
+> <AdminClientsGetBrandingResponse> admin_clients_get_branding(org_id, client_id)
+
+Get an OAuth client's login and consent page branding
+
+Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminOAuthClientsApi.new
+org_id = 'org_id_example' # String | 
+client_id = 'client_id_example' # String | 
+
+begin
+  # Get an OAuth client's login and consent page branding
+  result = api_instance.admin_clients_get_branding(org_id, client_id)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminOAuthClientsApi->admin_clients_get_branding: #{e}"
+end
+```
+
+#### Using the admin_clients_get_branding_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AdminClientsGetBrandingResponse>, Integer, Hash)> admin_clients_get_branding_with_http_info(org_id, client_id)
+
+```ruby
+begin
+  # Get an OAuth client's login and consent page branding
+  data, status_code, headers = api_instance.admin_clients_get_branding_with_http_info(org_id, client_id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AdminClientsGetBrandingResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminOAuthClientsApi->admin_clients_get_branding_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **client_id** | **String** |  |  |
+
+### Return type
+
+[**AdminClientsGetBrandingResponse**](AdminClientsGetBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 
@@ -608,6 +687,84 @@ end
 - **Accept**: application/json
 
 
+## patch_admin_clients_update_branding
+
+> <PatchAdminClientsUpdateBrandingResponse> patch_admin_clients_update_branding(org_id, client_id, opts)
+
+Change keys of an OAuth client's login and/or consent page branding
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminOAuthClientsApi.new
+org_id = 'org_id_example' # String | 
+client_id = 'client_id_example' # String | 
+opts = {
+  admin_clients_get_branding_response_data: LumoAuthApiClient::AdminClientsGetBrandingResponseData.new # AdminClientsGetBrandingResponseData | 
+}
+
+begin
+  # Change keys of an OAuth client's login and/or consent page branding
+  result = api_instance.patch_admin_clients_update_branding(org_id, client_id, opts)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminOAuthClientsApi->patch_admin_clients_update_branding: #{e}"
+end
+```
+
+#### Using the patch_admin_clients_update_branding_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<PatchAdminClientsUpdateBrandingResponse>, Integer, Hash)> patch_admin_clients_update_branding_with_http_info(org_id, client_id, opts)
+
+```ruby
+begin
+  # Change keys of an OAuth client's login and/or consent page branding
+  data, status_code, headers = api_instance.patch_admin_clients_update_branding_with_http_info(org_id, client_id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <PatchAdminClientsUpdateBrandingResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminOAuthClientsApi->patch_admin_clients_update_branding_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **client_id** | **String** |  |  |
+| **admin_clients_get_branding_response_data** | [**AdminClientsGetBrandingResponseData**](AdminClientsGetBrandingResponseData.md) |  | [optional] |
+
+### Return type
+
+[**PatchAdminClientsUpdateBrandingResponse**](PatchAdminClientsUpdateBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
 ## patch_client
 
 > <UpdateClientResponse> patch_client(org_id, client_id)
@@ -679,6 +836,84 @@ end
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## put_admin_clients_update_branding
+
+> <PutAdminClientsUpdateBrandingResponse> put_admin_clients_update_branding(org_id, client_id, opts)
+
+Replace an OAuth client's login and/or consent page branding
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminOAuthClientsApi.new
+org_id = 'org_id_example' # String | 
+client_id = 'client_id_example' # String | 
+opts = {
+  put_admin_clients_update_branding_request: LumoAuthApiClient::PutAdminClientsUpdateBrandingRequest.new # PutAdminClientsUpdateBrandingRequest | 
+}
+
+begin
+  # Replace an OAuth client's login and/or consent page branding
+  result = api_instance.put_admin_clients_update_branding(org_id, client_id, opts)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminOAuthClientsApi->put_admin_clients_update_branding: #{e}"
+end
+```
+
+#### Using the put_admin_clients_update_branding_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<PutAdminClientsUpdateBrandingResponse>, Integer, Hash)> put_admin_clients_update_branding_with_http_info(org_id, client_id, opts)
+
+```ruby
+begin
+  # Replace an OAuth client's login and/or consent page branding
+  data, status_code, headers = api_instance.put_admin_clients_update_branding_with_http_info(org_id, client_id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <PutAdminClientsUpdateBrandingResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminOAuthClientsApi->put_admin_clients_update_branding_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **client_id** | **String** |  |  |
+| **put_admin_clients_update_branding_request** | [**PutAdminClientsUpdateBrandingRequest**](PutAdminClientsUpdateBrandingRequest.md) |  | [optional] |
+
+### Return type
+
+[**PutAdminClientsUpdateBrandingResponse**](PutAdminClientsUpdateBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 

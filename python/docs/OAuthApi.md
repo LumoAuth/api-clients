@@ -12,7 +12,6 @@ Method | HTTP request | Description
 [**get_org_selection**](OAuthApi.md#get_org_selection) | **GET** /orgs/{orgId}/api/v1/oauth/org-select | Organization selector page
 [**introspect**](OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662)
 [**par**](OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126)
-[**passkey_login**](OAuthApi.md#passkey_login) | **GET** /orgs/{orgId}/api/v1/oauth/passkey-login | Passkey login entry point
 [**register_client**](OAuthApi.md#register_client) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR)
 [**revoke**](OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009)
 [**social_callback**](OAuthApi.md#social_callback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback
@@ -20,7 +19,6 @@ Method | HTTP request | Description
 [**social_login**](OAuthApi.md#social_login) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider} | Start social / enterprise identity-provider login
 [**submit_authorization**](OAuthApi.md#submit_authorization) | **POST** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint (form submission)
 [**submit_device_verification**](OAuthApi.md#submit_device_verification) | **POST** /orgs/{orgId}/api/v1/oauth/device | Submit device verification
-[**submit_login**](OAuthApi.md#submit_login) | **POST** /orgs/{orgId}/api/v1/oauth/login/submit | Hosted login form submission
 [**submit_login_json**](OAuthApi.md#submit_login_json) | **POST** /orgs/{orgId}/api/v1/oauth/login/json | Programmatic (JSON) login for the authorization flow
 [**submit_org_selection**](OAuthApi.md#submit_org_selection) | **POST** /orgs/{orgId}/api/v1/oauth/org-select | Submit organization selection
 [**token**](OAuthApi.md#token) | **POST** /orgs/{orgId}/api/v1/oauth/token | OAuth 2.1 token endpoint
@@ -652,71 +650,6 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **passkey_login**
-> passkey_login(org_id)
-
-Passkey login entry point
-
-Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-
-### Example
-
-
-```python
-import lumoauth_api_client
-from lumoauth_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://app.lumoauth.dev
-# See configuration.py for a list of all supported configuration parameters.
-configuration = lumoauth_api_client.Configuration(
-    host = "https://app.lumoauth.dev"
-)
-
-
-# Enter a context with an instance of the API client
-with lumoauth_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = lumoauth_api_client.OAuthApi(api_client)
-    org_id = 'org_id_example' # str | 
-
-    try:
-        # Passkey login entry point
-        api_instance.passkey_login(org_id)
-    except Exception as e:
-        print("Exception when calling OAuthApi->passkey_login: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **org_id** | **str**|  | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**302** | Redirect to the hosted login page. |  * Location -  <br>  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **register_client**
 > RegisterClientResponse register_client(org_id)
 
@@ -1225,72 +1158,6 @@ No authorization required
 **200** | HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. |  -  |
 **302** | Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. |  * Location -  <br>  |
 **429** | HTML error page — too many attempts. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **submit_login**
-> submit_login(org_id)
-
-Hosted login form submission
-
-Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-
-### Example
-
-
-```python
-import lumoauth_api_client
-from lumoauth_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://app.lumoauth.dev
-# See configuration.py for a list of all supported configuration parameters.
-configuration = lumoauth_api_client.Configuration(
-    host = "https://app.lumoauth.dev"
-)
-
-
-# Enter a context with an instance of the API client
-with lumoauth_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = lumoauth_api_client.OAuthApi(api_client)
-    org_id = 'org_id_example' # str | 
-
-    try:
-        # Hosted login form submission
-        api_instance.submit_login(org_id)
-    except Exception as e:
-        print("Exception when calling OAuthApi->submit_login: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **org_id** | **str**|  | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**302** | Redirect to /oauth/authorize with the original client_id, redirect_uri, state, scope, PKCE and nonce parameters. |  * Location -  <br>  |
-**404** | Unknown or inactive organization. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

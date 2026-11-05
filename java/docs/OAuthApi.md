@@ -12,7 +12,6 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**getOrgSelection**](OAuthApi.md#getOrgSelection) | **GET** /orgs/{orgId}/api/v1/oauth/org-select | Organization selector page |
 | [**introspect**](OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662) |
 | [**par**](OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126) |
-| [**passkeyLogin**](OAuthApi.md#passkeyLogin) | **GET** /orgs/{orgId}/api/v1/oauth/passkey-login | Passkey login entry point |
 | [**registerClient**](OAuthApi.md#registerClient) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR) |
 | [**revoke**](OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009) |
 | [**socialCallback**](OAuthApi.md#socialCallback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback |
@@ -20,7 +19,6 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**socialLogin**](OAuthApi.md#socialLogin) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider} | Start social / enterprise identity-provider login |
 | [**submitAuthorization**](OAuthApi.md#submitAuthorization) | **POST** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint (form submission) |
 | [**submitDeviceVerification**](OAuthApi.md#submitDeviceVerification) | **POST** /orgs/{orgId}/api/v1/oauth/device | Submit device verification |
-| [**submitLogin**](OAuthApi.md#submitLogin) | **POST** /orgs/{orgId}/api/v1/oauth/login/submit | Hosted login form submission |
 | [**submitLoginJson**](OAuthApi.md#submitLoginJson) | **POST** /orgs/{orgId}/api/v1/oauth/login/json | Programmatic (JSON) login for the authorization flow |
 | [**submitOrgSelection**](OAuthApi.md#submitOrgSelection) | **POST** /orgs/{orgId}/api/v1/oauth/org-select | Submit organization selection |
 | [**token**](OAuthApi.md#token) | **POST** /orgs/{orgId}/api/v1/oauth/token | OAuth 2.1 token endpoint |
@@ -581,67 +579,6 @@ public class Example {
 | **401** | invalid_client — client authentication failed. |  -  |
 | **429** | too_many_requests — rate limit exceeded. |  -  |
 
-<a id="passkeyLogin"></a>
-# **passkeyLogin**
-> passkeyLogin(orgId)
-
-Passkey login entry point
-
-Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-
-### Example
-```java
-// Import classes:
-import io.lumoauth.client.ApiClient;
-import io.lumoauth.client.ApiException;
-import io.lumoauth.client.Configuration;
-import io.lumoauth.client.models.*;
-import io.lumoauth.client.api.OAuthApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://app.lumoauth.dev");
-
-    OAuthApi apiInstance = new OAuthApi(defaultClient);
-    String orgId = "orgId_example"; // String | 
-    try {
-      apiInstance.passkeyLogin(orgId);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling OAuthApi#passkeyLogin");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **orgId** | **String**|  | |
-
-### Return type
-
-null (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **302** | Redirect to the hosted login page. |  * Location -  <br>  |
-
 <a id="registerClient"></a>
 # **registerClient**
 > RegisterClientResponse registerClient(orgId)
@@ -1108,68 +1045,6 @@ No authorization required
 | **200** | HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. |  -  |
 | **302** | Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. |  * Location -  <br>  |
 | **429** | HTML error page — too many attempts. |  -  |
-
-<a id="submitLogin"></a>
-# **submitLogin**
-> submitLogin(orgId)
-
-Hosted login form submission
-
-Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-
-### Example
-```java
-// Import classes:
-import io.lumoauth.client.ApiClient;
-import io.lumoauth.client.ApiException;
-import io.lumoauth.client.Configuration;
-import io.lumoauth.client.models.*;
-import io.lumoauth.client.api.OAuthApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://app.lumoauth.dev");
-
-    OAuthApi apiInstance = new OAuthApi(defaultClient);
-    String orgId = "orgId_example"; // String | 
-    try {
-      apiInstance.submitLogin(orgId);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling OAuthApi#submitLogin");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **orgId** | **String**|  | |
-
-### Return type
-
-null (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **302** | Redirect to /oauth/authorize with the original client_id, redirect_uri, state, scope, PKCE and nonce parameters. |  * Location -  <br>  |
-| **404** | Unknown or inactive organization. |  -  |
 
 <a id="submitLoginJson"></a>
 # **submitLoginJson**

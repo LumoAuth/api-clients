@@ -154,6 +154,8 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminClientTokensRevokeAllResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminClientsCimdCheckRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminClientsCimdCheckResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminClientsGetBrandingResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminClientsGetBrandingResponseData.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminEmailTemplatesListResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminEmailTemplatesPreviewResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminEmailTemplatesVariablesResponse.CustomTypeAdapterFactory());
@@ -411,6 +413,7 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.PaginationMeta.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.ParResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.PasskeyEnrollmentStarted.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.PatchAdminClientsUpdateBrandingResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.Permission.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.ProtectedResourceList.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.ProtectedResourceMetadata.CustomTypeAdapterFactory());
@@ -419,6 +422,8 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.PutAbacPoliciesUpdateResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.PutAdminAgentsUpdateRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.PutAdminAgentsUpdateResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.PutAdminClientsUpdateBrandingRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.PutAdminClientsUpdateBrandingResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.PutAdminOrgMembersUpdateResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.PutAdminSettingsAuthenticationUpdateResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.PutAdminSettingsBrandingUpdateResponse.CustomTypeAdapterFactory());

@@ -78,6 +78,9 @@ class AdminOAuthClientsApi
         'adminClientsCimdCheck' => [
             'application/json',
         ],
+        'adminClientsGetBranding' => [
+            'application/json',
+        ],
         'createClient' => [
             'application/json',
         ],
@@ -99,7 +102,13 @@ class AdminOAuthClientsApi
         'listClients' => [
             'application/json',
         ],
+        'patchAdminClientsUpdateBranding' => [
+            'application/json',
+        ],
         'patchClient' => [
+            'application/json',
+        ],
+        'putAdminClientsUpdateBranding' => [
             'application/json',
         ],
         'rotateClientSecret' => [
@@ -449,6 +458,303 @@ class AdminOAuthClientsApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation adminClientsGetBranding
+     *
+     * Get an OAuth client&#39;s login and consent page branding
+     *
+     * @param  string $orgId orgId (required)
+     * @param  string $clientId clientId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminClientsGetBranding'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponse
+     */
+    public function adminClientsGetBranding($orgId, $clientId, string $contentType = self::contentTypes['adminClientsGetBranding'][0])
+    {
+        list($response) = $this->adminClientsGetBrandingWithHttpInfo($orgId, $clientId, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation adminClientsGetBrandingWithHttpInfo
+     *
+     * Get an OAuth client&#39;s login and consent page branding
+     *
+     * @param  string $orgId (required)
+     * @param  string $clientId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminClientsGetBranding'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function adminClientsGetBrandingWithHttpInfo($orgId, $clientId, string $contentType = self::contentTypes['adminClientsGetBranding'][0])
+    {
+        $request = $this->adminClientsGetBrandingRequest($orgId, $clientId, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation adminClientsGetBrandingAsync
+     *
+     * Get an OAuth client&#39;s login and consent page branding
+     *
+     * @param  string $orgId (required)
+     * @param  string $clientId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminClientsGetBranding'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function adminClientsGetBrandingAsync($orgId, $clientId, string $contentType = self::contentTypes['adminClientsGetBranding'][0])
+    {
+        return $this->adminClientsGetBrandingAsyncWithHttpInfo($orgId, $clientId, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation adminClientsGetBrandingAsyncWithHttpInfo
+     *
+     * Get an OAuth client&#39;s login and consent page branding
+     *
+     * @param  string $orgId (required)
+     * @param  string $clientId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminClientsGetBranding'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function adminClientsGetBrandingAsyncWithHttpInfo($orgId, $clientId, string $contentType = self::contentTypes['adminClientsGetBranding'][0])
+    {
+        $returnType = '\LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponse';
+        $request = $this->adminClientsGetBrandingRequest($orgId, $clientId, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'adminClientsGetBranding'
+     *
+     * @param  string $orgId (required)
+     * @param  string $clientId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminClientsGetBranding'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function adminClientsGetBrandingRequest($orgId, $clientId, string $contentType = self::contentTypes['adminClientsGetBranding'][0])
+    {
+
+        // verify the required parameter 'orgId' is set
+        if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $orgId when calling adminClientsGetBranding'
+            );
+        }
+
+        // verify the required parameter 'clientId' is set
+        if ($clientId === null || (is_array($clientId) && count($clientId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $clientId when calling adminClientsGetBranding'
+            );
+        }
+
+
+        $resourcePath = '/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($orgId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'orgId' . '}',
+                ObjectSerializer::toPathValue($orgId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($clientId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'clientId' . '}',
+                ObjectSerializer::toPathValue($clientId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-API-Key');
+        if ($apiKey !== null) {
+            $headers['X-API-Key'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
@@ -2495,6 +2801,316 @@ class AdminOAuthClientsApi
     }
 
     /**
+     * Operation patchAdminClientsUpdateBranding
+     *
+     * Change keys of an OAuth client&#39;s login and/or consent page branding
+     *
+     * @param  string $orgId orgId (required)
+     * @param  string $clientId clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponseData|null $adminClientsGetBrandingResponseData adminClientsGetBrandingResponseData (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminClientsUpdateBranding'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \LumoAuth\ApiClient\Model\PatchAdminClientsUpdateBrandingResponse
+     */
+    public function patchAdminClientsUpdateBranding($orgId, $clientId, $adminClientsGetBrandingResponseData = null, string $contentType = self::contentTypes['patchAdminClientsUpdateBranding'][0])
+    {
+        list($response) = $this->patchAdminClientsUpdateBrandingWithHttpInfo($orgId, $clientId, $adminClientsGetBrandingResponseData, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation patchAdminClientsUpdateBrandingWithHttpInfo
+     *
+     * Change keys of an OAuth client&#39;s login and/or consent page branding
+     *
+     * @param  string $orgId (required)
+     * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponseData|null $adminClientsGetBrandingResponseData (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminClientsUpdateBranding'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \LumoAuth\ApiClient\Model\PatchAdminClientsUpdateBrandingResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function patchAdminClientsUpdateBrandingWithHttpInfo($orgId, $clientId, $adminClientsGetBrandingResponseData = null, string $contentType = self::contentTypes['patchAdminClientsUpdateBranding'][0])
+    {
+        $request = $this->patchAdminClientsUpdateBrandingRequest($orgId, $clientId, $adminClientsGetBrandingResponseData, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\LumoAuth\ApiClient\Model\PatchAdminClientsUpdateBrandingResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\LumoAuth\ApiClient\Model\PatchAdminClientsUpdateBrandingResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\LumoAuth\ApiClient\Model\PatchAdminClientsUpdateBrandingResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation patchAdminClientsUpdateBrandingAsync
+     *
+     * Change keys of an OAuth client&#39;s login and/or consent page branding
+     *
+     * @param  string $orgId (required)
+     * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponseData|null $adminClientsGetBrandingResponseData (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminClientsUpdateBranding'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function patchAdminClientsUpdateBrandingAsync($orgId, $clientId, $adminClientsGetBrandingResponseData = null, string $contentType = self::contentTypes['patchAdminClientsUpdateBranding'][0])
+    {
+        return $this->patchAdminClientsUpdateBrandingAsyncWithHttpInfo($orgId, $clientId, $adminClientsGetBrandingResponseData, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation patchAdminClientsUpdateBrandingAsyncWithHttpInfo
+     *
+     * Change keys of an OAuth client&#39;s login and/or consent page branding
+     *
+     * @param  string $orgId (required)
+     * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponseData|null $adminClientsGetBrandingResponseData (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminClientsUpdateBranding'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function patchAdminClientsUpdateBrandingAsyncWithHttpInfo($orgId, $clientId, $adminClientsGetBrandingResponseData = null, string $contentType = self::contentTypes['patchAdminClientsUpdateBranding'][0])
+    {
+        $returnType = '\LumoAuth\ApiClient\Model\PatchAdminClientsUpdateBrandingResponse';
+        $request = $this->patchAdminClientsUpdateBrandingRequest($orgId, $clientId, $adminClientsGetBrandingResponseData, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'patchAdminClientsUpdateBranding'
+     *
+     * @param  string $orgId (required)
+     * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponseData|null $adminClientsGetBrandingResponseData (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminClientsUpdateBranding'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function patchAdminClientsUpdateBrandingRequest($orgId, $clientId, $adminClientsGetBrandingResponseData = null, string $contentType = self::contentTypes['patchAdminClientsUpdateBranding'][0])
+    {
+
+        // verify the required parameter 'orgId' is set
+        if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $orgId when calling patchAdminClientsUpdateBranding'
+            );
+        }
+
+        // verify the required parameter 'clientId' is set
+        if ($clientId === null || (is_array($clientId) && count($clientId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $clientId when calling patchAdminClientsUpdateBranding'
+            );
+        }
+
+
+
+        $resourcePath = '/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($orgId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'orgId' . '}',
+                ObjectSerializer::toPathValue($orgId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($clientId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'clientId' . '}',
+                ObjectSerializer::toPathValue($clientId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($adminClientsGetBrandingResponseData)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminClientsGetBrandingResponseData));
+            } else {
+                $httpBody = $adminClientsGetBrandingResponseData;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-API-Key');
+        if ($apiKey !== null) {
+            $headers['X-API-Key'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PATCH',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation patchClient
      *
      * Update an OAuth client
@@ -2785,6 +3401,316 @@ class AdminOAuthClientsApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'PATCH',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation putAdminClientsUpdateBranding
+     *
+     * Replace an OAuth client&#39;s login and/or consent page branding
+     *
+     * @param  string $orgId orgId (required)
+     * @param  string $clientId clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingRequest|null $putAdminClientsUpdateBrandingRequest putAdminClientsUpdateBrandingRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminClientsUpdateBranding'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingResponse
+     */
+    public function putAdminClientsUpdateBranding($orgId, $clientId, $putAdminClientsUpdateBrandingRequest = null, string $contentType = self::contentTypes['putAdminClientsUpdateBranding'][0])
+    {
+        list($response) = $this->putAdminClientsUpdateBrandingWithHttpInfo($orgId, $clientId, $putAdminClientsUpdateBrandingRequest, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation putAdminClientsUpdateBrandingWithHttpInfo
+     *
+     * Replace an OAuth client&#39;s login and/or consent page branding
+     *
+     * @param  string $orgId (required)
+     * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingRequest|null $putAdminClientsUpdateBrandingRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminClientsUpdateBranding'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function putAdminClientsUpdateBrandingWithHttpInfo($orgId, $clientId, $putAdminClientsUpdateBrandingRequest = null, string $contentType = self::contentTypes['putAdminClientsUpdateBranding'][0])
+    {
+        $request = $this->putAdminClientsUpdateBrandingRequest($orgId, $clientId, $putAdminClientsUpdateBrandingRequest, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation putAdminClientsUpdateBrandingAsync
+     *
+     * Replace an OAuth client&#39;s login and/or consent page branding
+     *
+     * @param  string $orgId (required)
+     * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingRequest|null $putAdminClientsUpdateBrandingRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminClientsUpdateBranding'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function putAdminClientsUpdateBrandingAsync($orgId, $clientId, $putAdminClientsUpdateBrandingRequest = null, string $contentType = self::contentTypes['putAdminClientsUpdateBranding'][0])
+    {
+        return $this->putAdminClientsUpdateBrandingAsyncWithHttpInfo($orgId, $clientId, $putAdminClientsUpdateBrandingRequest, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation putAdminClientsUpdateBrandingAsyncWithHttpInfo
+     *
+     * Replace an OAuth client&#39;s login and/or consent page branding
+     *
+     * @param  string $orgId (required)
+     * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingRequest|null $putAdminClientsUpdateBrandingRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminClientsUpdateBranding'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function putAdminClientsUpdateBrandingAsyncWithHttpInfo($orgId, $clientId, $putAdminClientsUpdateBrandingRequest = null, string $contentType = self::contentTypes['putAdminClientsUpdateBranding'][0])
+    {
+        $returnType = '\LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingResponse';
+        $request = $this->putAdminClientsUpdateBrandingRequest($orgId, $clientId, $putAdminClientsUpdateBrandingRequest, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'putAdminClientsUpdateBranding'
+     *
+     * @param  string $orgId (required)
+     * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingRequest|null $putAdminClientsUpdateBrandingRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminClientsUpdateBranding'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function putAdminClientsUpdateBrandingRequest($orgId, $clientId, $putAdminClientsUpdateBrandingRequest = null, string $contentType = self::contentTypes['putAdminClientsUpdateBranding'][0])
+    {
+
+        // verify the required parameter 'orgId' is set
+        if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $orgId when calling putAdminClientsUpdateBranding'
+            );
+        }
+
+        // verify the required parameter 'clientId' is set
+        if ($clientId === null || (is_array($clientId) && count($clientId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $clientId when calling putAdminClientsUpdateBranding'
+            );
+        }
+
+
+
+        $resourcePath = '/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($orgId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'orgId' . '}',
+                ObjectSerializer::toPathValue($orgId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($clientId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'clientId' . '}',
+                ObjectSerializer::toPathValue($clientId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($putAdminClientsUpdateBrandingRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAdminClientsUpdateBrandingRequest));
+            } else {
+                $httpBody = $putAdminClientsUpdateBrandingRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-API-Key');
+        if ($apiKey !== null) {
+            $headers['X-API-Key'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PUT',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

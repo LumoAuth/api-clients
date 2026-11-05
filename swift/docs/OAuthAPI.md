@@ -12,7 +12,6 @@ Method | HTTP request | Description
 [**getOrgSelection**](OAuthAPI.md#getorgselection) | **GET** /orgs/{orgId}/api/v1/oauth/org-select | Organization selector page
 [**introspect**](OAuthAPI.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662)
 [**par**](OAuthAPI.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126)
-[**passkeyLogin**](OAuthAPI.md#passkeylogin) | **GET** /orgs/{orgId}/api/v1/oauth/passkey-login | Passkey login entry point
 [**registerClient**](OAuthAPI.md#registerclient) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR)
 [**revoke**](OAuthAPI.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009)
 [**socialCallback**](OAuthAPI.md#socialcallback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback
@@ -20,7 +19,6 @@ Method | HTTP request | Description
 [**socialLogin**](OAuthAPI.md#sociallogin) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider} | Start social / enterprise identity-provider login
 [**submitAuthorization**](OAuthAPI.md#submitauthorization) | **POST** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint (form submission)
 [**submitDeviceVerification**](OAuthAPI.md#submitdeviceverification) | **POST** /orgs/{orgId}/api/v1/oauth/device | Submit device verification
-[**submitLogin**](OAuthAPI.md#submitlogin) | **POST** /orgs/{orgId}/api/v1/oauth/login/submit | Hosted login form submission
 [**submitLoginJson**](OAuthAPI.md#submitloginjson) | **POST** /orgs/{orgId}/api/v1/oauth/login/json | Programmatic (JSON) login for the authorization flow
 [**submitOrgSelection**](OAuthAPI.md#submitorgselection) | **POST** /orgs/{orgId}/api/v1/oauth/org-select | Submit organization selection
 [**token**](OAuthAPI.md#token) | **POST** /orgs/{orgId}/api/v1/oauth/token | OAuth 2.1 token endpoint
@@ -428,56 +426,6 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **passkeyLogin**
-```swift
-    open class func passkeyLogin(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
-```
-
-Passkey login entry point
-
-Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-
-### Example
-```swift
-// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import LumoAuthAPIClient
-
-let orgId = "orgId_example" // String | 
-
-// Passkey login entry point
-OAuthAPI.passkeyLogin(orgId: orgId) { (response, error) in
-    guard error == nil else {
-        print(error)
-        return
-    }
-
-    if (response) {
-        dump(response)
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **orgId** | **String** |  | 
-
-### Return type
-
-Void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **registerClient**
 ```swift
     open class func registerClient(orgId: String, completion: @escaping (_ data: RegisterClientResponse?, _ error: Error?) -> Void)
@@ -831,56 +779,6 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: text/html
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **submitLogin**
-```swift
-    open class func submitLogin(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
-```
-
-Hosted login form submission
-
-Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-
-### Example
-```swift
-// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import LumoAuthAPIClient
-
-let orgId = "orgId_example" // String | 
-
-// Hosted login form submission
-OAuthAPI.submitLogin(orgId: orgId) { (response, error) in
-    guard error == nil else {
-        print(error)
-        return
-    }
-
-    if (response) {
-        dump(response)
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **orgId** | **String** |  | 
-
-### Return type
-
-Void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

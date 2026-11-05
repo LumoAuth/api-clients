@@ -63,7 +63,9 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string type = null;
-            //var response = instance.AdminEmailTemplatesDelete(orgId, type);
+            //string? locale = null;
+            //string? clientId = null;
+            //var response = instance.AdminEmailTemplatesDelete(orgId, type, locale, clientId);
             //Assert.IsType<MessageResponse>(response);
         }
 
@@ -76,7 +78,9 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string type = null;
-            //var response = instance.AdminEmailTemplatesGet(orgId, type);
+            //string? locale = null;
+            //string? clientId = null;
+            //var response = instance.AdminEmailTemplatesGet(orgId, type, locale, clientId);
             //Assert.IsType<EmailTemplate>(response);
         }
 

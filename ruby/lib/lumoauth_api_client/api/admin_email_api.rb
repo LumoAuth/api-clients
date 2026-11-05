@@ -23,6 +23,8 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :locale 
+    # @option opts [String] :client_id 
     # @return [MessageResponse]
     def admin_email_templates_delete(org_id, type, opts = {})
       data, _status_code, _headers = admin_email_templates_delete_with_http_info(org_id, type, opts)
@@ -33,6 +35,8 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :locale 
+    # @option opts [String] :client_id 
     # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_email_templates_delete_with_http_info(org_id, type, opts = {})
       if @api_client.config.debugging
@@ -51,6 +55,8 @@ module LumoAuthApiClient
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'locale'] = opts[:'locale'] if !opts[:'locale'].nil?
+      query_params[:'client_id'] = opts[:'client_id'] if !opts[:'client_id'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -90,6 +96,8 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :locale Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language
+    # @option opts [String] :client_id Application variant (OAuth client_id); omit for the variant used by every application
     # @return [EmailTemplate]
     def admin_email_templates_get(org_id, type, opts = {})
       data, _status_code, _headers = admin_email_templates_get_with_http_info(org_id, type, opts)
@@ -100,6 +108,8 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :locale Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language
+    # @option opts [String] :client_id Application variant (OAuth client_id); omit for the variant used by every application
     # @return [Array<(EmailTemplate, Integer, Hash)>] EmailTemplate data, response status code and response headers
     def admin_email_templates_get_with_http_info(org_id, type, opts = {})
       if @api_client.config.debugging
@@ -118,6 +128,8 @@ module LumoAuthApiClient
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'locale'] = opts[:'locale'] if !opts[:'locale'].nil?
+      query_params[:'client_id'] = opts[:'client_id'] if !opts[:'client_id'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -282,6 +294,7 @@ module LumoAuthApiClient
     end
 
     # Create or replace the custom email template for a type
+    # Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
@@ -292,6 +305,7 @@ module LumoAuthApiClient
     end
 
     # Create or replace the custom email template for a type
+    # Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters

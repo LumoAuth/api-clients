@@ -64,14 +64,22 @@ pub enum AdminEmailTemplatesVariablesError {
 }
 
 
-pub async fn admin_email_templates_delete(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<models::MessageResponse, Error<AdminEmailTemplatesDeleteError>> {
+pub async fn admin_email_templates_delete(configuration: &configuration::Configuration, org_id: &str, r#type: &str, locale: Option<&str>, client_id: Option<&str>) -> Result<models::MessageResponse, Error<AdminEmailTemplatesDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_type = r#type;
+    let p_locale = locale;
+    let p_client_id = client_id;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/email-templates/{type}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), type=crate::apis::urlencode(p_type));
     let mut req_builder = configuration.client.request(reqwest::Method::DELETE, &uri_str);
 
+    if let Some(ref param_value) = p_locale {
+        req_builder = req_builder.query(&[("locale", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_client_id {
+        req_builder = req_builder.query(&[("client_id", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -112,14 +120,22 @@ pub async fn admin_email_templates_delete(configuration: &configuration::Configu
     }
 }
 
-pub async fn admin_email_templates_get(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<models::EmailTemplate, Error<AdminEmailTemplatesGetError>> {
+pub async fn admin_email_templates_get(configuration: &configuration::Configuration, org_id: &str, r#type: &str, locale: Option<&str>, client_id: Option<&str>) -> Result<models::EmailTemplate, Error<AdminEmailTemplatesGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_type = r#type;
+    let p_locale = locale;
+    let p_client_id = client_id;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/email-templates/{type}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), type=crate::apis::urlencode(p_type));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_locale {
+        req_builder = req_builder.query(&[("locale", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_client_id {
+        req_builder = req_builder.query(&[("client_id", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -255,6 +271,7 @@ pub async fn admin_email_templates_preview(configuration: &configuration::Config
     }
 }
 
+/// Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
 pub async fn admin_email_templates_upsert(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<models::EmailTemplate, Error<AdminEmailTemplatesUpsertError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;

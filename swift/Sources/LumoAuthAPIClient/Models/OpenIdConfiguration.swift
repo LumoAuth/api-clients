@@ -39,6 +39,7 @@ public struct OpenIdConfiguration: Codable, JSONEncodable, Hashable {
     public var requireSignedRequestObject: Bool?
     public var requestObjectSigningAlgValuesSupported: [String]?
     public var uiLocalesSupported: [String]?
+    public var promptValuesSupported: [String]?
     /** The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings. */
     public var acrValuesSupported: [String]?
     public var codeChallengeMethodsSupported: [String]?
@@ -46,7 +47,6 @@ public struct OpenIdConfiguration: Codable, JSONEncodable, Hashable {
     public var pushedAuthorizationRequestEndpoint: String?
     public var requirePushedAuthorizationRequests: Bool?
     public var dpopSigningAlgValuesSupported: [String]?
-    public var tlsClientCertificateBoundAccessTokens: Bool?
     public var introspectionEndpoint: String?
     public var introspectionEndpointAuthMethodsSupported: [String]?
     public var revocationEndpoint: String?
@@ -72,7 +72,7 @@ public struct OpenIdConfiguration: Codable, JSONEncodable, Hashable {
     /** Only when configured. */
     public var opTosUri: String?
 
-    public init(issuer: String, authorizationEndpoint: String, tokenEndpoint: String, jwksUri: String, responseTypesSupported: [String], subjectTypesSupported: [String], idTokenSigningAlgValuesSupported: [String], userinfoEndpoint: String? = nil, registrationEndpoint: String? = nil, scopesSupported: [String]? = nil, claimsSupported: [String]? = nil, responseModesSupported: [String]? = nil, authorizationSigningAlgValuesSupported: [String]? = nil, grantTypesSupported: [String]? = nil, deviceAuthorizationEndpoint: String? = nil, tokenEndpointAuthMethodsSupported: [String]? = nil, tokenEndpointAuthSigningAlgValuesSupported: [String]? = nil, claimTypesSupported: [String]? = nil, claimsParameterSupported: Bool? = nil, requestParameterSupported: Bool? = nil, requestUriParameterSupported: Bool? = nil, requireRequestUriRegistration: Bool? = nil, requireSignedRequestObject: Bool? = nil, requestObjectSigningAlgValuesSupported: [String]? = nil, uiLocalesSupported: [String]? = nil, acrValuesSupported: [String]? = nil, codeChallengeMethodsSupported: [String]? = nil, authorizationResponseIssParameterSupported: Bool? = nil, pushedAuthorizationRequestEndpoint: String? = nil, requirePushedAuthorizationRequests: Bool? = nil, dpopSigningAlgValuesSupported: [String]? = nil, tlsClientCertificateBoundAccessTokens: Bool? = nil, introspectionEndpoint: String? = nil, introspectionEndpointAuthMethodsSupported: [String]? = nil, revocationEndpoint: String? = nil, revocationEndpointAuthMethodsSupported: [String]? = nil, resourceIndicatorsSupported: Bool? = nil, endSessionEndpoint: String? = nil, checkSessionIframe: String? = nil, frontchannelLogoutSupported: Bool? = nil, frontchannelLogoutSessionSupported: Bool? = nil, backchannelLogoutSupported: Bool? = nil, backchannelLogoutSessionSupported: Bool? = nil, backchannelAuthenticationEndpoint: String? = nil, backchannelTokenDeliveryModesSupported: [String]? = nil, backchannelUserCodeParameterSupported: Bool? = nil, serviceDocumentation: String? = nil, entityProfilesSupported: [String]? = nil, clientIdMetadataDocumentSupported: Bool? = nil, authorizationGrantProfilesSupported: [String]? = nil, opPolicyUri: String? = nil, opTosUri: String? = nil) {
+    public init(issuer: String, authorizationEndpoint: String, tokenEndpoint: String, jwksUri: String, responseTypesSupported: [String], subjectTypesSupported: [String], idTokenSigningAlgValuesSupported: [String], userinfoEndpoint: String? = nil, registrationEndpoint: String? = nil, scopesSupported: [String]? = nil, claimsSupported: [String]? = nil, responseModesSupported: [String]? = nil, authorizationSigningAlgValuesSupported: [String]? = nil, grantTypesSupported: [String]? = nil, deviceAuthorizationEndpoint: String? = nil, tokenEndpointAuthMethodsSupported: [String]? = nil, tokenEndpointAuthSigningAlgValuesSupported: [String]? = nil, claimTypesSupported: [String]? = nil, claimsParameterSupported: Bool? = nil, requestParameterSupported: Bool? = nil, requestUriParameterSupported: Bool? = nil, requireRequestUriRegistration: Bool? = nil, requireSignedRequestObject: Bool? = nil, requestObjectSigningAlgValuesSupported: [String]? = nil, uiLocalesSupported: [String]? = nil, promptValuesSupported: [String]? = nil, acrValuesSupported: [String]? = nil, codeChallengeMethodsSupported: [String]? = nil, authorizationResponseIssParameterSupported: Bool? = nil, pushedAuthorizationRequestEndpoint: String? = nil, requirePushedAuthorizationRequests: Bool? = nil, dpopSigningAlgValuesSupported: [String]? = nil, introspectionEndpoint: String? = nil, introspectionEndpointAuthMethodsSupported: [String]? = nil, revocationEndpoint: String? = nil, revocationEndpointAuthMethodsSupported: [String]? = nil, resourceIndicatorsSupported: Bool? = nil, endSessionEndpoint: String? = nil, checkSessionIframe: String? = nil, frontchannelLogoutSupported: Bool? = nil, frontchannelLogoutSessionSupported: Bool? = nil, backchannelLogoutSupported: Bool? = nil, backchannelLogoutSessionSupported: Bool? = nil, backchannelAuthenticationEndpoint: String? = nil, backchannelTokenDeliveryModesSupported: [String]? = nil, backchannelUserCodeParameterSupported: Bool? = nil, serviceDocumentation: String? = nil, entityProfilesSupported: [String]? = nil, clientIdMetadataDocumentSupported: Bool? = nil, authorizationGrantProfilesSupported: [String]? = nil, opPolicyUri: String? = nil, opTosUri: String? = nil) {
         self.issuer = issuer
         self.authorizationEndpoint = authorizationEndpoint
         self.tokenEndpoint = tokenEndpoint
@@ -98,13 +98,13 @@ public struct OpenIdConfiguration: Codable, JSONEncodable, Hashable {
         self.requireSignedRequestObject = requireSignedRequestObject
         self.requestObjectSigningAlgValuesSupported = requestObjectSigningAlgValuesSupported
         self.uiLocalesSupported = uiLocalesSupported
+        self.promptValuesSupported = promptValuesSupported
         self.acrValuesSupported = acrValuesSupported
         self.codeChallengeMethodsSupported = codeChallengeMethodsSupported
         self.authorizationResponseIssParameterSupported = authorizationResponseIssParameterSupported
         self.pushedAuthorizationRequestEndpoint = pushedAuthorizationRequestEndpoint
         self.requirePushedAuthorizationRequests = requirePushedAuthorizationRequests
         self.dpopSigningAlgValuesSupported = dpopSigningAlgValuesSupported
-        self.tlsClientCertificateBoundAccessTokens = tlsClientCertificateBoundAccessTokens
         self.introspectionEndpoint = introspectionEndpoint
         self.introspectionEndpointAuthMethodsSupported = introspectionEndpointAuthMethodsSupported
         self.revocationEndpoint = revocationEndpoint
@@ -153,13 +153,13 @@ public struct OpenIdConfiguration: Codable, JSONEncodable, Hashable {
         case requireSignedRequestObject = "require_signed_request_object"
         case requestObjectSigningAlgValuesSupported = "request_object_signing_alg_values_supported"
         case uiLocalesSupported = "ui_locales_supported"
+        case promptValuesSupported = "prompt_values_supported"
         case acrValuesSupported = "acr_values_supported"
         case codeChallengeMethodsSupported = "code_challenge_methods_supported"
         case authorizationResponseIssParameterSupported = "authorization_response_iss_parameter_supported"
         case pushedAuthorizationRequestEndpoint = "pushed_authorization_request_endpoint"
         case requirePushedAuthorizationRequests = "require_pushed_authorization_requests"
         case dpopSigningAlgValuesSupported = "dpop_signing_alg_values_supported"
-        case tlsClientCertificateBoundAccessTokens = "tls_client_certificate_bound_access_tokens"
         case introspectionEndpoint = "introspection_endpoint"
         case introspectionEndpointAuthMethodsSupported = "introspection_endpoint_auth_methods_supported"
         case revocationEndpoint = "revocation_endpoint"
@@ -211,13 +211,13 @@ public struct OpenIdConfiguration: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(requireSignedRequestObject, forKey: .requireSignedRequestObject)
         try container.encodeIfPresent(requestObjectSigningAlgValuesSupported, forKey: .requestObjectSigningAlgValuesSupported)
         try container.encodeIfPresent(uiLocalesSupported, forKey: .uiLocalesSupported)
+        try container.encodeIfPresent(promptValuesSupported, forKey: .promptValuesSupported)
         try container.encodeIfPresent(acrValuesSupported, forKey: .acrValuesSupported)
         try container.encodeIfPresent(codeChallengeMethodsSupported, forKey: .codeChallengeMethodsSupported)
         try container.encodeIfPresent(authorizationResponseIssParameterSupported, forKey: .authorizationResponseIssParameterSupported)
         try container.encodeIfPresent(pushedAuthorizationRequestEndpoint, forKey: .pushedAuthorizationRequestEndpoint)
         try container.encodeIfPresent(requirePushedAuthorizationRequests, forKey: .requirePushedAuthorizationRequests)
         try container.encodeIfPresent(dpopSigningAlgValuesSupported, forKey: .dpopSigningAlgValuesSupported)
-        try container.encodeIfPresent(tlsClientCertificateBoundAccessTokens, forKey: .tlsClientCertificateBoundAccessTokens)
         try container.encodeIfPresent(introspectionEndpoint, forKey: .introspectionEndpoint)
         try container.encodeIfPresent(introspectionEndpointAuthMethodsSupported, forKey: .introspectionEndpointAuthMethodsSupported)
         try container.encodeIfPresent(revocationEndpoint, forKey: .revocationEndpoint)

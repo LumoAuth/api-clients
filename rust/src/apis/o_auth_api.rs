@@ -89,13 +89,6 @@ pub enum ParError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`passkey_login`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum PasskeyLoginError {
-    UnknownValue(serde_json::Value),
-}
-
 /// struct for typed errors of method [`register_client`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -152,14 +145,6 @@ pub enum SubmitAuthorizationError {
 #[serde(untagged)]
 pub enum SubmitDeviceVerificationError {
     Status429(String),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`submit_login`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum SubmitLoginError {
-    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -514,32 +499,6 @@ pub async fn par(configuration: &configuration::Configuration, org_id: &str) -> 
     }
 }
 
-/// Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-pub async fn passkey_login(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PasskeyLoginError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_org_id = org_id;
-
-    let uri_str = format!("{}/orgs/{orgId}/api/v1/oauth/passkey-login", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-
-    if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<PasskeyLoginError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
 /// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
 pub async fn register_client(configuration: &configuration::Configuration, org_id: &str) -> Result<models::RegisterClientResponse, Error<RegisterClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
@@ -779,32 +738,6 @@ pub async fn submit_device_verification(configuration: &configuration::Configura
     } else {
         let content = resp.text().await?;
         let entity: Option<SubmitDeviceVerificationError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-/// Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-pub async fn submit_login(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<SubmitLoginError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_org_id = org_id;
-
-    let uri_str = format!("{}/orgs/{orgId}/api/v1/oauth/login/submit", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-
-    if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<SubmitLoginError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

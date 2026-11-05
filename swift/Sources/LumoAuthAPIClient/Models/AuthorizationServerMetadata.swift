@@ -43,7 +43,6 @@ public struct AuthorizationServerMetadata: Codable, JSONEncodable, Hashable {
     public var pushedAuthorizationRequestEndpoint: String?
     public var requirePushedAuthorizationRequests: Bool?
     public var dpopSigningAlgValuesSupported: [String]?
-    public var tlsClientCertificateBoundAccessTokens: Bool?
     public var backchannelAuthenticationEndpoint: String?
     public var backchannelTokenDeliveryModesSupported: [String]?
     public var backchannelUserCodeParameterSupported: Bool?
@@ -57,7 +56,7 @@ public struct AuthorizationServerMetadata: Codable, JSONEncodable, Hashable {
     /** Only when configured. */
     public var opTosUri: String?
 
-    public init(issuer: String, authorizationEndpoint: String, tokenEndpoint: String, responseTypesSupported: [String], jwksUri: String, registrationEndpoint: String? = nil, scopesSupported: [String]? = nil, responseModesSupported: [String]? = nil, authorizationSigningAlgValuesSupported: [String]? = nil, grantTypesSupported: [String]? = nil, tokenEndpointAuthMethodsSupported: [String]? = nil, tokenEndpointAuthSigningAlgValuesSupported: [String]? = nil, serviceDocumentation: String? = nil, uiLocalesSupported: [String]? = nil, revocationEndpoint: String? = nil, revocationEndpointAuthMethodsSupported: [String]? = nil, introspectionEndpoint: String? = nil, introspectionEndpointAuthMethodsSupported: [String]? = nil, codeChallengeMethodsSupported: [String]? = nil, authorizationResponseIssParameterSupported: Bool? = nil, requestParameterSupported: Bool? = nil, requestUriParameterSupported: Bool? = nil, requireRequestUriRegistration: Bool? = nil, requireSignedRequestObject: Bool? = nil, requestObjectSigningAlgValuesSupported: [String]? = nil, deviceAuthorizationEndpoint: String? = nil, pushedAuthorizationRequestEndpoint: String? = nil, requirePushedAuthorizationRequests: Bool? = nil, dpopSigningAlgValuesSupported: [String]? = nil, tlsClientCertificateBoundAccessTokens: Bool? = nil, backchannelAuthenticationEndpoint: String? = nil, backchannelTokenDeliveryModesSupported: [String]? = nil, backchannelUserCodeParameterSupported: Bool? = nil, entityProfilesSupported: [String]? = nil, clientIdMetadataDocumentSupported: Bool? = nil, authorizationGrantProfilesSupported: [String]? = nil, opPolicyUri: String? = nil, opTosUri: String? = nil) {
+    public init(issuer: String, authorizationEndpoint: String, tokenEndpoint: String, responseTypesSupported: [String], jwksUri: String, registrationEndpoint: String? = nil, scopesSupported: [String]? = nil, responseModesSupported: [String]? = nil, authorizationSigningAlgValuesSupported: [String]? = nil, grantTypesSupported: [String]? = nil, tokenEndpointAuthMethodsSupported: [String]? = nil, tokenEndpointAuthSigningAlgValuesSupported: [String]? = nil, serviceDocumentation: String? = nil, uiLocalesSupported: [String]? = nil, revocationEndpoint: String? = nil, revocationEndpointAuthMethodsSupported: [String]? = nil, introspectionEndpoint: String? = nil, introspectionEndpointAuthMethodsSupported: [String]? = nil, codeChallengeMethodsSupported: [String]? = nil, authorizationResponseIssParameterSupported: Bool? = nil, requestParameterSupported: Bool? = nil, requestUriParameterSupported: Bool? = nil, requireRequestUriRegistration: Bool? = nil, requireSignedRequestObject: Bool? = nil, requestObjectSigningAlgValuesSupported: [String]? = nil, deviceAuthorizationEndpoint: String? = nil, pushedAuthorizationRequestEndpoint: String? = nil, requirePushedAuthorizationRequests: Bool? = nil, dpopSigningAlgValuesSupported: [String]? = nil, backchannelAuthenticationEndpoint: String? = nil, backchannelTokenDeliveryModesSupported: [String]? = nil, backchannelUserCodeParameterSupported: Bool? = nil, entityProfilesSupported: [String]? = nil, clientIdMetadataDocumentSupported: Bool? = nil, authorizationGrantProfilesSupported: [String]? = nil, opPolicyUri: String? = nil, opTosUri: String? = nil) {
         self.issuer = issuer
         self.authorizationEndpoint = authorizationEndpoint
         self.tokenEndpoint = tokenEndpoint
@@ -87,7 +86,6 @@ public struct AuthorizationServerMetadata: Codable, JSONEncodable, Hashable {
         self.pushedAuthorizationRequestEndpoint = pushedAuthorizationRequestEndpoint
         self.requirePushedAuthorizationRequests = requirePushedAuthorizationRequests
         self.dpopSigningAlgValuesSupported = dpopSigningAlgValuesSupported
-        self.tlsClientCertificateBoundAccessTokens = tlsClientCertificateBoundAccessTokens
         self.backchannelAuthenticationEndpoint = backchannelAuthenticationEndpoint
         self.backchannelTokenDeliveryModesSupported = backchannelTokenDeliveryModesSupported
         self.backchannelUserCodeParameterSupported = backchannelUserCodeParameterSupported
@@ -128,7 +126,6 @@ public struct AuthorizationServerMetadata: Codable, JSONEncodable, Hashable {
         case pushedAuthorizationRequestEndpoint = "pushed_authorization_request_endpoint"
         case requirePushedAuthorizationRequests = "require_pushed_authorization_requests"
         case dpopSigningAlgValuesSupported = "dpop_signing_alg_values_supported"
-        case tlsClientCertificateBoundAccessTokens = "tls_client_certificate_bound_access_tokens"
         case backchannelAuthenticationEndpoint = "backchannel_authentication_endpoint"
         case backchannelTokenDeliveryModesSupported = "backchannel_token_delivery_modes_supported"
         case backchannelUserCodeParameterSupported = "backchannel_user_code_parameter_supported"
@@ -172,7 +169,6 @@ public struct AuthorizationServerMetadata: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(pushedAuthorizationRequestEndpoint, forKey: .pushedAuthorizationRequestEndpoint)
         try container.encodeIfPresent(requirePushedAuthorizationRequests, forKey: .requirePushedAuthorizationRequests)
         try container.encodeIfPresent(dpopSigningAlgValuesSupported, forKey: .dpopSigningAlgValuesSupported)
-        try container.encodeIfPresent(tlsClientCertificateBoundAccessTokens, forKey: .tlsClientCertificateBoundAccessTokens)
         try container.encodeIfPresent(backchannelAuthenticationEndpoint, forKey: .backchannelAuthenticationEndpoint)
         try container.encodeIfPresent(backchannelTokenDeliveryModesSupported, forKey: .backchannelTokenDeliveryModesSupported)
         try container.encodeIfPresent(backchannelUserCodeParameterSupported, forKey: .backchannelUserCodeParameterSupported)

@@ -44,7 +44,9 @@ public class AdminEmailApiTest {
     public void adminEmailTemplatesDeleteTest() throws ApiException {
         String orgId = null;
         String type = null;
-        MessageResponse response = api.adminEmailTemplatesDelete(orgId, type);
+        String locale = null;
+        String clientId = null;
+        MessageResponse response = api.adminEmailTemplatesDelete(orgId, type, locale, clientId);
         // TODO: test validations
     }
 
@@ -57,7 +59,9 @@ public class AdminEmailApiTest {
     public void adminEmailTemplatesGetTest() throws ApiException {
         String orgId = null;
         String type = null;
-        EmailTemplate response = api.adminEmailTemplatesGet(orgId, type);
+        String locale = null;
+        String clientId = null;
+        EmailTemplate response = api.adminEmailTemplatesGet(orgId, type, locale, clientId);
         // TODO: test validations
     }
 
@@ -88,6 +92,8 @@ public class AdminEmailApiTest {
 
     /**
      * Create or replace the custom email template for a type
+     *
+     * Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
      *
      * @throws ApiException if the Api call fails
      */

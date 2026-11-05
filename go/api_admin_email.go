@@ -81,6 +81,8 @@ type AdminEmailAPI interface {
 	/*
 	AdminEmailTemplatesUpsert Create or replace the custom email template for a type
 
+	Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@param type_
@@ -115,6 +117,18 @@ type ApiAdminEmailTemplatesDeleteRequest struct {
 	ApiService AdminEmailAPI
 	orgId string
 	type_ string
+	locale *string
+	clientId *string
+}
+
+func (r ApiAdminEmailTemplatesDeleteRequest) Locale(locale string) ApiAdminEmailTemplatesDeleteRequest {
+	r.locale = &locale
+	return r
+}
+
+func (r ApiAdminEmailTemplatesDeleteRequest) ClientId(clientId string) ApiAdminEmailTemplatesDeleteRequest {
+	r.clientId = &clientId
+	return r
 }
 
 func (r ApiAdminEmailTemplatesDeleteRequest) Execute() (*MessageResponse, *http.Response, error) {
@@ -161,6 +175,12 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesDeleteExecute(r ApiAdminEmailT
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.locale != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "locale", r.locale, "form", "")
+	}
+	if r.clientId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "client_id", r.clientId, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -234,6 +254,20 @@ type ApiAdminEmailTemplatesGetRequest struct {
 	ApiService AdminEmailAPI
 	orgId string
 	type_ string
+	locale *string
+	clientId *string
+}
+
+// Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language
+func (r ApiAdminEmailTemplatesGetRequest) Locale(locale string) ApiAdminEmailTemplatesGetRequest {
+	r.locale = &locale
+	return r
+}
+
+// Application variant (OAuth client_id); omit for the variant used by every application
+func (r ApiAdminEmailTemplatesGetRequest) ClientId(clientId string) ApiAdminEmailTemplatesGetRequest {
+	r.clientId = &clientId
+	return r
 }
 
 func (r ApiAdminEmailTemplatesGetRequest) Execute() (*EmailTemplate, *http.Response, error) {
@@ -280,6 +314,12 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesGetExecute(r ApiAdminEmailTemp
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.locale != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "locale", r.locale, "form", "")
+	}
+	if r.clientId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "client_id", r.clientId, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -595,6 +635,8 @@ func (r ApiAdminEmailTemplatesUpsertRequest) Execute() (*EmailTemplate, *http.Re
 
 /*
 AdminEmailTemplatesUpsert Create or replace the custom email template for a type
+
+Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId

@@ -176,6 +176,7 @@ Class | Method | HTTP request | Description
 *AdminMfaApi* | [**listUserAuthenticators**](docs/Api/AdminMfaApi.md#listuserauthenticators) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/authenticators | List a user&#39;s authenticators
 *AdminMfaApi* | [**updateMfaPolicy**](docs/Api/AdminMfaApi.md#updatemfapolicy) | **PUT** /orgs/{orgId}/api/v1/admin/policies/mfa | Update the MFA policy
 *AdminOAuthClientsApi* | [**adminClientsCimdCheck**](docs/Api/AdminOAuthClientsApi.md#adminclientscimdcheck) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document
+*AdminOAuthClientsApi* | [**adminClientsGetBranding**](docs/Api/AdminOAuthClientsApi.md#adminclientsgetbranding) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Get an OAuth client&#39;s login and consent page branding
 *AdminOAuthClientsApi* | [**createClient**](docs/Api/AdminOAuthClientsApi.md#createclient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client
 *AdminOAuthClientsApi* | [**deleteClient**](docs/Api/AdminOAuthClientsApi.md#deleteclient) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client
 *AdminOAuthClientsApi* | [**disableClient**](docs/Api/AdminOAuthClientsApi.md#disableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client
@@ -183,7 +184,9 @@ Class | Method | HTTP request | Description
 *AdminOAuthClientsApi* | [**getClient**](docs/Api/AdminOAuthClientsApi.md#getclient) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get an OAuth client
 *AdminOAuthClientsApi* | [**listClientScopes**](docs/Api/AdminOAuthClientsApi.md#listclientscopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | List the scopes granted to an OAuth client
 *AdminOAuthClientsApi* | [**listClients**](docs/Api/AdminOAuthClientsApi.md#listclients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List OAuth clients
+*AdminOAuthClientsApi* | [**patchAdminClientsUpdateBranding**](docs/Api/AdminOAuthClientsApi.md#patchadminclientsupdatebranding) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Change keys of an OAuth client&#39;s login and/or consent page branding
 *AdminOAuthClientsApi* | [**patchClient**](docs/Api/AdminOAuthClientsApi.md#patchclient) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client
+*AdminOAuthClientsApi* | [**putAdminClientsUpdateBranding**](docs/Api/AdminOAuthClientsApi.md#putadminclientsupdatebranding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client&#39;s login and/or consent page branding
 *AdminOAuthClientsApi* | [**rotateClientSecret**](docs/Api/AdminOAuthClientsApi.md#rotateclientsecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret
 *AdminOAuthClientsApi* | [**setClientScopes**](docs/Api/AdminOAuthClientsApi.md#setclientscopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
 *AdminOAuthClientsApi* | [**updateClient**](docs/Api/AdminOAuthClientsApi.md#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
@@ -388,7 +391,6 @@ Class | Method | HTTP request | Description
 *OAuthApi* | [**getOrgSelection**](docs/Api/OAuthApi.md#getorgselection) | **GET** /orgs/{orgId}/api/v1/oauth/org-select | Organization selector page
 *OAuthApi* | [**introspect**](docs/Api/OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662)
 *OAuthApi* | [**par**](docs/Api/OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126)
-*OAuthApi* | [**passkeyLogin**](docs/Api/OAuthApi.md#passkeylogin) | **GET** /orgs/{orgId}/api/v1/oauth/passkey-login | Passkey login entry point
 *OAuthApi* | [**registerClient**](docs/Api/OAuthApi.md#registerclient) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR)
 *OAuthApi* | [**revoke**](docs/Api/OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009)
 *OAuthApi* | [**socialCallback**](docs/Api/OAuthApi.md#socialcallback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback
@@ -396,7 +398,6 @@ Class | Method | HTTP request | Description
 *OAuthApi* | [**socialLogin**](docs/Api/OAuthApi.md#sociallogin) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider} | Start social / enterprise identity-provider login
 *OAuthApi* | [**submitAuthorization**](docs/Api/OAuthApi.md#submitauthorization) | **POST** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint (form submission)
 *OAuthApi* | [**submitDeviceVerification**](docs/Api/OAuthApi.md#submitdeviceverification) | **POST** /orgs/{orgId}/api/v1/oauth/device | Submit device verification
-*OAuthApi* | [**submitLogin**](docs/Api/OAuthApi.md#submitlogin) | **POST** /orgs/{orgId}/api/v1/oauth/login/submit | Hosted login form submission
 *OAuthApi* | [**submitLoginJson**](docs/Api/OAuthApi.md#submitloginjson) | **POST** /orgs/{orgId}/api/v1/oauth/login/json | Programmatic (JSON) login for the authorization flow
 *OAuthApi* | [**submitOrgSelection**](docs/Api/OAuthApi.md#submitorgselection) | **POST** /orgs/{orgId}/api/v1/oauth/org-select | Submit organization selection
 *OAuthApi* | [**token**](docs/Api/OAuthApi.md#token) | **POST** /orgs/{orgId}/api/v1/oauth/token | OAuth 2.1 token endpoint
@@ -476,6 +477,8 @@ Class | Method | HTTP request | Description
 - [AdminClientTokensRevokeAllResponse](docs/Model/AdminClientTokensRevokeAllResponse.md)
 - [AdminClientsCimdCheckRequest](docs/Model/AdminClientsCimdCheckRequest.md)
 - [AdminClientsCimdCheckResponse](docs/Model/AdminClientsCimdCheckResponse.md)
+- [AdminClientsGetBrandingResponse](docs/Model/AdminClientsGetBrandingResponse.md)
+- [AdminClientsGetBrandingResponseData](docs/Model/AdminClientsGetBrandingResponseData.md)
 - [AdminEmailTemplatesListResponse](docs/Model/AdminEmailTemplatesListResponse.md)
 - [AdminEmailTemplatesPreviewResponse](docs/Model/AdminEmailTemplatesPreviewResponse.md)
 - [AdminEmailTemplatesVariablesResponse](docs/Model/AdminEmailTemplatesVariablesResponse.md)
@@ -733,6 +736,7 @@ Class | Method | HTTP request | Description
 - [PaginationMeta](docs/Model/PaginationMeta.md)
 - [ParResponse](docs/Model/ParResponse.md)
 - [PasskeyEnrollmentStarted](docs/Model/PasskeyEnrollmentStarted.md)
+- [PatchAdminClientsUpdateBrandingResponse](docs/Model/PatchAdminClientsUpdateBrandingResponse.md)
 - [Permission](docs/Model/Permission.md)
 - [ProtectedResourceList](docs/Model/ProtectedResourceList.md)
 - [ProtectedResourceMetadata](docs/Model/ProtectedResourceMetadata.md)
@@ -741,6 +745,8 @@ Class | Method | HTTP request | Description
 - [PutAbacPoliciesUpdateResponse](docs/Model/PutAbacPoliciesUpdateResponse.md)
 - [PutAdminAgentsUpdateRequest](docs/Model/PutAdminAgentsUpdateRequest.md)
 - [PutAdminAgentsUpdateResponse](docs/Model/PutAdminAgentsUpdateResponse.md)
+- [PutAdminClientsUpdateBrandingRequest](docs/Model/PutAdminClientsUpdateBrandingRequest.md)
+- [PutAdminClientsUpdateBrandingResponse](docs/Model/PutAdminClientsUpdateBrandingResponse.md)
 - [PutAdminOrgMembersUpdateResponse](docs/Model/PutAdminOrgMembersUpdateResponse.md)
 - [PutAdminSettingsAuthenticationUpdateResponse](docs/Model/PutAdminSettingsAuthenticationUpdateResponse.md)
 - [PutAdminSettingsBrandingUpdateResponse](docs/Model/PutAdminSettingsBrandingUpdateResponse.md)
@@ -854,6 +860,6 @@ sdk@lumoauth.dev
 This PHP package is automatically generated by the [OpenAPI Generator](https://openapi-generator.tech) project:
 
 - API version: `1.0.0`
-    - Package version: `1.2.0`
+    - Package version: `1.3.0`
     - Generator version: `7.14.0`
 - Build package: `org.openapitools.codegen.languages.PhpClientCodegen`

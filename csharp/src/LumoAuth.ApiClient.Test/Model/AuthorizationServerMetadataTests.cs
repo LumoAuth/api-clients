@@ -317,15 +317,6 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'TlsClientCertificateBoundAccessTokens'
-        /// </summary>
-        [Fact]
-        public void TlsClientCertificateBoundAccessTokensTest()
-        {
-            // TODO unit test for the property 'TlsClientCertificateBoundAccessTokens'
-        }
-
-        /// <summary>
         /// Test the property 'BackchannelAuthenticationEndpoint'
         /// </summary>
         [Fact]

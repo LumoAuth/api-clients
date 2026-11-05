@@ -12,7 +12,6 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**get_org_selection**](OAuthApi.md#get_org_selection) | **GET** /orgs/{orgId}/api/v1/oauth/org-select | Organization selector page |
 | [**introspect**](OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662) |
 | [**par**](OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126) |
-| [**passkey_login**](OAuthApi.md#passkey_login) | **GET** /orgs/{orgId}/api/v1/oauth/passkey-login | Passkey login entry point |
 | [**register_client**](OAuthApi.md#register_client) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR) |
 | [**revoke**](OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009) |
 | [**social_callback**](OAuthApi.md#social_callback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback |
@@ -20,7 +19,6 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**social_login**](OAuthApi.md#social_login) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider} | Start social / enterprise identity-provider login |
 | [**submit_authorization**](OAuthApi.md#submit_authorization) | **POST** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint (form submission) |
 | [**submit_device_verification**](OAuthApi.md#submit_device_verification) | **POST** /orgs/{orgId}/api/v1/oauth/device | Submit device verification |
-| [**submit_login**](OAuthApi.md#submit_login) | **POST** /orgs/{orgId}/api/v1/oauth/login/submit | Hosted login form submission |
 | [**submit_login_json**](OAuthApi.md#submit_login_json) | **POST** /orgs/{orgId}/api/v1/oauth/login/json | Programmatic (JSON) login for the authorization flow |
 | [**submit_org_selection**](OAuthApi.md#submit_org_selection) | **POST** /orgs/{orgId}/api/v1/oauth/org-select | Submit organization selection |
 | [**token**](OAuthApi.md#token) | **POST** /orgs/{orgId}/api/v1/oauth/token | OAuth 2.1 token endpoint |
@@ -574,69 +572,6 @@ end
 - **Accept**: application/json
 
 
-## passkey_login
-
-> passkey_login(org_id)
-
-Passkey login entry point
-
-Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-
-### Examples
-
-```ruby
-require 'time'
-require 'lumoauth_api_client'
-
-api_instance = LumoAuthApiClient::OAuthApi.new
-org_id = 'org_id_example' # String | 
-
-begin
-  # Passkey login entry point
-  api_instance.passkey_login(org_id)
-rescue LumoAuthApiClient::ApiError => e
-  puts "Error when calling OAuthApi->passkey_login: #{e}"
-end
-```
-
-#### Using the passkey_login_with_http_info variant
-
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
-
-> <Array(nil, Integer, Hash)> passkey_login_with_http_info(org_id)
-
-```ruby
-begin
-  # Passkey login entry point
-  data, status_code, headers = api_instance.passkey_login_with_http_info(org_id)
-  p status_code # => 2xx
-  p headers # => { ... }
-  p data # => nil
-rescue LumoAuthApiClient::ApiError => e
-  puts "Error when calling OAuthApi->passkey_login_with_http_info: #{e}"
-end
-```
-
-### Parameters
-
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| **org_id** | **String** |  |  |
-
-### Return type
-
-nil (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
-
-
 ## register_client
 
 > <RegisterClientResponse> register_client(org_id)
@@ -1102,69 +1037,6 @@ No authorization required
 
 - **Content-Type**: Not defined
 - **Accept**: text/html
-
-
-## submit_login
-
-> submit_login(org_id)
-
-Hosted login form submission
-
-Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-
-### Examples
-
-```ruby
-require 'time'
-require 'lumoauth_api_client'
-
-api_instance = LumoAuthApiClient::OAuthApi.new
-org_id = 'org_id_example' # String | 
-
-begin
-  # Hosted login form submission
-  api_instance.submit_login(org_id)
-rescue LumoAuthApiClient::ApiError => e
-  puts "Error when calling OAuthApi->submit_login: #{e}"
-end
-```
-
-#### Using the submit_login_with_http_info variant
-
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
-
-> <Array(nil, Integer, Hash)> submit_login_with_http_info(org_id)
-
-```ruby
-begin
-  # Hosted login form submission
-  data, status_code, headers = api_instance.submit_login_with_http_info(org_id)
-  p status_code # => 2xx
-  p headers # => { ... }
-  p data # => nil
-rescue LumoAuthApiClient::ApiError => e
-  puts "Error when calling OAuthApi->submit_login_with_http_info: #{e}"
-end
-```
-
-### Parameters
-
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| **org_id** | **String** |  |  |
-
-### Return type
-
-nil (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
 
 
 ## submit_login_json

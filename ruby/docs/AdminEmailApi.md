@@ -14,7 +14,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 ## admin_email_templates_delete
 
-> <MessageResponse> admin_email_templates_delete(org_id, type)
+> <MessageResponse> admin_email_templates_delete(org_id, type, opts)
 
 Remove the custom email template so the built-in default is used
 
@@ -37,10 +37,14 @@ end
 api_instance = LumoAuthApiClient::AdminEmailApi.new
 org_id = 'org_id_example' # String | 
 type = 'type_example' # String | 
+opts = {
+  locale: 'locale_example', # String | 
+  client_id: 'client_id_example' # String | 
+}
 
 begin
   # Remove the custom email template so the built-in default is used
-  result = api_instance.admin_email_templates_delete(org_id, type)
+  result = api_instance.admin_email_templates_delete(org_id, type, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_delete: #{e}"
@@ -51,12 +55,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<MessageResponse>, Integer, Hash)> admin_email_templates_delete_with_http_info(org_id, type)
+> <Array(<MessageResponse>, Integer, Hash)> admin_email_templates_delete_with_http_info(org_id, type, opts)
 
 ```ruby
 begin
   # Remove the custom email template so the built-in default is used
-  data, status_code, headers = api_instance.admin_email_templates_delete_with_http_info(org_id, type)
+  data, status_code, headers = api_instance.admin_email_templates_delete_with_http_info(org_id, type, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <MessageResponse>
@@ -71,6 +75,8 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **type** | **String** |  |  |
+| **locale** | **String** |  | [optional] |
+| **client_id** | **String** |  | [optional] |
 
 ### Return type
 
@@ -88,7 +94,7 @@ end
 
 ## admin_email_templates_get
 
-> <EmailTemplate> admin_email_templates_get(org_id, type)
+> <EmailTemplate> admin_email_templates_get(org_id, type, opts)
 
 Get an email template (custom or built-in default)
 
@@ -111,10 +117,14 @@ end
 api_instance = LumoAuthApiClient::AdminEmailApi.new
 org_id = 'org_id_example' # String | 
 type = 'type_example' # String | 
+opts = {
+  locale: 'locale_example', # String | Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language
+  client_id: 'client_id_example' # String | Application variant (OAuth client_id); omit for the variant used by every application
+}
 
 begin
   # Get an email template (custom or built-in default)
-  result = api_instance.admin_email_templates_get(org_id, type)
+  result = api_instance.admin_email_templates_get(org_id, type, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_get: #{e}"
@@ -125,12 +135,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<EmailTemplate>, Integer, Hash)> admin_email_templates_get_with_http_info(org_id, type)
+> <Array(<EmailTemplate>, Integer, Hash)> admin_email_templates_get_with_http_info(org_id, type, opts)
 
 ```ruby
 begin
   # Get an email template (custom or built-in default)
-  data, status_code, headers = api_instance.admin_email_templates_get_with_http_info(org_id, type)
+  data, status_code, headers = api_instance.admin_email_templates_get_with_http_info(org_id, type, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <EmailTemplate>
@@ -145,6 +155,8 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **type** | **String** |  |  |
+| **locale** | **String** | Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language | [optional] |
+| **client_id** | **String** | Application variant (OAuth client_id); omit for the variant used by every application | [optional] |
 
 ### Return type
 
@@ -311,6 +323,8 @@ end
 > <EmailTemplate> admin_email_templates_upsert(org_id, type)
 
 Create or replace the custom email template for a type
+
+Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
 
 ### Examples
 

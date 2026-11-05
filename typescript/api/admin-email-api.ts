@@ -42,10 +42,12 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
          * @summary Remove the custom email template so the built-in default is used
          * @param {string} orgId 
          * @param {string} type 
+         * @param {string} [locale] 
+         * @param {string} [clientId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminEmailTemplatesDelete: async (orgId: string, type: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminEmailTemplatesDelete: async (orgId: string, type: string, locale?: string, clientId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminEmailTemplatesDelete', 'orgId', orgId)
             // verify required parameter 'type' is not null or undefined
@@ -71,6 +73,14 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (locale !== undefined) {
+                localVarQueryParameter['locale'] = locale;
+            }
+
+            if (clientId !== undefined) {
+                localVarQueryParameter['client_id'] = clientId;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -87,10 +97,12 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
          * @summary Get an email template (custom or built-in default)
          * @param {string} orgId 
          * @param {string} type 
+         * @param {string} [locale] Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language
+         * @param {string} [clientId] Application variant (OAuth client_id); omit for the variant used by every application
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminEmailTemplatesGet: async (orgId: string, type: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminEmailTemplatesGet: async (orgId: string, type: string, locale?: string, clientId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminEmailTemplatesGet', 'orgId', orgId)
             // verify required parameter 'type' is not null or undefined
@@ -115,6 +127,14 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
             // authentication BearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (locale !== undefined) {
+                localVarQueryParameter['locale'] = locale;
+            }
+
+            if (clientId !== undefined) {
+                localVarQueryParameter['client_id'] = clientId;
+            }
 
 
     
@@ -214,7 +234,7 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
          * @summary Create or replace the custom email template for a type
          * @param {string} orgId 
          * @param {string} type 
@@ -318,11 +338,13 @@ export const AdminEmailApiFp = function(configuration?: Configuration) {
          * @summary Remove the custom email template so the built-in default is used
          * @param {string} orgId 
          * @param {string} type 
+         * @param {string} [locale] 
+         * @param {string} [clientId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminEmailTemplatesDelete(orgId: string, type: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminEmailTemplatesDelete(orgId, type, options);
+        async adminEmailTemplatesDelete(orgId: string, type: string, locale?: string, clientId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminEmailTemplatesDelete(orgId, type, locale, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminEmailApi.adminEmailTemplatesDelete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -332,11 +354,13 @@ export const AdminEmailApiFp = function(configuration?: Configuration) {
          * @summary Get an email template (custom or built-in default)
          * @param {string} orgId 
          * @param {string} type 
+         * @param {string} [locale] Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language
+         * @param {string} [clientId] Application variant (OAuth client_id); omit for the variant used by every application
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminEmailTemplatesGet(orgId: string, type: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmailTemplate>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminEmailTemplatesGet(orgId, type, options);
+        async adminEmailTemplatesGet(orgId: string, type: string, locale?: string, clientId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmailTemplate>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminEmailTemplatesGet(orgId, type, locale, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminEmailApi.adminEmailTemplatesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -369,7 +393,7 @@ export const AdminEmailApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
          * @summary Create or replace the custom email template for a type
          * @param {string} orgId 
          * @param {string} type 
@@ -414,7 +438,7 @@ export const AdminEmailApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         adminEmailTemplatesDelete(requestParameters: AdminEmailApiAdminEmailTemplatesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
-            return localVarFp.adminEmailTemplatesDelete(requestParameters.orgId, requestParameters.type, options).then((request) => request(axios, basePath));
+            return localVarFp.adminEmailTemplatesDelete(requestParameters.orgId, requestParameters.type, requestParameters.locale, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -424,7 +448,7 @@ export const AdminEmailApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         adminEmailTemplatesGet(requestParameters: AdminEmailApiAdminEmailTemplatesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<EmailTemplate> {
-            return localVarFp.adminEmailTemplatesGet(requestParameters.orgId, requestParameters.type, options).then((request) => request(axios, basePath));
+            return localVarFp.adminEmailTemplatesGet(requestParameters.orgId, requestParameters.type, requestParameters.locale, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -447,7 +471,7 @@ export const AdminEmailApiFactory = function (configuration?: Configuration, bas
             return localVarFp.adminEmailTemplatesPreview(requestParameters.orgId, requestParameters.type, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
          * @summary Create or replace the custom email template for a type
          * @param {AdminEmailApiAdminEmailTemplatesUpsertRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -516,7 +540,7 @@ export interface AdminEmailApiInterface {
     adminEmailTemplatesPreview(requestParameters: AdminEmailApiAdminEmailTemplatesPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminEmailTemplatesPreviewResponse>;
 
     /**
-     * 
+     * Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
      * @summary Create or replace the custom email template for a type
      * @param {AdminEmailApiAdminEmailTemplatesUpsertRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -556,6 +580,20 @@ export interface AdminEmailApiAdminEmailTemplatesDeleteRequest {
      * @memberof AdminEmailApiAdminEmailTemplatesDelete
      */
     readonly type: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminEmailApiAdminEmailTemplatesDelete
+     */
+    readonly locale?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminEmailApiAdminEmailTemplatesDelete
+     */
+    readonly clientId?: string
 }
 
 /**
@@ -577,6 +615,20 @@ export interface AdminEmailApiAdminEmailTemplatesGetRequest {
      * @memberof AdminEmailApiAdminEmailTemplatesGet
      */
     readonly type: string
+
+    /**
+     * Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language
+     * @type {string}
+     * @memberof AdminEmailApiAdminEmailTemplatesGet
+     */
+    readonly locale?: string
+
+    /**
+     * Application variant (OAuth client_id); omit for the variant used by every application
+     * @type {string}
+     * @memberof AdminEmailApiAdminEmailTemplatesGet
+     */
+    readonly clientId?: string
 }
 
 /**
@@ -672,7 +724,7 @@ export class AdminEmailApi extends BaseAPI implements AdminEmailApiInterface {
      * @memberof AdminEmailApi
      */
     public adminEmailTemplatesDelete(requestParameters: AdminEmailApiAdminEmailTemplatesDeleteRequest, options?: RawAxiosRequestConfig) {
-        return AdminEmailApiFp(this.configuration).adminEmailTemplatesDelete(requestParameters.orgId, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+        return AdminEmailApiFp(this.configuration).adminEmailTemplatesDelete(requestParameters.orgId, requestParameters.type, requestParameters.locale, requestParameters.clientId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -684,7 +736,7 @@ export class AdminEmailApi extends BaseAPI implements AdminEmailApiInterface {
      * @memberof AdminEmailApi
      */
     public adminEmailTemplatesGet(requestParameters: AdminEmailApiAdminEmailTemplatesGetRequest, options?: RawAxiosRequestConfig) {
-        return AdminEmailApiFp(this.configuration).adminEmailTemplatesGet(requestParameters.orgId, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+        return AdminEmailApiFp(this.configuration).adminEmailTemplatesGet(requestParameters.orgId, requestParameters.type, requestParameters.locale, requestParameters.clientId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -712,7 +764,7 @@ export class AdminEmailApi extends BaseAPI implements AdminEmailApiInterface {
     }
 
     /**
-     * 
+     * Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
      * @summary Create or replace the custom email template for a type
      * @param {AdminEmailApiAdminEmailTemplatesUpsertRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

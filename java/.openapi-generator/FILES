@@ -65,6 +65,8 @@ docs/AdminAuditLogsStatsResponseDataPeriod.md
 docs/AdminClientTokensRevokeAllResponse.md
 docs/AdminClientsCimdCheckRequest.md
 docs/AdminClientsCimdCheckResponse.md
+docs/AdminClientsGetBrandingResponse.md
+docs/AdminClientsGetBrandingResponseData.md
 docs/AdminEmailApi.md
 docs/AdminEmailTemplatesListResponse.md
 docs/AdminEmailTemplatesPreviewResponse.md
@@ -344,6 +346,7 @@ docs/OrganizationRole.md
 docs/PaginationMeta.md
 docs/ParResponse.md
 docs/PasskeyEnrollmentStarted.md
+docs/PatchAdminClientsUpdateBrandingResponse.md
 docs/Permission.md
 docs/ProtectedResourceList.md
 docs/ProtectedResourceMetadata.md
@@ -352,6 +355,8 @@ docs/PutAbacAttributesUpdateResponse.md
 docs/PutAbacPoliciesUpdateResponse.md
 docs/PutAdminAgentsUpdateRequest.md
 docs/PutAdminAgentsUpdateResponse.md
+docs/PutAdminClientsUpdateBrandingRequest.md
+docs/PutAdminClientsUpdateBrandingResponse.md
 docs/PutAdminOrgMembersUpdateResponse.md
 docs/PutAdminSettingsAuthenticationUpdateResponse.md
 docs/PutAdminSettingsBrandingUpdateResponse.md
@@ -540,6 +545,8 @@ src/main/java/io/lumoauth/client/model/AdminAuditLogsStatsResponseDataPeriod.jav
 src/main/java/io/lumoauth/client/model/AdminClientTokensRevokeAllResponse.java
 src/main/java/io/lumoauth/client/model/AdminClientsCimdCheckRequest.java
 src/main/java/io/lumoauth/client/model/AdminClientsCimdCheckResponse.java
+src/main/java/io/lumoauth/client/model/AdminClientsGetBrandingResponse.java
+src/main/java/io/lumoauth/client/model/AdminClientsGetBrandingResponseData.java
 src/main/java/io/lumoauth/client/model/AdminEmailTemplatesListResponse.java
 src/main/java/io/lumoauth/client/model/AdminEmailTemplatesPreviewResponse.java
 src/main/java/io/lumoauth/client/model/AdminEmailTemplatesVariablesResponse.java
@@ -797,6 +804,7 @@ src/main/java/io/lumoauth/client/model/OrganizationRole.java
 src/main/java/io/lumoauth/client/model/PaginationMeta.java
 src/main/java/io/lumoauth/client/model/ParResponse.java
 src/main/java/io/lumoauth/client/model/PasskeyEnrollmentStarted.java
+src/main/java/io/lumoauth/client/model/PatchAdminClientsUpdateBrandingResponse.java
 src/main/java/io/lumoauth/client/model/Permission.java
 src/main/java/io/lumoauth/client/model/ProtectedResourceList.java
 src/main/java/io/lumoauth/client/model/ProtectedResourceMetadata.java
@@ -805,6 +813,8 @@ src/main/java/io/lumoauth/client/model/PutAbacAttributesUpdateResponse.java
 src/main/java/io/lumoauth/client/model/PutAbacPoliciesUpdateResponse.java
 src/main/java/io/lumoauth/client/model/PutAdminAgentsUpdateRequest.java
 src/main/java/io/lumoauth/client/model/PutAdminAgentsUpdateResponse.java
+src/main/java/io/lumoauth/client/model/PutAdminClientsUpdateBrandingRequest.java
+src/main/java/io/lumoauth/client/model/PutAdminClientsUpdateBrandingResponse.java
 src/main/java/io/lumoauth/client/model/PutAdminOrgMembersUpdateResponse.java
 src/main/java/io/lumoauth/client/model/PutAdminSettingsAuthenticationUpdateResponse.java
 src/main/java/io/lumoauth/client/model/PutAdminSettingsBrandingUpdateResponse.java
@@ -964,6 +974,8 @@ src/test/java/io/lumoauth/client/model/AdminAuditLogsStatsResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminClientTokensRevokeAllResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminClientsCimdCheckRequestTest.java
 src/test/java/io/lumoauth/client/model/AdminClientsCimdCheckResponseTest.java
+src/test/java/io/lumoauth/client/model/AdminClientsGetBrandingResponseDataTest.java
+src/test/java/io/lumoauth/client/model/AdminClientsGetBrandingResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminEmailTemplatesListResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminEmailTemplatesPreviewResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminEmailTemplatesVariablesResponseTest.java
@@ -1221,6 +1233,7 @@ src/test/java/io/lumoauth/client/model/OrganizationTest.java
 src/test/java/io/lumoauth/client/model/PaginationMetaTest.java
 src/test/java/io/lumoauth/client/model/ParResponseTest.java
 src/test/java/io/lumoauth/client/model/PasskeyEnrollmentStartedTest.java
+src/test/java/io/lumoauth/client/model/PatchAdminClientsUpdateBrandingResponseTest.java
 src/test/java/io/lumoauth/client/model/PermissionTest.java
 src/test/java/io/lumoauth/client/model/ProtectedResourceListTest.java
 src/test/java/io/lumoauth/client/model/ProtectedResourceMetadataTest.java
@@ -1229,6 +1242,8 @@ src/test/java/io/lumoauth/client/model/PutAbacAttributesUpdateResponseTest.java
 src/test/java/io/lumoauth/client/model/PutAbacPoliciesUpdateResponseTest.java
 src/test/java/io/lumoauth/client/model/PutAdminAgentsUpdateRequestTest.java
 src/test/java/io/lumoauth/client/model/PutAdminAgentsUpdateResponseTest.java
+src/test/java/io/lumoauth/client/model/PutAdminClientsUpdateBrandingRequestTest.java
+src/test/java/io/lumoauth/client/model/PutAdminClientsUpdateBrandingResponseTest.java
 src/test/java/io/lumoauth/client/model/PutAdminOrgMembersUpdateResponseTest.java
 src/test/java/io/lumoauth/client/model/PutAdminSettingsAuthenticationUpdateResponseTest.java
 src/test/java/io/lumoauth/client/model/PutAdminSettingsBrandingUpdateResponseTest.java

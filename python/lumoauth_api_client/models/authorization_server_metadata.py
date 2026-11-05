@@ -56,7 +56,6 @@ class AuthorizationServerMetadata(BaseModel):
     pushed_authorization_request_endpoint: Optional[StrictStr] = None
     require_pushed_authorization_requests: Optional[StrictBool] = None
     dpop_signing_alg_values_supported: Optional[List[StrictStr]] = None
-    tls_client_certificate_bound_access_tokens: Optional[StrictBool] = None
     backchannel_authentication_endpoint: Optional[StrictStr] = None
     backchannel_token_delivery_modes_supported: Optional[List[StrictStr]] = None
     backchannel_user_code_parameter_supported: Optional[StrictBool] = None
@@ -65,7 +64,7 @@ class AuthorizationServerMetadata(BaseModel):
     authorization_grant_profiles_supported: Optional[List[StrictStr]] = Field(default=None, description="Only when the organization accepts ID-JAGs.")
     op_policy_uri: Optional[StrictStr] = Field(default=None, description="Only when configured.")
     op_tos_uri: Optional[StrictStr] = Field(default=None, description="Only when configured.")
-    __properties: ClassVar[List[str]] = ["issuer", "authorization_endpoint", "token_endpoint", "response_types_supported", "jwks_uri", "registration_endpoint", "scopes_supported", "response_modes_supported", "authorization_signing_alg_values_supported", "grant_types_supported", "token_endpoint_auth_methods_supported", "token_endpoint_auth_signing_alg_values_supported", "service_documentation", "ui_locales_supported", "revocation_endpoint", "revocation_endpoint_auth_methods_supported", "introspection_endpoint", "introspection_endpoint_auth_methods_supported", "code_challenge_methods_supported", "authorization_response_iss_parameter_supported", "request_parameter_supported", "request_uri_parameter_supported", "require_request_uri_registration", "require_signed_request_object", "request_object_signing_alg_values_supported", "device_authorization_endpoint", "pushed_authorization_request_endpoint", "require_pushed_authorization_requests", "dpop_signing_alg_values_supported", "tls_client_certificate_bound_access_tokens", "backchannel_authentication_endpoint", "backchannel_token_delivery_modes_supported", "backchannel_user_code_parameter_supported", "entity_profiles_supported", "client_id_metadata_document_supported", "authorization_grant_profiles_supported", "op_policy_uri", "op_tos_uri"]
+    __properties: ClassVar[List[str]] = ["issuer", "authorization_endpoint", "token_endpoint", "response_types_supported", "jwks_uri", "registration_endpoint", "scopes_supported", "response_modes_supported", "authorization_signing_alg_values_supported", "grant_types_supported", "token_endpoint_auth_methods_supported", "token_endpoint_auth_signing_alg_values_supported", "service_documentation", "ui_locales_supported", "revocation_endpoint", "revocation_endpoint_auth_methods_supported", "introspection_endpoint", "introspection_endpoint_auth_methods_supported", "code_challenge_methods_supported", "authorization_response_iss_parameter_supported", "request_parameter_supported", "request_uri_parameter_supported", "require_request_uri_registration", "require_signed_request_object", "request_object_signing_alg_values_supported", "device_authorization_endpoint", "pushed_authorization_request_endpoint", "require_pushed_authorization_requests", "dpop_signing_alg_values_supported", "backchannel_authentication_endpoint", "backchannel_token_delivery_modes_supported", "backchannel_user_code_parameter_supported", "entity_profiles_supported", "client_id_metadata_document_supported", "authorization_grant_profiles_supported", "op_policy_uri", "op_tos_uri"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -147,7 +146,6 @@ class AuthorizationServerMetadata(BaseModel):
             "pushed_authorization_request_endpoint": obj.get("pushed_authorization_request_endpoint"),
             "require_pushed_authorization_requests": obj.get("require_pushed_authorization_requests"),
             "dpop_signing_alg_values_supported": obj.get("dpop_signing_alg_values_supported"),
-            "tls_client_certificate_bound_access_tokens": obj.get("tls_client_certificate_bound_access_tokens"),
             "backchannel_authentication_endpoint": obj.get("backchannel_authentication_endpoint"),
             "backchannel_token_delivery_modes_supported": obj.get("backchannel_token_delivery_modes_supported"),
             "backchannel_user_code_parameter_supported": obj.get("backchannel_user_code_parameter_supported"),

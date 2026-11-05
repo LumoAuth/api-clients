@@ -145,20 +145,6 @@ type OAuthAPI interface {
 	ParExecute(r ApiParRequest) (*ParResponse, *http.Response, error)
 
 	/*
-	PasskeyLogin Passkey login entry point
-
-	Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param orgId
-	@return ApiPasskeyLoginRequest
-	*/
-	PasskeyLogin(ctx context.Context, orgId string) ApiPasskeyLoginRequest
-
-	// PasskeyLoginExecute executes the request
-	PasskeyLoginExecute(r ApiPasskeyLoginRequest) (*http.Response, error)
-
-	/*
 	RegisterClient Dynamic client registration (RFC 7591 / OIDC DCR)
 
 	Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
@@ -262,20 +248,6 @@ type OAuthAPI interface {
 	// SubmitDeviceVerificationExecute executes the request
 	//  @return string
 	SubmitDeviceVerificationExecute(r ApiSubmitDeviceVerificationRequest) (string, *http.Response, error)
-
-	/*
-	SubmitLogin Hosted login form submission
-
-	Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param orgId
-	@return ApiSubmitLoginRequest
-	*/
-	SubmitLogin(ctx context.Context, orgId string) ApiSubmitLoginRequest
-
-	// SubmitLoginExecute executes the request
-	SubmitLoginExecute(r ApiSubmitLoginRequest) (*http.Response, error)
 
 	/*
 	SubmitLoginJson Programmatic (JSON) login for the authorization flow
@@ -1189,98 +1161,6 @@ func (a *OAuthAPIService) ParExecute(r ApiParRequest) (*ParResponse, *http.Respo
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiPasskeyLoginRequest struct {
-	ctx context.Context
-	ApiService OAuthAPI
-	orgId string
-}
-
-func (r ApiPasskeyLoginRequest) Execute() (*http.Response, error) {
-	return r.ApiService.PasskeyLoginExecute(r)
-}
-
-/*
-PasskeyLogin Passkey login entry point
-
-Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param orgId
- @return ApiPasskeyLoginRequest
-*/
-func (a *OAuthAPIService) PasskeyLogin(ctx context.Context, orgId string) ApiPasskeyLoginRequest {
-	return ApiPasskeyLoginRequest{
-		ApiService: a,
-		ctx: ctx,
-		orgId: orgId,
-	}
-}
-
-// Execute executes the request
-func (a *OAuthAPIService) PasskeyLoginExecute(r ApiPasskeyLoginRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.PasskeyLogin")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/passkey-login"
-	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
 type ApiRegisterClientRequest struct {
 	ctx context.Context
 	ApiService OAuthAPI
@@ -2014,98 +1894,6 @@ func (a *OAuthAPIService) SubmitDeviceVerificationExecute(r ApiSubmitDeviceVerif
 	}
 
 	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSubmitLoginRequest struct {
-	ctx context.Context
-	ApiService OAuthAPI
-	orgId string
-}
-
-func (r ApiSubmitLoginRequest) Execute() (*http.Response, error) {
-	return r.ApiService.SubmitLoginExecute(r)
-}
-
-/*
-SubmitLogin Hosted login form submission
-
-Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param orgId
- @return ApiSubmitLoginRequest
-*/
-func (a *OAuthAPIService) SubmitLogin(ctx context.Context, orgId string) ApiSubmitLoginRequest {
-	return ApiSubmitLoginRequest{
-		ApiService: a,
-		ctx: ctx,
-		orgId: orgId,
-	}
-}
-
-// Execute executes the request
-func (a *OAuthAPIService) SubmitLoginExecute(r ApiSubmitLoginRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.SubmitLogin")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/login/submit"
-	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
 }
 
 type ApiSubmitLoginJsonRequest struct {

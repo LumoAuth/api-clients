@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 # **adminEmailTemplatesDelete**
 ```swift
-    open class func adminEmailTemplatesDelete(orgId: String, type: String, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
+    open class func adminEmailTemplatesDelete(orgId: String, type: String, locale: String? = nil, clientId: String? = nil, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
 ```
 
 Remove the custom email template so the built-in default is used
@@ -26,9 +26,11 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let type = "type_example" // String | 
+let locale = "locale_example" // String |  (optional)
+let clientId = "clientId_example" // String |  (optional)
 
 // Remove the custom email template so the built-in default is used
-AdminEmailAPI.adminEmailTemplatesDelete(orgId: orgId, type: type) { (response, error) in
+AdminEmailAPI.adminEmailTemplatesDelete(orgId: orgId, type: type, locale: locale, clientId: clientId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -46,6 +48,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **type** | **String** |  | 
+ **locale** | **String** |  | [optional] 
+ **clientId** | **String** |  | [optional] 
 
 ### Return type
 
@@ -64,7 +68,7 @@ Name | Type | Description  | Notes
 
 # **adminEmailTemplatesGet**
 ```swift
-    open class func adminEmailTemplatesGet(orgId: String, type: String, completion: @escaping (_ data: EmailTemplate?, _ error: Error?) -> Void)
+    open class func adminEmailTemplatesGet(orgId: String, type: String, locale: String? = nil, clientId: String? = nil, completion: @escaping (_ data: EmailTemplate?, _ error: Error?) -> Void)
 ```
 
 Get an email template (custom or built-in default)
@@ -76,9 +80,11 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let type = "type_example" // String | 
+let locale = "locale_example" // String | Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
+let clientId = "clientId_example" // String | Application variant (OAuth client_id); omit for the variant used by every application (optional)
 
 // Get an email template (custom or built-in default)
-AdminEmailAPI.adminEmailTemplatesGet(orgId: orgId, type: type) { (response, error) in
+AdminEmailAPI.adminEmailTemplatesGet(orgId: orgId, type: type, locale: locale, clientId: clientId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -96,6 +102,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **type** | **String** |  | 
+ **locale** | **String** | Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language | [optional] 
+ **clientId** | **String** | Application variant (OAuth client_id); omit for the variant used by every application | [optional] 
 
 ### Return type
 
@@ -216,6 +224,8 @@ Name | Type | Description  | Notes
 ```
 
 Create or replace the custom email template for a type
+
+Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
 
 ### Example
 ```swift

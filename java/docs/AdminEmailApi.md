@@ -14,7 +14,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminEmailTemplatesDelete"></a>
 # **adminEmailTemplatesDelete**
-> MessageResponse adminEmailTemplatesDelete(orgId, type)
+> MessageResponse adminEmailTemplatesDelete(orgId, type, locale, clientId)
 
 Remove the custom email template so the built-in default is used
 
@@ -46,8 +46,10 @@ public class Example {
     AdminEmailApi apiInstance = new AdminEmailApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String type = "type_example"; // String | 
+    String locale = "locale_example"; // String | 
+    String clientId = "clientId_example"; // String | 
     try {
-      MessageResponse result = apiInstance.adminEmailTemplatesDelete(orgId, type);
+      MessageResponse result = apiInstance.adminEmailTemplatesDelete(orgId, type, locale, clientId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminEmailApi#adminEmailTemplatesDelete");
@@ -66,6 +68,8 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **type** | **String**|  | |
+| **locale** | **String**|  | [optional] |
+| **clientId** | **String**|  | [optional] |
 
 ### Return type
 
@@ -88,7 +92,7 @@ public class Example {
 
 <a id="adminEmailTemplatesGet"></a>
 # **adminEmailTemplatesGet**
-> EmailTemplate adminEmailTemplatesGet(orgId, type)
+> EmailTemplate adminEmailTemplatesGet(orgId, type, locale, clientId)
 
 Get an email template (custom or built-in default)
 
@@ -120,8 +124,10 @@ public class Example {
     AdminEmailApi apiInstance = new AdminEmailApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String type = "type_example"; // String | 
+    String locale = "locale_example"; // String | Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language
+    String clientId = "clientId_example"; // String | Application variant (OAuth client_id); omit for the variant used by every application
     try {
-      EmailTemplate result = apiInstance.adminEmailTemplatesGet(orgId, type);
+      EmailTemplate result = apiInstance.adminEmailTemplatesGet(orgId, type, locale, clientId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminEmailApi#adminEmailTemplatesGet");
@@ -140,6 +146,8 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **type** | **String**|  | |
+| **locale** | **String**| Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language | [optional] |
+| **clientId** | **String**| Application variant (OAuth client_id); omit for the variant used by every application | [optional] |
 
 ### Return type
 
@@ -310,6 +318,8 @@ public class Example {
 > EmailTemplate adminEmailTemplatesUpsert(orgId, type)
 
 Create or replace the custom email template for a type
+
+Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
 
 ### Example
 ```java

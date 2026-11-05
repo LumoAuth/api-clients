@@ -60,6 +60,56 @@ open class AdminOAuthClientsAPI {
     }
 
     /**
+     Get an OAuth client's login and consent page branding
+     
+     - parameter orgId: (path)  
+     - parameter clientId: (path)  
+     - returns: AdminClientsGetBrandingResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func adminClientsGetBranding(orgId: String, clientId: String) async throws -> AdminClientsGetBrandingResponse {
+        return try await adminClientsGetBrandingWithRequestBuilder(orgId: orgId, clientId: clientId).execute().body
+    }
+
+    /**
+     Get an OAuth client's login and consent page branding
+     - GET /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding
+     - Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter clientId: (path)  
+     - returns: RequestBuilder<AdminClientsGetBrandingResponse> 
+     */
+    open class func adminClientsGetBrandingWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<AdminClientsGetBrandingResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let clientIdPreEscape = "\(APIHelper.mapValueToPathItem(clientId))"
+        let clientIdPostEscape = clientIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{clientId}", with: clientIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AdminClientsGetBrandingResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      Create an OAuth client
      
      - parameter orgId: (path)  
@@ -393,6 +443,57 @@ open class AdminOAuthClientsAPI {
     }
 
     /**
+     Change keys of an OAuth client's login and/or consent page branding
+     
+     - parameter orgId: (path)  
+     - parameter clientId: (path)  
+     - parameter adminClientsGetBrandingResponseData: (body)  (optional)
+     - returns: PatchAdminClientsUpdateBrandingResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func patchAdminClientsUpdateBranding(orgId: String, clientId: String, adminClientsGetBrandingResponseData: AdminClientsGetBrandingResponseData? = nil) async throws -> PatchAdminClientsUpdateBrandingResponse {
+        return try await patchAdminClientsUpdateBrandingWithRequestBuilder(orgId: orgId, clientId: clientId, adminClientsGetBrandingResponseData: adminClientsGetBrandingResponseData).execute().body
+    }
+
+    /**
+     Change keys of an OAuth client's login and/or consent page branding
+     - PATCH /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter clientId: (path)  
+     - parameter adminClientsGetBrandingResponseData: (body)  (optional)
+     - returns: RequestBuilder<PatchAdminClientsUpdateBrandingResponse> 
+     */
+    open class func patchAdminClientsUpdateBrandingWithRequestBuilder(orgId: String, clientId: String, adminClientsGetBrandingResponseData: AdminClientsGetBrandingResponseData? = nil) -> RequestBuilder<PatchAdminClientsUpdateBrandingResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let clientIdPreEscape = "\(APIHelper.mapValueToPathItem(clientId))"
+        let clientIdPostEscape = clientIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{clientId}", with: clientIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminClientsGetBrandingResponseData)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<PatchAdminClientsUpdateBrandingResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      Update an OAuth client
      
      - parameter orgId: (path)  
@@ -439,6 +540,57 @@ open class AdminOAuthClientsAPI {
         let localVariableRequestBuilder: RequestBuilder<UpdateClientResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Replace an OAuth client's login and/or consent page branding
+     
+     - parameter orgId: (path)  
+     - parameter clientId: (path)  
+     - parameter putAdminClientsUpdateBrandingRequest: (body)  (optional)
+     - returns: PutAdminClientsUpdateBrandingResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func putAdminClientsUpdateBranding(orgId: String, clientId: String, putAdminClientsUpdateBrandingRequest: PutAdminClientsUpdateBrandingRequest? = nil) async throws -> PutAdminClientsUpdateBrandingResponse {
+        return try await putAdminClientsUpdateBrandingWithRequestBuilder(orgId: orgId, clientId: clientId, putAdminClientsUpdateBrandingRequest: putAdminClientsUpdateBrandingRequest).execute().body
+    }
+
+    /**
+     Replace an OAuth client's login and/or consent page branding
+     - PUT /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter clientId: (path)  
+     - parameter putAdminClientsUpdateBrandingRequest: (body)  (optional)
+     - returns: RequestBuilder<PutAdminClientsUpdateBrandingResponse> 
+     */
+    open class func putAdminClientsUpdateBrandingWithRequestBuilder(orgId: String, clientId: String, putAdminClientsUpdateBrandingRequest: PutAdminClientsUpdateBrandingRequest? = nil) -> RequestBuilder<PutAdminClientsUpdateBrandingResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let clientIdPreEscape = "\(APIHelper.mapValueToPathItem(clientId))"
+        let clientIdPostEscape = clientIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{clientId}", with: clientIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminClientsUpdateBrandingRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<PutAdminClientsUpdateBrandingResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**

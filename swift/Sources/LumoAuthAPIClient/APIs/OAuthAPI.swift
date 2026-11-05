@@ -348,45 +348,6 @@ open class OAuthAPI {
     }
 
     /**
-     Passkey login entry point
-     
-     - parameter orgId: (path)  
-     - returns: Void
-     */
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func passkeyLogin(orgId: String) async throws {
-        return try await passkeyLoginWithRequestBuilder(orgId: orgId).execute().body
-    }
-
-    /**
-     Passkey login entry point
-     - GET /orgs/{orgId}/api/v1/oauth/passkey-login
-     - Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-     - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
-     */
-    open class func passkeyLoginWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
-        var localVariablePath = "/orgs/{orgId}/api/v1/oauth/passkey-login"
-        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
-        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
-        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
-
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
-
-        let localVariableNillableHeaders: [String: Any?] = [
-            :
-        ]
-
-        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
-
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
-
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
-    }
-
-    /**
      Dynamic client registration (RFC 7591 / OIDC DCR)
      
      - parameter orgId: (path)  
@@ -679,45 +640,6 @@ open class OAuthAPI {
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
         let localVariableRequestBuilder: RequestBuilder<String>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
-
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
-    }
-
-    /**
-     Hosted login form submission
-     
-     - parameter orgId: (path)  
-     - returns: Void
-     */
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func submitLogin(orgId: String) async throws {
-        return try await submitLoginWithRequestBuilder(orgId: orgId).execute().body
-    }
-
-    /**
-     Hosted login form submission
-     - POST /orgs/{orgId}/api/v1/oauth/login/submit
-     - Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-     - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
-     */
-    open class func submitLoginWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
-        var localVariablePath = "/orgs/{orgId}/api/v1/oauth/login/submit"
-        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
-        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
-        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
-
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
-
-        let localVariableNillableHeaders: [String: Any?] = [
-            :
-        ]
-
-        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
-
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }

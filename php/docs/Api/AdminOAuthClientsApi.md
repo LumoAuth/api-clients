@@ -5,6 +5,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
 | [**adminClientsCimdCheck()**](AdminOAuthClientsApi.md#adminClientsCimdCheck) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document |
+| [**adminClientsGetBranding()**](AdminOAuthClientsApi.md#adminClientsGetBranding) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Get an OAuth client&#39;s login and consent page branding |
 | [**createClient()**](AdminOAuthClientsApi.md#createClient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client |
 | [**deleteClient()**](AdminOAuthClientsApi.md#deleteClient) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client |
 | [**disableClient()**](AdminOAuthClientsApi.md#disableClient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client |
@@ -12,7 +13,9 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | [**getClient()**](AdminOAuthClientsApi.md#getClient) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get an OAuth client |
 | [**listClientScopes()**](AdminOAuthClientsApi.md#listClientScopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | List the scopes granted to an OAuth client |
 | [**listClients()**](AdminOAuthClientsApi.md#listClients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List OAuth clients |
+| [**patchAdminClientsUpdateBranding()**](AdminOAuthClientsApi.md#patchAdminClientsUpdateBranding) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Change keys of an OAuth client&#39;s login and/or consent page branding |
 | [**patchClient()**](AdminOAuthClientsApi.md#patchClient) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client |
+| [**putAdminClientsUpdateBranding()**](AdminOAuthClientsApi.md#putAdminClientsUpdateBranding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client&#39;s login and/or consent page branding |
 | [**rotateClientSecret()**](AdminOAuthClientsApi.md#rotateClientSecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret |
 | [**setClientScopes()**](AdminOAuthClientsApi.md#setClientScopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client |
 | [**updateClient()**](AdminOAuthClientsApi.md#updateClient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client |
@@ -79,6 +82,73 @@ try {
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `adminClientsGetBranding()`
+
+```php
+adminClientsGetBranding($orgId, $clientId): \LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponse
+```
+
+Get an OAuth client's login and consent page branding
+
+Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\AdminOAuthClientsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$orgId = 'orgId_example'; // string
+$clientId = 'clientId_example'; // string
+
+try {
+    $result = $apiInstance->adminClientsGetBranding($orgId, $clientId);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AdminOAuthClientsApi->adminClientsGetBranding: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+| **clientId** | **string**|  | |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponse**](../Model/AdminClientsGetBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -536,6 +606,73 @@ try {
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
+## `patchAdminClientsUpdateBranding()`
+
+```php
+patchAdminClientsUpdateBranding($orgId, $clientId, $adminClientsGetBrandingResponseData): \LumoAuth\ApiClient\Model\PatchAdminClientsUpdateBrandingResponse
+```
+
+Change keys of an OAuth client's login and/or consent page branding
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\AdminOAuthClientsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$orgId = 'orgId_example'; // string
+$clientId = 'clientId_example'; // string
+$adminClientsGetBrandingResponseData = new \LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponseData(); // \LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponseData
+
+try {
+    $result = $apiInstance->patchAdminClientsUpdateBranding($orgId, $clientId, $adminClientsGetBrandingResponseData);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AdminOAuthClientsApi->patchAdminClientsUpdateBranding: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+| **clientId** | **string**|  | |
+| **adminClientsGetBrandingResponseData** | [**\LumoAuth\ApiClient\Model\AdminClientsGetBrandingResponseData**](../Model/AdminClientsGetBrandingResponseData.md)|  | [optional] |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\PatchAdminClientsUpdateBrandingResponse**](../Model/PatchAdminClientsUpdateBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
 ## `patchClient()`
 
 ```php
@@ -595,6 +732,73 @@ try {
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `putAdminClientsUpdateBranding()`
+
+```php
+putAdminClientsUpdateBranding($orgId, $clientId, $putAdminClientsUpdateBrandingRequest): \LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingResponse
+```
+
+Replace an OAuth client's login and/or consent page branding
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\AdminOAuthClientsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$orgId = 'orgId_example'; // string
+$clientId = 'clientId_example'; // string
+$putAdminClientsUpdateBrandingRequest = new \LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingRequest(); // \LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingRequest
+
+try {
+    $result = $apiInstance->putAdminClientsUpdateBranding($orgId, $clientId, $putAdminClientsUpdateBrandingRequest);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AdminOAuthClientsApi->putAdminClientsUpdateBranding: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+| **clientId** | **string**|  | |
+| **putAdminClientsUpdateBrandingRequest** | [**\LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingRequest**](../Model/PutAdminClientsUpdateBrandingRequest.md)|  | [optional] |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\PutAdminClientsUpdateBrandingResponse**](../Model/PutAdminClientsUpdateBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

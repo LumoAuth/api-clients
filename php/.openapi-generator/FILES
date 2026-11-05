@@ -88,6 +88,8 @@ docs/Model/AdminAuditLogsStatsResponseDataPeriod.md
 docs/Model/AdminClientTokensRevokeAllResponse.md
 docs/Model/AdminClientsCimdCheckRequest.md
 docs/Model/AdminClientsCimdCheckResponse.md
+docs/Model/AdminClientsGetBrandingResponse.md
+docs/Model/AdminClientsGetBrandingResponseData.md
 docs/Model/AdminEmailTemplatesListResponse.md
 docs/Model/AdminEmailTemplatesPreviewResponse.md
 docs/Model/AdminEmailTemplatesVariablesResponse.md
@@ -345,6 +347,7 @@ docs/Model/OrganizationRole.md
 docs/Model/PaginationMeta.md
 docs/Model/ParResponse.md
 docs/Model/PasskeyEnrollmentStarted.md
+docs/Model/PatchAdminClientsUpdateBrandingResponse.md
 docs/Model/Permission.md
 docs/Model/ProtectedResourceList.md
 docs/Model/ProtectedResourceMetadata.md
@@ -353,6 +356,8 @@ docs/Model/PutAbacAttributesUpdateResponse.md
 docs/Model/PutAbacPoliciesUpdateResponse.md
 docs/Model/PutAdminAgentsUpdateRequest.md
 docs/Model/PutAdminAgentsUpdateResponse.md
+docs/Model/PutAdminClientsUpdateBrandingRequest.md
+docs/Model/PutAdminClientsUpdateBrandingResponse.md
 docs/Model/PutAdminOrgMembersUpdateResponse.md
 docs/Model/PutAdminSettingsAuthenticationUpdateResponse.md
 docs/Model/PutAdminSettingsBrandingUpdateResponse.md
@@ -516,6 +521,8 @@ lib/Model/AdminAuditLogsStatsResponseDataPeriod.php
 lib/Model/AdminClientTokensRevokeAllResponse.php
 lib/Model/AdminClientsCimdCheckRequest.php
 lib/Model/AdminClientsCimdCheckResponse.php
+lib/Model/AdminClientsGetBrandingResponse.php
+lib/Model/AdminClientsGetBrandingResponseData.php
 lib/Model/AdminEmailTemplatesListResponse.php
 lib/Model/AdminEmailTemplatesPreviewResponse.php
 lib/Model/AdminEmailTemplatesVariablesResponse.php
@@ -774,6 +781,7 @@ lib/Model/OrganizationRole.php
 lib/Model/PaginationMeta.php
 lib/Model/ParResponse.php
 lib/Model/PasskeyEnrollmentStarted.php
+lib/Model/PatchAdminClientsUpdateBrandingResponse.php
 lib/Model/Permission.php
 lib/Model/ProtectedResourceList.php
 lib/Model/ProtectedResourceMetadata.php
@@ -782,6 +790,8 @@ lib/Model/PutAbacAttributesUpdateResponse.php
 lib/Model/PutAbacPoliciesUpdateResponse.php
 lib/Model/PutAdminAgentsUpdateRequest.php
 lib/Model/PutAdminAgentsUpdateResponse.php
+lib/Model/PutAdminClientsUpdateBrandingRequest.php
+lib/Model/PutAdminClientsUpdateBrandingResponse.php
 lib/Model/PutAdminOrgMembersUpdateResponse.php
 lib/Model/PutAdminSettingsAuthenticationUpdateResponse.php
 lib/Model/PutAdminSettingsBrandingUpdateResponse.php

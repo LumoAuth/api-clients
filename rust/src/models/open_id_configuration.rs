@@ -65,6 +65,8 @@ pub struct OpenIdConfiguration {
     pub request_object_signing_alg_values_supported: Option<Vec<String>>,
     #[serde(rename = "ui_locales_supported", skip_serializing_if = "Option::is_none")]
     pub ui_locales_supported: Option<Vec<String>>,
+    #[serde(rename = "prompt_values_supported", skip_serializing_if = "Option::is_none")]
+    pub prompt_values_supported: Option<Vec<String>>,
     /// The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
     #[serde(rename = "acr_values_supported", skip_serializing_if = "Option::is_none")]
     pub acr_values_supported: Option<Vec<String>>,
@@ -78,8 +80,6 @@ pub struct OpenIdConfiguration {
     pub require_pushed_authorization_requests: Option<bool>,
     #[serde(rename = "dpop_signing_alg_values_supported", skip_serializing_if = "Option::is_none")]
     pub dpop_signing_alg_values_supported: Option<Vec<String>>,
-    #[serde(rename = "tls_client_certificate_bound_access_tokens", skip_serializing_if = "Option::is_none")]
-    pub tls_client_certificate_bound_access_tokens: Option<bool>,
     #[serde(rename = "introspection_endpoint", skip_serializing_if = "Option::is_none")]
     pub introspection_endpoint: Option<String>,
     #[serde(rename = "introspection_endpoint_auth_methods_supported", skip_serializing_if = "Option::is_none")]
@@ -154,13 +154,13 @@ impl OpenIdConfiguration {
             require_signed_request_object: None,
             request_object_signing_alg_values_supported: None,
             ui_locales_supported: None,
+            prompt_values_supported: None,
             acr_values_supported: None,
             code_challenge_methods_supported: None,
             authorization_response_iss_parameter_supported: None,
             pushed_authorization_request_endpoint: None,
             require_pushed_authorization_requests: None,
             dpop_signing_alg_values_supported: None,
-            tls_client_certificate_bound_access_tokens: None,
             introspection_endpoint: None,
             introspection_endpoint_auth_methods_supported: None,
             revocation_endpoint: None,

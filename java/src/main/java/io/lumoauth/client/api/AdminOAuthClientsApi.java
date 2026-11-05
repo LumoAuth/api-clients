@@ -29,11 +29,16 @@ import java.io.IOException;
 
 import io.lumoauth.client.model.AdminClientsCimdCheckRequest;
 import io.lumoauth.client.model.AdminClientsCimdCheckResponse;
+import io.lumoauth.client.model.AdminClientsGetBrandingResponse;
+import io.lumoauth.client.model.AdminClientsGetBrandingResponseData;
 import io.lumoauth.client.model.CreateClientResponse;
 import io.lumoauth.client.model.GetClientResponse;
 import io.lumoauth.client.model.ListClientScopesResponse;
 import io.lumoauth.client.model.ListClientsResponse;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PatchAdminClientsUpdateBrandingResponse;
+import io.lumoauth.client.model.PutAdminClientsUpdateBrandingRequest;
+import io.lumoauth.client.model.PutAdminClientsUpdateBrandingResponse;
 import io.lumoauth.client.model.RotateClientSecretResponse;
 import io.lumoauth.client.model.SetClientScopesResponse;
 import io.lumoauth.client.model.UpdateClientResponse;
@@ -219,6 +224,147 @@ public class AdminOAuthClientsApi {
 
         okhttp3.Call localVarCall = adminClientsCimdCheckValidateBeforeCall(orgId, adminClientsCimdCheckRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminClientsCimdCheckResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for adminClientsGetBranding
+     * @param orgId  (required)
+     * @param clientId  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Branding of the application </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminClientsGetBrandingCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "clientId" + "}", localVarApiClient.escapeString(clientId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminClientsGetBrandingValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminClientsGetBranding(Async)");
+        }
+
+        // verify the required parameter 'clientId' is set
+        if (clientId == null) {
+            throw new ApiException("Missing the required parameter 'clientId' when calling adminClientsGetBranding(Async)");
+        }
+
+        return adminClientsGetBrandingCall(orgId, clientId, _callback);
+
+    }
+
+    /**
+     * Get an OAuth client&#39;s login and consent page branding
+     * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+     * @param orgId  (required)
+     * @param clientId  (required)
+     * @return AdminClientsGetBrandingResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Branding of the application </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminClientsGetBrandingResponse adminClientsGetBranding(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+        ApiResponse<AdminClientsGetBrandingResponse> localVarResp = adminClientsGetBrandingWithHttpInfo(orgId, clientId);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Get an OAuth client&#39;s login and consent page branding
+     * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+     * @param orgId  (required)
+     * @param clientId  (required)
+     * @return ApiResponse&lt;AdminClientsGetBrandingResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Branding of the application </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminClientsGetBrandingResponse> adminClientsGetBrandingWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+        okhttp3.Call localVarCall = adminClientsGetBrandingValidateBeforeCall(orgId, clientId, null);
+        Type localVarReturnType = new TypeToken<AdminClientsGetBrandingResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Get an OAuth client&#39;s login and consent page branding (asynchronously)
+     * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+     * @param orgId  (required)
+     * @param clientId  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Branding of the application </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminClientsGetBrandingAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<AdminClientsGetBrandingResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminClientsGetBrandingValidateBeforeCall(orgId, clientId, _callback);
+        Type localVarReturnType = new TypeToken<AdminClientsGetBrandingResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -1182,6 +1328,152 @@ public class AdminOAuthClientsApi {
         return localVarCall;
     }
     /**
+     * Build call for patchAdminClientsUpdateBranding
+     * @param orgId  (required)
+     * @param clientId  (required)
+     * @param adminClientsGetBrandingResponseData  (optional)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated branding </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call patchAdminClientsUpdateBrandingCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nullable AdminClientsGetBrandingResponseData adminClientsGetBrandingResponseData, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = adminClientsGetBrandingResponseData;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "clientId" + "}", localVarApiClient.escapeString(clientId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call patchAdminClientsUpdateBrandingValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nullable AdminClientsGetBrandingResponseData adminClientsGetBrandingResponseData, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminClientsUpdateBranding(Async)");
+        }
+
+        // verify the required parameter 'clientId' is set
+        if (clientId == null) {
+            throw new ApiException("Missing the required parameter 'clientId' when calling patchAdminClientsUpdateBranding(Async)");
+        }
+
+        return patchAdminClientsUpdateBrandingCall(orgId, clientId, adminClientsGetBrandingResponseData, _callback);
+
+    }
+
+    /**
+     * Change keys of an OAuth client&#39;s login and/or consent page branding
+     * 
+     * @param orgId  (required)
+     * @param clientId  (required)
+     * @param adminClientsGetBrandingResponseData  (optional)
+     * @return PatchAdminClientsUpdateBrandingResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated branding </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public PatchAdminClientsUpdateBrandingResponse patchAdminClientsUpdateBranding(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nullable AdminClientsGetBrandingResponseData adminClientsGetBrandingResponseData) throws ApiException {
+        ApiResponse<PatchAdminClientsUpdateBrandingResponse> localVarResp = patchAdminClientsUpdateBrandingWithHttpInfo(orgId, clientId, adminClientsGetBrandingResponseData);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Change keys of an OAuth client&#39;s login and/or consent page branding
+     * 
+     * @param orgId  (required)
+     * @param clientId  (required)
+     * @param adminClientsGetBrandingResponseData  (optional)
+     * @return ApiResponse&lt;PatchAdminClientsUpdateBrandingResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated branding </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<PatchAdminClientsUpdateBrandingResponse> patchAdminClientsUpdateBrandingWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nullable AdminClientsGetBrandingResponseData adminClientsGetBrandingResponseData) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminClientsUpdateBrandingValidateBeforeCall(orgId, clientId, adminClientsGetBrandingResponseData, null);
+        Type localVarReturnType = new TypeToken<PatchAdminClientsUpdateBrandingResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Change keys of an OAuth client&#39;s login and/or consent page branding (asynchronously)
+     * 
+     * @param orgId  (required)
+     * @param clientId  (required)
+     * @param adminClientsGetBrandingResponseData  (optional)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated branding </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call patchAdminClientsUpdateBrandingAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nullable AdminClientsGetBrandingResponseData adminClientsGetBrandingResponseData, final ApiCallback<PatchAdminClientsUpdateBrandingResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = patchAdminClientsUpdateBrandingValidateBeforeCall(orgId, clientId, adminClientsGetBrandingResponseData, _callback);
+        Type localVarReturnType = new TypeToken<PatchAdminClientsUpdateBrandingResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for patchClient
      * @param orgId  (required)
      * @param clientId  (required)
@@ -1319,6 +1611,152 @@ public class AdminOAuthClientsApi {
 
         okhttp3.Call localVarCall = patchClientValidateBeforeCall(orgId, clientId, _callback);
         Type localVarReturnType = new TypeToken<UpdateClientResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for putAdminClientsUpdateBranding
+     * @param orgId  (required)
+     * @param clientId  (required)
+     * @param putAdminClientsUpdateBrandingRequest  (optional)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated branding </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call putAdminClientsUpdateBrandingCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nullable PutAdminClientsUpdateBrandingRequest putAdminClientsUpdateBrandingRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = putAdminClientsUpdateBrandingRequest;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "clientId" + "}", localVarApiClient.escapeString(clientId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call putAdminClientsUpdateBrandingValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nullable PutAdminClientsUpdateBrandingRequest putAdminClientsUpdateBrandingRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling putAdminClientsUpdateBranding(Async)");
+        }
+
+        // verify the required parameter 'clientId' is set
+        if (clientId == null) {
+            throw new ApiException("Missing the required parameter 'clientId' when calling putAdminClientsUpdateBranding(Async)");
+        }
+
+        return putAdminClientsUpdateBrandingCall(orgId, clientId, putAdminClientsUpdateBrandingRequest, _callback);
+
+    }
+
+    /**
+     * Replace an OAuth client&#39;s login and/or consent page branding
+     * 
+     * @param orgId  (required)
+     * @param clientId  (required)
+     * @param putAdminClientsUpdateBrandingRequest  (optional)
+     * @return PutAdminClientsUpdateBrandingResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated branding </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public PutAdminClientsUpdateBrandingResponse putAdminClientsUpdateBranding(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nullable PutAdminClientsUpdateBrandingRequest putAdminClientsUpdateBrandingRequest) throws ApiException {
+        ApiResponse<PutAdminClientsUpdateBrandingResponse> localVarResp = putAdminClientsUpdateBrandingWithHttpInfo(orgId, clientId, putAdminClientsUpdateBrandingRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Replace an OAuth client&#39;s login and/or consent page branding
+     * 
+     * @param orgId  (required)
+     * @param clientId  (required)
+     * @param putAdminClientsUpdateBrandingRequest  (optional)
+     * @return ApiResponse&lt;PutAdminClientsUpdateBrandingResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated branding </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<PutAdminClientsUpdateBrandingResponse> putAdminClientsUpdateBrandingWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nullable PutAdminClientsUpdateBrandingRequest putAdminClientsUpdateBrandingRequest) throws ApiException {
+        okhttp3.Call localVarCall = putAdminClientsUpdateBrandingValidateBeforeCall(orgId, clientId, putAdminClientsUpdateBrandingRequest, null);
+        Type localVarReturnType = new TypeToken<PutAdminClientsUpdateBrandingResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Replace an OAuth client&#39;s login and/or consent page branding (asynchronously)
+     * 
+     * @param orgId  (required)
+     * @param clientId  (required)
+     * @param putAdminClientsUpdateBrandingRequest  (optional)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated branding </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call putAdminClientsUpdateBrandingAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nullable PutAdminClientsUpdateBrandingRequest putAdminClientsUpdateBrandingRequest, final ApiCallback<PutAdminClientsUpdateBrandingResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = putAdminClientsUpdateBrandingValidateBeforeCall(orgId, clientId, putAdminClientsUpdateBrandingRequest, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminClientsUpdateBrandingResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

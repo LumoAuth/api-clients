@@ -34,8 +34,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale"> (optional)</param>
+        /// <param name="clientId"> (optional)</param>
         /// <returns>MessageResponse</returns>
-        MessageResponse AdminEmailTemplatesDelete(string orgId, string type);
+        MessageResponse AdminEmailTemplatesDelete(string orgId, string type, string? locale = default, string? clientId = default);
 
         /// <summary>
         /// Remove the custom email template so the built-in default is used
@@ -46,16 +48,20 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale"> (optional)</param>
+        /// <param name="clientId"> (optional)</param>
         /// <returns>ApiResponse of MessageResponse</returns>
-        ApiResponse<MessageResponse> AdminEmailTemplatesDeleteWithHttpInfo(string orgId, string type);
+        ApiResponse<MessageResponse> AdminEmailTemplatesDeleteWithHttpInfo(string orgId, string type, string? locale = default, string? clientId = default);
         /// <summary>
         /// Get an email template (custom or built-in default)
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale">Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)</param>
+        /// <param name="clientId">Application variant (OAuth client_id); omit for the variant used by every application (optional)</param>
         /// <returns>EmailTemplate</returns>
-        EmailTemplate AdminEmailTemplatesGet(string orgId, string type);
+        EmailTemplate AdminEmailTemplatesGet(string orgId, string type, string? locale = default, string? clientId = default);
 
         /// <summary>
         /// Get an email template (custom or built-in default)
@@ -66,8 +72,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale">Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)</param>
+        /// <param name="clientId">Application variant (OAuth client_id); omit for the variant used by every application (optional)</param>
         /// <returns>ApiResponse of EmailTemplate</returns>
-        ApiResponse<EmailTemplate> AdminEmailTemplatesGetWithHttpInfo(string orgId, string type);
+        ApiResponse<EmailTemplate> AdminEmailTemplatesGetWithHttpInfo(string orgId, string type, string? locale = default, string? clientId = default);
         /// <summary>
         /// List every email template type with its current (custom or built-in) template
         /// </summary>
@@ -109,6 +117,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Create or replace the custom email template for a type
         /// </summary>
+        /// <remarks>
+        /// Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
@@ -119,7 +130,7 @@ namespace LumoAuth.ApiClient.Api
         /// Create or replace the custom email template for a type
         /// </summary>
         /// <remarks>
-        /// 
+        /// Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -164,9 +175,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale"> (optional)</param>
+        /// <param name="clientId"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MessageResponse</returns>
-        System.Threading.Tasks.Task<MessageResponse> AdminEmailTemplatesDeleteAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<MessageResponse> AdminEmailTemplatesDeleteAsync(string orgId, string type, string? locale = default, string? clientId = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove the custom email template so the built-in default is used
@@ -177,9 +190,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale"> (optional)</param>
+        /// <param name="clientId"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MessageResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminEmailTemplatesDeleteWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminEmailTemplatesDeleteWithHttpInfoAsync(string orgId, string type, string? locale = default, string? clientId = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Get an email template (custom or built-in default)
         /// </summary>
@@ -189,9 +204,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale">Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)</param>
+        /// <param name="clientId">Application variant (OAuth client_id); omit for the variant used by every application (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of EmailTemplate</returns>
-        System.Threading.Tasks.Task<EmailTemplate> AdminEmailTemplatesGetAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<EmailTemplate> AdminEmailTemplatesGetAsync(string orgId, string type, string? locale = default, string? clientId = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get an email template (custom or built-in default)
@@ -202,9 +219,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale">Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)</param>
+        /// <param name="clientId">Application variant (OAuth client_id); omit for the variant used by every application (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (EmailTemplate)</returns>
-        System.Threading.Tasks.Task<ApiResponse<EmailTemplate>> AdminEmailTemplatesGetWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<EmailTemplate>> AdminEmailTemplatesGetWithHttpInfoAsync(string orgId, string type, string? locale = default, string? clientId = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// List every email template type with its current (custom or built-in) template
         /// </summary>
@@ -257,7 +276,7 @@ namespace LumoAuth.ApiClient.Api
         /// Create or replace the custom email template for a type
         /// </summary>
         /// <remarks>
-        /// 
+        /// Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -270,7 +289,7 @@ namespace LumoAuth.ApiClient.Api
         /// Create or replace the custom email template for a type
         /// </summary>
         /// <remarks>
-        /// 
+        /// Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -522,10 +541,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale"> (optional)</param>
+        /// <param name="clientId"> (optional)</param>
         /// <returns>MessageResponse</returns>
-        public MessageResponse AdminEmailTemplatesDelete(string orgId, string type)
+        public MessageResponse AdminEmailTemplatesDelete(string orgId, string type, string? locale = default, string? clientId = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminEmailTemplatesDeleteWithHttpInfo(orgId, type);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminEmailTemplatesDeleteWithHttpInfo(orgId, type, locale, clientId);
             return localVarResponse.Data;
         }
 
@@ -535,8 +556,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale"> (optional)</param>
+        /// <param name="clientId"> (optional)</param>
         /// <returns>ApiResponse of MessageResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminEmailTemplatesDeleteWithHttpInfo(string orgId, string type)
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminEmailTemplatesDeleteWithHttpInfo(string orgId, string type, string? locale = default, string? clientId = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -564,6 +587,14 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(type)); // path parameter
+            if (locale != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "locale", locale));
+            }
+            if (clientId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "client_id", clientId));
+            }
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -595,11 +626,13 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale"> (optional)</param>
+        /// <param name="clientId"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MessageResponse</returns>
-        public async System.Threading.Tasks.Task<MessageResponse> AdminEmailTemplatesDeleteAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<MessageResponse> AdminEmailTemplatesDeleteAsync(string orgId, string type, string? locale = default, string? clientId = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminEmailTemplatesDeleteWithHttpInfoAsync(orgId, type, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminEmailTemplatesDeleteWithHttpInfoAsync(orgId, type, locale, clientId, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -609,9 +642,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale"> (optional)</param>
+        /// <param name="clientId"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MessageResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminEmailTemplatesDeleteWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminEmailTemplatesDeleteWithHttpInfoAsync(string orgId, string type, string? locale = default, string? clientId = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -641,6 +676,14 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(type)); // path parameter
+            if (locale != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "locale", locale));
+            }
+            if (clientId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "client_id", clientId));
+            }
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -673,10 +716,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale">Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)</param>
+        /// <param name="clientId">Application variant (OAuth client_id); omit for the variant used by every application (optional)</param>
         /// <returns>EmailTemplate</returns>
-        public EmailTemplate AdminEmailTemplatesGet(string orgId, string type)
+        public EmailTemplate AdminEmailTemplatesGet(string orgId, string type, string? locale = default, string? clientId = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate> localVarResponse = AdminEmailTemplatesGetWithHttpInfo(orgId, type);
+            LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate> localVarResponse = AdminEmailTemplatesGetWithHttpInfo(orgId, type, locale, clientId);
             return localVarResponse.Data;
         }
 
@@ -686,8 +731,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale">Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)</param>
+        /// <param name="clientId">Application variant (OAuth client_id); omit for the variant used by every application (optional)</param>
         /// <returns>ApiResponse of EmailTemplate</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate> AdminEmailTemplatesGetWithHttpInfo(string orgId, string type)
+        public LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate> AdminEmailTemplatesGetWithHttpInfo(string orgId, string type, string? locale = default, string? clientId = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -715,6 +762,14 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(type)); // path parameter
+            if (locale != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "locale", locale));
+            }
+            if (clientId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "client_id", clientId));
+            }
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -746,11 +801,13 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale">Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)</param>
+        /// <param name="clientId">Application variant (OAuth client_id); omit for the variant used by every application (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of EmailTemplate</returns>
-        public async System.Threading.Tasks.Task<EmailTemplate> AdminEmailTemplatesGetAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<EmailTemplate> AdminEmailTemplatesGetAsync(string orgId, string type, string? locale = default, string? clientId = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate> localVarResponse = await AdminEmailTemplatesGetWithHttpInfoAsync(orgId, type, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate> localVarResponse = await AdminEmailTemplatesGetWithHttpInfoAsync(orgId, type, locale, clientId, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -760,9 +817,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
+        /// <param name="locale">Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)</param>
+        /// <param name="clientId">Application variant (OAuth client_id); omit for the variant used by every application (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (EmailTemplate)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate>> AdminEmailTemplatesGetWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate>> AdminEmailTemplatesGetWithHttpInfoAsync(string orgId, string type, string? locale = default, string? clientId = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -792,6 +851,14 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(type)); // path parameter
+            if (locale != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "locale", locale));
+            }
+            if (clientId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "client_id", clientId));
+            }
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1107,7 +1174,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create or replace the custom email template for a type 
+        /// Create or replace the custom email template for a type Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1120,7 +1187,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create or replace the custom email template for a type 
+        /// Create or replace the custom email template for a type Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1180,7 +1247,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create or replace the custom email template for a type 
+        /// Create or replace the custom email template for a type Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1194,7 +1261,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create or replace the custom email template for a type 
+        /// Create or replace the custom email template for a type Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

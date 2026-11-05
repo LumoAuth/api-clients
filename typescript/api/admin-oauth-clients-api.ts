@@ -26,6 +26,10 @@ import type { AdminClientsCimdCheckRequest } from '../models';
 // @ts-ignore
 import type { AdminClientsCimdCheckResponse } from '../models';
 // @ts-ignore
+import type { AdminClientsGetBrandingResponse } from '../models';
+// @ts-ignore
+import type { AdminClientsGetBrandingResponseData } from '../models';
+// @ts-ignore
 import type { CreateClientResponse } from '../models';
 // @ts-ignore
 import type { GetClientResponse } from '../models';
@@ -35,6 +39,12 @@ import type { ListClientScopesResponse } from '../models';
 import type { ListClientsResponse } from '../models';
 // @ts-ignore
 import type { MessageResponse } from '../models';
+// @ts-ignore
+import type { PatchAdminClientsUpdateBrandingResponse } from '../models';
+// @ts-ignore
+import type { PutAdminClientsUpdateBrandingRequest } from '../models';
+// @ts-ignore
+import type { PutAdminClientsUpdateBrandingResponse } from '../models';
 // @ts-ignore
 import type { RotateClientSecretResponse } from '../models';
 // @ts-ignore
@@ -88,6 +98,51 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(adminClientsCimdCheckRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+         * @summary Get an OAuth client\'s login and consent page branding
+         * @param {string} orgId 
+         * @param {string} clientId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminClientsGetBranding: async (orgId: string, clientId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminClientsGetBranding', 'orgId', orgId)
+            // verify required parameter 'clientId' is not null or undefined
+            assertParamExists('adminClientsGetBranding', 'clientId', clientId)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"clientId"}}`, encodeURIComponent(String(clientId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -403,6 +458,55 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
+         * @summary Change keys of an OAuth client\'s login and/or consent page branding
+         * @param {string} orgId 
+         * @param {string} clientId 
+         * @param {AdminClientsGetBrandingResponseData} [adminClientsGetBrandingResponseData] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAdminClientsUpdateBranding: async (orgId: string, clientId: string, adminClientsGetBrandingResponseData?: AdminClientsGetBrandingResponseData, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('patchAdminClientsUpdateBranding', 'orgId', orgId)
+            // verify required parameter 'clientId' is not null or undefined
+            assertParamExists('patchAdminClientsUpdateBranding', 'clientId', clientId)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"clientId"}}`, encodeURIComponent(String(clientId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminClientsGetBrandingResponseData, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
@@ -440,6 +544,55 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Replace an OAuth client\'s login and/or consent page branding
+         * @param {string} orgId 
+         * @param {string} clientId 
+         * @param {PutAdminClientsUpdateBrandingRequest} [putAdminClientsUpdateBrandingRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putAdminClientsUpdateBranding: async (orgId: string, clientId: string, putAdminClientsUpdateBrandingRequest?: PutAdminClientsUpdateBrandingRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('putAdminClientsUpdateBranding', 'orgId', orgId)
+            // verify required parameter 'clientId' is not null or undefined
+            assertParamExists('putAdminClientsUpdateBranding', 'clientId', clientId)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"clientId"}}`, encodeURIComponent(String(clientId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminClientsUpdateBrandingRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -606,6 +759,20 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+         * @summary Get an OAuth client\'s login and consent page branding
+         * @param {string} orgId 
+         * @param {string} clientId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminClientsGetBranding(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminClientsGetBrandingResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminClientsGetBranding(orgId, clientId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.adminClientsGetBranding']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Create an OAuth client
          * @param {string} orgId 
@@ -703,6 +870,21 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Change keys of an OAuth client\'s login and/or consent page branding
+         * @param {string} orgId 
+         * @param {string} clientId 
+         * @param {AdminClientsGetBrandingResponseData} [adminClientsGetBrandingResponseData] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchAdminClientsUpdateBranding(orgId: string, clientId: string, adminClientsGetBrandingResponseData?: AdminClientsGetBrandingResponseData, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PatchAdminClientsUpdateBrandingResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminClientsUpdateBranding(orgId, clientId, adminClientsGetBrandingResponseData, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.patchAdminClientsUpdateBranding']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Update an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
@@ -713,6 +895,21 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchClient(orgId, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.patchClient']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Replace an OAuth client\'s login and/or consent page branding
+         * @param {string} orgId 
+         * @param {string} clientId 
+         * @param {PutAdminClientsUpdateBrandingRequest} [putAdminClientsUpdateBrandingRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putAdminClientsUpdateBranding(orgId: string, clientId: string, putAdminClientsUpdateBrandingRequest?: PutAdminClientsUpdateBrandingRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminClientsUpdateBrandingResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminClientsUpdateBranding(orgId, clientId, putAdminClientsUpdateBrandingRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.putAdminClientsUpdateBranding']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -776,6 +973,16 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
          */
         adminClientsCimdCheck(requestParameters: AdminOAuthClientsApiAdminClientsCimdCheckRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminClientsCimdCheckResponse> {
             return localVarFp.adminClientsCimdCheck(requestParameters.orgId, requestParameters.adminClientsCimdCheckRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+         * @summary Get an OAuth client\'s login and consent page branding
+         * @param {AdminOAuthClientsApiAdminClientsGetBrandingRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminClientsGetBranding(requestParameters: AdminOAuthClientsApiAdminClientsGetBrandingRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminClientsGetBrandingResponse> {
+            return localVarFp.adminClientsGetBranding(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -849,6 +1056,16 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Change keys of an OAuth client\'s login and/or consent page branding
+         * @param {AdminOAuthClientsApiPatchAdminClientsUpdateBrandingRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAdminClientsUpdateBranding(requestParameters: AdminOAuthClientsApiPatchAdminClientsUpdateBrandingRequest, options?: RawAxiosRequestConfig): AxiosPromise<PatchAdminClientsUpdateBrandingResponse> {
+            return localVarFp.patchAdminClientsUpdateBranding(requestParameters.orgId, requestParameters.clientId, requestParameters.adminClientsGetBrandingResponseData, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Update an OAuth client
          * @param {AdminOAuthClientsApiPatchClientRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -856,6 +1073,16 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
          */
         patchClient(requestParameters: AdminOAuthClientsApiPatchClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse> {
             return localVarFp.patchClient(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Replace an OAuth client\'s login and/or consent page branding
+         * @param {AdminOAuthClientsApiPutAdminClientsUpdateBrandingRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putAdminClientsUpdateBranding(requestParameters: AdminOAuthClientsApiPutAdminClientsUpdateBrandingRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminClientsUpdateBrandingResponse> {
+            return localVarFp.putAdminClientsUpdateBranding(requestParameters.orgId, requestParameters.clientId, requestParameters.putAdminClientsUpdateBrandingRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -905,6 +1132,16 @@ export interface AdminOAuthClientsApiInterface {
      * @memberof AdminOAuthClientsApiInterface
      */
     adminClientsCimdCheck(requestParameters: AdminOAuthClientsApiAdminClientsCimdCheckRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminClientsCimdCheckResponse>;
+
+    /**
+     * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+     * @summary Get an OAuth client\'s login and consent page branding
+     * @param {AdminOAuthClientsApiAdminClientsGetBrandingRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminOAuthClientsApiInterface
+     */
+    adminClientsGetBranding(requestParameters: AdminOAuthClientsApiAdminClientsGetBrandingRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminClientsGetBrandingResponse>;
 
     /**
      * 
@@ -978,6 +1215,16 @@ export interface AdminOAuthClientsApiInterface {
 
     /**
      * 
+     * @summary Change keys of an OAuth client\'s login and/or consent page branding
+     * @param {AdminOAuthClientsApiPatchAdminClientsUpdateBrandingRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminOAuthClientsApiInterface
+     */
+    patchAdminClientsUpdateBranding(requestParameters: AdminOAuthClientsApiPatchAdminClientsUpdateBrandingRequest, options?: RawAxiosRequestConfig): AxiosPromise<PatchAdminClientsUpdateBrandingResponse>;
+
+    /**
+     * 
      * @summary Update an OAuth client
      * @param {AdminOAuthClientsApiPatchClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -985,6 +1232,16 @@ export interface AdminOAuthClientsApiInterface {
      * @memberof AdminOAuthClientsApiInterface
      */
     patchClient(requestParameters: AdminOAuthClientsApiPatchClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse>;
+
+    /**
+     * 
+     * @summary Replace an OAuth client\'s login and/or consent page branding
+     * @param {AdminOAuthClientsApiPutAdminClientsUpdateBrandingRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminOAuthClientsApiInterface
+     */
+    putAdminClientsUpdateBranding(requestParameters: AdminOAuthClientsApiPutAdminClientsUpdateBrandingRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminClientsUpdateBrandingResponse>;
 
     /**
      * 
@@ -1037,6 +1294,27 @@ export interface AdminOAuthClientsApiAdminClientsCimdCheckRequest {
      * @memberof AdminOAuthClientsApiAdminClientsCimdCheck
      */
     readonly adminClientsCimdCheckRequest: AdminClientsCimdCheckRequest
+}
+
+/**
+ * Request parameters for adminClientsGetBranding operation in AdminOAuthClientsApi.
+ * @export
+ * @interface AdminOAuthClientsApiAdminClientsGetBrandingRequest
+ */
+export interface AdminOAuthClientsApiAdminClientsGetBrandingRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminOAuthClientsApiAdminClientsGetBranding
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminOAuthClientsApiAdminClientsGetBranding
+     */
+    readonly clientId: string
 }
 
 /**
@@ -1173,6 +1451,34 @@ export interface AdminOAuthClientsApiListClientsRequest {
 }
 
 /**
+ * Request parameters for patchAdminClientsUpdateBranding operation in AdminOAuthClientsApi.
+ * @export
+ * @interface AdminOAuthClientsApiPatchAdminClientsUpdateBrandingRequest
+ */
+export interface AdminOAuthClientsApiPatchAdminClientsUpdateBrandingRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminOAuthClientsApiPatchAdminClientsUpdateBranding
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminOAuthClientsApiPatchAdminClientsUpdateBranding
+     */
+    readonly clientId: string
+
+    /**
+     * 
+     * @type {AdminClientsGetBrandingResponseData}
+     * @memberof AdminOAuthClientsApiPatchAdminClientsUpdateBranding
+     */
+    readonly adminClientsGetBrandingResponseData?: AdminClientsGetBrandingResponseData
+}
+
+/**
  * Request parameters for patchClient operation in AdminOAuthClientsApi.
  * @export
  * @interface AdminOAuthClientsApiPatchClientRequest
@@ -1191,6 +1497,34 @@ export interface AdminOAuthClientsApiPatchClientRequest {
      * @memberof AdminOAuthClientsApiPatchClient
      */
     readonly clientId: string
+}
+
+/**
+ * Request parameters for putAdminClientsUpdateBranding operation in AdminOAuthClientsApi.
+ * @export
+ * @interface AdminOAuthClientsApiPutAdminClientsUpdateBrandingRequest
+ */
+export interface AdminOAuthClientsApiPutAdminClientsUpdateBrandingRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminOAuthClientsApiPutAdminClientsUpdateBranding
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminOAuthClientsApiPutAdminClientsUpdateBranding
+     */
+    readonly clientId: string
+
+    /**
+     * 
+     * @type {PutAdminClientsUpdateBrandingRequest}
+     * @memberof AdminOAuthClientsApiPutAdminClientsUpdateBranding
+     */
+    readonly putAdminClientsUpdateBrandingRequest?: PutAdminClientsUpdateBrandingRequest
 }
 
 /**
@@ -1273,6 +1607,18 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
      */
     public adminClientsCimdCheck(requestParameters: AdminOAuthClientsApiAdminClientsCimdCheckRequest, options?: RawAxiosRequestConfig) {
         return AdminOAuthClientsApiFp(this.configuration).adminClientsCimdCheck(requestParameters.orgId, requestParameters.adminClientsCimdCheckRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+     * @summary Get an OAuth client\'s login and consent page branding
+     * @param {AdminOAuthClientsApiAdminClientsGetBrandingRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminOAuthClientsApi
+     */
+    public adminClientsGetBranding(requestParameters: AdminOAuthClientsApiAdminClientsGetBrandingRequest, options?: RawAxiosRequestConfig) {
+        return AdminOAuthClientsApiFp(this.configuration).adminClientsGetBranding(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1361,6 +1707,18 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
 
     /**
      * 
+     * @summary Change keys of an OAuth client\'s login and/or consent page branding
+     * @param {AdminOAuthClientsApiPatchAdminClientsUpdateBrandingRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminOAuthClientsApi
+     */
+    public patchAdminClientsUpdateBranding(requestParameters: AdminOAuthClientsApiPatchAdminClientsUpdateBrandingRequest, options?: RawAxiosRequestConfig) {
+        return AdminOAuthClientsApiFp(this.configuration).patchAdminClientsUpdateBranding(requestParameters.orgId, requestParameters.clientId, requestParameters.adminClientsGetBrandingResponseData, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Update an OAuth client
      * @param {AdminOAuthClientsApiPatchClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1369,6 +1727,18 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
      */
     public patchClient(requestParameters: AdminOAuthClientsApiPatchClientRequest, options?: RawAxiosRequestConfig) {
         return AdminOAuthClientsApiFp(this.configuration).patchClient(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Replace an OAuth client\'s login and/or consent page branding
+     * @param {AdminOAuthClientsApiPutAdminClientsUpdateBrandingRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminOAuthClientsApi
+     */
+    public putAdminClientsUpdateBranding(requestParameters: AdminOAuthClientsApiPutAdminClientsUpdateBrandingRequest, options?: RawAxiosRequestConfig) {
+        return AdminOAuthClientsApiFp(this.configuration).putAdminClientsUpdateBranding(requestParameters.orgId, requestParameters.clientId, requestParameters.putAdminClientsUpdateBrandingRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

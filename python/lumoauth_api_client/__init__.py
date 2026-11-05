@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 
 # Define package exports
 __all__ = [
@@ -115,6 +115,8 @@ __all__ = [
     "AdminClientTokensRevokeAllResponse",
     "AdminClientsCimdCheckRequest",
     "AdminClientsCimdCheckResponse",
+    "AdminClientsGetBrandingResponse",
+    "AdminClientsGetBrandingResponseData",
     "AdminEmailTemplatesListResponse",
     "AdminEmailTemplatesPreviewResponse",
     "AdminEmailTemplatesVariablesResponse",
@@ -372,6 +374,7 @@ __all__ = [
     "PaginationMeta",
     "ParResponse",
     "PasskeyEnrollmentStarted",
+    "PatchAdminClientsUpdateBrandingResponse",
     "Permission",
     "ProtectedResourceList",
     "ProtectedResourceMetadata",
@@ -380,6 +383,8 @@ __all__ = [
     "PutAbacPoliciesUpdateResponse",
     "PutAdminAgentsUpdateRequest",
     "PutAdminAgentsUpdateResponse",
+    "PutAdminClientsUpdateBrandingRequest",
+    "PutAdminClientsUpdateBrandingResponse",
     "PutAdminOrgMembersUpdateResponse",
     "PutAdminSettingsAuthenticationUpdateResponse",
     "PutAdminSettingsBrandingUpdateResponse",
@@ -555,6 +560,8 @@ from lumoauth_api_client.models.admin_audit_logs_stats_response_data_period impo
 from lumoauth_api_client.models.admin_client_tokens_revoke_all_response import AdminClientTokensRevokeAllResponse as AdminClientTokensRevokeAllResponse
 from lumoauth_api_client.models.admin_clients_cimd_check_request import AdminClientsCimdCheckRequest as AdminClientsCimdCheckRequest
 from lumoauth_api_client.models.admin_clients_cimd_check_response import AdminClientsCimdCheckResponse as AdminClientsCimdCheckResponse
+from lumoauth_api_client.models.admin_clients_get_branding_response import AdminClientsGetBrandingResponse as AdminClientsGetBrandingResponse
+from lumoauth_api_client.models.admin_clients_get_branding_response_data import AdminClientsGetBrandingResponseData as AdminClientsGetBrandingResponseData
 from lumoauth_api_client.models.admin_email_templates_list_response import AdminEmailTemplatesListResponse as AdminEmailTemplatesListResponse
 from lumoauth_api_client.models.admin_email_templates_preview_response import AdminEmailTemplatesPreviewResponse as AdminEmailTemplatesPreviewResponse
 from lumoauth_api_client.models.admin_email_templates_variables_response import AdminEmailTemplatesVariablesResponse as AdminEmailTemplatesVariablesResponse
@@ -812,6 +819,7 @@ from lumoauth_api_client.models.organization_role import OrganizationRole as Org
 from lumoauth_api_client.models.pagination_meta import PaginationMeta as PaginationMeta
 from lumoauth_api_client.models.par_response import ParResponse as ParResponse
 from lumoauth_api_client.models.passkey_enrollment_started import PasskeyEnrollmentStarted as PasskeyEnrollmentStarted
+from lumoauth_api_client.models.patch_admin_clients_update_branding_response import PatchAdminClientsUpdateBrandingResponse as PatchAdminClientsUpdateBrandingResponse
 from lumoauth_api_client.models.permission import Permission as Permission
 from lumoauth_api_client.models.protected_resource_list import ProtectedResourceList as ProtectedResourceList
 from lumoauth_api_client.models.protected_resource_metadata import ProtectedResourceMetadata as ProtectedResourceMetadata
@@ -820,6 +828,8 @@ from lumoauth_api_client.models.put_abac_attributes_update_response import PutAb
 from lumoauth_api_client.models.put_abac_policies_update_response import PutAbacPoliciesUpdateResponse as PutAbacPoliciesUpdateResponse
 from lumoauth_api_client.models.put_admin_agents_update_request import PutAdminAgentsUpdateRequest as PutAdminAgentsUpdateRequest
 from lumoauth_api_client.models.put_admin_agents_update_response import PutAdminAgentsUpdateResponse as PutAdminAgentsUpdateResponse
+from lumoauth_api_client.models.put_admin_clients_update_branding_request import PutAdminClientsUpdateBrandingRequest as PutAdminClientsUpdateBrandingRequest
+from lumoauth_api_client.models.put_admin_clients_update_branding_response import PutAdminClientsUpdateBrandingResponse as PutAdminClientsUpdateBrandingResponse
 from lumoauth_api_client.models.put_admin_org_members_update_response import PutAdminOrgMembersUpdateResponse as PutAdminOrgMembersUpdateResponse
 from lumoauth_api_client.models.put_admin_settings_authentication_update_response import PutAdminSettingsAuthenticationUpdateResponse as PutAdminSettingsAuthenticationUpdateResponse
 from lumoauth_api_client.models.put_admin_settings_branding_update_response import PutAdminSettingsBrandingUpdateResponse as PutAdminSettingsBrandingUpdateResponse

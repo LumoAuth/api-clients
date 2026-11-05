@@ -55,7 +55,7 @@ import io.lumoauth.client.JSON;
 /**
  * Result of POST /admin/clients/cimd/check — how the authorization server sees a Client ID Metadata Document.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-30T07:09:37.528972290-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-05T14:43:02.247013037-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class CimdCheckResult {
   public static final String SERIALIZED_NAME_OK = "ok";
   @SerializedName(SERIALIZED_NAME_OK)

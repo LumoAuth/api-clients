@@ -33,7 +33,6 @@
 | **pushed_authorization_request_endpoint** | **String** |  | [optional] |
 | **require_pushed_authorization_requests** | **Boolean** |  | [optional] |
 | **dpop_signing_alg_values_supported** | **Array&lt;String&gt;** |  | [optional] |
-| **tls_client_certificate_bound_access_tokens** | **Boolean** |  | [optional] |
 | **backchannel_authentication_endpoint** | **String** |  | [optional] |
 | **backchannel_token_delivery_modes_supported** | **Array&lt;String&gt;** |  | [optional] |
 | **backchannel_user_code_parameter_supported** | **Boolean** |  | [optional] |
@@ -62,7 +61,7 @@ instance = LumoAuthApiClient::AuthorizationServerMetadata.new(
   token_endpoint_auth_methods_supported: null,
   token_endpoint_auth_signing_alg_values_supported: null,
   service_documentation: https://docs.lumoauth.dev,
-  ui_locales_supported: [&quot;en&quot;],
+  ui_locales_supported: [&quot;en&quot;,&quot;es&quot;,&quot;fr&quot;,&quot;de&quot;,&quot;pt-BR&quot;,&quot;it&quot;,&quot;nl&quot;,&quot;ja&quot;,&quot;ar&quot;],
   revocation_endpoint: null,
   revocation_endpoint_auth_methods_supported: null,
   introspection_endpoint: null,
@@ -78,7 +77,6 @@ instance = LumoAuthApiClient::AuthorizationServerMetadata.new(
   pushed_authorization_request_endpoint: null,
   require_pushed_authorization_requests: false,
   dpop_signing_alg_values_supported: null,
-  tls_client_certificate_bound_access_tokens: false,
   backchannel_authentication_endpoint: null,
   backchannel_token_delivery_modes_supported: [&quot;poll&quot;],
   backchannel_user_code_parameter_supported: false,

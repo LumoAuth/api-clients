@@ -67,6 +67,8 @@ module LumoAuthApiClient
 
     attr_accessor :ui_locales_supported
 
+    attr_accessor :prompt_values_supported
+
     # The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
     attr_accessor :acr_values_supported
 
@@ -79,8 +81,6 @@ module LumoAuthApiClient
     attr_accessor :require_pushed_authorization_requests
 
     attr_accessor :dpop_signing_alg_values_supported
-
-    attr_accessor :tls_client_certificate_bound_access_tokens
 
     attr_accessor :introspection_endpoint
 
@@ -154,13 +154,13 @@ module LumoAuthApiClient
         :'require_signed_request_object' => :'require_signed_request_object',
         :'request_object_signing_alg_values_supported' => :'request_object_signing_alg_values_supported',
         :'ui_locales_supported' => :'ui_locales_supported',
+        :'prompt_values_supported' => :'prompt_values_supported',
         :'acr_values_supported' => :'acr_values_supported',
         :'code_challenge_methods_supported' => :'code_challenge_methods_supported',
         :'authorization_response_iss_parameter_supported' => :'authorization_response_iss_parameter_supported',
         :'pushed_authorization_request_endpoint' => :'pushed_authorization_request_endpoint',
         :'require_pushed_authorization_requests' => :'require_pushed_authorization_requests',
         :'dpop_signing_alg_values_supported' => :'dpop_signing_alg_values_supported',
-        :'tls_client_certificate_bound_access_tokens' => :'tls_client_certificate_bound_access_tokens',
         :'introspection_endpoint' => :'introspection_endpoint',
         :'introspection_endpoint_auth_methods_supported' => :'introspection_endpoint_auth_methods_supported',
         :'revocation_endpoint' => :'revocation_endpoint',
@@ -222,13 +222,13 @@ module LumoAuthApiClient
         :'require_signed_request_object' => :'Boolean',
         :'request_object_signing_alg_values_supported' => :'Array<String>',
         :'ui_locales_supported' => :'Array<String>',
+        :'prompt_values_supported' => :'Array<String>',
         :'acr_values_supported' => :'Array<String>',
         :'code_challenge_methods_supported' => :'Array<String>',
         :'authorization_response_iss_parameter_supported' => :'Boolean',
         :'pushed_authorization_request_endpoint' => :'String',
         :'require_pushed_authorization_requests' => :'Boolean',
         :'dpop_signing_alg_values_supported' => :'Array<String>',
-        :'tls_client_certificate_bound_access_tokens' => :'Boolean',
         :'introspection_endpoint' => :'String',
         :'introspection_endpoint_auth_methods_supported' => :'Array<String>',
         :'revocation_endpoint' => :'String',
@@ -414,6 +414,12 @@ module LumoAuthApiClient
         end
       end
 
+      if attributes.key?(:'prompt_values_supported')
+        if (value = attributes[:'prompt_values_supported']).is_a?(Array)
+          self.prompt_values_supported = value
+        end
+      end
+
       if attributes.key?(:'acr_values_supported')
         if (value = attributes[:'acr_values_supported']).is_a?(Array)
           self.acr_values_supported = value
@@ -442,10 +448,6 @@ module LumoAuthApiClient
         if (value = attributes[:'dpop_signing_alg_values_supported']).is_a?(Array)
           self.dpop_signing_alg_values_supported = value
         end
-      end
-
-      if attributes.key?(:'tls_client_certificate_bound_access_tokens')
-        self.tls_client_certificate_bound_access_tokens = attributes[:'tls_client_certificate_bound_access_tokens']
       end
 
       if attributes.key?(:'introspection_endpoint')
@@ -689,13 +691,13 @@ module LumoAuthApiClient
           require_signed_request_object == o.require_signed_request_object &&
           request_object_signing_alg_values_supported == o.request_object_signing_alg_values_supported &&
           ui_locales_supported == o.ui_locales_supported &&
+          prompt_values_supported == o.prompt_values_supported &&
           acr_values_supported == o.acr_values_supported &&
           code_challenge_methods_supported == o.code_challenge_methods_supported &&
           authorization_response_iss_parameter_supported == o.authorization_response_iss_parameter_supported &&
           pushed_authorization_request_endpoint == o.pushed_authorization_request_endpoint &&
           require_pushed_authorization_requests == o.require_pushed_authorization_requests &&
           dpop_signing_alg_values_supported == o.dpop_signing_alg_values_supported &&
-          tls_client_certificate_bound_access_tokens == o.tls_client_certificate_bound_access_tokens &&
           introspection_endpoint == o.introspection_endpoint &&
           introspection_endpoint_auth_methods_supported == o.introspection_endpoint_auth_methods_supported &&
           revocation_endpoint == o.revocation_endpoint &&
@@ -727,7 +729,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [issuer, authorization_endpoint, token_endpoint, jwks_uri, response_types_supported, subject_types_supported, id_token_signing_alg_values_supported, userinfo_endpoint, registration_endpoint, scopes_supported, claims_supported, response_modes_supported, authorization_signing_alg_values_supported, grant_types_supported, device_authorization_endpoint, token_endpoint_auth_methods_supported, token_endpoint_auth_signing_alg_values_supported, claim_types_supported, claims_parameter_supported, request_parameter_supported, request_uri_parameter_supported, require_request_uri_registration, require_signed_request_object, request_object_signing_alg_values_supported, ui_locales_supported, acr_values_supported, code_challenge_methods_supported, authorization_response_iss_parameter_supported, pushed_authorization_request_endpoint, require_pushed_authorization_requests, dpop_signing_alg_values_supported, tls_client_certificate_bound_access_tokens, introspection_endpoint, introspection_endpoint_auth_methods_supported, revocation_endpoint, revocation_endpoint_auth_methods_supported, resource_indicators_supported, end_session_endpoint, check_session_iframe, frontchannel_logout_supported, frontchannel_logout_session_supported, backchannel_logout_supported, backchannel_logout_session_supported, backchannel_authentication_endpoint, backchannel_token_delivery_modes_supported, backchannel_user_code_parameter_supported, service_documentation, entity_profiles_supported, client_id_metadata_document_supported, authorization_grant_profiles_supported, op_policy_uri, op_tos_uri].hash
+      [issuer, authorization_endpoint, token_endpoint, jwks_uri, response_types_supported, subject_types_supported, id_token_signing_alg_values_supported, userinfo_endpoint, registration_endpoint, scopes_supported, claims_supported, response_modes_supported, authorization_signing_alg_values_supported, grant_types_supported, device_authorization_endpoint, token_endpoint_auth_methods_supported, token_endpoint_auth_signing_alg_values_supported, claim_types_supported, claims_parameter_supported, request_parameter_supported, request_uri_parameter_supported, require_request_uri_registration, require_signed_request_object, request_object_signing_alg_values_supported, ui_locales_supported, prompt_values_supported, acr_values_supported, code_challenge_methods_supported, authorization_response_iss_parameter_supported, pushed_authorization_request_endpoint, require_pushed_authorization_requests, dpop_signing_alg_values_supported, introspection_endpoint, introspection_endpoint_auth_methods_supported, revocation_endpoint, revocation_endpoint_auth_methods_supported, resource_indicators_supported, end_session_endpoint, check_session_iframe, frontchannel_logout_supported, frontchannel_logout_session_supported, backchannel_logout_supported, backchannel_logout_session_supported, backchannel_authentication_endpoint, backchannel_token_delivery_modes_supported, backchannel_user_code_parameter_supported, service_documentation, entity_profiles_supported, client_id_metadata_document_supported, authorization_grant_profiles_supported, op_policy_uri, op_tos_uri].hash
     end
 
     # Builds the object from hash

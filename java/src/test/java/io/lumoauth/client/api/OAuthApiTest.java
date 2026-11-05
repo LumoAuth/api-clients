@@ -152,20 +152,6 @@ public class OAuthApiTest {
     }
 
     /**
-     * Passkey login entry point
-     *
-     * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void passkeyLoginTest() throws ApiException {
-        String orgId = null;
-        api.passkeyLogin(orgId);
-        // TODO: test validations
-    }
-
-    /**
      * Dynamic client registration (RFC 7591 / OIDC DCR)
      *
      * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
@@ -263,20 +249,6 @@ public class OAuthApiTest {
     public void submitDeviceVerificationTest() throws ApiException {
         String orgId = null;
         String response = api.submitDeviceVerification(orgId);
-        // TODO: test validations
-    }
-
-    /**
-     * Hosted login form submission
-     *
-     * Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void submitLoginTest() throws ApiException {
-        String orgId = null;
-        api.submitLogin(orgId);
         // TODO: test validations
     }
 

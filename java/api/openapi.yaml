@@ -2206,6 +2206,117 @@ paths:
       x-accepts:
       - application/json
       - text/csv
+  /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding:
+    get:
+      description: Login settings use the same keys as the organization branding settings
+        (GET /settings/branding); a missing or null value means "same as the organization".
+      operationId: adminClientsGetBranding
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: clientId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminClientsGetBrandingResponse"
+          description: Branding of the application
+        "404":
+          description: OAuth client not found
+      summary: Get an OAuth client's login and consent page branding
+      tags:
+      - "Admin: OAuth Clients"
+      x-symfony-route: api_admin_clients_get_branding
+      x-accepts:
+      - application/json
+    patch:
+      operationId: patchAdminClientsUpdateBranding
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: clientId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminClientsGetBrandingResponseData"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PatchAdminClientsUpdateBrandingResponse"
+          description: Updated branding
+        "404":
+          description: OAuth client not found
+      summary: Change keys of an OAuth client's login and/or consent page branding
+      tags:
+      - "Admin: OAuth Clients"
+      x-symfony-route: api_admin_clients_update_branding
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+    put:
+      operationId: putAdminClientsUpdateBranding
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: clientId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminClientsUpdateBrandingRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PutAdminClientsUpdateBrandingResponse"
+          description: Updated branding
+        "404":
+          description: OAuth client not found
+      summary: Replace an OAuth client's login and/or consent page branding
+      tags:
+      - "Admin: OAuth Clients"
+      x-symfony-route: api_admin_clients_update_branding
+      x-content-type: application/json
+      x-accepts:
+      - application/json
   /orgs/{orgId}/api/v1/admin/clients/cimd/check:
     post:
       description: "Fetches and validates the metadata document at `client_id` exactly\
@@ -2619,6 +2730,20 @@ paths:
     delete:
       operationId: adminEmailTemplatesDelete
       parameters:
+      - explode: true
+        in: query
+        name: locale
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: client_id
+        required: false
+        schema:
+          type: string
+        style: form
       - explode: false
         in: path
         name: orgId
@@ -2651,6 +2776,24 @@ paths:
     get:
       operationId: adminEmailTemplatesGet
       parameters:
+      - description: "Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant\
+          \ used in every language"
+        explode: true
+        in: query
+        name: locale
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Application variant (OAuth client_id); omit for the variant used
+          by every application
+        explode: true
+        in: query
+        name: client_id
+        required: false
+        schema:
+          type: string
+        style: form
       - explode: false
         in: path
         name: orgId
@@ -2681,6 +2824,10 @@ paths:
       x-accepts:
       - application/json
     put:
+      description: "Body: subject, body_html, and optionally locale (BCP 47) and client_id\
+        \ to save a language- or application-specific version. Mails use the most\
+        \ specific version: application + language, application, language, then the\
+        \ default."
       operationId: adminEmailTemplatesUpsert
       parameters:
       - explode: false
@@ -10309,35 +10456,6 @@ paths:
       x-symfony-route: oauth_authorize
       x-accepts:
       - text/html
-  /orgs/{orgId}/api/v1/oauth/passkey-login:
-    get:
-      description: "Placeholder: flashes an informational message and redirects to\
-        \ the hosted login page. Not a JSON API."
-      operationId: passkeyLogin
-      parameters:
-      - explode: false
-        in: path
-        name: orgId
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "302":
-          description: Redirect to the hosted login page.
-          headers:
-            Location:
-              explode: false
-              schema:
-                type: string
-              style: simple
-      security: []
-      summary: Passkey login entry point
-      tags:
-      - OAuth
-      x-symfony-route: oauth_passkey_login
-      x-accepts:
-      - application/json
   /orgs/{orgId}/api/v1/oauth/login/json:
     post:
       description: Establishes the end-user browser session from JSON credentials
@@ -10378,41 +10496,6 @@ paths:
       tags:
       - OAuth
       x-symfony-route: api_auth_login_json
-      x-accepts:
-      - application/json
-  /orgs/{orgId}/api/v1/oauth/login/submit:
-    post:
-      description: "Receives the hosted OAuth login page's form (email, password,\
-        \ csrf token and the authorization request parameters). Every outcome — success,\
-        \ invalid credentials, locked account, captcha or CSRF failure — answers with\
-        \ the same redirect back to /oauth/authorize, which re-renders the login page\
-        \ or continues the flow. Not a JSON API."
-      operationId: submitLogin
-      parameters:
-      - explode: false
-        in: path
-        name: orgId
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "302":
-          description: "Redirect to /oauth/authorize with the original client_id,\
-            \ redirect_uri, state, scope, PKCE and nonce parameters."
-          headers:
-            Location:
-              explode: false
-              schema:
-                type: string
-              style: simple
-        "404":
-          description: Unknown or inactive organization.
-      security: []
-      summary: Hosted login form submission
-      tags:
-      - OAuth
-      x-symfony-route: oauth_login_submit
       x-accepts:
       - application/json
   /orgs/{orgId}/api/v1/oauth/org-select:
@@ -15059,6 +15142,90 @@ components:
           type: array
         meta:
           $ref: "#/components/schemas/AdminAuditLogsExportResponseMeta"
+      type: object
+    AdminClientsGetBrandingResponseData:
+      example:
+        login:
+          key: ""
+        consent:
+          key: ""
+      properties:
+        login:
+          additionalProperties: true
+          type: object
+        consent:
+          additionalProperties: true
+          type: object
+      type: object
+    AdminClientsGetBrandingResponse:
+      example:
+        data:
+          login:
+            key: ""
+          consent:
+            key: ""
+      properties:
+        data:
+          $ref: "#/components/schemas/AdminClientsGetBrandingResponseData"
+      type: object
+    PutAdminClientsUpdateBrandingRequest:
+      example:
+        login:
+          enabled: true
+          primary_color: "#0f62fe"
+          welcome_title: Welcome to Acme Shop
+          layout: split-right
+        consent:
+          enabled: true
+          title: Allow Acme Shop
+      properties:
+        login:
+          additionalProperties: true
+          example:
+            enabled: true
+            primary_color: "#0f62fe"
+            welcome_title: Welcome to Acme Shop
+            layout: split-right
+          type: object
+        consent:
+          additionalProperties: true
+          example:
+            enabled: true
+            title: Allow Acme Shop
+          type: object
+      type: object
+    PutAdminClientsUpdateBrandingResponse:
+      example:
+        data:
+          key: ""
+        rejected:
+        - rejected
+        - rejected
+      properties:
+        data:
+          additionalProperties: true
+          type: object
+        rejected:
+          description: Keys whose value was refused by validation and not saved
+          items:
+            type: string
+          type: array
+      type: object
+    PatchAdminClientsUpdateBrandingResponse:
+      example:
+        data:
+          key: ""
+        rejected:
+        - rejected
+        - rejected
+      properties:
+        data:
+          additionalProperties: true
+          type: object
+        rejected:
+          items:
+            type: string
+          type: array
       type: object
     AdminClientsCimdCheckRequest:
       example:
@@ -22588,7 +22755,6 @@ components:
         token_endpoint_auth_methods_supported:
         - token_endpoint_auth_methods_supported
         - token_endpoint_auth_methods_supported
-        tls_client_certificate_bound_access_tokens: false
         response_modes_supported:
         - response_modes_supported
         - response_modes_supported
@@ -22611,9 +22777,22 @@ components:
         - grant_types_supported
         ui_locales_supported:
         - en
+        - es
+        - fr
+        - de
+        - pt-BR
+        - it
+        - nl
+        - ja
+        - ar
         resource_indicators_supported: true
         authorization_grant_profiles_supported:
         - urn:ietf:params:oauth:grant-profile:id-jag
+        prompt_values_supported:
+        - none
+        - login
+        - consent
+        - create
         entity_profiles_supported:
         - user
         - ai_agent
@@ -22755,6 +22934,23 @@ components:
         ui_locales_supported:
           example:
           - en
+          - es
+          - fr
+          - de
+          - pt-BR
+          - it
+          - nl
+          - ja
+          - ar
+          items:
+            type: string
+          type: array
+        prompt_values_supported:
+          example:
+          - none
+          - login
+          - consent
+          - create
           items:
             type: string
           type: array
@@ -22783,9 +22979,6 @@ components:
           items:
             type: string
           type: array
-        tls_client_certificate_bound_access_tokens:
-          example: false
-          type: boolean
         introspection_endpoint:
           format: uri
           type: string
@@ -22895,7 +23088,6 @@ components:
         token_endpoint_auth_methods_supported:
         - token_endpoint_auth_methods_supported
         - token_endpoint_auth_methods_supported
-        tls_client_certificate_bound_access_tokens: false
         response_modes_supported:
         - response_modes_supported
         - response_modes_supported
@@ -22917,6 +23109,14 @@ components:
         - grant_types_supported
         ui_locales_supported:
         - en
+        - es
+        - fr
+        - de
+        - pt-BR
+        - it
+        - nl
+        - ja
+        - ar
         revocation_endpoint: https://openapi-generator.tech
         authorization_grant_profiles_supported:
         - urn:ietf:params:oauth:grant-profile:id-jag
@@ -22996,6 +23196,14 @@ components:
         ui_locales_supported:
           example:
           - en
+          - es
+          - fr
+          - de
+          - pt-BR
+          - it
+          - nl
+          - ja
+          - ar
           items:
             type: string
           type: array
@@ -23051,9 +23259,6 @@ components:
           items:
             type: string
           type: array
-        tls_client_certificate_bound_access_tokens:
-          example: false
-          type: boolean
         backchannel_authentication_endpoint:
           format: uri
           type: string

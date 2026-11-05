@@ -33,7 +33,6 @@ Name | Type | Description | Notes
 **PushedAuthorizationRequestEndpoint** | Pointer to **string** |  | [optional] 
 **RequirePushedAuthorizationRequests** | Pointer to **bool** |  | [optional] 
 **DpopSigningAlgValuesSupported** | Pointer to **[]string** |  | [optional] 
-**TlsClientCertificateBoundAccessTokens** | Pointer to **bool** |  | [optional] 
 **BackchannelAuthenticationEndpoint** | Pointer to **string** |  | [optional] 
 **BackchannelTokenDeliveryModesSupported** | Pointer to **[]string** |  | [optional] 
 **BackchannelUserCodeParameterSupported** | Pointer to **bool** |  | [optional] 
@@ -761,31 +760,6 @@ SetDpopSigningAlgValuesSupported sets DpopSigningAlgValuesSupported field to giv
 `func (o *AuthorizationServerMetadata) HasDpopSigningAlgValuesSupported() bool`
 
 HasDpopSigningAlgValuesSupported returns a boolean if a field has been set.
-
-### GetTlsClientCertificateBoundAccessTokens
-
-`func (o *AuthorizationServerMetadata) GetTlsClientCertificateBoundAccessTokens() bool`
-
-GetTlsClientCertificateBoundAccessTokens returns the TlsClientCertificateBoundAccessTokens field if non-nil, zero value otherwise.
-
-### GetTlsClientCertificateBoundAccessTokensOk
-
-`func (o *AuthorizationServerMetadata) GetTlsClientCertificateBoundAccessTokensOk() (*bool, bool)`
-
-GetTlsClientCertificateBoundAccessTokensOk returns a tuple with the TlsClientCertificateBoundAccessTokens field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTlsClientCertificateBoundAccessTokens
-
-`func (o *AuthorizationServerMetadata) SetTlsClientCertificateBoundAccessTokens(v bool)`
-
-SetTlsClientCertificateBoundAccessTokens sets TlsClientCertificateBoundAccessTokens field to given value.
-
-### HasTlsClientCertificateBoundAccessTokens
-
-`func (o *AuthorizationServerMetadata) HasTlsClientCertificateBoundAccessTokens() bool`
-
-HasTlsClientCertificateBoundAccessTokens returns a boolean if a field has been set.
 
 ### GetBackchannelAuthenticationEndpoint
 

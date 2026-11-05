@@ -70,7 +70,6 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="pushedAuthorizationRequestEndpoint">pushedAuthorizationRequestEndpoint.</param>
         /// <param name="requirePushedAuthorizationRequests">requirePushedAuthorizationRequests.</param>
         /// <param name="dpopSigningAlgValuesSupported">dpopSigningAlgValuesSupported.</param>
-        /// <param name="tlsClientCertificateBoundAccessTokens">tlsClientCertificateBoundAccessTokens.</param>
         /// <param name="backchannelAuthenticationEndpoint">backchannelAuthenticationEndpoint.</param>
         /// <param name="backchannelTokenDeliveryModesSupported">backchannelTokenDeliveryModesSupported.</param>
         /// <param name="backchannelUserCodeParameterSupported">backchannelUserCodeParameterSupported.</param>
@@ -79,7 +78,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="authorizationGrantProfilesSupported">Only when the organization accepts ID-JAGs..</param>
         /// <param name="opPolicyUri">Only when configured..</param>
         /// <param name="opTosUri">Only when configured..</param>
-        public AuthorizationServerMetadata(string issuer = default, string authorizationEndpoint = default, string tokenEndpoint = default, List<string> responseTypesSupported = default, string jwksUri = default, string registrationEndpoint = default, List<string> scopesSupported = default, List<string> responseModesSupported = default, List<string> authorizationSigningAlgValuesSupported = default, List<string> grantTypesSupported = default, List<string> tokenEndpointAuthMethodsSupported = default, List<string> tokenEndpointAuthSigningAlgValuesSupported = default, string serviceDocumentation = default, List<string> uiLocalesSupported = default, string revocationEndpoint = default, List<string> revocationEndpointAuthMethodsSupported = default, string introspectionEndpoint = default, List<string> introspectionEndpointAuthMethodsSupported = default, List<string> codeChallengeMethodsSupported = default, bool authorizationResponseIssParameterSupported = default, bool requestParameterSupported = default, bool requestUriParameterSupported = default, bool requireRequestUriRegistration = default, bool requireSignedRequestObject = default, List<string> requestObjectSigningAlgValuesSupported = default, string deviceAuthorizationEndpoint = default, string pushedAuthorizationRequestEndpoint = default, bool requirePushedAuthorizationRequests = default, List<string> dpopSigningAlgValuesSupported = default, bool tlsClientCertificateBoundAccessTokens = default, string backchannelAuthenticationEndpoint = default, List<string> backchannelTokenDeliveryModesSupported = default, bool backchannelUserCodeParameterSupported = default, List<string> entityProfilesSupported = default, bool clientIdMetadataDocumentSupported = default, List<string> authorizationGrantProfilesSupported = default, string opPolicyUri = default, string opTosUri = default)
+        public AuthorizationServerMetadata(string issuer = default, string authorizationEndpoint = default, string tokenEndpoint = default, List<string> responseTypesSupported = default, string jwksUri = default, string registrationEndpoint = default, List<string> scopesSupported = default, List<string> responseModesSupported = default, List<string> authorizationSigningAlgValuesSupported = default, List<string> grantTypesSupported = default, List<string> tokenEndpointAuthMethodsSupported = default, List<string> tokenEndpointAuthSigningAlgValuesSupported = default, string serviceDocumentation = default, List<string> uiLocalesSupported = default, string revocationEndpoint = default, List<string> revocationEndpointAuthMethodsSupported = default, string introspectionEndpoint = default, List<string> introspectionEndpointAuthMethodsSupported = default, List<string> codeChallengeMethodsSupported = default, bool authorizationResponseIssParameterSupported = default, bool requestParameterSupported = default, bool requestUriParameterSupported = default, bool requireRequestUriRegistration = default, bool requireSignedRequestObject = default, List<string> requestObjectSigningAlgValuesSupported = default, string deviceAuthorizationEndpoint = default, string pushedAuthorizationRequestEndpoint = default, bool requirePushedAuthorizationRequests = default, List<string> dpopSigningAlgValuesSupported = default, string backchannelAuthenticationEndpoint = default, List<string> backchannelTokenDeliveryModesSupported = default, bool backchannelUserCodeParameterSupported = default, List<string> entityProfilesSupported = default, bool clientIdMetadataDocumentSupported = default, List<string> authorizationGrantProfilesSupported = default, string opPolicyUri = default, string opTosUri = default)
         {
             // to ensure "issuer" is required (not null)
             if (issuer == null)
@@ -135,7 +134,6 @@ namespace LumoAuth.ApiClient.Model
             this.PushedAuthorizationRequestEndpoint = pushedAuthorizationRequestEndpoint;
             this.RequirePushedAuthorizationRequests = requirePushedAuthorizationRequests;
             this.DpopSigningAlgValuesSupported = dpopSigningAlgValuesSupported;
-            this.TlsClientCertificateBoundAccessTokens = tlsClientCertificateBoundAccessTokens;
             this.BackchannelAuthenticationEndpoint = backchannelAuthenticationEndpoint;
             this.BackchannelTokenDeliveryModesSupported = backchannelTokenDeliveryModesSupported;
             this.BackchannelUserCodeParameterSupported = backchannelUserCodeParameterSupported;
@@ -236,7 +234,7 @@ namespace LumoAuth.ApiClient.Model
         /// Gets or Sets UiLocalesSupported
         /// </summary>
         /*
-        <example>[&quot;en&quot;]</example>
+        <example>[&quot;en&quot;,&quot;es&quot;,&quot;fr&quot;,&quot;de&quot;,&quot;pt-BR&quot;,&quot;it&quot;,&quot;nl&quot;,&quot;ja&quot;,&quot;ar&quot;]</example>
         */
         [DataMember(Name = "ui_locales_supported", EmitDefaultValue = false)]
         public List<string> UiLocalesSupported { get; set; }
@@ -353,15 +351,6 @@ namespace LumoAuth.ApiClient.Model
         public List<string> DpopSigningAlgValuesSupported { get; set; }
 
         /// <summary>
-        /// Gets or Sets TlsClientCertificateBoundAccessTokens
-        /// </summary>
-        /*
-        <example>false</example>
-        */
-        [DataMember(Name = "tls_client_certificate_bound_access_tokens", EmitDefaultValue = true)]
-        public bool TlsClientCertificateBoundAccessTokens { get; set; }
-
-        /// <summary>
         /// Gets or Sets BackchannelAuthenticationEndpoint
         /// </summary>
         [DataMember(Name = "backchannel_authentication_endpoint", EmitDefaultValue = false)]
@@ -462,7 +451,6 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  PushedAuthorizationRequestEndpoint: ").Append(PushedAuthorizationRequestEndpoint).Append("\n");
             sb.Append("  RequirePushedAuthorizationRequests: ").Append(RequirePushedAuthorizationRequests).Append("\n");
             sb.Append("  DpopSigningAlgValuesSupported: ").Append(DpopSigningAlgValuesSupported).Append("\n");
-            sb.Append("  TlsClientCertificateBoundAccessTokens: ").Append(TlsClientCertificateBoundAccessTokens).Append("\n");
             sb.Append("  BackchannelAuthenticationEndpoint: ").Append(BackchannelAuthenticationEndpoint).Append("\n");
             sb.Append("  BackchannelTokenDeliveryModesSupported: ").Append(BackchannelTokenDeliveryModesSupported).Append("\n");
             sb.Append("  BackchannelUserCodeParameterSupported: ").Append(BackchannelUserCodeParameterSupported).Append("\n");

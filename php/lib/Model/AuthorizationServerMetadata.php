@@ -87,7 +87,6 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'pushedAuthorizationRequestEndpoint' => 'string',
         'requirePushedAuthorizationRequests' => 'bool',
         'dpopSigningAlgValuesSupported' => 'string[]',
-        'tlsClientCertificateBoundAccessTokens' => 'bool',
         'backchannelAuthenticationEndpoint' => 'string',
         'backchannelTokenDeliveryModesSupported' => 'string[]',
         'backchannelUserCodeParameterSupported' => 'bool',
@@ -135,7 +134,6 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'pushedAuthorizationRequestEndpoint' => 'uri',
         'requirePushedAuthorizationRequests' => null,
         'dpopSigningAlgValuesSupported' => null,
-        'tlsClientCertificateBoundAccessTokens' => null,
         'backchannelAuthenticationEndpoint' => 'uri',
         'backchannelTokenDeliveryModesSupported' => null,
         'backchannelUserCodeParameterSupported' => null,
@@ -181,7 +179,6 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'pushedAuthorizationRequestEndpoint' => false,
         'requirePushedAuthorizationRequests' => false,
         'dpopSigningAlgValuesSupported' => false,
-        'tlsClientCertificateBoundAccessTokens' => false,
         'backchannelAuthenticationEndpoint' => false,
         'backchannelTokenDeliveryModesSupported' => false,
         'backchannelUserCodeParameterSupported' => false,
@@ -307,7 +304,6 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'pushedAuthorizationRequestEndpoint' => 'pushed_authorization_request_endpoint',
         'requirePushedAuthorizationRequests' => 'require_pushed_authorization_requests',
         'dpopSigningAlgValuesSupported' => 'dpop_signing_alg_values_supported',
-        'tlsClientCertificateBoundAccessTokens' => 'tls_client_certificate_bound_access_tokens',
         'backchannelAuthenticationEndpoint' => 'backchannel_authentication_endpoint',
         'backchannelTokenDeliveryModesSupported' => 'backchannel_token_delivery_modes_supported',
         'backchannelUserCodeParameterSupported' => 'backchannel_user_code_parameter_supported',
@@ -353,7 +349,6 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'pushedAuthorizationRequestEndpoint' => 'setPushedAuthorizationRequestEndpoint',
         'requirePushedAuthorizationRequests' => 'setRequirePushedAuthorizationRequests',
         'dpopSigningAlgValuesSupported' => 'setDpopSigningAlgValuesSupported',
-        'tlsClientCertificateBoundAccessTokens' => 'setTlsClientCertificateBoundAccessTokens',
         'backchannelAuthenticationEndpoint' => 'setBackchannelAuthenticationEndpoint',
         'backchannelTokenDeliveryModesSupported' => 'setBackchannelTokenDeliveryModesSupported',
         'backchannelUserCodeParameterSupported' => 'setBackchannelUserCodeParameterSupported',
@@ -399,7 +394,6 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'pushedAuthorizationRequestEndpoint' => 'getPushedAuthorizationRequestEndpoint',
         'requirePushedAuthorizationRequests' => 'getRequirePushedAuthorizationRequests',
         'dpopSigningAlgValuesSupported' => 'getDpopSigningAlgValuesSupported',
-        'tlsClientCertificateBoundAccessTokens' => 'getTlsClientCertificateBoundAccessTokens',
         'backchannelAuthenticationEndpoint' => 'getBackchannelAuthenticationEndpoint',
         'backchannelTokenDeliveryModesSupported' => 'getBackchannelTokenDeliveryModesSupported',
         'backchannelUserCodeParameterSupported' => 'getBackchannelUserCodeParameterSupported',
@@ -496,7 +490,6 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         $this->setIfExists('pushedAuthorizationRequestEndpoint', $data ?? [], null);
         $this->setIfExists('requirePushedAuthorizationRequests', $data ?? [], null);
         $this->setIfExists('dpopSigningAlgValuesSupported', $data ?? [], null);
-        $this->setIfExists('tlsClientCertificateBoundAccessTokens', $data ?? [], null);
         $this->setIfExists('backchannelAuthenticationEndpoint', $data ?? [], null);
         $this->setIfExists('backchannelTokenDeliveryModesSupported', $data ?? [], null);
         $this->setIfExists('backchannelUserCodeParameterSupported', $data ?? [], null);
@@ -1343,33 +1336,6 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
             throw new \InvalidArgumentException('non-nullable dpopSigningAlgValuesSupported cannot be null');
         }
         $this->container['dpopSigningAlgValuesSupported'] = $dpopSigningAlgValuesSupported;
-
-        return $this;
-    }
-
-    /**
-     * Gets tlsClientCertificateBoundAccessTokens
-     *
-     * @return bool|null
-     */
-    public function getTlsClientCertificateBoundAccessTokens()
-    {
-        return $this->container['tlsClientCertificateBoundAccessTokens'];
-    }
-
-    /**
-     * Sets tlsClientCertificateBoundAccessTokens
-     *
-     * @param bool|null $tlsClientCertificateBoundAccessTokens tlsClientCertificateBoundAccessTokens
-     *
-     * @return self
-     */
-    public function setTlsClientCertificateBoundAccessTokens($tlsClientCertificateBoundAccessTokens)
-    {
-        if (is_null($tlsClientCertificateBoundAccessTokens)) {
-            throw new \InvalidArgumentException('non-nullable tlsClientCertificateBoundAccessTokens cannot be null');
-        }
-        $this->container['tlsClientCertificateBoundAccessTokens'] = $tlsClientCertificateBoundAccessTokens;
 
         return $this;
     }

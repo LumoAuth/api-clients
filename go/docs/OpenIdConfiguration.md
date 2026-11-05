@@ -29,13 +29,13 @@ Name | Type | Description | Notes
 **RequireSignedRequestObject** | Pointer to **bool** |  | [optional] 
 **RequestObjectSigningAlgValuesSupported** | Pointer to **[]string** |  | [optional] 
 **UiLocalesSupported** | Pointer to **[]string** |  | [optional] 
+**PromptValuesSupported** | Pointer to **[]string** |  | [optional] 
 **AcrValuesSupported** | Pointer to **[]string** | The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings. | [optional] 
 **CodeChallengeMethodsSupported** | Pointer to **[]string** |  | [optional] 
 **AuthorizationResponseIssParameterSupported** | Pointer to **bool** |  | [optional] 
 **PushedAuthorizationRequestEndpoint** | Pointer to **string** |  | [optional] 
 **RequirePushedAuthorizationRequests** | Pointer to **bool** |  | [optional] 
 **DpopSigningAlgValuesSupported** | Pointer to **[]string** |  | [optional] 
-**TlsClientCertificateBoundAccessTokens** | Pointer to **bool** |  | [optional] 
 **IntrospectionEndpoint** | Pointer to **string** |  | [optional] 
 **IntrospectionEndpointAuthMethodsSupported** | Pointer to **[]string** |  | [optional] 
 **RevocationEndpoint** | Pointer to **string** |  | [optional] 
@@ -666,6 +666,31 @@ SetUiLocalesSupported sets UiLocalesSupported field to given value.
 
 HasUiLocalesSupported returns a boolean if a field has been set.
 
+### GetPromptValuesSupported
+
+`func (o *OpenIdConfiguration) GetPromptValuesSupported() []string`
+
+GetPromptValuesSupported returns the PromptValuesSupported field if non-nil, zero value otherwise.
+
+### GetPromptValuesSupportedOk
+
+`func (o *OpenIdConfiguration) GetPromptValuesSupportedOk() (*[]string, bool)`
+
+GetPromptValuesSupportedOk returns a tuple with the PromptValuesSupported field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPromptValuesSupported
+
+`func (o *OpenIdConfiguration) SetPromptValuesSupported(v []string)`
+
+SetPromptValuesSupported sets PromptValuesSupported field to given value.
+
+### HasPromptValuesSupported
+
+`func (o *OpenIdConfiguration) HasPromptValuesSupported() bool`
+
+HasPromptValuesSupported returns a boolean if a field has been set.
+
 ### GetAcrValuesSupported
 
 `func (o *OpenIdConfiguration) GetAcrValuesSupported() []string`
@@ -815,31 +840,6 @@ SetDpopSigningAlgValuesSupported sets DpopSigningAlgValuesSupported field to giv
 `func (o *OpenIdConfiguration) HasDpopSigningAlgValuesSupported() bool`
 
 HasDpopSigningAlgValuesSupported returns a boolean if a field has been set.
-
-### GetTlsClientCertificateBoundAccessTokens
-
-`func (o *OpenIdConfiguration) GetTlsClientCertificateBoundAccessTokens() bool`
-
-GetTlsClientCertificateBoundAccessTokens returns the TlsClientCertificateBoundAccessTokens field if non-nil, zero value otherwise.
-
-### GetTlsClientCertificateBoundAccessTokensOk
-
-`func (o *OpenIdConfiguration) GetTlsClientCertificateBoundAccessTokensOk() (*bool, bool)`
-
-GetTlsClientCertificateBoundAccessTokensOk returns a tuple with the TlsClientCertificateBoundAccessTokens field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTlsClientCertificateBoundAccessTokens
-
-`func (o *OpenIdConfiguration) SetTlsClientCertificateBoundAccessTokens(v bool)`
-
-SetTlsClientCertificateBoundAccessTokens sets TlsClientCertificateBoundAccessTokens field to given value.
-
-### HasTlsClientCertificateBoundAccessTokens
-
-`func (o *OpenIdConfiguration) HasTlsClientCertificateBoundAccessTokens() bool`
-
-HasTlsClientCertificateBoundAccessTokens returns a boolean if a field has been set.
 
 ### GetIntrospectionEndpoint
 

@@ -34,7 +34,6 @@ Name | Type | Description | Notes
 **pushed_authorization_request_endpoint** | **str** |  | [optional] 
 **require_pushed_authorization_requests** | **bool** |  | [optional] 
 **dpop_signing_alg_values_supported** | **List[str]** |  | [optional] 
-**tls_client_certificate_bound_access_tokens** | **bool** |  | [optional] 
 **backchannel_authentication_endpoint** | **str** |  | [optional] 
 **backchannel_token_delivery_modes_supported** | **List[str]** |  | [optional] 
 **backchannel_user_code_parameter_supported** | **bool** |  | [optional] 

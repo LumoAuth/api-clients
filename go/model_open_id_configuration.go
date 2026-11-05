@@ -49,6 +49,7 @@ type OpenIdConfiguration struct {
 	RequireSignedRequestObject *bool `json:"require_signed_request_object,omitempty"`
 	RequestObjectSigningAlgValuesSupported []string `json:"request_object_signing_alg_values_supported,omitempty"`
 	UiLocalesSupported []string `json:"ui_locales_supported,omitempty"`
+	PromptValuesSupported []string `json:"prompt_values_supported,omitempty"`
 	// The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty"`
 	CodeChallengeMethodsSupported []string `json:"code_challenge_methods_supported,omitempty"`
@@ -56,7 +57,6 @@ type OpenIdConfiguration struct {
 	PushedAuthorizationRequestEndpoint *string `json:"pushed_authorization_request_endpoint,omitempty"`
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty"`
 	DpopSigningAlgValuesSupported []string `json:"dpop_signing_alg_values_supported,omitempty"`
-	TlsClientCertificateBoundAccessTokens *bool `json:"tls_client_certificate_bound_access_tokens,omitempty"`
 	IntrospectionEndpoint *string `json:"introspection_endpoint,omitempty"`
 	IntrospectionEndpointAuthMethodsSupported []string `json:"introspection_endpoint_auth_methods_supported,omitempty"`
 	RevocationEndpoint *string `json:"revocation_endpoint,omitempty"`
@@ -853,6 +853,38 @@ func (o *OpenIdConfiguration) SetUiLocalesSupported(v []string) {
 	o.UiLocalesSupported = v
 }
 
+// GetPromptValuesSupported returns the PromptValuesSupported field value if set, zero value otherwise.
+func (o *OpenIdConfiguration) GetPromptValuesSupported() []string {
+	if o == nil || IsNil(o.PromptValuesSupported) {
+		var ret []string
+		return ret
+	}
+	return o.PromptValuesSupported
+}
+
+// GetPromptValuesSupportedOk returns a tuple with the PromptValuesSupported field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OpenIdConfiguration) GetPromptValuesSupportedOk() ([]string, bool) {
+	if o == nil || IsNil(o.PromptValuesSupported) {
+		return nil, false
+	}
+	return o.PromptValuesSupported, true
+}
+
+// HasPromptValuesSupported returns a boolean if a field has been set.
+func (o *OpenIdConfiguration) HasPromptValuesSupported() bool {
+	if o != nil && !IsNil(o.PromptValuesSupported) {
+		return true
+	}
+
+	return false
+}
+
+// SetPromptValuesSupported gets a reference to the given []string and assigns it to the PromptValuesSupported field.
+func (o *OpenIdConfiguration) SetPromptValuesSupported(v []string) {
+	o.PromptValuesSupported = v
+}
+
 // GetAcrValuesSupported returns the AcrValuesSupported field value if set, zero value otherwise.
 func (o *OpenIdConfiguration) GetAcrValuesSupported() []string {
 	if o == nil || IsNil(o.AcrValuesSupported) {
@@ -1043,38 +1075,6 @@ func (o *OpenIdConfiguration) HasDpopSigningAlgValuesSupported() bool {
 // SetDpopSigningAlgValuesSupported gets a reference to the given []string and assigns it to the DpopSigningAlgValuesSupported field.
 func (o *OpenIdConfiguration) SetDpopSigningAlgValuesSupported(v []string) {
 	o.DpopSigningAlgValuesSupported = v
-}
-
-// GetTlsClientCertificateBoundAccessTokens returns the TlsClientCertificateBoundAccessTokens field value if set, zero value otherwise.
-func (o *OpenIdConfiguration) GetTlsClientCertificateBoundAccessTokens() bool {
-	if o == nil || IsNil(o.TlsClientCertificateBoundAccessTokens) {
-		var ret bool
-		return ret
-	}
-	return *o.TlsClientCertificateBoundAccessTokens
-}
-
-// GetTlsClientCertificateBoundAccessTokensOk returns a tuple with the TlsClientCertificateBoundAccessTokens field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *OpenIdConfiguration) GetTlsClientCertificateBoundAccessTokensOk() (*bool, bool) {
-	if o == nil || IsNil(o.TlsClientCertificateBoundAccessTokens) {
-		return nil, false
-	}
-	return o.TlsClientCertificateBoundAccessTokens, true
-}
-
-// HasTlsClientCertificateBoundAccessTokens returns a boolean if a field has been set.
-func (o *OpenIdConfiguration) HasTlsClientCertificateBoundAccessTokens() bool {
-	if o != nil && !IsNil(o.TlsClientCertificateBoundAccessTokens) {
-		return true
-	}
-
-	return false
-}
-
-// SetTlsClientCertificateBoundAccessTokens gets a reference to the given bool and assigns it to the TlsClientCertificateBoundAccessTokens field.
-func (o *OpenIdConfiguration) SetTlsClientCertificateBoundAccessTokens(v bool) {
-	o.TlsClientCertificateBoundAccessTokens = &v
 }
 
 // GetIntrospectionEndpoint returns the IntrospectionEndpoint field value if set, zero value otherwise.
@@ -1788,6 +1788,9 @@ func (o OpenIdConfiguration) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UiLocalesSupported) {
 		toSerialize["ui_locales_supported"] = o.UiLocalesSupported
 	}
+	if !IsNil(o.PromptValuesSupported) {
+		toSerialize["prompt_values_supported"] = o.PromptValuesSupported
+	}
 	if !IsNil(o.AcrValuesSupported) {
 		toSerialize["acr_values_supported"] = o.AcrValuesSupported
 	}
@@ -1805,9 +1808,6 @@ func (o OpenIdConfiguration) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.DpopSigningAlgValuesSupported) {
 		toSerialize["dpop_signing_alg_values_supported"] = o.DpopSigningAlgValuesSupported
-	}
-	if !IsNil(o.TlsClientCertificateBoundAccessTokens) {
-		toSerialize["tls_client_certificate_bound_access_tokens"] = o.TlsClientCertificateBoundAccessTokens
 	}
 	if !IsNil(o.IntrospectionEndpoint) {
 		toSerialize["introspection_endpoint"] = o.IntrospectionEndpoint

@@ -13,7 +13,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminemailtemplatesdelete"></a>
 # **AdminEmailTemplatesDelete**
-> MessageResponse AdminEmailTemplatesDelete (string orgId, string type)
+> MessageResponse AdminEmailTemplatesDelete (string orgId, string type, string? locale = null, string? clientId = null)
 
 Remove the custom email template so the built-in default is used
 
@@ -47,11 +47,13 @@ namespace Example
             var apiInstance = new AdminEmailApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var type = "type_example";  // string | 
+            var locale = "locale_example";  // string? |  (optional) 
+            var clientId = "clientId_example";  // string? |  (optional) 
 
             try
             {
                 // Remove the custom email template so the built-in default is used
-                MessageResponse result = apiInstance.AdminEmailTemplatesDelete(orgId, type);
+                MessageResponse result = apiInstance.AdminEmailTemplatesDelete(orgId, type, locale, clientId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -72,7 +74,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Remove the custom email template so the built-in default is used
-    ApiResponse<MessageResponse> response = apiInstance.AdminEmailTemplatesDeleteWithHttpInfo(orgId, type);
+    ApiResponse<MessageResponse> response = apiInstance.AdminEmailTemplatesDeleteWithHttpInfo(orgId, type, locale, clientId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -91,6 +93,8 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **type** | **string** |  |  |
+| **locale** | **string?** |  | [optional]  |
+| **clientId** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -116,7 +120,7 @@ catch (ApiException e)
 
 <a id="adminemailtemplatesget"></a>
 # **AdminEmailTemplatesGet**
-> EmailTemplate AdminEmailTemplatesGet (string orgId, string type)
+> EmailTemplate AdminEmailTemplatesGet (string orgId, string type, string? locale = null, string? clientId = null)
 
 Get an email template (custom or built-in default)
 
@@ -150,11 +154,13 @@ namespace Example
             var apiInstance = new AdminEmailApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var type = "type_example";  // string | 
+            var locale = "locale_example";  // string? | Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional) 
+            var clientId = "clientId_example";  // string? | Application variant (OAuth client_id); omit for the variant used by every application (optional) 
 
             try
             {
                 // Get an email template (custom or built-in default)
-                EmailTemplate result = apiInstance.AdminEmailTemplatesGet(orgId, type);
+                EmailTemplate result = apiInstance.AdminEmailTemplatesGet(orgId, type, locale, clientId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -175,7 +181,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get an email template (custom or built-in default)
-    ApiResponse<EmailTemplate> response = apiInstance.AdminEmailTemplatesGetWithHttpInfo(orgId, type);
+    ApiResponse<EmailTemplate> response = apiInstance.AdminEmailTemplatesGetWithHttpInfo(orgId, type, locale, clientId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -194,6 +200,8 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **type** | **string** |  |  |
+| **locale** | **string?** | Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language | [optional]  |
+| **clientId** | **string?** | Application variant (OAuth client_id); omit for the variant used by every application | [optional]  |
 
 ### Return type
 
@@ -425,6 +433,8 @@ catch (ApiException e)
 > EmailTemplate AdminEmailTemplatesUpsert (string orgId, string type)
 
 Create or replace the custom email template for a type
+
+Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
 
 ### Example
 ```csharp

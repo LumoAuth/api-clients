@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 ## AdminEmailTemplatesDelete
 
-> MessageResponse AdminEmailTemplatesDelete(ctx, orgId, type_).Execute()
+> MessageResponse AdminEmailTemplatesDelete(ctx, orgId, type_).Locale(locale).ClientId(clientId).Execute()
 
 Remove the custom email template so the built-in default is used
 
@@ -34,10 +34,12 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	type_ := "type__example" // string | 
+	locale := "locale_example" // string |  (optional)
+	clientId := "clientId_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminEmailAPI.AdminEmailTemplatesDelete(context.Background(), orgId, type_).Execute()
+	resp, r, err := apiClient.AdminEmailAPI.AdminEmailTemplatesDelete(context.Background(), orgId, type_).Locale(locale).ClientId(clientId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminEmailAPI.AdminEmailTemplatesDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -65,6 +67,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **locale** | **string** |  | 
+ **clientId** | **string** |  | 
 
 ### Return type
 
@@ -86,7 +90,7 @@ Name | Type | Description  | Notes
 
 ## AdminEmailTemplatesGet
 
-> EmailTemplate AdminEmailTemplatesGet(ctx, orgId, type_).Execute()
+> EmailTemplate AdminEmailTemplatesGet(ctx, orgId, type_).Locale(locale).ClientId(clientId).Execute()
 
 Get an email template (custom or built-in default)
 
@@ -105,10 +109,12 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	type_ := "type__example" // string | 
+	locale := "locale_example" // string | Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
+	clientId := "clientId_example" // string | Application variant (OAuth client_id); omit for the variant used by every application (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminEmailAPI.AdminEmailTemplatesGet(context.Background(), orgId, type_).Execute()
+	resp, r, err := apiClient.AdminEmailAPI.AdminEmailTemplatesGet(context.Background(), orgId, type_).Locale(locale).ClientId(clientId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminEmailAPI.AdminEmailTemplatesGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -136,6 +142,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **locale** | **string** | Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language | 
+ **clientId** | **string** | Application variant (OAuth client_id); omit for the variant used by every application | 
 
 ### Return type
 
@@ -299,6 +307,8 @@ Name | Type | Description  | Notes
 > EmailTemplate AdminEmailTemplatesUpsert(ctx, orgId, type_).Execute()
 
 Create or replace the custom email template for a type
+
+
 
 ### Example
 

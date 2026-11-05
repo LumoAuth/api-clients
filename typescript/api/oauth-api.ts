@@ -343,40 +343,6 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-         * @summary Passkey login entry point
-         * @param {string} orgId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        passkeyLogin: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'orgId' is not null or undefined
-            assertParamExists('passkeyLogin', 'orgId', orgId)
-            const localVarPath = `/orgs/{orgId}/api/v1/oauth/passkey-login`
-                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
          * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
          * @param {string} orgId 
@@ -638,40 +604,6 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Receives the hosted OAuth login page\'s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-         * @summary Hosted login form submission
-         * @param {string} orgId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        submitLogin: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'orgId' is not null or undefined
-            assertParamExists('submitLogin', 'orgId', orgId)
-            const localVarPath = `/orgs/{orgId}/api/v1/oauth/login/submit`
-                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
          * @summary Programmatic (JSON) login for the authorization flow
          * @param {string} orgId 
@@ -893,19 +825,6 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-         * @summary Passkey login entry point
-         * @param {string} orgId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async passkeyLogin(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.passkeyLogin(orgId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OAuthApi.passkeyLogin']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
          * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
          * @param {string} orgId 
@@ -997,19 +916,6 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.submitDeviceVerification(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.submitDeviceVerification']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Receives the hosted OAuth login page\'s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-         * @summary Hosted login form submission
-         * @param {string} orgId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async submitLogin(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.submitLogin(orgId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OAuthApi.submitLogin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1142,16 +1048,6 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.par(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-         * @summary Passkey login entry point
-         * @param {OAuthApiPasskeyLoginRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        passkeyLogin(requestParameters: OAuthApiPasskeyLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.passkeyLogin(requestParameters.orgId, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
          * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
          * @param {OAuthApiRegisterClientRequest} requestParameters Request parameters.
@@ -1220,16 +1116,6 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
          */
         submitDeviceVerification(requestParameters: OAuthApiSubmitDeviceVerificationRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.submitDeviceVerification(requestParameters.orgId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Receives the hosted OAuth login page\'s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-         * @summary Hosted login form submission
-         * @param {OAuthApiSubmitLoginRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        submitLogin(requestParameters: OAuthApiSubmitLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.submitLogin(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
@@ -1351,16 +1237,6 @@ export interface OAuthApiInterface {
     par(requestParameters: OAuthApiParRequest, options?: RawAxiosRequestConfig): AxiosPromise<ParResponse>;
 
     /**
-     * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-     * @summary Passkey login entry point
-     * @param {OAuthApiPasskeyLoginRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OAuthApiInterface
-     */
-    passkeyLogin(requestParameters: OAuthApiPasskeyLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
-
-    /**
      * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
      * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
      * @param {OAuthApiRegisterClientRequest} requestParameters Request parameters.
@@ -1429,16 +1305,6 @@ export interface OAuthApiInterface {
      * @memberof OAuthApiInterface
      */
     submitDeviceVerification(requestParameters: OAuthApiSubmitDeviceVerificationRequest, options?: RawAxiosRequestConfig): AxiosPromise<string>;
-
-    /**
-     * Receives the hosted OAuth login page\'s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-     * @summary Hosted login form submission
-     * @param {OAuthApiSubmitLoginRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OAuthApiInterface
-     */
-    submitLogin(requestParameters: OAuthApiSubmitLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
@@ -1592,20 +1458,6 @@ export interface OAuthApiParRequest {
 }
 
 /**
- * Request parameters for passkeyLogin operation in OAuthApi.
- * @export
- * @interface OAuthApiPasskeyLoginRequest
- */
-export interface OAuthApiPasskeyLoginRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof OAuthApiPasskeyLogin
-     */
-    readonly orgId: string
-}
-
-/**
  * Request parameters for registerClient operation in OAuthApi.
  * @export
  * @interface OAuthApiRegisterClientRequest
@@ -1720,20 +1572,6 @@ export interface OAuthApiSubmitDeviceVerificationRequest {
      * 
      * @type {string}
      * @memberof OAuthApiSubmitDeviceVerification
-     */
-    readonly orgId: string
-}
-
-/**
- * Request parameters for submitLogin operation in OAuthApi.
- * @export
- * @interface OAuthApiSubmitLoginRequest
- */
-export interface OAuthApiSubmitLoginRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof OAuthApiSubmitLogin
      */
     readonly orgId: string
 }
@@ -1884,18 +1722,6 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-     * @summary Passkey login entry point
-     * @param {OAuthApiPasskeyLoginRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OAuthApi
-     */
-    public passkeyLogin(requestParameters: OAuthApiPasskeyLoginRequest, options?: RawAxiosRequestConfig) {
-        return OAuthApiFp(this.configuration).passkeyLogin(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
      * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
      * @param {OAuthApiRegisterClientRequest} requestParameters Request parameters.
@@ -1977,18 +1803,6 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
      */
     public submitDeviceVerification(requestParameters: OAuthApiSubmitDeviceVerificationRequest, options?: RawAxiosRequestConfig) {
         return OAuthApiFp(this.configuration).submitDeviceVerification(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Receives the hosted OAuth login page\'s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-     * @summary Hosted login form submission
-     * @param {OAuthApiSubmitLoginRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OAuthApi
-     */
-    public submitLogin(requestParameters: OAuthApiSubmitLoginRequest, options?: RawAxiosRequestConfig) {
-        return OAuthApiFp(this.configuration).submitLogin(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

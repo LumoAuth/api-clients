@@ -12,7 +12,6 @@ Method | HTTP request | Description
 [**GetOrgSelection**](OAuthAPI.md#GetOrgSelection) | **Get** /orgs/{orgId}/api/v1/oauth/org-select | Organization selector page
 [**Introspect**](OAuthAPI.md#Introspect) | **Post** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662)
 [**Par**](OAuthAPI.md#Par) | **Post** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126)
-[**PasskeyLogin**](OAuthAPI.md#PasskeyLogin) | **Get** /orgs/{orgId}/api/v1/oauth/passkey-login | Passkey login entry point
 [**RegisterClient**](OAuthAPI.md#RegisterClient) | **Post** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR)
 [**Revoke**](OAuthAPI.md#Revoke) | **Post** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009)
 [**SocialCallback**](OAuthAPI.md#SocialCallback) | **Get** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback
@@ -20,7 +19,6 @@ Method | HTTP request | Description
 [**SocialLogin**](OAuthAPI.md#SocialLogin) | **Get** /orgs/{orgId}/api/v1/oauth/social/{provider} | Start social / enterprise identity-provider login
 [**SubmitAuthorization**](OAuthAPI.md#SubmitAuthorization) | **Post** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint (form submission)
 [**SubmitDeviceVerification**](OAuthAPI.md#SubmitDeviceVerification) | **Post** /orgs/{orgId}/api/v1/oauth/device | Submit device verification
-[**SubmitLogin**](OAuthAPI.md#SubmitLogin) | **Post** /orgs/{orgId}/api/v1/oauth/login/submit | Hosted login form submission
 [**SubmitLoginJson**](OAuthAPI.md#SubmitLoginJson) | **Post** /orgs/{orgId}/api/v1/oauth/login/json | Programmatic (JSON) login for the authorization flow
 [**SubmitOrgSelection**](OAuthAPI.md#SubmitOrgSelection) | **Post** /orgs/{orgId}/api/v1/oauth/org-select | Submit organization selection
 [**Token**](OAuthAPI.md#Token) | **Post** /orgs/{orgId}/api/v1/oauth/token | OAuth 2.1 token endpoint
@@ -590,74 +588,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## PasskeyLogin
-
-> PasskeyLogin(ctx, orgId).Execute()
-
-Passkey login entry point
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/lumoauth/api-clients/go"
-)
-
-func main() {
-	orgId := "orgId_example" // string | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.PasskeyLogin(context.Background(), orgId).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.PasskeyLogin``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**orgId** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiPasskeyLoginRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## RegisterClient
 
 > RegisterClientResponse RegisterClient(ctx, orgId).Execute()
@@ -1145,74 +1075,6 @@ No authorization required
 
 - **Content-Type**: Not defined
 - **Accept**: text/html
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## SubmitLogin
-
-> SubmitLogin(ctx, orgId).Execute()
-
-Hosted login form submission
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/lumoauth/api-clients/go"
-)
-
-func main() {
-	orgId := "orgId_example" // string | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.SubmitLogin(context.Background(), orgId).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.SubmitLogin``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**orgId** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiSubmitLoginRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

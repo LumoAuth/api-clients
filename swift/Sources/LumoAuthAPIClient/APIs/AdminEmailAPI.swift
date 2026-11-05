@@ -17,11 +17,13 @@ open class AdminEmailAPI {
      
      - parameter orgId: (path)  
      - parameter type: (path)  
+     - parameter locale: (query)  (optional)
+     - parameter clientId: (query)  (optional)
      - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminEmailTemplatesDelete(orgId: String, type: String) async throws -> MessageResponse {
-        return try await adminEmailTemplatesDeleteWithRequestBuilder(orgId: orgId, type: type).execute().body
+    open class func adminEmailTemplatesDelete(orgId: String, type: String, locale: String? = nil, clientId: String? = nil) async throws -> MessageResponse {
+        return try await adminEmailTemplatesDeleteWithRequestBuilder(orgId: orgId, type: type, locale: locale, clientId: clientId).execute().body
     }
 
     /**
@@ -35,9 +37,11 @@ open class AdminEmailAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter type: (path)  
+     - parameter locale: (query)  (optional)
+     - parameter clientId: (query)  (optional)
      - returns: RequestBuilder<MessageResponse> 
      */
-    open class func adminEmailTemplatesDeleteWithRequestBuilder(orgId: String, type: String) -> RequestBuilder<MessageResponse> {
+    open class func adminEmailTemplatesDeleteWithRequestBuilder(orgId: String, type: String, locale: String? = nil, clientId: String? = nil) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/email-templates/{type}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -48,7 +52,11 @@ open class AdminEmailAPI {
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "locale": (wrappedValue: locale?.encodeToJSON(), isExplode: true),
+            "client_id": (wrappedValue: clientId?.encodeToJSON(), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
             :
@@ -66,11 +74,13 @@ open class AdminEmailAPI {
      
      - parameter orgId: (path)  
      - parameter type: (path)  
+     - parameter locale: (query) Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
+     - parameter clientId: (query) Application variant (OAuth client_id); omit for the variant used by every application (optional)
      - returns: EmailTemplate
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminEmailTemplatesGet(orgId: String, type: String) async throws -> EmailTemplate {
-        return try await adminEmailTemplatesGetWithRequestBuilder(orgId: orgId, type: type).execute().body
+    open class func adminEmailTemplatesGet(orgId: String, type: String, locale: String? = nil, clientId: String? = nil) async throws -> EmailTemplate {
+        return try await adminEmailTemplatesGetWithRequestBuilder(orgId: orgId, type: type, locale: locale, clientId: clientId).execute().body
     }
 
     /**
@@ -84,9 +94,11 @@ open class AdminEmailAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter type: (path)  
+     - parameter locale: (query) Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
+     - parameter clientId: (query) Application variant (OAuth client_id); omit for the variant used by every application (optional)
      - returns: RequestBuilder<EmailTemplate> 
      */
-    open class func adminEmailTemplatesGetWithRequestBuilder(orgId: String, type: String) -> RequestBuilder<EmailTemplate> {
+    open class func adminEmailTemplatesGetWithRequestBuilder(orgId: String, type: String, locale: String? = nil, clientId: String? = nil) -> RequestBuilder<EmailTemplate> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/email-templates/{type}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -97,7 +109,11 @@ open class AdminEmailAPI {
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "locale": (wrappedValue: locale?.encodeToJSON(), isExplode: true),
+            "client_id": (wrappedValue: clientId?.encodeToJSON(), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
             :
@@ -218,6 +234,7 @@ open class AdminEmailAPI {
     /**
      Create or replace the custom email template for a type
      - PUT /orgs/{orgId}/api/v1/admin/email-templates/{type}
+     - Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth

@@ -17,7 +17,9 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import Field, StrictStr
+from typing import Optional
+from typing_extensions import Annotated
 from lumoauth_api_client.models.admin_email_templates_list_response import AdminEmailTemplatesListResponse
 from lumoauth_api_client.models.admin_email_templates_preview_response import AdminEmailTemplatesPreviewResponse
 from lumoauth_api_client.models.admin_email_templates_variables_response import AdminEmailTemplatesVariablesResponse
@@ -47,6 +49,8 @@ class AdminEmailApi:
         self,
         org_id: StrictStr,
         type: StrictStr,
+        locale: Optional[StrictStr] = None,
+        client_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -67,6 +71,10 @@ class AdminEmailApi:
         :type org_id: str
         :param type: (required)
         :type type: str
+        :param locale:
+        :type locale: str
+        :param client_id:
+        :type client_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -92,6 +100,8 @@ class AdminEmailApi:
         _param = self._admin_email_templates_delete_serialize(
             org_id=org_id,
             type=type,
+            locale=locale,
+            client_id=client_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -118,6 +128,8 @@ class AdminEmailApi:
         self,
         org_id: StrictStr,
         type: StrictStr,
+        locale: Optional[StrictStr] = None,
+        client_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -138,6 +150,10 @@ class AdminEmailApi:
         :type org_id: str
         :param type: (required)
         :type type: str
+        :param locale:
+        :type locale: str
+        :param client_id:
+        :type client_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -163,6 +179,8 @@ class AdminEmailApi:
         _param = self._admin_email_templates_delete_serialize(
             org_id=org_id,
             type=type,
+            locale=locale,
+            client_id=client_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -189,6 +207,8 @@ class AdminEmailApi:
         self,
         org_id: StrictStr,
         type: StrictStr,
+        locale: Optional[StrictStr] = None,
+        client_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -209,6 +229,10 @@ class AdminEmailApi:
         :type org_id: str
         :param type: (required)
         :type type: str
+        :param locale:
+        :type locale: str
+        :param client_id:
+        :type client_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -234,6 +258,8 @@ class AdminEmailApi:
         _param = self._admin_email_templates_delete_serialize(
             org_id=org_id,
             type=type,
+            locale=locale,
+            client_id=client_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -255,6 +281,8 @@ class AdminEmailApi:
         self,
         org_id,
         type,
+        locale,
+        client_id,
         _request_auth,
         _content_type,
         _headers,
@@ -281,6 +309,14 @@ class AdminEmailApi:
         if type is not None:
             _path_params['type'] = type
         # process the query parameters
+        if locale is not None:
+            
+            _query_params.append(('locale', locale))
+            
+        if client_id is not None:
+            
+            _query_params.append(('client_id', client_id))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -324,6 +360,8 @@ class AdminEmailApi:
         self,
         org_id: StrictStr,
         type: StrictStr,
+        locale: Annotated[Optional[StrictStr], Field(description="Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language")] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Application variant (OAuth client_id); omit for the variant used by every application")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -344,6 +382,10 @@ class AdminEmailApi:
         :type org_id: str
         :param type: (required)
         :type type: str
+        :param locale: Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language
+        :type locale: str
+        :param client_id: Application variant (OAuth client_id); omit for the variant used by every application
+        :type client_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -369,6 +411,8 @@ class AdminEmailApi:
         _param = self._admin_email_templates_get_serialize(
             org_id=org_id,
             type=type,
+            locale=locale,
+            client_id=client_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -395,6 +439,8 @@ class AdminEmailApi:
         self,
         org_id: StrictStr,
         type: StrictStr,
+        locale: Annotated[Optional[StrictStr], Field(description="Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language")] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Application variant (OAuth client_id); omit for the variant used by every application")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -415,6 +461,10 @@ class AdminEmailApi:
         :type org_id: str
         :param type: (required)
         :type type: str
+        :param locale: Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language
+        :type locale: str
+        :param client_id: Application variant (OAuth client_id); omit for the variant used by every application
+        :type client_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -440,6 +490,8 @@ class AdminEmailApi:
         _param = self._admin_email_templates_get_serialize(
             org_id=org_id,
             type=type,
+            locale=locale,
+            client_id=client_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -466,6 +518,8 @@ class AdminEmailApi:
         self,
         org_id: StrictStr,
         type: StrictStr,
+        locale: Annotated[Optional[StrictStr], Field(description="Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language")] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Application variant (OAuth client_id); omit for the variant used by every application")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -486,6 +540,10 @@ class AdminEmailApi:
         :type org_id: str
         :param type: (required)
         :type type: str
+        :param locale: Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language
+        :type locale: str
+        :param client_id: Application variant (OAuth client_id); omit for the variant used by every application
+        :type client_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -511,6 +569,8 @@ class AdminEmailApi:
         _param = self._admin_email_templates_get_serialize(
             org_id=org_id,
             type=type,
+            locale=locale,
+            client_id=client_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -532,6 +592,8 @@ class AdminEmailApi:
         self,
         org_id,
         type,
+        locale,
+        client_id,
         _request_auth,
         _content_type,
         _headers,
@@ -558,6 +620,14 @@ class AdminEmailApi:
         if type is not None:
             _path_params['type'] = type
         # process the query parameters
+        if locale is not None:
+            
+            _query_params.append(('locale', locale))
+            
+        if client_id is not None:
+            
+            _query_params.append(('client_id', client_id))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -1152,6 +1222,7 @@ class AdminEmailApi:
     ) -> EmailTemplate:
         """Create or replace the custom email template for a type
 
+        Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
 
         :param org_id: (required)
         :type org_id: str
@@ -1224,6 +1295,7 @@ class AdminEmailApi:
     ) -> ApiResponse[EmailTemplate]:
         """Create or replace the custom email template for a type
 
+        Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
 
         :param org_id: (required)
         :type org_id: str
@@ -1296,6 +1368,7 @@ class AdminEmailApi:
     ) -> RESTResponseType:
         """Create or replace the custom email template for a type
 
+        Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
 
         :param org_id: (required)
         :type org_id: str

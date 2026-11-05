@@ -15,7 +15,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 ## `adminEmailTemplatesDelete()`
 
 ```php
-adminEmailTemplatesDelete($orgId, $type): \LumoAuth\ApiClient\Model\MessageResponse
+adminEmailTemplatesDelete($orgId, $type, $locale, $clientId): \LumoAuth\ApiClient\Model\MessageResponse
 ```
 
 Remove the custom email template so the built-in default is used
@@ -44,9 +44,11 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminEmailApi(
 );
 $orgId = 'orgId_example'; // string
 $type = 'type_example'; // string
+$locale = 'locale_example'; // string
+$clientId = 'clientId_example'; // string
 
 try {
-    $result = $apiInstance->adminEmailTemplatesDelete($orgId, $type);
+    $result = $apiInstance->adminEmailTemplatesDelete($orgId, $type, $locale, $clientId);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminEmailApi->adminEmailTemplatesDelete: ', $e->getMessage(), PHP_EOL;
@@ -59,6 +61,8 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **type** | **string**|  | |
+| **locale** | **string**|  | [optional] |
+| **clientId** | **string**|  | [optional] |
 
 ### Return type
 
@@ -80,7 +84,7 @@ try {
 ## `adminEmailTemplatesGet()`
 
 ```php
-adminEmailTemplatesGet($orgId, $type): \LumoAuth\ApiClient\Model\EmailTemplate
+adminEmailTemplatesGet($orgId, $type, $locale, $clientId): \LumoAuth\ApiClient\Model\EmailTemplate
 ```
 
 Get an email template (custom or built-in default)
@@ -109,9 +113,11 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminEmailApi(
 );
 $orgId = 'orgId_example'; // string
 $type = 'type_example'; // string
+$locale = 'locale_example'; // string | Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language
+$clientId = 'clientId_example'; // string | Application variant (OAuth client_id); omit for the variant used by every application
 
 try {
-    $result = $apiInstance->adminEmailTemplatesGet($orgId, $type);
+    $result = $apiInstance->adminEmailTemplatesGet($orgId, $type, $locale, $clientId);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminEmailApi->adminEmailTemplatesGet: ', $e->getMessage(), PHP_EOL;
@@ -124,6 +130,8 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **type** | **string**|  | |
+| **locale** | **string**| Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language | [optional] |
+| **clientId** | **string**| Application variant (OAuth client_id); omit for the variant used by every application | [optional] |
 
 ### Return type
 
@@ -277,6 +285,8 @@ adminEmailTemplatesUpsert($orgId, $type): \LumoAuth\ApiClient\Model\EmailTemplat
 ```
 
 Create or replace the custom email template for a type
+
+Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
 
 ### Example
 

@@ -80,6 +80,8 @@ public class AdminEmailApi {
      * Build call for adminEmailTemplatesDelete
      * @param orgId  (required)
      * @param type  (required)
+     * @param locale  (optional)
+     * @param clientId  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -91,7 +93,7 @@ public class AdminEmailApi {
         <tr><td> 404 </td><td> Unknown template type, or no custom template exists </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminEmailTemplatesDeleteCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminEmailTemplatesDeleteCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable String locale, @javax.annotation.Nullable String clientId, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -117,6 +119,14 @@ public class AdminEmailApi {
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (locale != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("locale", locale));
+        }
+
+        if (clientId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("client_id", clientId));
+        }
 
         final String[] localVarAccepts = {
             "application/json"
@@ -138,7 +148,7 @@ public class AdminEmailApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminEmailTemplatesDeleteValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminEmailTemplatesDeleteValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable String locale, @javax.annotation.Nullable String clientId, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminEmailTemplatesDelete(Async)");
@@ -149,7 +159,7 @@ public class AdminEmailApi {
             throw new ApiException("Missing the required parameter 'type' when calling adminEmailTemplatesDelete(Async)");
         }
 
-        return adminEmailTemplatesDeleteCall(orgId, type, _callback);
+        return adminEmailTemplatesDeleteCall(orgId, type, locale, clientId, _callback);
 
     }
 
@@ -158,6 +168,8 @@ public class AdminEmailApi {
      * 
      * @param orgId  (required)
      * @param type  (required)
+     * @param locale  (optional)
+     * @param clientId  (optional)
      * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -168,8 +180,8 @@ public class AdminEmailApi {
         <tr><td> 404 </td><td> Unknown template type, or no custom template exists </td><td>  -  </td></tr>
      </table>
      */
-    public MessageResponse adminEmailTemplatesDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type) throws ApiException {
-        ApiResponse<MessageResponse> localVarResp = adminEmailTemplatesDeleteWithHttpInfo(orgId, type);
+    public MessageResponse adminEmailTemplatesDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable String locale, @javax.annotation.Nullable String clientId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminEmailTemplatesDeleteWithHttpInfo(orgId, type, locale, clientId);
         return localVarResp.getData();
     }
 
@@ -178,6 +190,8 @@ public class AdminEmailApi {
      * 
      * @param orgId  (required)
      * @param type  (required)
+     * @param locale  (optional)
+     * @param clientId  (optional)
      * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -188,8 +202,8 @@ public class AdminEmailApi {
         <tr><td> 404 </td><td> Unknown template type, or no custom template exists </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<MessageResponse> adminEmailTemplatesDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type) throws ApiException {
-        okhttp3.Call localVarCall = adminEmailTemplatesDeleteValidateBeforeCall(orgId, type, null);
+    public ApiResponse<MessageResponse> adminEmailTemplatesDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable String locale, @javax.annotation.Nullable String clientId) throws ApiException {
+        okhttp3.Call localVarCall = adminEmailTemplatesDeleteValidateBeforeCall(orgId, type, locale, clientId, null);
         Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -199,6 +213,8 @@ public class AdminEmailApi {
      * 
      * @param orgId  (required)
      * @param type  (required)
+     * @param locale  (optional)
+     * @param clientId  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -210,9 +226,9 @@ public class AdminEmailApi {
         <tr><td> 404 </td><td> Unknown template type, or no custom template exists </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminEmailTemplatesDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, final ApiCallback<MessageResponse> _callback) throws ApiException {
+    public okhttp3.Call adminEmailTemplatesDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable String locale, @javax.annotation.Nullable String clientId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminEmailTemplatesDeleteValidateBeforeCall(orgId, type, _callback);
+        okhttp3.Call localVarCall = adminEmailTemplatesDeleteValidateBeforeCall(orgId, type, locale, clientId, _callback);
         Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -221,6 +237,8 @@ public class AdminEmailApi {
      * Build call for adminEmailTemplatesGet
      * @param orgId  (required)
      * @param type  (required)
+     * @param locale Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
+     * @param clientId Application variant (OAuth client_id); omit for the variant used by every application (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -232,7 +250,7 @@ public class AdminEmailApi {
         <tr><td> 404 </td><td> Unknown template type </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminEmailTemplatesGetCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminEmailTemplatesGetCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable String locale, @javax.annotation.Nullable String clientId, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -259,6 +277,14 @@ public class AdminEmailApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (locale != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("locale", locale));
+        }
+
+        if (clientId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("client_id", clientId));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -279,7 +305,7 @@ public class AdminEmailApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminEmailTemplatesGetValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminEmailTemplatesGetValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable String locale, @javax.annotation.Nullable String clientId, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminEmailTemplatesGet(Async)");
@@ -290,7 +316,7 @@ public class AdminEmailApi {
             throw new ApiException("Missing the required parameter 'type' when calling adminEmailTemplatesGet(Async)");
         }
 
-        return adminEmailTemplatesGetCall(orgId, type, _callback);
+        return adminEmailTemplatesGetCall(orgId, type, locale, clientId, _callback);
 
     }
 
@@ -299,6 +325,8 @@ public class AdminEmailApi {
      * 
      * @param orgId  (required)
      * @param type  (required)
+     * @param locale Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
+     * @param clientId Application variant (OAuth client_id); omit for the variant used by every application (optional)
      * @return EmailTemplate
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -309,8 +337,8 @@ public class AdminEmailApi {
         <tr><td> 404 </td><td> Unknown template type </td><td>  -  </td></tr>
      </table>
      */
-    public EmailTemplate adminEmailTemplatesGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type) throws ApiException {
-        ApiResponse<EmailTemplate> localVarResp = adminEmailTemplatesGetWithHttpInfo(orgId, type);
+    public EmailTemplate adminEmailTemplatesGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable String locale, @javax.annotation.Nullable String clientId) throws ApiException {
+        ApiResponse<EmailTemplate> localVarResp = adminEmailTemplatesGetWithHttpInfo(orgId, type, locale, clientId);
         return localVarResp.getData();
     }
 
@@ -319,6 +347,8 @@ public class AdminEmailApi {
      * 
      * @param orgId  (required)
      * @param type  (required)
+     * @param locale Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
+     * @param clientId Application variant (OAuth client_id); omit for the variant used by every application (optional)
      * @return ApiResponse&lt;EmailTemplate&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -329,8 +359,8 @@ public class AdminEmailApi {
         <tr><td> 404 </td><td> Unknown template type </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<EmailTemplate> adminEmailTemplatesGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type) throws ApiException {
-        okhttp3.Call localVarCall = adminEmailTemplatesGetValidateBeforeCall(orgId, type, null);
+    public ApiResponse<EmailTemplate> adminEmailTemplatesGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable String locale, @javax.annotation.Nullable String clientId) throws ApiException {
+        okhttp3.Call localVarCall = adminEmailTemplatesGetValidateBeforeCall(orgId, type, locale, clientId, null);
         Type localVarReturnType = new TypeToken<EmailTemplate>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -340,6 +370,8 @@ public class AdminEmailApi {
      * 
      * @param orgId  (required)
      * @param type  (required)
+     * @param locale Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
+     * @param clientId Application variant (OAuth client_id); omit for the variant used by every application (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -351,9 +383,9 @@ public class AdminEmailApi {
         <tr><td> 404 </td><td> Unknown template type </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminEmailTemplatesGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, final ApiCallback<EmailTemplate> _callback) throws ApiException {
+    public okhttp3.Call adminEmailTemplatesGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable String locale, @javax.annotation.Nullable String clientId, final ApiCallback<EmailTemplate> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminEmailTemplatesGetValidateBeforeCall(orgId, type, _callback);
+        okhttp3.Call localVarCall = adminEmailTemplatesGetValidateBeforeCall(orgId, type, locale, clientId, _callback);
         Type localVarReturnType = new TypeToken<EmailTemplate>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -706,7 +738,7 @@ public class AdminEmailApi {
 
     /**
      * Create or replace the custom email template for a type
-     * 
+     * Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
      * @param orgId  (required)
      * @param type  (required)
      * @return EmailTemplate
@@ -727,7 +759,7 @@ public class AdminEmailApi {
 
     /**
      * Create or replace the custom email template for a type
-     * 
+     * Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
      * @param orgId  (required)
      * @param type  (required)
      * @return ApiResponse&lt;EmailTemplate&gt;
@@ -749,7 +781,7 @@ public class AdminEmailApi {
 
     /**
      * Create or replace the custom email template for a type (asynchronously)
-     * 
+     * Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
      * @param orgId  (required)
      * @param type  (required)
      * @param _callback The callback to be executed when the API call finishes

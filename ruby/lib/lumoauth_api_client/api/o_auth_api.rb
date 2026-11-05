@@ -529,67 +529,6 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Passkey login entry point
-    # Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-    # @param org_id [String] 
-    # @param [Hash] opts the optional parameters
-    # @return [nil]
-    def passkey_login(org_id, opts = {})
-      passkey_login_with_http_info(org_id, opts)
-      nil
-    end
-
-    # Passkey login entry point
-    # Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-    # @param org_id [String] 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
-    def passkey_login_with_http_info(org_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: OAuthApi.passkey_login ...'
-      end
-      # verify the required parameter 'org_id' is set
-      if @api_client.config.client_side_validation && org_id.nil?
-        fail ArgumentError, "Missing the required parameter 'org_id' when calling OAuthApi.passkey_login"
-      end
-      # resource path
-      local_var_path = '/orgs/{orgId}/api/v1/oauth/passkey-login'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
-
-      # query parameters
-      query_params = opts[:query_params] || {}
-
-      # header parameters
-      header_params = opts[:header_params] || {}
-
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
-      post_body = opts[:debug_body]
-
-      # return_type
-      return_type = opts[:debug_return_type]
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || []
-
-      new_options = opts.merge(
-        :operation => :"OAuthApi.passkey_login",
-        :header_params => header_params,
-        :query_params => query_params,
-        :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
-      )
-
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OAuthApi#passkey_login\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
-    end
-
     # Dynamic client registration (RFC 7591 / OIDC DCR)
     # Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
     # @param org_id [String] 
@@ -1039,67 +978,6 @@ module LumoAuthApiClient
       data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: OAuthApi#submit_device_verification\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
-    end
-
-    # Hosted login form submission
-    # Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-    # @param org_id [String] 
-    # @param [Hash] opts the optional parameters
-    # @return [nil]
-    def submit_login(org_id, opts = {})
-      submit_login_with_http_info(org_id, opts)
-      nil
-    end
-
-    # Hosted login form submission
-    # Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-    # @param org_id [String] 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
-    def submit_login_with_http_info(org_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: OAuthApi.submit_login ...'
-      end
-      # verify the required parameter 'org_id' is set
-      if @api_client.config.client_side_validation && org_id.nil?
-        fail ArgumentError, "Missing the required parameter 'org_id' when calling OAuthApi.submit_login"
-      end
-      # resource path
-      local_var_path = '/orgs/{orgId}/api/v1/oauth/login/submit'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
-
-      # query parameters
-      query_params = opts[:query_params] || {}
-
-      # header parameters
-      header_params = opts[:header_params] || {}
-
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
-      post_body = opts[:debug_body]
-
-      # return_type
-      return_type = opts[:debug_return_type]
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || []
-
-      new_options = opts.merge(
-        :operation => :"OAuthApi.submit_login",
-        :header_params => header_params,
-        :query_params => query_params,
-        :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
-      )
-
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OAuthApi#submit_login\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

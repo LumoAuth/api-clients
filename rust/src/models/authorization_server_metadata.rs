@@ -73,8 +73,6 @@ pub struct AuthorizationServerMetadata {
     pub require_pushed_authorization_requests: Option<bool>,
     #[serde(rename = "dpop_signing_alg_values_supported", skip_serializing_if = "Option::is_none")]
     pub dpop_signing_alg_values_supported: Option<Vec<String>>,
-    #[serde(rename = "tls_client_certificate_bound_access_tokens", skip_serializing_if = "Option::is_none")]
-    pub tls_client_certificate_bound_access_tokens: Option<bool>,
     #[serde(rename = "backchannel_authentication_endpoint", skip_serializing_if = "Option::is_none")]
     pub backchannel_authentication_endpoint: Option<String>,
     #[serde(rename = "backchannel_token_delivery_modes_supported", skip_serializing_if = "Option::is_none")]
@@ -129,7 +127,6 @@ impl AuthorizationServerMetadata {
             pushed_authorization_request_endpoint: None,
             require_pushed_authorization_requests: None,
             dpop_signing_alg_values_supported: None,
-            tls_client_certificate_bound_access_tokens: None,
             backchannel_authentication_endpoint: None,
             backchannel_token_delivery_modes_supported: None,
             backchannel_user_code_parameter_supported: None,

@@ -32,7 +32,6 @@ Name | Type | Description | Notes
 **pushedAuthorizationRequestEndpoint** | **String** |  | [optional] 
 **requirePushedAuthorizationRequests** | **Bool** |  | [optional] 
 **dpopSigningAlgValuesSupported** | **[String]** |  | [optional] 
-**tlsClientCertificateBoundAccessTokens** | **Bool** |  | [optional] 
 **backchannelAuthenticationEndpoint** | **String** |  | [optional] 
 **backchannelTokenDeliveryModesSupported** | **[String]** |  | [optional] 
 **backchannelUserCodeParameterSupported** | **Bool** |  | [optional] 

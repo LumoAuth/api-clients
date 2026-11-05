@@ -16,11 +16,16 @@ package io.lumoauth.client.api;
 import io.lumoauth.client.ApiException;
 import io.lumoauth.client.model.AdminClientsCimdCheckRequest;
 import io.lumoauth.client.model.AdminClientsCimdCheckResponse;
+import io.lumoauth.client.model.AdminClientsGetBrandingResponse;
+import io.lumoauth.client.model.AdminClientsGetBrandingResponseData;
 import io.lumoauth.client.model.CreateClientResponse;
 import io.lumoauth.client.model.GetClientResponse;
 import io.lumoauth.client.model.ListClientScopesResponse;
 import io.lumoauth.client.model.ListClientsResponse;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PatchAdminClientsUpdateBrandingResponse;
+import io.lumoauth.client.model.PutAdminClientsUpdateBrandingRequest;
+import io.lumoauth.client.model.PutAdminClientsUpdateBrandingResponse;
 import io.lumoauth.client.model.RotateClientSecretResponse;
 import io.lumoauth.client.model.SetClientScopesResponse;
 import io.lumoauth.client.model.UpdateClientResponse;
@@ -52,6 +57,21 @@ public class AdminOAuthClientsApiTest {
         String orgId = null;
         AdminClientsCimdCheckRequest adminClientsCimdCheckRequest = null;
         AdminClientsCimdCheckResponse response = api.adminClientsCimdCheck(orgId, adminClientsCimdCheckRequest);
+        // TODO: test validations
+    }
+
+    /**
+     * Get an OAuth client&#39;s login and consent page branding
+     *
+     * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminClientsGetBrandingTest() throws ApiException {
+        String orgId = null;
+        String clientId = null;
+        AdminClientsGetBrandingResponse response = api.adminClientsGetBranding(orgId, clientId);
         // TODO: test validations
     }
 
@@ -145,6 +165,20 @@ public class AdminOAuthClientsApiTest {
     }
 
     /**
+     * Change keys of an OAuth client&#39;s login and/or consent page branding
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void patchAdminClientsUpdateBrandingTest() throws ApiException {
+        String orgId = null;
+        String clientId = null;
+        AdminClientsGetBrandingResponseData adminClientsGetBrandingResponseData = null;
+        PatchAdminClientsUpdateBrandingResponse response = api.patchAdminClientsUpdateBranding(orgId, clientId, adminClientsGetBrandingResponseData);
+        // TODO: test validations
+    }
+
+    /**
      * Update an OAuth client
      *
      * @throws ApiException if the Api call fails
@@ -154,6 +188,20 @@ public class AdminOAuthClientsApiTest {
         String orgId = null;
         String clientId = null;
         UpdateClientResponse response = api.patchClient(orgId, clientId);
+        // TODO: test validations
+    }
+
+    /**
+     * Replace an OAuth client&#39;s login and/or consent page branding
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void putAdminClientsUpdateBrandingTest() throws ApiException {
+        String orgId = null;
+        String clientId = null;
+        PutAdminClientsUpdateBrandingRequest putAdminClientsUpdateBrandingRequest = null;
+        PutAdminClientsUpdateBrandingResponse response = api.putAdminClientsUpdateBranding(orgId, clientId, putAdminClientsUpdateBrandingRequest);
         // TODO: test validations
     }
 

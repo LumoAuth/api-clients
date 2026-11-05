@@ -29,13 +29,13 @@
 | **require_signed_request_object** | **Boolean** |  | [optional] |
 | **request_object_signing_alg_values_supported** | **Array&lt;String&gt;** |  | [optional] |
 | **ui_locales_supported** | **Array&lt;String&gt;** |  | [optional] |
+| **prompt_values_supported** | **Array&lt;String&gt;** |  | [optional] |
 | **acr_values_supported** | **Array&lt;String&gt;** | The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings. | [optional] |
 | **code_challenge_methods_supported** | **Array&lt;String&gt;** |  | [optional] |
 | **authorization_response_iss_parameter_supported** | **Boolean** |  | [optional] |
 | **pushed_authorization_request_endpoint** | **String** |  | [optional] |
 | **require_pushed_authorization_requests** | **Boolean** |  | [optional] |
 | **dpop_signing_alg_values_supported** | **Array&lt;String&gt;** |  | [optional] |
-| **tls_client_certificate_bound_access_tokens** | **Boolean** |  | [optional] |
 | **introspection_endpoint** | **String** |  | [optional] |
 | **introspection_endpoint_auth_methods_supported** | **Array&lt;String&gt;** |  | [optional] |
 | **revocation_endpoint** | **String** |  | [optional] |
@@ -87,14 +87,14 @@ instance = LumoAuthApiClient::OpenIdConfiguration.new(
   require_request_uri_registration: false,
   require_signed_request_object: false,
   request_object_signing_alg_values_supported: null,
-  ui_locales_supported: [&quot;en&quot;],
+  ui_locales_supported: [&quot;en&quot;,&quot;es&quot;,&quot;fr&quot;,&quot;de&quot;,&quot;pt-BR&quot;,&quot;it&quot;,&quot;nl&quot;,&quot;ja&quot;,&quot;ar&quot;],
+  prompt_values_supported: [&quot;none&quot;,&quot;login&quot;,&quot;consent&quot;,&quot;create&quot;],
   acr_values_supported: null,
   code_challenge_methods_supported: [&quot;S256&quot;],
   authorization_response_iss_parameter_supported: true,
   pushed_authorization_request_endpoint: null,
   require_pushed_authorization_requests: false,
   dpop_signing_alg_values_supported: null,
-  tls_client_certificate_bound_access_tokens: false,
   introspection_endpoint: null,
   introspection_endpoint_auth_methods_supported: null,
   revocation_endpoint: null,

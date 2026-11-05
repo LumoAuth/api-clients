@@ -68,6 +68,19 @@ namespace LumoAuth.ApiClient.Test.Api
         }
 
         /// <summary>
+        /// Test AdminClientsGetBranding
+        /// </summary>
+        [Fact]
+        public void AdminClientsGetBrandingTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //string clientId = null;
+            //var response = instance.AdminClientsGetBranding(orgId, clientId);
+            //Assert.IsType<AdminClientsGetBrandingResponse>(response);
+        }
+
+        /// <summary>
         /// Test CreateClient
         /// </summary>
         [Fact]
@@ -157,6 +170,20 @@ namespace LumoAuth.ApiClient.Test.Api
         }
 
         /// <summary>
+        /// Test PatchAdminClientsUpdateBranding
+        /// </summary>
+        [Fact]
+        public void PatchAdminClientsUpdateBrandingTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //string clientId = null;
+            //AdminClientsGetBrandingResponseData? adminClientsGetBrandingResponseData = null;
+            //var response = instance.PatchAdminClientsUpdateBranding(orgId, clientId, adminClientsGetBrandingResponseData);
+            //Assert.IsType<PatchAdminClientsUpdateBrandingResponse>(response);
+        }
+
+        /// <summary>
         /// Test PatchClient
         /// </summary>
         [Fact]
@@ -167,6 +194,20 @@ namespace LumoAuth.ApiClient.Test.Api
             //string clientId = null;
             //var response = instance.PatchClient(orgId, clientId);
             //Assert.IsType<UpdateClientResponse>(response);
+        }
+
+        /// <summary>
+        /// Test PutAdminClientsUpdateBranding
+        /// </summary>
+        [Fact]
+        public void PutAdminClientsUpdateBrandingTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //string clientId = null;
+            //PutAdminClientsUpdateBrandingRequest? putAdminClientsUpdateBrandingRequest = null;
+            //var response = instance.PutAdminClientsUpdateBranding(orgId, clientId, putAdminClientsUpdateBrandingRequest);
+            //Assert.IsType<PutAdminClientsUpdateBrandingResponse>(response);
         }
 
         /// <summary>

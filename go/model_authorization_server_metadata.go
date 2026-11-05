@@ -53,7 +53,6 @@ type AuthorizationServerMetadata struct {
 	PushedAuthorizationRequestEndpoint *string `json:"pushed_authorization_request_endpoint,omitempty"`
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty"`
 	DpopSigningAlgValuesSupported []string `json:"dpop_signing_alg_values_supported,omitempty"`
-	TlsClientCertificateBoundAccessTokens *bool `json:"tls_client_certificate_bound_access_tokens,omitempty"`
 	BackchannelAuthenticationEndpoint *string `json:"backchannel_authentication_endpoint,omitempty"`
 	BackchannelTokenDeliveryModesSupported []string `json:"backchannel_token_delivery_modes_supported,omitempty"`
 	BackchannelUserCodeParameterSupported *bool `json:"backchannel_user_code_parameter_supported,omitempty"`
@@ -980,38 +979,6 @@ func (o *AuthorizationServerMetadata) SetDpopSigningAlgValuesSupported(v []strin
 	o.DpopSigningAlgValuesSupported = v
 }
 
-// GetTlsClientCertificateBoundAccessTokens returns the TlsClientCertificateBoundAccessTokens field value if set, zero value otherwise.
-func (o *AuthorizationServerMetadata) GetTlsClientCertificateBoundAccessTokens() bool {
-	if o == nil || IsNil(o.TlsClientCertificateBoundAccessTokens) {
-		var ret bool
-		return ret
-	}
-	return *o.TlsClientCertificateBoundAccessTokens
-}
-
-// GetTlsClientCertificateBoundAccessTokensOk returns a tuple with the TlsClientCertificateBoundAccessTokens field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AuthorizationServerMetadata) GetTlsClientCertificateBoundAccessTokensOk() (*bool, bool) {
-	if o == nil || IsNil(o.TlsClientCertificateBoundAccessTokens) {
-		return nil, false
-	}
-	return o.TlsClientCertificateBoundAccessTokens, true
-}
-
-// HasTlsClientCertificateBoundAccessTokens returns a boolean if a field has been set.
-func (o *AuthorizationServerMetadata) HasTlsClientCertificateBoundAccessTokens() bool {
-	if o != nil && !IsNil(o.TlsClientCertificateBoundAccessTokens) {
-		return true
-	}
-
-	return false
-}
-
-// SetTlsClientCertificateBoundAccessTokens gets a reference to the given bool and assigns it to the TlsClientCertificateBoundAccessTokens field.
-func (o *AuthorizationServerMetadata) SetTlsClientCertificateBoundAccessTokens(v bool) {
-	o.TlsClientCertificateBoundAccessTokens = &v
-}
-
 // GetBackchannelAuthenticationEndpoint returns the BackchannelAuthenticationEndpoint field value if set, zero value otherwise.
 func (o *AuthorizationServerMetadata) GetBackchannelAuthenticationEndpoint() string {
 	if o == nil || IsNil(o.BackchannelAuthenticationEndpoint) {
@@ -1354,9 +1321,6 @@ func (o AuthorizationServerMetadata) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.DpopSigningAlgValuesSupported) {
 		toSerialize["dpop_signing_alg_values_supported"] = o.DpopSigningAlgValuesSupported
-	}
-	if !IsNil(o.TlsClientCertificateBoundAccessTokens) {
-		toSerialize["tls_client_certificate_bound_access_tokens"] = o.TlsClientCertificateBoundAccessTokens
 	}
 	if !IsNil(o.BackchannelAuthenticationEndpoint) {
 		toSerialize["backchannel_authentication_endpoint"] = o.BackchannelAuthenticationEndpoint

@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **admin_email_templates_delete**
-> MessageResponse admin_email_templates_delete(org_id, type)
+> MessageResponse admin_email_templates_delete(org_id, type, locale=locale, client_id=client_id)
 
 Remove the custom email template so the built-in default is used
 
@@ -56,10 +56,12 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminEmailApi(api_client)
     org_id = 'org_id_example' # str | 
     type = 'type_example' # str | 
+    locale = 'locale_example' # str |  (optional)
+    client_id = 'client_id_example' # str |  (optional)
 
     try:
         # Remove the custom email template so the built-in default is used
-        api_response = api_instance.admin_email_templates_delete(org_id, type)
+        api_response = api_instance.admin_email_templates_delete(org_id, type, locale=locale, client_id=client_id)
         print("The response of AdminEmailApi->admin_email_templates_delete:\n")
         pprint(api_response)
     except Exception as e:
@@ -75,6 +77,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **type** | **str**|  | 
+ **locale** | **str**|  | [optional] 
+ **client_id** | **str**|  | [optional] 
 
 ### Return type
 
@@ -99,7 +103,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_email_templates_get**
-> EmailTemplate admin_email_templates_get(org_id, type)
+> EmailTemplate admin_email_templates_get(org_id, type, locale=locale, client_id=client_id)
 
 Get an email template (custom or built-in default)
 
@@ -142,10 +146,12 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminEmailApi(api_client)
     org_id = 'org_id_example' # str | 
     type = 'type_example' # str | 
+    locale = 'locale_example' # str | Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
+    client_id = 'client_id_example' # str | Application variant (OAuth client_id); omit for the variant used by every application (optional)
 
     try:
         # Get an email template (custom or built-in default)
-        api_response = api_instance.admin_email_templates_get(org_id, type)
+        api_response = api_instance.admin_email_templates_get(org_id, type, locale=locale, client_id=client_id)
         print("The response of AdminEmailApi->admin_email_templates_get:\n")
         pprint(api_response)
     except Exception as e:
@@ -161,6 +167,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **type** | **str**|  | 
+ **locale** | **str**| Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language | [optional] 
+ **client_id** | **str**| Application variant (OAuth client_id); omit for the variant used by every application | [optional] 
 
 ### Return type
 
@@ -357,6 +365,8 @@ Name | Type | Description  | Notes
 > EmailTemplate admin_email_templates_upsert(org_id, type)
 
 Create or replace the custom email template for a type
+
+Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
 
 ### Example
 

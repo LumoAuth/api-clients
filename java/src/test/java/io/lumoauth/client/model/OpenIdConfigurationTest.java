@@ -241,6 +241,14 @@ public class OpenIdConfigurationTest {
     }
 
     /**
+     * Test the property 'promptValuesSupported'
+     */
+    @Test
+    public void promptValuesSupportedTest() {
+        // TODO: test promptValuesSupported
+    }
+
+    /**
      * Test the property 'acrValuesSupported'
      */
     @Test
@@ -286,14 +294,6 @@ public class OpenIdConfigurationTest {
     @Test
     public void dpopSigningAlgValuesSupportedTest() {
         // TODO: test dpopSigningAlgValuesSupported
-    }
-
-    /**
-     * Test the property 'tlsClientCertificateBoundAccessTokens'
-     */
-    @Test
-    public void tlsClientCertificateBoundAccessTokensTest() {
-        // TODO: test tlsClientCertificateBoundAccessTokens
     }
 
     /**

@@ -196,12 +196,6 @@ export interface AuthorizationServerMetadata {
     'dpop_signing_alg_values_supported'?: Array<string>;
     /**
      * 
-     * @type {boolean}
-     * @memberof AuthorizationServerMetadata
-     */
-    'tls_client_certificate_bound_access_tokens'?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof AuthorizationServerMetadata
      */

@@ -64,6 +64,8 @@ docs/AdminAuditLogsStatsResponseDataPeriod.md
 docs/AdminClientTokensRevokeAllResponse.md
 docs/AdminClientsCimdCheckRequest.md
 docs/AdminClientsCimdCheckResponse.md
+docs/AdminClientsGetBrandingResponse.md
+docs/AdminClientsGetBrandingResponseData.md
 docs/AdminEmailApi.md
 docs/AdminEmailTemplatesListResponse.md
 docs/AdminEmailTemplatesPreviewResponse.md
@@ -343,6 +345,7 @@ docs/OrganizationRole.md
 docs/PaginationMeta.md
 docs/ParResponse.md
 docs/PasskeyEnrollmentStarted.md
+docs/PatchAdminClientsUpdateBrandingResponse.md
 docs/Permission.md
 docs/ProtectedResourceList.md
 docs/ProtectedResourceMetadata.md
@@ -351,6 +354,8 @@ docs/PutAbacAttributesUpdateResponse.md
 docs/PutAbacPoliciesUpdateResponse.md
 docs/PutAdminAgentsUpdateRequest.md
 docs/PutAdminAgentsUpdateResponse.md
+docs/PutAdminClientsUpdateBrandingRequest.md
+docs/PutAdminClientsUpdateBrandingResponse.md
 docs/PutAdminOrgMembersUpdateResponse.md
 docs/PutAdminSettingsAuthenticationUpdateResponse.md
 docs/PutAdminSettingsBrandingUpdateResponse.md
@@ -514,6 +519,8 @@ src/LumoAuth.ApiClient.Test/Model/AdminAuditLogsStatsResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminClientTokensRevokeAllResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminClientsCimdCheckRequestTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminClientsCimdCheckResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/AdminClientsGetBrandingResponseDataTests.cs
+src/LumoAuth.ApiClient.Test/Model/AdminClientsGetBrandingResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminEmailTemplatesListResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminEmailTemplatesPreviewResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminEmailTemplatesVariablesResponseTests.cs
@@ -771,6 +778,7 @@ src/LumoAuth.ApiClient.Test/Model/OrganizationTests.cs
 src/LumoAuth.ApiClient.Test/Model/PaginationMetaTests.cs
 src/LumoAuth.ApiClient.Test/Model/ParResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/PasskeyEnrollmentStartedTests.cs
+src/LumoAuth.ApiClient.Test/Model/PatchAdminClientsUpdateBrandingResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/PermissionTests.cs
 src/LumoAuth.ApiClient.Test/Model/ProtectedResourceListTests.cs
 src/LumoAuth.ApiClient.Test/Model/ProtectedResourceMetadataTests.cs
@@ -779,6 +787,8 @@ src/LumoAuth.ApiClient.Test/Model/PutAbacAttributesUpdateResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/PutAbacPoliciesUpdateResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/PutAdminAgentsUpdateRequestTests.cs
 src/LumoAuth.ApiClient.Test/Model/PutAdminAgentsUpdateResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/PutAdminClientsUpdateBrandingRequestTests.cs
+src/LumoAuth.ApiClient.Test/Model/PutAdminClientsUpdateBrandingResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/PutAdminOrgMembersUpdateResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/PutAdminSettingsAuthenticationUpdateResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/PutAdminSettingsBrandingUpdateResponseTests.cs
@@ -957,6 +967,8 @@ src/LumoAuth.ApiClient/Model/AdminAuditLogsStatsResponseDataPeriod.cs
 src/LumoAuth.ApiClient/Model/AdminClientTokensRevokeAllResponse.cs
 src/LumoAuth.ApiClient/Model/AdminClientsCimdCheckRequest.cs
 src/LumoAuth.ApiClient/Model/AdminClientsCimdCheckResponse.cs
+src/LumoAuth.ApiClient/Model/AdminClientsGetBrandingResponse.cs
+src/LumoAuth.ApiClient/Model/AdminClientsGetBrandingResponseData.cs
 src/LumoAuth.ApiClient/Model/AdminEmailTemplatesListResponse.cs
 src/LumoAuth.ApiClient/Model/AdminEmailTemplatesPreviewResponse.cs
 src/LumoAuth.ApiClient/Model/AdminEmailTemplatesVariablesResponse.cs
@@ -1214,6 +1226,7 @@ src/LumoAuth.ApiClient/Model/OrganizationRole.cs
 src/LumoAuth.ApiClient/Model/PaginationMeta.cs
 src/LumoAuth.ApiClient/Model/ParResponse.cs
 src/LumoAuth.ApiClient/Model/PasskeyEnrollmentStarted.cs
+src/LumoAuth.ApiClient/Model/PatchAdminClientsUpdateBrandingResponse.cs
 src/LumoAuth.ApiClient/Model/Permission.cs
 src/LumoAuth.ApiClient/Model/ProtectedResourceList.cs
 src/LumoAuth.ApiClient/Model/ProtectedResourceMetadata.cs
@@ -1222,6 +1235,8 @@ src/LumoAuth.ApiClient/Model/PutAbacAttributesUpdateResponse.cs
 src/LumoAuth.ApiClient/Model/PutAbacPoliciesUpdateResponse.cs
 src/LumoAuth.ApiClient/Model/PutAdminAgentsUpdateRequest.cs
 src/LumoAuth.ApiClient/Model/PutAdminAgentsUpdateResponse.cs
+src/LumoAuth.ApiClient/Model/PutAdminClientsUpdateBrandingRequest.cs
+src/LumoAuth.ApiClient/Model/PutAdminClientsUpdateBrandingResponse.cs
 src/LumoAuth.ApiClient/Model/PutAdminOrgMembersUpdateResponse.cs
 src/LumoAuth.ApiClient/Model/PutAdminSettingsAuthenticationUpdateResponse.cs
 src/LumoAuth.ApiClient/Model/PutAdminSettingsBrandingUpdateResponse.cs

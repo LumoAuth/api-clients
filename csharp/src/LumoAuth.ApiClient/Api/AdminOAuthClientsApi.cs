@@ -52,6 +52,29 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of AdminClientsCimdCheckResponse</returns>
         ApiResponse<AdminClientsCimdCheckResponse> AdminClientsCimdCheckWithHttpInfo(string orgId, AdminClientsCimdCheckRequest adminClientsCimdCheckRequest);
         /// <summary>
+        /// Get an OAuth client&#39;s login and consent page branding
+        /// </summary>
+        /// <remarks>
+        /// Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <returns>AdminClientsGetBrandingResponse</returns>
+        AdminClientsGetBrandingResponse AdminClientsGetBranding(string orgId, string clientId);
+
+        /// <summary>
+        /// Get an OAuth client&#39;s login and consent page branding
+        /// </summary>
+        /// <remarks>
+        /// Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <returns>ApiResponse of AdminClientsGetBrandingResponse</returns>
+        ApiResponse<AdminClientsGetBrandingResponse> AdminClientsGetBrandingWithHttpInfo(string orgId, string clientId);
+        /// <summary>
         /// Create an OAuth client
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
@@ -188,6 +211,28 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of ListClientsResponse</returns>
         ApiResponse<ListClientsResponse> ListClientsWithHttpInfo(string orgId);
         /// <summary>
+        /// Change keys of an OAuth client&#39;s login and/or consent page branding
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="adminClientsGetBrandingResponseData"> (optional)</param>
+        /// <returns>PatchAdminClientsUpdateBrandingResponse</returns>
+        PatchAdminClientsUpdateBrandingResponse PatchAdminClientsUpdateBranding(string orgId, string clientId, AdminClientsGetBrandingResponseData? adminClientsGetBrandingResponseData = default);
+
+        /// <summary>
+        /// Change keys of an OAuth client&#39;s login and/or consent page branding
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="adminClientsGetBrandingResponseData"> (optional)</param>
+        /// <returns>ApiResponse of PatchAdminClientsUpdateBrandingResponse</returns>
+        ApiResponse<PatchAdminClientsUpdateBrandingResponse> PatchAdminClientsUpdateBrandingWithHttpInfo(string orgId, string clientId, AdminClientsGetBrandingResponseData? adminClientsGetBrandingResponseData = default);
+        /// <summary>
         /// Update an OAuth client
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
@@ -207,6 +252,28 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="clientId"></param>
         /// <returns>ApiResponse of UpdateClientResponse</returns>
         ApiResponse<UpdateClientResponse> PatchClientWithHttpInfo(string orgId, string clientId);
+        /// <summary>
+        /// Replace an OAuth client&#39;s login and/or consent page branding
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="putAdminClientsUpdateBrandingRequest"> (optional)</param>
+        /// <returns>PutAdminClientsUpdateBrandingResponse</returns>
+        PutAdminClientsUpdateBrandingResponse PutAdminClientsUpdateBranding(string orgId, string clientId, PutAdminClientsUpdateBrandingRequest? putAdminClientsUpdateBrandingRequest = default);
+
+        /// <summary>
+        /// Replace an OAuth client&#39;s login and/or consent page branding
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="putAdminClientsUpdateBrandingRequest"> (optional)</param>
+        /// <returns>ApiResponse of PutAdminClientsUpdateBrandingResponse</returns>
+        ApiResponse<PutAdminClientsUpdateBrandingResponse> PutAdminClientsUpdateBrandingWithHttpInfo(string orgId, string clientId, PutAdminClientsUpdateBrandingRequest? putAdminClientsUpdateBrandingRequest = default);
         /// <summary>
         /// Rotate an OAuth client secret
         /// </summary>
@@ -301,6 +368,31 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminClientsCimdCheckResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AdminClientsCimdCheckResponse>> AdminClientsCimdCheckWithHttpInfoAsync(string orgId, AdminClientsCimdCheckRequest adminClientsCimdCheckRequest, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Get an OAuth client&#39;s login and consent page branding
+        /// </summary>
+        /// <remarks>
+        /// Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminClientsGetBrandingResponse</returns>
+        System.Threading.Tasks.Task<AdminClientsGetBrandingResponse> AdminClientsGetBrandingAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get an OAuth client&#39;s login and consent page branding
+        /// </summary>
+        /// <remarks>
+        /// Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminClientsGetBrandingResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminClientsGetBrandingResponse>> AdminClientsGetBrandingWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Create an OAuth client
         /// </summary>
@@ -473,6 +565,33 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (ListClientsResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<ListClientsResponse>> ListClientsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
+        /// Change keys of an OAuth client&#39;s login and/or consent page branding
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="adminClientsGetBrandingResponseData"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of PatchAdminClientsUpdateBrandingResponse</returns>
+        System.Threading.Tasks.Task<PatchAdminClientsUpdateBrandingResponse> PatchAdminClientsUpdateBrandingAsync(string orgId, string clientId, AdminClientsGetBrandingResponseData? adminClientsGetBrandingResponseData = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Change keys of an OAuth client&#39;s login and/or consent page branding
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="adminClientsGetBrandingResponseData"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (PatchAdminClientsUpdateBrandingResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PatchAdminClientsUpdateBrandingResponse>> PatchAdminClientsUpdateBrandingWithHttpInfoAsync(string orgId, string clientId, AdminClientsGetBrandingResponseData? adminClientsGetBrandingResponseData = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
         /// Update an OAuth client
         /// </summary>
         /// <remarks>
@@ -497,6 +616,33 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (UpdateClientResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<UpdateClientResponse>> PatchClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Replace an OAuth client&#39;s login and/or consent page branding
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="putAdminClientsUpdateBrandingRequest"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of PutAdminClientsUpdateBrandingResponse</returns>
+        System.Threading.Tasks.Task<PutAdminClientsUpdateBrandingResponse> PutAdminClientsUpdateBrandingAsync(string orgId, string clientId, PutAdminClientsUpdateBrandingRequest? putAdminClientsUpdateBrandingRequest = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Replace an OAuth client&#39;s login and/or consent page branding
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="putAdminClientsUpdateBrandingRequest"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (PutAdminClientsUpdateBrandingResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PutAdminClientsUpdateBrandingResponse>> PutAdminClientsUpdateBrandingWithHttpInfoAsync(string orgId, string clientId, PutAdminClientsUpdateBrandingRequest? putAdminClientsUpdateBrandingRequest = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Rotate an OAuth client secret
         /// </summary>
@@ -932,6 +1078,157 @@ namespace LumoAuth.ApiClient.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AdminClientsCimdCheck", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Get an OAuth client&#39;s login and consent page branding Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <returns>AdminClientsGetBrandingResponse</returns>
+        public AdminClientsGetBrandingResponse AdminClientsGetBranding(string orgId, string clientId)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminClientsGetBrandingResponse> localVarResponse = AdminClientsGetBrandingWithHttpInfo(orgId, clientId);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Get an OAuth client&#39;s login and consent page branding Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <returns>ApiResponse of AdminClientsGetBrandingResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminClientsGetBrandingResponse> AdminClientsGetBrandingWithHttpInfo(string orgId, string clientId)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminOAuthClientsApi->AdminClientsGetBranding");
+
+            // verify the required parameter 'clientId' is set
+            if (clientId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'clientId' when calling AdminOAuthClientsApi->AdminClientsGetBranding");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("clientId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // path parameter
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Get<AdminClientsGetBrandingResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminClientsGetBranding", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Get an OAuth client&#39;s login and consent page branding Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminClientsGetBrandingResponse</returns>
+        public async System.Threading.Tasks.Task<AdminClientsGetBrandingResponse> AdminClientsGetBrandingAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminClientsGetBrandingResponse> localVarResponse = await AdminClientsGetBrandingWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Get an OAuth client&#39;s login and consent page branding Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminClientsGetBrandingResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminClientsGetBrandingResponse>> AdminClientsGetBrandingWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminOAuthClientsApi->AdminClientsGetBranding");
+
+            // verify the required parameter 'clientId' is set
+            if (clientId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'clientId' when calling AdminOAuthClientsApi->AdminClientsGetBranding");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("clientId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // path parameter
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminClientsGetBrandingResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminClientsGetBranding", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 
@@ -1968,6 +2265,165 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
+        /// Change keys of an OAuth client&#39;s login and/or consent page branding 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="adminClientsGetBrandingResponseData"> (optional)</param>
+        /// <returns>PatchAdminClientsUpdateBrandingResponse</returns>
+        public PatchAdminClientsUpdateBrandingResponse PatchAdminClientsUpdateBranding(string orgId, string clientId, AdminClientsGetBrandingResponseData? adminClientsGetBrandingResponseData = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<PatchAdminClientsUpdateBrandingResponse> localVarResponse = PatchAdminClientsUpdateBrandingWithHttpInfo(orgId, clientId, adminClientsGetBrandingResponseData);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Change keys of an OAuth client&#39;s login and/or consent page branding 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="adminClientsGetBrandingResponseData"> (optional)</param>
+        /// <returns>ApiResponse of PatchAdminClientsUpdateBrandingResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<PatchAdminClientsUpdateBrandingResponse> PatchAdminClientsUpdateBrandingWithHttpInfo(string orgId, string clientId, AdminClientsGetBrandingResponseData? adminClientsGetBrandingResponseData = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminOAuthClientsApi->PatchAdminClientsUpdateBranding");
+
+            // verify the required parameter 'clientId' is set
+            if (clientId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'clientId' when calling AdminOAuthClientsApi->PatchAdminClientsUpdateBranding");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("clientId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // path parameter
+            localVarRequestOptions.Data = adminClientsGetBrandingResponseData;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Patch<PatchAdminClientsUpdateBrandingResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("PatchAdminClientsUpdateBranding", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Change keys of an OAuth client&#39;s login and/or consent page branding 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="adminClientsGetBrandingResponseData"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of PatchAdminClientsUpdateBrandingResponse</returns>
+        public async System.Threading.Tasks.Task<PatchAdminClientsUpdateBrandingResponse> PatchAdminClientsUpdateBrandingAsync(string orgId, string clientId, AdminClientsGetBrandingResponseData? adminClientsGetBrandingResponseData = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<PatchAdminClientsUpdateBrandingResponse> localVarResponse = await PatchAdminClientsUpdateBrandingWithHttpInfoAsync(orgId, clientId, adminClientsGetBrandingResponseData, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Change keys of an OAuth client&#39;s login and/or consent page branding 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="adminClientsGetBrandingResponseData"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (PatchAdminClientsUpdateBrandingResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PatchAdminClientsUpdateBrandingResponse>> PatchAdminClientsUpdateBrandingWithHttpInfoAsync(string orgId, string clientId, AdminClientsGetBrandingResponseData? adminClientsGetBrandingResponseData = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminOAuthClientsApi->PatchAdminClientsUpdateBranding");
+
+            // verify the required parameter 'clientId' is set
+            if (clientId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'clientId' when calling AdminOAuthClientsApi->PatchAdminClientsUpdateBranding");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("clientId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // path parameter
+            localVarRequestOptions.Data = adminClientsGetBrandingResponseData;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PatchAsync<PatchAdminClientsUpdateBrandingResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("PatchAdminClientsUpdateBranding", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
         /// Update an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
@@ -2112,6 +2568,165 @@ namespace LumoAuth.ApiClient.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("PatchClient", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Replace an OAuth client&#39;s login and/or consent page branding 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="putAdminClientsUpdateBrandingRequest"> (optional)</param>
+        /// <returns>PutAdminClientsUpdateBrandingResponse</returns>
+        public PutAdminClientsUpdateBrandingResponse PutAdminClientsUpdateBranding(string orgId, string clientId, PutAdminClientsUpdateBrandingRequest? putAdminClientsUpdateBrandingRequest = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminClientsUpdateBrandingResponse> localVarResponse = PutAdminClientsUpdateBrandingWithHttpInfo(orgId, clientId, putAdminClientsUpdateBrandingRequest);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Replace an OAuth client&#39;s login and/or consent page branding 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="putAdminClientsUpdateBrandingRequest"> (optional)</param>
+        /// <returns>ApiResponse of PutAdminClientsUpdateBrandingResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminClientsUpdateBrandingResponse> PutAdminClientsUpdateBrandingWithHttpInfo(string orgId, string clientId, PutAdminClientsUpdateBrandingRequest? putAdminClientsUpdateBrandingRequest = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminOAuthClientsApi->PutAdminClientsUpdateBranding");
+
+            // verify the required parameter 'clientId' is set
+            if (clientId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'clientId' when calling AdminOAuthClientsApi->PutAdminClientsUpdateBranding");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("clientId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // path parameter
+            localVarRequestOptions.Data = putAdminClientsUpdateBrandingRequest;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Put<PutAdminClientsUpdateBrandingResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("PutAdminClientsUpdateBranding", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Replace an OAuth client&#39;s login and/or consent page branding 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="putAdminClientsUpdateBrandingRequest"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of PutAdminClientsUpdateBrandingResponse</returns>
+        public async System.Threading.Tasks.Task<PutAdminClientsUpdateBrandingResponse> PutAdminClientsUpdateBrandingAsync(string orgId, string clientId, PutAdminClientsUpdateBrandingRequest? putAdminClientsUpdateBrandingRequest = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminClientsUpdateBrandingResponse> localVarResponse = await PutAdminClientsUpdateBrandingWithHttpInfoAsync(orgId, clientId, putAdminClientsUpdateBrandingRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Replace an OAuth client&#39;s login and/or consent page branding 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <param name="putAdminClientsUpdateBrandingRequest"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (PutAdminClientsUpdateBrandingResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminClientsUpdateBrandingResponse>> PutAdminClientsUpdateBrandingWithHttpInfoAsync(string orgId, string clientId, PutAdminClientsUpdateBrandingRequest? putAdminClientsUpdateBrandingRequest = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminOAuthClientsApi->PutAdminClientsUpdateBranding");
+
+            // verify the required parameter 'clientId' is set
+            if (clientId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'clientId' when calling AdminOAuthClientsApi->PutAdminClientsUpdateBranding");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("clientId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // path parameter
+            localVarRequestOptions.Data = putAdminClientsUpdateBrandingRequest;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PutAsync<PutAdminClientsUpdateBrandingResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("PutAdminClientsUpdateBranding", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 

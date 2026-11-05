@@ -148,15 +148,17 @@ class AdminEmailApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $type type (required)
+     * @param  string|null $locale locale (optional)
+     * @param  string|null $clientId clientId (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesDelete'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\MessageResponse
      */
-    public function adminEmailTemplatesDelete($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesDelete'][0])
+    public function adminEmailTemplatesDelete($orgId, $type, $locale = null, $clientId = null, string $contentType = self::contentTypes['adminEmailTemplatesDelete'][0])
     {
-        list($response) = $this->adminEmailTemplatesDeleteWithHttpInfo($orgId, $type, $contentType);
+        list($response) = $this->adminEmailTemplatesDeleteWithHttpInfo($orgId, $type, $locale, $clientId, $contentType);
         return $response;
     }
 
@@ -167,15 +169,17 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  string|null $locale (optional)
+     * @param  string|null $clientId (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesDelete'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\MessageResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminEmailTemplatesDeleteWithHttpInfo($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesDelete'][0])
+    public function adminEmailTemplatesDeleteWithHttpInfo($orgId, $type, $locale = null, $clientId = null, string $contentType = self::contentTypes['adminEmailTemplatesDelete'][0])
     {
-        $request = $this->adminEmailTemplatesDeleteRequest($orgId, $type, $contentType);
+        $request = $this->adminEmailTemplatesDeleteRequest($orgId, $type, $locale, $clientId, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -253,14 +257,16 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  string|null $locale (optional)
+     * @param  string|null $clientId (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesDelete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminEmailTemplatesDeleteAsync($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesDelete'][0])
+    public function adminEmailTemplatesDeleteAsync($orgId, $type, $locale = null, $clientId = null, string $contentType = self::contentTypes['adminEmailTemplatesDelete'][0])
     {
-        return $this->adminEmailTemplatesDeleteAsyncWithHttpInfo($orgId, $type, $contentType)
+        return $this->adminEmailTemplatesDeleteAsyncWithHttpInfo($orgId, $type, $locale, $clientId, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -275,15 +281,17 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  string|null $locale (optional)
+     * @param  string|null $clientId (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesDelete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminEmailTemplatesDeleteAsyncWithHttpInfo($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesDelete'][0])
+    public function adminEmailTemplatesDeleteAsyncWithHttpInfo($orgId, $type, $locale = null, $clientId = null, string $contentType = self::contentTypes['adminEmailTemplatesDelete'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\MessageResponse';
-        $request = $this->adminEmailTemplatesDeleteRequest($orgId, $type, $contentType);
+        $request = $this->adminEmailTemplatesDeleteRequest($orgId, $type, $locale, $clientId, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -326,12 +334,14 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  string|null $locale (optional)
+     * @param  string|null $clientId (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesDelete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminEmailTemplatesDeleteRequest($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesDelete'][0])
+    public function adminEmailTemplatesDeleteRequest($orgId, $type, $locale = null, $clientId = null, string $contentType = self::contentTypes['adminEmailTemplatesDelete'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -349,6 +359,8 @@ class AdminEmailApi
         }
 
 
+
+
         $resourcePath = '/orgs/{orgId}/api/v1/admin/email-templates/{type}';
         $formParams = [];
         $queryParams = [];
@@ -356,6 +368,24 @@ class AdminEmailApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $locale,
+            'locale', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $clientId,
+            'client_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
         // path params
@@ -445,15 +475,17 @@ class AdminEmailApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $type type (required)
+     * @param  string|null $locale Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
+     * @param  string|null $clientId Application variant (OAuth client_id); omit for the variant used by every application (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesGet'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\EmailTemplate
      */
-    public function adminEmailTemplatesGet($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesGet'][0])
+    public function adminEmailTemplatesGet($orgId, $type, $locale = null, $clientId = null, string $contentType = self::contentTypes['adminEmailTemplatesGet'][0])
     {
-        list($response) = $this->adminEmailTemplatesGetWithHttpInfo($orgId, $type, $contentType);
+        list($response) = $this->adminEmailTemplatesGetWithHttpInfo($orgId, $type, $locale, $clientId, $contentType);
         return $response;
     }
 
@@ -464,15 +496,17 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  string|null $locale Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
+     * @param  string|null $clientId Application variant (OAuth client_id); omit for the variant used by every application (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesGet'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\EmailTemplate, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminEmailTemplatesGetWithHttpInfo($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesGet'][0])
+    public function adminEmailTemplatesGetWithHttpInfo($orgId, $type, $locale = null, $clientId = null, string $contentType = self::contentTypes['adminEmailTemplatesGet'][0])
     {
-        $request = $this->adminEmailTemplatesGetRequest($orgId, $type, $contentType);
+        $request = $this->adminEmailTemplatesGetRequest($orgId, $type, $locale, $clientId, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -550,14 +584,16 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  string|null $locale Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
+     * @param  string|null $clientId Application variant (OAuth client_id); omit for the variant used by every application (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesGet'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminEmailTemplatesGetAsync($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesGet'][0])
+    public function adminEmailTemplatesGetAsync($orgId, $type, $locale = null, $clientId = null, string $contentType = self::contentTypes['adminEmailTemplatesGet'][0])
     {
-        return $this->adminEmailTemplatesGetAsyncWithHttpInfo($orgId, $type, $contentType)
+        return $this->adminEmailTemplatesGetAsyncWithHttpInfo($orgId, $type, $locale, $clientId, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -572,15 +608,17 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  string|null $locale Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
+     * @param  string|null $clientId Application variant (OAuth client_id); omit for the variant used by every application (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesGet'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminEmailTemplatesGetAsyncWithHttpInfo($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesGet'][0])
+    public function adminEmailTemplatesGetAsyncWithHttpInfo($orgId, $type, $locale = null, $clientId = null, string $contentType = self::contentTypes['adminEmailTemplatesGet'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\EmailTemplate';
-        $request = $this->adminEmailTemplatesGetRequest($orgId, $type, $contentType);
+        $request = $this->adminEmailTemplatesGetRequest($orgId, $type, $locale, $clientId, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -623,12 +661,14 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  string|null $locale Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
+     * @param  string|null $clientId Application variant (OAuth client_id); omit for the variant used by every application (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesGet'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminEmailTemplatesGetRequest($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesGet'][0])
+    public function adminEmailTemplatesGetRequest($orgId, $type, $locale = null, $clientId = null, string $contentType = self::contentTypes['adminEmailTemplatesGet'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -646,6 +686,8 @@ class AdminEmailApi
         }
 
 
+
+
         $resourcePath = '/orgs/{orgId}/api/v1/admin/email-templates/{type}';
         $formParams = [];
         $queryParams = [];
@@ -653,6 +695,24 @@ class AdminEmailApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $locale,
+            'locale', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $clientId,
+            'client_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
         // path params

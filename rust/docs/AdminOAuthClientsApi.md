@@ -5,6 +5,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**admin_clients_cimd_check**](AdminOAuthClientsApi.md#admin_clients_cimd_check) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document
+[**admin_clients_get_branding**](AdminOAuthClientsApi.md#admin_clients_get_branding) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Get an OAuth client's login and consent page branding
 [**create_client**](AdminOAuthClientsApi.md#create_client) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client
 [**delete_client**](AdminOAuthClientsApi.md#delete_client) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client
 [**disable_client**](AdminOAuthClientsApi.md#disable_client) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client
@@ -12,7 +13,9 @@ Method | HTTP request | Description
 [**get_client**](AdminOAuthClientsApi.md#get_client) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get an OAuth client
 [**list_client_scopes**](AdminOAuthClientsApi.md#list_client_scopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | List the scopes granted to an OAuth client
 [**list_clients**](AdminOAuthClientsApi.md#list_clients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List OAuth clients
+[**patch_admin_clients_update_branding**](AdminOAuthClientsApi.md#patch_admin_clients_update_branding) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Change keys of an OAuth client's login and/or consent page branding
 [**patch_client**](AdminOAuthClientsApi.md#patch_client) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client
+[**put_admin_clients_update_branding**](AdminOAuthClientsApi.md#put_admin_clients_update_branding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client's login and/or consent page branding
 [**rotate_client_secret**](AdminOAuthClientsApi.md#rotate_client_secret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret
 [**set_client_scopes**](AdminOAuthClientsApi.md#set_client_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
 [**update_client**](AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
@@ -45,6 +48,37 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## admin_clients_get_branding
+
+> models::AdminClientsGetBrandingResponse admin_clients_get_branding(org_id, client_id)
+Get an OAuth client's login and consent page branding
+
+Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**org_id** | **String** |  | [required] |
+**client_id** | **String** |  | [required] |
+
+### Return type
+
+[**models::AdminClientsGetBrandingResponse**](AdminClientsGetBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -251,6 +285,36 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## patch_admin_clients_update_branding
+
+> models::PatchAdminClientsUpdateBrandingResponse patch_admin_clients_update_branding(org_id, client_id, admin_clients_get_branding_response_data)
+Change keys of an OAuth client's login and/or consent page branding
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**org_id** | **String** |  | [required] |
+**client_id** | **String** |  | [required] |
+**admin_clients_get_branding_response_data** | Option<[**AdminClientsGetBrandingResponseData**](AdminClientsGetBrandingResponseData.md)> |  |  |
+
+### Return type
+
+[**models::PatchAdminClientsUpdateBrandingResponse**](PatchAdminClientsUpdateBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## patch_client
 
 > models::UpdateClientResponse patch_client(org_id, client_id)
@@ -275,6 +339,36 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## put_admin_clients_update_branding
+
+> models::PutAdminClientsUpdateBrandingResponse put_admin_clients_update_branding(org_id, client_id, put_admin_clients_update_branding_request)
+Replace an OAuth client's login and/or consent page branding
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**org_id** | **String** |  | [required] |
+**client_id** | **String** |  | [required] |
+**put_admin_clients_update_branding_request** | Option<[**PutAdminClientsUpdateBrandingRequest**](PutAdminClientsUpdateBrandingRequest.md)> |  |  |
+
+### Return type
+
+[**models::PutAdminClientsUpdateBrandingResponse**](PutAdminClientsUpdateBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

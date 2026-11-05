@@ -273,14 +273,6 @@ public class AuthorizationServerMetadataTest {
     }
 
     /**
-     * Test the property 'tlsClientCertificateBoundAccessTokens'
-     */
-    @Test
-    public void tlsClientCertificateBoundAccessTokensTest() {
-        // TODO: test tlsClientCertificateBoundAccessTokens
-    }
-
-    /**
      * Test the property 'backchannelAuthenticationEndpoint'
      */
     @Test

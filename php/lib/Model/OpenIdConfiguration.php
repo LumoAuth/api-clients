@@ -83,13 +83,13 @@ class OpenIdConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
         'requireSignedRequestObject' => 'bool',
         'requestObjectSigningAlgValuesSupported' => 'string[]',
         'uiLocalesSupported' => 'string[]',
+        'promptValuesSupported' => 'string[]',
         'acrValuesSupported' => 'string[]',
         'codeChallengeMethodsSupported' => 'string[]',
         'authorizationResponseIssParameterSupported' => 'bool',
         'pushedAuthorizationRequestEndpoint' => 'string',
         'requirePushedAuthorizationRequests' => 'bool',
         'dpopSigningAlgValuesSupported' => 'string[]',
-        'tlsClientCertificateBoundAccessTokens' => 'bool',
         'introspectionEndpoint' => 'string',
         'introspectionEndpointAuthMethodsSupported' => 'string[]',
         'revocationEndpoint' => 'string',
@@ -145,13 +145,13 @@ class OpenIdConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
         'requireSignedRequestObject' => null,
         'requestObjectSigningAlgValuesSupported' => null,
         'uiLocalesSupported' => null,
+        'promptValuesSupported' => null,
         'acrValuesSupported' => null,
         'codeChallengeMethodsSupported' => null,
         'authorizationResponseIssParameterSupported' => null,
         'pushedAuthorizationRequestEndpoint' => 'uri',
         'requirePushedAuthorizationRequests' => null,
         'dpopSigningAlgValuesSupported' => null,
-        'tlsClientCertificateBoundAccessTokens' => null,
         'introspectionEndpoint' => 'uri',
         'introspectionEndpointAuthMethodsSupported' => null,
         'revocationEndpoint' => 'uri',
@@ -205,13 +205,13 @@ class OpenIdConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
         'requireSignedRequestObject' => false,
         'requestObjectSigningAlgValuesSupported' => false,
         'uiLocalesSupported' => false,
+        'promptValuesSupported' => false,
         'acrValuesSupported' => false,
         'codeChallengeMethodsSupported' => false,
         'authorizationResponseIssParameterSupported' => false,
         'pushedAuthorizationRequestEndpoint' => false,
         'requirePushedAuthorizationRequests' => false,
         'dpopSigningAlgValuesSupported' => false,
-        'tlsClientCertificateBoundAccessTokens' => false,
         'introspectionEndpoint' => false,
         'introspectionEndpointAuthMethodsSupported' => false,
         'revocationEndpoint' => false,
@@ -345,13 +345,13 @@ class OpenIdConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
         'requireSignedRequestObject' => 'require_signed_request_object',
         'requestObjectSigningAlgValuesSupported' => 'request_object_signing_alg_values_supported',
         'uiLocalesSupported' => 'ui_locales_supported',
+        'promptValuesSupported' => 'prompt_values_supported',
         'acrValuesSupported' => 'acr_values_supported',
         'codeChallengeMethodsSupported' => 'code_challenge_methods_supported',
         'authorizationResponseIssParameterSupported' => 'authorization_response_iss_parameter_supported',
         'pushedAuthorizationRequestEndpoint' => 'pushed_authorization_request_endpoint',
         'requirePushedAuthorizationRequests' => 'require_pushed_authorization_requests',
         'dpopSigningAlgValuesSupported' => 'dpop_signing_alg_values_supported',
-        'tlsClientCertificateBoundAccessTokens' => 'tls_client_certificate_bound_access_tokens',
         'introspectionEndpoint' => 'introspection_endpoint',
         'introspectionEndpointAuthMethodsSupported' => 'introspection_endpoint_auth_methods_supported',
         'revocationEndpoint' => 'revocation_endpoint',
@@ -405,13 +405,13 @@ class OpenIdConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
         'requireSignedRequestObject' => 'setRequireSignedRequestObject',
         'requestObjectSigningAlgValuesSupported' => 'setRequestObjectSigningAlgValuesSupported',
         'uiLocalesSupported' => 'setUiLocalesSupported',
+        'promptValuesSupported' => 'setPromptValuesSupported',
         'acrValuesSupported' => 'setAcrValuesSupported',
         'codeChallengeMethodsSupported' => 'setCodeChallengeMethodsSupported',
         'authorizationResponseIssParameterSupported' => 'setAuthorizationResponseIssParameterSupported',
         'pushedAuthorizationRequestEndpoint' => 'setPushedAuthorizationRequestEndpoint',
         'requirePushedAuthorizationRequests' => 'setRequirePushedAuthorizationRequests',
         'dpopSigningAlgValuesSupported' => 'setDpopSigningAlgValuesSupported',
-        'tlsClientCertificateBoundAccessTokens' => 'setTlsClientCertificateBoundAccessTokens',
         'introspectionEndpoint' => 'setIntrospectionEndpoint',
         'introspectionEndpointAuthMethodsSupported' => 'setIntrospectionEndpointAuthMethodsSupported',
         'revocationEndpoint' => 'setRevocationEndpoint',
@@ -465,13 +465,13 @@ class OpenIdConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
         'requireSignedRequestObject' => 'getRequireSignedRequestObject',
         'requestObjectSigningAlgValuesSupported' => 'getRequestObjectSigningAlgValuesSupported',
         'uiLocalesSupported' => 'getUiLocalesSupported',
+        'promptValuesSupported' => 'getPromptValuesSupported',
         'acrValuesSupported' => 'getAcrValuesSupported',
         'codeChallengeMethodsSupported' => 'getCodeChallengeMethodsSupported',
         'authorizationResponseIssParameterSupported' => 'getAuthorizationResponseIssParameterSupported',
         'pushedAuthorizationRequestEndpoint' => 'getPushedAuthorizationRequestEndpoint',
         'requirePushedAuthorizationRequests' => 'getRequirePushedAuthorizationRequests',
         'dpopSigningAlgValuesSupported' => 'getDpopSigningAlgValuesSupported',
-        'tlsClientCertificateBoundAccessTokens' => 'getTlsClientCertificateBoundAccessTokens',
         'introspectionEndpoint' => 'getIntrospectionEndpoint',
         'introspectionEndpointAuthMethodsSupported' => 'getIntrospectionEndpointAuthMethodsSupported',
         'revocationEndpoint' => 'getRevocationEndpoint',
@@ -576,13 +576,13 @@ class OpenIdConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
         $this->setIfExists('requireSignedRequestObject', $data ?? [], null);
         $this->setIfExists('requestObjectSigningAlgValuesSupported', $data ?? [], null);
         $this->setIfExists('uiLocalesSupported', $data ?? [], null);
+        $this->setIfExists('promptValuesSupported', $data ?? [], null);
         $this->setIfExists('acrValuesSupported', $data ?? [], null);
         $this->setIfExists('codeChallengeMethodsSupported', $data ?? [], null);
         $this->setIfExists('authorizationResponseIssParameterSupported', $data ?? [], null);
         $this->setIfExists('pushedAuthorizationRequestEndpoint', $data ?? [], null);
         $this->setIfExists('requirePushedAuthorizationRequests', $data ?? [], null);
         $this->setIfExists('dpopSigningAlgValuesSupported', $data ?? [], null);
-        $this->setIfExists('tlsClientCertificateBoundAccessTokens', $data ?? [], null);
         $this->setIfExists('introspectionEndpoint', $data ?? [], null);
         $this->setIfExists('introspectionEndpointAuthMethodsSupported', $data ?? [], null);
         $this->setIfExists('revocationEndpoint', $data ?? [], null);
@@ -1344,6 +1344,33 @@ class OpenIdConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
     }
 
     /**
+     * Gets promptValuesSupported
+     *
+     * @return string[]|null
+     */
+    public function getPromptValuesSupported()
+    {
+        return $this->container['promptValuesSupported'];
+    }
+
+    /**
+     * Sets promptValuesSupported
+     *
+     * @param string[]|null $promptValuesSupported promptValuesSupported
+     *
+     * @return self
+     */
+    public function setPromptValuesSupported($promptValuesSupported)
+    {
+        if (is_null($promptValuesSupported)) {
+            throw new \InvalidArgumentException('non-nullable promptValuesSupported cannot be null');
+        }
+        $this->container['promptValuesSupported'] = $promptValuesSupported;
+
+        return $this;
+    }
+
+    /**
      * Gets acrValuesSupported
      *
      * @return string[]|null
@@ -1501,33 +1528,6 @@ class OpenIdConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
             throw new \InvalidArgumentException('non-nullable dpopSigningAlgValuesSupported cannot be null');
         }
         $this->container['dpopSigningAlgValuesSupported'] = $dpopSigningAlgValuesSupported;
-
-        return $this;
-    }
-
-    /**
-     * Gets tlsClientCertificateBoundAccessTokens
-     *
-     * @return bool|null
-     */
-    public function getTlsClientCertificateBoundAccessTokens()
-    {
-        return $this->container['tlsClientCertificateBoundAccessTokens'];
-    }
-
-    /**
-     * Sets tlsClientCertificateBoundAccessTokens
-     *
-     * @param bool|null $tlsClientCertificateBoundAccessTokens tlsClientCertificateBoundAccessTokens
-     *
-     * @return self
-     */
-    public function setTlsClientCertificateBoundAccessTokens($tlsClientCertificateBoundAccessTokens)
-    {
-        if (is_null($tlsClientCertificateBoundAccessTokens)) {
-            throw new \InvalidArgumentException('non-nullable tlsClientCertificateBoundAccessTokens cannot be null');
-        }
-        $this->container['tlsClientCertificateBoundAccessTokens'] = $tlsClientCertificateBoundAccessTokens;
 
         return $this;
     }

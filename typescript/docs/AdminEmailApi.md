@@ -28,10 +28,14 @@ const apiInstance = new AdminEmailApi(configuration);
 
 let orgId: string; // (default to undefined)
 let type: string; // (default to undefined)
+let locale: string; // (optional) (default to undefined)
+let clientId: string; // (optional) (default to undefined)
 
 const { status, data } = await apiInstance.adminEmailTemplatesDelete(
     orgId,
-    type
+    type,
+    locale,
+    clientId
 );
 ```
 
@@ -41,6 +45,8 @@ const { status, data } = await apiInstance.adminEmailTemplatesDelete(
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
 | **type** | [**string**] |  | defaults to undefined|
+| **locale** | [**string**] |  | (optional) defaults to undefined|
+| **clientId** | [**string**] |  | (optional) defaults to undefined|
 
 
 ### Return type
@@ -82,10 +88,14 @@ const apiInstance = new AdminEmailApi(configuration);
 
 let orgId: string; // (default to undefined)
 let type: string; // (default to undefined)
+let locale: string; //Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional) (default to undefined)
+let clientId: string; //Application variant (OAuth client_id); omit for the variant used by every application (optional) (default to undefined)
 
 const { status, data } = await apiInstance.adminEmailTemplatesGet(
     orgId,
-    type
+    type,
+    locale,
+    clientId
 );
 ```
 
@@ -95,6 +105,8 @@ const { status, data } = await apiInstance.adminEmailTemplatesGet(
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
 | **type** | [**string**] |  | defaults to undefined|
+| **locale** | [**string**] | Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language | (optional) defaults to undefined|
+| **clientId** | [**string**] | Application variant (OAuth client_id); omit for the variant used by every application | (optional) defaults to undefined|
 
 
 ### Return type
@@ -226,6 +238,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesPreview(
 # **adminEmailTemplatesUpsert**
 > EmailTemplate adminEmailTemplatesUpsert()
 
+Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
 
 ### Example
 

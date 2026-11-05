@@ -94,6 +94,8 @@ docs/AdminAuditLogsStatsResponseDataPeriod.md
 docs/AdminClientTokensRevokeAllResponse.md
 docs/AdminClientsCimdCheckRequest.md
 docs/AdminClientsCimdCheckResponse.md
+docs/AdminClientsGetBrandingResponse.md
+docs/AdminClientsGetBrandingResponseData.md
 docs/AdminEmailAPI.md
 docs/AdminEmailTemplatesListResponse.md
 docs/AdminEmailTemplatesPreviewResponse.md
@@ -373,6 +375,7 @@ docs/OrganizationRole.md
 docs/PaginationMeta.md
 docs/ParResponse.md
 docs/PasskeyEnrollmentStarted.md
+docs/PatchAdminClientsUpdateBrandingResponse.md
 docs/Permission.md
 docs/ProtectedResourceList.md
 docs/ProtectedResourceMetadata.md
@@ -381,6 +384,8 @@ docs/PutAbacAttributesUpdateResponse.md
 docs/PutAbacPoliciesUpdateResponse.md
 docs/PutAdminAgentsUpdateRequest.md
 docs/PutAdminAgentsUpdateResponse.md
+docs/PutAdminClientsUpdateBrandingRequest.md
+docs/PutAdminClientsUpdateBrandingResponse.md
 docs/PutAdminOrgMembersUpdateResponse.md
 docs/PutAdminSettingsAuthenticationUpdateResponse.md
 docs/PutAdminSettingsBrandingUpdateResponse.md
@@ -516,6 +521,8 @@ model_admin_audit_logs_stats_response_data_period.go
 model_admin_client_tokens_revoke_all_response.go
 model_admin_clients_cimd_check_request.go
 model_admin_clients_cimd_check_response.go
+model_admin_clients_get_branding_response.go
+model_admin_clients_get_branding_response_data.go
 model_admin_email_templates_list_response.go
 model_admin_email_templates_preview_response.go
 model_admin_email_templates_variables_response.go
@@ -773,6 +780,7 @@ model_organization_role.go
 model_pagination_meta.go
 model_par_response.go
 model_passkey_enrollment_started.go
+model_patch_admin_clients_update_branding_response.go
 model_permission.go
 model_protected_resource_list.go
 model_protected_resource_metadata.go
@@ -781,6 +789,8 @@ model_put_abac_attributes_update_response.go
 model_put_abac_policies_update_response.go
 model_put_admin_agents_update_request.go
 model_put_admin_agents_update_response.go
+model_put_admin_clients_update_branding_request.go
+model_put_admin_clients_update_branding_response.go
 model_put_admin_org_members_update_response.go
 model_put_admin_settings_authentication_update_response.go
 model_put_admin_settings_branding_update_response.go

@@ -12,7 +12,6 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**getOrgSelection**](#getorgselection) | **GET** /orgs/{orgId}/api/v1/oauth/org-select | Organization selector page|
 |[**introspect**](#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662)|
 |[**par**](#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126)|
-|[**passkeyLogin**](#passkeylogin) | **GET** /orgs/{orgId}/api/v1/oauth/passkey-login | Passkey login entry point|
 |[**registerClient**](#registerclient) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR)|
 |[**revoke**](#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009)|
 |[**socialCallback**](#socialcallback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback|
@@ -20,7 +19,6 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**socialLogin**](#sociallogin) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider} | Start social / enterprise identity-provider login|
 |[**submitAuthorization**](#submitauthorization) | **POST** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint (form submission)|
 |[**submitDeviceVerification**](#submitdeviceverification) | **POST** /orgs/{orgId}/api/v1/oauth/device | Submit device verification|
-|[**submitLogin**](#submitlogin) | **POST** /orgs/{orgId}/api/v1/oauth/login/submit | Hosted login form submission|
 |[**submitLoginJson**](#submitloginjson) | **POST** /orgs/{orgId}/api/v1/oauth/login/json | Programmatic (JSON) login for the authorization flow|
 |[**submitOrgSelection**](#submitorgselection) | **POST** /orgs/{orgId}/api/v1/oauth/org-select | Submit organization selection|
 |[**token**](#token) | **POST** /orgs/{orgId}/api/v1/oauth/token | OAuth 2.1 token endpoint|
@@ -458,57 +456,6 @@ const { status, data } = await apiInstance.par(
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **passkeyLogin**
-> passkeyLogin()
-
-Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-
-### Example
-
-```typescript
-import {
-    OAuthApi,
-    Configuration
-} from '@lumoauth/api-client';
-
-const configuration = new Configuration();
-const apiInstance = new OAuthApi(configuration);
-
-let orgId: string; // (default to undefined)
-
-const { status, data } = await apiInstance.passkeyLogin(
-    orgId
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **orgId** | [**string**] |  | defaults to undefined|
-
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**302** | Redirect to the hosted login page. |  * Location -  <br>  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **registerClient**
 > RegisterClientResponse registerClient()
 
@@ -885,58 +832,6 @@ No authorization required
 |**200** | HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. |  -  |
 |**302** | Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. |  * Location -  <br>  |
 |**429** | HTML error page — too many attempts. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **submitLogin**
-> submitLogin()
-
-Receives the hosted OAuth login page\'s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-
-### Example
-
-```typescript
-import {
-    OAuthApi,
-    Configuration
-} from '@lumoauth/api-client';
-
-const configuration = new Configuration();
-const apiInstance = new OAuthApi(configuration);
-
-let orgId: string; // (default to undefined)
-
-const { status, data } = await apiInstance.submitLogin(
-    orgId
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **orgId** | [**string**] |  | defaults to undefined|
-
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**302** | Redirect to /oauth/authorize with the original client_id, redirect_uri, state, scope, PKCE and nonce parameters. |  * Location -  <br>  |
-|**404** | Unknown or inactive organization. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

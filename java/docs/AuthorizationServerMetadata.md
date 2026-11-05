@@ -36,7 +36,6 @@
 |**pushedAuthorizationRequestEndpoint** | **URI** |  |  [optional] |
 |**requirePushedAuthorizationRequests** | **Boolean** |  |  [optional] |
 |**dpopSigningAlgValuesSupported** | **List&lt;String&gt;** |  |  [optional] |
-|**tlsClientCertificateBoundAccessTokens** | **Boolean** |  |  [optional] |
 |**backchannelAuthenticationEndpoint** | **URI** |  |  [optional] |
 |**backchannelTokenDeliveryModesSupported** | **List&lt;String&gt;** |  |  [optional] |
 |**backchannelUserCodeParameterSupported** | **Boolean** |  |  [optional] |

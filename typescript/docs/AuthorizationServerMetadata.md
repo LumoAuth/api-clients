@@ -34,7 +34,6 @@ Name | Type | Description | Notes
 **pushed_authorization_request_endpoint** | **string** |  | [optional] [default to undefined]
 **require_pushed_authorization_requests** | **boolean** |  | [optional] [default to undefined]
 **dpop_signing_alg_values_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
-**tls_client_certificate_bound_access_tokens** | **boolean** |  | [optional] [default to undefined]
 **backchannel_authentication_endpoint** | **string** |  | [optional] [default to undefined]
 **backchannel_token_delivery_modes_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **backchannel_user_code_parameter_supported** | **boolean** |  | [optional] [default to undefined]
@@ -79,7 +78,6 @@ const instance: AuthorizationServerMetadata = {
     pushed_authorization_request_endpoint,
     require_pushed_authorization_requests,
     dpop_signing_alg_values_supported,
-    tls_client_certificate_bound_access_tokens,
     backchannel_authentication_endpoint,
     backchannel_token_delivery_modes_supported,
     backchannel_user_code_parameter_supported,

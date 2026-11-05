@@ -32,13 +32,13 @@
 |**requireSignedRequestObject** | **Boolean** |  |  [optional] |
 |**requestObjectSigningAlgValuesSupported** | **List&lt;String&gt;** |  |  [optional] |
 |**uiLocalesSupported** | **List&lt;String&gt;** |  |  [optional] |
+|**promptValuesSupported** | **List&lt;String&gt;** |  |  [optional] |
 |**acrValuesSupported** | **List&lt;String&gt;** | The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings. |  [optional] |
 |**codeChallengeMethodsSupported** | **List&lt;String&gt;** |  |  [optional] |
 |**authorizationResponseIssParameterSupported** | **Boolean** |  |  [optional] |
 |**pushedAuthorizationRequestEndpoint** | **URI** |  |  [optional] |
 |**requirePushedAuthorizationRequests** | **Boolean** |  |  [optional] |
 |**dpopSigningAlgValuesSupported** | **List&lt;String&gt;** |  |  [optional] |
-|**tlsClientCertificateBoundAccessTokens** | **Boolean** |  |  [optional] |
 |**introspectionEndpoint** | **URI** |  |  [optional] |
 |**introspectionEndpointAuthMethodsSupported** | **List&lt;String&gt;** |  |  [optional] |
 |**revocationEndpoint** | **URI** |  |  [optional] |

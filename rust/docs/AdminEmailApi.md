@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 ## admin_email_templates_delete
 
-> models::MessageResponse admin_email_templates_delete(org_id, r#type)
+> models::MessageResponse admin_email_templates_delete(org_id, r#type, locale, client_id)
 Remove the custom email template so the built-in default is used
 
 ### Parameters
@@ -25,6 +25,8 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **r#type** | **String** |  | [required] |
+**locale** | Option<**String**> |  |  |
+**client_id** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -44,7 +46,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_email_templates_get
 
-> models::EmailTemplate admin_email_templates_get(org_id, r#type)
+> models::EmailTemplate admin_email_templates_get(org_id, r#type, locale, client_id)
 Get an email template (custom or built-in default)
 
 ### Parameters
@@ -54,6 +56,8 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **r#type** | **String** |  | [required] |
+**locale** | Option<**String**> | Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language |  |
+**client_id** | Option<**String**> | Application variant (OAuth client_id); omit for the variant used by every application |  |
 
 ### Return type
 
@@ -132,6 +136,8 @@ Name | Type | Description  | Required | Notes
 
 > models::EmailTemplate admin_email_templates_upsert(org_id, r#type)
 Create or replace the custom email template for a type
+
+Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
 
 ### Parameters
 

@@ -5,6 +5,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**AdminClientsCimdCheck**](AdminOAuthClientsAPI.md#AdminClientsCimdCheck) | **Post** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document
+[**AdminClientsGetBranding**](AdminOAuthClientsAPI.md#AdminClientsGetBranding) | **Get** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Get an OAuth client&#39;s login and consent page branding
 [**CreateClient**](AdminOAuthClientsAPI.md#CreateClient) | **Post** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client
 [**DeleteClient**](AdminOAuthClientsAPI.md#DeleteClient) | **Delete** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client
 [**DisableClient**](AdminOAuthClientsAPI.md#DisableClient) | **Post** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client
@@ -12,7 +13,9 @@ Method | HTTP request | Description
 [**GetClient**](AdminOAuthClientsAPI.md#GetClient) | **Get** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get an OAuth client
 [**ListClientScopes**](AdminOAuthClientsAPI.md#ListClientScopes) | **Get** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | List the scopes granted to an OAuth client
 [**ListClients**](AdminOAuthClientsAPI.md#ListClients) | **Get** /orgs/{orgId}/api/v1/admin/clients | List OAuth clients
+[**PatchAdminClientsUpdateBranding**](AdminOAuthClientsAPI.md#PatchAdminClientsUpdateBranding) | **Patch** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Change keys of an OAuth client&#39;s login and/or consent page branding
 [**PatchClient**](AdminOAuthClientsAPI.md#PatchClient) | **Patch** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client
+[**PutAdminClientsUpdateBranding**](AdminOAuthClientsAPI.md#PutAdminClientsUpdateBranding) | **Put** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client&#39;s login and/or consent page branding
 [**RotateClientSecret**](AdminOAuthClientsAPI.md#RotateClientSecret) | **Post** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret
 [**SetClientScopes**](AdminOAuthClientsAPI.md#SetClientScopes) | **Put** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
 [**UpdateClient**](AdminOAuthClientsAPI.md#UpdateClient) | **Put** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
@@ -84,6 +87,79 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## AdminClientsGetBranding
+
+> AdminClientsGetBrandingResponse AdminClientsGetBranding(ctx, orgId, clientId).Execute()
+
+Get an OAuth client's login and consent page branding
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	clientId := "clientId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AdminOAuthClientsAPI.AdminClientsGetBranding(context.Background(), orgId, clientId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.AdminClientsGetBranding``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AdminClientsGetBranding`: AdminClientsGetBrandingResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.AdminClientsGetBranding`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+**clientId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAdminClientsGetBrandingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**AdminClientsGetBrandingResponse**](AdminClientsGetBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -582,6 +658,79 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## PatchAdminClientsUpdateBranding
+
+> PatchAdminClientsUpdateBrandingResponse PatchAdminClientsUpdateBranding(ctx, orgId, clientId).AdminClientsGetBrandingResponseData(adminClientsGetBrandingResponseData).Execute()
+
+Change keys of an OAuth client's login and/or consent page branding
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	clientId := "clientId_example" // string | 
+	adminClientsGetBrandingResponseData := *openapiclient.NewAdminClientsGetBrandingResponseData() // AdminClientsGetBrandingResponseData |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AdminOAuthClientsAPI.PatchAdminClientsUpdateBranding(context.Background(), orgId, clientId).AdminClientsGetBrandingResponseData(adminClientsGetBrandingResponseData).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.PatchAdminClientsUpdateBranding``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PatchAdminClientsUpdateBranding`: PatchAdminClientsUpdateBrandingResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.PatchAdminClientsUpdateBranding`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+**clientId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPatchAdminClientsUpdateBrandingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **adminClientsGetBrandingResponseData** | [**AdminClientsGetBrandingResponseData**](AdminClientsGetBrandingResponseData.md) |  | 
+
+### Return type
+
+[**PatchAdminClientsUpdateBrandingResponse**](PatchAdminClientsUpdateBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## PatchClient
 
 > UpdateClientResponse PatchClient(ctx, orgId, clientId).Execute()
@@ -646,6 +795,79 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PutAdminClientsUpdateBranding
+
+> PutAdminClientsUpdateBrandingResponse PutAdminClientsUpdateBranding(ctx, orgId, clientId).PutAdminClientsUpdateBrandingRequest(putAdminClientsUpdateBrandingRequest).Execute()
+
+Replace an OAuth client's login and/or consent page branding
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	clientId := "clientId_example" // string | 
+	putAdminClientsUpdateBrandingRequest := *openapiclient.NewPutAdminClientsUpdateBrandingRequest() // PutAdminClientsUpdateBrandingRequest |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AdminOAuthClientsAPI.PutAdminClientsUpdateBranding(context.Background(), orgId, clientId).PutAdminClientsUpdateBrandingRequest(putAdminClientsUpdateBrandingRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.PutAdminClientsUpdateBranding``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PutAdminClientsUpdateBranding`: PutAdminClientsUpdateBrandingResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.PutAdminClientsUpdateBranding`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+**clientId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPutAdminClientsUpdateBrandingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **putAdminClientsUpdateBrandingRequest** | [**PutAdminClientsUpdateBrandingRequest**](PutAdminClientsUpdateBrandingRequest.md) |  | 
+
+### Return type
+
+[**PutAdminClientsUpdateBrandingResponse**](PutAdminClientsUpdateBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

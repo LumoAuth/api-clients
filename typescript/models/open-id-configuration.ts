@@ -171,6 +171,12 @@ export interface OpenIdConfiguration {
      */
     'ui_locales_supported'?: Array<string>;
     /**
+     * 
+     * @type {Array<string>}
+     * @memberof OpenIdConfiguration
+     */
+    'prompt_values_supported'?: Array<string>;
+    /**
      * The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
      * @type {Array<string>}
      * @memberof OpenIdConfiguration
@@ -206,12 +212,6 @@ export interface OpenIdConfiguration {
      * @memberof OpenIdConfiguration
      */
     'dpop_signing_alg_values_supported'?: Array<string>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof OpenIdConfiguration
-     */
-    'tls_client_certificate_bound_access_tokens'?: boolean;
     /**
      * 
      * @type {string}

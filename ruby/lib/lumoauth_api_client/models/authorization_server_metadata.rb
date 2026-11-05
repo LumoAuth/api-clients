@@ -75,8 +75,6 @@ module LumoAuthApiClient
 
     attr_accessor :dpop_signing_alg_values_supported
 
-    attr_accessor :tls_client_certificate_bound_access_tokens
-
     attr_accessor :backchannel_authentication_endpoint
 
     attr_accessor :backchannel_token_delivery_modes_supported
@@ -129,7 +127,6 @@ module LumoAuthApiClient
         :'pushed_authorization_request_endpoint' => :'pushed_authorization_request_endpoint',
         :'require_pushed_authorization_requests' => :'require_pushed_authorization_requests',
         :'dpop_signing_alg_values_supported' => :'dpop_signing_alg_values_supported',
-        :'tls_client_certificate_bound_access_tokens' => :'tls_client_certificate_bound_access_tokens',
         :'backchannel_authentication_endpoint' => :'backchannel_authentication_endpoint',
         :'backchannel_token_delivery_modes_supported' => :'backchannel_token_delivery_modes_supported',
         :'backchannel_user_code_parameter_supported' => :'backchannel_user_code_parameter_supported',
@@ -183,7 +180,6 @@ module LumoAuthApiClient
         :'pushed_authorization_request_endpoint' => :'String',
         :'require_pushed_authorization_requests' => :'Boolean',
         :'dpop_signing_alg_values_supported' => :'Array<String>',
-        :'tls_client_certificate_bound_access_tokens' => :'Boolean',
         :'backchannel_authentication_endpoint' => :'String',
         :'backchannel_token_delivery_modes_supported' => :'Array<String>',
         :'backchannel_user_code_parameter_supported' => :'Boolean',
@@ -369,10 +365,6 @@ module LumoAuthApiClient
         end
       end
 
-      if attributes.key?(:'tls_client_certificate_bound_access_tokens')
-        self.tls_client_certificate_bound_access_tokens = attributes[:'tls_client_certificate_bound_access_tokens']
-      end
-
       if attributes.key?(:'backchannel_authentication_endpoint')
         self.backchannel_authentication_endpoint = attributes[:'backchannel_authentication_endpoint']
       end
@@ -536,7 +528,6 @@ module LumoAuthApiClient
           pushed_authorization_request_endpoint == o.pushed_authorization_request_endpoint &&
           require_pushed_authorization_requests == o.require_pushed_authorization_requests &&
           dpop_signing_alg_values_supported == o.dpop_signing_alg_values_supported &&
-          tls_client_certificate_bound_access_tokens == o.tls_client_certificate_bound_access_tokens &&
           backchannel_authentication_endpoint == o.backchannel_authentication_endpoint &&
           backchannel_token_delivery_modes_supported == o.backchannel_token_delivery_modes_supported &&
           backchannel_user_code_parameter_supported == o.backchannel_user_code_parameter_supported &&
@@ -556,7 +547,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [issuer, authorization_endpoint, token_endpoint, response_types_supported, jwks_uri, registration_endpoint, scopes_supported, response_modes_supported, authorization_signing_alg_values_supported, grant_types_supported, token_endpoint_auth_methods_supported, token_endpoint_auth_signing_alg_values_supported, service_documentation, ui_locales_supported, revocation_endpoint, revocation_endpoint_auth_methods_supported, introspection_endpoint, introspection_endpoint_auth_methods_supported, code_challenge_methods_supported, authorization_response_iss_parameter_supported, request_parameter_supported, request_uri_parameter_supported, require_request_uri_registration, require_signed_request_object, request_object_signing_alg_values_supported, device_authorization_endpoint, pushed_authorization_request_endpoint, require_pushed_authorization_requests, dpop_signing_alg_values_supported, tls_client_certificate_bound_access_tokens, backchannel_authentication_endpoint, backchannel_token_delivery_modes_supported, backchannel_user_code_parameter_supported, entity_profiles_supported, client_id_metadata_document_supported, authorization_grant_profiles_supported, op_policy_uri, op_tos_uri].hash
+      [issuer, authorization_endpoint, token_endpoint, response_types_supported, jwks_uri, registration_endpoint, scopes_supported, response_modes_supported, authorization_signing_alg_values_supported, grant_types_supported, token_endpoint_auth_methods_supported, token_endpoint_auth_signing_alg_values_supported, service_documentation, ui_locales_supported, revocation_endpoint, revocation_endpoint_auth_methods_supported, introspection_endpoint, introspection_endpoint_auth_methods_supported, code_challenge_methods_supported, authorization_response_iss_parameter_supported, request_parameter_supported, request_uri_parameter_supported, require_request_uri_registration, require_signed_request_object, request_object_signing_alg_values_supported, device_authorization_endpoint, pushed_authorization_request_endpoint, require_pushed_authorization_requests, dpop_signing_alg_values_supported, backchannel_authentication_endpoint, backchannel_token_delivery_modes_supported, backchannel_user_code_parameter_supported, entity_profiles_supported, client_id_metadata_document_supported, authorization_grant_profiles_supported, op_policy_uri, op_tos_uri].hash
     end
 
     # Builds the object from hash

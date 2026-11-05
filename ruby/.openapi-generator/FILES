@@ -66,6 +66,8 @@ docs/AdminAuditLogsStatsResponseDataPeriod.md
 docs/AdminClientTokensRevokeAllResponse.md
 docs/AdminClientsCimdCheckRequest.md
 docs/AdminClientsCimdCheckResponse.md
+docs/AdminClientsGetBrandingResponse.md
+docs/AdminClientsGetBrandingResponseData.md
 docs/AdminEmailApi.md
 docs/AdminEmailTemplatesListResponse.md
 docs/AdminEmailTemplatesPreviewResponse.md
@@ -345,6 +347,7 @@ docs/OrganizationRole.md
 docs/PaginationMeta.md
 docs/ParResponse.md
 docs/PasskeyEnrollmentStarted.md
+docs/PatchAdminClientsUpdateBrandingResponse.md
 docs/Permission.md
 docs/ProtectedResourceList.md
 docs/ProtectedResourceMetadata.md
@@ -353,6 +356,8 @@ docs/PutAbacAttributesUpdateResponse.md
 docs/PutAbacPoliciesUpdateResponse.md
 docs/PutAdminAgentsUpdateRequest.md
 docs/PutAdminAgentsUpdateResponse.md
+docs/PutAdminClientsUpdateBrandingRequest.md
+docs/PutAdminClientsUpdateBrandingResponse.md
 docs/PutAdminOrgMembersUpdateResponse.md
 docs/PutAdminSettingsAuthenticationUpdateResponse.md
 docs/PutAdminSettingsBrandingUpdateResponse.md
@@ -519,6 +524,8 @@ lib/lumoauth_api_client/models/admin_audit_logs_stats_response_data_period.rb
 lib/lumoauth_api_client/models/admin_client_tokens_revoke_all_response.rb
 lib/lumoauth_api_client/models/admin_clients_cimd_check_request.rb
 lib/lumoauth_api_client/models/admin_clients_cimd_check_response.rb
+lib/lumoauth_api_client/models/admin_clients_get_branding_response.rb
+lib/lumoauth_api_client/models/admin_clients_get_branding_response_data.rb
 lib/lumoauth_api_client/models/admin_email_templates_list_response.rb
 lib/lumoauth_api_client/models/admin_email_templates_preview_response.rb
 lib/lumoauth_api_client/models/admin_email_templates_variables_response.rb
@@ -776,6 +783,7 @@ lib/lumoauth_api_client/models/organization_role.rb
 lib/lumoauth_api_client/models/pagination_meta.rb
 lib/lumoauth_api_client/models/par_response.rb
 lib/lumoauth_api_client/models/passkey_enrollment_started.rb
+lib/lumoauth_api_client/models/patch_admin_clients_update_branding_response.rb
 lib/lumoauth_api_client/models/permission.rb
 lib/lumoauth_api_client/models/protected_resource_list.rb
 lib/lumoauth_api_client/models/protected_resource_metadata.rb
@@ -784,6 +792,8 @@ lib/lumoauth_api_client/models/put_abac_attributes_update_response.rb
 lib/lumoauth_api_client/models/put_abac_policies_update_response.rb
 lib/lumoauth_api_client/models/put_admin_agents_update_request.rb
 lib/lumoauth_api_client/models/put_admin_agents_update_response.rb
+lib/lumoauth_api_client/models/put_admin_clients_update_branding_request.rb
+lib/lumoauth_api_client/models/put_admin_clients_update_branding_response.rb
 lib/lumoauth_api_client/models/put_admin_org_members_update_response.rb
 lib/lumoauth_api_client/models/put_admin_settings_authentication_update_response.rb
 lib/lumoauth_api_client/models/put_admin_settings_branding_update_response.rb

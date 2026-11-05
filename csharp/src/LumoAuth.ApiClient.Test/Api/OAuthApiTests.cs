@@ -152,17 +152,6 @@ namespace LumoAuth.ApiClient.Test.Api
         }
 
         /// <summary>
-        /// Test PasskeyLogin
-        /// </summary>
-        [Fact]
-        public void PasskeyLoginTest()
-        {
-            // TODO uncomment below to test the method and replace null with proper value
-            //string orgId = null;
-            //instance.PasskeyLogin(orgId);
-        }
-
-        /// <summary>
         /// Test RegisterClient
         /// </summary>
         [Fact]
@@ -244,17 +233,6 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //var response = instance.SubmitDeviceVerification(orgId);
             //Assert.IsType<string>(response);
-        }
-
-        /// <summary>
-        /// Test SubmitLogin
-        /// </summary>
-        [Fact]
-        public void SubmitLoginTest()
-        {
-            // TODO uncomment below to test the method and replace null with proper value
-            //string orgId = null;
-            //instance.SubmitLogin(orgId);
         }
 
         /// <summary>

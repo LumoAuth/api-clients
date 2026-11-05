@@ -39,6 +39,22 @@ type AdminOAuthClientsAPI interface {
 	AdminClientsCimdCheckExecute(r ApiAdminClientsCimdCheckRequest) (*AdminClientsCimdCheckResponse, *http.Response, error)
 
 	/*
+	AdminClientsGetBranding Get an OAuth client's login and consent page branding
+
+	Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means "same as the organization".
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@param clientId
+	@return ApiAdminClientsGetBrandingRequest
+	*/
+	AdminClientsGetBranding(ctx context.Context, orgId string, clientId string) ApiAdminClientsGetBrandingRequest
+
+	// AdminClientsGetBrandingExecute executes the request
+	//  @return AdminClientsGetBrandingResponse
+	AdminClientsGetBrandingExecute(r ApiAdminClientsGetBrandingRequest) (*AdminClientsGetBrandingResponse, *http.Response, error)
+
+	/*
 	CreateClient Create an OAuth client
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -135,6 +151,20 @@ type AdminOAuthClientsAPI interface {
 	ListClientsExecute(r ApiListClientsRequest) (*ListClientsResponse, *http.Response, error)
 
 	/*
+	PatchAdminClientsUpdateBranding Change keys of an OAuth client's login and/or consent page branding
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@param clientId
+	@return ApiPatchAdminClientsUpdateBrandingRequest
+	*/
+	PatchAdminClientsUpdateBranding(ctx context.Context, orgId string, clientId string) ApiPatchAdminClientsUpdateBrandingRequest
+
+	// PatchAdminClientsUpdateBrandingExecute executes the request
+	//  @return PatchAdminClientsUpdateBrandingResponse
+	PatchAdminClientsUpdateBrandingExecute(r ApiPatchAdminClientsUpdateBrandingRequest) (*PatchAdminClientsUpdateBrandingResponse, *http.Response, error)
+
+	/*
 	PatchClient Update an OAuth client
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -147,6 +177,20 @@ type AdminOAuthClientsAPI interface {
 	// PatchClientExecute executes the request
 	//  @return UpdateClientResponse
 	PatchClientExecute(r ApiPatchClientRequest) (*UpdateClientResponse, *http.Response, error)
+
+	/*
+	PutAdminClientsUpdateBranding Replace an OAuth client's login and/or consent page branding
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@param clientId
+	@return ApiPutAdminClientsUpdateBrandingRequest
+	*/
+	PutAdminClientsUpdateBranding(ctx context.Context, orgId string, clientId string) ApiPutAdminClientsUpdateBrandingRequest
+
+	// PutAdminClientsUpdateBrandingExecute executes the request
+	//  @return PutAdminClientsUpdateBrandingResponse
+	PutAdminClientsUpdateBrandingExecute(r ApiPutAdminClientsUpdateBrandingRequest) (*PutAdminClientsUpdateBrandingResponse, *http.Response, error)
 
 	/*
 	RotateClientSecret Rotate an OAuth client secret
@@ -271,6 +315,127 @@ func (a *AdminOAuthClientsAPIService) AdminClientsCimdCheckExecute(r ApiAdminCli
 	}
 	// body params
 	localVarPostBody = r.adminClientsCimdCheckRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiAdminClientsGetBrandingRequest struct {
+	ctx context.Context
+	ApiService AdminOAuthClientsAPI
+	orgId string
+	clientId string
+}
+
+func (r ApiAdminClientsGetBrandingRequest) Execute() (*AdminClientsGetBrandingResponse, *http.Response, error) {
+	return r.ApiService.AdminClientsGetBrandingExecute(r)
+}
+
+/*
+AdminClientsGetBranding Get an OAuth client's login and consent page branding
+
+Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means "same as the organization".
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @param clientId
+ @return ApiAdminClientsGetBrandingRequest
+*/
+func (a *AdminOAuthClientsAPIService) AdminClientsGetBranding(ctx context.Context, orgId string, clientId string) ApiAdminClientsGetBrandingRequest {
+	return ApiAdminClientsGetBrandingRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+		clientId: clientId,
+	}
+}
+
+// Execute executes the request
+//  @return AdminClientsGetBrandingResponse
+func (a *AdminOAuthClientsAPIService) AdminClientsGetBrandingExecute(r ApiAdminClientsGetBrandingRequest) (*AdminClientsGetBrandingResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AdminClientsGetBrandingResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.AdminClientsGetBranding")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"clientId"+"}", url.PathEscape(parameterValueToString(r.clientId, "clientId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1147,6 +1312,133 @@ func (a *AdminOAuthClientsAPIService) ListClientsExecute(r ApiListClientsRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiPatchAdminClientsUpdateBrandingRequest struct {
+	ctx context.Context
+	ApiService AdminOAuthClientsAPI
+	orgId string
+	clientId string
+	adminClientsGetBrandingResponseData *AdminClientsGetBrandingResponseData
+}
+
+func (r ApiPatchAdminClientsUpdateBrandingRequest) AdminClientsGetBrandingResponseData(adminClientsGetBrandingResponseData AdminClientsGetBrandingResponseData) ApiPatchAdminClientsUpdateBrandingRequest {
+	r.adminClientsGetBrandingResponseData = &adminClientsGetBrandingResponseData
+	return r
+}
+
+func (r ApiPatchAdminClientsUpdateBrandingRequest) Execute() (*PatchAdminClientsUpdateBrandingResponse, *http.Response, error) {
+	return r.ApiService.PatchAdminClientsUpdateBrandingExecute(r)
+}
+
+/*
+PatchAdminClientsUpdateBranding Change keys of an OAuth client's login and/or consent page branding
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @param clientId
+ @return ApiPatchAdminClientsUpdateBrandingRequest
+*/
+func (a *AdminOAuthClientsAPIService) PatchAdminClientsUpdateBranding(ctx context.Context, orgId string, clientId string) ApiPatchAdminClientsUpdateBrandingRequest {
+	return ApiPatchAdminClientsUpdateBrandingRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+		clientId: clientId,
+	}
+}
+
+// Execute executes the request
+//  @return PatchAdminClientsUpdateBrandingResponse
+func (a *AdminOAuthClientsAPIService) PatchAdminClientsUpdateBrandingExecute(r ApiPatchAdminClientsUpdateBrandingRequest) (*PatchAdminClientsUpdateBrandingResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PatchAdminClientsUpdateBrandingResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.PatchAdminClientsUpdateBranding")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"clientId"+"}", url.PathEscape(parameterValueToString(r.clientId, "clientId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.adminClientsGetBrandingResponseData
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiPatchClientRequest struct {
 	ctx context.Context
 	ApiService AdminOAuthClientsAPI
@@ -1215,6 +1507,133 @@ func (a *AdminOAuthClientsAPIService) PatchClientExecute(r ApiPatchClientRequest
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPutAdminClientsUpdateBrandingRequest struct {
+	ctx context.Context
+	ApiService AdminOAuthClientsAPI
+	orgId string
+	clientId string
+	putAdminClientsUpdateBrandingRequest *PutAdminClientsUpdateBrandingRequest
+}
+
+func (r ApiPutAdminClientsUpdateBrandingRequest) PutAdminClientsUpdateBrandingRequest(putAdminClientsUpdateBrandingRequest PutAdminClientsUpdateBrandingRequest) ApiPutAdminClientsUpdateBrandingRequest {
+	r.putAdminClientsUpdateBrandingRequest = &putAdminClientsUpdateBrandingRequest
+	return r
+}
+
+func (r ApiPutAdminClientsUpdateBrandingRequest) Execute() (*PutAdminClientsUpdateBrandingResponse, *http.Response, error) {
+	return r.ApiService.PutAdminClientsUpdateBrandingExecute(r)
+}
+
+/*
+PutAdminClientsUpdateBranding Replace an OAuth client's login and/or consent page branding
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @param clientId
+ @return ApiPutAdminClientsUpdateBrandingRequest
+*/
+func (a *AdminOAuthClientsAPIService) PutAdminClientsUpdateBranding(ctx context.Context, orgId string, clientId string) ApiPutAdminClientsUpdateBrandingRequest {
+	return ApiPutAdminClientsUpdateBrandingRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+		clientId: clientId,
+	}
+}
+
+// Execute executes the request
+//  @return PutAdminClientsUpdateBrandingResponse
+func (a *AdminOAuthClientsAPIService) PutAdminClientsUpdateBrandingExecute(r ApiPutAdminClientsUpdateBrandingRequest) (*PutAdminClientsUpdateBrandingResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PutAdminClientsUpdateBrandingResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.PutAdminClientsUpdateBranding")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"clientId"+"}", url.PathEscape(parameterValueToString(r.clientId, "clientId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.putAdminClientsUpdateBrandingRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

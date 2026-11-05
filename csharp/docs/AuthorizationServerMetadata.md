@@ -33,7 +33,6 @@ Name | Type | Description | Notes
 **PushedAuthorizationRequestEndpoint** | **string** |  | [optional] 
 **RequirePushedAuthorizationRequests** | **bool** |  | [optional] 
 **DpopSigningAlgValuesSupported** | **List&lt;string&gt;** |  | [optional] 
-**TlsClientCertificateBoundAccessTokens** | **bool** |  | [optional] 
 **BackchannelAuthenticationEndpoint** | **string** |  | [optional] 
 **BackchannelTokenDeliveryModesSupported** | **List&lt;string&gt;** |  | [optional] 
 **BackchannelUserCodeParameterSupported** | **bool** |  | [optional] 

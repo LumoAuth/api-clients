@@ -51,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * OpenIdConfiguration
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-30T07:09:37.528972290-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-05T14:43:02.247013037-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class OpenIdConfiguration {
   public static final String SERIALIZED_NAME_ISSUER = "issuer";
   @SerializedName(SERIALIZED_NAME_ISSUER)
@@ -178,6 +178,11 @@ public class OpenIdConfiguration {
   @javax.annotation.Nullable
   private List<String> uiLocalesSupported = new ArrayList<>();
 
+  public static final String SERIALIZED_NAME_PROMPT_VALUES_SUPPORTED = "prompt_values_supported";
+  @SerializedName(SERIALIZED_NAME_PROMPT_VALUES_SUPPORTED)
+  @javax.annotation.Nullable
+  private List<String> promptValuesSupported = new ArrayList<>();
+
   public static final String SERIALIZED_NAME_ACR_VALUES_SUPPORTED = "acr_values_supported";
   @SerializedName(SERIALIZED_NAME_ACR_VALUES_SUPPORTED)
   @javax.annotation.Nullable
@@ -207,11 +212,6 @@ public class OpenIdConfiguration {
   @SerializedName(SERIALIZED_NAME_DPOP_SIGNING_ALG_VALUES_SUPPORTED)
   @javax.annotation.Nullable
   private List<String> dpopSigningAlgValuesSupported = new ArrayList<>();
-
-  public static final String SERIALIZED_NAME_TLS_CLIENT_CERTIFICATE_BOUND_ACCESS_TOKENS = "tls_client_certificate_bound_access_tokens";
-  @SerializedName(SERIALIZED_NAME_TLS_CLIENT_CERTIFICATE_BOUND_ACCESS_TOKENS)
-  @javax.annotation.Nullable
-  private Boolean tlsClientCertificateBoundAccessTokens;
 
   public static final String SERIALIZED_NAME_INTROSPECTION_ENDPOINT = "introspection_endpoint";
   @SerializedName(SERIALIZED_NAME_INTROSPECTION_ENDPOINT)
@@ -895,6 +895,33 @@ public class OpenIdConfiguration {
   }
 
 
+  public OpenIdConfiguration promptValuesSupported(@javax.annotation.Nullable List<String> promptValuesSupported) {
+    this.promptValuesSupported = promptValuesSupported;
+    return this;
+  }
+
+  public OpenIdConfiguration addPromptValuesSupportedItem(String promptValuesSupportedItem) {
+    if (this.promptValuesSupported == null) {
+      this.promptValuesSupported = new ArrayList<>();
+    }
+    this.promptValuesSupported.add(promptValuesSupportedItem);
+    return this;
+  }
+
+  /**
+   * Get promptValuesSupported
+   * @return promptValuesSupported
+   */
+  @javax.annotation.Nullable
+  public List<String> getPromptValuesSupported() {
+    return promptValuesSupported;
+  }
+
+  public void setPromptValuesSupported(@javax.annotation.Nullable List<String> promptValuesSupported) {
+    this.promptValuesSupported = promptValuesSupported;
+  }
+
+
   public OpenIdConfiguration acrValuesSupported(@javax.annotation.Nullable List<String> acrValuesSupported) {
     this.acrValuesSupported = acrValuesSupported;
     return this;
@@ -1030,25 +1057,6 @@ public class OpenIdConfiguration {
 
   public void setDpopSigningAlgValuesSupported(@javax.annotation.Nullable List<String> dpopSigningAlgValuesSupported) {
     this.dpopSigningAlgValuesSupported = dpopSigningAlgValuesSupported;
-  }
-
-
-  public OpenIdConfiguration tlsClientCertificateBoundAccessTokens(@javax.annotation.Nullable Boolean tlsClientCertificateBoundAccessTokens) {
-    this.tlsClientCertificateBoundAccessTokens = tlsClientCertificateBoundAccessTokens;
-    return this;
-  }
-
-  /**
-   * Get tlsClientCertificateBoundAccessTokens
-   * @return tlsClientCertificateBoundAccessTokens
-   */
-  @javax.annotation.Nullable
-  public Boolean getTlsClientCertificateBoundAccessTokens() {
-    return tlsClientCertificateBoundAccessTokens;
-  }
-
-  public void setTlsClientCertificateBoundAccessTokens(@javax.annotation.Nullable Boolean tlsClientCertificateBoundAccessTokens) {
-    this.tlsClientCertificateBoundAccessTokens = tlsClientCertificateBoundAccessTokens;
   }
 
 
@@ -1507,13 +1515,13 @@ public class OpenIdConfiguration {
         Objects.equals(this.requireSignedRequestObject, openIdConfiguration.requireSignedRequestObject) &&
         Objects.equals(this.requestObjectSigningAlgValuesSupported, openIdConfiguration.requestObjectSigningAlgValuesSupported) &&
         Objects.equals(this.uiLocalesSupported, openIdConfiguration.uiLocalesSupported) &&
+        Objects.equals(this.promptValuesSupported, openIdConfiguration.promptValuesSupported) &&
         Objects.equals(this.acrValuesSupported, openIdConfiguration.acrValuesSupported) &&
         Objects.equals(this.codeChallengeMethodsSupported, openIdConfiguration.codeChallengeMethodsSupported) &&
         Objects.equals(this.authorizationResponseIssParameterSupported, openIdConfiguration.authorizationResponseIssParameterSupported) &&
         Objects.equals(this.pushedAuthorizationRequestEndpoint, openIdConfiguration.pushedAuthorizationRequestEndpoint) &&
         Objects.equals(this.requirePushedAuthorizationRequests, openIdConfiguration.requirePushedAuthorizationRequests) &&
         Objects.equals(this.dpopSigningAlgValuesSupported, openIdConfiguration.dpopSigningAlgValuesSupported) &&
-        Objects.equals(this.tlsClientCertificateBoundAccessTokens, openIdConfiguration.tlsClientCertificateBoundAccessTokens) &&
         Objects.equals(this.introspectionEndpoint, openIdConfiguration.introspectionEndpoint) &&
         Objects.equals(this.introspectionEndpointAuthMethodsSupported, openIdConfiguration.introspectionEndpointAuthMethodsSupported) &&
         Objects.equals(this.revocationEndpoint, openIdConfiguration.revocationEndpoint) &&
@@ -1538,7 +1546,7 @@ public class OpenIdConfiguration {
 
   @Override
   public int hashCode() {
-    return Objects.hash(issuer, authorizationEndpoint, tokenEndpoint, jwksUri, responseTypesSupported, subjectTypesSupported, idTokenSigningAlgValuesSupported, userinfoEndpoint, registrationEndpoint, scopesSupported, claimsSupported, responseModesSupported, authorizationSigningAlgValuesSupported, grantTypesSupported, deviceAuthorizationEndpoint, tokenEndpointAuthMethodsSupported, tokenEndpointAuthSigningAlgValuesSupported, claimTypesSupported, claimsParameterSupported, requestParameterSupported, requestUriParameterSupported, requireRequestUriRegistration, requireSignedRequestObject, requestObjectSigningAlgValuesSupported, uiLocalesSupported, acrValuesSupported, codeChallengeMethodsSupported, authorizationResponseIssParameterSupported, pushedAuthorizationRequestEndpoint, requirePushedAuthorizationRequests, dpopSigningAlgValuesSupported, tlsClientCertificateBoundAccessTokens, introspectionEndpoint, introspectionEndpointAuthMethodsSupported, revocationEndpoint, revocationEndpointAuthMethodsSupported, resourceIndicatorsSupported, endSessionEndpoint, checkSessionIframe, frontchannelLogoutSupported, frontchannelLogoutSessionSupported, backchannelLogoutSupported, backchannelLogoutSessionSupported, backchannelAuthenticationEndpoint, backchannelTokenDeliveryModesSupported, backchannelUserCodeParameterSupported, serviceDocumentation, entityProfilesSupported, clientIdMetadataDocumentSupported, authorizationGrantProfilesSupported, opPolicyUri, opTosUri);
+    return Objects.hash(issuer, authorizationEndpoint, tokenEndpoint, jwksUri, responseTypesSupported, subjectTypesSupported, idTokenSigningAlgValuesSupported, userinfoEndpoint, registrationEndpoint, scopesSupported, claimsSupported, responseModesSupported, authorizationSigningAlgValuesSupported, grantTypesSupported, deviceAuthorizationEndpoint, tokenEndpointAuthMethodsSupported, tokenEndpointAuthSigningAlgValuesSupported, claimTypesSupported, claimsParameterSupported, requestParameterSupported, requestUriParameterSupported, requireRequestUriRegistration, requireSignedRequestObject, requestObjectSigningAlgValuesSupported, uiLocalesSupported, promptValuesSupported, acrValuesSupported, codeChallengeMethodsSupported, authorizationResponseIssParameterSupported, pushedAuthorizationRequestEndpoint, requirePushedAuthorizationRequests, dpopSigningAlgValuesSupported, introspectionEndpoint, introspectionEndpointAuthMethodsSupported, revocationEndpoint, revocationEndpointAuthMethodsSupported, resourceIndicatorsSupported, endSessionEndpoint, checkSessionIframe, frontchannelLogoutSupported, frontchannelLogoutSessionSupported, backchannelLogoutSupported, backchannelLogoutSessionSupported, backchannelAuthenticationEndpoint, backchannelTokenDeliveryModesSupported, backchannelUserCodeParameterSupported, serviceDocumentation, entityProfilesSupported, clientIdMetadataDocumentSupported, authorizationGrantProfilesSupported, opPolicyUri, opTosUri);
   }
 
   @Override
@@ -1570,13 +1578,13 @@ public class OpenIdConfiguration {
     sb.append("    requireSignedRequestObject: ").append(toIndentedString(requireSignedRequestObject)).append("\n");
     sb.append("    requestObjectSigningAlgValuesSupported: ").append(toIndentedString(requestObjectSigningAlgValuesSupported)).append("\n");
     sb.append("    uiLocalesSupported: ").append(toIndentedString(uiLocalesSupported)).append("\n");
+    sb.append("    promptValuesSupported: ").append(toIndentedString(promptValuesSupported)).append("\n");
     sb.append("    acrValuesSupported: ").append(toIndentedString(acrValuesSupported)).append("\n");
     sb.append("    codeChallengeMethodsSupported: ").append(toIndentedString(codeChallengeMethodsSupported)).append("\n");
     sb.append("    authorizationResponseIssParameterSupported: ").append(toIndentedString(authorizationResponseIssParameterSupported)).append("\n");
     sb.append("    pushedAuthorizationRequestEndpoint: ").append(toIndentedString(pushedAuthorizationRequestEndpoint)).append("\n");
     sb.append("    requirePushedAuthorizationRequests: ").append(toIndentedString(requirePushedAuthorizationRequests)).append("\n");
     sb.append("    dpopSigningAlgValuesSupported: ").append(toIndentedString(dpopSigningAlgValuesSupported)).append("\n");
-    sb.append("    tlsClientCertificateBoundAccessTokens: ").append(toIndentedString(tlsClientCertificateBoundAccessTokens)).append("\n");
     sb.append("    introspectionEndpoint: ").append(toIndentedString(introspectionEndpoint)).append("\n");
     sb.append("    introspectionEndpointAuthMethodsSupported: ").append(toIndentedString(introspectionEndpointAuthMethodsSupported)).append("\n");
     sb.append("    revocationEndpoint: ").append(toIndentedString(revocationEndpoint)).append("\n");
@@ -1618,7 +1626,7 @@ public class OpenIdConfiguration {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("issuer", "authorization_endpoint", "token_endpoint", "jwks_uri", "response_types_supported", "subject_types_supported", "id_token_signing_alg_values_supported", "userinfo_endpoint", "registration_endpoint", "scopes_supported", "claims_supported", "response_modes_supported", "authorization_signing_alg_values_supported", "grant_types_supported", "device_authorization_endpoint", "token_endpoint_auth_methods_supported", "token_endpoint_auth_signing_alg_values_supported", "claim_types_supported", "claims_parameter_supported", "request_parameter_supported", "request_uri_parameter_supported", "require_request_uri_registration", "require_signed_request_object", "request_object_signing_alg_values_supported", "ui_locales_supported", "acr_values_supported", "code_challenge_methods_supported", "authorization_response_iss_parameter_supported", "pushed_authorization_request_endpoint", "require_pushed_authorization_requests", "dpop_signing_alg_values_supported", "tls_client_certificate_bound_access_tokens", "introspection_endpoint", "introspection_endpoint_auth_methods_supported", "revocation_endpoint", "revocation_endpoint_auth_methods_supported", "resource_indicators_supported", "end_session_endpoint", "check_session_iframe", "frontchannel_logout_supported", "frontchannel_logout_session_supported", "backchannel_logout_supported", "backchannel_logout_session_supported", "backchannel_authentication_endpoint", "backchannel_token_delivery_modes_supported", "backchannel_user_code_parameter_supported", "service_documentation", "entity_profiles_supported", "client_id_metadata_document_supported", "authorization_grant_profiles_supported", "op_policy_uri", "op_tos_uri"));
+    openapiFields = new HashSet<String>(Arrays.asList("issuer", "authorization_endpoint", "token_endpoint", "jwks_uri", "response_types_supported", "subject_types_supported", "id_token_signing_alg_values_supported", "userinfo_endpoint", "registration_endpoint", "scopes_supported", "claims_supported", "response_modes_supported", "authorization_signing_alg_values_supported", "grant_types_supported", "device_authorization_endpoint", "token_endpoint_auth_methods_supported", "token_endpoint_auth_signing_alg_values_supported", "claim_types_supported", "claims_parameter_supported", "request_parameter_supported", "request_uri_parameter_supported", "require_request_uri_registration", "require_signed_request_object", "request_object_signing_alg_values_supported", "ui_locales_supported", "prompt_values_supported", "acr_values_supported", "code_challenge_methods_supported", "authorization_response_iss_parameter_supported", "pushed_authorization_request_endpoint", "require_pushed_authorization_requests", "dpop_signing_alg_values_supported", "introspection_endpoint", "introspection_endpoint_auth_methods_supported", "revocation_endpoint", "revocation_endpoint_auth_methods_supported", "resource_indicators_supported", "end_session_endpoint", "check_session_iframe", "frontchannel_logout_supported", "frontchannel_logout_session_supported", "backchannel_logout_supported", "backchannel_logout_session_supported", "backchannel_authentication_endpoint", "backchannel_token_delivery_modes_supported", "backchannel_user_code_parameter_supported", "service_documentation", "entity_profiles_supported", "client_id_metadata_document_supported", "authorization_grant_profiles_supported", "op_policy_uri", "op_tos_uri"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("issuer", "authorization_endpoint", "token_endpoint", "jwks_uri", "response_types_supported", "subject_types_supported", "id_token_signing_alg_values_supported"));
@@ -1730,6 +1738,10 @@ public class OpenIdConfiguration {
       // ensure the optional json data is an array if present
       if (jsonObj.get("ui_locales_supported") != null && !jsonObj.get("ui_locales_supported").isJsonNull() && !jsonObj.get("ui_locales_supported").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `ui_locales_supported` to be an array in the JSON string but got `%s`", jsonObj.get("ui_locales_supported").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("prompt_values_supported") != null && !jsonObj.get("prompt_values_supported").isJsonNull() && !jsonObj.get("prompt_values_supported").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `prompt_values_supported` to be an array in the JSON string but got `%s`", jsonObj.get("prompt_values_supported").toString()));
       }
       // ensure the optional json data is an array if present
       if (jsonObj.get("acr_values_supported") != null && !jsonObj.get("acr_values_supported").isJsonNull() && !jsonObj.get("acr_values_supported").isJsonArray()) {

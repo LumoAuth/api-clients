@@ -30,13 +30,13 @@ Name | Type | Description | Notes
 **require_signed_request_object** | **boolean** |  | [optional] [default to undefined]
 **request_object_signing_alg_values_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **ui_locales_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
+**prompt_values_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **acr_values_supported** | **Array&lt;string&gt;** | The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings. | [optional] [default to undefined]
 **code_challenge_methods_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **authorization_response_iss_parameter_supported** | **boolean** |  | [optional] [default to undefined]
 **pushed_authorization_request_endpoint** | **string** |  | [optional] [default to undefined]
 **require_pushed_authorization_requests** | **boolean** |  | [optional] [default to undefined]
 **dpop_signing_alg_values_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
-**tls_client_certificate_bound_access_tokens** | **boolean** |  | [optional] [default to undefined]
 **introspection_endpoint** | **string** |  | [optional] [default to undefined]
 **introspection_endpoint_auth_methods_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **revocation_endpoint** | **string** |  | [optional] [default to undefined]
@@ -89,13 +89,13 @@ const instance: OpenIdConfiguration = {
     require_signed_request_object,
     request_object_signing_alg_values_supported,
     ui_locales_supported,
+    prompt_values_supported,
     acr_values_supported,
     code_challenge_methods_supported,
     authorization_response_iss_parameter_supported,
     pushed_authorization_request_endpoint,
     require_pushed_authorization_requests,
     dpop_signing_alg_values_supported,
-    tls_client_certificate_bound_access_tokens,
     introspection_endpoint,
     introspection_endpoint_auth_methods_supported,
     revocation_endpoint,

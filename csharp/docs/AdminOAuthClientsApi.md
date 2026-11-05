@@ -5,6 +5,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
 | [**AdminClientsCimdCheck**](AdminOAuthClientsApi.md#adminclientscimdcheck) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document |
+| [**AdminClientsGetBranding**](AdminOAuthClientsApi.md#adminclientsgetbranding) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Get an OAuth client&#39;s login and consent page branding |
 | [**CreateClient**](AdminOAuthClientsApi.md#createclient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client |
 | [**DeleteClient**](AdminOAuthClientsApi.md#deleteclient) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client |
 | [**DisableClient**](AdminOAuthClientsApi.md#disableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client |
@@ -12,7 +13,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**GetClient**](AdminOAuthClientsApi.md#getclient) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get an OAuth client |
 | [**ListClientScopes**](AdminOAuthClientsApi.md#listclientscopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | List the scopes granted to an OAuth client |
 | [**ListClients**](AdminOAuthClientsApi.md#listclients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List OAuth clients |
+| [**PatchAdminClientsUpdateBranding**](AdminOAuthClientsApi.md#patchadminclientsupdatebranding) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Change keys of an OAuth client&#39;s login and/or consent page branding |
 | [**PatchClient**](AdminOAuthClientsApi.md#patchclient) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client |
+| [**PutAdminClientsUpdateBranding**](AdminOAuthClientsApi.md#putadminclientsupdatebranding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client&#39;s login and/or consent page branding |
 | [**RotateClientSecret**](AdminOAuthClientsApi.md#rotateclientsecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret |
 | [**SetClientScopes**](AdminOAuthClientsApi.md#setclientscopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client |
 | [**UpdateClient**](AdminOAuthClientsApi.md#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client |
@@ -119,6 +122,111 @@ catch (ApiException e)
 |-------------|-------------|------------------|
 | **200** | Check result (ok&#x3D;false is still 200: the document was reachable for inspection but rejected) |  -  |
 | **422** | validation_error: client_id missing |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="adminclientsgetbranding"></a>
+# **AdminClientsGetBranding**
+> AdminClientsGetBrandingResponse AdminClientsGetBranding (string orgId, string clientId)
+
+Get an OAuth client's login and consent page branding
+
+Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class AdminClientsGetBrandingExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AdminOAuthClientsApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+            var clientId = "clientId_example";  // string | 
+
+            try
+            {
+                // Get an OAuth client's login and consent page branding
+                AdminClientsGetBrandingResponse result = apiInstance.AdminClientsGetBranding(orgId, clientId);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AdminOAuthClientsApi.AdminClientsGetBranding: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the AdminClientsGetBrandingWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Get an OAuth client's login and consent page branding
+    ApiResponse<AdminClientsGetBrandingResponse> response = apiInstance.AdminClientsGetBrandingWithHttpInfo(orgId, clientId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AdminOAuthClientsApi.AdminClientsGetBrandingWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+| **clientId** | **string** |  |  |
+
+### Return type
+
+[**AdminClientsGetBrandingResponse**](AdminClientsGetBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Branding of the application |  -  |
+| **404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -837,6 +945,111 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a id="patchadminclientsupdatebranding"></a>
+# **PatchAdminClientsUpdateBranding**
+> PatchAdminClientsUpdateBrandingResponse PatchAdminClientsUpdateBranding (string orgId, string clientId, AdminClientsGetBrandingResponseData? adminClientsGetBrandingResponseData = null)
+
+Change keys of an OAuth client's login and/or consent page branding
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class PatchAdminClientsUpdateBrandingExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AdminOAuthClientsApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+            var clientId = "clientId_example";  // string | 
+            var adminClientsGetBrandingResponseData = new AdminClientsGetBrandingResponseData?(); // AdminClientsGetBrandingResponseData? |  (optional) 
+
+            try
+            {
+                // Change keys of an OAuth client's login and/or consent page branding
+                PatchAdminClientsUpdateBrandingResponse result = apiInstance.PatchAdminClientsUpdateBranding(orgId, clientId, adminClientsGetBrandingResponseData);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AdminOAuthClientsApi.PatchAdminClientsUpdateBranding: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the PatchAdminClientsUpdateBrandingWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Change keys of an OAuth client's login and/or consent page branding
+    ApiResponse<PatchAdminClientsUpdateBrandingResponse> response = apiInstance.PatchAdminClientsUpdateBrandingWithHttpInfo(orgId, clientId, adminClientsGetBrandingResponseData);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AdminOAuthClientsApi.PatchAdminClientsUpdateBrandingWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+| **clientId** | **string** |  |  |
+| **adminClientsGetBrandingResponseData** | [**AdminClientsGetBrandingResponseData?**](AdminClientsGetBrandingResponseData?.md) |  | [optional]  |
+
+### Return type
+
+[**PatchAdminClientsUpdateBrandingResponse**](PatchAdminClientsUpdateBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Updated branding |  -  |
+| **404** | OAuth client not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a id="patchclient"></a>
 # **PatchClient**
 > UpdateClientResponse PatchClient (string orgId, string clientId)
@@ -936,6 +1149,111 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated OAuth client (detailed) |  -  |
+| **404** | OAuth client not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="putadminclientsupdatebranding"></a>
+# **PutAdminClientsUpdateBranding**
+> PutAdminClientsUpdateBrandingResponse PutAdminClientsUpdateBranding (string orgId, string clientId, PutAdminClientsUpdateBrandingRequest? putAdminClientsUpdateBrandingRequest = null)
+
+Replace an OAuth client's login and/or consent page branding
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class PutAdminClientsUpdateBrandingExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AdminOAuthClientsApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+            var clientId = "clientId_example";  // string | 
+            var putAdminClientsUpdateBrandingRequest = new PutAdminClientsUpdateBrandingRequest?(); // PutAdminClientsUpdateBrandingRequest? |  (optional) 
+
+            try
+            {
+                // Replace an OAuth client's login and/or consent page branding
+                PutAdminClientsUpdateBrandingResponse result = apiInstance.PutAdminClientsUpdateBranding(orgId, clientId, putAdminClientsUpdateBrandingRequest);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AdminOAuthClientsApi.PutAdminClientsUpdateBranding: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the PutAdminClientsUpdateBrandingWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Replace an OAuth client's login and/or consent page branding
+    ApiResponse<PutAdminClientsUpdateBrandingResponse> response = apiInstance.PutAdminClientsUpdateBrandingWithHttpInfo(orgId, clientId, putAdminClientsUpdateBrandingRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AdminOAuthClientsApi.PutAdminClientsUpdateBrandingWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+| **clientId** | **string** |  |  |
+| **putAdminClientsUpdateBrandingRequest** | [**PutAdminClientsUpdateBrandingRequest?**](PutAdminClientsUpdateBrandingRequest?.md) |  | [optional]  |
+
+### Return type
+
+[**PutAdminClientsUpdateBrandingResponse**](PutAdminClientsUpdateBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Updated branding |  -  |
 | **404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -135,19 +135,6 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test OAuthAPIService PasskeyLogin", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var orgId string
-
-		httpRes, err := apiClient.OAuthAPI.PasskeyLogin(context.Background(), orgId).Execute()
-
-		require.Nil(t, err)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test OAuthAPIService RegisterClient", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -242,19 +229,6 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test OAuthAPIService SubmitLogin", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var orgId string
-
-		httpRes, err := apiClient.OAuthAPI.SubmitLogin(context.Background(), orgId).Execute()
-
-		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

@@ -2679,6 +2679,147 @@
                 }
             }
         },
+        "/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding": {
+            "get": {
+                "tags": [
+                    "Admin: OAuth Clients"
+                ],
+                "summary": "Get an OAuth client's login and consent page branding",
+                "description": "Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".",
+                "operationId": "adminClientsGetBranding",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Branding of the application",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AdminClientsGetBrandingResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "OAuth client not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Admin: OAuth Clients"
+                ],
+                "summary": "Replace an OAuth client's login and/or consent page branding",
+                "operationId": "putAdminClientsUpdateBranding",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PutAdminClientsUpdateBrandingRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated branding",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PutAdminClientsUpdateBrandingResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "OAuth client not found"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Admin: OAuth Clients"
+                ],
+                "summary": "Change keys of an OAuth client's login and/or consent page branding",
+                "operationId": "patchAdminClientsUpdateBranding",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminClientsGetBrandingResponseData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated branding",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PatchAdminClientsUpdateBrandingResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "OAuth client not found"
+                    }
+                }
+            }
+        },
         "/orgs/{orgId}/api/v1/admin/clients/cimd/check": {
             "post": {
                 "tags": [
@@ -3194,6 +3335,24 @@
                 "operationId": "adminEmailTemplatesGet",
                 "parameters": [
                     {
+                        "name": "locale",
+                        "in": "query",
+                        "description": "Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "client_id",
+                        "in": "query",
+                        "description": "Application variant (OAuth client_id); omit for the variant used by every application",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "orgId",
                         "in": "path",
                         "required": true,
@@ -3231,6 +3390,7 @@
                     "Admin: Email"
                 ],
                 "summary": "Create or replace the custom email template for a type",
+                "description": "Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.",
                 "operationId": "adminEmailTemplatesUpsert",
                 "parameters": [
                     {
@@ -3276,6 +3436,22 @@
                 "summary": "Remove the custom email template so the built-in default is used",
                 "operationId": "adminEmailTemplatesDelete",
                 "parameters": [
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "client_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
                     {
                         "name": "orgId",
                         "in": "path",
@@ -12600,39 +12776,6 @@
                 "security": []
             }
         },
-        "/orgs/{orgId}/api/v1/oauth/passkey-login": {
-            "get": {
-                "tags": [
-                    "OAuth"
-                ],
-                "summary": "Passkey login entry point",
-                "description": "Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.",
-                "operationId": "passkeyLogin",
-                "parameters": [
-                    {
-                        "name": "orgId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "302": {
-                        "description": "Redirect to the hosted login page.",
-                        "headers": {
-                            "Location": {
-                                "schema": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": []
-            }
-        },
         "/orgs/{orgId}/api/v1/oauth/login/json": {
             "post": {
                 "tags": [
@@ -12676,42 +12819,6 @@
                     },
                     "429": {
                         "description": "{\"status\":\"rate_limited\"}."
-                    }
-                },
-                "security": []
-            }
-        },
-        "/orgs/{orgId}/api/v1/oauth/login/submit": {
-            "post": {
-                "tags": [
-                    "OAuth"
-                ],
-                "summary": "Hosted login form submission",
-                "description": "Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.",
-                "operationId": "submitLogin",
-                "parameters": [
-                    {
-                        "name": "orgId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "302": {
-                        "description": "Redirect to /oauth/authorize with the original client_id, redirect_uri, state, scope, PKCE and nonce parameters.",
-                        "headers": {
-                            "Location": {
-                                "schema": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Unknown or inactive organization."
                     }
                 },
                 "security": []
@@ -17564,6 +17671,81 @@
                     },
                     "meta": {
                         "$ref": "#/components/schemas/AdminAuditLogsExportResponseMeta"
+                    }
+                },
+                "type": "object"
+            },
+            "AdminClientsGetBrandingResponseData": {
+                "properties": {
+                    "login": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "consent": {
+                        "type": "object",
+                        "additionalProperties": true
+                    }
+                },
+                "type": "object"
+            },
+            "AdminClientsGetBrandingResponse": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/AdminClientsGetBrandingResponseData"
+                    }
+                },
+                "type": "object"
+            },
+            "PutAdminClientsUpdateBrandingRequest": {
+                "properties": {
+                    "login": {
+                        "type": "object",
+                        "example": {
+                            "enabled": true,
+                            "primary_color": "#0f62fe",
+                            "welcome_title": "Welcome to Acme Shop",
+                            "layout": "split-right"
+                        },
+                        "additionalProperties": true
+                    },
+                    "consent": {
+                        "type": "object",
+                        "example": {
+                            "enabled": true,
+                            "title": "Allow Acme Shop"
+                        },
+                        "additionalProperties": true
+                    }
+                },
+                "type": "object"
+            },
+            "PutAdminClientsUpdateBrandingResponse": {
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "rejected": {
+                        "description": "Keys whose value was refused by validation and not saved",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "PatchAdminClientsUpdateBrandingResponse": {
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "rejected": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     }
                 },
                 "type": "object"
@@ -22618,7 +22800,27 @@
                             "type": "string"
                         },
                         "example": [
-                            "en"
+                            "en",
+                            "es",
+                            "fr",
+                            "de",
+                            "pt-BR",
+                            "it",
+                            "nl",
+                            "ja",
+                            "ar"
+                        ]
+                    },
+                    "prompt_values_supported": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "none",
+                            "login",
+                            "consent",
+                            "create"
                         ]
                     },
                     "acr_values_supported": {
@@ -22654,10 +22856,6 @@
                         "items": {
                             "type": "string"
                         }
-                    },
-                    "tls_client_certificate_bound_access_tokens": {
-                        "type": "boolean",
-                        "example": false
                     },
                     "introspection_endpoint": {
                         "type": "string",
@@ -22854,7 +23052,15 @@
                             "type": "string"
                         },
                         "example": [
-                            "en"
+                            "en",
+                            "es",
+                            "fr",
+                            "de",
+                            "pt-BR",
+                            "it",
+                            "nl",
+                            "ja",
+                            "ar"
                         ]
                     },
                     "revocation_endpoint": {
@@ -22929,10 +23135,6 @@
                         "items": {
                             "type": "string"
                         }
-                    },
-                    "tls_client_certificate_bound_access_tokens": {
-                        "type": "boolean",
-                        "example": false
                     },
                     "backchannel_authentication_endpoint": {
                         "type": "string",

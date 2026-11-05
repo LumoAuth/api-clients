@@ -5,6 +5,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
 |[**adminClientsCimdCheck**](#adminclientscimdcheck) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document|
+|[**adminClientsGetBranding**](#adminclientsgetbranding) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Get an OAuth client\&#39;s login and consent page branding|
 |[**createClient**](#createclient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client|
 |[**deleteClient**](#deleteclient) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client|
 |[**disableClient**](#disableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client|
@@ -12,7 +13,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**getClient**](#getclient) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get an OAuth client|
 |[**listClientScopes**](#listclientscopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | List the scopes granted to an OAuth client|
 |[**listClients**](#listclients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List OAuth clients|
+|[**patchAdminClientsUpdateBranding**](#patchadminclientsupdatebranding) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Change keys of an OAuth client\&#39;s login and/or consent page branding|
 |[**patchClient**](#patchclient) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client|
+|[**putAdminClientsUpdateBranding**](#putadminclientsupdatebranding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client\&#39;s login and/or consent page branding|
 |[**rotateClientSecret**](#rotateclientsecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret|
 |[**setClientScopes**](#setclientscopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client|
 |[**updateClient**](#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client|
@@ -70,6 +73,61 @@ const { status, data } = await apiInstance.adminClientsCimdCheck(
 |-------------|-------------|------------------|
 |**200** | Check result (ok&#x3D;false is still 200: the document was reachable for inspection but rejected) |  -  |
 |**422** | validation_error: client_id missing |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminClientsGetBranding**
+> AdminClientsGetBrandingResponse adminClientsGetBranding()
+
+Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+
+### Example
+
+```typescript
+import {
+    AdminOAuthClientsApi,
+    Configuration
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminOAuthClientsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let clientId: string; // (default to undefined)
+
+const { status, data } = await apiInstance.adminClientsGetBranding(
+    orgId,
+    clientId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | [**string**] |  | defaults to undefined|
+| **clientId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminClientsGetBrandingResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Branding of the application |  -  |
+|**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -443,6 +501,64 @@ const { status, data } = await apiInstance.listClients(
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **patchAdminClientsUpdateBranding**
+> PatchAdminClientsUpdateBrandingResponse patchAdminClientsUpdateBranding()
+
+
+### Example
+
+```typescript
+import {
+    AdminOAuthClientsApi,
+    Configuration,
+    AdminClientsGetBrandingResponseData
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminOAuthClientsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let clientId: string; // (default to undefined)
+let adminClientsGetBrandingResponseData: AdminClientsGetBrandingResponseData; // (optional)
+
+const { status, data } = await apiInstance.patchAdminClientsUpdateBranding(
+    orgId,
+    clientId,
+    adminClientsGetBrandingResponseData
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **adminClientsGetBrandingResponseData** | **AdminClientsGetBrandingResponseData**|  | |
+| **orgId** | [**string**] |  | defaults to undefined|
+| **clientId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**PatchAdminClientsUpdateBrandingResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Updated branding |  -  |
+|**404** | OAuth client not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **patchClient**
 > UpdateClientResponse patchClient()
 
@@ -493,6 +609,64 @@ const { status, data } = await apiInstance.patchClient(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Updated OAuth client (detailed) |  -  |
+|**404** | OAuth client not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **putAdminClientsUpdateBranding**
+> PutAdminClientsUpdateBrandingResponse putAdminClientsUpdateBranding()
+
+
+### Example
+
+```typescript
+import {
+    AdminOAuthClientsApi,
+    Configuration,
+    PutAdminClientsUpdateBrandingRequest
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminOAuthClientsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let clientId: string; // (default to undefined)
+let putAdminClientsUpdateBrandingRequest: PutAdminClientsUpdateBrandingRequest; // (optional)
+
+const { status, data } = await apiInstance.putAdminClientsUpdateBranding(
+    orgId,
+    clientId,
+    putAdminClientsUpdateBrandingRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **putAdminClientsUpdateBrandingRequest** | **PutAdminClientsUpdateBrandingRequest**|  | |
+| **orgId** | [**string**] |  | defaults to undefined|
+| **clientId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**PutAdminClientsUpdateBrandingResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Updated branding |  -  |
 |**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

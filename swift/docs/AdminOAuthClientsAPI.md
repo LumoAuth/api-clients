@@ -5,6 +5,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**adminClientsCimdCheck**](AdminOAuthClientsAPI.md#adminclientscimdcheck) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document
+[**adminClientsGetBranding**](AdminOAuthClientsAPI.md#adminclientsgetbranding) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Get an OAuth client&#39;s login and consent page branding
 [**createClient**](AdminOAuthClientsAPI.md#createclient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client
 [**deleteClient**](AdminOAuthClientsAPI.md#deleteclient) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client
 [**disableClient**](AdminOAuthClientsAPI.md#disableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client
@@ -12,7 +13,9 @@ Method | HTTP request | Description
 [**getClient**](AdminOAuthClientsAPI.md#getclient) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get an OAuth client
 [**listClientScopes**](AdminOAuthClientsAPI.md#listclientscopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | List the scopes granted to an OAuth client
 [**listClients**](AdminOAuthClientsAPI.md#listclients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List OAuth clients
+[**patchAdminClientsUpdateBranding**](AdminOAuthClientsAPI.md#patchadminclientsupdatebranding) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Change keys of an OAuth client&#39;s login and/or consent page branding
 [**patchClient**](AdminOAuthClientsAPI.md#patchclient) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client
+[**putAdminClientsUpdateBranding**](AdminOAuthClientsAPI.md#putadminclientsupdatebranding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client&#39;s login and/or consent page branding
 [**rotateClientSecret**](AdminOAuthClientsAPI.md#rotateclientsecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret
 [**setClientScopes**](AdminOAuthClientsAPI.md#setclientscopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
 [**updateClient**](AdminOAuthClientsAPI.md#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
@@ -66,6 +69,58 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminClientsGetBranding**
+```swift
+    open class func adminClientsGetBranding(orgId: String, clientId: String, completion: @escaping (_ data: AdminClientsGetBrandingResponse?, _ error: Error?) -> Void)
+```
+
+Get an OAuth client's login and consent page branding
+
+Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import LumoAuthAPIClient
+
+let orgId = "orgId_example" // String | 
+let clientId = "clientId_example" // String | 
+
+// Get an OAuth client's login and consent page branding
+AdminOAuthClientsAPI.adminClientsGetBranding(orgId: orgId, clientId: clientId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **String** |  | 
+ **clientId** | **String** |  | 
+
+### Return type
+
+[**AdminClientsGetBrandingResponse**](AdminClientsGetBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -416,6 +471,58 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **patchAdminClientsUpdateBranding**
+```swift
+    open class func patchAdminClientsUpdateBranding(orgId: String, clientId: String, adminClientsGetBrandingResponseData: AdminClientsGetBrandingResponseData? = nil, completion: @escaping (_ data: PatchAdminClientsUpdateBrandingResponse?, _ error: Error?) -> Void)
+```
+
+Change keys of an OAuth client's login and/or consent page branding
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import LumoAuthAPIClient
+
+let orgId = "orgId_example" // String | 
+let clientId = "clientId_example" // String | 
+let adminClientsGetBrandingResponseData = AdminClientsGetBrandingResponseData(login: "TODO", consent: "TODO") // AdminClientsGetBrandingResponseData |  (optional)
+
+// Change keys of an OAuth client's login and/or consent page branding
+AdminOAuthClientsAPI.patchAdminClientsUpdateBranding(orgId: orgId, clientId: clientId, adminClientsGetBrandingResponseData: adminClientsGetBrandingResponseData) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **String** |  | 
+ **clientId** | **String** |  | 
+ **adminClientsGetBrandingResponseData** | [**AdminClientsGetBrandingResponseData**](AdminClientsGetBrandingResponseData.md) |  | [optional] 
+
+### Return type
+
+[**PatchAdminClientsUpdateBrandingResponse**](PatchAdminClientsUpdateBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **patchClient**
 ```swift
     open class func patchClient(orgId: String, clientId: String, completion: @escaping (_ data: UpdateClientResponse?, _ error: Error?) -> Void)
@@ -462,6 +569,58 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **putAdminClientsUpdateBranding**
+```swift
+    open class func putAdminClientsUpdateBranding(orgId: String, clientId: String, putAdminClientsUpdateBrandingRequest: PutAdminClientsUpdateBrandingRequest? = nil, completion: @escaping (_ data: PutAdminClientsUpdateBrandingResponse?, _ error: Error?) -> Void)
+```
+
+Replace an OAuth client's login and/or consent page branding
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import LumoAuthAPIClient
+
+let orgId = "orgId_example" // String | 
+let clientId = "clientId_example" // String | 
+let putAdminClientsUpdateBrandingRequest = PutAdminClientsUpdateBrandingRequest(login: "TODO", consent: "TODO") // PutAdminClientsUpdateBrandingRequest |  (optional)
+
+// Replace an OAuth client's login and/or consent page branding
+AdminOAuthClientsAPI.putAdminClientsUpdateBranding(orgId: orgId, clientId: clientId, putAdminClientsUpdateBrandingRequest: putAdminClientsUpdateBrandingRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **String** |  | 
+ **clientId** | **String** |  | 
+ **putAdminClientsUpdateBrandingRequest** | [**PutAdminClientsUpdateBrandingRequest**](PutAdminClientsUpdateBrandingRequest.md) |  | [optional] 
+
+### Return type
+
+[**PutAdminClientsUpdateBrandingResponse**](PutAdminClientsUpdateBrandingResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

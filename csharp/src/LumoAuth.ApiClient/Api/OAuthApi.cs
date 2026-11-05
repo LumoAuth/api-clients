@@ -199,27 +199,6 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of ParResponse</returns>
         ApiResponse<ParResponse> ParWithHttpInfo(string orgId);
         /// <summary>
-        /// Passkey login entry point
-        /// </summary>
-        /// <remarks>
-        /// Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        void PasskeyLogin(string orgId);
-
-        /// <summary>
-        /// Passkey login entry point
-        /// </summary>
-        /// <remarks>
-        /// Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> PasskeyLoginWithHttpInfo(string orgId);
-        /// <summary>
         /// Dynamic client registration (RFC 7591 / OIDC DCR)
         /// </summary>
         /// <remarks>
@@ -372,27 +351,6 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <returns>ApiResponse of string</returns>
         ApiResponse<string> SubmitDeviceVerificationWithHttpInfo(string orgId);
-        /// <summary>
-        /// Hosted login form submission
-        /// </summary>
-        /// <remarks>
-        /// Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        void SubmitLogin(string orgId);
-
-        /// <summary>
-        /// Hosted login form submission
-        /// </summary>
-        /// <remarks>
-        /// Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> SubmitLoginWithHttpInfo(string orgId);
         /// <summary>
         /// Programmatic (JSON) login for the authorization flow
         /// </summary>
@@ -652,29 +610,6 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (ParResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<ParResponse>> ParWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Passkey login entry point
-        /// </summary>
-        /// <remarks>
-        /// Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task PasskeyLoginAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Passkey login entry point
-        /// </summary>
-        /// <remarks>
-        /// Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PasskeyLoginWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
-        /// <summary>
         /// Dynamic client registration (RFC 7591 / OIDC DCR)
         /// </summary>
         /// <remarks>
@@ -841,29 +776,6 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (string)</returns>
         System.Threading.Tasks.Task<ApiResponse<string>> SubmitDeviceVerificationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
-        /// <summary>
-        /// Hosted login form submission
-        /// </summary>
-        /// <remarks>
-        /// Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task SubmitLoginAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Hosted login form submission
-        /// </summary>
-        /// <remarks>
-        /// Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> SubmitLoginWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Programmatic (JSON) login for the authorization flow
         /// </summary>
@@ -2151,117 +2063,6 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Passkey login entry point Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void PasskeyLogin(string orgId)
-        {
-            PasskeyLoginWithHttpInfo(orgId);
-        }
-
-        /// <summary>
-        /// Passkey login entry point Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> PasskeyLoginWithHttpInfo(string orgId)
-        {
-            // verify the required parameter 'orgId' is set
-            if (orgId == null)
-                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->PasskeyLogin");
-
-            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-            };
-
-            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-
-            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
-
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/oauth/passkey-login", localVarRequestOptions, this.Configuration);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("PasskeyLogin", localVarResponse);
-                if (_exception != null) throw _exception;
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Passkey login entry point Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task PasskeyLoginAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
-        {
-            await PasskeyLoginWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Passkey login entry point Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> PasskeyLoginWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
-        {
-            // verify the required parameter 'orgId' is set
-            if (orgId == null)
-                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->PasskeyLogin");
-
-
-            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-            };
-
-
-            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-
-            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
-
-
-            // make the HTTP request
-
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/oauth/passkey-login", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("PasskeyLogin", localVarResponse);
-                if (_exception != null) throw _exception;
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
         /// Dynamic client registration (RFC 7591 / OIDC DCR) Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
@@ -3124,117 +2925,6 @@ namespace LumoAuth.ApiClient.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("SubmitDeviceVerification", localVarResponse);
-                if (_exception != null) throw _exception;
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Hosted login form submission Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void SubmitLogin(string orgId)
-        {
-            SubmitLoginWithHttpInfo(orgId);
-        }
-
-        /// <summary>
-        /// Hosted login form submission Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> SubmitLoginWithHttpInfo(string orgId)
-        {
-            // verify the required parameter 'orgId' is set
-            if (orgId == null)
-                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->SubmitLogin");
-
-            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-            };
-
-            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-
-            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
-
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/oauth/login/submit", localVarRequestOptions, this.Configuration);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("SubmitLogin", localVarResponse);
-                if (_exception != null) throw _exception;
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Hosted login form submission Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task SubmitLoginAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
-        {
-            await SubmitLoginWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Hosted login form submission Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> SubmitLoginWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
-        {
-            // verify the required parameter 'orgId' is set
-            if (orgId == null)
-                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->SubmitLogin");
-
-
-            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-            };
-
-
-            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-
-            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
-
-
-            // make the HTTP request
-
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/oauth/login/submit", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("SubmitLogin", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 

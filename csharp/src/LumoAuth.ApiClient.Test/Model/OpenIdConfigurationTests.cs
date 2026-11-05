@@ -281,6 +281,15 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'PromptValuesSupported'
+        /// </summary>
+        [Fact]
+        public void PromptValuesSupportedTest()
+        {
+            // TODO unit test for the property 'PromptValuesSupported'
+        }
+
+        /// <summary>
         /// Test the property 'AcrValuesSupported'
         /// </summary>
         [Fact]
@@ -332,15 +341,6 @@ namespace LumoAuth.ApiClient.Test.Model
         public void DpopSigningAlgValuesSupportedTest()
         {
             // TODO unit test for the property 'DpopSigningAlgValuesSupported'
-        }
-
-        /// <summary>
-        /// Test the property 'TlsClientCertificateBoundAccessTokens'
-        /// </summary>
-        [Fact]
-        public void TlsClientCertificateBoundAccessTokensTest()
-        {
-            // TODO unit test for the property 'TlsClientCertificateBoundAccessTokens'
         }
 
         /// <summary>

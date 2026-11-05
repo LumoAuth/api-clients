@@ -93,6 +93,75 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Get an OAuth client's login and consent page branding
+    # Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+    # @param org_id [String] 
+    # @param client_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [AdminClientsGetBrandingResponse]
+    def admin_clients_get_branding(org_id, client_id, opts = {})
+      data, _status_code, _headers = admin_clients_get_branding_with_http_info(org_id, client_id, opts)
+      data
+    end
+
+    # Get an OAuth client&#39;s login and consent page branding
+    # Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+    # @param org_id [String] 
+    # @param client_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(AdminClientsGetBrandingResponse, Integer, Hash)>] AdminClientsGetBrandingResponse data, response status code and response headers
+    def admin_clients_get_branding_with_http_info(org_id, client_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.admin_clients_get_branding ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminOAuthClientsApi.admin_clients_get_branding"
+      end
+      # verify the required parameter 'client_id' is set
+      if @api_client.config.client_side_validation && client_id.nil?
+        fail ArgumentError, "Missing the required parameter 'client_id' when calling AdminOAuthClientsApi.admin_clients_get_branding"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'clientId' + '}', CGI.escape(client_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'AdminClientsGetBrandingResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AdminOAuthClientsApi.admin_clients_get_branding",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AdminOAuthClientsApi#admin_clients_get_branding\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Create an OAuth client
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
@@ -550,6 +619,80 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Change keys of an OAuth client's login and/or consent page branding
+    # @param org_id [String] 
+    # @param client_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [AdminClientsGetBrandingResponseData] :admin_clients_get_branding_response_data 
+    # @return [PatchAdminClientsUpdateBrandingResponse]
+    def patch_admin_clients_update_branding(org_id, client_id, opts = {})
+      data, _status_code, _headers = patch_admin_clients_update_branding_with_http_info(org_id, client_id, opts)
+      data
+    end
+
+    # Change keys of an OAuth client&#39;s login and/or consent page branding
+    # @param org_id [String] 
+    # @param client_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [AdminClientsGetBrandingResponseData] :admin_clients_get_branding_response_data 
+    # @return [Array<(PatchAdminClientsUpdateBrandingResponse, Integer, Hash)>] PatchAdminClientsUpdateBrandingResponse data, response status code and response headers
+    def patch_admin_clients_update_branding_with_http_info(org_id, client_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.patch_admin_clients_update_branding ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminOAuthClientsApi.patch_admin_clients_update_branding"
+      end
+      # verify the required parameter 'client_id' is set
+      if @api_client.config.client_side_validation && client_id.nil?
+        fail ArgumentError, "Missing the required parameter 'client_id' when calling AdminOAuthClientsApi.patch_admin_clients_update_branding"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'clientId' + '}', CGI.escape(client_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'admin_clients_get_branding_response_data'])
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'PatchAdminClientsUpdateBrandingResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AdminOAuthClientsApi.patch_admin_clients_update_branding",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PATCH, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AdminOAuthClientsApi#patch_admin_clients_update_branding\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Update an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
@@ -613,6 +756,80 @@ module LumoAuthApiClient
       data, status_code, headers = @api_client.call_api(:PATCH, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AdminOAuthClientsApi#patch_client\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Replace an OAuth client's login and/or consent page branding
+    # @param org_id [String] 
+    # @param client_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [PutAdminClientsUpdateBrandingRequest] :put_admin_clients_update_branding_request 
+    # @return [PutAdminClientsUpdateBrandingResponse]
+    def put_admin_clients_update_branding(org_id, client_id, opts = {})
+      data, _status_code, _headers = put_admin_clients_update_branding_with_http_info(org_id, client_id, opts)
+      data
+    end
+
+    # Replace an OAuth client&#39;s login and/or consent page branding
+    # @param org_id [String] 
+    # @param client_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [PutAdminClientsUpdateBrandingRequest] :put_admin_clients_update_branding_request 
+    # @return [Array<(PutAdminClientsUpdateBrandingResponse, Integer, Hash)>] PutAdminClientsUpdateBrandingResponse data, response status code and response headers
+    def put_admin_clients_update_branding_with_http_info(org_id, client_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.put_admin_clients_update_branding ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminOAuthClientsApi.put_admin_clients_update_branding"
+      end
+      # verify the required parameter 'client_id' is set
+      if @api_client.config.client_side_validation && client_id.nil?
+        fail ArgumentError, "Missing the required parameter 'client_id' when calling AdminOAuthClientsApi.put_admin_clients_update_branding"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/admin/clients/{clientId}/branding'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'clientId' + '}', CGI.escape(client_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'put_admin_clients_update_branding_request'])
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'PutAdminClientsUpdateBrandingResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AdminOAuthClientsApi.put_admin_clients_update_branding",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AdminOAuthClientsApi#put_admin_clients_update_branding\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
