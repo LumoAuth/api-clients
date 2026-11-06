@@ -11680,7 +11680,7 @@
                     {
                         "BearerAuth": []
                     },
-                    []
+                    {}
                 ]
             },
             "post": {
@@ -11750,7 +11750,7 @@
                     {
                         "BearerAuth": []
                     },
-                    []
+                    {}
                 ]
             }
         },
@@ -12960,7 +12960,7 @@
                     {
                         "ClientAuth": []
                     },
-                    []
+                    {}
                 ]
             }
         },
@@ -13007,7 +13007,7 @@
                     {
                         "ClientAuth": []
                     },
-                    []
+                    {}
                 ]
             }
         },
@@ -13158,7 +13158,7 @@
                     {
                         "ClientAuth": []
                     },
-                    []
+                    {}
                 ]
             }
         },
@@ -13205,7 +13205,7 @@
                     {
                         "ClientAuth": []
                     },
-                    []
+                    {}
                 ]
             }
         },
@@ -13253,7 +13253,7 @@
                     {
                         "ClientAuth": []
                     },
-                    []
+                    {}
                 ]
             }
         },
@@ -13308,7 +13308,7 @@
                     {
                         "ClientAuth": []
                     },
-                    []
+                    {}
                 ]
             }
         },
@@ -14770,9 +14770,15 @@
                                 "oneOf": [
                                     {
                                         "$ref": "#/components/schemas/RedactedSecret"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "nullable": true,
+                                        "enum": [
+                                            null
+                                        ]
                                     }
                                 ],
-                                "nullable": true,
                                 "description": "Write-only secret: returned as the redaction marker {\"configured\": true, \"redacted\": true} when a value is stored, null otherwise."
                             },
                             "bearer_token_preview": {
@@ -14855,9 +14861,15 @@
                                 "oneOf": [
                                     {
                                         "$ref": "#/components/schemas/RedactedSecret"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "nullable": true,
+                                        "enum": [
+                                            null
+                                        ]
                                     }
                                 ],
-                                "nullable": true,
                                 "description": "Write-only secret: returned as the redaction marker {\"configured\": true, \"redacted\": true} when a value is stored, null otherwise."
                             },
                             "auth_type": {
@@ -14876,9 +14888,15 @@
                                 "oneOf": [
                                     {
                                         "$ref": "#/components/schemas/RedactedSecret"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "nullable": true,
+                                        "enum": [
+                                            null
+                                        ]
                                     }
                                 ],
-                                "nullable": true,
                                 "description": "Write-only secret: returned as the redaction marker {\"configured\": true, \"redacted\": true} when a value is stored, null otherwise."
                             },
                             "oauth2_client_id": {
@@ -14889,9 +14907,15 @@
                                 "oneOf": [
                                     {
                                         "$ref": "#/components/schemas/RedactedSecret"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "nullable": true,
+                                        "enum": [
+                                            null
+                                        ]
                                     }
                                 ],
-                                "nullable": true,
                                 "description": "Write-only secret: returned as the redaction marker {\"configured\": true, \"redacted\": true} when a value is stored, null otherwise."
                             },
                             "oauth2_token_url": {
@@ -16360,9 +16384,7 @@
                         "nullable": true,
                         "additionalProperties": true
                     },
-                    "defaultValue": {
-                        "nullable": true
-                    },
+                    "defaultValue": {},
                     "isRequired": {
                         "type": "boolean"
                     },
@@ -16451,9 +16473,7 @@
                     "attributeName": {
                         "type": "string"
                     },
-                    "value": {
-                        "nullable": true
-                    },
+                    "value": {},
                     "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -17086,8 +17106,7 @@
                         "type": "string"
                     },
                     "value": {
-                        "description": "The stored value (any JSON type)",
-                        "nullable": true
+                        "description": "The stored value (any JSON type)"
                     }
                 },
                 "type": "object"

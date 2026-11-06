@@ -67,7 +67,7 @@ export interface AbacAttributeDefinition {
      * @type {any}
      * @memberof AbacAttributeDefinition
      */
-    'defaultValue'?: any | null;
+    'defaultValue'?: any;
     /**
      * 
      * @type {boolean}

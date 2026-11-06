@@ -55,7 +55,7 @@ export interface AbacResourceAttribute {
      * @type {any}
      * @memberof AbacResourceAttribute
      */
-    'value'?: any | null;
+    'value'?: any;
     /**
      * 
      * @type {string}

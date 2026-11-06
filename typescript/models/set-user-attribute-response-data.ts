@@ -37,6 +37,6 @@ export interface SetUserAttributeResponseData {
      * @type {any}
      * @memberof SetUserAttributeResponseData
      */
-    'value'?: any | null;
+    'value'?: any;
 }
 
