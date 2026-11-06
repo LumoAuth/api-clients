@@ -13490,8 +13490,7 @@ components:
           additionalProperties: true
           nullable: true
           type: object
-        defaultValue:
-          nullable: true
+        defaultValue: {}
         isRequired:
           type: boolean
         isSystem:
@@ -13577,8 +13576,7 @@ components:
           type: string
         attributeName:
           type: string
-        value:
-          nullable: true
+        value: {}
         createdAt:
           format: date-time
           type: string
@@ -14249,7 +14247,6 @@ components:
           type: string
         value:
           description: The stored value (any JSON type)
-          nullable: true
       type: object
     SetUserAttributeResponse:
       example:
