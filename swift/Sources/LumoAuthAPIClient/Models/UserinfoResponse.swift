@@ -69,10 +69,12 @@ public struct UserinfoResponse: Codable, JSONEncodable, Hashable {
     public var workloadIdentity: String?
     /** Agents only. */
     public var capabilities: [String]?
+    /** Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429. */
+    public var budgetPolicy: [String: AnyCodable]?
     /** Clients only. */
     public var clientId: String?
 
-    public init(sub: String, identityType: IdentityType? = nil, tenant: String? = nil, name: String? = nil, givenName: String? = nil, familyName: String? = nil, middleName: String? = nil, nickname: String? = nil, preferredUsername: String? = nil, profile: String? = nil, picture: String? = nil, website: String? = nil, gender: String? = nil, birthdate: Date? = nil, zoneinfo: String? = nil, locale: String? = nil, updatedAt: Int? = nil, email: String? = nil, emailVerified: Bool? = nil, phoneNumber: String? = nil, phoneNumberVerified: Bool? = nil, address: [String: AnyCodable]? = nil, roles: [String]? = nil, agentId: String? = nil, workloadIdentity: String? = nil, capabilities: [String]? = nil, clientId: String? = nil) {
+    public init(sub: String, identityType: IdentityType? = nil, tenant: String? = nil, name: String? = nil, givenName: String? = nil, familyName: String? = nil, middleName: String? = nil, nickname: String? = nil, preferredUsername: String? = nil, profile: String? = nil, picture: String? = nil, website: String? = nil, gender: String? = nil, birthdate: Date? = nil, zoneinfo: String? = nil, locale: String? = nil, updatedAt: Int? = nil, email: String? = nil, emailVerified: Bool? = nil, phoneNumber: String? = nil, phoneNumberVerified: Bool? = nil, address: [String: AnyCodable]? = nil, roles: [String]? = nil, agentId: String? = nil, workloadIdentity: String? = nil, capabilities: [String]? = nil, budgetPolicy: [String: AnyCodable]? = nil, clientId: String? = nil) {
         self.sub = sub
         self.identityType = identityType
         self.tenant = tenant
@@ -99,6 +101,7 @@ public struct UserinfoResponse: Codable, JSONEncodable, Hashable {
         self.agentId = agentId
         self.workloadIdentity = workloadIdentity
         self.capabilities = capabilities
+        self.budgetPolicy = budgetPolicy
         self.clientId = clientId
     }
 
@@ -129,6 +132,7 @@ public struct UserinfoResponse: Codable, JSONEncodable, Hashable {
         case agentId = "agent_id"
         case workloadIdentity = "workload_identity"
         case capabilities
+        case budgetPolicy = "budget_policy"
         case clientId = "client_id"
     }
 
@@ -162,6 +166,7 @@ public struct UserinfoResponse: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(agentId, forKey: .agentId)
         try container.encodeIfPresent(workloadIdentity, forKey: .workloadIdentity)
         try container.encodeIfPresent(capabilities, forKey: .capabilities)
+        try container.encodeIfPresent(budgetPolicy, forKey: .budgetPolicy)
         try container.encodeIfPresent(clientId, forKey: .clientId)
     }
 }

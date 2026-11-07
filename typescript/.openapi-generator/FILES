@@ -64,6 +64,10 @@ docs/AdminAgentsGenerateTokenResponseData.md
 docs/AdminAgentsGetResponse.md
 docs/AdminAgentsGetScopesResponse.md
 docs/AdminAgentsListResponse.md
+docs/AdminAgentsReportUsageRequest.md
+docs/AdminAgentsReportUsageResponse.md
+docs/AdminAgentsReportUsageResponseData.md
+docs/AdminAgentsReportUsageResponseDataRecorded.md
 docs/AdminAgentsRevokeKeyResponse.md
 docs/AdminAgentsRotateCredentialsResponse.md
 docs/AdminAgentsSetScopesRequest.md
@@ -405,6 +409,7 @@ docs/RegisteredClientMetadata.md
 docs/RemoveUserGroupResponse.md
 docs/RemoveUserPermissionResponse.md
 docs/RemoveUserRoleResponse.md
+docs/ReportAgentUsageResponse.md
 docs/RequestPermissionRequest.md
 docs/RequestPermissionResponse.md
 docs/RevokeAgentTokenRequest.md
@@ -491,6 +496,10 @@ models/admin-agents-generate-token-response.ts
 models/admin-agents-get-response.ts
 models/admin-agents-get-scopes-response.ts
 models/admin-agents-list-response.ts
+models/admin-agents-report-usage-request.ts
+models/admin-agents-report-usage-response-data-recorded.ts
+models/admin-agents-report-usage-response-data.ts
+models/admin-agents-report-usage-response.ts
 models/admin-agents-revoke-key-response.ts
 models/admin-agents-rotate-credentials-response.ts
 models/admin-agents-set-scopes-request.ts
@@ -810,6 +819,7 @@ models/registered-client-metadata.ts
 models/remove-user-group-response.ts
 models/remove-user-permission-response.ts
 models/remove-user-role-response.ts
+models/report-agent-usage-response.ts
 models/request-permission-request.ts
 models/request-permission-response.ts
 models/revoke-agent-token-request.ts

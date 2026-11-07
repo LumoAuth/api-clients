@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**get_approval_status**](AgentsApi.md#get_approval_status) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 [**get_current_agent**](AgentsApi.md#get_current_agent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
 [**register_agent**](AgentsApi.md#register_agent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
+[**report_agent_usage**](AgentsApi.md#report_agent_usage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used
 [**verify_agent_card**](AgentsApi.md#verify_agent_card) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
 
 
@@ -716,6 +717,97 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Registered agent |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **report_agent_usage**
+> ReportAgentUsageResponse report_agent_usage(org_id, admin_agents_report_usage_request)
+
+Report the model tokens and cost that the agent used
+
+Adds the reported tokens and cost to the agent's budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
+
+```python
+import lumoauth_api_client
+from lumoauth_api_client.models.admin_agents_report_usage_request import AdminAgentsReportUsageRequest
+from lumoauth_api_client.models.report_agent_usage_response import ReportAgentUsageResponse
+from lumoauth_api_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.lumoauth.dev
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lumoauth_api_client.Configuration(
+    host = "https://app.lumoauth.dev"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = lumoauth_api_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with lumoauth_api_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lumoauth_api_client.AgentsApi(api_client)
+    org_id = 'org_id_example' # str | 
+    admin_agents_report_usage_request = lumoauth_api_client.AdminAgentsReportUsageRequest() # AdminAgentsReportUsageRequest | 
+
+    try:
+        # Report the model tokens and cost that the agent used
+        api_response = api_instance.report_agent_usage(org_id, admin_agents_report_usage_request)
+        print("The response of AgentsApi->report_agent_usage:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AgentsApi->report_agent_usage: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**|  | 
+ **admin_agents_report_usage_request** | [**AdminAgentsReportUsageRequest**](AdminAgentsReportUsageRequest.md)|  | 
+
+### Return type
+
+[**ReportAgentUsageResponse**](ReportAgentUsageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Recorded. &#x60;budget&#x60; has the same shape as &#x60;budget_policy&#x60; in UserInfo; &#x60;exhausted: true&#x60; means that the next metered call gets 429. |  -  |
+**400** | invalid_request: tokens or cost_usd is missing, negative, too large or not a number. |  -  |
+**403** | test_token_not_accepted or cross_tenant. |  -  |
+**429** | rate_limited: too many reports from this agent. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

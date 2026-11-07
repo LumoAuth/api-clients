@@ -91,6 +91,9 @@ pub struct UserinfoResponse {
     /// Agents only.
     #[serde(rename = "capabilities", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub capabilities: Option<Option<Vec<String>>>,
+    /// Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429.
+    #[serde(rename = "budget_policy", skip_serializing_if = "Option::is_none")]
+    pub budget_policy: Option<std::collections::HashMap<String, serde_json::Value>>,
     /// Clients only.
     #[serde(rename = "client_id", skip_serializing_if = "Option::is_none")]
     pub client_id: Option<String>,
@@ -125,6 +128,7 @@ impl UserinfoResponse {
             agent_id: None,
             workload_identity: None,
             capabilities: None,
+            budget_policy: None,
             client_id: None,
         }
     }

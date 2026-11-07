@@ -27,6 +27,8 @@ import io.lumoauth.client.model.AdminAgentsGenerateTokenResponse;
 import io.lumoauth.client.model.AdminAgentsGetResponse;
 import io.lumoauth.client.model.AdminAgentsGetScopesResponse;
 import io.lumoauth.client.model.AdminAgentsListResponse;
+import io.lumoauth.client.model.AdminAgentsReportUsageRequest;
+import io.lumoauth.client.model.AdminAgentsReportUsageResponse;
 import io.lumoauth.client.model.AdminAgentsRevokeKeyResponse;
 import io.lumoauth.client.model.AdminAgentsRotateCredentialsResponse;
 import io.lumoauth.client.model.AdminAgentsSetScopesRequest;
@@ -189,6 +191,22 @@ public class AdminAgentsApiTest {
     public void adminAgentsListTest() throws ApiException {
         String orgId = null;
         AdminAgentsListResponse response = api.adminAgentsList(orgId);
+        // TODO: test validations
+    }
+
+    /**
+     * Report model tokens and cost for an agent
+     *
+     * For a trusted component of your organization, such as an AI gateway&#39;s spend callback or an orchestrator, that sees the agent&#39;s model calls. Adds the tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminAgentsReportUsageTest() throws ApiException {
+        String orgId = null;
+        String agentId = null;
+        AdminAgentsReportUsageRequest adminAgentsReportUsageRequest = null;
+        AdminAgentsReportUsageResponse response = api.adminAgentsReportUsage(orgId, agentId, adminAgentsReportUsageRequest);
         // TODO: test validations
     }
 

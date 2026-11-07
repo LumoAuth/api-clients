@@ -249,6 +249,31 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of AdminAgentsListResponse</returns>
         ApiResponse<AdminAgentsListResponse> AdminAgentsListWithHttpInfo(string orgId);
         /// <summary>
+        /// Report model tokens and cost for an agent
+        /// </summary>
+        /// <remarks>
+        /// For a trusted component of your organization, such as an AI gateway&#39;s spend callback or an orchestrator, that sees the agent&#39;s model calls. Adds the tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminAgentsReportUsageRequest"></param>
+        /// <returns>AdminAgentsReportUsageResponse</returns>
+        AdminAgentsReportUsageResponse AdminAgentsReportUsage(string orgId, string agentId, AdminAgentsReportUsageRequest adminAgentsReportUsageRequest);
+
+        /// <summary>
+        /// Report model tokens and cost for an agent
+        /// </summary>
+        /// <remarks>
+        /// For a trusted component of your organization, such as an AI gateway&#39;s spend callback or an orchestrator, that sees the agent&#39;s model calls. Adds the tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminAgentsReportUsageRequest"></param>
+        /// <returns>ApiResponse of AdminAgentsReportUsageResponse</returns>
+        ApiResponse<AdminAgentsReportUsageResponse> AdminAgentsReportUsageWithHttpInfo(string orgId, string agentId, AdminAgentsReportUsageRequest adminAgentsReportUsageRequest);
+        /// <summary>
         /// Revoke agent API key (nullify it so it can no longer authenticate)
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
@@ -638,6 +663,33 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminAgentsListResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AdminAgentsListResponse>> AdminAgentsListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Report model tokens and cost for an agent
+        /// </summary>
+        /// <remarks>
+        /// For a trusted component of your organization, such as an AI gateway&#39;s spend callback or an orchestrator, that sees the agent&#39;s model calls. Adds the tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminAgentsReportUsageRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminAgentsReportUsageResponse</returns>
+        System.Threading.Tasks.Task<AdminAgentsReportUsageResponse> AdminAgentsReportUsageAsync(string orgId, string agentId, AdminAgentsReportUsageRequest adminAgentsReportUsageRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Report model tokens and cost for an agent
+        /// </summary>
+        /// <remarks>
+        /// For a trusted component of your organization, such as an AI gateway&#39;s spend callback or an orchestrator, that sees the agent&#39;s model calls. Adds the tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminAgentsReportUsageRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminAgentsReportUsageResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminAgentsReportUsageResponse>> AdminAgentsReportUsageWithHttpInfoAsync(string orgId, string agentId, AdminAgentsReportUsageRequest adminAgentsReportUsageRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Revoke agent API key (nullify it so it can no longer authenticate)
         /// </summary>
@@ -2633,6 +2685,173 @@ namespace LumoAuth.ApiClient.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AdminAgentsList", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Report model tokens and cost for an agent For a trusted component of your organization, such as an AI gateway&#39;s spend callback or an orchestrator, that sees the agent&#39;s model calls. Adds the tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminAgentsReportUsageRequest"></param>
+        /// <returns>AdminAgentsReportUsageResponse</returns>
+        public AdminAgentsReportUsageResponse AdminAgentsReportUsage(string orgId, string agentId, AdminAgentsReportUsageRequest adminAgentsReportUsageRequest)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsReportUsageResponse> localVarResponse = AdminAgentsReportUsageWithHttpInfo(orgId, agentId, adminAgentsReportUsageRequest);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Report model tokens and cost for an agent For a trusted component of your organization, such as an AI gateway&#39;s spend callback or an orchestrator, that sees the agent&#39;s model calls. Adds the tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminAgentsReportUsageRequest"></param>
+        /// <returns>ApiResponse of AdminAgentsReportUsageResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsReportUsageResponse> AdminAgentsReportUsageWithHttpInfo(string orgId, string agentId, AdminAgentsReportUsageRequest adminAgentsReportUsageRequest)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminAgentsApi->AdminAgentsReportUsage");
+
+            // verify the required parameter 'agentId' is set
+            if (agentId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'agentId' when calling AdminAgentsApi->AdminAgentsReportUsage");
+
+            // verify the required parameter 'adminAgentsReportUsageRequest' is set
+            if (adminAgentsReportUsageRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminAgentsReportUsageRequest' when calling AdminAgentsApi->AdminAgentsReportUsage");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("agentId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(agentId)); // path parameter
+            localVarRequestOptions.Data = adminAgentsReportUsageRequest;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<AdminAgentsReportUsageResponse>("/orgs/{orgId}/api/v1/admin/agents/{agentId}/usage", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminAgentsReportUsage", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Report model tokens and cost for an agent For a trusted component of your organization, such as an AI gateway&#39;s spend callback or an orchestrator, that sees the agent&#39;s model calls. Adds the tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminAgentsReportUsageRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminAgentsReportUsageResponse</returns>
+        public async System.Threading.Tasks.Task<AdminAgentsReportUsageResponse> AdminAgentsReportUsageAsync(string orgId, string agentId, AdminAgentsReportUsageRequest adminAgentsReportUsageRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsReportUsageResponse> localVarResponse = await AdminAgentsReportUsageWithHttpInfoAsync(orgId, agentId, adminAgentsReportUsageRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Report model tokens and cost for an agent For a trusted component of your organization, such as an AI gateway&#39;s spend callback or an orchestrator, that sees the agent&#39;s model calls. Adds the tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminAgentsReportUsageRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminAgentsReportUsageResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsReportUsageResponse>> AdminAgentsReportUsageWithHttpInfoAsync(string orgId, string agentId, AdminAgentsReportUsageRequest adminAgentsReportUsageRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminAgentsApi->AdminAgentsReportUsage");
+
+            // verify the required parameter 'agentId' is set
+            if (agentId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'agentId' when calling AdminAgentsApi->AdminAgentsReportUsage");
+
+            // verify the required parameter 'adminAgentsReportUsageRequest' is set
+            if (adminAgentsReportUsageRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminAgentsReportUsageRequest' when calling AdminAgentsApi->AdminAgentsReportUsage");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("agentId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(agentId)); // path parameter
+            localVarRequestOptions.Data = adminAgentsReportUsageRequest;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminAgentsReportUsageResponse>("/orgs/{orgId}/api/v1/admin/agents/{agentId}/usage", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminAgentsReportUsage", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 

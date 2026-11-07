@@ -79,6 +79,7 @@ Class | Method | HTTP request | Description
 *AdminAgentsApi* | [**admin_agents_get**](docs/AdminAgentsApi.md#admin_agents_get) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId} | Get a single agent by ID or agentId
 *AdminAgentsApi* | [**admin_agents_get_scopes**](docs/AdminAgentsApi.md#admin_agents_get_scopes) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Get agent scopes/capabilities
 *AdminAgentsApi* | [**admin_agents_list**](docs/AdminAgentsApi.md#admin_agents_list) | **GET** /orgs/{orgId}/api/v1/admin/agents | List all agents in the tenant
+*AdminAgentsApi* | [**admin_agents_report_usage**](docs/AdminAgentsApi.md#admin_agents_report_usage) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/usage | Report model tokens and cost for an agent
 *AdminAgentsApi* | [**admin_agents_revoke_key**](docs/AdminAgentsApi.md#admin_agents_revoke_key) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/revoke-key | Revoke agent API key (nullify it so it can no longer authenticate)
 *AdminAgentsApi* | [**admin_agents_rotate_credentials**](docs/AdminAgentsApi.md#admin_agents_rotate_credentials) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials | Rotate agent credentials
 *AdminAgentsApi* | [**admin_agents_set_scopes**](docs/AdminAgentsApi.md#admin_agents_set_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Update agent scopes/capabilities
@@ -292,6 +293,7 @@ Class | Method | HTTP request | Description
 *AgentsApi* | [**get_approval_status**](docs/AgentsApi.md#get_approval_status) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 *AgentsApi* | [**get_current_agent**](docs/AgentsApi.md#get_current_agent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
 *AgentsApi* | [**register_agent**](docs/AgentsApi.md#register_agent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
+*AgentsApi* | [**report_agent_usage**](docs/AgentsApi.md#report_agent_usage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used
 *AgentsApi* | [**verify_agent_card**](docs/AgentsApi.md#verify_agent_card) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
 *AuthorizationApi* | [**check_abac**](docs/AuthorizationApi.md#check_abac) | **POST** /orgs/{orgId}/api/v1/abac/check | Evaluate an ABAC policy decision for the caller
 *AuthorizationApi* | [**check_abac_bulk**](docs/AuthorizationApi.md#check_abac_bulk) | **POST** /orgs/{orgId}/api/v1/abac/check-bulk | Evaluate up to 100 ABAC checks for the caller in one call
@@ -404,6 +406,10 @@ Class | Method | HTTP request | Description
  - [AdminAgentsGetResponse](docs/AdminAgentsGetResponse.md)
  - [AdminAgentsGetScopesResponse](docs/AdminAgentsGetScopesResponse.md)
  - [AdminAgentsListResponse](docs/AdminAgentsListResponse.md)
+ - [AdminAgentsReportUsageRequest](docs/AdminAgentsReportUsageRequest.md)
+ - [AdminAgentsReportUsageResponse](docs/AdminAgentsReportUsageResponse.md)
+ - [AdminAgentsReportUsageResponseData](docs/AdminAgentsReportUsageResponseData.md)
+ - [AdminAgentsReportUsageResponseDataRecorded](docs/AdminAgentsReportUsageResponseDataRecorded.md)
  - [AdminAgentsRevokeKeyResponse](docs/AdminAgentsRevokeKeyResponse.md)
  - [AdminAgentsRotateCredentialsResponse](docs/AdminAgentsRotateCredentialsResponse.md)
  - [AdminAgentsSetScopesRequest](docs/AdminAgentsSetScopesRequest.md)
@@ -722,6 +728,7 @@ Class | Method | HTTP request | Description
  - [RemoveUserGroupResponse](docs/RemoveUserGroupResponse.md)
  - [RemoveUserPermissionResponse](docs/RemoveUserPermissionResponse.md)
  - [RemoveUserRoleResponse](docs/RemoveUserRoleResponse.md)
+ - [ReportAgentUsageResponse](docs/ReportAgentUsageResponse.md)
  - [RequestPermissionRequest](docs/RequestPermissionRequest.md)
  - [RequestPermissionResponse](docs/RequestPermissionResponse.md)
  - [RevokeAgentTokenRequest](docs/RevokeAgentTokenRequest.md)

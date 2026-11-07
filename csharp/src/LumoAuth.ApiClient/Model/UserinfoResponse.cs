@@ -100,8 +100,9 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="agentId">Agents only..</param>
         /// <param name="workloadIdentity">Agents only..</param>
         /// <param name="capabilities">Agents only..</param>
+        /// <param name="budgetPolicy">Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429..</param>
         /// <param name="clientId">Clients only..</param>
-        public UserinfoResponse(string sub = default, IdentityTypeEnum? identityType = default, string tenant = default, string name = default, string givenName = default, string familyName = default, string middleName = default, string nickname = default, string preferredUsername = default, string profile = default, string picture = default, string website = default, string gender = default, DateOnly birthdate = default, string zoneinfo = default, string locale = default, int updatedAt = default, string email = default, bool emailVerified = default, string phoneNumber = default, bool phoneNumberVerified = default, Dictionary<string, Object> address = default, List<string> roles = default, string agentId = default, string workloadIdentity = default, List<string> capabilities = default, string clientId = default)
+        public UserinfoResponse(string sub = default, IdentityTypeEnum? identityType = default, string tenant = default, string name = default, string givenName = default, string familyName = default, string middleName = default, string nickname = default, string preferredUsername = default, string profile = default, string picture = default, string website = default, string gender = default, DateOnly birthdate = default, string zoneinfo = default, string locale = default, int updatedAt = default, string email = default, bool emailVerified = default, string phoneNumber = default, bool phoneNumberVerified = default, Dictionary<string, Object> address = default, List<string> roles = default, string agentId = default, string workloadIdentity = default, List<string> capabilities = default, Dictionary<string, Object> budgetPolicy = default, string clientId = default)
         {
             // to ensure "sub" is required (not null)
             if (sub == null)
@@ -134,6 +135,7 @@ namespace LumoAuth.ApiClient.Model
             this.AgentId = agentId;
             this.WorkloadIdentity = workloadIdentity;
             this.Capabilities = capabilities;
+            this.BudgetPolicy = budgetPolicy;
             this.ClientId = clientId;
         }
 
@@ -313,6 +315,13 @@ namespace LumoAuth.ApiClient.Model
         public List<string> Capabilities { get; set; }
 
         /// <summary>
+        /// Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429.
+        /// </summary>
+        /// <value>Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429.</value>
+        [DataMember(Name = "budget_policy", EmitDefaultValue = false)]
+        public Dictionary<string, Object> BudgetPolicy { get; set; }
+
+        /// <summary>
         /// Clients only.
         /// </summary>
         /// <value>Clients only.</value>
@@ -353,6 +362,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  AgentId: ").Append(AgentId).Append("\n");
             sb.Append("  WorkloadIdentity: ").Append(WorkloadIdentity).Append("\n");
             sb.Append("  Capabilities: ").Append(Capabilities).Append("\n");
+            sb.Append("  BudgetPolicy: ").Append(BudgetPolicy).Append("\n");
             sb.Append("  ClientId: ").Append(ClientId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();

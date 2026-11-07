@@ -30,6 +30,7 @@ Name | Type | Description | Notes
 **AgentId** | Pointer to **string** | Agents only. | [optional] 
 **WorkloadIdentity** | Pointer to **NullableString** | Agents only. | [optional] 
 **Capabilities** | Pointer to **[]string** | Agents only. | [optional] 
+**BudgetPolicy** | Pointer to **map[string]interface{}** | Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429. | [optional] 
 **ClientId** | Pointer to **string** | Clients only. | [optional] 
 
 ## Methods
@@ -716,6 +717,31 @@ HasCapabilities returns a boolean if a field has been set.
 `func (o *UserinfoResponse) UnsetCapabilities()`
 
 UnsetCapabilities ensures that no value is present for Capabilities, not even an explicit nil
+### GetBudgetPolicy
+
+`func (o *UserinfoResponse) GetBudgetPolicy() map[string]interface{}`
+
+GetBudgetPolicy returns the BudgetPolicy field if non-nil, zero value otherwise.
+
+### GetBudgetPolicyOk
+
+`func (o *UserinfoResponse) GetBudgetPolicyOk() (*map[string]interface{}, bool)`
+
+GetBudgetPolicyOk returns a tuple with the BudgetPolicy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBudgetPolicy
+
+`func (o *UserinfoResponse) SetBudgetPolicy(v map[string]interface{})`
+
+SetBudgetPolicy sets BudgetPolicy field to given value.
+
+### HasBudgetPolicy
+
+`func (o *UserinfoResponse) HasBudgetPolicy() bool`
+
+HasBudgetPolicy returns a boolean if a field has been set.
+
 ### GetClientId
 
 `func (o *UserinfoResponse) GetClientId() string`

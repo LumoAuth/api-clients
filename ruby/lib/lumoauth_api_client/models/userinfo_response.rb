@@ -93,6 +93,9 @@ module LumoAuthApiClient
     # Agents only.
     attr_accessor :capabilities
 
+    # Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429.
+    attr_accessor :budget_policy
+
     # Clients only.
     attr_accessor :client_id
 
@@ -147,6 +150,7 @@ module LumoAuthApiClient
         :'agent_id' => :'agent_id',
         :'workload_identity' => :'workload_identity',
         :'capabilities' => :'capabilities',
+        :'budget_policy' => :'budget_policy',
         :'client_id' => :'client_id'
       }
     end
@@ -190,6 +194,7 @@ module LumoAuthApiClient
         :'agent_id' => :'String',
         :'workload_identity' => :'String',
         :'capabilities' => :'Array<String>',
+        :'budget_policy' => :'Hash<String, Object>',
         :'client_id' => :'String'
       }
     end
@@ -330,6 +335,12 @@ module LumoAuthApiClient
         end
       end
 
+      if attributes.key?(:'budget_policy')
+        if (value = attributes[:'budget_policy']).is_a?(Hash)
+          self.budget_policy = value
+        end
+      end
+
       if attributes.key?(:'client_id')
         self.client_id = attributes[:'client_id']
       end
@@ -408,6 +419,7 @@ module LumoAuthApiClient
           agent_id == o.agent_id &&
           workload_identity == o.workload_identity &&
           capabilities == o.capabilities &&
+          budget_policy == o.budget_policy &&
           client_id == o.client_id
     end
 
@@ -420,7 +432,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [sub, identity_type, tenant, name, given_name, family_name, middle_name, nickname, preferred_username, profile, picture, website, gender, birthdate, zoneinfo, locale, updated_at, email, email_verified, phone_number, phone_number_verified, address, roles, agent_id, workload_identity, capabilities, client_id].hash
+      [sub, identity_type, tenant, name, given_name, family_name, middle_name, nickname, preferred_username, profile, picture, website, gender, birthdate, zoneinfo, locale, updated_at, email, email_verified, phone_number, phone_number_verified, address, roles, agent_id, workload_identity, capabilities, budget_policy, client_id].hash
     end
 
     # Builds the object from hash

@@ -40,6 +40,8 @@ import io.lumoauth.client.model.AdminAgentsGenerateTokenResponse;
 import io.lumoauth.client.model.AdminAgentsGetResponse;
 import io.lumoauth.client.model.AdminAgentsGetScopesResponse;
 import io.lumoauth.client.model.AdminAgentsListResponse;
+import io.lumoauth.client.model.AdminAgentsReportUsageRequest;
+import io.lumoauth.client.model.AdminAgentsReportUsageResponse;
 import io.lumoauth.client.model.AdminAgentsRevokeKeyResponse;
 import io.lumoauth.client.model.AdminAgentsRotateCredentialsResponse;
 import io.lumoauth.client.model.AdminAgentsSetScopesRequest;
@@ -1729,6 +1731,169 @@ public class AdminAgentsApi {
 
         okhttp3.Call localVarCall = adminAgentsListValidateBeforeCall(orgId, _callback);
         Type localVarReturnType = new TypeToken<AdminAgentsListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for adminAgentsReportUsage
+     * @param orgId  (required)
+     * @param agentId  (required)
+     * @param adminAgentsReportUsageRequest  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Recorded. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminAgentsReportUsageCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminAgentsReportUsageRequest adminAgentsReportUsageRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = adminAgentsReportUsageRequest;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/agents/{agentId}/usage"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "agentId" + "}", localVarApiClient.escapeString(agentId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminAgentsReportUsageValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminAgentsReportUsageRequest adminAgentsReportUsageRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminAgentsReportUsage(Async)");
+        }
+
+        // verify the required parameter 'agentId' is set
+        if (agentId == null) {
+            throw new ApiException("Missing the required parameter 'agentId' when calling adminAgentsReportUsage(Async)");
+        }
+
+        // verify the required parameter 'adminAgentsReportUsageRequest' is set
+        if (adminAgentsReportUsageRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminAgentsReportUsageRequest' when calling adminAgentsReportUsage(Async)");
+        }
+
+        return adminAgentsReportUsageCall(orgId, agentId, adminAgentsReportUsageRequest, _callback);
+
+    }
+
+    /**
+     * Report model tokens and cost for an agent
+     * For a trusted component of your organization, such as an AI gateway&#39;s spend callback or an orchestrator, that sees the agent&#39;s model calls. Adds the tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+     * @param orgId  (required)
+     * @param agentId  (required)
+     * @param adminAgentsReportUsageRequest  (required)
+     * @return AdminAgentsReportUsageResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Recorded. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminAgentsReportUsageResponse adminAgentsReportUsage(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminAgentsReportUsageRequest adminAgentsReportUsageRequest) throws ApiException {
+        ApiResponse<AdminAgentsReportUsageResponse> localVarResp = adminAgentsReportUsageWithHttpInfo(orgId, agentId, adminAgentsReportUsageRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Report model tokens and cost for an agent
+     * For a trusted component of your organization, such as an AI gateway&#39;s spend callback or an orchestrator, that sees the agent&#39;s model calls. Adds the tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+     * @param orgId  (required)
+     * @param agentId  (required)
+     * @param adminAgentsReportUsageRequest  (required)
+     * @return ApiResponse&lt;AdminAgentsReportUsageResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Recorded. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminAgentsReportUsageResponse> adminAgentsReportUsageWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminAgentsReportUsageRequest adminAgentsReportUsageRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminAgentsReportUsageValidateBeforeCall(orgId, agentId, adminAgentsReportUsageRequest, null);
+        Type localVarReturnType = new TypeToken<AdminAgentsReportUsageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Report model tokens and cost for an agent (asynchronously)
+     * For a trusted component of your organization, such as an AI gateway&#39;s spend callback or an orchestrator, that sees the agent&#39;s model calls. Adds the tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+     * @param orgId  (required)
+     * @param agentId  (required)
+     * @param adminAgentsReportUsageRequest  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Recorded. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminAgentsReportUsageAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminAgentsReportUsageRequest adminAgentsReportUsageRequest, final ApiCallback<AdminAgentsReportUsageResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminAgentsReportUsageValidateBeforeCall(orgId, agentId, adminAgentsReportUsageRequest, _callback);
+        Type localVarReturnType = new TypeToken<AdminAgentsReportUsageResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

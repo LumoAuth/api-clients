@@ -185,6 +185,21 @@ func Test_lumoauthclient_AdminAgentsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test AdminAgentsAPIService AdminAgentsReportUsage", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+		var agentId string
+
+		resp, httpRes, err := apiClient.AdminAgentsAPI.AdminAgentsReportUsage(context.Background(), orgId, agentId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AdminAgentsAPIService AdminAgentsRevokeKey", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

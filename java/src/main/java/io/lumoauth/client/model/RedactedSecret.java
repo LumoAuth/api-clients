@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * Marker returned in place of a stored secret: the value is never echoed back.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T01:31:12.308427125Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T03:46:00.253581610Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class RedactedSecret {
   public static final String SERIALIZED_NAME_CONFIGURED = "configured";
   @SerializedName(SERIALIZED_NAME_CONFIGURED)

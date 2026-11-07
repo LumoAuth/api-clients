@@ -57,6 +57,10 @@ docs/Model/AdminAgentsGenerateTokenResponseData.md
 docs/Model/AdminAgentsGetResponse.md
 docs/Model/AdminAgentsGetScopesResponse.md
 docs/Model/AdminAgentsListResponse.md
+docs/Model/AdminAgentsReportUsageRequest.md
+docs/Model/AdminAgentsReportUsageResponse.md
+docs/Model/AdminAgentsReportUsageResponseData.md
+docs/Model/AdminAgentsReportUsageResponseDataRecorded.md
 docs/Model/AdminAgentsRevokeKeyResponse.md
 docs/Model/AdminAgentsRotateCredentialsResponse.md
 docs/Model/AdminAgentsSetScopesRequest.md
@@ -375,6 +379,7 @@ docs/Model/RegisteredClientMetadata.md
 docs/Model/RemoveUserGroupResponse.md
 docs/Model/RemoveUserPermissionResponse.md
 docs/Model/RemoveUserRoleResponse.md
+docs/Model/ReportAgentUsageResponse.md
 docs/Model/RequestPermissionRequest.md
 docs/Model/RequestPermissionResponse.md
 docs/Model/RevokeAgentTokenRequest.md
@@ -490,6 +495,10 @@ lib/Model/AdminAgentsGenerateTokenResponseData.php
 lib/Model/AdminAgentsGetResponse.php
 lib/Model/AdminAgentsGetScopesResponse.php
 lib/Model/AdminAgentsListResponse.php
+lib/Model/AdminAgentsReportUsageRequest.php
+lib/Model/AdminAgentsReportUsageResponse.php
+lib/Model/AdminAgentsReportUsageResponseData.php
+lib/Model/AdminAgentsReportUsageResponseDataRecorded.php
 lib/Model/AdminAgentsRevokeKeyResponse.php
 lib/Model/AdminAgentsRotateCredentialsResponse.php
 lib/Model/AdminAgentsSetScopesRequest.php
@@ -809,6 +818,7 @@ lib/Model/RegisteredClientMetadata.php
 lib/Model/RemoveUserGroupResponse.php
 lib/Model/RemoveUserPermissionResponse.php
 lib/Model/RemoveUserRoleResponse.php
+lib/Model/ReportAgentUsageResponse.php
 lib/Model/RequestPermissionRequest.php
 lib/Model/RequestPermissionResponse.php
 lib/Model/RevokeAgentTokenRequest.php

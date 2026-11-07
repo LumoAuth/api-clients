@@ -31,6 +31,10 @@ docs/AdminAgentsGenerateTokenResponseData.md
 docs/AdminAgentsGetResponse.md
 docs/AdminAgentsGetScopesResponse.md
 docs/AdminAgentsListResponse.md
+docs/AdminAgentsReportUsageRequest.md
+docs/AdminAgentsReportUsageResponse.md
+docs/AdminAgentsReportUsageResponseData.md
+docs/AdminAgentsReportUsageResponseDataRecorded.md
 docs/AdminAgentsRevokeKeyResponse.md
 docs/AdminAgentsRotateCredentialsResponse.md
 docs/AdminAgentsSetScopesRequest.md
@@ -372,6 +376,7 @@ docs/RegisteredClientMetadata.md
 docs/RemoveUserGroupResponse.md
 docs/RemoveUserPermissionResponse.md
 docs/RemoveUserRoleResponse.md
+docs/ReportAgentUsageResponse.md
 docs/RequestPermissionRequest.md
 docs/RequestPermissionResponse.md
 docs/RevokeAgentTokenRequest.md
@@ -489,6 +494,10 @@ src/models/admin_agents_generate_token_response_data.rs
 src/models/admin_agents_get_response.rs
 src/models/admin_agents_get_scopes_response.rs
 src/models/admin_agents_list_response.rs
+src/models/admin_agents_report_usage_request.rs
+src/models/admin_agents_report_usage_response.rs
+src/models/admin_agents_report_usage_response_data.rs
+src/models/admin_agents_report_usage_response_data_recorded.rs
 src/models/admin_agents_revoke_key_response.rs
 src/models/admin_agents_rotate_credentials_response.rs
 src/models/admin_agents_set_scopes_request.rs
@@ -808,6 +817,7 @@ src/models/registered_client_metadata.rs
 src/models/remove_user_group_response.rs
 src/models/remove_user_permission_response.rs
 src/models/remove_user_role_response.rs
+src/models/report_agent_usage_response.rs
 src/models/request_permission_request.rs
 src/models/request_permission_response.rs
 src/models/revoke_agent_token_request.rs
