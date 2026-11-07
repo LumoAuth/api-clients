@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * EnrollAuthenticatorRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T15:54:22.219291245Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class EnrollAuthenticatorRequest {
   public static final String SERIALIZED_NAME_PHONE = "phone";
   @SerializedName(SERIALIZED_NAME_PHONE)
