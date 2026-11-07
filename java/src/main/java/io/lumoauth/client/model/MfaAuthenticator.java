@@ -55,7 +55,7 @@ import io.lumoauth.client.JSON;
 /**
  * One enrolled authenticator. &#x60;id&#x60; is a stable reference such as &#x60;totp:12&#x60; or &#x60;passkey:7&#x60;.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T15:54:22.219291245Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class MfaAuthenticator {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
