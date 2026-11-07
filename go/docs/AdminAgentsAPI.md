@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**AdminAgentsGet**](AdminAgentsAPI.md#AdminAgentsGet) | **Get** /orgs/{orgId}/api/v1/admin/agents/{agentId} | Get a single agent by ID or agentId
 [**AdminAgentsGetScopes**](AdminAgentsAPI.md#AdminAgentsGetScopes) | **Get** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Get agent scopes/capabilities
 [**AdminAgentsList**](AdminAgentsAPI.md#AdminAgentsList) | **Get** /orgs/{orgId}/api/v1/admin/agents | List all agents in the tenant
+[**AdminAgentsReportUsage**](AdminAgentsAPI.md#AdminAgentsReportUsage) | **Post** /orgs/{orgId}/api/v1/admin/agents/{agentId}/usage | Report model tokens and cost for an agent
 [**AdminAgentsRevokeKey**](AdminAgentsAPI.md#AdminAgentsRevokeKey) | **Post** /orgs/{orgId}/api/v1/admin/agents/{agentId}/revoke-key | Revoke agent API key (nullify it so it can no longer authenticate)
 [**AdminAgentsRotateCredentials**](AdminAgentsAPI.md#AdminAgentsRotateCredentials) | **Post** /orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials | Rotate agent credentials
 [**AdminAgentsSetScopes**](AdminAgentsAPI.md#AdminAgentsSetScopes) | **Put** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Update agent scopes/capabilities
@@ -795,6 +796,81 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## AdminAgentsReportUsage
+
+> AdminAgentsReportUsageResponse AdminAgentsReportUsage(ctx, orgId, agentId).AdminAgentsReportUsageRequest(adminAgentsReportUsageRequest).Execute()
+
+Report model tokens and cost for an agent
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	agentId := "agentId_example" // string | 
+	adminAgentsReportUsageRequest := *openapiclient.NewAdminAgentsReportUsageRequest() // AdminAgentsReportUsageRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AdminAgentsAPI.AdminAgentsReportUsage(context.Background(), orgId, agentId).AdminAgentsReportUsageRequest(adminAgentsReportUsageRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AdminAgentsAPI.AdminAgentsReportUsage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AdminAgentsReportUsage`: AdminAgentsReportUsageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAgentsAPI.AdminAgentsReportUsage`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+**agentId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAdminAgentsReportUsageRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **adminAgentsReportUsageRequest** | [**AdminAgentsReportUsageRequest**](AdminAgentsReportUsageRequest.md) |  | 
+
+### Return type
+
+[**AdminAgentsReportUsageResponse**](AdminAgentsReportUsageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

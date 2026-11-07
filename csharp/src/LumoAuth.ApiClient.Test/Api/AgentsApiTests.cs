@@ -158,6 +158,19 @@ namespace LumoAuth.ApiClient.Test.Api
         }
 
         /// <summary>
+        /// Test ReportAgentUsage
+        /// </summary>
+        [Fact]
+        public void ReportAgentUsageTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //AdminAgentsReportUsageRequest adminAgentsReportUsageRequest = null;
+            //var response = instance.ReportAgentUsage(orgId, adminAgentsReportUsageRequest);
+            //Assert.IsType<ReportAgentUsageResponse>(response);
+        }
+
+        /// <summary>
         /// Test VerifyAgentCard
         /// </summary>
         [Fact]

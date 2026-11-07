@@ -575,6 +575,80 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Report the model tokens and cost that the agent used
+    # Adds the reported tokens and cost to the agent's budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+    # @param org_id [String] 
+    # @param admin_agents_report_usage_request [AdminAgentsReportUsageRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [ReportAgentUsageResponse]
+    def report_agent_usage(org_id, admin_agents_report_usage_request, opts = {})
+      data, _status_code, _headers = report_agent_usage_with_http_info(org_id, admin_agents_report_usage_request, opts)
+      data
+    end
+
+    # Report the model tokens and cost that the agent used
+    # Adds the reported tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+    # @param org_id [String] 
+    # @param admin_agents_report_usage_request [AdminAgentsReportUsageRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(ReportAgentUsageResponse, Integer, Hash)>] ReportAgentUsageResponse data, response status code and response headers
+    def report_agent_usage_with_http_info(org_id, admin_agents_report_usage_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AgentsApi.report_agent_usage ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AgentsApi.report_agent_usage"
+      end
+      # verify the required parameter 'admin_agents_report_usage_request' is set
+      if @api_client.config.client_side_validation && admin_agents_report_usage_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_agents_report_usage_request' when calling AgentsApi.report_agent_usage"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/agents/me/usage'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_agents_report_usage_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'ReportAgentUsageResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AgentsApi.report_agent_usage",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AgentsApi#report_agent_usage\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Verify a signed A2A agent card
     # Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
     # @param org_id [String] 

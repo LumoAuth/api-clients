@@ -2357,6 +2357,68 @@
                 }
             }
         },
+        "/orgs/{orgId}/api/v1/admin/agents/{agentId}/usage": {
+            "post": {
+                "tags": [
+                    "Admin: Agents"
+                ],
+                "summary": "Report model tokens and cost for an agent",
+                "description": "For a trusted component of your organization, such as an AI gateway's spend callback or an orchestrator, that sees the agent's model calls. Adds the tokens and cost to the agent's budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.",
+                "operationId": "adminAgentsReportUsage",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "agentId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminAgentsReportUsageRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recorded.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AdminAgentsReportUsageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "tokens or cost_usd is missing, negative, too large or not a number."
+                    },
+                    "401": {
+                        "description": "Authentication required."
+                    },
+                    "403": {
+                        "description": "Admin privileges required."
+                    },
+                    "404": {
+                        "description": "Tenant or agent not found."
+                    }
+                }
+            }
+        },
         "/orgs/{orgId}/api/v1/admin/agents/{agentId}/token": {
             "post": {
                 "tags": [
@@ -10359,6 +10421,57 @@
                 }
             }
         },
+        "/orgs/{orgId}/api/v1/agents/me/usage": {
+            "post": {
+                "tags": [
+                    "Agents"
+                ],
+                "summary": "Report the model tokens and cost that the agent used",
+                "description": "Adds the reported tokens and cost to the agent's budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.",
+                "operationId": "reportAgentUsage",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminAgentsReportUsageRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recorded. `budget` has the same shape as `budget_policy` in UserInfo; `exhausted: true` means that the next metered call gets 429.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReportAgentUsageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid_request: tokens or cost_usd is missing, negative, too large or not a number."
+                    },
+                    "403": {
+                        "description": "test_token_not_accepted or cross_tenant."
+                    },
+                    "429": {
+                        "description": "rate_limited: too many reports from this agent."
+                    }
+                }
+            }
+        },
         "/orgs/{orgId}/api/v1/agents/ask": {
             "post": {
                 "tags": [
@@ -13332,7 +13445,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Claims for the token's principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token yields sub=agent_<id>, name, agent_id, workload_identity, capabilities, tenant, identity_type=agent; a client token yields sub=client_<id>, client_id, name, tenant, identity_type=client. Sent with Cache-Control: no-store.",
+                        "description": "Claims for the token's principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub=agent_<id>, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type=agent; a client token yields sub=client_<id>, client_id, name, tenant, identity_type=client. Sent with Cache-Control: no-store.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13376,7 +13489,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Claims for the token's principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token yields sub=agent_<id>, name, agent_id, workload_identity, capabilities, tenant, identity_type=agent; a client token yields sub=client_<id>, client_id, name, tenant, identity_type=client. Sent with Cache-Control: no-store.",
+                        "description": "Claims for the token's principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub=agent_<id>, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type=agent; a client token yields sub=client_<id>, client_id, name, tenant, identity_type=client. Sent with Cache-Control: no-store.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -17478,6 +17591,59 @@
                 },
                 "type": "object"
             },
+            "AdminAgentsReportUsageRequest": {
+                "properties": {
+                    "tokens": {
+                        "description": "Model tokens used since the last report (input and output together).",
+                        "type": "integer",
+                        "example": 1530,
+                        "maximum": 100000000,
+                        "minimum": 0
+                    },
+                    "cost_usd": {
+                        "description": "Cost in USD since the last report.",
+                        "type": "number",
+                        "example": 0.0042,
+                        "maximum": 100000,
+                        "minimum": 0
+                    }
+                },
+                "type": "object"
+            },
+            "AdminAgentsReportUsageResponseDataRecorded": {
+                "properties": {
+                    "tokens": {
+                        "type": "integer",
+                        "example": 1530
+                    },
+                    "cost_usd": {
+                        "type": "number",
+                        "example": 0.0042
+                    }
+                },
+                "type": "object"
+            },
+            "AdminAgentsReportUsageResponseData": {
+                "properties": {
+                    "recorded": {
+                        "$ref": "#/components/schemas/AdminAgentsReportUsageResponseDataRecorded"
+                    },
+                    "budget": {
+                        "description": "Same shape as budget_policy in UserInfo: limits, usage in the current windows, exhausted.",
+                        "type": "object",
+                        "additionalProperties": true
+                    }
+                },
+                "type": "object"
+            },
+            "AdminAgentsReportUsageResponse": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/AdminAgentsReportUsageResponseData"
+                    }
+                },
+                "type": "object"
+            },
             "AdminAgentsGenerateTokenRequest": {
                 "properties": {
                     "expiresIn": {
@@ -20088,6 +20254,18 @@
                 },
                 "type": "object"
             },
+            "ReportAgentUsageResponse": {
+                "properties": {
+                    "recorded": {
+                        "$ref": "#/components/schemas/AdminAgentsReportUsageResponseDataRecorded"
+                    },
+                    "budget": {
+                        "type": "object",
+                        "additionalProperties": true
+                    }
+                },
+                "type": "object"
+            },
             "AskRequest": {
                 "properties": {
                     "action": {
@@ -22335,6 +22513,11 @@
                             "type": "string"
                         },
                         "nullable": true
+                    },
+                    "budget_policy": {
+                        "description": "Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429.",
+                        "type": "object",
+                        "additionalProperties": true
                     },
                     "client_id": {
                         "description": "Clients only.",

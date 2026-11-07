@@ -30,6 +30,10 @@ docs/AdminAgentsGenerateTokenResponseData.md
 docs/AdminAgentsGetResponse.md
 docs/AdminAgentsGetScopesResponse.md
 docs/AdminAgentsListResponse.md
+docs/AdminAgentsReportUsageRequest.md
+docs/AdminAgentsReportUsageResponse.md
+docs/AdminAgentsReportUsageResponseData.md
+docs/AdminAgentsReportUsageResponseDataRecorded.md
 docs/AdminAgentsRevokeKeyResponse.md
 docs/AdminAgentsRotateCredentialsResponse.md
 docs/AdminAgentsSetScopesRequest.md
@@ -371,6 +375,7 @@ docs/RegisteredClientMetadata.md
 docs/RemoveUserGroupResponse.md
 docs/RemoveUserPermissionResponse.md
 docs/RemoveUserRoleResponse.md
+docs/ReportAgentUsageResponse.md
 docs/RequestPermissionRequest.md
 docs/RequestPermissionResponse.md
 docs/RevokeAgentTokenRequest.md
@@ -492,6 +497,10 @@ lumoauth_api_client/models/admin_agents_generate_token_response_data.py
 lumoauth_api_client/models/admin_agents_get_response.py
 lumoauth_api_client/models/admin_agents_get_scopes_response.py
 lumoauth_api_client/models/admin_agents_list_response.py
+lumoauth_api_client/models/admin_agents_report_usage_request.py
+lumoauth_api_client/models/admin_agents_report_usage_response.py
+lumoauth_api_client/models/admin_agents_report_usage_response_data.py
+lumoauth_api_client/models/admin_agents_report_usage_response_data_recorded.py
 lumoauth_api_client/models/admin_agents_revoke_key_response.py
 lumoauth_api_client/models/admin_agents_rotate_credentials_response.py
 lumoauth_api_client/models/admin_agents_set_scopes_request.py
@@ -810,6 +819,7 @@ lumoauth_api_client/models/registered_client_metadata.py
 lumoauth_api_client/models/remove_user_group_response.py
 lumoauth_api_client/models/remove_user_permission_response.py
 lumoauth_api_client/models/remove_user_role_response.py
+lumoauth_api_client/models/report_agent_usage_response.py
 lumoauth_api_client/models/request_permission_request.py
 lumoauth_api_client/models/request_permission_response.py
 lumoauth_api_client/models/revoke_agent_token_request.py

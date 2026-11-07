@@ -48,6 +48,10 @@ import type { AdminAgentsGetScopesResponse } from '../models';
 // @ts-ignore
 import type { AdminAgentsListResponse } from '../models';
 // @ts-ignore
+import type { AdminAgentsReportUsageRequest } from '../models';
+// @ts-ignore
+import type { AdminAgentsReportUsageResponse } from '../models';
+// @ts-ignore
 import type { AdminAgentsRevokeKeyResponse } from '../models';
 // @ts-ignore
 import type { AdminAgentsRotateCredentialsResponse } from '../models';
@@ -563,6 +567,57 @@ export const AdminAgentsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * For a trusted component of your organization, such as an AI gateway\'s spend callback or an orchestrator, that sees the agent\'s model calls. Adds the tokens and cost to the agent\'s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+         * @summary Report model tokens and cost for an agent
+         * @param {string} orgId 
+         * @param {string} agentId 
+         * @param {AdminAgentsReportUsageRequest} adminAgentsReportUsageRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminAgentsReportUsage: async (orgId: string, agentId: string, adminAgentsReportUsageRequest: AdminAgentsReportUsageRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminAgentsReportUsage', 'orgId', orgId)
+            // verify required parameter 'agentId' is not null or undefined
+            assertParamExists('adminAgentsReportUsage', 'agentId', agentId)
+            // verify required parameter 'adminAgentsReportUsageRequest' is not null or undefined
+            assertParamExists('adminAgentsReportUsage', 'adminAgentsReportUsageRequest', adminAgentsReportUsageRequest)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/agents/{agentId}/usage`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"agentId"}}`, encodeURIComponent(String(agentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminAgentsReportUsageRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Revoke agent API key (nullify it so it can no longer authenticate)
          * @param {string} orgId 
@@ -970,6 +1025,21 @@ export const AdminAgentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * For a trusted component of your organization, such as an AI gateway\'s spend callback or an orchestrator, that sees the agent\'s model calls. Adds the tokens and cost to the agent\'s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+         * @summary Report model tokens and cost for an agent
+         * @param {string} orgId 
+         * @param {string} agentId 
+         * @param {AdminAgentsReportUsageRequest} adminAgentsReportUsageRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminAgentsReportUsage(orgId: string, agentId: string, adminAgentsReportUsageRequest: AdminAgentsReportUsageRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAgentsReportUsageResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAgentsReportUsage(orgId, agentId, adminAgentsReportUsageRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminAgentsApi.adminAgentsReportUsage']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Revoke agent API key (nullify it so it can no longer authenticate)
          * @param {string} orgId 
@@ -1163,6 +1233,16 @@ export const AdminAgentsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.adminAgentsList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
+         * For a trusted component of your organization, such as an AI gateway\'s spend callback or an orchestrator, that sees the agent\'s model calls. Adds the tokens and cost to the agent\'s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+         * @summary Report model tokens and cost for an agent
+         * @param {AdminAgentsApiAdminAgentsReportUsageRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminAgentsReportUsage(requestParameters: AdminAgentsApiAdminAgentsReportUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsReportUsageResponse> {
+            return localVarFp.adminAgentsReportUsage(requestParameters.orgId, requestParameters.agentId, requestParameters.adminAgentsReportUsageRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Revoke agent API key (nullify it so it can no longer authenticate)
          * @param {AdminAgentsApiAdminAgentsRevokeKeyRequest} requestParameters Request parameters.
@@ -1330,6 +1410,16 @@ export interface AdminAgentsApiInterface {
      * @memberof AdminAgentsApiInterface
      */
     adminAgentsList(requestParameters: AdminAgentsApiAdminAgentsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsListResponse>;
+
+    /**
+     * For a trusted component of your organization, such as an AI gateway\'s spend callback or an orchestrator, that sees the agent\'s model calls. Adds the tokens and cost to the agent\'s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+     * @summary Report model tokens and cost for an agent
+     * @param {AdminAgentsApiAdminAgentsReportUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminAgentsApiInterface
+     */
+    adminAgentsReportUsage(requestParameters: AdminAgentsApiAdminAgentsReportUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsReportUsageResponse>;
 
     /**
      * 
@@ -1615,6 +1705,34 @@ export interface AdminAgentsApiAdminAgentsListRequest {
 }
 
 /**
+ * Request parameters for adminAgentsReportUsage operation in AdminAgentsApi.
+ * @export
+ * @interface AdminAgentsApiAdminAgentsReportUsageRequest
+ */
+export interface AdminAgentsApiAdminAgentsReportUsageRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminAgentsApiAdminAgentsReportUsage
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminAgentsApiAdminAgentsReportUsage
+     */
+    readonly agentId: string
+
+    /**
+     * 
+     * @type {AdminAgentsReportUsageRequest}
+     * @memberof AdminAgentsApiAdminAgentsReportUsage
+     */
+    readonly adminAgentsReportUsageRequest: AdminAgentsReportUsageRequest
+}
+
+/**
  * Request parameters for adminAgentsRevokeKey operation in AdminAgentsApi.
  * @export
  * @interface AdminAgentsApiAdminAgentsRevokeKeyRequest
@@ -1877,6 +1995,18 @@ export class AdminAgentsApi extends BaseAPI implements AdminAgentsApiInterface {
      */
     public adminAgentsList(requestParameters: AdminAgentsApiAdminAgentsListRequest, options?: RawAxiosRequestConfig) {
         return AdminAgentsApiFp(this.configuration).adminAgentsList(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * For a trusted component of your organization, such as an AI gateway\'s spend callback or an orchestrator, that sees the agent\'s model calls. Adds the tokens and cost to the agent\'s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+     * @summary Report model tokens and cost for an agent
+     * @param {AdminAgentsApiAdminAgentsReportUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminAgentsApi
+     */
+    public adminAgentsReportUsage(requestParameters: AdminAgentsApiAdminAgentsReportUsageRequest, options?: RawAxiosRequestConfig) {
+        return AdminAgentsApiFp(this.configuration).adminAgentsReportUsage(requestParameters.orgId, requestParameters.agentId, requestParameters.adminAgentsReportUsageRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

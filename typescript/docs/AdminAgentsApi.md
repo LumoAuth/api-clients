@@ -15,6 +15,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**adminAgentsGet**](#adminagentsget) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId} | Get a single agent by ID or agentId|
 |[**adminAgentsGetScopes**](#adminagentsgetscopes) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Get agent scopes/capabilities|
 |[**adminAgentsList**](#adminagentslist) | **GET** /orgs/{orgId}/api/v1/admin/agents | List all agents in the tenant|
+|[**adminAgentsReportUsage**](#adminagentsreportusage) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/usage | Report model tokens and cost for an agent|
 |[**adminAgentsRevokeKey**](#adminagentsrevokekey) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/revoke-key | Revoke agent API key (nullify it so it can no longer authenticate)|
 |[**adminAgentsRotateCredentials**](#adminagentsrotatecredentials) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials | Rotate agent credentials|
 |[**adminAgentsSetScopes**](#adminagentssetscopes) | **PUT** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Update agent scopes/capabilities|
@@ -638,6 +639,68 @@ const { status, data } = await apiInstance.adminAgentsList(
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
 |**404** | Tenant not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminAgentsReportUsage**
+> AdminAgentsReportUsageResponse adminAgentsReportUsage(adminAgentsReportUsageRequest)
+
+For a trusted component of your organization, such as an AI gateway\'s spend callback or an orchestrator, that sees the agent\'s model calls. Adds the tokens and cost to the agent\'s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+
+### Example
+
+```typescript
+import {
+    AdminAgentsApi,
+    Configuration,
+    AdminAgentsReportUsageRequest
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminAgentsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let agentId: string; // (default to undefined)
+let adminAgentsReportUsageRequest: AdminAgentsReportUsageRequest; //
+
+const { status, data } = await apiInstance.adminAgentsReportUsage(
+    orgId,
+    agentId,
+    adminAgentsReportUsageRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **adminAgentsReportUsageRequest** | **AdminAgentsReportUsageRequest**|  | |
+| **orgId** | [**string**] |  | defaults to undefined|
+| **agentId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminAgentsReportUsageResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Recorded. |  -  |
+|**400** | tokens or cost_usd is missing, negative, too large or not a number. |  -  |
+|**401** | Authentication required. |  -  |
+|**403** | Admin privileges required. |  -  |
+|**404** | Tenant or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

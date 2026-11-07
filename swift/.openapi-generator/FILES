@@ -68,6 +68,10 @@ Sources/LumoAuthAPIClient/Models/AdminAgentsGenerateTokenResponseData.swift
 Sources/LumoAuthAPIClient/Models/AdminAgentsGetResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminAgentsGetScopesResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminAgentsListResponse.swift
+Sources/LumoAuthAPIClient/Models/AdminAgentsReportUsageRequest.swift
+Sources/LumoAuthAPIClient/Models/AdminAgentsReportUsageResponse.swift
+Sources/LumoAuthAPIClient/Models/AdminAgentsReportUsageResponseData.swift
+Sources/LumoAuthAPIClient/Models/AdminAgentsReportUsageResponseDataRecorded.swift
 Sources/LumoAuthAPIClient/Models/AdminAgentsRevokeKeyResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminAgentsRotateCredentialsResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminAgentsSetScopesRequest.swift
@@ -386,6 +390,7 @@ Sources/LumoAuthAPIClient/Models/RegisteredClientMetadata.swift
 Sources/LumoAuthAPIClient/Models/RemoveUserGroupResponse.swift
 Sources/LumoAuthAPIClient/Models/RemoveUserPermissionResponse.swift
 Sources/LumoAuthAPIClient/Models/RemoveUserRoleResponse.swift
+Sources/LumoAuthAPIClient/Models/ReportAgentUsageResponse.swift
 Sources/LumoAuthAPIClient/Models/RequestPermissionRequest.swift
 Sources/LumoAuthAPIClient/Models/RequestPermissionResponse.swift
 Sources/LumoAuthAPIClient/Models/RevokeAgentTokenRequest.swift
@@ -475,6 +480,10 @@ docs/AdminAgentsGenerateTokenResponseData.md
 docs/AdminAgentsGetResponse.md
 docs/AdminAgentsGetScopesResponse.md
 docs/AdminAgentsListResponse.md
+docs/AdminAgentsReportUsageRequest.md
+docs/AdminAgentsReportUsageResponse.md
+docs/AdminAgentsReportUsageResponseData.md
+docs/AdminAgentsReportUsageResponseDataRecorded.md
 docs/AdminAgentsRevokeKeyResponse.md
 docs/AdminAgentsRotateCredentialsResponse.md
 docs/AdminAgentsSetScopesRequest.md
@@ -816,6 +825,7 @@ docs/RegisteredClientMetadata.md
 docs/RemoveUserGroupResponse.md
 docs/RemoveUserPermissionResponse.md
 docs/RemoveUserRoleResponse.md
+docs/ReportAgentUsageResponse.md
 docs/RequestPermissionRequest.md
 docs/RequestPermissionResponse.md
 docs/RevokeAgentTokenRequest.md

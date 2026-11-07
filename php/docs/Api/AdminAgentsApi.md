@@ -15,6 +15,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | [**adminAgentsGet()**](AdminAgentsApi.md#adminAgentsGet) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId} | Get a single agent by ID or agentId |
 | [**adminAgentsGetScopes()**](AdminAgentsApi.md#adminAgentsGetScopes) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Get agent scopes/capabilities |
 | [**adminAgentsList()**](AdminAgentsApi.md#adminAgentsList) | **GET** /orgs/{orgId}/api/v1/admin/agents | List all agents in the tenant |
+| [**adminAgentsReportUsage()**](AdminAgentsApi.md#adminAgentsReportUsage) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/usage | Report model tokens and cost for an agent |
 | [**adminAgentsRevokeKey()**](AdminAgentsApi.md#adminAgentsRevokeKey) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/revoke-key | Revoke agent API key (nullify it so it can no longer authenticate) |
 | [**adminAgentsRotateCredentials()**](AdminAgentsApi.md#adminAgentsRotateCredentials) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials | Rotate agent credentials |
 | [**adminAgentsSetScopes()**](AdminAgentsApi.md#adminAgentsSetScopes) | **PUT** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Update agent scopes/capabilities |
@@ -731,6 +732,75 @@ try {
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `adminAgentsReportUsage()`
+
+```php
+adminAgentsReportUsage($orgId, $agentId, $adminAgentsReportUsageRequest): \LumoAuth\ApiClient\Model\AdminAgentsReportUsageResponse
+```
+
+Report model tokens and cost for an agent
+
+For a trusted component of your organization, such as an AI gateway's spend callback or an orchestrator, that sees the agent's model calls. Adds the tokens and cost to the agent's budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\AdminAgentsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$orgId = 'orgId_example'; // string
+$agentId = 'agentId_example'; // string
+$adminAgentsReportUsageRequest = new \LumoAuth\ApiClient\Model\AdminAgentsReportUsageRequest(); // \LumoAuth\ApiClient\Model\AdminAgentsReportUsageRequest
+
+try {
+    $result = $apiInstance->adminAgentsReportUsage($orgId, $agentId, $adminAgentsReportUsageRequest);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AdminAgentsApi->adminAgentsReportUsage: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+| **agentId** | **string**|  | |
+| **adminAgentsReportUsageRequest** | [**\LumoAuth\ApiClient\Model\AdminAgentsReportUsageRequest**](../Model/AdminAgentsReportUsageRequest.md)|  | |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\AdminAgentsReportUsageResponse**](../Model/AdminAgentsReportUsageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

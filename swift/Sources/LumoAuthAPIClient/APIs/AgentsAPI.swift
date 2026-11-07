@@ -383,6 +383,53 @@ open class AgentsAPI {
     }
 
     /**
+     Report the model tokens and cost that the agent used
+     
+     - parameter orgId: (path)  
+     - parameter adminAgentsReportUsageRequest: (body)  
+     - returns: ReportAgentUsageResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func reportAgentUsage(orgId: String, adminAgentsReportUsageRequest: AdminAgentsReportUsageRequest) async throws -> ReportAgentUsageResponse {
+        return try await reportAgentUsageWithRequestBuilder(orgId: orgId, adminAgentsReportUsageRequest: adminAgentsReportUsageRequest).execute().body
+    }
+
+    /**
+     Report the model tokens and cost that the agent used
+     - POST /orgs/{orgId}/api/v1/agents/me/usage
+     - Adds the reported tokens and cost to the agent's budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter adminAgentsReportUsageRequest: (body)  
+     - returns: RequestBuilder<ReportAgentUsageResponse> 
+     */
+    open class func reportAgentUsageWithRequestBuilder(orgId: String, adminAgentsReportUsageRequest: AdminAgentsReportUsageRequest) -> RequestBuilder<ReportAgentUsageResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/agents/me/usage"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminAgentsReportUsageRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<ReportAgentUsageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      Verify a signed A2A agent card
      
      - parameter orgId: (path)  

@@ -84,6 +84,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'agentId' => 'string',
         'workloadIdentity' => 'string',
         'capabilities' => 'string[]',
+        'budgetPolicy' => 'array<string,mixed>',
         'clientId' => 'string'
     ];
 
@@ -121,6 +122,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'agentId' => null,
         'workloadIdentity' => null,
         'capabilities' => null,
+        'budgetPolicy' => null,
         'clientId' => null
     ];
 
@@ -156,6 +158,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'agentId' => false,
         'workloadIdentity' => true,
         'capabilities' => true,
+        'budgetPolicy' => false,
         'clientId' => false
     ];
 
@@ -271,6 +274,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'agentId' => 'agent_id',
         'workloadIdentity' => 'workload_identity',
         'capabilities' => 'capabilities',
+        'budgetPolicy' => 'budget_policy',
         'clientId' => 'client_id'
     ];
 
@@ -306,6 +310,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'agentId' => 'setAgentId',
         'workloadIdentity' => 'setWorkloadIdentity',
         'capabilities' => 'setCapabilities',
+        'budgetPolicy' => 'setBudgetPolicy',
         'clientId' => 'setClientId'
     ];
 
@@ -341,6 +346,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'agentId' => 'getAgentId',
         'workloadIdentity' => 'getWorkloadIdentity',
         'capabilities' => 'getCapabilities',
+        'budgetPolicy' => 'getBudgetPolicy',
         'clientId' => 'getClientId'
     ];
 
@@ -444,6 +450,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('agentId', $data ?? [], null);
         $this->setIfExists('workloadIdentity', $data ?? [], null);
         $this->setIfExists('capabilities', $data ?? [], null);
+        $this->setIfExists('budgetPolicy', $data ?? [], null);
         $this->setIfExists('clientId', $data ?? [], null);
     }
 
@@ -1223,6 +1230,33 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
             }
         }
         $this->container['capabilities'] = $capabilities;
+
+        return $this;
+    }
+
+    /**
+     * Gets budgetPolicy
+     *
+     * @return array<string,mixed>|null
+     */
+    public function getBudgetPolicy()
+    {
+        return $this->container['budgetPolicy'];
+    }
+
+    /**
+     * Sets budgetPolicy
+     *
+     * @param array<string,mixed>|null $budgetPolicy Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429.
+     *
+     * @return self
+     */
+    public function setBudgetPolicy($budgetPolicy)
+    {
+        if (is_null($budgetPolicy)) {
+            throw new \InvalidArgumentException('non-nullable budgetPolicy cannot be null');
+        }
+        $this->container['budgetPolicy'] = $budgetPolicy;
 
         return $this;
     }

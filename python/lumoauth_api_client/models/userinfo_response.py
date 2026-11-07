@@ -54,8 +54,9 @@ class UserinfoResponse(BaseModel):
     agent_id: Optional[StrictStr] = Field(default=None, description="Agents only.")
     workload_identity: Optional[StrictStr] = Field(default=None, description="Agents only.")
     capabilities: Optional[List[StrictStr]] = Field(default=None, description="Agents only.")
+    budget_policy: Optional[Dict[str, Any]] = Field(default=None, description="Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429.")
     client_id: Optional[StrictStr] = Field(default=None, description="Clients only.")
-    __properties: ClassVar[List[str]] = ["sub", "identity_type", "tenant", "name", "given_name", "family_name", "middle_name", "nickname", "preferred_username", "profile", "picture", "website", "gender", "birthdate", "zoneinfo", "locale", "updated_at", "email", "email_verified", "phone_number", "phone_number_verified", "address", "roles", "agent_id", "workload_identity", "capabilities", "client_id"]
+    __properties: ClassVar[List[str]] = ["sub", "identity_type", "tenant", "name", "given_name", "family_name", "middle_name", "nickname", "preferred_username", "profile", "picture", "website", "gender", "birthdate", "zoneinfo", "locale", "updated_at", "email", "email_verified", "phone_number", "phone_number_verified", "address", "roles", "agent_id", "workload_identity", "capabilities", "budget_policy", "client_id"]
 
     @field_validator('identity_type')
     def identity_type_validate_enum(cls, value):
@@ -154,6 +155,7 @@ class UserinfoResponse(BaseModel):
             "agent_id": obj.get("agent_id"),
             "workload_identity": obj.get("workload_identity"),
             "capabilities": obj.get("capabilities"),
+            "budget_policy": obj.get("budget_policy"),
             "client_id": obj.get("client_id")
         })
         return _obj

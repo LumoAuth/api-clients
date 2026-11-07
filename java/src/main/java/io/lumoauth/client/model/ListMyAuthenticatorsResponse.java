@@ -53,7 +53,7 @@ import io.lumoauth.client.JSON;
 /**
  * ListMyAuthenticatorsResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T01:31:12.308427125Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T21:33:52.528835904-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class ListMyAuthenticatorsResponse {
   /**
    * Gets or Sets status

@@ -58,7 +58,7 @@ import io.lumoauth.client.JSON;
 /**
  * Authentication settings (entity defaults merged with the stored values). Any other stored key is returned as-is; secret-looking keys (e.g. initial_access_tokens) are redacted.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T01:31:12.308427125Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T21:33:52.528835904-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class AuthenticationSettings {
   public static final String SERIALIZED_NAME_PASSKEY_ENABLED = "passkey_enabled";
   @SerializedName(SERIALIZED_NAME_PASSKEY_ENABLED)

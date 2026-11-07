@@ -7,7 +7,7 @@
 > `github.com/lumoauth/lumo-auth-go`), prefer it.
 > Do not edit by hand: changes are overwritten on the next regeneration.
 
-## @lumoauth/api-client@1.3.0
+## @lumoauth/api-client@1.4.0
 
 This generator creates TypeScript/JavaScript client that utilizes [axios](https://github.com/axios/axios). The generated Node module can be used in the following environments:
 
@@ -45,7 +45,7 @@ navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install @lumoauth/api-client@1.3.0 --save
+npm install @lumoauth/api-client@1.4.0 --save
 ```
 
 _unPublished (not recommended):_
@@ -100,6 +100,7 @@ Class | Method | HTTP request | Description
 *AdminAgentsApi* | [**adminAgentsGet**](docs/AdminAgentsApi.md#adminagentsget) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId} | Get a single agent by ID or agentId
 *AdminAgentsApi* | [**adminAgentsGetScopes**](docs/AdminAgentsApi.md#adminagentsgetscopes) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Get agent scopes/capabilities
 *AdminAgentsApi* | [**adminAgentsList**](docs/AdminAgentsApi.md#adminagentslist) | **GET** /orgs/{orgId}/api/v1/admin/agents | List all agents in the tenant
+*AdminAgentsApi* | [**adminAgentsReportUsage**](docs/AdminAgentsApi.md#adminagentsreportusage) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/usage | Report model tokens and cost for an agent
 *AdminAgentsApi* | [**adminAgentsRevokeKey**](docs/AdminAgentsApi.md#adminagentsrevokekey) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/revoke-key | Revoke agent API key (nullify it so it can no longer authenticate)
 *AdminAgentsApi* | [**adminAgentsRotateCredentials**](docs/AdminAgentsApi.md#adminagentsrotatecredentials) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials | Rotate agent credentials
 *AdminAgentsApi* | [**adminAgentsSetScopes**](docs/AdminAgentsApi.md#adminagentssetscopes) | **PUT** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Update agent scopes/capabilities
@@ -313,6 +314,7 @@ Class | Method | HTTP request | Description
 *AgentsApi* | [**getApprovalStatus**](docs/AgentsApi.md#getapprovalstatus) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 *AgentsApi* | [**getCurrentAgent**](docs/AgentsApi.md#getcurrentagent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
 *AgentsApi* | [**registerAgent**](docs/AgentsApi.md#registeragent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
+*AgentsApi* | [**reportAgentUsage**](docs/AgentsApi.md#reportagentusage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used
 *AgentsApi* | [**verifyAgentCard**](docs/AgentsApi.md#verifyagentcard) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
 *AuthorizationApi* | [**checkAbac**](docs/AuthorizationApi.md#checkabac) | **POST** /orgs/{orgId}/api/v1/abac/check | Evaluate an ABAC policy decision for the caller
 *AuthorizationApi* | [**checkAbacBulk**](docs/AuthorizationApi.md#checkabacbulk) | **POST** /orgs/{orgId}/api/v1/abac/check-bulk | Evaluate up to 100 ABAC checks for the caller in one call
@@ -425,6 +427,10 @@ Class | Method | HTTP request | Description
  - [AdminAgentsGetResponse](docs/AdminAgentsGetResponse.md)
  - [AdminAgentsGetScopesResponse](docs/AdminAgentsGetScopesResponse.md)
  - [AdminAgentsListResponse](docs/AdminAgentsListResponse.md)
+ - [AdminAgentsReportUsageRequest](docs/AdminAgentsReportUsageRequest.md)
+ - [AdminAgentsReportUsageResponse](docs/AdminAgentsReportUsageResponse.md)
+ - [AdminAgentsReportUsageResponseData](docs/AdminAgentsReportUsageResponseData.md)
+ - [AdminAgentsReportUsageResponseDataRecorded](docs/AdminAgentsReportUsageResponseDataRecorded.md)
  - [AdminAgentsRevokeKeyResponse](docs/AdminAgentsRevokeKeyResponse.md)
  - [AdminAgentsRotateCredentialsResponse](docs/AdminAgentsRotateCredentialsResponse.md)
  - [AdminAgentsSetScopesRequest](docs/AdminAgentsSetScopesRequest.md)
@@ -743,6 +749,7 @@ Class | Method | HTTP request | Description
  - [RemoveUserGroupResponse](docs/RemoveUserGroupResponse.md)
  - [RemoveUserPermissionResponse](docs/RemoveUserPermissionResponse.md)
  - [RemoveUserRoleResponse](docs/RemoveUserRoleResponse.md)
+ - [ReportAgentUsageResponse](docs/ReportAgentUsageResponse.md)
  - [RequestPermissionRequest](docs/RequestPermissionRequest.md)
  - [RequestPermissionResponse](docs/RequestPermissionResponse.md)
  - [RevokeAgentTokenRequest](docs/RevokeAgentTokenRequest.md)
