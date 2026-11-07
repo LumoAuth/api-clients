@@ -198,6 +198,20 @@ namespace LumoAuth.ApiClient.Test.Api
         }
 
         /// <summary>
+        /// Test AdminAgentsReportUsage
+        /// </summary>
+        [Fact]
+        public void AdminAgentsReportUsageTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //string agentId = null;
+            //AdminAgentsReportUsageRequest adminAgentsReportUsageRequest = null;
+            //var response = instance.AdminAgentsReportUsage(orgId, agentId, adminAgentsReportUsageRequest);
+            //Assert.IsType<AdminAgentsReportUsageResponse>(response);
+        }
+
+        /// <summary>
         /// Test AdminAgentsRevokeKey
         /// </summary>
         [Fact]

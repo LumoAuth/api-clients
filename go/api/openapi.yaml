@@ -1840,6 +1840,55 @@ paths:
       tags:
       - "Admin: Agents"
       x-symfony-route: api_admin_agents_deactivate
+  /orgs/{orgId}/api/v1/admin/agents/{agentId}/usage:
+    post:
+      description: "For a trusted component of your organization, such as an AI gateway's\
+        \ spend callback or an orchestrator, that sees the agent's model calls. Adds\
+        \ the tokens and cost to the agent's budget windows (current UTC hour, day\
+        \ and month), exactly like POST /agents/me/usage from the agent itself. The\
+        \ report adds no API call and is accepted even when the budget is spent."
+      operationId: adminAgentsReportUsage
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: agentId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminAgentsReportUsageRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminAgentsReportUsageResponse"
+          description: Recorded.
+        "400":
+          description: "tokens or cost_usd is missing, negative, too large or not\
+            \ a number."
+        "401":
+          description: Authentication required.
+        "403":
+          description: Admin privileges required.
+        "404":
+          description: Tenant or agent not found.
+      summary: Report model tokens and cost for an agent
+      tags:
+      - "Admin: Agents"
+      x-symfony-route: api_admin_agents_report_usage
   /orgs/{orgId}/api/v1/admin/agents/{agentId}/token:
     post:
       operationId: adminAgentsGenerateToken
@@ -7856,6 +7905,48 @@ paths:
       tags:
       - Agents
       x-symfony-route: api_agents_mcp_authorize
+  /orgs/{orgId}/api/v1/agents/me/usage:
+    post:
+      description: "Adds the reported tokens and cost to the agent's budget windows\
+        \ (current UTC hour, day and month). LumoAuth does not see model calls, so\
+        \ token and cost limits apply only to usage that is reported here or through\
+        \ the Admin API. The report adds no API call and is accepted even when the\
+        \ budget is spent. Agent credentials only; portal test tokens are refused.\
+        \ Rate limited per agent."
+      operationId: reportAgentUsage
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminAgentsReportUsageRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportAgentUsageResponse"
+          description: "Recorded. `budget` has the same shape as `budget_policy` in\
+            \ UserInfo; `exhausted: true` means that the next metered call gets 429."
+        "400":
+          description: "invalid_request: tokens or cost_usd is missing, negative,\
+            \ too large or not a number."
+        "403":
+          description: test_token_not_accepted or cross_tenant.
+        "429":
+          description: "rate_limited: too many reports from this agent."
+      summary: Report the model tokens and cost that the agent used
+      tags:
+      - Agents
+      x-symfony-route: api_agents_me_usage
   /orgs/{orgId}/api/v1/agents/ask:
     post:
       description: |-
@@ -10258,10 +10349,11 @@ paths:
             \ identity type: a user token yields standard OIDC claims gated by scope\
             \ (profile, email, phone, address), roles only when the client enabled\
             \ the roles claim, plus tenant — null-valued claims are omitted; an agent\
-            \ token yields sub=agent_<id>, name, agent_id, workload_identity, capabilities,\
-            \ tenant, identity_type=agent; a client token yields sub=client_<id>,\
-            \ client_id, name, tenant, identity_type=client. Sent with Cache-Control:\
-            \ no-store."
+            \ token (no openid scope needed: an agent is not an End-User and reads\
+            \ only its own record) yields sub=agent_<id>, name, agent_id, workload_identity,\
+            \ capabilities, budget_policy, tenant, identity_type=agent; a client token\
+            \ yields sub=client_<id>, client_id, name, tenant, identity_type=client.\
+            \ Sent with Cache-Control: no-store."
         "400":
           description: invalid_request — Authorization header missing or malformed.
         "401":
@@ -10296,10 +10388,11 @@ paths:
             \ identity type: a user token yields standard OIDC claims gated by scope\
             \ (profile, email, phone, address), roles only when the client enabled\
             \ the roles claim, plus tenant — null-valued claims are omitted; an agent\
-            \ token yields sub=agent_<id>, name, agent_id, workload_identity, capabilities,\
-            \ tenant, identity_type=agent; a client token yields sub=client_<id>,\
-            \ client_id, name, tenant, identity_type=client. Sent with Cache-Control:\
-            \ no-store."
+            \ token (no openid scope needed: an agent is not an End-User and reads\
+            \ only its own record) yields sub=agent_<id>, name, agent_id, workload_identity,\
+            \ capabilities, budget_policy, tenant, identity_type=agent; a client token\
+            \ yields sub=client_<id>, client_id, name, tenant, identity_type=client.\
+            \ Sent with Cache-Control: no-store."
         "400":
           description: invalid_request — Authorization header missing or malformed.
         "401":
@@ -14089,6 +14182,64 @@ components:
         message:
           example: Agent deactivated
           type: string
+      type: object
+    AdminAgentsReportUsageRequest:
+      example:
+        cost_usd: 0.0042
+        tokens: 1530
+      properties:
+        tokens:
+          description: Model tokens used since the last report (input and output together).
+          example: 1530
+          maximum: 100000000
+          minimum: 0
+          type: integer
+        cost_usd:
+          description: Cost in USD since the last report.
+          example: 0.0042
+          maximum: 100000
+          minimum: 0
+          type: number
+      type: object
+    AdminAgentsReportUsageResponseDataRecorded:
+      example:
+        cost_usd: 0.0042
+        tokens: 1530
+      properties:
+        tokens:
+          example: 1530
+          type: integer
+        cost_usd:
+          example: 0.0042
+          type: number
+      type: object
+    AdminAgentsReportUsageResponseData:
+      example:
+        recorded:
+          cost_usd: 0.0042
+          tokens: 1530
+        budget:
+          key: ""
+      properties:
+        recorded:
+          $ref: "#/components/schemas/AdminAgentsReportUsageResponseDataRecorded"
+        budget:
+          additionalProperties: true
+          description: "Same shape as budget_policy in UserInfo: limits, usage in\
+            \ the current windows, exhausted."
+          type: object
+      type: object
+    AdminAgentsReportUsageResponse:
+      example:
+        data:
+          recorded:
+            cost_usd: 0.0042
+            tokens: 1530
+          budget:
+            key: ""
+      properties:
+        data:
+          $ref: "#/components/schemas/AdminAgentsReportUsageResponseData"
       type: object
     AdminAgentsGenerateTokenRequest:
       example:
@@ -19372,6 +19523,20 @@ components:
         resource:
           type: object
       type: object
+    ReportAgentUsageResponse:
+      example:
+        recorded:
+          cost_usd: 0.0042
+          tokens: 1530
+        budget:
+          key: ""
+      properties:
+        recorded:
+          $ref: "#/components/schemas/AdminAgentsReportUsageResponseDataRecorded"
+        budget:
+          additionalProperties: true
+          type: object
+      type: object
     AskRequest:
       example:
         context:
@@ -21564,6 +21729,8 @@ components:
         - roles
         preferred_username: preferred_username
         locale: locale
+        budget_policy:
+          key: ""
         client_id: client_id
         updated_at: 0
         workload_identity: workload_identity
@@ -21678,6 +21845,16 @@ components:
             type: string
           nullable: true
           type: array
+        budget_policy:
+          additionalProperties: true
+          description: "Agents only. The budget limits that are set (max_api_calls_per_hour,\
+            \ max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd,\
+            \ max_cost_per_month_usd, hard_limit; unlimited ones are left out) and\
+            \ any other policy keys, the usage in the current UTC windows (api_calls_this_hour,\
+            \ api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd,\
+            \ cost_this_month_usd), and exhausted: true when a limit is reached and\
+            \ the next metered call would get 429."
+          type: object
         client_id:
           description: Clients only.
           type: string

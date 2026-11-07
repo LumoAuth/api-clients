@@ -15,6 +15,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**adminAgentsGet**](AdminAgentsApi.md#adminAgentsGet) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId} | Get a single agent by ID or agentId |
 | [**adminAgentsGetScopes**](AdminAgentsApi.md#adminAgentsGetScopes) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Get agent scopes/capabilities |
 | [**adminAgentsList**](AdminAgentsApi.md#adminAgentsList) | **GET** /orgs/{orgId}/api/v1/admin/agents | List all agents in the tenant |
+| [**adminAgentsReportUsage**](AdminAgentsApi.md#adminAgentsReportUsage) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/usage | Report model tokens and cost for an agent |
 | [**adminAgentsRevokeKey**](AdminAgentsApi.md#adminAgentsRevokeKey) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/revoke-key | Revoke agent API key (nullify it so it can no longer authenticate) |
 | [**adminAgentsRotateCredentials**](AdminAgentsApi.md#adminAgentsRotateCredentials) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials | Rotate agent credentials |
 | [**adminAgentsSetScopes**](AdminAgentsApi.md#adminAgentsSetScopes) | **PUT** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Update agent scopes/capabilities |
@@ -859,6 +860,87 @@ public class Example {
 | **401** | Authentication required. |  -  |
 | **403** | Admin privileges required. |  -  |
 | **404** | Tenant not found. |  -  |
+
+<a id="adminAgentsReportUsage"></a>
+# **adminAgentsReportUsage**
+> AdminAgentsReportUsageResponse adminAgentsReportUsage(orgId, agentId, adminAgentsReportUsageRequest)
+
+Report model tokens and cost for an agent
+
+For a trusted component of your organization, such as an AI gateway&#39;s spend callback or an orchestrator, that sees the agent&#39;s model calls. Adds the tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+
+### Example
+```java
+// Import classes:
+import io.lumoauth.client.ApiClient;
+import io.lumoauth.client.ApiException;
+import io.lumoauth.client.Configuration;
+import io.lumoauth.client.auth.*;
+import io.lumoauth.client.models.*;
+import io.lumoauth.client.api.AdminAgentsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://app.lumoauth.dev");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    AdminAgentsApi apiInstance = new AdminAgentsApi(defaultClient);
+    String orgId = "orgId_example"; // String | 
+    String agentId = "agentId_example"; // String | 
+    AdminAgentsReportUsageRequest adminAgentsReportUsageRequest = new AdminAgentsReportUsageRequest(); // AdminAgentsReportUsageRequest | 
+    try {
+      AdminAgentsReportUsageResponse result = apiInstance.adminAgentsReportUsage(orgId, agentId, adminAgentsReportUsageRequest);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling AdminAgentsApi#adminAgentsReportUsage");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | **String**|  | |
+| **agentId** | **String**|  | |
+| **adminAgentsReportUsageRequest** | [**AdminAgentsReportUsageRequest**](AdminAgentsReportUsageRequest.md)|  | |
+
+### Return type
+
+[**AdminAgentsReportUsageResponse**](AdminAgentsReportUsageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Recorded. |  -  |
+| **400** | tokens or cost_usd is missing, negative, too large or not a number. |  -  |
+| **401** | Authentication required. |  -  |
+| **403** | Admin privileges required. |  -  |
+| **404** | Tenant or agent not found. |  -  |
 
 <a id="adminAgentsRevokeKey"></a>
 # **adminAgentsRevokeKey**

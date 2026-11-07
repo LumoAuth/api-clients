@@ -12,6 +12,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**get_approval_status**](AgentsApi.md#get_approval_status) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status |  |
 | [**get_current_agent**](AgentsApi.md#get_current_agent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent |
 | [**register_agent**](AgentsApi.md#register_agent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent |
+| [**report_agent_usage**](AgentsApi.md#report_agent_usage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used |
 | [**verify_agent_card**](AgentsApi.md#verify_agent_card) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card |
 
 
@@ -602,6 +603,82 @@ end
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## report_agent_usage
+
+> <ReportAgentUsageResponse> report_agent_usage(org_id, admin_agents_report_usage_request)
+
+Report the model tokens and cost that the agent used
+
+Adds the reported tokens and cost to the agent's budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AgentsApi.new
+org_id = 'org_id_example' # String | 
+admin_agents_report_usage_request = LumoAuthApiClient::AdminAgentsReportUsageRequest.new # AdminAgentsReportUsageRequest | 
+
+begin
+  # Report the model tokens and cost that the agent used
+  result = api_instance.report_agent_usage(org_id, admin_agents_report_usage_request)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AgentsApi->report_agent_usage: #{e}"
+end
+```
+
+#### Using the report_agent_usage_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ReportAgentUsageResponse>, Integer, Hash)> report_agent_usage_with_http_info(org_id, admin_agents_report_usage_request)
+
+```ruby
+begin
+  # Report the model tokens and cost that the agent used
+  data, status_code, headers = api_instance.report_agent_usage_with_http_info(org_id, admin_agents_report_usage_request)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ReportAgentUsageResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AgentsApi->report_agent_usage_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **admin_agents_report_usage_request** | [**AdminAgentsReportUsageRequest**](AdminAgentsReportUsageRequest.md) |  |  |
+
+### Return type
+
+[**ReportAgentUsageResponse**](ReportAgentUsageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 

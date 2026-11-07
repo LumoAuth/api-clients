@@ -11,7 +11,7 @@
 
 LumoAuth API
 - API version: 1.0.0
-  - Build date: 2026-11-06T01:31:12.308427125Z[Etc/UTC]
+  - Build date: 2026-11-07T03:46:00.253581610Z[Etc/UTC]
   - Generator version: 7.14.0
 
 LumoAuth REST API — authentication, authorization, agent registry,
@@ -172,6 +172,7 @@ Class | Method | HTTP request | Description
 *AdminAgentsApi* | [**adminAgentsGet**](docs/AdminAgentsApi.md#adminAgentsGet) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId} | Get a single agent by ID or agentId
 *AdminAgentsApi* | [**adminAgentsGetScopes**](docs/AdminAgentsApi.md#adminAgentsGetScopes) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Get agent scopes/capabilities
 *AdminAgentsApi* | [**adminAgentsList**](docs/AdminAgentsApi.md#adminAgentsList) | **GET** /orgs/{orgId}/api/v1/admin/agents | List all agents in the tenant
+*AdminAgentsApi* | [**adminAgentsReportUsage**](docs/AdminAgentsApi.md#adminAgentsReportUsage) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/usage | Report model tokens and cost for an agent
 *AdminAgentsApi* | [**adminAgentsRevokeKey**](docs/AdminAgentsApi.md#adminAgentsRevokeKey) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/revoke-key | Revoke agent API key (nullify it so it can no longer authenticate)
 *AdminAgentsApi* | [**adminAgentsRotateCredentials**](docs/AdminAgentsApi.md#adminAgentsRotateCredentials) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials | Rotate agent credentials
 *AdminAgentsApi* | [**adminAgentsSetScopes**](docs/AdminAgentsApi.md#adminAgentsSetScopes) | **PUT** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Update agent scopes/capabilities
@@ -385,6 +386,7 @@ Class | Method | HTTP request | Description
 *AgentsApi* | [**getApprovalStatus**](docs/AgentsApi.md#getApprovalStatus) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 *AgentsApi* | [**getCurrentAgent**](docs/AgentsApi.md#getCurrentAgent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
 *AgentsApi* | [**registerAgent**](docs/AgentsApi.md#registerAgent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
+*AgentsApi* | [**reportAgentUsage**](docs/AgentsApi.md#reportAgentUsage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used
 *AgentsApi* | [**verifyAgentCard**](docs/AgentsApi.md#verifyAgentCard) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
 *AuthorizationApi* | [**checkAbac**](docs/AuthorizationApi.md#checkAbac) | **POST** /orgs/{orgId}/api/v1/abac/check | Evaluate an ABAC policy decision for the caller
 *AuthorizationApi* | [**checkAbacBulk**](docs/AuthorizationApi.md#checkAbacBulk) | **POST** /orgs/{orgId}/api/v1/abac/check-bulk | Evaluate up to 100 ABAC checks for the caller in one call
@@ -497,6 +499,10 @@ Class | Method | HTTP request | Description
  - [AdminAgentsGetResponse](docs/AdminAgentsGetResponse.md)
  - [AdminAgentsGetScopesResponse](docs/AdminAgentsGetScopesResponse.md)
  - [AdminAgentsListResponse](docs/AdminAgentsListResponse.md)
+ - [AdminAgentsReportUsageRequest](docs/AdminAgentsReportUsageRequest.md)
+ - [AdminAgentsReportUsageResponse](docs/AdminAgentsReportUsageResponse.md)
+ - [AdminAgentsReportUsageResponseData](docs/AdminAgentsReportUsageResponseData.md)
+ - [AdminAgentsReportUsageResponseDataRecorded](docs/AdminAgentsReportUsageResponseDataRecorded.md)
  - [AdminAgentsRevokeKeyResponse](docs/AdminAgentsRevokeKeyResponse.md)
  - [AdminAgentsRotateCredentialsResponse](docs/AdminAgentsRotateCredentialsResponse.md)
  - [AdminAgentsSetScopesRequest](docs/AdminAgentsSetScopesRequest.md)
@@ -815,6 +821,7 @@ Class | Method | HTTP request | Description
  - [RemoveUserGroupResponse](docs/RemoveUserGroupResponse.md)
  - [RemoveUserPermissionResponse](docs/RemoveUserPermissionResponse.md)
  - [RemoveUserRoleResponse](docs/RemoveUserRoleResponse.md)
+ - [ReportAgentUsageResponse](docs/ReportAgentUsageResponse.md)
  - [RequestPermissionRequest](docs/RequestPermissionRequest.md)
  - [RequestPermissionResponse](docs/RequestPermissionResponse.md)
  - [RevokeAgentTokenRequest](docs/RevokeAgentTokenRequest.md)

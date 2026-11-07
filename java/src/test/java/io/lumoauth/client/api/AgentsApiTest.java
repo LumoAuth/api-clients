@@ -14,6 +14,7 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminAgentsReportUsageRequest;
 import io.lumoauth.client.model.AskRequest;
 import io.lumoauth.client.model.AskResponse;
 import io.lumoauth.client.model.AttestRequest;
@@ -26,6 +27,7 @@ import io.lumoauth.client.model.CreateApprovalResponse202;
 import io.lumoauth.client.model.GetApprovalStatusResponse;
 import io.lumoauth.client.model.GetCurrentAgentResponse;
 import io.lumoauth.client.model.RegisterAgentResponse;
+import io.lumoauth.client.model.ReportAgentUsageResponse;
 import io.lumoauth.client.model.SignedAgentCard;
 import io.lumoauth.client.model.VerifyAgentCardResponse;
 import org.junit.jupiter.api.Disabled;
@@ -150,6 +152,21 @@ public class AgentsApiTest {
     public void registerAgentTest() throws ApiException {
         String orgId = null;
         RegisterAgentResponse response = api.registerAgent(orgId);
+        // TODO: test validations
+    }
+
+    /**
+     * Report the model tokens and cost that the agent used
+     *
+     * Adds the reported tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void reportAgentUsageTest() throws ApiException {
+        String orgId = null;
+        AdminAgentsReportUsageRequest adminAgentsReportUsageRequest = null;
+        ReportAgentUsageResponse response = api.reportAgentUsage(orgId, adminAgentsReportUsageRequest);
         // TODO: test validations
     }
 

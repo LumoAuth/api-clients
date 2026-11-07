@@ -84,6 +84,10 @@ __all__ = [
     "AdminAgentsGetResponse",
     "AdminAgentsGetScopesResponse",
     "AdminAgentsListResponse",
+    "AdminAgentsReportUsageRequest",
+    "AdminAgentsReportUsageResponse",
+    "AdminAgentsReportUsageResponseData",
+    "AdminAgentsReportUsageResponseDataRecorded",
     "AdminAgentsRevokeKeyResponse",
     "AdminAgentsRotateCredentialsResponse",
     "AdminAgentsSetScopesRequest",
@@ -402,6 +406,7 @@ __all__ = [
     "RemoveUserGroupResponse",
     "RemoveUserPermissionResponse",
     "RemoveUserRoleResponse",
+    "ReportAgentUsageResponse",
     "RequestPermissionRequest",
     "RequestPermissionResponse",
     "RevokeAgentTokenRequest",
@@ -529,6 +534,10 @@ from lumoauth_api_client.models.admin_agents_generate_token_response_data import
 from lumoauth_api_client.models.admin_agents_get_response import AdminAgentsGetResponse as AdminAgentsGetResponse
 from lumoauth_api_client.models.admin_agents_get_scopes_response import AdminAgentsGetScopesResponse as AdminAgentsGetScopesResponse
 from lumoauth_api_client.models.admin_agents_list_response import AdminAgentsListResponse as AdminAgentsListResponse
+from lumoauth_api_client.models.admin_agents_report_usage_request import AdminAgentsReportUsageRequest as AdminAgentsReportUsageRequest
+from lumoauth_api_client.models.admin_agents_report_usage_response import AdminAgentsReportUsageResponse as AdminAgentsReportUsageResponse
+from lumoauth_api_client.models.admin_agents_report_usage_response_data import AdminAgentsReportUsageResponseData as AdminAgentsReportUsageResponseData
+from lumoauth_api_client.models.admin_agents_report_usage_response_data_recorded import AdminAgentsReportUsageResponseDataRecorded as AdminAgentsReportUsageResponseDataRecorded
 from lumoauth_api_client.models.admin_agents_revoke_key_response import AdminAgentsRevokeKeyResponse as AdminAgentsRevokeKeyResponse
 from lumoauth_api_client.models.admin_agents_rotate_credentials_response import AdminAgentsRotateCredentialsResponse as AdminAgentsRotateCredentialsResponse
 from lumoauth_api_client.models.admin_agents_set_scopes_request import AdminAgentsSetScopesRequest as AdminAgentsSetScopesRequest
@@ -847,6 +856,7 @@ from lumoauth_api_client.models.registered_client_metadata import RegisteredClie
 from lumoauth_api_client.models.remove_user_group_response import RemoveUserGroupResponse as RemoveUserGroupResponse
 from lumoauth_api_client.models.remove_user_permission_response import RemoveUserPermissionResponse as RemoveUserPermissionResponse
 from lumoauth_api_client.models.remove_user_role_response import RemoveUserRoleResponse as RemoveUserRoleResponse
+from lumoauth_api_client.models.report_agent_usage_response import ReportAgentUsageResponse as ReportAgentUsageResponse
 from lumoauth_api_client.models.request_permission_request import RequestPermissionRequest as RequestPermissionRequest
 from lumoauth_api_client.models.request_permission_response import RequestPermissionResponse as RequestPermissionResponse
 from lumoauth_api_client.models.revoke_agent_token_request import RevokeAgentTokenRequest as RevokeAgentTokenRequest

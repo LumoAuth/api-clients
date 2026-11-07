@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AdminAgentsReportUsageRequest } from '../models';
+// @ts-ignore
 import type { AskRequest } from '../models';
 // @ts-ignore
 import type { AskResponse } from '../models';
@@ -45,6 +47,8 @@ import type { GetApprovalStatusResponse } from '../models';
 import type { GetCurrentAgentResponse } from '../models';
 // @ts-ignore
 import type { RegisterAgentResponse } from '../models';
+// @ts-ignore
+import type { ReportAgentUsageResponse } from '../models';
 // @ts-ignore
 import type { SignedAgentCard } from '../models';
 // @ts-ignore
@@ -411,6 +415,53 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Adds the reported tokens and cost to the agent\'s budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+         * @summary Report the model tokens and cost that the agent used
+         * @param {string} orgId 
+         * @param {AdminAgentsReportUsageRequest} adminAgentsReportUsageRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reportAgentUsage: async (orgId: string, adminAgentsReportUsageRequest: AdminAgentsReportUsageRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('reportAgentUsage', 'orgId', orgId)
+            // verify required parameter 'adminAgentsReportUsageRequest' is not null or undefined
+            assertParamExists('reportAgentUsage', 'adminAgentsReportUsageRequest', adminAgentsReportUsageRequest)
+            const localVarPath = `/orgs/{orgId}/api/v1/agents/me/usage`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminAgentsReportUsageRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer\'s key set (SSRF-guarded); by default the organization\'s own JWKS is used.
          * @summary Verify a signed A2A agent card
          * @param {string} orgId 
@@ -577,6 +628,20 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Adds the reported tokens and cost to the agent\'s budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+         * @summary Report the model tokens and cost that the agent used
+         * @param {string} orgId 
+         * @param {AdminAgentsReportUsageRequest} adminAgentsReportUsageRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async reportAgentUsage(orgId: string, adminAgentsReportUsageRequest: AdminAgentsReportUsageRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportAgentUsageResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reportAgentUsage(orgId, adminAgentsReportUsageRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.reportAgentUsage']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer\'s key set (SSRF-guarded); by default the organization\'s own JWKS is used.
          * @summary Verify a signed A2A agent card
          * @param {string} orgId 
@@ -679,6 +744,16 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.registerAgent(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Adds the reported tokens and cost to the agent\'s budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+         * @summary Report the model tokens and cost that the agent used
+         * @param {AgentsApiReportAgentUsageRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reportAgentUsage(requestParameters: AgentsApiReportAgentUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReportAgentUsageResponse> {
+            return localVarFp.reportAgentUsage(requestParameters.orgId, requestParameters.adminAgentsReportUsageRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer\'s key set (SSRF-guarded); by default the organization\'s own JWKS is used.
          * @summary Verify a signed A2A agent card
          * @param {AgentsApiVerifyAgentCardRequest} requestParameters Request parameters.
@@ -774,6 +849,16 @@ export interface AgentsApiInterface {
      * @memberof AgentsApiInterface
      */
     registerAgent(requestParameters: AgentsApiRegisterAgentRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisterAgentResponse>;
+
+    /**
+     * Adds the reported tokens and cost to the agent\'s budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+     * @summary Report the model tokens and cost that the agent used
+     * @param {AgentsApiReportAgentUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApiInterface
+     */
+    reportAgentUsage(requestParameters: AgentsApiReportAgentUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReportAgentUsageResponse>;
 
     /**
      * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer\'s key set (SSRF-guarded); by default the organization\'s own JWKS is used.
@@ -949,6 +1034,27 @@ export interface AgentsApiRegisterAgentRequest {
 }
 
 /**
+ * Request parameters for reportAgentUsage operation in AgentsApi.
+ * @export
+ * @interface AgentsApiReportAgentUsageRequest
+ */
+export interface AgentsApiReportAgentUsageRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentsApiReportAgentUsage
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {AdminAgentsReportUsageRequest}
+     * @memberof AgentsApiReportAgentUsage
+     */
+    readonly adminAgentsReportUsageRequest: AdminAgentsReportUsageRequest
+}
+
+/**
  * Request parameters for verifyAgentCard operation in AgentsApi.
  * @export
  * @interface AgentsApiVerifyAgentCardRequest
@@ -1068,6 +1174,18 @@ export class AgentsApi extends BaseAPI implements AgentsApiInterface {
      */
     public registerAgent(requestParameters: AgentsApiRegisterAgentRequest, options?: RawAxiosRequestConfig) {
         return AgentsApiFp(this.configuration).registerAgent(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Adds the reported tokens and cost to the agent\'s budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+     * @summary Report the model tokens and cost that the agent used
+     * @param {AgentsApiReportAgentUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public reportAgentUsage(requestParameters: AgentsApiReportAgentUsageRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).reportAgentUsage(requestParameters.orgId, requestParameters.adminAgentsReportUsageRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -127,6 +127,17 @@ pub enum AdminAgentsListError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`admin_agents_report_usage`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AdminAgentsReportUsageError {
+    Status400(),
+    Status401(),
+    Status403(),
+    Status404(),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`admin_agents_revoke_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -706,6 +717,57 @@ pub async fn admin_agents_list(configuration: &configuration::Configuration, org
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminAgentsListError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// For a trusted component of your organization, such as an AI gateway's spend callback or an orchestrator, that sees the agent's model calls. Adds the tokens and cost to the agent's budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+pub async fn admin_agents_report_usage(configuration: &configuration::Configuration, org_id: &str, agent_id: &str, admin_agents_report_usage_request: models::AdminAgentsReportUsageRequest) -> Result<models::AdminAgentsReportUsageResponse, Error<AdminAgentsReportUsageError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_agent_id = agent_id;
+    let p_admin_agents_report_usage_request = admin_agents_report_usage_request;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/agents/{agentId}/usage", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), agentId=crate::apis::urlencode(p_agent_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+    req_builder = req_builder.json(&p_admin_agents_report_usage_request);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminAgentsReportUsageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminAgentsReportUsageResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<AdminAgentsReportUsageError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

@@ -12,6 +12,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**GetApprovalStatus**](AgentsApi.md#getapprovalstatus) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status |  |
 | [**GetCurrentAgent**](AgentsApi.md#getcurrentagent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent |
 | [**RegisterAgent**](AgentsApi.md#registeragent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent |
+| [**ReportAgentUsage**](AgentsApi.md#reportagentusage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used |
 | [**VerifyAgentCard**](AgentsApi.md#verifyagentcard) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card |
 
 <a id="ask"></a>
@@ -844,6 +845,113 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Registered agent |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="reportagentusage"></a>
+# **ReportAgentUsage**
+> ReportAgentUsageResponse ReportAgentUsage (string orgId, AdminAgentsReportUsageRequest adminAgentsReportUsageRequest)
+
+Report the model tokens and cost that the agent used
+
+Adds the reported tokens and cost to the agent's budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class ReportAgentUsageExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AgentsApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+            var adminAgentsReportUsageRequest = new AdminAgentsReportUsageRequest(); // AdminAgentsReportUsageRequest | 
+
+            try
+            {
+                // Report the model tokens and cost that the agent used
+                ReportAgentUsageResponse result = apiInstance.ReportAgentUsage(orgId, adminAgentsReportUsageRequest);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AgentsApi.ReportAgentUsage: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the ReportAgentUsageWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Report the model tokens and cost that the agent used
+    ApiResponse<ReportAgentUsageResponse> response = apiInstance.ReportAgentUsageWithHttpInfo(orgId, adminAgentsReportUsageRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AgentsApi.ReportAgentUsageWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+| **adminAgentsReportUsageRequest** | [**AdminAgentsReportUsageRequest**](AdminAgentsReportUsageRequest.md) |  |  |
+
+### Return type
+
+[**ReportAgentUsageResponse**](ReportAgentUsageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Recorded. &#x60;budget&#x60; has the same shape as &#x60;budget_policy&#x60; in UserInfo; &#x60;exhausted: true&#x60; means that the next metered call gets 429. |  -  |
+| **400** | invalid_request: tokens or cost_usd is missing, negative, too large or not a number. |  -  |
+| **403** | test_token_not_accepted or cross_tenant. |  -  |
+| **429** | rate_limited: too many reports from this agent. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -156,6 +156,21 @@ Body: { "server_id": "mcp_0123…", "tool": "send_payment_reminder" }
 	RegisterAgentExecute(r ApiRegisterAgentRequest) (*RegisterAgentResponse, *http.Response, error)
 
 	/*
+	ReportAgentUsage Report the model tokens and cost that the agent used
+
+	Adds the reported tokens and cost to the agent's budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@return ApiReportAgentUsageRequest
+	*/
+	ReportAgentUsage(ctx context.Context, orgId string) ApiReportAgentUsageRequest
+
+	// ReportAgentUsageExecute executes the request
+	//  @return ReportAgentUsageResponse
+	ReportAgentUsageExecute(r ApiReportAgentUsageRequest) (*ReportAgentUsageResponse, *http.Response, error)
+
+	/*
 	VerifyAgentCard Verify a signed A2A agent card
 
 	Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {"card": {...}, "jwks_uri": "https://..."} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
@@ -1110,6 +1125,134 @@ func (a *AgentsAPIService) RegisterAgentExecute(r ApiRegisterAgentRequest) (*Reg
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiReportAgentUsageRequest struct {
+	ctx context.Context
+	ApiService AgentsAPI
+	orgId string
+	adminAgentsReportUsageRequest *AdminAgentsReportUsageRequest
+}
+
+func (r ApiReportAgentUsageRequest) AdminAgentsReportUsageRequest(adminAgentsReportUsageRequest AdminAgentsReportUsageRequest) ApiReportAgentUsageRequest {
+	r.adminAgentsReportUsageRequest = &adminAgentsReportUsageRequest
+	return r
+}
+
+func (r ApiReportAgentUsageRequest) Execute() (*ReportAgentUsageResponse, *http.Response, error) {
+	return r.ApiService.ReportAgentUsageExecute(r)
+}
+
+/*
+ReportAgentUsage Report the model tokens and cost that the agent used
+
+Adds the reported tokens and cost to the agent's budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @return ApiReportAgentUsageRequest
+*/
+func (a *AgentsAPIService) ReportAgentUsage(ctx context.Context, orgId string) ApiReportAgentUsageRequest {
+	return ApiReportAgentUsageRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+	}
+}
+
+// Execute executes the request
+//  @return ReportAgentUsageResponse
+func (a *AgentsAPIService) ReportAgentUsageExecute(r ApiReportAgentUsageRequest) (*ReportAgentUsageResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ReportAgentUsageResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AgentsAPIService.ReportAgentUsage")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/agents/me/usage"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.adminAgentsReportUsageRequest == nil {
+		return localVarReturnValue, nil, reportError("adminAgentsReportUsageRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.adminAgentsReportUsageRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

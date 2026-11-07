@@ -15,6 +15,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**admin_agents_get**](AdminAgentsApi.md#admin_agents_get) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId} | Get a single agent by ID or agentId |
 | [**admin_agents_get_scopes**](AdminAgentsApi.md#admin_agents_get_scopes) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Get agent scopes/capabilities |
 | [**admin_agents_list**](AdminAgentsApi.md#admin_agents_list) | **GET** /orgs/{orgId}/api/v1/admin/agents | List all agents in the tenant |
+| [**admin_agents_report_usage**](AdminAgentsApi.md#admin_agents_report_usage) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/usage | Report model tokens and cost for an agent |
 | [**admin_agents_revoke_key**](AdminAgentsApi.md#admin_agents_revoke_key) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/revoke-key | Revoke agent API key (nullify it so it can no longer authenticate) |
 | [**admin_agents_rotate_credentials**](AdminAgentsApi.md#admin_agents_rotate_credentials) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials | Rotate agent credentials |
 | [**admin_agents_set_scopes**](AdminAgentsApi.md#admin_agents_set_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Update agent scopes/capabilities |
@@ -835,6 +836,84 @@ end
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## admin_agents_report_usage
+
+> <AdminAgentsReportUsageResponse> admin_agents_report_usage(org_id, agent_id, admin_agents_report_usage_request)
+
+Report model tokens and cost for an agent
+
+For a trusted component of your organization, such as an AI gateway's spend callback or an orchestrator, that sees the agent's model calls. Adds the tokens and cost to the agent's budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminAgentsApi.new
+org_id = 'org_id_example' # String | 
+agent_id = 'agent_id_example' # String | 
+admin_agents_report_usage_request = LumoAuthApiClient::AdminAgentsReportUsageRequest.new # AdminAgentsReportUsageRequest | 
+
+begin
+  # Report model tokens and cost for an agent
+  result = api_instance.admin_agents_report_usage(org_id, agent_id, admin_agents_report_usage_request)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminAgentsApi->admin_agents_report_usage: #{e}"
+end
+```
+
+#### Using the admin_agents_report_usage_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AdminAgentsReportUsageResponse>, Integer, Hash)> admin_agents_report_usage_with_http_info(org_id, agent_id, admin_agents_report_usage_request)
+
+```ruby
+begin
+  # Report model tokens and cost for an agent
+  data, status_code, headers = api_instance.admin_agents_report_usage_with_http_info(org_id, agent_id, admin_agents_report_usage_request)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AdminAgentsReportUsageResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminAgentsApi->admin_agents_report_usage_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **agent_id** | **String** |  |  |
+| **admin_agents_report_usage_request** | [**AdminAgentsReportUsageRequest**](AdminAgentsReportUsageRequest.md) |  |  |
+
+### Return type
+
+[**AdminAgentsReportUsageResponse**](AdminAgentsReportUsageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 

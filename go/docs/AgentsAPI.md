@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**GetApprovalStatus**](AgentsAPI.md#GetApprovalStatus) | **Get** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 [**GetCurrentAgent**](AgentsAPI.md#GetCurrentAgent) | **Get** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
 [**RegisterAgent**](AgentsAPI.md#RegisterAgent) | **Post** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
+[**ReportAgentUsage**](AgentsAPI.md#ReportAgentUsage) | **Post** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used
 [**VerifyAgentCard**](AgentsAPI.md#VerifyAgentCard) | **Post** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
 
 
@@ -580,6 +581,78 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ReportAgentUsage
+
+> ReportAgentUsageResponse ReportAgentUsage(ctx, orgId).AdminAgentsReportUsageRequest(adminAgentsReportUsageRequest).Execute()
+
+Report the model tokens and cost that the agent used
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	adminAgentsReportUsageRequest := *openapiclient.NewAdminAgentsReportUsageRequest() // AdminAgentsReportUsageRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AgentsAPI.ReportAgentUsage(context.Background(), orgId).AdminAgentsReportUsageRequest(adminAgentsReportUsageRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AgentsAPI.ReportAgentUsage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ReportAgentUsage`: ReportAgentUsageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AgentsAPI.ReportAgentUsage`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiReportAgentUsageRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **adminAgentsReportUsageRequest** | [**AdminAgentsReportUsageRequest**](AdminAgentsReportUsageRequest.md) |  | 
+
+### Return type
+
+[**ReportAgentUsageResponse**](ReportAgentUsageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

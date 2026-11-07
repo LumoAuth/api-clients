@@ -138,6 +138,7 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AdminAgentsApi* | [**admin_agents_get**](docs/AdminAgentsApi.md#admin_agents_get) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId} | Get a single agent by ID or agentId
 *LumoAuthApiClient::AdminAgentsApi* | [**admin_agents_get_scopes**](docs/AdminAgentsApi.md#admin_agents_get_scopes) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Get agent scopes/capabilities
 *LumoAuthApiClient::AdminAgentsApi* | [**admin_agents_list**](docs/AdminAgentsApi.md#admin_agents_list) | **GET** /orgs/{orgId}/api/v1/admin/agents | List all agents in the tenant
+*LumoAuthApiClient::AdminAgentsApi* | [**admin_agents_report_usage**](docs/AdminAgentsApi.md#admin_agents_report_usage) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/usage | Report model tokens and cost for an agent
 *LumoAuthApiClient::AdminAgentsApi* | [**admin_agents_revoke_key**](docs/AdminAgentsApi.md#admin_agents_revoke_key) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/revoke-key | Revoke agent API key (nullify it so it can no longer authenticate)
 *LumoAuthApiClient::AdminAgentsApi* | [**admin_agents_rotate_credentials**](docs/AdminAgentsApi.md#admin_agents_rotate_credentials) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials | Rotate agent credentials
 *LumoAuthApiClient::AdminAgentsApi* | [**admin_agents_set_scopes**](docs/AdminAgentsApi.md#admin_agents_set_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Update agent scopes/capabilities
@@ -351,6 +352,7 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AgentsApi* | [**get_approval_status**](docs/AgentsApi.md#get_approval_status) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 *LumoAuthApiClient::AgentsApi* | [**get_current_agent**](docs/AgentsApi.md#get_current_agent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
 *LumoAuthApiClient::AgentsApi* | [**register_agent**](docs/AgentsApi.md#register_agent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
+*LumoAuthApiClient::AgentsApi* | [**report_agent_usage**](docs/AgentsApi.md#report_agent_usage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used
 *LumoAuthApiClient::AgentsApi* | [**verify_agent_card**](docs/AgentsApi.md#verify_agent_card) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
 *LumoAuthApiClient::AuthorizationApi* | [**check_abac**](docs/AuthorizationApi.md#check_abac) | **POST** /orgs/{orgId}/api/v1/abac/check | Evaluate an ABAC policy decision for the caller
 *LumoAuthApiClient::AuthorizationApi* | [**check_abac_bulk**](docs/AuthorizationApi.md#check_abac_bulk) | **POST** /orgs/{orgId}/api/v1/abac/check-bulk | Evaluate up to 100 ABAC checks for the caller in one call
@@ -463,6 +465,10 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::AdminAgentsGetResponse](docs/AdminAgentsGetResponse.md)
  - [LumoAuthApiClient::AdminAgentsGetScopesResponse](docs/AdminAgentsGetScopesResponse.md)
  - [LumoAuthApiClient::AdminAgentsListResponse](docs/AdminAgentsListResponse.md)
+ - [LumoAuthApiClient::AdminAgentsReportUsageRequest](docs/AdminAgentsReportUsageRequest.md)
+ - [LumoAuthApiClient::AdminAgentsReportUsageResponse](docs/AdminAgentsReportUsageResponse.md)
+ - [LumoAuthApiClient::AdminAgentsReportUsageResponseData](docs/AdminAgentsReportUsageResponseData.md)
+ - [LumoAuthApiClient::AdminAgentsReportUsageResponseDataRecorded](docs/AdminAgentsReportUsageResponseDataRecorded.md)
  - [LumoAuthApiClient::AdminAgentsRevokeKeyResponse](docs/AdminAgentsRevokeKeyResponse.md)
  - [LumoAuthApiClient::AdminAgentsRotateCredentialsResponse](docs/AdminAgentsRotateCredentialsResponse.md)
  - [LumoAuthApiClient::AdminAgentsSetScopesRequest](docs/AdminAgentsSetScopesRequest.md)
@@ -781,6 +787,7 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::RemoveUserGroupResponse](docs/RemoveUserGroupResponse.md)
  - [LumoAuthApiClient::RemoveUserPermissionResponse](docs/RemoveUserPermissionResponse.md)
  - [LumoAuthApiClient::RemoveUserRoleResponse](docs/RemoveUserRoleResponse.md)
+ - [LumoAuthApiClient::ReportAgentUsageResponse](docs/ReportAgentUsageResponse.md)
  - [LumoAuthApiClient::RequestPermissionRequest](docs/RequestPermissionRequest.md)
  - [LumoAuthApiClient::RequestPermissionResponse](docs/RequestPermissionResponse.md)
  - [LumoAuthApiClient::RevokeAgentTokenRequest](docs/RevokeAgentTokenRequest.md)

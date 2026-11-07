@@ -32,6 +32,10 @@ docs/AdminAgentsGenerateTokenResponseData.md
 docs/AdminAgentsGetResponse.md
 docs/AdminAgentsGetScopesResponse.md
 docs/AdminAgentsListResponse.md
+docs/AdminAgentsReportUsageRequest.md
+docs/AdminAgentsReportUsageResponse.md
+docs/AdminAgentsReportUsageResponseData.md
+docs/AdminAgentsReportUsageResponseDataRecorded.md
 docs/AdminAgentsRevokeKeyResponse.md
 docs/AdminAgentsRotateCredentialsResponse.md
 docs/AdminAgentsSetScopesRequest.md
@@ -373,6 +377,7 @@ docs/RegisteredClientMetadata.md
 docs/RemoveUserGroupResponse.md
 docs/RemoveUserPermissionResponse.md
 docs/RemoveUserRoleResponse.md
+docs/ReportAgentUsageResponse.md
 docs/RequestPermissionRequest.md
 docs/RequestPermissionResponse.md
 docs/RevokeAgentTokenRequest.md
@@ -488,6 +493,10 @@ src/LumoAuth.ApiClient.Test/Model/AdminAgentsGenerateTokenResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminAgentsGetResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminAgentsGetScopesResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminAgentsListResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/AdminAgentsReportUsageRequestTests.cs
+src/LumoAuth.ApiClient.Test/Model/AdminAgentsReportUsageResponseDataRecordedTests.cs
+src/LumoAuth.ApiClient.Test/Model/AdminAgentsReportUsageResponseDataTests.cs
+src/LumoAuth.ApiClient.Test/Model/AdminAgentsReportUsageResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminAgentsRevokeKeyResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminAgentsRotateCredentialsResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminAgentsSetScopesRequestTests.cs
@@ -806,6 +815,7 @@ src/LumoAuth.ApiClient.Test/Model/RegisteredClientMetadataTests.cs
 src/LumoAuth.ApiClient.Test/Model/RemoveUserGroupResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/RemoveUserPermissionResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/RemoveUserRoleResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/ReportAgentUsageResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/RequestPermissionRequestTests.cs
 src/LumoAuth.ApiClient.Test/Model/RequestPermissionResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/RevokeAgentTokenRequestTests.cs
@@ -936,6 +946,10 @@ src/LumoAuth.ApiClient/Model/AdminAgentsGenerateTokenResponseData.cs
 src/LumoAuth.ApiClient/Model/AdminAgentsGetResponse.cs
 src/LumoAuth.ApiClient/Model/AdminAgentsGetScopesResponse.cs
 src/LumoAuth.ApiClient/Model/AdminAgentsListResponse.cs
+src/LumoAuth.ApiClient/Model/AdminAgentsReportUsageRequest.cs
+src/LumoAuth.ApiClient/Model/AdminAgentsReportUsageResponse.cs
+src/LumoAuth.ApiClient/Model/AdminAgentsReportUsageResponseData.cs
+src/LumoAuth.ApiClient/Model/AdminAgentsReportUsageResponseDataRecorded.cs
 src/LumoAuth.ApiClient/Model/AdminAgentsRevokeKeyResponse.cs
 src/LumoAuth.ApiClient/Model/AdminAgentsRotateCredentialsResponse.cs
 src/LumoAuth.ApiClient/Model/AdminAgentsSetScopesRequest.cs
@@ -1254,6 +1268,7 @@ src/LumoAuth.ApiClient/Model/RegisteredClientMetadata.cs
 src/LumoAuth.ApiClient/Model/RemoveUserGroupResponse.cs
 src/LumoAuth.ApiClient/Model/RemoveUserPermissionResponse.cs
 src/LumoAuth.ApiClient/Model/RemoveUserRoleResponse.cs
+src/LumoAuth.ApiClient/Model/ReportAgentUsageResponse.cs
 src/LumoAuth.ApiClient/Model/RequestPermissionRequest.cs
 src/LumoAuth.ApiClient/Model/RequestPermissionResponse.cs
 src/LumoAuth.ApiClient/Model/RevokeAgentTokenRequest.cs

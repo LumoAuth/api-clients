@@ -12,6 +12,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**getApprovalStatus**](#getapprovalstatus) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | |
 |[**getCurrentAgent**](#getcurrentagent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent|
 |[**registerAgent**](#registeragent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent|
+|[**reportAgentUsage**](#reportagentusage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used|
 |[**verifyAgentCard**](#verifyagentcard) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card|
 
 # **ask**
@@ -461,6 +462,64 @@ const { status, data } = await apiInstance.registerAgent(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Registered agent |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reportAgentUsage**
+> ReportAgentUsageResponse reportAgentUsage(adminAgentsReportUsageRequest)
+
+Adds the reported tokens and cost to the agent\'s budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+
+### Example
+
+```typescript
+import {
+    AgentsApi,
+    Configuration,
+    AdminAgentsReportUsageRequest
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AgentsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let adminAgentsReportUsageRequest: AdminAgentsReportUsageRequest; //
+
+const { status, data } = await apiInstance.reportAgentUsage(
+    orgId,
+    adminAgentsReportUsageRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **adminAgentsReportUsageRequest** | **AdminAgentsReportUsageRequest**|  | |
+| **orgId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**ReportAgentUsageResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Recorded. &#x60;budget&#x60; has the same shape as &#x60;budget_policy&#x60; in UserInfo; &#x60;exhausted: true&#x60; means that the next metered call gets 429. |  -  |
+|**400** | invalid_request: tokens or cost_usd is missing, negative, too large or not a number. |  -  |
+|**403** | test_token_not_accepted or cross_tenant. |  -  |
+|**429** | rate_limited: too many reports from this agent. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

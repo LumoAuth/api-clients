@@ -54,7 +54,7 @@ import io.lumoauth.client.JSON;
 /**
  * UserinfoResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T01:31:12.308427125Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T03:46:00.253581610Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class UserinfoResponse {
   public static final String SERIALIZED_NAME_SUB = "sub";
   @SerializedName(SERIALIZED_NAME_SUB)
@@ -239,6 +239,11 @@ public class UserinfoResponse {
   @SerializedName(SERIALIZED_NAME_CAPABILITIES)
   @javax.annotation.Nullable
   private List<String> capabilities;
+
+  public static final String SERIALIZED_NAME_BUDGET_POLICY = "budget_policy";
+  @SerializedName(SERIALIZED_NAME_BUDGET_POLICY)
+  @javax.annotation.Nullable
+  private Map<String, Object> budgetPolicy = new HashMap<>();
 
   public static final String SERIALIZED_NAME_CLIENT_ID = "client_id";
   @SerializedName(SERIALIZED_NAME_CLIENT_ID)
@@ -766,6 +771,33 @@ public class UserinfoResponse {
   }
 
 
+  public UserinfoResponse budgetPolicy(@javax.annotation.Nullable Map<String, Object> budgetPolicy) {
+    this.budgetPolicy = budgetPolicy;
+    return this;
+  }
+
+  public UserinfoResponse putBudgetPolicyItem(String key, Object budgetPolicyItem) {
+    if (this.budgetPolicy == null) {
+      this.budgetPolicy = new HashMap<>();
+    }
+    this.budgetPolicy.put(key, budgetPolicyItem);
+    return this;
+  }
+
+  /**
+   * Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429.
+   * @return budgetPolicy
+   */
+  @javax.annotation.Nullable
+  public Map<String, Object> getBudgetPolicy() {
+    return budgetPolicy;
+  }
+
+  public void setBudgetPolicy(@javax.annotation.Nullable Map<String, Object> budgetPolicy) {
+    this.budgetPolicy = budgetPolicy;
+  }
+
+
   public UserinfoResponse clientId(@javax.annotation.Nullable String clientId) {
     this.clientId = clientId;
     return this;
@@ -821,6 +853,7 @@ public class UserinfoResponse {
         Objects.equals(this.agentId, userinfoResponse.agentId) &&
         Objects.equals(this.workloadIdentity, userinfoResponse.workloadIdentity) &&
         Objects.equals(this.capabilities, userinfoResponse.capabilities) &&
+        Objects.equals(this.budgetPolicy, userinfoResponse.budgetPolicy) &&
         Objects.equals(this.clientId, userinfoResponse.clientId);
   }
 
@@ -830,7 +863,7 @@ public class UserinfoResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(sub, identityType, tenant, name, givenName, familyName, middleName, nickname, preferredUsername, profile, picture, website, gender, birthdate, zoneinfo, locale, updatedAt, email, emailVerified, phoneNumber, phoneNumberVerified, address, roles, agentId, workloadIdentity, capabilities, clientId);
+    return Objects.hash(sub, identityType, tenant, name, givenName, familyName, middleName, nickname, preferredUsername, profile, picture, website, gender, birthdate, zoneinfo, locale, updatedAt, email, emailVerified, phoneNumber, phoneNumberVerified, address, roles, agentId, workloadIdentity, capabilities, budgetPolicy, clientId);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -870,6 +903,7 @@ public class UserinfoResponse {
     sb.append("    agentId: ").append(toIndentedString(agentId)).append("\n");
     sb.append("    workloadIdentity: ").append(toIndentedString(workloadIdentity)).append("\n");
     sb.append("    capabilities: ").append(toIndentedString(capabilities)).append("\n");
+    sb.append("    budgetPolicy: ").append(toIndentedString(budgetPolicy)).append("\n");
     sb.append("    clientId: ").append(toIndentedString(clientId)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -892,7 +926,7 @@ public class UserinfoResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("sub", "identity_type", "tenant", "name", "given_name", "family_name", "middle_name", "nickname", "preferred_username", "profile", "picture", "website", "gender", "birthdate", "zoneinfo", "locale", "updated_at", "email", "email_verified", "phone_number", "phone_number_verified", "address", "roles", "agent_id", "workload_identity", "capabilities", "client_id"));
+    openapiFields = new HashSet<String>(Arrays.asList("sub", "identity_type", "tenant", "name", "given_name", "family_name", "middle_name", "nickname", "preferred_username", "profile", "picture", "website", "gender", "birthdate", "zoneinfo", "locale", "updated_at", "email", "email_verified", "phone_number", "phone_number_verified", "address", "roles", "agent_id", "workload_identity", "capabilities", "budget_policy", "client_id"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("sub"));

@@ -546,6 +546,58 @@ open class AdminAgentsAPI {
     }
 
     /**
+     Report model tokens and cost for an agent
+     
+     - parameter orgId: (path)  
+     - parameter agentId: (path)  
+     - parameter adminAgentsReportUsageRequest: (body)  
+     - returns: AdminAgentsReportUsageResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func adminAgentsReportUsage(orgId: String, agentId: String, adminAgentsReportUsageRequest: AdminAgentsReportUsageRequest) async throws -> AdminAgentsReportUsageResponse {
+        return try await adminAgentsReportUsageWithRequestBuilder(orgId: orgId, agentId: agentId, adminAgentsReportUsageRequest: adminAgentsReportUsageRequest).execute().body
+    }
+
+    /**
+     Report model tokens and cost for an agent
+     - POST /orgs/{orgId}/api/v1/admin/agents/{agentId}/usage
+     - For a trusted component of your organization, such as an AI gateway's spend callback or an orchestrator, that sees the agent's model calls. Adds the tokens and cost to the agent's budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter agentId: (path)  
+     - parameter adminAgentsReportUsageRequest: (body)  
+     - returns: RequestBuilder<AdminAgentsReportUsageResponse> 
+     */
+    open class func adminAgentsReportUsageWithRequestBuilder(orgId: String, agentId: String, adminAgentsReportUsageRequest: AdminAgentsReportUsageRequest) -> RequestBuilder<AdminAgentsReportUsageResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/agents/{agentId}/usage"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let agentIdPreEscape = "\(APIHelper.mapValueToPathItem(agentId))"
+        let agentIdPostEscape = agentIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{agentId}", with: agentIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminAgentsReportUsageRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AdminAgentsReportUsageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      Revoke agent API key (nullify it so it can no longer authenticate)
      
      - parameter orgId: (path)  

@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**adminAgentsGet**](AdminAgentsAPI.md#adminagentsget) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId} | Get a single agent by ID or agentId
 [**adminAgentsGetScopes**](AdminAgentsAPI.md#adminagentsgetscopes) | **GET** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Get agent scopes/capabilities
 [**adminAgentsList**](AdminAgentsAPI.md#adminagentslist) | **GET** /orgs/{orgId}/api/v1/admin/agents | List all agents in the tenant
+[**adminAgentsReportUsage**](AdminAgentsAPI.md#adminagentsreportusage) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/usage | Report model tokens and cost for an agent
 [**adminAgentsRevokeKey**](AdminAgentsAPI.md#adminagentsrevokekey) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/revoke-key | Revoke agent API key (nullify it so it can no longer authenticate)
 [**adminAgentsRotateCredentials**](AdminAgentsAPI.md#adminagentsrotatecredentials) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials | Rotate agent credentials
 [**adminAgentsSetScopes**](AdminAgentsAPI.md#adminagentssetscopes) | **PUT** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Update agent scopes/capabilities
@@ -568,6 +569,60 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminAgentsReportUsage**
+```swift
+    open class func adminAgentsReportUsage(orgId: String, agentId: String, adminAgentsReportUsageRequest: AdminAgentsReportUsageRequest, completion: @escaping (_ data: AdminAgentsReportUsageResponse?, _ error: Error?) -> Void)
+```
+
+Report model tokens and cost for an agent
+
+For a trusted component of your organization, such as an AI gateway's spend callback or an orchestrator, that sees the agent's model calls. Adds the tokens and cost to the agent's budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import LumoAuthAPIClient
+
+let orgId = "orgId_example" // String | 
+let agentId = "agentId_example" // String | 
+let adminAgentsReportUsageRequest = AdminAgentsReportUsageRequest(tokens: 123, costUsd: 123) // AdminAgentsReportUsageRequest | 
+
+// Report model tokens and cost for an agent
+AdminAgentsAPI.adminAgentsReportUsage(orgId: orgId, agentId: agentId, adminAgentsReportUsageRequest: adminAgentsReportUsageRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **String** |  | 
+ **agentId** | **String** |  | 
+ **adminAgentsReportUsageRequest** | [**AdminAgentsReportUsageRequest**](AdminAgentsReportUsageRequest.md) |  | 
+
+### Return type
+
+[**AdminAgentsReportUsageResponse**](AdminAgentsReportUsageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -74,6 +74,8 @@ type UserinfoResponse struct {
 	WorkloadIdentity NullableString `json:"workload_identity,omitempty"`
 	// Agents only.
 	Capabilities []string `json:"capabilities,omitempty"`
+	// Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429.
+	BudgetPolicy map[string]interface{} `json:"budget_policy,omitempty"`
 	// Clients only.
 	ClientId *string `json:"client_id,omitempty"`
 }
@@ -933,6 +935,38 @@ func (o *UserinfoResponse) SetCapabilities(v []string) {
 	o.Capabilities = v
 }
 
+// GetBudgetPolicy returns the BudgetPolicy field value if set, zero value otherwise.
+func (o *UserinfoResponse) GetBudgetPolicy() map[string]interface{} {
+	if o == nil || IsNil(o.BudgetPolicy) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.BudgetPolicy
+}
+
+// GetBudgetPolicyOk returns a tuple with the BudgetPolicy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UserinfoResponse) GetBudgetPolicyOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.BudgetPolicy) {
+		return map[string]interface{}{}, false
+	}
+	return o.BudgetPolicy, true
+}
+
+// HasBudgetPolicy returns a boolean if a field has been set.
+func (o *UserinfoResponse) HasBudgetPolicy() bool {
+	if o != nil && !IsNil(o.BudgetPolicy) {
+		return true
+	}
+
+	return false
+}
+
+// SetBudgetPolicy gets a reference to the given map[string]interface{} and assigns it to the BudgetPolicy field.
+func (o *UserinfoResponse) SetBudgetPolicy(v map[string]interface{}) {
+	o.BudgetPolicy = v
+}
+
 // GetClientId returns the ClientId field value if set, zero value otherwise.
 func (o *UserinfoResponse) GetClientId() string {
 	if o == nil || IsNil(o.ClientId) {
@@ -1050,6 +1084,9 @@ func (o UserinfoResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Capabilities != nil {
 		toSerialize["capabilities"] = o.Capabilities
+	}
+	if !IsNil(o.BudgetPolicy) {
+		toSerialize["budget_policy"] = o.BudgetPolicy
 	}
 	if !IsNil(o.ClientId) {
 		toSerialize["client_id"] = o.ClientId

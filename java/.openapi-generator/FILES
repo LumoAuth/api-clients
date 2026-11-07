@@ -33,6 +33,10 @@ docs/AdminAgentsGenerateTokenResponseData.md
 docs/AdminAgentsGetResponse.md
 docs/AdminAgentsGetScopesResponse.md
 docs/AdminAgentsListResponse.md
+docs/AdminAgentsReportUsageRequest.md
+docs/AdminAgentsReportUsageResponse.md
+docs/AdminAgentsReportUsageResponseData.md
+docs/AdminAgentsReportUsageResponseDataRecorded.md
 docs/AdminAgentsRevokeKeyResponse.md
 docs/AdminAgentsRotateCredentialsResponse.md
 docs/AdminAgentsSetScopesRequest.md
@@ -374,6 +378,7 @@ docs/RegisteredClientMetadata.md
 docs/RemoveUserGroupResponse.md
 docs/RemoveUserPermissionResponse.md
 docs/RemoveUserRoleResponse.md
+docs/ReportAgentUsageResponse.md
 docs/RequestPermissionRequest.md
 docs/RequestPermissionResponse.md
 docs/RevokeAgentTokenRequest.md
@@ -514,6 +519,10 @@ src/main/java/io/lumoauth/client/model/AdminAgentsGenerateTokenResponseData.java
 src/main/java/io/lumoauth/client/model/AdminAgentsGetResponse.java
 src/main/java/io/lumoauth/client/model/AdminAgentsGetScopesResponse.java
 src/main/java/io/lumoauth/client/model/AdminAgentsListResponse.java
+src/main/java/io/lumoauth/client/model/AdminAgentsReportUsageRequest.java
+src/main/java/io/lumoauth/client/model/AdminAgentsReportUsageResponse.java
+src/main/java/io/lumoauth/client/model/AdminAgentsReportUsageResponseData.java
+src/main/java/io/lumoauth/client/model/AdminAgentsReportUsageResponseDataRecorded.java
 src/main/java/io/lumoauth/client/model/AdminAgentsRevokeKeyResponse.java
 src/main/java/io/lumoauth/client/model/AdminAgentsRotateCredentialsResponse.java
 src/main/java/io/lumoauth/client/model/AdminAgentsSetScopesRequest.java
@@ -832,6 +841,7 @@ src/main/java/io/lumoauth/client/model/RegisteredClientMetadata.java
 src/main/java/io/lumoauth/client/model/RemoveUserGroupResponse.java
 src/main/java/io/lumoauth/client/model/RemoveUserPermissionResponse.java
 src/main/java/io/lumoauth/client/model/RemoveUserRoleResponse.java
+src/main/java/io/lumoauth/client/model/ReportAgentUsageResponse.java
 src/main/java/io/lumoauth/client/model/RequestPermissionRequest.java
 src/main/java/io/lumoauth/client/model/RequestPermissionResponse.java
 src/main/java/io/lumoauth/client/model/RevokeAgentTokenRequest.java
@@ -943,6 +953,10 @@ src/test/java/io/lumoauth/client/model/AdminAgentsGenerateTokenResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminAgentsGetResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminAgentsGetScopesResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminAgentsListResponseTest.java
+src/test/java/io/lumoauth/client/model/AdminAgentsReportUsageRequestTest.java
+src/test/java/io/lumoauth/client/model/AdminAgentsReportUsageResponseDataRecordedTest.java
+src/test/java/io/lumoauth/client/model/AdminAgentsReportUsageResponseDataTest.java
+src/test/java/io/lumoauth/client/model/AdminAgentsReportUsageResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminAgentsRevokeKeyResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminAgentsRotateCredentialsResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminAgentsSetScopesRequestTest.java
@@ -1261,6 +1275,7 @@ src/test/java/io/lumoauth/client/model/RegisteredClientMetadataTest.java
 src/test/java/io/lumoauth/client/model/RemoveUserGroupResponseTest.java
 src/test/java/io/lumoauth/client/model/RemoveUserPermissionResponseTest.java
 src/test/java/io/lumoauth/client/model/RemoveUserRoleResponseTest.java
+src/test/java/io/lumoauth/client/model/ReportAgentUsageResponseTest.java
 src/test/java/io/lumoauth/client/model/RequestPermissionRequestTest.java
 src/test/java/io/lumoauth/client/model/RequestPermissionResponseTest.java
 src/test/java/io/lumoauth/client/model/RevokeAgentTokenRequestTest.java

@@ -27,6 +27,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminAgentsReportUsageRequest;
 import io.lumoauth.client.model.AskRequest;
 import io.lumoauth.client.model.AskResponse;
 import io.lumoauth.client.model.AttestRequest;
@@ -39,6 +40,7 @@ import io.lumoauth.client.model.CreateApprovalResponse202;
 import io.lumoauth.client.model.GetApprovalStatusResponse;
 import io.lumoauth.client.model.GetCurrentAgentResponse;
 import io.lumoauth.client.model.RegisterAgentResponse;
+import io.lumoauth.client.model.ReportAgentUsageResponse;
 import io.lumoauth.client.model.SignedAgentCard;
 import io.lumoauth.client.model.VerifyAgentCardResponse;
 
@@ -1248,6 +1250,155 @@ public class AgentsApi {
 
         okhttp3.Call localVarCall = registerAgentValidateBeforeCall(orgId, _callback);
         Type localVarReturnType = new TypeToken<RegisterAgentResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for reportAgentUsage
+     * @param orgId  (required)
+     * @param adminAgentsReportUsageRequest  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Recorded. &#x60;budget&#x60; has the same shape as &#x60;budget_policy&#x60; in UserInfo; &#x60;exhausted: true&#x60; means that the next metered call gets 429. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request: tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> test_token_not_accepted or cross_tenant. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited: too many reports from this agent. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call reportAgentUsageCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminAgentsReportUsageRequest adminAgentsReportUsageRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = adminAgentsReportUsageRequest;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/agents/me/usage"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call reportAgentUsageValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminAgentsReportUsageRequest adminAgentsReportUsageRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling reportAgentUsage(Async)");
+        }
+
+        // verify the required parameter 'adminAgentsReportUsageRequest' is set
+        if (adminAgentsReportUsageRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminAgentsReportUsageRequest' when calling reportAgentUsage(Async)");
+        }
+
+        return reportAgentUsageCall(orgId, adminAgentsReportUsageRequest, _callback);
+
+    }
+
+    /**
+     * Report the model tokens and cost that the agent used
+     * Adds the reported tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+     * @param orgId  (required)
+     * @param adminAgentsReportUsageRequest  (required)
+     * @return ReportAgentUsageResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Recorded. &#x60;budget&#x60; has the same shape as &#x60;budget_policy&#x60; in UserInfo; &#x60;exhausted: true&#x60; means that the next metered call gets 429. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request: tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> test_token_not_accepted or cross_tenant. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited: too many reports from this agent. </td><td>  -  </td></tr>
+     </table>
+     */
+    public ReportAgentUsageResponse reportAgentUsage(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminAgentsReportUsageRequest adminAgentsReportUsageRequest) throws ApiException {
+        ApiResponse<ReportAgentUsageResponse> localVarResp = reportAgentUsageWithHttpInfo(orgId, adminAgentsReportUsageRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Report the model tokens and cost that the agent used
+     * Adds the reported tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+     * @param orgId  (required)
+     * @param adminAgentsReportUsageRequest  (required)
+     * @return ApiResponse&lt;ReportAgentUsageResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Recorded. &#x60;budget&#x60; has the same shape as &#x60;budget_policy&#x60; in UserInfo; &#x60;exhausted: true&#x60; means that the next metered call gets 429. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request: tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> test_token_not_accepted or cross_tenant. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited: too many reports from this agent. </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<ReportAgentUsageResponse> reportAgentUsageWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminAgentsReportUsageRequest adminAgentsReportUsageRequest) throws ApiException {
+        okhttp3.Call localVarCall = reportAgentUsageValidateBeforeCall(orgId, adminAgentsReportUsageRequest, null);
+        Type localVarReturnType = new TypeToken<ReportAgentUsageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Report the model tokens and cost that the agent used (asynchronously)
+     * Adds the reported tokens and cost to the agent&#39;s budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
+     * @param orgId  (required)
+     * @param adminAgentsReportUsageRequest  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Recorded. &#x60;budget&#x60; has the same shape as &#x60;budget_policy&#x60; in UserInfo; &#x60;exhausted: true&#x60; means that the next metered call gets 429. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request: tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> test_token_not_accepted or cross_tenant. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited: too many reports from this agent. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call reportAgentUsageAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminAgentsReportUsageRequest adminAgentsReportUsageRequest, final ApiCallback<ReportAgentUsageResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = reportAgentUsageValidateBeforeCall(orgId, adminAgentsReportUsageRequest, _callback);
+        Type localVarReturnType = new TypeToken<ReportAgentUsageResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
