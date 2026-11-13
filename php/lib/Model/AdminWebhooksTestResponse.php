@@ -60,6 +60,7 @@ class AdminWebhooksTestResponse implements ModelInterface, ArrayAccess, \JsonSer
     protected static $openAPITypes = [
         'success' => 'bool',
         'statusCode' => 'int',
+        'deliveryId' => 'string',
         'message' => 'string'
     ];
 
@@ -73,6 +74,7 @@ class AdminWebhooksTestResponse implements ModelInterface, ArrayAccess, \JsonSer
     protected static $openAPIFormats = [
         'success' => null,
         'statusCode' => null,
+        'deliveryId' => null,
         'message' => null
     ];
 
@@ -84,6 +86,7 @@ class AdminWebhooksTestResponse implements ModelInterface, ArrayAccess, \JsonSer
     protected static array $openAPINullables = [
         'success' => false,
         'statusCode' => false,
+        'deliveryId' => false,
         'message' => false
     ];
 
@@ -175,6 +178,7 @@ class AdminWebhooksTestResponse implements ModelInterface, ArrayAccess, \JsonSer
     protected static $attributeMap = [
         'success' => 'success',
         'statusCode' => 'statusCode',
+        'deliveryId' => 'deliveryId',
         'message' => 'message'
     ];
 
@@ -186,6 +190,7 @@ class AdminWebhooksTestResponse implements ModelInterface, ArrayAccess, \JsonSer
     protected static $setters = [
         'success' => 'setSuccess',
         'statusCode' => 'setStatusCode',
+        'deliveryId' => 'setDeliveryId',
         'message' => 'setMessage'
     ];
 
@@ -197,6 +202,7 @@ class AdminWebhooksTestResponse implements ModelInterface, ArrayAccess, \JsonSer
     protected static $getters = [
         'success' => 'getSuccess',
         'statusCode' => 'getStatusCode',
+        'deliveryId' => 'getDeliveryId',
         'message' => 'getMessage'
     ];
 
@@ -259,6 +265,7 @@ class AdminWebhooksTestResponse implements ModelInterface, ArrayAccess, \JsonSer
     {
         $this->setIfExists('success', $data ?? [], null);
         $this->setIfExists('statusCode', $data ?? [], null);
+        $this->setIfExists('deliveryId', $data ?? [], null);
         $this->setIfExists('message', $data ?? [], null);
     }
 
@@ -354,6 +361,33 @@ class AdminWebhooksTestResponse implements ModelInterface, ArrayAccess, \JsonSer
             throw new \InvalidArgumentException('non-nullable statusCode cannot be null');
         }
         $this->container['statusCode'] = $statusCode;
+
+        return $this;
+    }
+
+    /**
+     * Gets deliveryId
+     *
+     * @return string|null
+     */
+    public function getDeliveryId()
+    {
+        return $this->container['deliveryId'];
+    }
+
+    /**
+     * Sets deliveryId
+     *
+     * @param string|null $deliveryId Id of the delivery row (the `X-LumoAuth-Delivery` header of the request)
+     *
+     * @return self
+     */
+    public function setDeliveryId($deliveryId)
+    {
+        if (is_null($deliveryId)) {
+            throw new \InvalidArgumentException('non-nullable deliveryId cannot be null');
+        }
+        $this->container['deliveryId'] = $deliveryId;
 
         return $this;
     }

@@ -19,7 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.lumoauth.client.model.SandboxTenant;
+import io.lumoauth.client.model.AdminSandboxSpawnResponseData;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -49,17 +49,17 @@ import io.lumoauth.client.JSON;
 /**
  * AdminSandboxSpawnResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T14:48:44.873539119Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminSandboxSpawnResponse {
   public static final String SERIALIZED_NAME_DATA = "data";
   @SerializedName(SERIALIZED_NAME_DATA)
   @javax.annotation.Nullable
-  private SandboxTenant data;
+  private AdminSandboxSpawnResponseData data;
 
   public AdminSandboxSpawnResponse() {
   }
 
-  public AdminSandboxSpawnResponse data(@javax.annotation.Nullable SandboxTenant data) {
+  public AdminSandboxSpawnResponse data(@javax.annotation.Nullable AdminSandboxSpawnResponseData data) {
     this.data = data;
     return this;
   }
@@ -69,11 +69,11 @@ public class AdminSandboxSpawnResponse {
    * @return data
    */
   @javax.annotation.Nullable
-  public SandboxTenant getData() {
+  public AdminSandboxSpawnResponseData getData() {
     return data;
   }
 
-  public void setData(@javax.annotation.Nullable SandboxTenant data) {
+  public void setData(@javax.annotation.Nullable AdminSandboxSpawnResponseData data) {
     this.data = data;
   }
 
@@ -151,7 +151,7 @@ public class AdminSandboxSpawnResponse {
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       // validate the optional field `data`
       if (jsonObj.get("data") != null && !jsonObj.get("data").isJsonNull()) {
-        SandboxTenant.validateJsonElement(jsonObj.get("data"));
+        AdminSandboxSpawnResponseData.validateJsonElement(jsonObj.get("data"));
       }
   }
 

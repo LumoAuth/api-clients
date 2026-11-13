@@ -37,7 +37,9 @@ type CreateClientResponseData struct {
 	Scopes []string `json:"scopes,omitempty"`
 	// Detailed responses only
 	GrantTypes []string `json:"grantTypes,omitempty"`
-	// Plaintext client secret — returned only once, never retrievable again
+	// Detailed responses only. Whether the client may use CIBA (backchannel authentication).
+	CibaEnabled *bool `json:"cibaEnabled,omitempty"`
+	// Plaintext client secret — returned only once, never retrievable again. Absent for a public client
 	Secret *string `json:"secret,omitempty"`
 	Note *string `json:"_note,omitempty"`
 }
@@ -357,6 +359,38 @@ func (o *CreateClientResponseData) SetGrantTypes(v []string) {
 	o.GrantTypes = v
 }
 
+// GetCibaEnabled returns the CibaEnabled field value if set, zero value otherwise.
+func (o *CreateClientResponseData) GetCibaEnabled() bool {
+	if o == nil || IsNil(o.CibaEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.CibaEnabled
+}
+
+// GetCibaEnabledOk returns a tuple with the CibaEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateClientResponseData) GetCibaEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.CibaEnabled) {
+		return nil, false
+	}
+	return o.CibaEnabled, true
+}
+
+// HasCibaEnabled returns a boolean if a field has been set.
+func (o *CreateClientResponseData) HasCibaEnabled() bool {
+	if o != nil && !IsNil(o.CibaEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetCibaEnabled gets a reference to the given bool and assigns it to the CibaEnabled field.
+func (o *CreateClientResponseData) SetCibaEnabled(v bool) {
+	o.CibaEnabled = &v
+}
+
 // GetSecret returns the Secret field value if set, zero value otherwise.
 func (o *CreateClientResponseData) GetSecret() string {
 	if o == nil || IsNil(o.Secret) {
@@ -447,6 +481,9 @@ func (o CreateClientResponseData) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.GrantTypes) {
 		toSerialize["grantTypes"] = o.GrantTypes
+	}
+	if !IsNil(o.CibaEnabled) {
+		toSerialize["cibaEnabled"] = o.CibaEnabled
 	}
 	if !IsNil(o.Secret) {
 		toSerialize["secret"] = o.Secret

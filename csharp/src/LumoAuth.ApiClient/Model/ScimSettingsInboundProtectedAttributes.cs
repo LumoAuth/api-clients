@@ -28,7 +28,7 @@ using OpenAPIDateConverter = LumoAuth.ApiClient.Client.OpenAPIDateConverter;
 namespace LumoAuth.ApiClient.Model
 {
     /// <summary>
-    /// Attribute name &#x3D;&gt; true when SCIM may not change it.
+    /// Attribute name &#x3D;&gt; true when SCIM may not change it. role_membership stops every /Groups request that would add or remove a member of a role.
     /// </summary>
     [DataContract(Name = "ScimSettings_inbound_protected_attributes")]
     public partial class ScimSettingsInboundProtectedAttributes : IValidatableObject
@@ -39,16 +39,13 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="email">email.</param>
         /// <param name="name">name.</param>
         /// <param name="active">active.</param>
-        /// <param name="roles">roles.</param>
-        /// <param name="permissions">permissions.</param>
-        public ScimSettingsInboundProtectedAttributes(bool email = default, bool name = default, bool active = default, bool roles = default, bool permissions = default)
+        /// <param name="roleMembership">roleMembership.</param>
+        public ScimSettingsInboundProtectedAttributes(bool email = default, bool name = default, bool active = default, bool roleMembership = default)
         {
             this.Email = email;
             this.Name = name;
             this.Active = active;
-            this.Roles = roles;
-            this.Permissions = permissions;
-            this.AdditionalProperties = new Dictionary<string, object>();
+            this.RoleMembership = roleMembership;
         }
 
         /// <summary>
@@ -70,22 +67,10 @@ namespace LumoAuth.ApiClient.Model
         public bool Active { get; set; }
 
         /// <summary>
-        /// Gets or Sets Roles
+        /// Gets or Sets RoleMembership
         /// </summary>
-        [DataMember(Name = "roles", EmitDefaultValue = true)]
-        public bool Roles { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Permissions
-        /// </summary>
-        [DataMember(Name = "permissions", EmitDefaultValue = true)]
-        public bool Permissions { get; set; }
-
-        /// <summary>
-        /// Gets or Sets additional properties
-        /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; }
+        [DataMember(Name = "role_membership", EmitDefaultValue = true)]
+        public bool RoleMembership { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -98,9 +83,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Email: ").Append(Email).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Active: ").Append(Active).Append("\n");
-            sb.Append("  Roles: ").Append(Roles).Append("\n");
-            sb.Append("  Permissions: ").Append(Permissions).Append("\n");
-            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
+            sb.Append("  RoleMembership: ").Append(RoleMembership).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

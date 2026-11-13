@@ -36,7 +36,7 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="OAuthClientSecretIssued" /> class.
         /// </summary>
-        /// <param name="secret">Plaintext client secret — returned only once, never retrievable again.</param>
+        /// <param name="secret">Plaintext client secret — returned only once, never retrievable again. Absent for a public client.</param>
         /// <param name="note">note.</param>
         public OAuthClientSecretIssued(string secret = default, string note = default)
         {
@@ -45,9 +45,9 @@ namespace LumoAuth.ApiClient.Model
         }
 
         /// <summary>
-        /// Plaintext client secret — returned only once, never retrievable again
+        /// Plaintext client secret — returned only once, never retrievable again. Absent for a public client
         /// </summary>
-        /// <value>Plaintext client secret — returned only once, never retrievable again</value>
+        /// <value>Plaintext client secret — returned only once, never retrievable again. Absent for a public client</value>
         [DataMember(Name = "secret", EmitDefaultValue = false)]
         public string Secret { get; set; }
 

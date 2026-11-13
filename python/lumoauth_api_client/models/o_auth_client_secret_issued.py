@@ -27,7 +27,7 @@ class OAuthClientSecretIssued(BaseModel):
     """
     OAuthClientSecretIssued
     """ # noqa: E501
-    secret: Optional[StrictStr] = Field(default=None, description="Plaintext client secret — returned only once, never retrievable again")
+    secret: Optional[StrictStr] = Field(default=None, description="Plaintext client secret — returned only once, never retrievable again. Absent for a public client")
     note: Optional[StrictStr] = Field(default=None, alias="_note")
     __properties: ClassVar[List[str]] = ["secret", "_note"]
 

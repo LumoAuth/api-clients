@@ -586,7 +586,7 @@
                         "description": "Denied by a conditional access policy."
                     },
                     "429": {
-                        "description": "Rate limit exceeded (per IP or per agent)."
+                        "description": "Rate limit exceeded (per IP or per agent), or the agent budget is spent (access_denied)."
                     }
                 },
                 "security": [
@@ -1390,7 +1390,7 @@
                         }
                     },
                     "400": {
-                        "description": "Invalid effect or policy conditions"
+                        "description": "Invalid effect, priority (a whole number from 0 to 1000) or policy conditions"
                     },
                     "409": {
                         "description": "A policy with this slug already exists"
@@ -1691,7 +1691,7 @@
                         }
                     },
                     "400": {
-                        "description": "Missing required field: name."
+                        "description": "Missing required field: name, or an invalid budgetPolicy (unknown key, or a value that is not a number greater than zero)."
                     },
                     "401": {
                         "description": "Authentication required."
@@ -1797,6 +1797,9 @@
                             }
                         }
                     },
+                    "400": {
+                        "description": "Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero."
+                    },
                     "401": {
                         "description": "Authentication required."
                     },
@@ -1899,6 +1902,9 @@
                             }
                         }
                     },
+                    "400": {
+                        "description": "Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero."
+                    },
                     "401": {
                         "description": "Authentication required."
                     },
@@ -1936,6 +1942,17 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "description": "Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminAgentsAgentsRotateKeyRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "API key rotated. The new key is returned ONCE and cannot be retrieved again.",
@@ -1946,6 +1963,9 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "The agent does not authenticate with an API key (identity type other than api_key), or the lifetime is invalid."
                     },
                     "401": {
                         "description": "Authentication required."
@@ -2235,6 +2255,17 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "description": "For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminAgentsAgentsRotateKeyRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Credentials rotated. The new secret is returned ONCE and cannot be retrieved again.",
@@ -2466,7 +2497,7 @@
                         }
                     },
                     "400": {
-                        "description": "Inactive agent, requested scopes outside the agent's capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource."
+                        "description": "Inactive agent, an agent that only takes DPoP-bound tokens (a minted token cannot be bound to its key), requested scopes outside the agent's capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource."
                     },
                     "401": {
                         "description": "Authentication required."
@@ -2476,6 +2507,9 @@
                     },
                     "404": {
                         "description": "Tenant or agent not found."
+                    },
+                    "429": {
+                        "description": "budget_exceeded: the agent budget is spent. A token mint counts as one call. Retry-After holds the seconds until the spent window starts again."
                     }
                 }
             }
@@ -2975,7 +3009,7 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Created — the plaintext secret is included once and never shown again",
+                        "description": "Created. For a confidential client the plaintext secret is included once and never shown again; a public client (isConfidential false) has no secret and the field is absent",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3032,7 +3066,7 @@
                 "tags": [
                     "Admin: OAuth Clients"
                 ],
-                "summary": "Replace an OAuth client",
+                "summary": "Update an OAuth client (same as PATCH: only the fields that are sent change)",
                 "operationId": "updateClient",
                 "parameters": [
                     {
@@ -4131,7 +4165,7 @@
                     "Admin: Users"
                 ],
                 "summary": "List a user's federated identity links",
-                "description": "SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.",
+                "description": "SAML (IdP + NameID), enterprise OpenID Connect (connection + subject), LDAP (directory + DN) and social provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP. An OpenID Connect link with `hashed: true` stores a long subject as a hash, so `subject` is null.",
                 "operationId": "adminIdentitiesList",
                 "parameters": [
                     {
@@ -4171,8 +4205,8 @@
                 "tags": [
                     "Admin: Users"
                 ],
-                "summary": "Link a SAML or LDAP identity to a user",
-                "description": "Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).",
+                "summary": "Link a SAML, OpenID Connect or LDAP identity to a user",
+                "description": "Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`), enterprise OpenID Connect binding (`idp_id` + `subject`: the value of the connection's user identifier claim; a person can sign in through such a connection only after this link exists) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).",
                 "operationId": "adminIdentitiesLink",
                 "parameters": [
                     {
@@ -4217,7 +4251,7 @@
                         "description": "Actor does not outrank the user, or step_up_required"
                     },
                     "404": {
-                        "description": "User, IdP or directory not found"
+                        "description": "User, identity provider or directory not found"
                     },
                     "409": {
                         "description": "identity_conflict"
@@ -4233,8 +4267,8 @@
                 "tags": [
                     "Admin: Users"
                 ],
-                "summary": "Unlink a user's SAML, LDAP or social identity",
-                "description": "Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.",
+                "summary": "Unlink a user's SAML, OpenID Connect, LDAP or social identity",
+                "description": "Removes the binding of the given type (`saml`, `oidc`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.",
                 "operationId": "adminIdentitiesUnlink",
                 "parameters": [
                     {
@@ -4245,6 +4279,7 @@
                             "type": "string",
                             "enum": [
                                 "saml",
+                                "oidc",
                                 "ldap",
                                 "social"
                             ]
@@ -4417,7 +4452,7 @@
                     "Admin: Mcp"
                 ],
                 "summary": "Register an MCP server",
-                "description": "Body:\nname (required) — display name\nresource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for\n    loopback), no fragment, no user info, not a LumoAuth host, unique\n    per organization after normalisation (same rules as the portal)\nendpoint_url (optional) — actual MCP endpoint\ndescription (optional)\nscopes_supported (optional) — array OR space/comma-separated string; omnibus\n    scopes, offline_access and admin/scim scopes are refused (422)\nbasic_scopes (optional) — subset of scopes_supported advertised in the\n    401 challenge and Protected Resource Metadata; no wildcards\ntransport (optional) — defaults to \"http_streamable\" (\"http_sse\" is\n    deprecated in MCP 2026-07-28)\nauth_mode (optional) — defaults to \"oauth\"\ntoken_lifetime (optional, default 3600) — 60..86400, else 422\ntool_authorizer_client_ids (optional) — the MCP server's own OAuth clients\n    that may call the per-tool authorization endpoint\nallowed_client_ids (optional) — array of this organization's OAuth client ids;\n    unknown ids are a 422 (never persisted as policy)\nrequire_pkce (optional, default true)\nrequire_resource_param (optional, default true)\nrequire_dpop (optional, default false) — RFC 9449 sender-constrained tokens only",
+                "description": "Body:\n  name (required) — display name\n  resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for\n      loopback), no fragment, no user info, not a LumoAuth host, unique\n      per organization after normalisation (same rules as the portal)\n  endpoint_url (optional) — actual MCP endpoint\n  description (optional)\n  scopes_supported (optional) — array OR space/comma-separated string; omnibus\n      scopes, offline_access and admin/scim scopes are refused (422)\n  basic_scopes (optional) — subset of scopes_supported advertised in the\n      401 challenge and Protected Resource Metadata; no wildcards\n  transport (optional) — defaults to \"http_streamable\" (\"http_sse\" is\n      deprecated in MCP 2026-07-28)\n  auth_mode (optional) — defaults to \"oauth\"\n  token_lifetime (optional, default 3600) — 60..86400, else 422\n  tool_authorizer_client_ids (optional) — the MCP server's own OAuth clients\n      that may call the per-tool authorization endpoint\n  allowed_client_ids (optional) — array of this organization's OAuth client ids;\n      unknown ids are a 422 (never persisted as policy)\n  require_pkce (optional, default true)\n  require_resource_param (optional, default true)\n  require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only\n  scope_descriptions (optional) — object scope => text for scopes in\n      scopes_supported (portal and consent page only), 200 characters each\n\nA server that is not OAuth-protected (auth_mode \"none\" or transport\n\"stdio\") is stored with the three require_* switches off. Fields that\ncannot be configured (include_scope_in_challenge, bearer_methods_supported)\nare refused with 400 so that a caller is never told a value was stored.",
                 "operationId": "adminMcpServersCreate",
                 "parameters": [
                     {
@@ -4439,6 +4474,9 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Invalid resource_uri, or a field that cannot be set (include_scope_in_challenge, bearer_methods_supported)"
                     },
                     "409": {
                         "description": "An MCP server with this resource_uri already exists"
@@ -6494,6 +6532,7 @@
                     "Admin: Sandbox"
                 ],
                 "summary": "Spawn a sandbox tenant",
+                "description": "Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.",
                 "operationId": "adminSandboxSpawn",
                 "parameters": [
                     {
@@ -6517,7 +6556,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Sandbox created",
+                        "description": "Sandbox created. `data.api_key` is shown only once.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -6525,6 +6564,9 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "The organization lacks the Developer sandboxes add-on (`feature_not_in_plan`), or it is itself a sandbox"
                     },
                     "429": {
                         "description": "Per-owner active-sandbox cap reached"
@@ -9673,7 +9715,7 @@
                     "Admin: Webhooks"
                 ],
                 "summary": "Create a webhook",
-                "description": "The signing secret is generated server-side and returned once in this response only.",
+                "description": "Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.",
                 "operationId": "adminWebhooksCreate",
                 "parameters": [
                     {
@@ -9776,6 +9818,7 @@
                     "Admin: Webhooks"
                 ],
                 "summary": "Update a webhook",
+                "description": "Changes only the fields that are sent: `url`, `events`, `isActive` (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`. A new `url` for a webhook that has a signing secret needs `rotateSecret: true`; the response then carries the new `secret` once. Unknown fields, `secret` and event names that are not in the catalogue are refused with 400.",
                 "operationId": "putAdminWebhooksUpdate",
                 "parameters": [
                     {
@@ -9982,7 +10025,7 @@
                     "Admin: Webhooks"
                 ],
                 "summary": "Send a test delivery",
-                "description": "POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver's status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.",
+                "description": "Sends one `webhook.test` event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with `success: false`; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.",
                 "operationId": "adminWebhooksTest",
                 "parameters": [
                     {
@@ -10028,7 +10071,7 @@
                     "Admin: Webhooks"
                 ],
                 "summary": "Rotate the signing secret",
-                "description": "Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.",
+                "description": "Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries `X-LumoAuth-Signature-Previous`, signed with the secret that was replaced, so the receiver can be updated without losing events. The `kid` of `X-LumoAuth-Signature` changes with every rotation.",
                 "operationId": "adminWebhooksRotateSecret",
                 "parameters": [
                     {
@@ -10165,7 +10208,7 @@
                     "Admin: Webhooks"
                 ],
                 "summary": "Replay a delivery",
-                "description": "Resets the delivery's failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.",
+                "description": "Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.",
                 "operationId": "adminWebhooksDeliveryReplay",
                 "parameters": [
                     {
@@ -10195,7 +10238,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Delivery re-enqueued",
+                        "description": "Replay queued",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -10206,6 +10249,9 @@
                     },
                     "404": {
                         "description": "Webhook or delivery not found"
+                    },
+                    "409": {
+                        "description": "The webhook is disabled"
                     }
                 }
             }
@@ -10417,6 +10463,9 @@
                     },
                     "404": {
                         "description": "unknown_server — server_id is not an active MCP server of this organization."
+                    },
+                    "429": {
+                        "description": "budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again."
                     }
                 }
             }
@@ -10464,7 +10513,7 @@
                         "description": "invalid_request: tokens or cost_usd is missing, negative, too large or not a number."
                     },
                     "403": {
-                        "description": "test_token_not_accepted or cross_tenant."
+                        "description": "test_token_not_accepted, cross_tenant or insufficient_scope (the token was narrowed with a scope)."
                     },
                     "429": {
                         "description": "rate_limited: too many reports from this agent."
@@ -10514,8 +10563,11 @@
                     "400": {
                         "description": "Missing required field: action."
                     },
+                    "403": {
+                        "description": "plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only)."
+                    },
                     "429": {
-                        "description": "Agent budget exceeded."
+                        "description": "budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again."
                     }
                 }
             }
@@ -10571,7 +10623,7 @@
                         "description": "Invalid JSON, task_id, reason, impact, or missing on_behalf_of."
                     },
                     "403": {
-                        "description": "Caller is not an agent, is cross-tenant, or lacks delegation permission."
+                        "description": "Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission."
                     },
                     "404": {
                         "description": "Tenant or target user not found."
@@ -10733,6 +10785,9 @@
                     },
                     "404": {
                         "description": "not_found — unknown organization, or the agent is unknown, inactive or has no published A2A card."
+                    },
+                    "429": {
+                        "description": "rate_limited — too many card requests from this address (Retry-After)."
                     }
                 },
                 "security": []
@@ -10880,7 +10935,7 @@
                         "description": "invalid_user_id."
                     },
                     "403": {
-                        "description": "agent_token_required, cross_tenant, delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled."
+                        "description": "agent_token_required, cross_tenant, insufficient_scope (the token was narrowed with a scope), delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled."
                     },
                     "404": {
                         "description": "tenant_not_found, connection_not_found or grant_not_found."
@@ -10889,7 +10944,7 @@
                         "description": "grant_revoked, grant_expired or refresh_failed."
                     },
                     "429": {
-                        "description": "rate_limited."
+                        "description": "rate_limited, or budget_exceeded when the agent budget is spent."
                     },
                     "503": {
                         "description": "refresh_in_progress (Retry-After: 2) or provider_unavailable."
@@ -11099,7 +11154,7 @@
                 "operationId": "listPermissions",
                 "responses": {
                     "200": {
-                        "description": "Permissions from the user's roles (including group-inherited roles). `permissions` and `data` are identical.",
+                        "description": "Permissions from the user's roles (including group-inherited roles) and permissions granted to the user directly. `permissions` and `data` are identical.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -11219,7 +11274,7 @@
                         "description": "Invalid or missing agent token."
                     },
                     "403": {
-                        "description": "Task belongs to a different agent."
+                        "description": "Task belongs to a different agent, or task_suspended: continuous access evaluation suspended the task on this request."
                     },
                     "404": {
                         "description": "Tenant or task not found."
@@ -11339,7 +11394,7 @@
                         "description": "Tenant or request not found."
                     },
                     "429": {
-                        "description": "Rate limit or agent budget exceeded."
+                        "description": "rate_limit_exceeded, or budget_exceeded when the agent budget is spent (Retry-After holds the seconds until the spent window starts again)."
                     }
                 },
                 "security": [
@@ -11622,7 +11677,7 @@
                         "description": "Authentication required."
                     },
                     "403": {
-                        "description": "Cross-tenant evaluation is not permitted."
+                        "description": "The caller is not a user of this organization with the `jit.approve` permission."
                     },
                     "404": {
                         "description": "Tenant or task not found."
@@ -12925,7 +12980,7 @@
                         "description": "{\"status\":\"invalid_credentials\"}."
                     },
                     "403": {
-                        "description": "{\"status\":\"blocked\"} or {\"status\":\"inactive\"}."
+                        "description": "{\"status\":\"blocked\"} or {\"status\":\"inactive\"}; {\"status\":\"sso_required\",\"redirect_url\":…} for an administrator of an organization that requires single sign-on for administrators."
                     },
                     "404": {
                         "description": "{\"status\":\"not_found\"} — unknown or inactive organization."
@@ -13275,6 +13330,61 @@
                 ]
             }
         },
+        "/orgs/{orgId}/api/v1/oauth/magic-link": {
+            "post": {
+                "tags": [
+                    "OAuth"
+                ],
+                "summary": "Request a sign-in link by email",
+                "description": "For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to `return_to`, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by `client_id`.",
+                "operationId": "requestMagicLink",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RequestMagicLinkRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The request was accepted. The answer is the same whether or not the address belongs to an account.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RequestMagicLinkResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "`{\"error\": …, \"message\": …}` with error `invalid_request`, `invalid_client`, `invalid_return_to`, `captcha_required` or `captcha_failed`."
+                    },
+                    "403": {
+                        "description": "`{\"error\":\"origin_not_allowed\"}`: the page that made the request is not one of the application's allowed origins."
+                    },
+                    "404": {
+                        "description": "`{\"error\":\"not_found\"}` for an unknown organization, `{\"error\":\"magic_link_disabled\"}` when the organization does not offer sign-in links."
+                    },
+                    "429": {
+                        "description": "`{\"error\":\"rate_limited\"}`."
+                    }
+                },
+                "security": []
+            }
+        },
         "/orgs/{orgId}/api/v1/oauth/par": {
             "post": {
                 "tags": [
@@ -13305,7 +13415,7 @@
                         }
                     },
                     "400": {
-                        "description": "invalid_request / invalid_target / invalid_request_object, or the tenant is unknown."
+                        "description": "invalid_request / invalid_target / invalid_request_object, or the organization is unknown."
                     },
                     "401": {
                         "description": "invalid_client — client authentication failed."
@@ -13412,6 +13522,9 @@
                     },
                     "401": {
                         "description": "invalid_client — client authentication failed."
+                    },
+                    "403": {
+                        "description": "plan_limit_reached — the month's included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which."
                     },
                     "429": {
                         "description": "too_many_requests — rate limit exceeded."
@@ -14442,9 +14555,6 @@
                     "passkey_enabled": {
                         "type": "boolean"
                     },
-                    "biometric_enabled": {
-                        "type": "boolean"
-                    },
                     "passkeys": {
                         "properties": {
                             "require_certified_authenticator": {
@@ -14577,6 +14687,7 @@
                         "nullable": true
                     },
                     "social_login_enabled": {
+                        "description": "Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag.",
                         "type": "boolean"
                     },
                     "social_providers": {
@@ -14602,6 +14713,7 @@
                         "type": "boolean"
                     },
                     "password_policy": {
+                        "description": "The password rules that apply. A write is merged with the stored object. A named template sets its own rules; rules sent without a template make the policy custom.",
                         "properties": {
                             "template": {
                                 "type": "string",
@@ -14613,7 +14725,9 @@
                                 ]
                             },
                             "min_length": {
-                                "type": "integer"
+                                "type": "integer",
+                                "maximum": 128,
+                                "minimum": 8
                             },
                             "require_special": {
                                 "type": "boolean"
@@ -14623,36 +14737,51 @@
                             },
                             "require_uppercase": {
                                 "type": "boolean"
+                            },
+                            "require_lowercase": {
+                                "type": "boolean"
+                            },
+                            "reject_breached_passwords": {
+                                "type": "boolean"
+                            },
+                            "breached_password_min_count": {
+                                "type": "integer",
+                                "minimum": 1
+                            },
+                            "check_breached_on_login": {
+                                "type": "boolean"
                             }
                         },
                         "type": "object"
                     },
                     "password_rotation_policy": {
+                        "description": "A write is merged with the stored object.",
                         "properties": {
                             "enabled": {
                                 "type": "boolean"
                             },
                             "max_age_days": {
-                                "type": "integer"
-                            },
-                            "notify_before_days": {
-                                "type": "integer"
-                            },
-                            "history_count": {
-                                "type": "integer"
+                                "type": "integer",
+                                "maximum": 730,
+                                "minimum": 1
                             }
                         },
                         "type": "object"
                     },
                     "no_mfa_action": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "allow",
+                            "prompt",
+                            "email",
+                            "block"
+                        ]
                     },
                     "session_timeout": {
-                        "description": "Seconds.",
-                        "type": "integer"
-                    },
-                    "encrypt_client_secrets": {
-                        "type": "boolean"
+                        "description": "Idle timeout in seconds.",
+                        "type": "integer",
+                        "maximum": 1209600,
+                        "minimum": 300
                     },
                     "dynamic_client_registration_enabled": {
                         "type": "boolean"
@@ -14916,7 +15045,7 @@
                                 "type": "boolean"
                             },
                             "protected_attributes": {
-                                "description": "Attribute name => true when SCIM may not change it.",
+                                "description": "Attribute name => true when SCIM may not change it. role_membership stops every /Groups request that would add or remove a member of a role.",
                                 "properties": {
                                     "email": {
                                         "type": "boolean"
@@ -14927,24 +15056,11 @@
                                     "active": {
                                         "type": "boolean"
                                     },
-                                    "roles": {
-                                        "type": "boolean"
-                                    },
-                                    "permissions": {
+                                    "role_membership": {
                                         "type": "boolean"
                                     }
                                 },
-                                "type": "object",
-                                "additionalProperties": {
-                                    "type": "boolean"
-                                }
-                            },
-                            "attribute_mapping": {
-                                "description": "SCIM attribute => user field.",
-                                "type": "object",
-                                "additionalProperties": {
-                                    "type": "string"
-                                }
+                                "type": "object"
                             },
                             "auto_activate_users": {
                                 "type": "boolean"
@@ -15040,11 +15156,12 @@
                                 "nullable": true
                             },
                             "tls_certificate": {
-                                "description": "Optional PEM CA certificate used for TLS verification.",
+                                "description": "Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets.",
                                 "type": "string",
                                 "nullable": true
                             },
                             "verify_tls": {
+                                "description": "Always true. The endpoint certificate is always verified; false is rejected with 400.",
                                 "type": "boolean"
                             },
                             "push_user_creates": {
@@ -15072,13 +15189,6 @@
                                     "daily",
                                     "weekly"
                                 ]
-                            },
-                            "attribute_mapping": {
-                                "description": "User field => SCIM attribute.",
-                                "type": "object",
-                                "additionalProperties": {
-                                    "type": "string"
-                                }
                             },
                             "last_sync_at": {
                                 "type": "string",
@@ -15592,6 +15702,10 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "cibaEnabled": {
+                        "description": "Detailed responses only. Whether the client may use CIBA (backchannel authentication).",
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
@@ -15891,7 +16005,7 @@
                         "nullable": true
                     },
                     "status": {
-                        "description": "Detailed responses only",
+                        "description": "Result of the event: success, failure, pending or partial",
                         "type": "string",
                         "nullable": true
                     },
@@ -17404,6 +17518,17 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "budgetPolicy": {
+                        "description": "The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. Leave it out for an agent without a budget.",
+                        "type": "object",
+                        "example": {
+                            "max_api_calls_per_hour": 500,
+                            "max_tokens_per_day": 100000,
+                            "max_cost_per_month_usd": 50
+                        },
+                        "nullable": true,
+                        "additionalProperties": true
                     }
                 },
                 "type": "object"
@@ -17442,6 +17567,17 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "budgetPolicy": {
+                        "description": "The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is.",
+                        "type": "object",
+                        "example": {
+                            "max_api_calls_per_hour": 500,
+                            "max_tokens_per_day": 100000,
+                            "max_cost_per_month_usd": 50
+                        },
+                        "nullable": true,
+                        "additionalProperties": true
                     }
                 },
                 "type": "object"
@@ -17467,6 +17603,25 @@
                 },
                 "type": "object"
             },
+            "AdminAgentsAgentsRotateKeyRequest": {
+                "properties": {
+                    "apiKeyExpiresInDays": {
+                        "description": "Days until the new key expires; null for a key that never expires.",
+                        "type": "integer",
+                        "example": 90,
+                        "nullable": true,
+                        "maximum": 3650,
+                        "minimum": 1
+                    },
+                    "apiKeyExpiresAt": {
+                        "description": "Exact expiry of the new key (ISO 8601, in the future); null for never. Ignored when apiKeyExpiresInDays is sent.",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
             "AdminAgentsAgentsRotateKeyResponse": {
                 "properties": {
                     "message": {
@@ -17476,6 +17631,12 @@
                     "api_key": {
                         "description": "The new plaintext API key — shown only in this response.",
                         "type": "string"
+                    },
+                    "api_key_expires_at": {
+                        "description": "When the new key expires; null = never.",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -17810,17 +17971,29 @@
             "AdminAuditLogsRetentionResponseData": {
                 "properties": {
                     "retentionDays": {
-                        "description": "Effective retention, capped by the plan limit",
+                        "description": "The organization's own period, between minRetentionDays and maxRetentionDays. It applies while data retention is on and autoDelete is not false.",
                         "type": "integer",
                         "example": 90
                     },
                     "autoDelete": {
+                        "description": "false switches the organization's own period off; the plan's period still applies",
                         "type": "boolean"
                     },
                     "planLimitDays": {
-                        "description": "Plan cap; null when unlimited or billing enforcement is off",
+                        "description": "The plan's period: older entries are not returned and are deleted. null when the plan has no limit.",
                         "type": "integer",
                         "nullable": true
+                    },
+                    "effectiveRetentionDays": {
+                        "description": "How long entries are kept now; null when nothing is deleted",
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "minRetentionDays": {
+                        "type": "integer"
+                    },
+                    "maxRetentionDays": {
+                        "type": "integer"
                     }
                 },
                 "type": "object"
@@ -17986,7 +18159,7 @@
             "OAuthClientSecretIssued": {
                 "properties": {
                     "secret": {
-                        "description": "Plaintext client secret — returned only once, never retrievable again",
+                        "description": "Plaintext client secret — returned only once, never retrievable again. Absent for a public client",
                         "type": "string"
                     },
                     "_note": {
@@ -18264,6 +18437,7 @@
                         "type": "string",
                         "enum": [
                             "saml",
+                            "oidc",
                             "ldap",
                             "social",
                             "social_account"
@@ -18274,6 +18448,10 @@
                         "nullable": true
                     },
                     "name_id": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "subject": {
                         "type": "string",
                         "nullable": true
                     },
@@ -18331,12 +18509,18 @@
                         "type": "string",
                         "enum": [
                             "saml",
+                            "oidc",
                             "ldap"
                         ]
                     },
                     "idp_id": {
-                        "description": "SAML IdP config id (type=saml)",
+                        "description": "SAML IdP config id (type=saml) or OpenID Connect connection id (type=oidc)",
                         "type": "integer"
+                    },
+                    "subject": {
+                        "description": "Subject the OpenID Connect provider issues for this user (type=oidc)",
+                        "type": "string",
+                        "example": "00u1abcd2EFGH3ijk4x5"
                     },
                     "name_id": {
                         "description": "NameID the IdP asserts for this user (type=saml)",
@@ -18966,10 +19150,30 @@
                 },
                 "type": "object"
             },
+            "AdminSandboxSpawnResponseData1": {
+                "required": [
+                    "api_key"
+                ],
+                "properties": {
+                    "api_key": {
+                        "description": "API key of the sandbox, with every Admin API scope. Shown only in this response; it expires with the sandbox.",
+                        "type": "string",
+                        "example": "lmk_3f9c…"
+                    }
+                },
+                "type": "object"
+            },
             "AdminSandboxSpawnResponse": {
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/SandboxTenant"
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/SandboxTenant"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AdminSandboxSpawnResponseData1"
+                            }
+                        ]
                     }
                 },
                 "type": "object"
@@ -20026,6 +20230,10 @@
                         "description": "HTTP status returned by the receiver",
                         "type": "integer"
                     },
+                    "deliveryId": {
+                        "description": "Id of the delivery row (the `X-LumoAuth-Delivery` header of the request)",
+                        "type": "string"
+                    },
                     "message": {
                         "type": "string",
                         "example": "Test webhook delivered successfully"
@@ -20138,10 +20346,33 @@
                 },
                 "type": "object"
             },
+            "AdminWebhooksDeliveryReplayResponseData": {
+                "properties": {
+                    "delivery_id": {
+                        "description": "Id of the new delivery",
+                        "type": "string"
+                    },
+                    "replay_of": {
+                        "description": "Id of the delivery that was replayed",
+                        "type": "string"
+                    },
+                    "webhook_id": {
+                        "type": "integer"
+                    },
+                    "event_name": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "pending"
+                    }
+                },
+                "type": "object"
+            },
             "AdminWebhooksDeliveryReplayResponse": {
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/WebhookDelivery"
+                        "$ref": "#/components/schemas/AdminWebhooksDeliveryReplayResponseData"
                     },
                     "message": {
                         "type": "string",
@@ -20375,7 +20606,8 @@
             "GetApprovalStatusResponseApprovedBy": {
                 "properties": {
                     "user_id": {
-                        "type": "integer"
+                        "type": "string",
+                        "format": "uuid"
                     }
                 },
                 "type": "object"
@@ -20434,7 +20666,7 @@
                         "type": "string"
                     },
                     "audience_generic": {
-                        "description": "True when the registered audience is not specific to this deployment (operators should move to the agent-specific audience).",
+                        "description": "True when the registered audience is not specific to LumoAuth (move to the agent-specific audience).",
                         "type": "boolean"
                     }
                 },
@@ -21090,7 +21322,7 @@
                         "nullable": true
                     },
                     "source": {
-                        "description": "role:<role name> that grants it",
+                        "description": "role:<role name> that grants it, or direct for a permission granted to the user directly",
                         "type": "string",
                         "example": "role:Editor"
                     }
@@ -21981,7 +22213,7 @@
                         "type": "string"
                     },
                     "deep_link_android": {
-                        "description": "Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.",
+                        "description": "Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when it is not available.",
                         "type": "string",
                         "nullable": true
                     },
@@ -22304,6 +22536,48 @@
                     "jti": {
                         "description": "JWT id (JWT tokens only).",
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "RequestMagicLinkRequest": {
+                "required": [
+                    "email",
+                    "client_id"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "The address to mail the sign-in link to.",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "client_id": {
+                        "description": "Client ID of an active application of the organization.",
+                        "type": "string"
+                    },
+                    "return_to": {
+                        "description": "Page of the application that the person goes to after signing in. An absolute https URL (http only on localhost) whose origin is one of the application's allowed origins or the origin of one of its redirect URIs. Without it the person goes to the organization's default page.",
+                        "type": "string",
+                        "format": "uri",
+                        "maxLength": 1024
+                    },
+                    "captcha_token": {
+                        "description": "Token from the CAPTCHA widget. Required when the organization protects sign-in link requests with a CAPTCHA.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "RequestMagicLinkResponse": {
+                "required": [
+                    "status"
+                ],
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "sent"
+                        ]
                     }
                 },
                 "type": "object"

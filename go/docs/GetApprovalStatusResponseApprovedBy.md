@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**UserId** | Pointer to **int32** |  | [optional] 
+**UserId** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetUserId
 
-`func (o *GetApprovalStatusResponseApprovedBy) GetUserId() int32`
+`func (o *GetApprovalStatusResponseApprovedBy) GetUserId() string`
 
 GetUserId returns the UserId field if non-nil, zero value otherwise.
 
 ### GetUserIdOk
 
-`func (o *GetApprovalStatusResponseApprovedBy) GetUserIdOk() (*int32, bool)`
+`func (o *GetApprovalStatusResponseApprovedBy) GetUserIdOk() (*string, bool)`
 
 GetUserIdOk returns a tuple with the UserId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUserId
 
-`func (o *GetApprovalStatusResponseApprovedBy) SetUserId(v int32)`
+`func (o *GetApprovalStatusResponseApprovedBy) SetUserId(v string)`
 
 SetUserId sets UserId field to given value.
 

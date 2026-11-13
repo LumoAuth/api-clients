@@ -378,7 +378,7 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> Created — the plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created. For a confidential client the plaintext secret is included once and never shown again; a public client (isConfidential false) has no secret and the field is absent </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call createClientCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -447,7 +447,7 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> Created — the plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created. For a confidential client the plaintext secret is included once and never shown again; a public client (isConfidential false) has no secret and the field is absent </td><td>  -  </td></tr>
      </table>
      */
     public CreateClientResponse createClient(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -465,7 +465,7 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> Created — the plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created. For a confidential client the plaintext secret is included once and never shown again; a public client (isConfidential false) has no secret and the field is absent </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<CreateClientResponse> createClientWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -485,7 +485,7 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> Created — the plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created. For a confidential client the plaintext secret is included once and never shown again; a public client (isConfidential false) has no secret and the field is absent </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call createClientAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<CreateClientResponse> _callback) throws ApiException {
@@ -2120,7 +2120,7 @@ public class AdminOAuthClientsApi {
     }
 
     /**
-     * Replace an OAuth client
+     * Update an OAuth client (same as PATCH: only the fields that are sent change)
      * 
      * @param orgId  (required)
      * @param clientId  (required)
@@ -2140,7 +2140,7 @@ public class AdminOAuthClientsApi {
     }
 
     /**
-     * Replace an OAuth client
+     * Update an OAuth client (same as PATCH: only the fields that are sent change)
      * 
      * @param orgId  (required)
      * @param clientId  (required)
@@ -2161,7 +2161,7 @@ public class AdminOAuthClientsApi {
     }
 
     /**
-     * Replace an OAuth client (asynchronously)
+     * Update an OAuth client (same as PATCH: only the fields that are sent change) (asynchronously)
      * 
      * @param orgId  (required)
      * @param clientId  (required)

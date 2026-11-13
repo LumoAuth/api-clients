@@ -19,7 +19,7 @@ module LumoAuthApiClient
 
     attr_accessor :description
 
-    # role:<role name> that grants it
+    # role:<role name> that grants it, or direct for a permission granted to the user directly
     attr_accessor :source
 
     # Attribute mapping from ruby-style variable name to JSON key.

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **success** | **bool** |  | [optional] 
 **status_code** | **int** | HTTP status returned by the receiver | [optional] 
+**delivery_id** | **str** | Id of the delivery row (the &#x60;X-LumoAuth-Delivery&#x60; header of the request) | [optional] 
 **message** | **str** |  | [optional] 
 
 ## Example

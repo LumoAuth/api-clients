@@ -691,7 +691,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Replace an OAuth client
+         * @summary Update an OAuth client (same as PATCH: only the fields that are sent change)
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
@@ -942,7 +942,7 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Replace an OAuth client
+         * @summary Update an OAuth client (same as PATCH: only the fields that are sent change)
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
@@ -1106,7 +1106,7 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Replace an OAuth client
+         * @summary Update an OAuth client (same as PATCH: only the fields that are sent change)
          * @param {AdminOAuthClientsApiUpdateClientRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1265,7 +1265,7 @@ export interface AdminOAuthClientsApiInterface {
 
     /**
      * 
-     * @summary Replace an OAuth client
+     * @summary Update an OAuth client (same as PATCH: only the fields that are sent change)
      * @param {AdminOAuthClientsApiUpdateClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1767,7 +1767,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
 
     /**
      * 
-     * @summary Replace an OAuth client
+     * @summary Update an OAuth client (same as PATCH: only the fields that are sent change)
      * @param {AdminOAuthClientsApiUpdateClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

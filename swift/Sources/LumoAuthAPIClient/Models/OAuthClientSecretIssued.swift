@@ -12,7 +12,7 @@ import AnyCodable
 
 public struct OAuthClientSecretIssued: Codable, JSONEncodable, Hashable {
 
-    /** Plaintext client secret — returned only once, never retrievable again */
+    /** Plaintext client secret — returned only once, never retrievable again. Absent for a public client */
     public var secret: String?
     public var note: String?
 

@@ -542,7 +542,8 @@ paths:
         "403":
           description: Denied by a conditional access policy.
         "429":
-          description: Rate limit exceeded (per IP or per agent).
+          description: "Rate limit exceeded (per IP or per agent), or the agent budget\
+            \ is spent (access_denied)."
       security:
       - AAuthSigned: []
       tags:
@@ -1200,7 +1201,8 @@ paths:
                 $ref: "#/components/schemas/AbacPoliciesCreateResponse"
           description: Created
         "400":
-          description: Invalid effect or policy conditions
+          description: "Invalid effect, priority (a whole number from 0 to 1000) or\
+            \ policy conditions"
         "409":
           description: A policy with this slug already exists
       summary: Create an ABAC policy
@@ -1434,7 +1436,8 @@ paths:
           description: Agent created. The generated credential/secret is returned
             ONCE and cannot be retrieved again.
         "400":
-          description: "Missing required field: name."
+          description: "Missing required field: name, or an invalid budgetPolicy (unknown\
+            \ key, or a value that is not a number greater than zero)."
         "401":
           description: Authentication required.
         "403":
@@ -1551,6 +1554,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminAgentsUpdateResponse"
           description: Agent updated.
+        "400":
+          description: "Invalid budgetPolicy: an unknown key, or a value that is not\
+            \ a number greater than zero."
         "401":
           description: Authentication required.
         "403":
@@ -1594,6 +1600,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminAgentsUpdateResponse"
           description: Agent updated.
+        "400":
+          description: "Invalid budgetPolicy: an unknown key, or a value that is not\
+            \ a number greater than zero."
         "401":
           description: Authentication required.
         "403":
@@ -1625,6 +1634,15 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminAgentsAgentsRotateKeyRequest"
+        description: "Optional lifetime of the new API key. Without either field the\
+          \ current expiry date is kept, unless it has already passed (then the new\
+          \ key gets 180 days)."
+        required: false
       responses:
         "200":
           content:
@@ -1633,6 +1651,9 @@ paths:
                 $ref: "#/components/schemas/AdminAgentsAgentsRotateKeyResponse"
           description: API key rotated. The new key is returned ONCE and cannot be
             retrieved again.
+        "400":
+          description: "The agent does not authenticate with an API key (identity\
+            \ type other than api_key), or the lifetime is invalid."
         "401":
           description: Authentication required.
         "403":
@@ -1643,6 +1664,7 @@ paths:
       tags:
       - "Admin: Agents"
       x-symfony-route: api_admin_agents_agents_rotate_key
+      x-content-type: application/json
       x-accepts:
       - application/json
   /orgs/{orgId}/api/v1/admin/agents/{agentId}/enable:
@@ -1856,6 +1878,15 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminAgentsAgentsRotateKeyRequest"
+        description: "For an api_key agent, the optional lifetime of the new key (ignored\
+          \ for a client secret). Without either field the current expiry date is\
+          \ kept, unless it has already passed (then the new key gets 180 days)."
+        required: false
       responses:
         "200":
           content:
@@ -1877,6 +1908,7 @@ paths:
       tags:
       - "Admin: Agents"
       x-symfony-route: api_admin_agents_rotate_credentials
+      x-content-type: application/json
       x-accepts:
       - application/json
   /orgs/{orgId}/api/v1/admin/agents/{agentId}/activate:
@@ -2037,15 +2069,20 @@ paths:
                 $ref: "#/components/schemas/AdminAgentsGenerateTokenResponse"
           description: A generated agent token. The token value is returned ONCE.
         "400":
-          description: "Inactive agent, requested scopes outside the agent's capabilities,\
-            \ a resource that is not an active MCP server of this organization, or\
-            \ expiresIn above 3600 without a resource."
+          description: "Inactive agent, an agent that only takes DPoP-bound tokens\
+            \ (a minted token cannot be bound to its key), requested scopes outside\
+            \ the agent's capabilities, a resource that is not an active MCP server\
+            \ of this organization, or expiresIn above 3600 without a resource."
         "401":
           description: Authentication required.
         "403":
           description: Admin privileges required.
         "404":
           description: Tenant or agent not found.
+        "429":
+          description: "budget_exceeded: the agent budget is spent. A token mint counts\
+            \ as one call. Retry-After holds the seconds until the spent window starts\
+            \ again."
       summary: Generate a token for the agent
       tags:
       - "Admin: Agents"
@@ -2451,8 +2488,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CreateClientResponse"
-          description: Created — the plaintext secret is included once and never shown
-            again
+          description: Created. For a confidential client the plaintext secret is
+            included once and never shown again; a public client (isConfidential false)
+            has no secret and the field is absent
       summary: Create an OAuth client
       tags:
       - "Admin: OAuth Clients"
@@ -2582,7 +2620,8 @@ paths:
           description: Updated OAuth client (detailed)
         "404":
           description: OAuth client not found
-      summary: Replace an OAuth client
+      summary: "Update an OAuth client (same as PATCH: only the fields that are sent\
+        \ change)"
       tags:
       - "Admin: OAuth Clients"
       x-symfony-route: api_admin_clients_update
@@ -3377,9 +3416,11 @@ paths:
       - application/json
   /orgs/{orgId}/api/v1/admin/users/{userId}/identities:
     get:
-      description: "SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC\
-        \ provider links. A SAML link with `legacy: true` stores a bare NameID and\
-        \ is refused at sign-in while the organization has more than one SAML IdP."
+      description: "SAML (IdP + NameID), enterprise OpenID Connect (connection + subject),\
+        \ LDAP (directory + DN) and social provider links. A SAML link with `legacy:\
+        \ true` stores a bare NameID and is refused at sign-in while the organization\
+        \ has more than one SAML IdP. An OpenID Connect link with `hashed: true` stores\
+        \ a long subject as a hash, so `subject` is null."
       operationId: adminIdentitiesList
       parameters:
       - explode: false
@@ -3412,14 +3453,17 @@ paths:
       x-accepts:
       - application/json
     post:
-      description: "Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`)\
-        \ or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up\
-        \ in the directory by the user's email / username). Refused with 409 when\
-        \ another user already holds that identity, or when the user is linked to\
-        \ a different federated source (unlink it first). Revokes the user's sessions\
-        \ and tokens, notifies the user and is audited as identity.link.created. Signed-in\
-        \ admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge\
-        \ with an approved step-up challenge when calling with a user token)."
+      description: "Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`),\
+        \ enterprise OpenID Connect binding (`idp_id` + `subject`: the value of the\
+        \ connection's user identifier claim; a person can sign in through such a\
+        \ connection only after this link exists) or LDAP binding (`ldap_config_id`\
+        \ + `dn`; omit `dn` to look the entry up in the directory by the user's email\
+        \ / username). Refused with 409 when another user already holds that identity,\
+        \ or when the user is linked to a different federated source (unlink it first).\
+        \ Revokes the user's sessions and tokens, notifies the user and is audited\
+        \ as identity.link.created. Signed-in admins must have passed MFA in the last\
+        \ 10 minutes (send X-MFA-Challenge with an approved step-up challenge when\
+        \ calling with a user token)."
       operationId: adminIdentitiesLink
       parameters:
       - explode: false
@@ -3452,12 +3496,12 @@ paths:
         "403":
           description: "Actor does not outrank the user, or step_up_required"
         "404":
-          description: "User, IdP or directory not found"
+          description: "User, identity provider or directory not found"
         "409":
           description: identity_conflict
         "422":
           description: invalid_identity / directory_lookup_failed
-      summary: Link a SAML or LDAP identity to a user
+      summary: "Link a SAML, OpenID Connect or LDAP identity to a user"
       tags:
       - "Admin: Users"
       x-symfony-route: api_admin_identities_link
@@ -3466,10 +3510,10 @@ paths:
       - application/json
   /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type}:
     delete:
-      description: "Removes the binding of the given type (`saml`, `ldap` or `social`).\
-        \ Revokes the user's sessions and tokens, notifies the user and is audited\
-        \ as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up\
-        \ rule as linking."
+      description: "Removes the binding of the given type (`saml`, `oidc`, `ldap`\
+        \ or `social`). Revokes the user's sessions and tokens, notifies the user\
+        \ and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only.\
+        \ Same step-up rule as linking."
       operationId: adminIdentitiesUnlink
       parameters:
       - explode: false
@@ -3479,6 +3523,7 @@ paths:
         schema:
           enum:
           - saml
+          - oidc
           - ldap
           - social
           type: string
@@ -3510,7 +3555,7 @@ paths:
           description: "User not found, or no link of that type"
         "422":
           description: Unknown type
-      summary: "Unlink a user's SAML, LDAP or social identity"
+      summary: "Unlink a user's SAML, OpenID Connect, LDAP or social identity"
       tags:
       - "Admin: Users"
       x-symfony-route: api_admin_identities_unlink
@@ -3626,27 +3671,34 @@ paths:
     post:
       description: |-
         Body:
-        name (required) — display name
-        resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for
-            loopback), no fragment, no user info, not a LumoAuth host, unique
-            per organization after normalisation (same rules as the portal)
-        endpoint_url (optional) — actual MCP endpoint
-        description (optional)
-        scopes_supported (optional) — array OR space/comma-separated string; omnibus
-            scopes, offline_access and admin/scim scopes are refused (422)
-        basic_scopes (optional) — subset of scopes_supported advertised in the
-            401 challenge and Protected Resource Metadata; no wildcards
-        transport (optional) — defaults to "http_streamable" ("http_sse" is
-            deprecated in MCP 2026-07-28)
-        auth_mode (optional) — defaults to "oauth"
-        token_lifetime (optional, default 3600) — 60..86400, else 422
-        tool_authorizer_client_ids (optional) — the MCP server's own OAuth clients
-            that may call the per-tool authorization endpoint
-        allowed_client_ids (optional) — array of this organization's OAuth client ids;
-            unknown ids are a 422 (never persisted as policy)
-        require_pkce (optional, default true)
-        require_resource_param (optional, default true)
-        require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
+          name (required) — display name
+          resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for
+              loopback), no fragment, no user info, not a LumoAuth host, unique
+              per organization after normalisation (same rules as the portal)
+          endpoint_url (optional) — actual MCP endpoint
+          description (optional)
+          scopes_supported (optional) — array OR space/comma-separated string; omnibus
+              scopes, offline_access and admin/scim scopes are refused (422)
+          basic_scopes (optional) — subset of scopes_supported advertised in the
+              401 challenge and Protected Resource Metadata; no wildcards
+          transport (optional) — defaults to "http_streamable" ("http_sse" is
+              deprecated in MCP 2026-07-28)
+          auth_mode (optional) — defaults to "oauth"
+          token_lifetime (optional, default 3600) — 60..86400, else 422
+          tool_authorizer_client_ids (optional) — the MCP server's own OAuth clients
+              that may call the per-tool authorization endpoint
+          allowed_client_ids (optional) — array of this organization's OAuth client ids;
+              unknown ids are a 422 (never persisted as policy)
+          require_pkce (optional, default true)
+          require_resource_param (optional, default true)
+          require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
+          scope_descriptions (optional) — object scope => text for scopes in
+              scopes_supported (portal and consent page only), 200 characters each
+
+        A server that is not OAuth-protected (auth_mode "none" or transport
+        "stdio") is stored with the three require_* switches off. Fields that
+        cannot be configured (include_scope_in_challenge, bearer_methods_supported)
+        are refused with 400 so that a caller is never told a value was stored.
       operationId: adminMcpServersCreate
       parameters:
       - explode: false
@@ -3663,6 +3715,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminMcpServersCreateResponse"
           description: MCP server created
+        "400":
+          description: "Invalid resource_uri, or a field that cannot be set (include_scope_in_challenge,\
+            \ bearer_methods_supported)"
         "409":
           description: An MCP server with this resource_uri already exists
         "422":
@@ -5306,6 +5361,13 @@ paths:
       - application/json
   /orgs/{orgId}/api/v1/admin/sandbox/spawn:
     post:
+      description: "Creates a sandbox organization with its own signing key, the Tenant\
+        \ Admin role, a Starter App client and one API key that holds every Admin\
+        \ API scope. The API key is returned only in this response and expires with\
+        \ the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`.\
+        \ No user who can sign in is created: add users with the key. The sandbox\
+        \ uses the plan of the organization that created it and cannot create sandboxes\
+        \ itself."
       operationId: adminSandboxSpawn
       parameters:
       - explode: false
@@ -5327,7 +5389,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AdminSandboxSpawnResponse"
-          description: Sandbox created
+          description: Sandbox created. `data.api_key` is shown only once.
+        "403":
+          description: "The organization lacks the Developer sandboxes add-on (`feature_not_in_plan`),\
+            \ or it is itself a sandbox"
         "429":
           description: Per-owner active-sandbox cap reached
       summary: Spawn a sandbox tenant
@@ -7821,8 +7886,10 @@ paths:
       x-accepts:
       - application/json
     post:
-      description: The signing secret is generated server-side and returned once in
-        this response only.
+      description: "Accepts `url`, `events`, `isActive` (also as `active` or `enabled`),\
+        \ `type` and `configuration`. The signing secret is generated server-side\
+        \ and returned once in this response only: a `secret` in the request, an unknown\
+        \ field and an event name that is not in the catalogue are refused with 400."
       operationId: adminWebhooksCreate
       parameters:
       - explode: false
@@ -7967,6 +8034,12 @@ paths:
       x-accepts:
       - application/json
     put:
+      description: "Changes only the fields that are sent: `url`, `events`, `isActive`\
+        \ (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`.\
+        \ A new `url` for a webhook that has a signing secret needs `rotateSecret:\
+        \ true`; the response then carries the new `secret` once. Unknown fields,\
+        \ `secret` and event names that are not in the catalogue are refused with\
+        \ 400."
       operationId: putAdminWebhooksUpdate
       parameters:
       - explode: false
@@ -8066,9 +8139,11 @@ paths:
       - application/json
   /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test:
     post:
-      description: "POSTs a signed `test.webhook` payload to the webhook URL and reports\
-        \ the receiver's status. A non-2xx receiver response still yields HTTP 200\
-        \ with `success: false`; a transport failure yields 502."
+      description: "Sends one `webhook.test` event to the webhook URL now, with the\
+        \ same body, headers and signature as any event, and records it in the delivery\
+        \ history. A receiver answer outside 2xx still yields HTTP 200 with `success:\
+        \ false`; when no answer was received (connection or TLS error) the endpoint\
+        \ answers 502. A failed test is not retried."
       operationId: adminWebhooksTest
       parameters:
       - explode: false
@@ -8104,8 +8179,10 @@ paths:
       - application/json
   /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret:
     post:
-      description: Generates a new HMAC secret and keeps the previous one for a grace
-        window. The new secret is returned once.
+      description: "Generates a new HMAC secret and returns it once. For 24 hours\
+        \ every delivery also carries `X-LumoAuth-Signature-Previous`, signed with\
+        \ the secret that was replaced, so the receiver can be updated without losing\
+        \ events. The `kid` of `X-LumoAuth-Signature` changes with every rotation."
       operationId: adminWebhooksRotateSecret
       parameters:
       - explode: false
@@ -8217,8 +8294,9 @@ paths:
       - application/json
   /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay:
     post:
-      description: Resets the delivery's failure state (attempt history is preserved)
-        and re-enqueues it. Idempotent on already-pending rows.
+      description: "Queues a new delivery with the same event and payload and returns\
+        \ its id. The original delivery is not changed. A disabled webhook sends nothing,\
+        \ so the call answers 409 until the webhook is enabled."
       operationId: adminWebhooksDeliveryReplay
       parameters:
       - explode: false
@@ -8248,9 +8326,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AdminWebhooksDeliveryReplayResponse"
-          description: Delivery re-enqueued
+          description: Replay queued
         "404":
           description: Webhook or delivery not found
+        "409":
+          description: The webhook is disabled
       summary: Replay a delivery
       tags:
       - "Admin: Webhooks"
@@ -8440,6 +8520,9 @@ paths:
         "404":
           description: unknown_server — server_id is not an active MCP server of this
             organization.
+        "429":
+          description: "budget_exceeded: the agent budget is spent. Retry-After holds\
+            \ the seconds until the spent window starts again."
       summary: Per-MCP-tool authorization for the authenticated agent (dx B3).
       tags:
       - Agents
@@ -8482,7 +8565,8 @@ paths:
           description: "invalid_request: tokens or cost_usd is missing, negative,\
             \ too large or not a number."
         "403":
-          description: test_token_not_accepted or cross_tenant.
+          description: "test_token_not_accepted, cross_tenant or insufficient_scope\
+            \ (the token was narrowed with a scope)."
         "429":
           description: "rate_limited: too many reports from this agent."
       summary: Report the model tokens and cost that the agent used
@@ -8524,8 +8608,12 @@ paths:
           description: Authorization decision for the requested action.
         "400":
           description: "Missing required field: action."
+        "403":
+          description: "plan_limit_reached: the Ask API calls that the plan includes\
+            \ for this month are used (plans without overage only)."
         "429":
-          description: Agent budget exceeded.
+          description: "budget_exceeded: the agent budget is spent. Retry-After holds\
+            \ the seconds until the spent window starts again."
       summary: Agent-friendly permission check (Natural Language style)
       tags:
       - Agents
@@ -8567,8 +8655,8 @@ paths:
         "400":
           description: "Invalid JSON, task_id, reason, impact, or missing on_behalf_of."
         "403":
-          description: "Caller is not an agent, is cross-tenant, or lacks delegation\
-            \ permission."
+          description: "Caller is not an agent, is cross-tenant, presents a scope-narrowed\
+            \ token (insufficient_scope), or lacks delegation permission."
         "404":
           description: Tenant or target user not found.
         "428":
@@ -8708,6 +8796,8 @@ paths:
         "404":
           description: "not_found — unknown organization, or the agent is unknown,\
             \ inactive or has no published A2A card."
+        "429":
+          description: rate_limited — too many card requests from this address (Retry-After).
       security: []
       summary: Signed A2A agent card
       tags:
@@ -8831,14 +8921,16 @@ paths:
         "400":
           description: invalid_user_id.
         "403":
-          description: "agent_token_required, cross_tenant, delegation_not_permitted,\
-            \ agent_not_allowed, delegation_not_allowed or connection_disabled."
+          description: "agent_token_required, cross_tenant, insufficient_scope (the\
+            \ token was narrowed with a scope), delegation_not_permitted, agent_not_allowed,\
+            \ delegation_not_allowed or connection_disabled."
         "404":
           description: "tenant_not_found, connection_not_found or grant_not_found."
         "409":
           description: "grant_revoked, grant_expired or refresh_failed."
         "429":
-          description: rate_limited.
+          description: "rate_limited, or budget_exceeded when the agent budget is\
+            \ spent."
         "503":
           description: "refresh_in_progress (Retry-After: 2) or provider_unavailable."
       summary: Fetch a live third-party access token for a connection
@@ -9083,7 +9175,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/ListPermissionsResponse"
           description: Permissions from the user's roles (including group-inherited
-            roles). `permissions` and `data` are identical.
+            roles) and permissions granted to the user directly. `permissions` and
+            `data` are identical.
       summary: List the caller's effective permissions
       tags:
       - Authorization
@@ -9192,7 +9285,8 @@ paths:
         "401":
           description: Invalid or missing agent token.
         "403":
-          description: Task belongs to a different agent.
+          description: "Task belongs to a different agent, or task_suspended: continuous\
+            \ access evaluation suspended the task on this request."
         "404":
           description: Tenant or task not found.
         "429":
@@ -9284,7 +9378,9 @@ paths:
         "404":
           description: Tenant or request not found.
         "429":
-          description: Rate limit or agent budget exceeded.
+          description: "rate_limit_exceeded, or budget_exceeded when the agent budget\
+            \ is spent (Retry-After holds the seconds until the spent window starts\
+            \ again)."
       security:
       - BearerAuth: []
       summary: Exchange an approved JIT request for a downscoped token.
@@ -9493,7 +9589,8 @@ paths:
         "401":
           description: Authentication required.
         "403":
-          description: Cross-tenant evaluation is not permitted.
+          description: The caller is not a user of this organization with the `jit.approve`
+            permission.
         "404":
           description: Tenant or task not found.
       security:
@@ -10583,7 +10680,9 @@ paths:
         "401":
           description: "{\"status\":\"invalid_credentials\"}."
         "403":
-          description: "{\"status\":\"blocked\"} or {\"status\":\"inactive\"}."
+          description: "{\"status\":\"blocked\"} or {\"status\":\"inactive\"}; {\"\
+            status\":\"sso_required\",\"redirect_url\":…} for an administrator of\
+            \ an organization that requires single sign-on for administrators."
         "404":
           description: "{\"status\":\"not_found\"} — unknown or inactive organization."
         "429":
@@ -10883,6 +10982,58 @@ paths:
       x-symfony-route: oauth_introspect
       x-accepts:
       - application/json
+  /orgs/{orgId}/api/v1/oauth/magic-link:
+    post:
+      description: "For applications that render their own sign-in form. Mails a single-use\
+        \ sign-in link to the address when it belongs to an account of the organization,\
+        \ and gives the same answer when it does not. Signs nobody in and mints no\
+        \ tokens: the person opens the link, confirms on the hosted page, and is then\
+        \ sent to `return_to`, where the application starts its normal authorization\
+        \ flow. A browser request must come from one of the allowed origins of the\
+        \ application named by `client_id`."
+      operationId: requestMagicLink
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestMagicLinkRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RequestMagicLinkResponse"
+          description: The request was accepted. The answer is the same whether or
+            not the address belongs to an account.
+        "400":
+          description: "`{\"error\": …, \"message\": …}` with error `invalid_request`,\
+            \ `invalid_client`, `invalid_return_to`, `captcha_required` or `captcha_failed`."
+        "403":
+          description: "`{\"error\":\"origin_not_allowed\"}`: the page that made the\
+            \ request is not one of the application's allowed origins."
+        "404":
+          description: "`{\"error\":\"not_found\"}` for an unknown organization, `{\"\
+            error\":\"magic_link_disabled\"}` when the organization does not offer\
+            \ sign-in links."
+        "429":
+          description: "`{\"error\":\"rate_limited\"}`."
+      security: []
+      summary: Request a sign-in link by email
+      tags:
+      - OAuth
+      x-symfony-route: api_auth_magic_link_request
+      x-content-type: application/json
+      x-accepts:
+      - application/json
   /orgs/{orgId}/api/v1/oauth/par:
     post:
       description: Stores the authorization request parameters server-side and returns
@@ -10906,7 +11057,7 @@ paths:
           description: Pushed authorization request created (RFC 9126 §2.2).
         "400":
           description: "invalid_request / invalid_target / invalid_request_object,\
-            \ or the tenant is unknown."
+            \ or the organization is unknown."
         "401":
           description: invalid_client — client authentication failed.
         "429":
@@ -11001,6 +11152,10 @@ paths:
             invalid_scope (RFC 6749 §5.2).
         "401":
           description: invalid_client — client authentication failed.
+        "403":
+          description: plan_limit_reached — the month's included machine-to-machine
+            tokens or active agents are used on a plan without overage; error_description
+            says which.
         "429":
           description: too_many_requests — rate limit exceeded.
       security:
@@ -11883,25 +12038,22 @@ components:
         values). Any other stored key is returned as-is; secret-looking keys (e.g.
         initial_access_tokens) are redacted.
       example:
+        cimd_enabled: true
         passkeys:
           require_certified_authenticator: true
         push_auth_required: true
-        encrypt_client_secrets: true
         social_providers:
         - social_providers
         - social_providers
         password_rotation_policy:
-          max_age_days: 7
-          history_count: 1
-          notify_before_days: 1
+          max_age_days: 90
           enabled: true
-        no_mfa_action: no_mfa_action
+        no_mfa_action: allow
         passkey_enabled: true
         mfa_methods:
         - mfa_methods
         - mfa_methods
         dynamic_client_registration_enabled: true
-        biometric_enabled: true
         mfa_policy:
           min_tier_login: 1
           nudge_interval_days: 7
@@ -11925,6 +12077,16 @@ components:
           required_since: 3
           grace_period_days: 53
           sms_block_voip: false
+        password_policy:
+          template: fair
+          require_numbers: true
+          reject_breached_passwords: true
+          min_length: 57
+          require_lowercase: true
+          require_uppercase: true
+          check_breached_on_login: true
+          require_special: true
+          breached_password_min_count: 1
         xaa_idp_enabled: true
         progressive_profiling:
           rules:
@@ -11934,29 +12096,20 @@ components:
         password_min_length: 2
         xaa_resource_enabled: true
         mfa_required: true
-        social_login_enabled: true
-        password_require_special: true
-        cimd_enabled: true
-        password_policy:
-          template: fair
-          require_numbers: true
-          min_length: 4
-          require_uppercase: true
-          require_special: true
         social_configs:
           key:
             key: ""
         cimd_allowed_domains:
         - cimd_allowed_domains
         - cimd_allowed_domains
+        social_login_enabled: true
+        password_require_special: true
         cimd_localhost_redirect_policy: warn
         push_app_name: push_app_name
         mfa_sms_enabled: true
-        session_timeout: 1
+        session_timeout: 124210
       properties:
         passkey_enabled:
-          type: boolean
-        biometric_enabled:
           type: boolean
         passkeys:
           $ref: "#/components/schemas/AuthenticationSettings_passkeys"
@@ -11976,6 +12129,9 @@ components:
           nullable: true
           type: string
         social_login_enabled:
+          description: "Legacy. Switches on the older social sign-in flow that uses\
+            \ social_configs and social_providers. Social sign-in on the hosted sign-in\
+            \ page follows the enabled social providers, not this flag."
           type: boolean
         social_providers:
           items:
@@ -12003,12 +12159,17 @@ components:
         password_rotation_policy:
           $ref: "#/components/schemas/AuthenticationSettings_password_rotation_policy"
         no_mfa_action:
+          enum:
+          - allow
+          - prompt
+          - email
+          - block
           type: string
         session_timeout:
-          description: Seconds.
+          description: Idle timeout in seconds.
+          maximum: 1209600
+          minimum: 300
           type: integer
-        encrypt_client_secrets:
-          type: boolean
         dynamic_client_registration_enabled:
           type: boolean
         cimd_enabled:
@@ -12056,14 +12217,14 @@ components:
         privacy_url: privacy_url
         theme: auto
         magic_link_enabled: true
-        background_overlay_opacity: 6
+        background_overlay_opacity: 1
         split_panel_title: split_panel_title
         button_style: filled
         apply_to_consent: true
         footer_text: footer_text
         primary_color: primary_color
         background_type: solid
-        magic_link_expiry: 7
+        magic_link_expiry: 6
         layout: centered
         background_color: background_color
         show_tenant_name: true
@@ -12198,19 +12359,16 @@ components:
           bearer_token: bearer_token
           allow_user_deletion: true
           auto_activate_users: true
-          attribute_mapping:
-            key: attribute_mapping
           token_created_at: token_created_at
           allow_user_updates: true
           protected_attributes:
-            permissions: true
-            roles: true
+            role_membership: true
             name: true
             active: true
             email: true
           allow_user_creation: true
-          enabled: true
           bearer_token_preview: bearer_token_preview
+          enabled: true
           allow_group_operations: true
           bearer_token_hash:
             configured: true
@@ -12221,8 +12379,6 @@ components:
             configured: true
             redacted: true
           oauth2_scope: oauth2_scope
-          attribute_mapping:
-            key: attribute_mapping
           verify_tls: true
           last_batch_sync_counts:
             key: ""
@@ -12674,6 +12830,7 @@ components:
     OAuthClient:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
+        cibaEnabled: true
         grantTypes:
         - grantTypes
         - grantTypes
@@ -12723,6 +12880,10 @@ components:
           items:
             type: string
           type: array
+        cibaEnabled:
+          description: Detailed responses only. Whether the client may use CIBA (backchannel
+            authentication).
+          type: boolean
       required:
       - clientId
       - createdAt
@@ -13033,7 +13194,7 @@ components:
           nullable: true
           type: string
         status:
-          description: Detailed responses only
+          description: "Result of the event: success, failure, pending or partial"
           nullable: true
           type: string
         statusReason:
@@ -14713,6 +14874,10 @@ components:
         - capabilities
         name: Invoice bot
         description: description
+        budgetPolicy:
+          max_api_calls_per_hour: 500
+          max_tokens_per_day: 100000
+          max_cost_per_month_usd: 50
       properties:
         name:
           description: Required. Human-readable agent name.
@@ -14724,6 +14889,21 @@ components:
           items:
             type: string
           type: array
+        budgetPolicy:
+          additionalProperties: true
+          description: "The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day,\
+            \ max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd,\
+            \ max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds\
+            \ (whole numbers, read by the agent from UserInfo), and the gateway-only\
+            \ max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater\
+            \ than zero; an unknown key or an invalid value is refused with 400. Leave\
+            \ it out for an agent without a budget."
+          example:
+            max_api_calls_per_hour: 500
+            max_tokens_per_day: 100000
+            max_cost_per_month_usd: 50
+          nullable: true
+          type: object
       type: object
     AdminAgentsCreateResponse:
       example:
@@ -14751,6 +14931,10 @@ components:
         - capabilities
         name: name
         description: description
+        budgetPolicy:
+          max_api_calls_per_hour: 500
+          max_tokens_per_day: 100000
+          max_cost_per_month_usd: 50
       properties:
         name:
           type: string
@@ -14760,6 +14944,22 @@ components:
           items:
             type: string
           type: array
+        budgetPolicy:
+          additionalProperties: true
+          description: "The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day,\
+            \ max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd,\
+            \ max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds\
+            \ (whole numbers, read by the agent from UserInfo), and the gateway-only\
+            \ max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater\
+            \ than zero; an unknown key or an invalid value is refused with 400. An\
+            \ update replaces the whole policy; {} or null removes the budget, and\
+            \ a request without the field leaves it as it is."
+          example:
+            max_api_calls_per_hour: 500
+            max_tokens_per_day: 100000
+            max_cost_per_month_usd: 50
+          nullable: true
+          type: object
       type: object
     PutAdminAgentsUpdateResponse:
       example:
@@ -14780,16 +14980,41 @@ components:
           example: Agent deleted successfully
           type: string
       type: object
+    AdminAgentsAgentsRotateKeyRequest:
+      example:
+        apiKeyExpiresAt: 2000-01-23T04:56:07.000+00:00
+        apiKeyExpiresInDays: 90
+      properties:
+        apiKeyExpiresInDays:
+          description: Days until the new key expires; null for a key that never expires.
+          example: 90
+          maximum: 3650
+          minimum: 1
+          nullable: true
+          type: integer
+        apiKeyExpiresAt:
+          description: "Exact expiry of the new key (ISO 8601, in the future); null\
+            \ for never. Ignored when apiKeyExpiresInDays is sent."
+          format: date-time
+          nullable: true
+          type: string
+      type: object
     AdminAgentsAgentsRotateKeyResponse:
       example:
         api_key: api_key
         message: Agent API key rotated
+        api_key_expires_at: 2000-01-23T04:56:07.000+00:00
       properties:
         message:
           example: Agent API key rotated
           type: string
         api_key:
           description: The new plaintext API key — shown only in this response.
+          type: string
+        api_key_expires_at:
+          description: When the new key expires; null = never.
+          format: date-time
+          nullable: true
           type: string
       type: object
     AdminAgentsAgentsEnableResponse:
@@ -15255,26 +15480,45 @@ components:
     AdminAuditLogsRetentionResponseData:
       example:
         retentionDays: 90
+        minRetentionDays: 1
+        maxRetentionDays: 5
         planLimitDays: 0
         autoDelete: true
+        effectiveRetentionDays: 6
       properties:
         retentionDays:
-          description: "Effective retention, capped by the plan limit"
+          description: "The organization's own period, between minRetentionDays and\
+            \ maxRetentionDays. It applies while data retention is on and autoDelete\
+            \ is not false."
           example: 90
           type: integer
         autoDelete:
+          description: false switches the organization's own period off; the plan's
+            period still applies
           type: boolean
         planLimitDays:
-          description: Plan cap; null when unlimited or billing enforcement is off
+          description: "The plan's period: older entries are not returned and are\
+            \ deleted. null when the plan has no limit."
           nullable: true
+          type: integer
+        effectiveRetentionDays:
+          description: How long entries are kept now; null when nothing is deleted
+          nullable: true
+          type: integer
+        minRetentionDays:
+          type: integer
+        maxRetentionDays:
           type: integer
       type: object
     AdminAuditLogsRetentionResponse:
       example:
         data:
           retentionDays: 90
+          minRetentionDays: 1
+          maxRetentionDays: 5
           planLimitDays: 0
           autoDelete: true
+          effectiveRetentionDays: 6
       properties:
         data:
           $ref: "#/components/schemas/AdminAuditLogsRetentionResponseData"
@@ -15453,6 +15697,7 @@ components:
           page: 1
         data:
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          cibaEnabled: true
           grantTypes:
           - grantTypes
           - grantTypes
@@ -15470,6 +15715,7 @@ components:
           - redirectUris
           - redirectUris
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          cibaEnabled: true
           grantTypes:
           - grantTypes
           - grantTypes
@@ -15511,7 +15757,7 @@ components:
       properties:
         secret:
           description: "Plaintext client secret — returned only once, never retrievable\
-            \ again"
+            \ again. Absent for a public client"
           type: string
         _note:
           example: Store the secret securely. It will not be shown again.
@@ -15520,6 +15766,7 @@ components:
     CreateClientResponse:
       example:
         data:
+          cibaEnabled: true
           clientId: clientId
           isConfidential: true
           secret: secret
@@ -15550,6 +15797,7 @@ components:
       example:
         data:
           createdAt: 2000-01-23T04:56:07.000+00:00
+          cibaEnabled: true
           grantTypes:
           - grantTypes
           - grantTypes
@@ -15574,6 +15822,7 @@ components:
       example:
         data:
           createdAt: 2000-01-23T04:56:07.000+00:00
+          cibaEnabled: true
           grantTypes:
           - grantTypes
           - grantTypes
@@ -16002,6 +16251,7 @@ components:
       example:
         legacy: true
         provider: provider
+        subject: subject
         idp_id: 0
         dn: dn
         ldap_config_id: 6
@@ -16011,6 +16261,7 @@ components:
         type:
           enum:
           - saml
+          - oidc
           - ldap
           - social
           - social_account
@@ -16019,6 +16270,9 @@ components:
           nullable: true
           type: integer
         name_id:
+          nullable: true
+          type: string
+        subject:
           nullable: true
           type: string
         legacy:
@@ -16039,6 +16293,7 @@ components:
         bindings:
         - legacy: true
           provider: provider
+          subject: subject
           idp_id: 0
           dn: dn
           ldap_config_id: 6
@@ -16046,6 +16301,7 @@ components:
           name_id: name_id
         - legacy: true
           provider: provider
+          subject: subject
           idp_id: 0
           dn: dn
           ldap_config_id: 6
@@ -16071,6 +16327,7 @@ components:
           bindings:
           - legacy: true
             provider: provider
+            subject: subject
             idp_id: 0
             dn: dn
             ldap_config_id: 6
@@ -16078,6 +16335,7 @@ components:
             name_id: name_id
           - legacy: true
             provider: provider
+            subject: subject
             idp_id: 0
             dn: dn
             ldap_config_id: 6
@@ -16090,6 +16348,7 @@ components:
       type: object
     AdminIdentitiesLinkRequest:
       example:
+        subject: 00u1abcd2EFGH3ijk4x5
         idp_id: 0
         dn: "uid=jane,ou=people,dc=acme,dc=com"
         ldap_only: false
@@ -16100,11 +16359,17 @@ components:
         type:
           enum:
           - saml
+          - oidc
           - ldap
           type: string
         idp_id:
-          description: SAML IdP config id (type=saml)
+          description: SAML IdP config id (type=saml) or OpenID Connect connection
+            id (type=oidc)
           type: integer
+        subject:
+          description: Subject the OpenID Connect provider issues for this user (type=oidc)
+          example: 00u1abcd2EFGH3ijk4x5
+          type: string
         name_id:
           description: NameID the IdP asserts for this user (type=saml)
           example: jane@acme.com
@@ -17423,18 +17688,29 @@ components:
           example: 24
           type: integer
       type: object
+    AdminSandboxSpawnResponseData1:
+      properties:
+        api_key:
+          description: "API key of the sandbox, with every Admin API scope. Shown\
+            \ only in this response; it expires with the sandbox."
+          example: lmk_3f9c…
+          type: string
+      required:
+      - api_key
+      type: object
     AdminSandboxSpawnResponse:
       example:
         data:
           owner_email: owner_email
           expires_at: 2000-01-23T04:56:07.000+00:00
+          api_key: lmk_3f9c…
           name: name
           created_at: 2000-01-23T04:56:07.000+00:00
           spawned_from: spawned_from
           slug: slug
       properties:
         data:
-          $ref: "#/components/schemas/SandboxTenant"
+          $ref: "#/components/schemas/AdminSandboxSpawnResponse_data"
       type: object
     AdminSandboxListResponse:
       example:
@@ -17769,14 +18045,14 @@ components:
           privacy_url: privacy_url
           theme: auto
           magic_link_enabled: true
-          background_overlay_opacity: 6
+          background_overlay_opacity: 1
           split_panel_title: split_panel_title
           button_style: filled
           apply_to_consent: true
           footer_text: footer_text
           primary_color: primary_color
           background_type: solid
-          magic_link_expiry: 7
+          magic_link_expiry: 6
           layout: centered
           background_color: background_color
           show_tenant_name: true
@@ -17788,25 +18064,22 @@ components:
         email:
           key: ""
         authentication:
+          cimd_enabled: true
           passkeys:
             require_certified_authenticator: true
           push_auth_required: true
-          encrypt_client_secrets: true
           social_providers:
           - social_providers
           - social_providers
           password_rotation_policy:
-            max_age_days: 7
-            history_count: 1
-            notify_before_days: 1
+            max_age_days: 90
             enabled: true
-          no_mfa_action: no_mfa_action
+          no_mfa_action: allow
           passkey_enabled: true
           mfa_methods:
           - mfa_methods
           - mfa_methods
           dynamic_client_registration_enabled: true
-          biometric_enabled: true
           mfa_policy:
             min_tier_login: 1
             nudge_interval_days: 7
@@ -17830,6 +18103,16 @@ components:
             required_since: 3
             grace_period_days: 53
             sms_block_voip: false
+          password_policy:
+            template: fair
+            require_numbers: true
+            reject_breached_passwords: true
+            min_length: 57
+            require_lowercase: true
+            require_uppercase: true
+            check_breached_on_login: true
+            require_special: true
+            breached_password_min_count: 1
           xaa_idp_enabled: true
           progressive_profiling:
             rules:
@@ -17839,25 +18122,18 @@ components:
           password_min_length: 2
           xaa_resource_enabled: true
           mfa_required: true
-          social_login_enabled: true
-          password_require_special: true
-          cimd_enabled: true
-          password_policy:
-            template: fair
-            require_numbers: true
-            min_length: 4
-            require_uppercase: true
-            require_special: true
           social_configs:
             key:
               key: ""
           cimd_allowed_domains:
           - cimd_allowed_domains
           - cimd_allowed_domains
+          social_login_enabled: true
+          password_require_special: true
           cimd_localhost_redirect_policy: warn
           push_app_name: push_app_name
           mfa_sms_enabled: true
-          session_timeout: 1
+          session_timeout: 124210
       properties:
         general:
           $ref: "#/components/schemas/AdminSettingsAllResponseDataGeneral"
@@ -17901,14 +18177,14 @@ components:
             privacy_url: privacy_url
             theme: auto
             magic_link_enabled: true
-            background_overlay_opacity: 6
+            background_overlay_opacity: 1
             split_panel_title: split_panel_title
             button_style: filled
             apply_to_consent: true
             footer_text: footer_text
             primary_color: primary_color
             background_type: solid
-            magic_link_expiry: 7
+            magic_link_expiry: 6
             layout: centered
             background_color: background_color
             show_tenant_name: true
@@ -17920,25 +18196,22 @@ components:
           email:
             key: ""
           authentication:
+            cimd_enabled: true
             passkeys:
               require_certified_authenticator: true
             push_auth_required: true
-            encrypt_client_secrets: true
             social_providers:
             - social_providers
             - social_providers
             password_rotation_policy:
-              max_age_days: 7
-              history_count: 1
-              notify_before_days: 1
+              max_age_days: 90
               enabled: true
-            no_mfa_action: no_mfa_action
+            no_mfa_action: allow
             passkey_enabled: true
             mfa_methods:
             - mfa_methods
             - mfa_methods
             dynamic_client_registration_enabled: true
-            biometric_enabled: true
             mfa_policy:
               min_tier_login: 1
               nudge_interval_days: 7
@@ -17962,6 +18235,16 @@ components:
               required_since: 3
               grace_period_days: 53
               sms_block_voip: false
+            password_policy:
+              template: fair
+              require_numbers: true
+              reject_breached_passwords: true
+              min_length: 57
+              require_lowercase: true
+              require_uppercase: true
+              check_breached_on_login: true
+              require_special: true
+              breached_password_min_count: 1
             xaa_idp_enabled: true
             progressive_profiling:
               rules:
@@ -17971,25 +18254,18 @@ components:
             password_min_length: 2
             xaa_resource_enabled: true
             mfa_required: true
-            social_login_enabled: true
-            password_require_special: true
-            cimd_enabled: true
-            password_policy:
-              template: fair
-              require_numbers: true
-              min_length: 4
-              require_uppercase: true
-              require_special: true
             social_configs:
               key:
                 key: ""
             cimd_allowed_domains:
             - cimd_allowed_domains
             - cimd_allowed_domains
+            social_login_enabled: true
+            password_require_special: true
             cimd_localhost_redirect_policy: warn
             push_app_name: push_app_name
             mfa_sms_enabled: true
-            session_timeout: 1
+            session_timeout: 124210
       properties:
         data:
           $ref: "#/components/schemas/AdminSettingsAllResponseData"
@@ -18064,25 +18340,22 @@ components:
     AdminSettingsAuthenticationGetResponse:
       example:
         data:
+          cimd_enabled: true
           passkeys:
             require_certified_authenticator: true
           push_auth_required: true
-          encrypt_client_secrets: true
           social_providers:
           - social_providers
           - social_providers
           password_rotation_policy:
-            max_age_days: 7
-            history_count: 1
-            notify_before_days: 1
+            max_age_days: 90
             enabled: true
-          no_mfa_action: no_mfa_action
+          no_mfa_action: allow
           passkey_enabled: true
           mfa_methods:
           - mfa_methods
           - mfa_methods
           dynamic_client_registration_enabled: true
-          biometric_enabled: true
           mfa_policy:
             min_tier_login: 1
             nudge_interval_days: 7
@@ -18106,6 +18379,16 @@ components:
             required_since: 3
             grace_period_days: 53
             sms_block_voip: false
+          password_policy:
+            template: fair
+            require_numbers: true
+            reject_breached_passwords: true
+            min_length: 57
+            require_lowercase: true
+            require_uppercase: true
+            check_breached_on_login: true
+            require_special: true
+            breached_password_min_count: 1
           xaa_idp_enabled: true
           progressive_profiling:
             rules:
@@ -18115,25 +18398,18 @@ components:
           password_min_length: 2
           xaa_resource_enabled: true
           mfa_required: true
-          social_login_enabled: true
-          password_require_special: true
-          cimd_enabled: true
-          password_policy:
-            template: fair
-            require_numbers: true
-            min_length: 4
-            require_uppercase: true
-            require_special: true
           social_configs:
             key:
               key: ""
           cimd_allowed_domains:
           - cimd_allowed_domains
           - cimd_allowed_domains
+          social_login_enabled: true
+          password_require_special: true
           cimd_localhost_redirect_policy: warn
           push_app_name: push_app_name
           mfa_sms_enabled: true
-          session_timeout: 1
+          session_timeout: 124210
       properties:
         data:
           $ref: "#/components/schemas/AuthenticationSettings"
@@ -18141,25 +18417,22 @@ components:
     PutAdminSettingsAuthenticationUpdateResponse:
       example:
         data:
+          cimd_enabled: true
           passkeys:
             require_certified_authenticator: true
           push_auth_required: true
-          encrypt_client_secrets: true
           social_providers:
           - social_providers
           - social_providers
           password_rotation_policy:
-            max_age_days: 7
-            history_count: 1
-            notify_before_days: 1
+            max_age_days: 90
             enabled: true
-          no_mfa_action: no_mfa_action
+          no_mfa_action: allow
           passkey_enabled: true
           mfa_methods:
           - mfa_methods
           - mfa_methods
           dynamic_client_registration_enabled: true
-          biometric_enabled: true
           mfa_policy:
             min_tier_login: 1
             nudge_interval_days: 7
@@ -18183,6 +18456,16 @@ components:
             required_since: 3
             grace_period_days: 53
             sms_block_voip: false
+          password_policy:
+            template: fair
+            require_numbers: true
+            reject_breached_passwords: true
+            min_length: 57
+            require_lowercase: true
+            require_uppercase: true
+            check_breached_on_login: true
+            require_special: true
+            breached_password_min_count: 1
           xaa_idp_enabled: true
           progressive_profiling:
             rules:
@@ -18192,25 +18475,18 @@ components:
           password_min_length: 2
           xaa_resource_enabled: true
           mfa_required: true
-          social_login_enabled: true
-          password_require_special: true
-          cimd_enabled: true
-          password_policy:
-            template: fair
-            require_numbers: true
-            min_length: 4
-            require_uppercase: true
-            require_special: true
           social_configs:
             key:
               key: ""
           cimd_allowed_domains:
           - cimd_allowed_domains
           - cimd_allowed_domains
+          social_login_enabled: true
+          password_require_special: true
           cimd_localhost_redirect_policy: warn
           push_app_name: push_app_name
           mfa_sms_enabled: true
-          session_timeout: 1
+          session_timeout: 124210
         message: message
       properties:
         data:
@@ -18318,14 +18594,14 @@ components:
           privacy_url: privacy_url
           theme: auto
           magic_link_enabled: true
-          background_overlay_opacity: 6
+          background_overlay_opacity: 1
           split_panel_title: split_panel_title
           button_style: filled
           apply_to_consent: true
           footer_text: footer_text
           primary_color: primary_color
           background_type: solid
-          magic_link_expiry: 7
+          magic_link_expiry: 6
           layout: centered
           background_color: background_color
           show_tenant_name: true
@@ -18361,14 +18637,14 @@ components:
           privacy_url: privacy_url
           theme: auto
           magic_link_enabled: true
-          background_overlay_opacity: 6
+          background_overlay_opacity: 1
           split_panel_title: split_panel_title
           button_style: filled
           apply_to_consent: true
           footer_text: footer_text
           primary_color: primary_color
           background_type: solid
-          magic_link_expiry: 7
+          magic_link_expiry: 6
           layout: centered
           background_color: background_color
           show_tenant_name: true
@@ -18392,19 +18668,16 @@ components:
             bearer_token: bearer_token
             allow_user_deletion: true
             auto_activate_users: true
-            attribute_mapping:
-              key: attribute_mapping
             token_created_at: token_created_at
             allow_user_updates: true
             protected_attributes:
-              permissions: true
-              roles: true
+              role_membership: true
               name: true
               active: true
               email: true
             allow_user_creation: true
-            enabled: true
             bearer_token_preview: bearer_token_preview
+            enabled: true
             allow_group_operations: true
             bearer_token_hash:
               configured: true
@@ -18415,8 +18688,6 @@ components:
               configured: true
               redacted: true
             oauth2_scope: oauth2_scope
-            attribute_mapping:
-              key: attribute_mapping
             verify_tls: true
             last_batch_sync_counts:
               key: ""
@@ -18457,19 +18728,16 @@ components:
             bearer_token: bearer_token
             allow_user_deletion: true
             auto_activate_users: true
-            attribute_mapping:
-              key: attribute_mapping
             token_created_at: token_created_at
             allow_user_updates: true
             protected_attributes:
-              permissions: true
-              roles: true
+              role_membership: true
               name: true
               active: true
               email: true
             allow_user_creation: true
-            enabled: true
             bearer_token_preview: bearer_token_preview
+            enabled: true
             allow_group_operations: true
             bearer_token_hash:
               configured: true
@@ -18480,8 +18748,6 @@ components:
               configured: true
               redacted: true
             oauth2_scope: oauth2_scope
-            attribute_mapping:
-              key: attribute_mapping
             verify_tls: true
             last_batch_sync_counts:
               key: ""
@@ -19943,6 +20209,7 @@ components:
       type: object
     AdminWebhooksTestResponse:
       example:
+        deliveryId: deliveryId
         success: true
         message: Test webhook delivered successfully
         statusCode: 0
@@ -19952,6 +20219,10 @@ components:
         statusCode:
           description: HTTP status returned by the receiver
           type: integer
+        deliveryId:
+          description: Id of the delivery row (the `X-LumoAuth-Delivery` header of
+            the request)
+          type: string
         message:
           example: Test webhook delivered successfully
           type: string
@@ -20104,27 +20375,40 @@ components:
         data:
           $ref: "#/components/schemas/AdminWebhooksDeliveryShowResponse_data"
       type: object
+    AdminWebhooksDeliveryReplayResponseData:
+      example:
+        webhook_id: 0
+        delivery_id: delivery_id
+        event_name: event_name
+        replay_of: replay_of
+        status: pending
+      properties:
+        delivery_id:
+          description: Id of the new delivery
+          type: string
+        replay_of:
+          description: Id of the delivery that was replayed
+          type: string
+        webhook_id:
+          type: integer
+        event_name:
+          type: string
+        status:
+          example: pending
+          type: string
+      type: object
     AdminWebhooksDeliveryReplayResponse:
       example:
         data:
-          attempt_count: 6
-          last_status_code: 1
-          last_response_body: last_response_body
-          delivery_id: delivery_id
-          created_at: 2000-01-23T04:56:07.000+00:00
-          succeeded_at: 2000-01-23T04:56:07.000+00:00
-          next_attempt_at: 2000-01-23T04:56:07.000+00:00
-          updated_at: 2000-01-23T04:56:07.000+00:00
           webhook_id: 0
+          delivery_id: delivery_id
           event_name: event_name
-          dead_lettered_at: 2000-01-23T04:56:07.000+00:00
-          id: id
-          last_error: last_error
+          replay_of: replay_of
           status: pending
         message: Delivery re-enqueued
       properties:
         data:
-          $ref: "#/components/schemas/WebhookDelivery"
+          $ref: "#/components/schemas/AdminWebhooksDeliveryReplayResponseData"
         message:
           example: Delivery re-enqueued
           type: string
@@ -20354,16 +20638,17 @@ components:
       type: object
     GetApprovalStatusResponseApprovedBy:
       example:
-        user_id: 0
+        user_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
       properties:
         user_id:
-          type: integer
+          format: uuid
+          type: string
       type: object
     GetApprovalStatusResponse:
       example:
         reason: reason
         approved_by:
-          user_id: 0
+          user_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         impact: impact
         approval_token: approval_token
         responded_at: 2000-01-23T04:56:07.000+00:00
@@ -20413,8 +20698,8 @@ components:
         issuer:
           type: string
         audience_generic:
-          description: True when the registered audience is not specific to this deployment
-            (operators should move to the agent-specific audience).
+          description: True when the registered audience is not specific to LumoAuth
+            (move to the agent-specific audience).
           type: boolean
       type: object
     AttestResponse:
@@ -21131,7 +21416,8 @@ components:
           nullable: true
           type: string
         source:
-          description: role:<role name> that grants it
+          description: "role:<role name> that grants it, or direct for a permission\
+            \ granted to the user directly"
           example: role:Editor
           type: string
       type: object
@@ -22047,7 +22333,7 @@ components:
         deep_link_android:
           description: "Same link as an intent:// URL pinned to the Android app package,\
             \ for pages served from this host (Chrome keeps same-site App Links in\
-            \ the browser). Null when the deployment has not configured the package."
+            \ the browser). Null when it is not available."
           nullable: true
           type: string
         activation_code:
@@ -22350,6 +22636,47 @@ components:
           type: string
       required:
       - active
+      type: object
+    RequestMagicLinkRequest:
+      example:
+        captcha_token: captcha_token
+        return_to: https://openapi-generator.tech
+        email: email
+        client_id: client_id
+      properties:
+        email:
+          description: The address to mail the sign-in link to.
+          format: email
+          type: string
+        client_id:
+          description: Client ID of an active application of the organization.
+          type: string
+        return_to:
+          description: Page of the application that the person goes to after signing
+            in. An absolute https URL (http only on localhost) whose origin is one
+            of the application's allowed origins or the origin of one of its redirect
+            URIs. Without it the person goes to the organization's default page.
+          format: uri
+          maxLength: 1024
+          type: string
+        captcha_token:
+          description: Token from the CAPTCHA widget. Required when the organization
+            protects sign-in link requests with a CAPTCHA.
+          type: string
+      required:
+      - client_id
+      - email
+      type: object
+    RequestMagicLinkResponse:
+      example:
+        status: sent
+      properties:
+        status:
+          enum:
+          - sent
+          type: string
+      required:
+      - status
       type: object
     ParResponse:
       example:
@@ -23863,12 +24190,19 @@ components:
           type: integer
       type: object
     AuthenticationSettings_password_policy:
+      description: The password rules that apply. A write is merged with the stored
+        object. A named template sets its own rules; rules sent without a template
+        make the policy custom.
       example:
         template: fair
         require_numbers: true
-        min_length: 4
+        reject_breached_passwords: true
+        min_length: 57
+        require_lowercase: true
         require_uppercase: true
+        check_breached_on_login: true
         require_special: true
+        breached_password_min_count: 1
       properties:
         template:
           enum:
@@ -23878,6 +24212,8 @@ components:
           - custom
           type: string
         min_length:
+          maximum: 128
+          minimum: 8
           type: integer
         require_special:
           type: boolean
@@ -23885,21 +24221,27 @@ components:
           type: boolean
         require_uppercase:
           type: boolean
+        require_lowercase:
+          type: boolean
+        reject_breached_passwords:
+          type: boolean
+        breached_password_min_count:
+          minimum: 1
+          type: integer
+        check_breached_on_login:
+          type: boolean
       type: object
     AuthenticationSettings_password_rotation_policy:
+      description: A write is merged with the stored object.
       example:
-        max_age_days: 7
-        history_count: 1
-        notify_before_days: 1
+        max_age_days: 90
         enabled: true
       properties:
         enabled:
           type: boolean
         max_age_days:
-          type: integer
-        notify_before_days:
-          type: integer
-        history_count:
+          maximum: 730
+          minimum: 1
           type: integer
       type: object
     AuthenticationSettings_progressive_profiling:
@@ -23918,12 +24260,10 @@ components:
           type: array
       type: object
     ScimSettings_inbound_protected_attributes:
-      additionalProperties:
-        type: boolean
-      description: Attribute name => true when SCIM may not change it.
+      description: Attribute name => true when SCIM may not change it. role_membership
+        stops every /Groups request that would add or remove a member of a role.
       example:
-        permissions: true
-        roles: true
+        role_membership: true
         name: true
         active: true
         email: true
@@ -23934,9 +24274,7 @@ components:
           type: boolean
         active:
           type: boolean
-        roles:
-          type: boolean
-        permissions:
+        role_membership:
           type: boolean
       type: object
     ScimSettings_inbound:
@@ -23947,19 +24285,16 @@ components:
         bearer_token: bearer_token
         allow_user_deletion: true
         auto_activate_users: true
-        attribute_mapping:
-          key: attribute_mapping
         token_created_at: token_created_at
         allow_user_updates: true
         protected_attributes:
-          permissions: true
-          roles: true
+          role_membership: true
           name: true
           active: true
           email: true
         allow_user_creation: true
-        enabled: true
         bearer_token_preview: bearer_token_preview
+        enabled: true
         allow_group_operations: true
         bearer_token_hash:
           configured: true
@@ -23992,11 +24327,6 @@ components:
           type: boolean
         protected_attributes:
           $ref: "#/components/schemas/ScimSettings_inbound_protected_attributes"
-        attribute_mapping:
-          additionalProperties:
-            type: string
-          description: SCIM attribute => user field.
-          type: object
         auto_activate_users:
           type: boolean
         deprovisioning_action:
@@ -24015,8 +24345,6 @@ components:
           configured: true
           redacted: true
         oauth2_scope: oauth2_scope
-        attribute_mapping:
-          key: attribute_mapping
         verify_tls: true
         last_batch_sync_counts:
           key: ""
@@ -24076,10 +24404,14 @@ components:
           nullable: true
           type: string
         tls_certificate:
-          description: Optional PEM CA certificate used for TLS verification.
+          description: Optional PEM CA certificate used for TLS verification. Send
+            null or an empty string to remove it. Changing it requires re-entering
+            the stored secrets.
           nullable: true
           type: string
         verify_tls:
+          description: Always true. The endpoint certificate is always verified; false
+            is rejected with 400.
           type: boolean
         push_user_creates:
           type: boolean
@@ -24099,11 +24431,6 @@ components:
           - daily
           - weekly
           type: string
-        attribute_mapping:
-          additionalProperties:
-            type: string
-          description: User field => SCIM attribute.
-          type: object
         last_sync_at:
           nullable: true
           type: string
@@ -24254,6 +24581,7 @@ components:
       - $ref: "#/components/schemas/OAuthClient"
       - $ref: "#/components/schemas/OAuthClientSecretIssued"
       example:
+        cibaEnabled: true
         clientId: clientId
         isConfidential: true
         secret: secret
@@ -24273,6 +24601,18 @@ components:
         - scopes
         - scopes
         _note: Store the secret securely. It will not be shown again.
+    AdminSandboxSpawnResponse_data:
+      allOf:
+      - $ref: "#/components/schemas/SandboxTenant"
+      - $ref: "#/components/schemas/AdminSandboxSpawnResponseData1"
+      example:
+        owner_email: owner_email
+        expires_at: 2000-01-23T04:56:07.000+00:00
+        api_key: lmk_3f9c…
+        name: name
+        created_at: 2000-01-23T04:56:07.000+00:00
+        spawned_from: spawned_from
+        slug: slug
     AdminWebhooksCreateResponse_data:
       allOf:
       - $ref: "#/components/schemas/Webhook"

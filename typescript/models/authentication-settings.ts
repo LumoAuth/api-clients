@@ -45,12 +45,6 @@ export interface AuthenticationSettings {
     'passkey_enabled'?: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof AuthenticationSettings
-     */
-    'biometric_enabled'?: boolean;
-    /**
-     * 
      * @type {AuthenticationSettingsPasskeys}
      * @memberof AuthenticationSettings
      */
@@ -92,7 +86,7 @@ export interface AuthenticationSettings {
      */
     'push_app_name'?: string | null;
     /**
-     * 
+     * Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag.
      * @type {boolean}
      * @memberof AuthenticationSettings
      */
@@ -138,19 +132,13 @@ export interface AuthenticationSettings {
      * @type {string}
      * @memberof AuthenticationSettings
      */
-    'no_mfa_action'?: string;
+    'no_mfa_action'?: AuthenticationSettingsNoMfaAction;
     /**
-     * Seconds.
+     * Idle timeout in seconds.
      * @type {number}
      * @memberof AuthenticationSettings
      */
     'session_timeout'?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AuthenticationSettings
-     */
-    'encrypt_client_secrets'?: boolean;
     /**
      * 
      * @type {boolean}
@@ -195,6 +183,16 @@ export interface AuthenticationSettings {
     'progressive_profiling'?: AuthenticationSettingsProgressiveProfiling;
 }
 
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AuthenticationSettingsNoMfaAction {
+    ALLOW = 'allow',
+    PROMPT = 'prompt',
+    EMAIL = 'email',
+    BLOCK = 'block'
+}
 /**
     * @export
     * @enum {string}

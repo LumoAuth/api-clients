@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **redirectUris** | **Array&lt;string&gt;** | Detailed responses only | [optional] [default to undefined]
 **scopes** | **Array&lt;string&gt;** | Detailed responses only | [optional] [default to undefined]
 **grantTypes** | **Array&lt;string&gt;** | Detailed responses only | [optional] [default to undefined]
+**cibaEnabled** | **boolean** | Detailed responses only. Whether the client may use CIBA (backchannel authentication). | [optional] [default to undefined]
 
 ## Example
 
@@ -34,6 +35,7 @@ const instance: OAuthClient = {
     redirectUris,
     scopes,
     grantTypes,
+    cibaEnabled,
 };
 ```
 

@@ -38,8 +38,8 @@ class ScimSettingsOutbound(BaseModel):
     oauth2_client_secret: Optional[RedactedSecret] = None
     oauth2_token_url: Optional[StrictStr] = None
     oauth2_scope: Optional[StrictStr] = None
-    tls_certificate: Optional[StrictStr] = Field(default=None, description="Optional PEM CA certificate used for TLS verification.")
-    verify_tls: Optional[StrictBool] = None
+    tls_certificate: Optional[StrictStr] = Field(default=None, description="Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets.")
+    verify_tls: Optional[StrictBool] = Field(default=None, description="Always true. The endpoint certificate is always verified; false is rejected with 400.")
     push_user_creates: Optional[StrictBool] = None
     push_user_updates: Optional[StrictBool] = None
     push_user_deletes: Optional[StrictBool] = None
@@ -47,7 +47,6 @@ class ScimSettingsOutbound(BaseModel):
     sync_on_login: Optional[StrictBool] = None
     batch_sync_enabled: Optional[StrictBool] = None
     batch_sync_interval: Optional[StrictStr] = None
-    attribute_mapping: Optional[Dict[str, StrictStr]] = Field(default=None, description="User field => SCIM attribute.")
     last_sync_at: Optional[StrictStr] = None
     last_sync_status: Optional[StrictStr] = None
     last_sync_error: Optional[StrictStr] = None
@@ -55,7 +54,7 @@ class ScimSettingsOutbound(BaseModel):
     last_batch_sync_status: Optional[StrictStr] = None
     last_batch_sync_error: Optional[StrictStr] = None
     last_batch_sync_counts: Optional[Dict[str, Any]] = Field(default=None, description="Free-form counters of the last batch reconcile.")
-    __properties: ClassVar[List[str]] = ["enabled", "endpoint_url", "bearer_token", "auth_type", "basic_username", "basic_password", "oauth2_client_id", "oauth2_client_secret", "oauth2_token_url", "oauth2_scope", "tls_certificate", "verify_tls", "push_user_creates", "push_user_updates", "push_user_deletes", "push_group_changes", "sync_on_login", "batch_sync_enabled", "batch_sync_interval", "attribute_mapping", "last_sync_at", "last_sync_status", "last_sync_error", "last_batch_sync_at", "last_batch_sync_status", "last_batch_sync_error", "last_batch_sync_counts"]
+    __properties: ClassVar[List[str]] = ["enabled", "endpoint_url", "bearer_token", "auth_type", "basic_username", "basic_password", "oauth2_client_id", "oauth2_client_secret", "oauth2_token_url", "oauth2_scope", "tls_certificate", "verify_tls", "push_user_creates", "push_user_updates", "push_user_deletes", "push_group_changes", "sync_on_login", "batch_sync_enabled", "batch_sync_interval", "last_sync_at", "last_sync_status", "last_sync_error", "last_batch_sync_at", "last_batch_sync_status", "last_batch_sync_error", "last_batch_sync_counts"]
 
     @field_validator('auth_type')
     def auth_type_validate_enum(cls, value):
@@ -236,7 +235,6 @@ class ScimSettingsOutbound(BaseModel):
             "sync_on_login": obj.get("sync_on_login"),
             "batch_sync_enabled": obj.get("batch_sync_enabled"),
             "batch_sync_interval": obj.get("batch_sync_interval"),
-            "attribute_mapping": obj.get("attribute_mapping"),
             "last_sync_at": obj.get("last_sync_at"),
             "last_sync_status": obj.get("last_sync_status"),
             "last_sync_error": obj.get("last_sync_error"),

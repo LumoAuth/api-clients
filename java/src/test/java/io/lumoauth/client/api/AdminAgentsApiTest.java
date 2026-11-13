@@ -17,6 +17,7 @@ import io.lumoauth.client.ApiException;
 import io.lumoauth.client.model.AdminAgentsActivateResponse;
 import io.lumoauth.client.model.AdminAgentsAgentsDisableResponse;
 import io.lumoauth.client.model.AdminAgentsAgentsEnableResponse;
+import io.lumoauth.client.model.AdminAgentsAgentsRotateKeyRequest;
 import io.lumoauth.client.model.AdminAgentsAgentsRotateKeyResponse;
 import io.lumoauth.client.model.AdminAgentsCreateRequest;
 import io.lumoauth.client.model.AdminAgentsCreateResponse;
@@ -99,7 +100,8 @@ public class AdminAgentsApiTest {
     public void adminAgentsAgentsRotateKeyTest() throws ApiException {
         String orgId = null;
         String agentId = null;
-        AdminAgentsAgentsRotateKeyResponse response = api.adminAgentsAgentsRotateKey(orgId, agentId);
+        AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest = null;
+        AdminAgentsAgentsRotateKeyResponse response = api.adminAgentsAgentsRotateKey(orgId, agentId, adminAgentsAgentsRotateKeyRequest);
         // TODO: test validations
     }
 
@@ -232,7 +234,8 @@ public class AdminAgentsApiTest {
     public void adminAgentsRotateCredentialsTest() throws ApiException {
         String orgId = null;
         String agentId = null;
-        AdminAgentsRotateCredentialsResponse response = api.adminAgentsRotateCredentials(orgId, agentId);
+        AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest = null;
+        AdminAgentsRotateCredentialsResponse response = api.adminAgentsRotateCredentials(orgId, agentId, adminAgentsAgentsRotateKeyRequest);
         // TODO: test validations
     }
 

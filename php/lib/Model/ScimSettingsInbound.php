@@ -69,7 +69,6 @@ class ScimSettingsInbound implements ModelInterface, ArrayAccess, \JsonSerializa
         'allowUserDeletion' => 'bool',
         'allowGroupOperations' => 'bool',
         'protectedAttributes' => '\LumoAuth\ApiClient\Model\ScimSettingsInboundProtectedAttributes',
-        'attributeMapping' => 'array<string,string>',
         'autoActivateUsers' => 'bool',
         'deprovisioningAction' => 'string'
     ];
@@ -92,7 +91,6 @@ class ScimSettingsInbound implements ModelInterface, ArrayAccess, \JsonSerializa
         'allowUserDeletion' => null,
         'allowGroupOperations' => null,
         'protectedAttributes' => null,
-        'attributeMapping' => null,
         'autoActivateUsers' => null,
         'deprovisioningAction' => null
     ];
@@ -113,7 +111,6 @@ class ScimSettingsInbound implements ModelInterface, ArrayAccess, \JsonSerializa
         'allowUserDeletion' => false,
         'allowGroupOperations' => false,
         'protectedAttributes' => false,
-        'attributeMapping' => false,
         'autoActivateUsers' => false,
         'deprovisioningAction' => false
     ];
@@ -214,7 +211,6 @@ class ScimSettingsInbound implements ModelInterface, ArrayAccess, \JsonSerializa
         'allowUserDeletion' => 'allow_user_deletion',
         'allowGroupOperations' => 'allow_group_operations',
         'protectedAttributes' => 'protected_attributes',
-        'attributeMapping' => 'attribute_mapping',
         'autoActivateUsers' => 'auto_activate_users',
         'deprovisioningAction' => 'deprovisioning_action'
     ];
@@ -235,7 +231,6 @@ class ScimSettingsInbound implements ModelInterface, ArrayAccess, \JsonSerializa
         'allowUserDeletion' => 'setAllowUserDeletion',
         'allowGroupOperations' => 'setAllowGroupOperations',
         'protectedAttributes' => 'setProtectedAttributes',
-        'attributeMapping' => 'setAttributeMapping',
         'autoActivateUsers' => 'setAutoActivateUsers',
         'deprovisioningAction' => 'setDeprovisioningAction'
     ];
@@ -256,7 +251,6 @@ class ScimSettingsInbound implements ModelInterface, ArrayAccess, \JsonSerializa
         'allowUserDeletion' => 'getAllowUserDeletion',
         'allowGroupOperations' => 'getAllowGroupOperations',
         'protectedAttributes' => 'getProtectedAttributes',
-        'attributeMapping' => 'getAttributeMapping',
         'autoActivateUsers' => 'getAutoActivateUsers',
         'deprovisioningAction' => 'getDeprovisioningAction'
     ];
@@ -345,7 +339,6 @@ class ScimSettingsInbound implements ModelInterface, ArrayAccess, \JsonSerializa
         $this->setIfExists('allowUserDeletion', $data ?? [], null);
         $this->setIfExists('allowGroupOperations', $data ?? [], null);
         $this->setIfExists('protectedAttributes', $data ?? [], null);
-        $this->setIfExists('attributeMapping', $data ?? [], null);
         $this->setIfExists('autoActivateUsers', $data ?? [], null);
         $this->setIfExists('deprovisioningAction', $data ?? [], null);
     }
@@ -695,33 +688,6 @@ class ScimSettingsInbound implements ModelInterface, ArrayAccess, \JsonSerializa
             throw new \InvalidArgumentException('non-nullable protectedAttributes cannot be null');
         }
         $this->container['protectedAttributes'] = $protectedAttributes;
-
-        return $this;
-    }
-
-    /**
-     * Gets attributeMapping
-     *
-     * @return array<string,string>|null
-     */
-    public function getAttributeMapping()
-    {
-        return $this->container['attributeMapping'];
-    }
-
-    /**
-     * Sets attributeMapping
-     *
-     * @param array<string,string>|null $attributeMapping SCIM attribute => user field.
-     *
-     * @return self
-     */
-    public function setAttributeMapping($attributeMapping)
-    {
-        if (is_null($attributeMapping)) {
-            throw new \InvalidArgumentException('non-nullable attributeMapping cannot be null');
-        }
-        $this->container['attributeMapping'] = $attributeMapping;
 
         return $this;
     }

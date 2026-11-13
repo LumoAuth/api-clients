@@ -33,6 +33,12 @@ export interface AdminWebhooksTestResponse {
      */
     'statusCode'?: number;
     /**
+     * Id of the delivery row (the `X-LumoAuth-Delivery` header of the request)
+     * @type {string}
+     * @memberof AdminWebhooksTestResponse
+     */
+    'deliveryId'?: string;
+    /**
      * 
      * @type {string}
      * @memberof AdminWebhooksTestResponse

@@ -1695,7 +1695,7 @@ class AdminUsersApi
     /**
      * Operation adminIdentitiesLink
      *
-     * Link a SAML or LDAP identity to a user
+     * Link a SAML, OpenID Connect or LDAP identity to a user
      *
      * @param  string $orgId orgId (required)
      * @param  string $userId userId (required)
@@ -1715,7 +1715,7 @@ class AdminUsersApi
     /**
      * Operation adminIdentitiesLinkWithHttpInfo
      *
-     * Link a SAML or LDAP identity to a user
+     * Link a SAML, OpenID Connect or LDAP identity to a user
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
@@ -1802,7 +1802,7 @@ class AdminUsersApi
     /**
      * Operation adminIdentitiesLinkAsync
      *
-     * Link a SAML or LDAP identity to a user
+     * Link a SAML, OpenID Connect or LDAP identity to a user
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
@@ -1825,7 +1825,7 @@ class AdminUsersApi
     /**
      * Operation adminIdentitiesLinkAsyncWithHttpInfo
      *
-     * Link a SAML or LDAP identity to a user
+     * Link a SAML, OpenID Connect or LDAP identity to a user
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
@@ -2308,7 +2308,7 @@ class AdminUsersApi
     /**
      * Operation adminIdentitiesUnlink
      *
-     * Unlink a user&#39;s SAML, LDAP or social identity
+     * Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity
      *
      * @param  string $type type (required)
      * @param  string $orgId orgId (required)
@@ -2328,7 +2328,7 @@ class AdminUsersApi
     /**
      * Operation adminIdentitiesUnlinkWithHttpInfo
      *
-     * Unlink a user&#39;s SAML, LDAP or social identity
+     * Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity
      *
      * @param  string $type (required)
      * @param  string $orgId (required)
@@ -2415,7 +2415,7 @@ class AdminUsersApi
     /**
      * Operation adminIdentitiesUnlinkAsync
      *
-     * Unlink a user&#39;s SAML, LDAP or social identity
+     * Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity
      *
      * @param  string $type (required)
      * @param  string $orgId (required)
@@ -2438,7 +2438,7 @@ class AdminUsersApi
     /**
      * Operation adminIdentitiesUnlinkAsyncWithHttpInfo
      *
-     * Unlink a user&#39;s SAML, LDAP or social identity
+     * Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity
      *
      * @param  string $type (required)
      * @param  string $orgId (required)

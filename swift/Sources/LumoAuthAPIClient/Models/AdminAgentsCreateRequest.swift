@@ -16,17 +16,21 @@ public struct AdminAgentsCreateRequest: Codable, JSONEncodable, Hashable {
     public var name: String?
     public var description: String?
     public var capabilities: [String]?
+    /** The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. Leave it out for an agent without a budget. */
+    public var budgetPolicy: [String: AnyCodable]?
 
-    public init(name: String? = nil, description: String? = nil, capabilities: [String]? = nil) {
+    public init(name: String? = nil, description: String? = nil, capabilities: [String]? = nil, budgetPolicy: [String: AnyCodable]? = nil) {
         self.name = name
         self.description = description
         self.capabilities = capabilities
+        self.budgetPolicy = budgetPolicy
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case description
         case capabilities
+        case budgetPolicy
     }
 
     // Encodable protocol methods
@@ -36,6 +40,7 @@ public struct AdminAgentsCreateRequest: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(name, forKey: .name)
         try container.encodeIfPresent(description, forKey: .description)
         try container.encodeIfPresent(capabilities, forKey: .capabilities)
+        try container.encodeIfPresent(budgetPolicy, forKey: .budgetPolicy)
     }
 }
 

@@ -58,7 +58,7 @@ class AdminWebhooksDeliveryReplayResponse implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'data' => '\LumoAuth\ApiClient\Model\WebhookDelivery',
+        'data' => '\LumoAuth\ApiClient\Model\AdminWebhooksDeliveryReplayResponseData',
         'message' => 'string'
     ];
 
@@ -300,7 +300,7 @@ class AdminWebhooksDeliveryReplayResponse implements ModelInterface, ArrayAccess
     /**
      * Gets data
      *
-     * @return \LumoAuth\ApiClient\Model\WebhookDelivery|null
+     * @return \LumoAuth\ApiClient\Model\AdminWebhooksDeliveryReplayResponseData|null
      */
     public function getData()
     {
@@ -310,7 +310,7 @@ class AdminWebhooksDeliveryReplayResponse implements ModelInterface, ArrayAccess
     /**
      * Sets data
      *
-     * @param \LumoAuth\ApiClient\Model\WebhookDelivery|null $data data
+     * @param \LumoAuth\ApiClient\Model\AdminWebhooksDeliveryReplayResponseData|null $data data
      *
      * @return self
      */

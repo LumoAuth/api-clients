@@ -84,13 +84,13 @@ export interface ScimSettingsOutbound {
      */
     'oauth2_scope'?: string | null;
     /**
-     * Optional PEM CA certificate used for TLS verification.
+     * Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets.
      * @type {string}
      * @memberof ScimSettingsOutbound
      */
     'tls_certificate'?: string | null;
     /**
-     * 
+     * Always true. The endpoint certificate is always verified; false is rejected with 400.
      * @type {boolean}
      * @memberof ScimSettingsOutbound
      */
@@ -137,12 +137,6 @@ export interface ScimSettingsOutbound {
      * @memberof ScimSettingsOutbound
      */
     'batch_sync_interval'?: ScimSettingsOutboundBatchSyncInterval;
-    /**
-     * User field => SCIM attribute.
-     * @type {{ [key: string]: string; }}
-     * @memberof ScimSettingsOutbound
-     */
-    'attribute_mapping'?: { [key: string]: string; };
     /**
      * 
      * @type {string}

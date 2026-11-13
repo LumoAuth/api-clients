@@ -14,7 +14,6 @@
 | **allow_user_deletion** | **Boolean** |  | [optional] |
 | **allow_group_operations** | **Boolean** |  | [optional] |
 | **protected_attributes** | [**ScimSettingsInboundProtectedAttributes**](ScimSettingsInboundProtectedAttributes.md) |  | [optional] |
-| **attribute_mapping** | **Hash&lt;String, String&gt;** | SCIM attribute &#x3D;&gt; user field. | [optional] |
 | **auto_activate_users** | **Boolean** |  | [optional] |
 | **deprovisioning_action** | **String** |  | [optional] |
 
@@ -34,7 +33,6 @@ instance = LumoAuthApiClient::ScimSettingsInbound.new(
   allow_user_deletion: null,
   allow_group_operations: null,
   protected_attributes: null,
-  attribute_mapping: null,
   auto_activate_users: null,
   deprovisioning_action: null
 )

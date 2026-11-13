@@ -21,7 +21,7 @@
  */
 export interface OAuthClientSecretIssued {
     /**
-     * Plaintext client secret — returned only once, never retrievable again
+     * Plaintext client secret — returned only once, never retrievable again. Absent for a public client
      * @type {string}
      * @memberof OAuthClientSecretIssued
      */

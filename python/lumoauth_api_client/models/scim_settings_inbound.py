@@ -39,10 +39,9 @@ class ScimSettingsInbound(BaseModel):
     allow_user_deletion: Optional[StrictBool] = None
     allow_group_operations: Optional[StrictBool] = None
     protected_attributes: Optional[ScimSettingsInboundProtectedAttributes] = None
-    attribute_mapping: Optional[Dict[str, StrictStr]] = Field(default=None, description="SCIM attribute => user field.")
     auto_activate_users: Optional[StrictBool] = None
     deprovisioning_action: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["enabled", "bearer_token", "bearer_token_hash", "bearer_token_preview", "token_created_at", "allow_user_creation", "allow_user_updates", "allow_user_deletion", "allow_group_operations", "protected_attributes", "attribute_mapping", "auto_activate_users", "deprovisioning_action"]
+    __properties: ClassVar[List[str]] = ["enabled", "bearer_token", "bearer_token_hash", "bearer_token_preview", "token_created_at", "allow_user_creation", "allow_user_updates", "allow_user_deletion", "allow_group_operations", "protected_attributes", "auto_activate_users", "deprovisioning_action"]
 
     @field_validator('deprovisioning_action')
     def deprovisioning_action_validate_enum(cls, value):
@@ -141,7 +140,6 @@ class ScimSettingsInbound(BaseModel):
             "allow_user_deletion": obj.get("allow_user_deletion"),
             "allow_group_operations": obj.get("allow_group_operations"),
             "protected_attributes": ScimSettingsInboundProtectedAttributes.from_dict(obj["protected_attributes"]) if obj.get("protected_attributes") is not None else None,
-            "attribute_mapping": obj.get("attribute_mapping"),
             "auto_activate_users": obj.get("auto_activate_users"),
             "deprovisioning_action": obj.get("deprovisioning_action")
         })

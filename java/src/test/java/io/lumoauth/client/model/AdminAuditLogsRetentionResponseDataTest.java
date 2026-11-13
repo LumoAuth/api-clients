@@ -62,4 +62,28 @@ public class AdminAuditLogsRetentionResponseDataTest {
         // TODO: test planLimitDays
     }
 
+    /**
+     * Test the property 'effectiveRetentionDays'
+     */
+    @Test
+    public void effectiveRetentionDaysTest() {
+        // TODO: test effectiveRetentionDays
+    }
+
+    /**
+     * Test the property 'minRetentionDays'
+     */
+    @Test
+    public void minRetentionDaysTest() {
+        // TODO: test minRetentionDays
+    }
+
+    /**
+     * Test the property 'maxRetentionDays'
+     */
+    @Test
+    public void maxRetentionDaysTest() {
+        // TODO: test maxRetentionDays
+    }
+
 }

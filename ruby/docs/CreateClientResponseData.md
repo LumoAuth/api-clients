@@ -15,7 +15,8 @@
 | **redirect_uris** | **Array&lt;String&gt;** | Detailed responses only | [optional] |
 | **scopes** | **Array&lt;String&gt;** | Detailed responses only | [optional] |
 | **grant_types** | **Array&lt;String&gt;** | Detailed responses only | [optional] |
-| **secret** | **String** | Plaintext client secret — returned only once, never retrievable again | [optional] |
+| **ciba_enabled** | **Boolean** | Detailed responses only. Whether the client may use CIBA (backchannel authentication). | [optional] |
+| **secret** | **String** | Plaintext client secret — returned only once, never retrievable again. Absent for a public client | [optional] |
 | **_note** | **String** |  | [optional] |
 
 ## Example
@@ -35,6 +36,7 @@ instance = LumoAuthApiClient::CreateClientResponseData.new(
   redirect_uris: null,
   scopes: null,
   grant_types: null,
+  ciba_enabled: null,
   secret: null,
   _note: Store the secret securely. It will not be shown again.
 )

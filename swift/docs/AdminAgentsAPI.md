@@ -175,7 +175,7 @@ Name | Type | Description  | Notes
 
 # **adminAgentsAgentsRotateKey**
 ```swift
-    open class func adminAgentsAgentsRotateKey(orgId: String, agentId: String, completion: @escaping (_ data: AdminAgentsAgentsRotateKeyResponse?, _ error: Error?) -> Void)
+    open class func adminAgentsAgentsRotateKey(orgId: String, agentId: String, adminAgentsAgentsRotateKeyRequest: AdminAgentsAgentsRotateKeyRequest? = nil, completion: @escaping (_ data: AdminAgentsAgentsRotateKeyResponse?, _ error: Error?) -> Void)
 ```
 
 Rotate agent API key
@@ -187,9 +187,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let agentId = "agentId_example" // String | 
+let adminAgentsAgentsRotateKeyRequest = AdminAgentsAgentsRotateKeyRequest(apiKeyExpiresInDays: 123, apiKeyExpiresAt: Date()) // AdminAgentsAgentsRotateKeyRequest | Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
 
 // Rotate agent API key
-AdminAgentsAPI.adminAgentsAgentsRotateKey(orgId: orgId, agentId: agentId) { (response, error) in
+AdminAgentsAPI.adminAgentsAgentsRotateKey(orgId: orgId, agentId: agentId, adminAgentsAgentsRotateKeyRequest: adminAgentsAgentsRotateKeyRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -207,6 +208,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **agentId** | **String** |  | 
+ **adminAgentsAgentsRotateKeyRequest** | [**AdminAgentsAgentsRotateKeyRequest**](AdminAgentsAgentsRotateKeyRequest.md) | Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | [optional] 
 
 ### Return type
 
@@ -218,7 +220,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -236,7 +238,7 @@ Create a new agent
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
-let adminAgentsCreateRequest = AdminAgentsCreateRequest(name: "name_example", description: "description_example", capabilities: ["capabilities_example"]) // AdminAgentsCreateRequest | 
+let adminAgentsCreateRequest = AdminAgentsCreateRequest(name: "name_example", description: "description_example", capabilities: ["capabilities_example"], budgetPolicy: "TODO") // AdminAgentsCreateRequest | 
 
 // Create a new agent
 AdminAgentsAPI.adminAgentsCreate(orgId: orgId, adminAgentsCreateRequest: adminAgentsCreateRequest) { (response, error) in
@@ -679,7 +681,7 @@ Name | Type | Description  | Notes
 
 # **adminAgentsRotateCredentials**
 ```swift
-    open class func adminAgentsRotateCredentials(orgId: String, agentId: String, completion: @escaping (_ data: AdminAgentsRotateCredentialsResponse?, _ error: Error?) -> Void)
+    open class func adminAgentsRotateCredentials(orgId: String, agentId: String, adminAgentsAgentsRotateKeyRequest: AdminAgentsAgentsRotateKeyRequest? = nil, completion: @escaping (_ data: AdminAgentsRotateCredentialsResponse?, _ error: Error?) -> Void)
 ```
 
 Rotate agent credentials
@@ -691,9 +693,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let agentId = "agentId_example" // String | 
+let adminAgentsAgentsRotateKeyRequest = AdminAgentsAgentsRotateKeyRequest(apiKeyExpiresInDays: 123, apiKeyExpiresAt: Date()) // AdminAgentsAgentsRotateKeyRequest | For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
 
 // Rotate agent credentials
-AdminAgentsAPI.adminAgentsRotateCredentials(orgId: orgId, agentId: agentId) { (response, error) in
+AdminAgentsAPI.adminAgentsRotateCredentials(orgId: orgId, agentId: agentId, adminAgentsAgentsRotateKeyRequest: adminAgentsAgentsRotateKeyRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -711,6 +714,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **agentId** | **String** |  | 
+ **adminAgentsAgentsRotateKeyRequest** | [**AdminAgentsAgentsRotateKeyRequest**](AdminAgentsAgentsRotateKeyRequest.md) | For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | [optional] 
 
 ### Return type
 
@@ -722,7 +726,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -793,7 +797,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let agentId = "agentId_example" // String | 
-let putAdminAgentsUpdateRequest = PutAdminAgentsUpdateRequest(name: "name_example", description: "description_example", capabilities: ["capabilities_example"]) // PutAdminAgentsUpdateRequest | 
+let putAdminAgentsUpdateRequest = PutAdminAgentsUpdateRequest(name: "name_example", description: "description_example", capabilities: ["capabilities_example"], budgetPolicy: "TODO") // PutAdminAgentsUpdateRequest | 
 
 // Update an existing agent
 AdminAgentsAPI.patchAdminAgentsUpdate(orgId: orgId, agentId: agentId, putAdminAgentsUpdateRequest: putAdminAgentsUpdateRequest) { (response, error) in
@@ -845,7 +849,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let agentId = "agentId_example" // String | 
-let putAdminAgentsUpdateRequest = PutAdminAgentsUpdateRequest(name: "name_example", description: "description_example", capabilities: ["capabilities_example"]) // PutAdminAgentsUpdateRequest | 
+let putAdminAgentsUpdateRequest = PutAdminAgentsUpdateRequest(name: "name_example", description: "description_example", capabilities: ["capabilities_example"], budgetPolicy: "TODO") // PutAdminAgentsUpdateRequest | 
 
 // Update an existing agent
 AdminAgentsAPI.putAdminAgentsUpdate(orgId: orgId, agentId: agentId, putAdminAgentsUpdateRequest: putAdminAgentsUpdateRequest) { (response, error) in

@@ -20,6 +20,8 @@ import io.lumoauth.client.model.IntrospectResponse;
 import io.lumoauth.client.model.ParResponse;
 import io.lumoauth.client.model.RegisterClientResponse;
 import io.lumoauth.client.model.RegisteredClientMetadata;
+import io.lumoauth.client.model.RequestMagicLinkRequest;
+import io.lumoauth.client.model.RequestMagicLinkResponse;
 import io.lumoauth.client.model.SubmitLoginJsonResponse;
 import io.lumoauth.client.model.TokenResponse;
 import org.junit.jupiter.api.Disabled;
@@ -162,6 +164,21 @@ public class OAuthApiTest {
     public void registerClientTest() throws ApiException {
         String orgId = null;
         RegisterClientResponse response = api.registerClient(orgId);
+        // TODO: test validations
+    }
+
+    /**
+     * Request a sign-in link by email
+     *
+     * For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to &#x60;return_to&#x60;, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void requestMagicLinkTest() throws ApiException {
+        String orgId = null;
+        RequestMagicLinkRequest requestMagicLinkRequest = null;
+        RequestMagicLinkResponse response = api.requestMagicLink(orgId, requestMagicLinkRequest);
         // TODO: test validations
     }
 

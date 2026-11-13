@@ -381,7 +381,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Created |  -  |
-| **400** | Invalid effect or policy conditions |  -  |
+| **400** | Invalid effect, priority (a whole number from 0 to 1000) or policy conditions |  -  |
 | **409** | A policy with this slug already exists |  -  |
 
 <a id="abacPoliciesDelete"></a>

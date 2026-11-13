@@ -18,12 +18,10 @@ import (
 // checks if the AuthenticationSettingsPasswordRotationPolicy type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AuthenticationSettingsPasswordRotationPolicy{}
 
-// AuthenticationSettingsPasswordRotationPolicy struct for AuthenticationSettingsPasswordRotationPolicy
+// AuthenticationSettingsPasswordRotationPolicy A write is merged with the stored object.
 type AuthenticationSettingsPasswordRotationPolicy struct {
 	Enabled *bool `json:"enabled,omitempty"`
 	MaxAgeDays *int32 `json:"max_age_days,omitempty"`
-	NotifyBeforeDays *int32 `json:"notify_before_days,omitempty"`
-	HistoryCount *int32 `json:"history_count,omitempty"`
 }
 
 // NewAuthenticationSettingsPasswordRotationPolicy instantiates a new AuthenticationSettingsPasswordRotationPolicy object
@@ -107,70 +105,6 @@ func (o *AuthenticationSettingsPasswordRotationPolicy) SetMaxAgeDays(v int32) {
 	o.MaxAgeDays = &v
 }
 
-// GetNotifyBeforeDays returns the NotifyBeforeDays field value if set, zero value otherwise.
-func (o *AuthenticationSettingsPasswordRotationPolicy) GetNotifyBeforeDays() int32 {
-	if o == nil || IsNil(o.NotifyBeforeDays) {
-		var ret int32
-		return ret
-	}
-	return *o.NotifyBeforeDays
-}
-
-// GetNotifyBeforeDaysOk returns a tuple with the NotifyBeforeDays field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AuthenticationSettingsPasswordRotationPolicy) GetNotifyBeforeDaysOk() (*int32, bool) {
-	if o == nil || IsNil(o.NotifyBeforeDays) {
-		return nil, false
-	}
-	return o.NotifyBeforeDays, true
-}
-
-// HasNotifyBeforeDays returns a boolean if a field has been set.
-func (o *AuthenticationSettingsPasswordRotationPolicy) HasNotifyBeforeDays() bool {
-	if o != nil && !IsNil(o.NotifyBeforeDays) {
-		return true
-	}
-
-	return false
-}
-
-// SetNotifyBeforeDays gets a reference to the given int32 and assigns it to the NotifyBeforeDays field.
-func (o *AuthenticationSettingsPasswordRotationPolicy) SetNotifyBeforeDays(v int32) {
-	o.NotifyBeforeDays = &v
-}
-
-// GetHistoryCount returns the HistoryCount field value if set, zero value otherwise.
-func (o *AuthenticationSettingsPasswordRotationPolicy) GetHistoryCount() int32 {
-	if o == nil || IsNil(o.HistoryCount) {
-		var ret int32
-		return ret
-	}
-	return *o.HistoryCount
-}
-
-// GetHistoryCountOk returns a tuple with the HistoryCount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AuthenticationSettingsPasswordRotationPolicy) GetHistoryCountOk() (*int32, bool) {
-	if o == nil || IsNil(o.HistoryCount) {
-		return nil, false
-	}
-	return o.HistoryCount, true
-}
-
-// HasHistoryCount returns a boolean if a field has been set.
-func (o *AuthenticationSettingsPasswordRotationPolicy) HasHistoryCount() bool {
-	if o != nil && !IsNil(o.HistoryCount) {
-		return true
-	}
-
-	return false
-}
-
-// SetHistoryCount gets a reference to the given int32 and assigns it to the HistoryCount field.
-func (o *AuthenticationSettingsPasswordRotationPolicy) SetHistoryCount(v int32) {
-	o.HistoryCount = &v
-}
-
 func (o AuthenticationSettingsPasswordRotationPolicy) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -186,12 +120,6 @@ func (o AuthenticationSettingsPasswordRotationPolicy) ToMap() (map[string]interf
 	}
 	if !IsNil(o.MaxAgeDays) {
 		toSerialize["max_age_days"] = o.MaxAgeDays
-	}
-	if !IsNil(o.NotifyBeforeDays) {
-		toSerialize["notify_before_days"] = o.NotifyBeforeDays
-	}
-	if !IsNil(o.HistoryCount) {
-		toSerialize["history_count"] = o.HistoryCount
 	}
 	return toSerialize, nil
 }

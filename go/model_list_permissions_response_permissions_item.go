@@ -22,7 +22,7 @@ var _ MappedNullable = &ListPermissionsResponsePermissionsItem{}
 type ListPermissionsResponsePermissionsItem struct {
 	Slug *string `json:"slug,omitempty"`
 	Description NullableString `json:"description,omitempty"`
-	// role:<role name> that grants it
+	// role:<role name> that grants it, or direct for a permission granted to the user directly
 	Source *string `json:"source,omitempty"`
 }
 

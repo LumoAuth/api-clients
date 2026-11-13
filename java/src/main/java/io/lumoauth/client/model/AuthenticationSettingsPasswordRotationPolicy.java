@@ -46,9 +46,9 @@ import java.util.Set;
 import io.lumoauth.client.JSON;
 
 /**
- * AuthenticationSettingsPasswordRotationPolicy
+ * A write is merged with the stored object.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T14:48:44.873539119Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AuthenticationSettingsPasswordRotationPolicy {
   public static final String SERIALIZED_NAME_ENABLED = "enabled";
   @SerializedName(SERIALIZED_NAME_ENABLED)
@@ -59,16 +59,6 @@ public class AuthenticationSettingsPasswordRotationPolicy {
   @SerializedName(SERIALIZED_NAME_MAX_AGE_DAYS)
   @javax.annotation.Nullable
   private Integer maxAgeDays;
-
-  public static final String SERIALIZED_NAME_NOTIFY_BEFORE_DAYS = "notify_before_days";
-  @SerializedName(SERIALIZED_NAME_NOTIFY_BEFORE_DAYS)
-  @javax.annotation.Nullable
-  private Integer notifyBeforeDays;
-
-  public static final String SERIALIZED_NAME_HISTORY_COUNT = "history_count";
-  @SerializedName(SERIALIZED_NAME_HISTORY_COUNT)
-  @javax.annotation.Nullable
-  private Integer historyCount;
 
   public AuthenticationSettingsPasswordRotationPolicy() {
   }
@@ -99,6 +89,8 @@ public class AuthenticationSettingsPasswordRotationPolicy {
 
   /**
    * Get maxAgeDays
+   * minimum: 1
+   * maximum: 730
    * @return maxAgeDays
    */
   @javax.annotation.Nullable
@@ -108,44 +100,6 @@ public class AuthenticationSettingsPasswordRotationPolicy {
 
   public void setMaxAgeDays(@javax.annotation.Nullable Integer maxAgeDays) {
     this.maxAgeDays = maxAgeDays;
-  }
-
-
-  public AuthenticationSettingsPasswordRotationPolicy notifyBeforeDays(@javax.annotation.Nullable Integer notifyBeforeDays) {
-    this.notifyBeforeDays = notifyBeforeDays;
-    return this;
-  }
-
-  /**
-   * Get notifyBeforeDays
-   * @return notifyBeforeDays
-   */
-  @javax.annotation.Nullable
-  public Integer getNotifyBeforeDays() {
-    return notifyBeforeDays;
-  }
-
-  public void setNotifyBeforeDays(@javax.annotation.Nullable Integer notifyBeforeDays) {
-    this.notifyBeforeDays = notifyBeforeDays;
-  }
-
-
-  public AuthenticationSettingsPasswordRotationPolicy historyCount(@javax.annotation.Nullable Integer historyCount) {
-    this.historyCount = historyCount;
-    return this;
-  }
-
-  /**
-   * Get historyCount
-   * @return historyCount
-   */
-  @javax.annotation.Nullable
-  public Integer getHistoryCount() {
-    return historyCount;
-  }
-
-  public void setHistoryCount(@javax.annotation.Nullable Integer historyCount) {
-    this.historyCount = historyCount;
   }
 
 
@@ -160,14 +114,12 @@ public class AuthenticationSettingsPasswordRotationPolicy {
     }
     AuthenticationSettingsPasswordRotationPolicy authenticationSettingsPasswordRotationPolicy = (AuthenticationSettingsPasswordRotationPolicy) o;
     return Objects.equals(this.enabled, authenticationSettingsPasswordRotationPolicy.enabled) &&
-        Objects.equals(this.maxAgeDays, authenticationSettingsPasswordRotationPolicy.maxAgeDays) &&
-        Objects.equals(this.notifyBeforeDays, authenticationSettingsPasswordRotationPolicy.notifyBeforeDays) &&
-        Objects.equals(this.historyCount, authenticationSettingsPasswordRotationPolicy.historyCount);
+        Objects.equals(this.maxAgeDays, authenticationSettingsPasswordRotationPolicy.maxAgeDays);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(enabled, maxAgeDays, notifyBeforeDays, historyCount);
+    return Objects.hash(enabled, maxAgeDays);
   }
 
   @Override
@@ -176,8 +128,6 @@ public class AuthenticationSettingsPasswordRotationPolicy {
     sb.append("class AuthenticationSettingsPasswordRotationPolicy {\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
     sb.append("    maxAgeDays: ").append(toIndentedString(maxAgeDays)).append("\n");
-    sb.append("    notifyBeforeDays: ").append(toIndentedString(notifyBeforeDays)).append("\n");
-    sb.append("    historyCount: ").append(toIndentedString(historyCount)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -199,7 +149,7 @@ public class AuthenticationSettingsPasswordRotationPolicy {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("enabled", "max_age_days", "notify_before_days", "history_count"));
+    openapiFields = new HashSet<String>(Arrays.asList("enabled", "max_age_days"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);

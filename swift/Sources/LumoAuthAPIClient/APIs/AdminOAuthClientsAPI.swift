@@ -692,7 +692,7 @@ open class AdminOAuthClientsAPI {
     }
 
     /**
-     Replace an OAuth client
+     Update an OAuth client (same as PATCH: only the fields that are sent change)
      
      - parameter orgId: (path)  
      - parameter clientId: (path)  
@@ -704,7 +704,7 @@ open class AdminOAuthClientsAPI {
     }
 
     /**
-     Replace an OAuth client
+     Update an OAuth client (same as PATCH: only the fields that are sent change)
      - PUT /orgs/{orgId}/api/v1/admin/clients/{clientId}
      - API Key:
        - type: apiKey X-API-Key (HEADER)

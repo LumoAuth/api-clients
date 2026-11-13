@@ -19,7 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.lumoauth.client.model.WebhookDelivery;
+import io.lumoauth.client.model.AdminWebhooksDeliveryReplayResponseData;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -49,12 +49,12 @@ import io.lumoauth.client.JSON;
 /**
  * AdminWebhooksDeliveryReplayResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T14:48:44.873539119Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminWebhooksDeliveryReplayResponse {
   public static final String SERIALIZED_NAME_DATA = "data";
   @SerializedName(SERIALIZED_NAME_DATA)
   @javax.annotation.Nullable
-  private WebhookDelivery data;
+  private AdminWebhooksDeliveryReplayResponseData data;
 
   public static final String SERIALIZED_NAME_MESSAGE = "message";
   @SerializedName(SERIALIZED_NAME_MESSAGE)
@@ -64,7 +64,7 @@ public class AdminWebhooksDeliveryReplayResponse {
   public AdminWebhooksDeliveryReplayResponse() {
   }
 
-  public AdminWebhooksDeliveryReplayResponse data(@javax.annotation.Nullable WebhookDelivery data) {
+  public AdminWebhooksDeliveryReplayResponse data(@javax.annotation.Nullable AdminWebhooksDeliveryReplayResponseData data) {
     this.data = data;
     return this;
   }
@@ -74,11 +74,11 @@ public class AdminWebhooksDeliveryReplayResponse {
    * @return data
    */
   @javax.annotation.Nullable
-  public WebhookDelivery getData() {
+  public AdminWebhooksDeliveryReplayResponseData getData() {
     return data;
   }
 
-  public void setData(@javax.annotation.Nullable WebhookDelivery data) {
+  public void setData(@javax.annotation.Nullable AdminWebhooksDeliveryReplayResponseData data) {
     this.data = data;
   }
 
@@ -177,7 +177,7 @@ public class AdminWebhooksDeliveryReplayResponse {
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       // validate the optional field `data`
       if (jsonObj.get("data") != null && !jsonObj.get("data").isJsonNull()) {
-        WebhookDelivery.validateJsonElement(jsonObj.get("data"));
+        AdminWebhooksDeliveryReplayResponseData.validateJsonElement(jsonObj.get("data"));
       }
       if ((jsonObj.get("message") != null && !jsonObj.get("message").isJsonNull()) && !jsonObj.get("message").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `message` to be a primitive type in the JSON string but got `%s`", jsonObj.get("message").toString()));

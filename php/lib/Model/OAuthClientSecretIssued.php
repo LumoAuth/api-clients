@@ -310,7 +310,7 @@ class OAuthClientSecretIssued implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets secret
      *
-     * @param string|null $secret Plaintext client secret — returned only once, never retrievable again
+     * @param string|null $secret Plaintext client secret — returned only once, never retrievable again. Absent for a public client
      *
      * @return self
      */

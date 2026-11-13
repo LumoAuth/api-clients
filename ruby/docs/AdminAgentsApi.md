@@ -247,7 +247,7 @@ end
 
 ## admin_agents_agents_rotate_key
 
-> <AdminAgentsAgentsRotateKeyResponse> admin_agents_agents_rotate_key(org_id, agent_id)
+> <AdminAgentsAgentsRotateKeyResponse> admin_agents_agents_rotate_key(org_id, agent_id, opts)
 
 Rotate agent API key
 
@@ -270,10 +270,13 @@ end
 api_instance = LumoAuthApiClient::AdminAgentsApi.new
 org_id = 'org_id_example' # String | 
 agent_id = 'agent_id_example' # String | 
+opts = {
+  admin_agents_agents_rotate_key_request: LumoAuthApiClient::AdminAgentsAgentsRotateKeyRequest.new # AdminAgentsAgentsRotateKeyRequest | Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
+}
 
 begin
   # Rotate agent API key
-  result = api_instance.admin_agents_agents_rotate_key(org_id, agent_id)
+  result = api_instance.admin_agents_agents_rotate_key(org_id, agent_id, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAgentsApi->admin_agents_agents_rotate_key: #{e}"
@@ -284,12 +287,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminAgentsAgentsRotateKeyResponse>, Integer, Hash)> admin_agents_agents_rotate_key_with_http_info(org_id, agent_id)
+> <Array(<AdminAgentsAgentsRotateKeyResponse>, Integer, Hash)> admin_agents_agents_rotate_key_with_http_info(org_id, agent_id, opts)
 
 ```ruby
 begin
   # Rotate agent API key
-  data, status_code, headers = api_instance.admin_agents_agents_rotate_key_with_http_info(org_id, agent_id)
+  data, status_code, headers = api_instance.admin_agents_agents_rotate_key_with_http_info(org_id, agent_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminAgentsAgentsRotateKeyResponse>
@@ -304,6 +307,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **agent_id** | **String** |  |  |
+| **admin_agents_agents_rotate_key_request** | [**AdminAgentsAgentsRotateKeyRequest**](AdminAgentsAgentsRotateKeyRequest.md) | Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | [optional] |
 
 ### Return type
 
@@ -315,7 +319,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -993,7 +997,7 @@ end
 
 ## admin_agents_rotate_credentials
 
-> <AdminAgentsRotateCredentialsResponse> admin_agents_rotate_credentials(org_id, agent_id)
+> <AdminAgentsRotateCredentialsResponse> admin_agents_rotate_credentials(org_id, agent_id, opts)
 
 Rotate agent credentials
 
@@ -1016,10 +1020,13 @@ end
 api_instance = LumoAuthApiClient::AdminAgentsApi.new
 org_id = 'org_id_example' # String | 
 agent_id = 'agent_id_example' # String | 
+opts = {
+  admin_agents_agents_rotate_key_request: LumoAuthApiClient::AdminAgentsAgentsRotateKeyRequest.new # AdminAgentsAgentsRotateKeyRequest | For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
+}
 
 begin
   # Rotate agent credentials
-  result = api_instance.admin_agents_rotate_credentials(org_id, agent_id)
+  result = api_instance.admin_agents_rotate_credentials(org_id, agent_id, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAgentsApi->admin_agents_rotate_credentials: #{e}"
@@ -1030,12 +1037,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminAgentsRotateCredentialsResponse>, Integer, Hash)> admin_agents_rotate_credentials_with_http_info(org_id, agent_id)
+> <Array(<AdminAgentsRotateCredentialsResponse>, Integer, Hash)> admin_agents_rotate_credentials_with_http_info(org_id, agent_id, opts)
 
 ```ruby
 begin
   # Rotate agent credentials
-  data, status_code, headers = api_instance.admin_agents_rotate_credentials_with_http_info(org_id, agent_id)
+  data, status_code, headers = api_instance.admin_agents_rotate_credentials_with_http_info(org_id, agent_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminAgentsRotateCredentialsResponse>
@@ -1050,6 +1057,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **agent_id** | **String** |  |  |
+| **admin_agents_agents_rotate_key_request** | [**AdminAgentsAgentsRotateKeyRequest**](AdminAgentsAgentsRotateKeyRequest.md) | For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | [optional] |
 
 ### Return type
 
@@ -1061,7 +1069,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 

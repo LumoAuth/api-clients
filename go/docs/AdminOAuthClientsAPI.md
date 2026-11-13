@@ -18,7 +18,7 @@ Method | HTTP request | Description
 [**PutAdminClientsUpdateBranding**](AdminOAuthClientsAPI.md#PutAdminClientsUpdateBranding) | **Put** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client&#39;s login and/or consent page branding
 [**RotateClientSecret**](AdminOAuthClientsAPI.md#RotateClientSecret) | **Post** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret
 [**SetClientScopes**](AdminOAuthClientsAPI.md#SetClientScopes) | **Put** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
-[**UpdateClient**](AdminOAuthClientsAPI.md#UpdateClient) | **Put** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
+[**UpdateClient**](AdminOAuthClientsAPI.md#UpdateClient) | **Put** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client (same as PATCH: only the fields that are sent change)
 
 
 
@@ -1021,7 +1021,7 @@ Name | Type | Description  | Notes
 
 > UpdateClientResponse UpdateClient(ctx, orgId, clientId).Execute()
 
-Replace an OAuth client
+Update an OAuth client (same as PATCH: only the fields that are sent change)
 
 ### Example
 

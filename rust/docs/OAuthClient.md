@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **redirect_uris** | Option<**Vec<String>**> | Detailed responses only | [optional]
 **scopes** | Option<**Vec<String>**> | Detailed responses only | [optional]
 **grant_types** | Option<**Vec<String>**> | Detailed responses only | [optional]
+**ciba_enabled** | Option<**bool**> | Detailed responses only. Whether the client may use CIBA (backchannel authentication). | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

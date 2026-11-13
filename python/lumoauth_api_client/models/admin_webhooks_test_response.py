@@ -29,8 +29,9 @@ class AdminWebhooksTestResponse(BaseModel):
     """ # noqa: E501
     success: Optional[StrictBool] = None
     status_code: Optional[StrictInt] = Field(default=None, description="HTTP status returned by the receiver", alias="statusCode")
+    delivery_id: Optional[StrictStr] = Field(default=None, description="Id of the delivery row (the `X-LumoAuth-Delivery` header of the request)", alias="deliveryId")
     message: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["success", "statusCode", "message"]
+    __properties: ClassVar[List[str]] = ["success", "statusCode", "deliveryId", "message"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -85,6 +86,7 @@ class AdminWebhooksTestResponse(BaseModel):
         _obj = cls.model_validate({
             "success": obj.get("success"),
             "statusCode": obj.get("statusCode"),
+            "deliveryId": obj.get("deliveryId"),
             "message": obj.get("message")
         })
         return _obj

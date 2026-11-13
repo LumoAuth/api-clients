@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**Introspect**](OAuthAPI.md#Introspect) | **Post** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662)
 [**Par**](OAuthAPI.md#Par) | **Post** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126)
 [**RegisterClient**](OAuthAPI.md#RegisterClient) | **Post** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR)
+[**RequestMagicLink**](OAuthAPI.md#RequestMagicLink) | **Post** /orgs/{orgId}/api/v1/oauth/magic-link | Request a sign-in link by email
 [**Revoke**](OAuthAPI.md#Revoke) | **Post** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009)
 [**SocialCallback**](OAuthAPI.md#SocialCallback) | **Get** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback
 [**SocialCallbackPost**](OAuthAPI.md#SocialCallbackPost) | **Post** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback (form_post)
@@ -651,6 +652,78 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RequestMagicLink
+
+> RequestMagicLinkResponse RequestMagicLink(ctx, orgId).RequestMagicLinkRequest(requestMagicLinkRequest).Execute()
+
+Request a sign-in link by email
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	requestMagicLinkRequest := *openapiclient.NewRequestMagicLinkRequest("Email_example", "ClientId_example") // RequestMagicLinkRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OAuthAPI.RequestMagicLink(context.Background(), orgId).RequestMagicLinkRequest(requestMagicLinkRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.RequestMagicLink``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RequestMagicLink`: RequestMagicLinkResponse
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.RequestMagicLink`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRequestMagicLinkRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **requestMagicLinkRequest** | [**RequestMagicLinkRequest**](RequestMagicLinkRequest.md) |  | 
+
+### Return type
+
+[**RequestMagicLinkResponse**](RequestMagicLinkResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

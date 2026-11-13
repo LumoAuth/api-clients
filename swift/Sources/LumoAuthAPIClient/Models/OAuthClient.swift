@@ -26,8 +26,10 @@ public struct OAuthClient: Codable, JSONEncodable, Hashable {
     public var scopes: [String]?
     /** Detailed responses only */
     public var grantTypes: [String]?
+    /** Detailed responses only. Whether the client may use CIBA (backchannel authentication). */
+    public var cibaEnabled: Bool?
 
-    public init(id: Int, clientId: String, name: String, isConfidential: Bool, isPublic: Bool, isActive: Bool, requiresPkce: Bool, createdAt: Date, redirectUris: [String]? = nil, scopes: [String]? = nil, grantTypes: [String]? = nil) {
+    public init(id: Int, clientId: String, name: String, isConfidential: Bool, isPublic: Bool, isActive: Bool, requiresPkce: Bool, createdAt: Date, redirectUris: [String]? = nil, scopes: [String]? = nil, grantTypes: [String]? = nil, cibaEnabled: Bool? = nil) {
         self.id = id
         self.clientId = clientId
         self.name = name
@@ -39,6 +41,7 @@ public struct OAuthClient: Codable, JSONEncodable, Hashable {
         self.redirectUris = redirectUris
         self.scopes = scopes
         self.grantTypes = grantTypes
+        self.cibaEnabled = cibaEnabled
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -53,6 +56,7 @@ public struct OAuthClient: Codable, JSONEncodable, Hashable {
         case redirectUris
         case scopes
         case grantTypes
+        case cibaEnabled
     }
 
     // Encodable protocol methods
@@ -70,6 +74,7 @@ public struct OAuthClient: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(redirectUris, forKey: .redirectUris)
         try container.encodeIfPresent(scopes, forKey: .scopes)
         try container.encodeIfPresent(grantTypes, forKey: .grantTypes)
+        try container.encodeIfPresent(cibaEnabled, forKey: .cibaEnabled)
     }
 }
 

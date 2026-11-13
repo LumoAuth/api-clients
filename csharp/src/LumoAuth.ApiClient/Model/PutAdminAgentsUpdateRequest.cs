@@ -39,11 +39,13 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="name">name.</param>
         /// <param name="description">description.</param>
         /// <param name="capabilities">capabilities.</param>
-        public PutAdminAgentsUpdateRequest(string name = default, string description = default, List<string> capabilities = default)
+        /// <param name="budgetPolicy">The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is..</param>
+        public PutAdminAgentsUpdateRequest(string name = default, string description = default, List<string> capabilities = default, Dictionary<string, Object> budgetPolicy = default)
         {
             this.Name = name;
             this.Description = description;
             this.Capabilities = capabilities;
+            this.BudgetPolicy = budgetPolicy;
         }
 
         /// <summary>
@@ -65,6 +67,16 @@ namespace LumoAuth.ApiClient.Model
         public List<string> Capabilities { get; set; }
 
         /// <summary>
+        /// The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is.
+        /// </summary>
+        /// <value>The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is.</value>
+        /*
+        <example>{&quot;max_api_calls_per_hour&quot;:500,&quot;max_tokens_per_day&quot;:100000,&quot;max_cost_per_month_usd&quot;:50}</example>
+        */
+        [DataMember(Name = "budgetPolicy", EmitDefaultValue = true)]
+        public Dictionary<string, Object> BudgetPolicy { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -75,6 +87,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Capabilities: ").Append(Capabilities).Append("\n");
+            sb.Append("  BudgetPolicy: ").Append(BudgetPolicy).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

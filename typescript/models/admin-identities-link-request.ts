@@ -27,11 +27,17 @@ export interface AdminIdentitiesLinkRequest {
      */
     'type': AdminIdentitiesLinkRequestType;
     /**
-     * SAML IdP config id (type=saml)
+     * SAML IdP config id (type=saml) or OpenID Connect connection id (type=oidc)
      * @type {number}
      * @memberof AdminIdentitiesLinkRequest
      */
     'idp_id'?: number;
+    /**
+     * Subject the OpenID Connect provider issues for this user (type=oidc)
+     * @type {string}
+     * @memberof AdminIdentitiesLinkRequest
+     */
+    'subject'?: string;
     /**
      * NameID the IdP asserts for this user (type=saml)
      * @type {string}
@@ -64,6 +70,7 @@ export interface AdminIdentitiesLinkRequest {
     */
 export enum AdminIdentitiesLinkRequestType {
     SAML = 'saml',
+    OIDC = 'oidc',
     LDAP = 'ldap'
 }
 

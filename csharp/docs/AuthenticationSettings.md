@@ -6,7 +6,6 @@ Authentication settings (entity defaults merged with the stored values). Any oth
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PasskeyEnabled** | **bool** |  | [optional] 
-**BiometricEnabled** | **bool** |  | [optional] 
 **Passkeys** | [**AuthenticationSettingsPasskeys**](AuthenticationSettingsPasskeys.md) |  | [optional] 
 **MfaRequired** | **bool** |  | [optional] 
 **MfaMethods** | **List&lt;string&gt;** |  | [optional] 
@@ -14,7 +13,7 @@ Name | Type | Description | Notes
 **MfaPolicy** | [**AuthenticationSettingsMfaPolicy**](AuthenticationSettingsMfaPolicy.md) |  | [optional] 
 **PushAuthRequired** | **bool** |  | [optional] 
 **PushAppName** | **string** |  | [optional] 
-**SocialLoginEnabled** | **bool** |  | [optional] 
+**SocialLoginEnabled** | **bool** | Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag. | [optional] 
 **SocialProviders** | **List&lt;string&gt;** |  | [optional] 
 **SocialConfigs** | **Dictionary&lt;string, Dictionary&lt;string, Object&gt;&gt;** | Per-provider OAuth credentials keyed by provider (google, github, microsoft, facebook, apple, linkedin). Each value is a free-form object of provider fields (client_id, hosted_domain, tenant_id, team_id, key_id, ...); the secret fields client_secret and private_key are returned as the redaction marker {\&quot;configured\&quot;: true, \&quot;redacted\&quot;: true} when set, null otherwise. | [optional] 
 **PasswordMinLength** | **int** | Legacy; mirrored by password_policy.min_length. | [optional] 
@@ -22,8 +21,7 @@ Name | Type | Description | Notes
 **PasswordPolicy** | [**AuthenticationSettingsPasswordPolicy**](AuthenticationSettingsPasswordPolicy.md) |  | [optional] 
 **PasswordRotationPolicy** | [**AuthenticationSettingsPasswordRotationPolicy**](AuthenticationSettingsPasswordRotationPolicy.md) |  | [optional] 
 **NoMfaAction** | **string** |  | [optional] 
-**SessionTimeout** | **int** | Seconds. | [optional] 
-**EncryptClientSecrets** | **bool** |  | [optional] 
+**SessionTimeout** | **int** | Idle timeout in seconds. | [optional] 
 **DynamicClientRegistrationEnabled** | **bool** |  | [optional] 
 **CimdEnabled** | **bool** | Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out. | [optional] [default to true]
 **CimdAllowedDomains** | **List&lt;string&gt;** |  | [optional] 

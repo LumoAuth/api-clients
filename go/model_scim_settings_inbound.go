@@ -32,8 +32,6 @@ type ScimSettingsInbound struct {
 	AllowUserDeletion *bool `json:"allow_user_deletion,omitempty"`
 	AllowGroupOperations *bool `json:"allow_group_operations,omitempty"`
 	ProtectedAttributes *ScimSettingsInboundProtectedAttributes `json:"protected_attributes,omitempty"`
-	// SCIM attribute => user field.
-	AttributeMapping *map[string]string `json:"attribute_mapping,omitempty"`
 	AutoActivateUsers *bool `json:"auto_activate_users,omitempty"`
 	DeprovisioningAction *string `json:"deprovisioning_action,omitempty"`
 }
@@ -415,38 +413,6 @@ func (o *ScimSettingsInbound) SetProtectedAttributes(v ScimSettingsInboundProtec
 	o.ProtectedAttributes = &v
 }
 
-// GetAttributeMapping returns the AttributeMapping field value if set, zero value otherwise.
-func (o *ScimSettingsInbound) GetAttributeMapping() map[string]string {
-	if o == nil || IsNil(o.AttributeMapping) {
-		var ret map[string]string
-		return ret
-	}
-	return *o.AttributeMapping
-}
-
-// GetAttributeMappingOk returns a tuple with the AttributeMapping field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ScimSettingsInbound) GetAttributeMappingOk() (*map[string]string, bool) {
-	if o == nil || IsNil(o.AttributeMapping) {
-		return nil, false
-	}
-	return o.AttributeMapping, true
-}
-
-// HasAttributeMapping returns a boolean if a field has been set.
-func (o *ScimSettingsInbound) HasAttributeMapping() bool {
-	if o != nil && !IsNil(o.AttributeMapping) {
-		return true
-	}
-
-	return false
-}
-
-// SetAttributeMapping gets a reference to the given map[string]string and assigns it to the AttributeMapping field.
-func (o *ScimSettingsInbound) SetAttributeMapping(v map[string]string) {
-	o.AttributeMapping = &v
-}
-
 // GetAutoActivateUsers returns the AutoActivateUsers field value if set, zero value otherwise.
 func (o *ScimSettingsInbound) GetAutoActivateUsers() bool {
 	if o == nil || IsNil(o.AutoActivateUsers) {
@@ -550,9 +516,6 @@ func (o ScimSettingsInbound) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ProtectedAttributes) {
 		toSerialize["protected_attributes"] = o.ProtectedAttributes
-	}
-	if !IsNil(o.AttributeMapping) {
-		toSerialize["attribute_mapping"] = o.AttributeMapping
 	}
 	if !IsNil(o.AutoActivateUsers) {
 		toSerialize["auto_activate_users"] = o.AutoActivateUsers

@@ -60,6 +60,7 @@ class AdminIdentitiesLinkRequest implements ModelInterface, ArrayAccess, \JsonSe
     protected static $openAPITypes = [
         'type' => 'string',
         'idpId' => 'int',
+        'subject' => 'string',
         'nameId' => 'string',
         'ldapConfigId' => 'int',
         'dn' => 'string',
@@ -76,6 +77,7 @@ class AdminIdentitiesLinkRequest implements ModelInterface, ArrayAccess, \JsonSe
     protected static $openAPIFormats = [
         'type' => null,
         'idpId' => null,
+        'subject' => null,
         'nameId' => null,
         'ldapConfigId' => null,
         'dn' => null,
@@ -90,6 +92,7 @@ class AdminIdentitiesLinkRequest implements ModelInterface, ArrayAccess, \JsonSe
     protected static array $openAPINullables = [
         'type' => false,
         'idpId' => false,
+        'subject' => false,
         'nameId' => false,
         'ldapConfigId' => false,
         'dn' => false,
@@ -184,6 +187,7 @@ class AdminIdentitiesLinkRequest implements ModelInterface, ArrayAccess, \JsonSe
     protected static $attributeMap = [
         'type' => 'type',
         'idpId' => 'idp_id',
+        'subject' => 'subject',
         'nameId' => 'name_id',
         'ldapConfigId' => 'ldap_config_id',
         'dn' => 'dn',
@@ -198,6 +202,7 @@ class AdminIdentitiesLinkRequest implements ModelInterface, ArrayAccess, \JsonSe
     protected static $setters = [
         'type' => 'setType',
         'idpId' => 'setIdpId',
+        'subject' => 'setSubject',
         'nameId' => 'setNameId',
         'ldapConfigId' => 'setLdapConfigId',
         'dn' => 'setDn',
@@ -212,6 +217,7 @@ class AdminIdentitiesLinkRequest implements ModelInterface, ArrayAccess, \JsonSe
     protected static $getters = [
         'type' => 'getType',
         'idpId' => 'getIdpId',
+        'subject' => 'getSubject',
         'nameId' => 'getNameId',
         'ldapConfigId' => 'getLdapConfigId',
         'dn' => 'getDn',
@@ -260,6 +266,7 @@ class AdminIdentitiesLinkRequest implements ModelInterface, ArrayAccess, \JsonSe
     }
 
     public const TYPE_SAML = 'saml';
+    public const TYPE_OIDC = 'oidc';
     public const TYPE_LDAP = 'ldap';
 
     /**
@@ -271,6 +278,7 @@ class AdminIdentitiesLinkRequest implements ModelInterface, ArrayAccess, \JsonSe
     {
         return [
             self::TYPE_SAML,
+            self::TYPE_OIDC,
             self::TYPE_LDAP,
         ];
     }
@@ -292,6 +300,7 @@ class AdminIdentitiesLinkRequest implements ModelInterface, ArrayAccess, \JsonSe
     {
         $this->setIfExists('type', $data ?? [], null);
         $this->setIfExists('idpId', $data ?? [], null);
+        $this->setIfExists('subject', $data ?? [], null);
         $this->setIfExists('nameId', $data ?? [], null);
         $this->setIfExists('ldapConfigId', $data ?? [], null);
         $this->setIfExists('dn', $data ?? [], null);
@@ -402,7 +411,7 @@ class AdminIdentitiesLinkRequest implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Sets idpId
      *
-     * @param int|null $idpId SAML IdP config id (type=saml)
+     * @param int|null $idpId SAML IdP config id (type=saml) or OpenID Connect connection id (type=oidc)
      *
      * @return self
      */
@@ -412,6 +421,33 @@ class AdminIdentitiesLinkRequest implements ModelInterface, ArrayAccess, \JsonSe
             throw new \InvalidArgumentException('non-nullable idpId cannot be null');
         }
         $this->container['idpId'] = $idpId;
+
+        return $this;
+    }
+
+    /**
+     * Gets subject
+     *
+     * @return string|null
+     */
+    public function getSubject()
+    {
+        return $this->container['subject'];
+    }
+
+    /**
+     * Sets subject
+     *
+     * @param string|null $subject Subject the OpenID Connect provider issues for this user (type=oidc)
+     *
+     * @return self
+     */
+    public function setSubject($subject)
+    {
+        if (is_null($subject)) {
+            throw new \InvalidArgumentException('non-nullable subject cannot be null');
+        }
+        $this->container['subject'] = $subject;
 
         return $this;
     }

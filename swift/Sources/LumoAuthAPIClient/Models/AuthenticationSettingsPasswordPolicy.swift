@@ -10,6 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
+/** The password rules that apply. A write is merged with the stored object. A named template sets its own rules; rules sent without a template make the policy custom. */
 public struct AuthenticationSettingsPasswordPolicy: Codable, JSONEncodable, Hashable {
 
     public enum Template: String, Codable, CaseIterable {
@@ -18,18 +19,28 @@ public struct AuthenticationSettingsPasswordPolicy: Codable, JSONEncodable, Hash
         case strict = "strict"
         case custom = "custom"
     }
+    public static let minLengthRule = NumericRule<Int>(minimum: 8, exclusiveMinimum: false, maximum: 128, exclusiveMaximum: false, multipleOf: nil)
+    public static let breachedPasswordMinCountRule = NumericRule<Int>(minimum: 1, exclusiveMinimum: false, maximum: nil, exclusiveMaximum: false, multipleOf: nil)
     public var template: Template?
     public var minLength: Int?
     public var requireSpecial: Bool?
     public var requireNumbers: Bool?
     public var requireUppercase: Bool?
+    public var requireLowercase: Bool?
+    public var rejectBreachedPasswords: Bool?
+    public var breachedPasswordMinCount: Int?
+    public var checkBreachedOnLogin: Bool?
 
-    public init(template: Template? = nil, minLength: Int? = nil, requireSpecial: Bool? = nil, requireNumbers: Bool? = nil, requireUppercase: Bool? = nil) {
+    public init(template: Template? = nil, minLength: Int? = nil, requireSpecial: Bool? = nil, requireNumbers: Bool? = nil, requireUppercase: Bool? = nil, requireLowercase: Bool? = nil, rejectBreachedPasswords: Bool? = nil, breachedPasswordMinCount: Int? = nil, checkBreachedOnLogin: Bool? = nil) {
         self.template = template
         self.minLength = minLength
         self.requireSpecial = requireSpecial
         self.requireNumbers = requireNumbers
         self.requireUppercase = requireUppercase
+        self.requireLowercase = requireLowercase
+        self.rejectBreachedPasswords = rejectBreachedPasswords
+        self.breachedPasswordMinCount = breachedPasswordMinCount
+        self.checkBreachedOnLogin = checkBreachedOnLogin
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -38,6 +49,10 @@ public struct AuthenticationSettingsPasswordPolicy: Codable, JSONEncodable, Hash
         case requireSpecial = "require_special"
         case requireNumbers = "require_numbers"
         case requireUppercase = "require_uppercase"
+        case requireLowercase = "require_lowercase"
+        case rejectBreachedPasswords = "reject_breached_passwords"
+        case breachedPasswordMinCount = "breached_password_min_count"
+        case checkBreachedOnLogin = "check_breached_on_login"
     }
 
     // Encodable protocol methods
@@ -49,6 +64,10 @@ public struct AuthenticationSettingsPasswordPolicy: Codable, JSONEncodable, Hash
         try container.encodeIfPresent(requireSpecial, forKey: .requireSpecial)
         try container.encodeIfPresent(requireNumbers, forKey: .requireNumbers)
         try container.encodeIfPresent(requireUppercase, forKey: .requireUppercase)
+        try container.encodeIfPresent(requireLowercase, forKey: .requireLowercase)
+        try container.encodeIfPresent(rejectBreachedPasswords, forKey: .rejectBreachedPasswords)
+        try container.encodeIfPresent(breachedPasswordMinCount, forKey: .breachedPasswordMinCount)
+        try container.encodeIfPresent(checkBreachedOnLogin, forKey: .checkBreachedOnLogin)
     }
 }
 

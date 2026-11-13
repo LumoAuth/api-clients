@@ -16,8 +16,8 @@ Name | Type | Description | Notes
 **oauth2_client_secret** | [**RedactedSecret**](RedactedSecret.md) |  | [optional] [default to undefined]
 **oauth2_token_url** | **string** |  | [optional] [default to undefined]
 **oauth2_scope** | **string** |  | [optional] [default to undefined]
-**tls_certificate** | **string** | Optional PEM CA certificate used for TLS verification. | [optional] [default to undefined]
-**verify_tls** | **boolean** |  | [optional] [default to undefined]
+**tls_certificate** | **string** | Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets. | [optional] [default to undefined]
+**verify_tls** | **boolean** | Always true. The endpoint certificate is always verified; false is rejected with 400. | [optional] [default to undefined]
 **push_user_creates** | **boolean** |  | [optional] [default to undefined]
 **push_user_updates** | **boolean** |  | [optional] [default to undefined]
 **push_user_deletes** | **boolean** |  | [optional] [default to undefined]
@@ -25,7 +25,6 @@ Name | Type | Description | Notes
 **sync_on_login** | **boolean** |  | [optional] [default to undefined]
 **batch_sync_enabled** | **boolean** |  | [optional] [default to undefined]
 **batch_sync_interval** | **string** |  | [optional] [default to undefined]
-**attribute_mapping** | **{ [key: string]: string; }** | User field &#x3D;&gt; SCIM attribute. | [optional] [default to undefined]
 **last_sync_at** | **string** |  | [optional] [default to undefined]
 **last_sync_status** | **string** |  | [optional] [default to undefined]
 **last_sync_error** | **string** |  | [optional] [default to undefined]
@@ -59,7 +58,6 @@ const instance: ScimSettingsOutbound = {
     sync_on_login,
     batch_sync_enabled,
     batch_sync_interval,
-    attribute_mapping,
     last_sync_at,
     last_sync_status,
     last_sync_error,

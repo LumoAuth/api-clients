@@ -16,8 +16,6 @@ use serde::{Deserialize, Serialize};
 pub struct AuthenticationSettings {
     #[serde(rename = "passkey_enabled", skip_serializing_if = "Option::is_none")]
     pub passkey_enabled: Option<bool>,
-    #[serde(rename = "biometric_enabled", skip_serializing_if = "Option::is_none")]
-    pub biometric_enabled: Option<bool>,
     #[serde(rename = "passkeys", skip_serializing_if = "Option::is_none")]
     pub passkeys: Option<Box<models::AuthenticationSettingsPasskeys>>,
     #[serde(rename = "mfa_required", skip_serializing_if = "Option::is_none")]
@@ -32,6 +30,7 @@ pub struct AuthenticationSettings {
     pub push_auth_required: Option<bool>,
     #[serde(rename = "push_app_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub push_app_name: Option<Option<String>>,
+    /// Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag.
     #[serde(rename = "social_login_enabled", skip_serializing_if = "Option::is_none")]
     pub social_login_enabled: Option<bool>,
     #[serde(rename = "social_providers", skip_serializing_if = "Option::is_none")]
@@ -50,12 +49,10 @@ pub struct AuthenticationSettings {
     #[serde(rename = "password_rotation_policy", skip_serializing_if = "Option::is_none")]
     pub password_rotation_policy: Option<Box<models::AuthenticationSettingsPasswordRotationPolicy>>,
     #[serde(rename = "no_mfa_action", skip_serializing_if = "Option::is_none")]
-    pub no_mfa_action: Option<String>,
-    /// Seconds.
+    pub no_mfa_action: Option<NoMfaAction>,
+    /// Idle timeout in seconds.
     #[serde(rename = "session_timeout", skip_serializing_if = "Option::is_none")]
     pub session_timeout: Option<i32>,
-    #[serde(rename = "encrypt_client_secrets", skip_serializing_if = "Option::is_none")]
-    pub encrypt_client_secrets: Option<bool>,
     #[serde(rename = "dynamic_client_registration_enabled", skip_serializing_if = "Option::is_none")]
     pub dynamic_client_registration_enabled: Option<bool>,
     /// Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out.
@@ -78,7 +75,6 @@ impl AuthenticationSettings {
     pub fn new() -> AuthenticationSettings {
         AuthenticationSettings {
             passkey_enabled: None,
-            biometric_enabled: None,
             passkeys: None,
             mfa_required: None,
             mfa_methods: None,
@@ -95,7 +91,6 @@ impl AuthenticationSettings {
             password_rotation_policy: None,
             no_mfa_action: None,
             session_timeout: None,
-            encrypt_client_secrets: None,
             dynamic_client_registration_enabled: None,
             cimd_enabled: None,
             cimd_allowed_domains: None,
@@ -104,6 +99,24 @@ impl AuthenticationSettings {
             xaa_resource_enabled: None,
             progressive_profiling: None,
         }
+    }
+}
+/// 
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum NoMfaAction {
+    #[serde(rename = "allow")]
+    Allow,
+    #[serde(rename = "prompt")]
+    Prompt,
+    #[serde(rename = "email")]
+    Email,
+    #[serde(rename = "block")]
+    Block,
+}
+
+impl Default for NoMfaAction {
+    fn default() -> NoMfaAction {
+        Self::Allow
     }
 }
 /// 

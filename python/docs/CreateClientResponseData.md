@@ -16,7 +16,8 @@ Name | Type | Description | Notes
 **redirect_uris** | **List[str]** | Detailed responses only | [optional] 
 **scopes** | **List[str]** | Detailed responses only | [optional] 
 **grant_types** | **List[str]** | Detailed responses only | [optional] 
-**secret** | **str** | Plaintext client secret — returned only once, never retrievable again | [optional] 
+**ciba_enabled** | **bool** | Detailed responses only. Whether the client may use CIBA (backchannel authentication). | [optional] 
+**secret** | **str** | Plaintext client secret — returned only once, never retrievable again. Absent for a public client | [optional] 
 **note** | **str** |  | [optional] 
 
 ## Example

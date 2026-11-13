@@ -42,7 +42,7 @@ public struct AuditLogEntry: Codable, JSONEncodable, Hashable {
     public var sessionId: String?
     /** Detailed responses only */
     public var requestId: String?
-    /** Detailed responses only */
+    /** Result of the event: success, failure, pending or partial */
     public var status: String?
     /** Detailed responses only */
     public var statusReason: String?

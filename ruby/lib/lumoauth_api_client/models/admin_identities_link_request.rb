@@ -17,8 +17,11 @@ module LumoAuthApiClient
   class AdminIdentitiesLinkRequest
     attr_accessor :type
 
-    # SAML IdP config id (type=saml)
+    # SAML IdP config id (type=saml) or OpenID Connect connection id (type=oidc)
     attr_accessor :idp_id
+
+    # Subject the OpenID Connect provider issues for this user (type=oidc)
+    attr_accessor :subject
 
     # NameID the IdP asserts for this user (type=saml)
     attr_accessor :name_id
@@ -59,6 +62,7 @@ module LumoAuthApiClient
       {
         :'type' => :'type',
         :'idp_id' => :'idp_id',
+        :'subject' => :'subject',
         :'name_id' => :'name_id',
         :'ldap_config_id' => :'ldap_config_id',
         :'dn' => :'dn',
@@ -81,6 +85,7 @@ module LumoAuthApiClient
       {
         :'type' => :'String',
         :'idp_id' => :'Integer',
+        :'subject' => :'String',
         :'name_id' => :'String',
         :'ldap_config_id' => :'Integer',
         :'dn' => :'String',
@@ -120,6 +125,10 @@ module LumoAuthApiClient
         self.idp_id = attributes[:'idp_id']
       end
 
+      if attributes.key?(:'subject')
+        self.subject = attributes[:'subject']
+      end
+
       if attributes.key?(:'name_id')
         self.name_id = attributes[:'name_id']
       end
@@ -156,7 +165,7 @@ module LumoAuthApiClient
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ["saml", "ldap"])
+      type_validator = EnumAttributeValidator.new('String', ["saml", "oidc", "ldap"])
       return false unless type_validator.valid?(@type)
       true
     end
@@ -164,7 +173,7 @@ module LumoAuthApiClient
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] type Object to be assigned
     def type=(type)
-      validator = EnumAttributeValidator.new('String', ["saml", "ldap"])
+      validator = EnumAttributeValidator.new('String', ["saml", "oidc", "ldap"])
       unless validator.valid?(type)
         fail ArgumentError, "invalid value for \"type\", must be one of #{validator.allowable_values}."
       end
@@ -178,6 +187,7 @@ module LumoAuthApiClient
       self.class == o.class &&
           type == o.type &&
           idp_id == o.idp_id &&
+          subject == o.subject &&
           name_id == o.name_id &&
           ldap_config_id == o.ldap_config_id &&
           dn == o.dn &&
@@ -193,7 +203,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [type, idp_id, name_id, ldap_config_id, dn, ldap_only].hash
+      [type, idp_id, subject, name_id, ldap_config_id, dn, ldap_only].hash
     end
 
     # Builds the object from hash

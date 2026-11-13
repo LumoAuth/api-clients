@@ -62,19 +62,11 @@ public class ScimSettingsInboundProtectedAttributesTest {
     }
 
     /**
-     * Test the property 'roles'
+     * Test the property 'roleMembership'
      */
     @Test
-    public void rolesTest() {
-        // TODO: test roles
-    }
-
-    /**
-     * Test the property 'permissions'
-     */
-    @Test
-    public void permissionsTest() {
-        // TODO: test permissions
+    public void roleMembershipTest() {
+        // TODO: test roleMembership
     }
 
 }

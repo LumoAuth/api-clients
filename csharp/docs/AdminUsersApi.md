@@ -9,9 +9,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**AddUserRole**](AdminUsersApi.md#adduserrole) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Assign a role to a user |
 | [**AdminIdentitiesLegacySamlRelink**](AdminUsersApi.md#adminidentitieslegacysamlrelink) | **POST** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Relink legacy SAML users to an IdP |
 | [**AdminIdentitiesLegacySamlReport**](AdminUsersApi.md#adminidentitieslegacysamlreport) | **GET** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Legacy SAML bindings report |
-| [**AdminIdentitiesLink**](AdminUsersApi.md#adminidentitieslink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML or LDAP identity to a user |
+| [**AdminIdentitiesLink**](AdminUsersApi.md#adminidentitieslink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user |
 | [**AdminIdentitiesList**](AdminUsersApi.md#adminidentitieslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links |
-| [**AdminIdentitiesUnlink**](AdminUsersApi.md#adminidentitiesunlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, LDAP or social identity |
+| [**AdminIdentitiesUnlink**](AdminUsersApi.md#adminidentitiesunlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity |
 | [**BlockUser**](AdminUsersApi.md#blockuser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user |
 | [**CreateUser**](AdminUsersApi.md#createuser) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user |
 | [**DeleteUser**](AdminUsersApi.md#deleteuser) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user |
@@ -557,9 +557,9 @@ catch (ApiException e)
 # **AdminIdentitiesLink**
 > AdminAgentsGetResponse AdminIdentitiesLink (string orgId, string userId, AdminIdentitiesLinkRequest adminIdentitiesLinkRequest)
 
-Link a SAML or LDAP identity to a user
+Link a SAML, OpenID Connect or LDAP identity to a user
 
-Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`), enterprise OpenID Connect binding (`idp_id` + `subject`: the value of the connection's user identifier claim; a person can sign in through such a connection only after this link exists) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
 
 ### Example
 ```csharp
@@ -595,7 +595,7 @@ namespace Example
 
             try
             {
-                // Link a SAML or LDAP identity to a user
+                // Link a SAML, OpenID Connect or LDAP identity to a user
                 AdminAgentsGetResponse result = apiInstance.AdminIdentitiesLink(orgId, userId, adminIdentitiesLinkRequest);
                 Debug.WriteLine(result);
             }
@@ -616,7 +616,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Link a SAML or LDAP identity to a user
+    // Link a SAML, OpenID Connect or LDAP identity to a user
     ApiResponse<AdminAgentsGetResponse> response = apiInstance.AdminIdentitiesLinkWithHttpInfo(orgId, userId, adminIdentitiesLinkRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
@@ -657,7 +657,7 @@ catch (ApiException e)
 |-------------|-------------|------------------|
 | **201** | Linked |  -  |
 | **403** | Actor does not outrank the user, or step_up_required |  -  |
-| **404** | User, IdP or directory not found |  -  |
+| **404** | User, identity provider or directory not found |  -  |
 | **409** | identity_conflict |  -  |
 | **422** | invalid_identity / directory_lookup_failed |  -  |
 
@@ -669,7 +669,7 @@ catch (ApiException e)
 
 List a user's federated identity links
 
-SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+SAML (IdP + NameID), enterprise OpenID Connect (connection + subject), LDAP (directory + DN) and social provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP. An OpenID Connect link with `hashed: true` stores a long subject as a hash, so `subject` is null.
 
 ### Example
 ```csharp
@@ -772,9 +772,9 @@ catch (ApiException e)
 # **AdminIdentitiesUnlink**
 > AdminAgentsGetResponse AdminIdentitiesUnlink (string type, string orgId, string userId)
 
-Unlink a user's SAML, LDAP or social identity
+Unlink a user's SAML, OpenID Connect, LDAP or social identity
 
-Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+Removes the binding of the given type (`saml`, `oidc`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
 
 ### Example
 ```csharp
@@ -810,7 +810,7 @@ namespace Example
 
             try
             {
-                // Unlink a user's SAML, LDAP or social identity
+                // Unlink a user's SAML, OpenID Connect, LDAP or social identity
                 AdminAgentsGetResponse result = apiInstance.AdminIdentitiesUnlink(type, orgId, userId);
                 Debug.WriteLine(result);
             }
@@ -831,7 +831,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Unlink a user's SAML, LDAP or social identity
+    // Unlink a user's SAML, OpenID Connect, LDAP or social identity
     ApiResponse<AdminAgentsGetResponse> response = apiInstance.AdminIdentitiesUnlinkWithHttpInfo(type, orgId, userId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);

@@ -17,7 +17,7 @@ pub struct ListPermissionsResponsePermissionsItem {
     pub slug: Option<String>,
     #[serde(rename = "description", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub description: Option<Option<String>>,
-    /// role:<role name> that grants it
+    /// role:<role name> that grants it, or direct for a permission granted to the user directly
     #[serde(rename = "source", skip_serializing_if = "Option::is_none")]
     pub source: Option<String>,
 }

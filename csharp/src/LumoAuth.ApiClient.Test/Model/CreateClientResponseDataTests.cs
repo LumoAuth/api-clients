@@ -155,6 +155,15 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'CibaEnabled'
+        /// </summary>
+        [Fact]
+        public void CibaEnabledTest()
+        {
+            // TODO unit test for the property 'CibaEnabled'
+        }
+
+        /// <summary>
         /// Test the property 'Secret'
         /// </summary>
         [Fact]

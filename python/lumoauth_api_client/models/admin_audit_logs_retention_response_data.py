@@ -27,10 +27,13 @@ class AdminAuditLogsRetentionResponseData(BaseModel):
     """
     AdminAuditLogsRetentionResponseData
     """ # noqa: E501
-    retention_days: Optional[StrictInt] = Field(default=None, description="Effective retention, capped by the plan limit", alias="retentionDays")
-    auto_delete: Optional[StrictBool] = Field(default=None, alias="autoDelete")
-    plan_limit_days: Optional[StrictInt] = Field(default=None, description="Plan cap; null when unlimited or billing enforcement is off", alias="planLimitDays")
-    __properties: ClassVar[List[str]] = ["retentionDays", "autoDelete", "planLimitDays"]
+    retention_days: Optional[StrictInt] = Field(default=None, description="The organization's own period, between minRetentionDays and maxRetentionDays. It applies while data retention is on and autoDelete is not false.", alias="retentionDays")
+    auto_delete: Optional[StrictBool] = Field(default=None, description="false switches the organization's own period off; the plan's period still applies", alias="autoDelete")
+    plan_limit_days: Optional[StrictInt] = Field(default=None, description="The plan's period: older entries are not returned and are deleted. null when the plan has no limit.", alias="planLimitDays")
+    effective_retention_days: Optional[StrictInt] = Field(default=None, description="How long entries are kept now; null when nothing is deleted", alias="effectiveRetentionDays")
+    min_retention_days: Optional[StrictInt] = Field(default=None, alias="minRetentionDays")
+    max_retention_days: Optional[StrictInt] = Field(default=None, alias="maxRetentionDays")
+    __properties: ClassVar[List[str]] = ["retentionDays", "autoDelete", "planLimitDays", "effectiveRetentionDays", "minRetentionDays", "maxRetentionDays"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -76,6 +79,11 @@ class AdminAuditLogsRetentionResponseData(BaseModel):
         if self.plan_limit_days is None and "plan_limit_days" in self.model_fields_set:
             _dict['planLimitDays'] = None
 
+        # set to None if effective_retention_days (nullable) is None
+        # and model_fields_set contains the field
+        if self.effective_retention_days is None and "effective_retention_days" in self.model_fields_set:
+            _dict['effectiveRetentionDays'] = None
+
         return _dict
 
     @classmethod
@@ -90,7 +98,10 @@ class AdminAuditLogsRetentionResponseData(BaseModel):
         _obj = cls.model_validate({
             "retentionDays": obj.get("retentionDays"),
             "autoDelete": obj.get("autoDelete"),
-            "planLimitDays": obj.get("planLimitDays")
+            "planLimitDays": obj.get("planLimitDays"),
+            "effectiveRetentionDays": obj.get("effectiveRetentionDays"),
+            "minRetentionDays": obj.get("minRetentionDays"),
+            "maxRetentionDays": obj.get("maxRetentionDays")
         })
         return _obj
 

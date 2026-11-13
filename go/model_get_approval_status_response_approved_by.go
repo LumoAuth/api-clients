@@ -20,7 +20,7 @@ var _ MappedNullable = &GetApprovalStatusResponseApprovedBy{}
 
 // GetApprovalStatusResponseApprovedBy struct for GetApprovalStatusResponseApprovedBy
 type GetApprovalStatusResponseApprovedBy struct {
-	UserId *int32 `json:"user_id,omitempty"`
+	UserId *string `json:"user_id,omitempty"`
 }
 
 // NewGetApprovalStatusResponseApprovedBy instantiates a new GetApprovalStatusResponseApprovedBy object
@@ -41,9 +41,9 @@ func NewGetApprovalStatusResponseApprovedByWithDefaults() *GetApprovalStatusResp
 }
 
 // GetUserId returns the UserId field value if set, zero value otherwise.
-func (o *GetApprovalStatusResponseApprovedBy) GetUserId() int32 {
+func (o *GetApprovalStatusResponseApprovedBy) GetUserId() string {
 	if o == nil || IsNil(o.UserId) {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.UserId
@@ -51,7 +51,7 @@ func (o *GetApprovalStatusResponseApprovedBy) GetUserId() int32 {
 
 // GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetApprovalStatusResponseApprovedBy) GetUserIdOk() (*int32, bool) {
+func (o *GetApprovalStatusResponseApprovedBy) GetUserIdOk() (*string, bool) {
 	if o == nil || IsNil(o.UserId) {
 		return nil, false
 	}
@@ -67,8 +67,8 @@ func (o *GetApprovalStatusResponseApprovedBy) HasUserId() bool {
 	return false
 }
 
-// SetUserId gets a reference to the given int32 and assigns it to the UserId field.
-func (o *GetApprovalStatusResponseApprovedBy) SetUserId(v int32) {
+// SetUserId gets a reference to the given string and assigns it to the UserId field.
+func (o *GetApprovalStatusResponseApprovedBy) SetUserId(v string) {
 	o.UserId = &v
 }
 

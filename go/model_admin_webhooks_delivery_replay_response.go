@@ -20,7 +20,7 @@ var _ MappedNullable = &AdminWebhooksDeliveryReplayResponse{}
 
 // AdminWebhooksDeliveryReplayResponse struct for AdminWebhooksDeliveryReplayResponse
 type AdminWebhooksDeliveryReplayResponse struct {
-	Data *WebhookDelivery `json:"data,omitempty"`
+	Data *AdminWebhooksDeliveryReplayResponseData `json:"data,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
@@ -42,9 +42,9 @@ func NewAdminWebhooksDeliveryReplayResponseWithDefaults() *AdminWebhooksDelivery
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *AdminWebhooksDeliveryReplayResponse) GetData() WebhookDelivery {
+func (o *AdminWebhooksDeliveryReplayResponse) GetData() AdminWebhooksDeliveryReplayResponseData {
 	if o == nil || IsNil(o.Data) {
-		var ret WebhookDelivery
+		var ret AdminWebhooksDeliveryReplayResponseData
 		return ret
 	}
 	return *o.Data
@@ -52,7 +52,7 @@ func (o *AdminWebhooksDeliveryReplayResponse) GetData() WebhookDelivery {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AdminWebhooksDeliveryReplayResponse) GetDataOk() (*WebhookDelivery, bool) {
+func (o *AdminWebhooksDeliveryReplayResponse) GetDataOk() (*AdminWebhooksDeliveryReplayResponseData, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -68,8 +68,8 @@ func (o *AdminWebhooksDeliveryReplayResponse) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given WebhookDelivery and assigns it to the Data field.
-func (o *AdminWebhooksDeliveryReplayResponse) SetData(v WebhookDelivery) {
+// SetData gets a reference to the given AdminWebhooksDeliveryReplayResponseData and assigns it to the Data field.
+func (o *AdminWebhooksDeliveryReplayResponse) SetData(v AdminWebhooksDeliveryReplayResponseData) {
 	o.Data = &v
 }
 

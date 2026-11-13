@@ -60,7 +60,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
       */
     protected static $openAPITypes = [
         'passkeyEnabled' => 'bool',
-        'biometricEnabled' => 'bool',
         'passkeys' => '\LumoAuth\ApiClient\Model\AuthenticationSettingsPasskeys',
         'mfaRequired' => 'bool',
         'mfaMethods' => 'string[]',
@@ -77,7 +76,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
         'passwordRotationPolicy' => '\LumoAuth\ApiClient\Model\AuthenticationSettingsPasswordRotationPolicy',
         'noMfaAction' => 'string',
         'sessionTimeout' => 'int',
-        'encryptClientSecrets' => 'bool',
         'dynamicClientRegistrationEnabled' => 'bool',
         'cimdEnabled' => 'bool',
         'cimdAllowedDomains' => 'string[]',
@@ -96,7 +94,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
       */
     protected static $openAPIFormats = [
         'passkeyEnabled' => null,
-        'biometricEnabled' => null,
         'passkeys' => null,
         'mfaRequired' => null,
         'mfaMethods' => null,
@@ -113,7 +110,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
         'passwordRotationPolicy' => null,
         'noMfaAction' => null,
         'sessionTimeout' => null,
-        'encryptClientSecrets' => null,
         'dynamicClientRegistrationEnabled' => null,
         'cimdEnabled' => null,
         'cimdAllowedDomains' => null,
@@ -130,7 +126,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
       */
     protected static array $openAPINullables = [
         'passkeyEnabled' => false,
-        'biometricEnabled' => false,
         'passkeys' => false,
         'mfaRequired' => false,
         'mfaMethods' => false,
@@ -147,7 +142,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
         'passwordRotationPolicy' => false,
         'noMfaAction' => false,
         'sessionTimeout' => false,
-        'encryptClientSecrets' => false,
         'dynamicClientRegistrationEnabled' => false,
         'cimdEnabled' => false,
         'cimdAllowedDomains' => false,
@@ -244,7 +238,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
      */
     protected static $attributeMap = [
         'passkeyEnabled' => 'passkey_enabled',
-        'biometricEnabled' => 'biometric_enabled',
         'passkeys' => 'passkeys',
         'mfaRequired' => 'mfa_required',
         'mfaMethods' => 'mfa_methods',
@@ -261,7 +254,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
         'passwordRotationPolicy' => 'password_rotation_policy',
         'noMfaAction' => 'no_mfa_action',
         'sessionTimeout' => 'session_timeout',
-        'encryptClientSecrets' => 'encrypt_client_secrets',
         'dynamicClientRegistrationEnabled' => 'dynamic_client_registration_enabled',
         'cimdEnabled' => 'cimd_enabled',
         'cimdAllowedDomains' => 'cimd_allowed_domains',
@@ -278,7 +270,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
      */
     protected static $setters = [
         'passkeyEnabled' => 'setPasskeyEnabled',
-        'biometricEnabled' => 'setBiometricEnabled',
         'passkeys' => 'setPasskeys',
         'mfaRequired' => 'setMfaRequired',
         'mfaMethods' => 'setMfaMethods',
@@ -295,7 +286,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
         'passwordRotationPolicy' => 'setPasswordRotationPolicy',
         'noMfaAction' => 'setNoMfaAction',
         'sessionTimeout' => 'setSessionTimeout',
-        'encryptClientSecrets' => 'setEncryptClientSecrets',
         'dynamicClientRegistrationEnabled' => 'setDynamicClientRegistrationEnabled',
         'cimdEnabled' => 'setCimdEnabled',
         'cimdAllowedDomains' => 'setCimdAllowedDomains',
@@ -312,7 +302,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
      */
     protected static $getters = [
         'passkeyEnabled' => 'getPasskeyEnabled',
-        'biometricEnabled' => 'getBiometricEnabled',
         'passkeys' => 'getPasskeys',
         'mfaRequired' => 'getMfaRequired',
         'mfaMethods' => 'getMfaMethods',
@@ -329,7 +318,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
         'passwordRotationPolicy' => 'getPasswordRotationPolicy',
         'noMfaAction' => 'getNoMfaAction',
         'sessionTimeout' => 'getSessionTimeout',
-        'encryptClientSecrets' => 'getEncryptClientSecrets',
         'dynamicClientRegistrationEnabled' => 'getDynamicClientRegistrationEnabled',
         'cimdEnabled' => 'getCimdEnabled',
         'cimdAllowedDomains' => 'getCimdAllowedDomains',
@@ -380,8 +368,27 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
         return self::$openAPIModelName;
     }
 
+    public const NO_MFA_ACTION_ALLOW = 'allow';
+    public const NO_MFA_ACTION_PROMPT = 'prompt';
+    public const NO_MFA_ACTION_EMAIL = 'email';
+    public const NO_MFA_ACTION_BLOCK = 'block';
     public const CIMD_LOCALHOST_REDIRECT_POLICY_WARN = 'warn';
     public const CIMD_LOCALHOST_REDIRECT_POLICY_BLOCK = 'block';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getNoMfaActionAllowableValues()
+    {
+        return [
+            self::NO_MFA_ACTION_ALLOW,
+            self::NO_MFA_ACTION_PROMPT,
+            self::NO_MFA_ACTION_EMAIL,
+            self::NO_MFA_ACTION_BLOCK,
+        ];
+    }
 
     /**
      * Gets allowable values of the enum
@@ -412,7 +419,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
     public function __construct(?array $data = null)
     {
         $this->setIfExists('passkeyEnabled', $data ?? [], null);
-        $this->setIfExists('biometricEnabled', $data ?? [], null);
         $this->setIfExists('passkeys', $data ?? [], null);
         $this->setIfExists('mfaRequired', $data ?? [], null);
         $this->setIfExists('mfaMethods', $data ?? [], null);
@@ -429,7 +435,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
         $this->setIfExists('passwordRotationPolicy', $data ?? [], null);
         $this->setIfExists('noMfaAction', $data ?? [], null);
         $this->setIfExists('sessionTimeout', $data ?? [], null);
-        $this->setIfExists('encryptClientSecrets', $data ?? [], null);
         $this->setIfExists('dynamicClientRegistrationEnabled', $data ?? [], null);
         $this->setIfExists('cimdEnabled', $data ?? [], true);
         $this->setIfExists('cimdAllowedDomains', $data ?? [], null);
@@ -465,6 +470,23 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        $allowedValues = $this->getNoMfaActionAllowableValues();
+        if (!is_null($this->container['noMfaAction']) && !in_array($this->container['noMfaAction'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'noMfaAction', must be one of '%s'",
+                $this->container['noMfaAction'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if (!is_null($this->container['sessionTimeout']) && ($this->container['sessionTimeout'] > 1209600)) {
+            $invalidProperties[] = "invalid value for 'sessionTimeout', must be smaller than or equal to 1209600.";
+        }
+
+        if (!is_null($this->container['sessionTimeout']) && ($this->container['sessionTimeout'] < 300)) {
+            $invalidProperties[] = "invalid value for 'sessionTimeout', must be bigger than or equal to 300.";
+        }
 
         $allowedValues = $this->getCimdLocalhostRedirectPolicyAllowableValues();
         if (!is_null($this->container['cimdLocalhostRedirectPolicy']) && !in_array($this->container['cimdLocalhostRedirectPolicy'], $allowedValues, true)) {
@@ -513,33 +535,6 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
             throw new \InvalidArgumentException('non-nullable passkeyEnabled cannot be null');
         }
         $this->container['passkeyEnabled'] = $passkeyEnabled;
-
-        return $this;
-    }
-
-    /**
-     * Gets biometricEnabled
-     *
-     * @return bool|null
-     */
-    public function getBiometricEnabled()
-    {
-        return $this->container['biometricEnabled'];
-    }
-
-    /**
-     * Sets biometricEnabled
-     *
-     * @param bool|null $biometricEnabled biometricEnabled
-     *
-     * @return self
-     */
-    public function setBiometricEnabled($biometricEnabled)
-    {
-        if (is_null($biometricEnabled)) {
-            throw new \InvalidArgumentException('non-nullable biometricEnabled cannot be null');
-        }
-        $this->container['biometricEnabled'] = $biometricEnabled;
 
         return $this;
     }
@@ -753,7 +748,7 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets socialLoginEnabled
      *
-     * @param bool|null $socialLoginEnabled socialLoginEnabled
+     * @param bool|null $socialLoginEnabled Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag.
      *
      * @return self
      */
@@ -951,6 +946,16 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
         if (is_null($noMfaAction)) {
             throw new \InvalidArgumentException('non-nullable noMfaAction cannot be null');
         }
+        $allowedValues = $this->getNoMfaActionAllowableValues();
+        if (!in_array($noMfaAction, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'noMfaAction', must be one of '%s'",
+                    $noMfaAction,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
         $this->container['noMfaAction'] = $noMfaAction;
 
         return $this;
@@ -969,7 +974,7 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets sessionTimeout
      *
-     * @param int|null $sessionTimeout Seconds.
+     * @param int|null $sessionTimeout Idle timeout in seconds.
      *
      * @return self
      */
@@ -978,34 +983,15 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
         if (is_null($sessionTimeout)) {
             throw new \InvalidArgumentException('non-nullable sessionTimeout cannot be null');
         }
-        $this->container['sessionTimeout'] = $sessionTimeout;
 
-        return $this;
-    }
-
-    /**
-     * Gets encryptClientSecrets
-     *
-     * @return bool|null
-     */
-    public function getEncryptClientSecrets()
-    {
-        return $this->container['encryptClientSecrets'];
-    }
-
-    /**
-     * Sets encryptClientSecrets
-     *
-     * @param bool|null $encryptClientSecrets encryptClientSecrets
-     *
-     * @return self
-     */
-    public function setEncryptClientSecrets($encryptClientSecrets)
-    {
-        if (is_null($encryptClientSecrets)) {
-            throw new \InvalidArgumentException('non-nullable encryptClientSecrets cannot be null');
+        if (($sessionTimeout > 1209600)) {
+            throw new \InvalidArgumentException('invalid value for $sessionTimeout when calling AuthenticationSettings., must be smaller than or equal to 1209600.');
         }
-        $this->container['encryptClientSecrets'] = $encryptClientSecrets;
+        if (($sessionTimeout < 300)) {
+            throw new \InvalidArgumentException('invalid value for $sessionTimeout when calling AuthenticationSettings., must be bigger than or equal to 300.');
+        }
+
+        $this->container['sessionTimeout'] = $sessionTimeout;
 
         return $this;
     }

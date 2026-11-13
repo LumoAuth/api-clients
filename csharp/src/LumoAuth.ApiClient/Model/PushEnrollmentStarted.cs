@@ -59,7 +59,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="state">state.</param>
         /// <param name="qrDataUri">qrDataUri.</param>
         /// <param name="deepLink">https://&lt;server&gt;/push-auth/enroll?d&#x3D;… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it)..</param>
-        /// <param name="deepLinkAndroid">Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package..</param>
+        /// <param name="deepLinkAndroid">Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when it is not available..</param>
         /// <param name="activationCode">activationCode.</param>
         /// <param name="expiresAt">expiresAt.</param>
         public PushEnrollmentStarted(string id = default, StateEnum? state = default, string qrDataUri = default, string deepLink = default, string deepLinkAndroid = default, string activationCode = default, DateTime expiresAt = default)
@@ -96,9 +96,9 @@ namespace LumoAuth.ApiClient.Model
         public string DeepLink { get; set; }
 
         /// <summary>
-        /// Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.
+        /// Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when it is not available.
         /// </summary>
-        /// <value>Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.</value>
+        /// <value>Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when it is not available.</value>
         [DataMember(Name = "deep_link_android", EmitDefaultValue = true)]
         public string DeepLinkAndroid { get; set; }
 

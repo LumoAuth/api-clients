@@ -81,5 +81,32 @@ namespace LumoAuth.ApiClient.Test.Model
         {
             // TODO unit test for the property 'PlanLimitDays'
         }
+
+        /// <summary>
+        /// Test the property 'EffectiveRetentionDays'
+        /// </summary>
+        [Fact]
+        public void EffectiveRetentionDaysTest()
+        {
+            // TODO unit test for the property 'EffectiveRetentionDays'
+        }
+
+        /// <summary>
+        /// Test the property 'MinRetentionDays'
+        /// </summary>
+        [Fact]
+        public void MinRetentionDaysTest()
+        {
+            // TODO unit test for the property 'MinRetentionDays'
+        }
+
+        /// <summary>
+        /// Test the property 'MaxRetentionDays'
+        /// </summary>
+        [Fact]
+        public void MaxRetentionDaysTest()
+        {
+            // TODO unit test for the property 'MaxRetentionDays'
+        }
     }
 }

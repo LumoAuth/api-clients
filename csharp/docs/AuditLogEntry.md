@@ -26,7 +26,7 @@ Name | Type | Description | Notes
 **GeoLocation** | **Dictionary&lt;string, Object&gt;** | Detailed responses only | [optional] 
 **SessionId** | **string** | Detailed responses only | [optional] 
 **RequestId** | **string** | Detailed responses only | [optional] 
-**Status** | **string** | Detailed responses only | [optional] 
+**Status** | **string** | Result of the event: success, failure, pending or partial | [optional] 
 **StatusReason** | **string** | Detailed responses only | [optional] 
 **OldValue** | **Dictionary&lt;string, Object&gt;** | Detailed responses only | [optional] 
 **NewValue** | **Dictionary&lt;string, Object&gt;** | Detailed responses only | [optional] 

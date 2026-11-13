@@ -29,7 +29,7 @@ class ListPermissionsResponsePermissionsItem(BaseModel):
     """ # noqa: E501
     slug: Optional[StrictStr] = None
     description: Optional[StrictStr] = None
-    source: Optional[StrictStr] = Field(default=None, description="role:<role name> that grants it")
+    source: Optional[StrictStr] = Field(default=None, description="role:<role name> that grants it, or direct for a permission granted to the user directly")
     __properties: ClassVar[List[str]] = ["slug", "description", "source"]
 
     model_config = ConfigDict(

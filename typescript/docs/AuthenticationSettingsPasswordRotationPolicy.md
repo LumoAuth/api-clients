@@ -1,5 +1,6 @@
 # AuthenticationSettingsPasswordRotationPolicy
 
+A write is merged with the stored object.
 
 ## Properties
 
@@ -7,8 +8,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **enabled** | **boolean** |  | [optional] [default to undefined]
 **max_age_days** | **number** |  | [optional] [default to undefined]
-**notify_before_days** | **number** |  | [optional] [default to undefined]
-**history_count** | **number** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -18,8 +17,6 @@ import { AuthenticationSettingsPasswordRotationPolicy } from '@lumoauth/api-clie
 const instance: AuthenticationSettingsPasswordRotationPolicy = {
     enabled,
     max_age_days,
-    notify_before_days,
-    history_count,
 };
 ```
 

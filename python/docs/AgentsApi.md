@@ -106,7 +106,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Authorization decision for the requested action. |  -  |
 **400** | Missing required field: action. |  -  |
-**429** | Agent budget exceeded. |  -  |
+**403** | plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). |  -  |
+**429** | budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -304,6 +305,7 @@ Name | Type | Description  | Notes
 **403** | Denied — no matching per-tool or server-wide grant. |  -  |
 **400** | server_id and tool are required, or contain forbidden characters, or are too long together. |  -  |
 **404** | unknown_server — server_id is not an active MCP server of this organization. |  -  |
+**429** | budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -389,7 +391,7 @@ Name | Type | Description  | Notes
 **201** | Approval request created and push sent. |  -  |
 **202** | User has no push device; an email sign-in fallback link was sent. |  -  |
 **400** | Invalid JSON, task_id, reason, impact, or missing on_behalf_of. |  -  |
-**403** | Caller is not an agent, is cross-tenant, or lacks delegation permission. |  -  |
+**403** | Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. |  -  |
 **404** | Tenant or target user not found. |  -  |
 **428** | User has no enrolled push device and the email fallback could not be sent. |  -  |
 **429** | Rate limited (per tenant/agent/user). |  -  |
@@ -464,6 +466,7 @@ No authorization required
 |-------------|-------------|------------------|
 **200** | The A2A AgentCard with a detached JWS signature over its JCS-canonical content (signatures[].protected + signature, verifiable against this organization&#39;s JWKS). |  -  |
 **404** | not_found — unknown organization, or the agent is unknown, inactive or has no published A2A card. |  -  |
+**429** | rate_limited — too many card requests from this address (Retry-After). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -806,7 +809,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Recorded. &#x60;budget&#x60; has the same shape as &#x60;budget_policy&#x60; in UserInfo; &#x60;exhausted: true&#x60; means that the next metered call gets 429. |  -  |
 **400** | invalid_request: tokens or cost_usd is missing, negative, too large or not a number. |  -  |
-**403** | test_token_not_accepted or cross_tenant. |  -  |
+**403** | test_token_not_accepted, cross_tenant or insufficient_scope (the token was narrowed with a scope). |  -  |
 **429** | rate_limited: too many reports from this agent. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

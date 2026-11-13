@@ -60,7 +60,10 @@ class AdminAuditLogsRetentionResponseData implements ModelInterface, ArrayAccess
     protected static $openAPITypes = [
         'retentionDays' => 'int',
         'autoDelete' => 'bool',
-        'planLimitDays' => 'int'
+        'planLimitDays' => 'int',
+        'effectiveRetentionDays' => 'int',
+        'minRetentionDays' => 'int',
+        'maxRetentionDays' => 'int'
     ];
 
     /**
@@ -73,7 +76,10 @@ class AdminAuditLogsRetentionResponseData implements ModelInterface, ArrayAccess
     protected static $openAPIFormats = [
         'retentionDays' => null,
         'autoDelete' => null,
-        'planLimitDays' => null
+        'planLimitDays' => null,
+        'effectiveRetentionDays' => null,
+        'minRetentionDays' => null,
+        'maxRetentionDays' => null
     ];
 
     /**
@@ -84,7 +90,10 @@ class AdminAuditLogsRetentionResponseData implements ModelInterface, ArrayAccess
     protected static array $openAPINullables = [
         'retentionDays' => false,
         'autoDelete' => false,
-        'planLimitDays' => true
+        'planLimitDays' => true,
+        'effectiveRetentionDays' => true,
+        'minRetentionDays' => false,
+        'maxRetentionDays' => false
     ];
 
     /**
@@ -175,7 +184,10 @@ class AdminAuditLogsRetentionResponseData implements ModelInterface, ArrayAccess
     protected static $attributeMap = [
         'retentionDays' => 'retentionDays',
         'autoDelete' => 'autoDelete',
-        'planLimitDays' => 'planLimitDays'
+        'planLimitDays' => 'planLimitDays',
+        'effectiveRetentionDays' => 'effectiveRetentionDays',
+        'minRetentionDays' => 'minRetentionDays',
+        'maxRetentionDays' => 'maxRetentionDays'
     ];
 
     /**
@@ -186,7 +198,10 @@ class AdminAuditLogsRetentionResponseData implements ModelInterface, ArrayAccess
     protected static $setters = [
         'retentionDays' => 'setRetentionDays',
         'autoDelete' => 'setAutoDelete',
-        'planLimitDays' => 'setPlanLimitDays'
+        'planLimitDays' => 'setPlanLimitDays',
+        'effectiveRetentionDays' => 'setEffectiveRetentionDays',
+        'minRetentionDays' => 'setMinRetentionDays',
+        'maxRetentionDays' => 'setMaxRetentionDays'
     ];
 
     /**
@@ -197,7 +212,10 @@ class AdminAuditLogsRetentionResponseData implements ModelInterface, ArrayAccess
     protected static $getters = [
         'retentionDays' => 'getRetentionDays',
         'autoDelete' => 'getAutoDelete',
-        'planLimitDays' => 'getPlanLimitDays'
+        'planLimitDays' => 'getPlanLimitDays',
+        'effectiveRetentionDays' => 'getEffectiveRetentionDays',
+        'minRetentionDays' => 'getMinRetentionDays',
+        'maxRetentionDays' => 'getMaxRetentionDays'
     ];
 
     /**
@@ -260,6 +278,9 @@ class AdminAuditLogsRetentionResponseData implements ModelInterface, ArrayAccess
         $this->setIfExists('retentionDays', $data ?? [], null);
         $this->setIfExists('autoDelete', $data ?? [], null);
         $this->setIfExists('planLimitDays', $data ?? [], null);
+        $this->setIfExists('effectiveRetentionDays', $data ?? [], null);
+        $this->setIfExists('minRetentionDays', $data ?? [], null);
+        $this->setIfExists('maxRetentionDays', $data ?? [], null);
     }
 
     /**
@@ -317,7 +338,7 @@ class AdminAuditLogsRetentionResponseData implements ModelInterface, ArrayAccess
     /**
      * Sets retentionDays
      *
-     * @param int|null $retentionDays Effective retention, capped by the plan limit
+     * @param int|null $retentionDays The organization's own period, between minRetentionDays and maxRetentionDays. It applies while data retention is on and autoDelete is not false.
      *
      * @return self
      */
@@ -344,7 +365,7 @@ class AdminAuditLogsRetentionResponseData implements ModelInterface, ArrayAccess
     /**
      * Sets autoDelete
      *
-     * @param bool|null $autoDelete autoDelete
+     * @param bool|null $autoDelete false switches the organization's own period off; the plan's period still applies
      *
      * @return self
      */
@@ -371,7 +392,7 @@ class AdminAuditLogsRetentionResponseData implements ModelInterface, ArrayAccess
     /**
      * Sets planLimitDays
      *
-     * @param int|null $planLimitDays Plan cap; null when unlimited or billing enforcement is off
+     * @param int|null $planLimitDays The plan's period: older entries are not returned and are deleted. null when the plan has no limit.
      *
      * @return self
      */
@@ -388,6 +409,94 @@ class AdminAuditLogsRetentionResponseData implements ModelInterface, ArrayAccess
             }
         }
         $this->container['planLimitDays'] = $planLimitDays;
+
+        return $this;
+    }
+
+    /**
+     * Gets effectiveRetentionDays
+     *
+     * @return int|null
+     */
+    public function getEffectiveRetentionDays()
+    {
+        return $this->container['effectiveRetentionDays'];
+    }
+
+    /**
+     * Sets effectiveRetentionDays
+     *
+     * @param int|null $effectiveRetentionDays How long entries are kept now; null when nothing is deleted
+     *
+     * @return self
+     */
+    public function setEffectiveRetentionDays($effectiveRetentionDays)
+    {
+        if (is_null($effectiveRetentionDays)) {
+            array_push($this->openAPINullablesSetToNull, 'effectiveRetentionDays');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('effectiveRetentionDays', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['effectiveRetentionDays'] = $effectiveRetentionDays;
+
+        return $this;
+    }
+
+    /**
+     * Gets minRetentionDays
+     *
+     * @return int|null
+     */
+    public function getMinRetentionDays()
+    {
+        return $this->container['minRetentionDays'];
+    }
+
+    /**
+     * Sets minRetentionDays
+     *
+     * @param int|null $minRetentionDays minRetentionDays
+     *
+     * @return self
+     */
+    public function setMinRetentionDays($minRetentionDays)
+    {
+        if (is_null($minRetentionDays)) {
+            throw new \InvalidArgumentException('non-nullable minRetentionDays cannot be null');
+        }
+        $this->container['minRetentionDays'] = $minRetentionDays;
+
+        return $this;
+    }
+
+    /**
+     * Gets maxRetentionDays
+     *
+     * @return int|null
+     */
+    public function getMaxRetentionDays()
+    {
+        return $this->container['maxRetentionDays'];
+    }
+
+    /**
+     * Sets maxRetentionDays
+     *
+     * @param int|null $maxRetentionDays maxRetentionDays
+     *
+     * @return self
+     */
+    public function setMaxRetentionDays($maxRetentionDays)
+    {
+        if (is_null($maxRetentionDays)) {
+            throw new \InvalidArgumentException('non-nullable maxRetentionDays cannot be null');
+        }
+        $this->container['maxRetentionDays'] = $maxRetentionDays;
 
         return $this;
     }

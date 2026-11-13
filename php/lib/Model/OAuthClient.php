@@ -68,7 +68,8 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         'createdAt' => '\DateTime',
         'redirectUris' => 'string[]',
         'scopes' => 'string[]',
-        'grantTypes' => 'string[]'
+        'grantTypes' => 'string[]',
+        'cibaEnabled' => 'bool'
     ];
 
     /**
@@ -89,7 +90,8 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         'createdAt' => 'date-time',
         'redirectUris' => null,
         'scopes' => null,
-        'grantTypes' => null
+        'grantTypes' => null,
+        'cibaEnabled' => null
     ];
 
     /**
@@ -108,7 +110,8 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         'createdAt' => false,
         'redirectUris' => false,
         'scopes' => false,
-        'grantTypes' => false
+        'grantTypes' => false,
+        'cibaEnabled' => false
     ];
 
     /**
@@ -207,7 +210,8 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         'createdAt' => 'createdAt',
         'redirectUris' => 'redirectUris',
         'scopes' => 'scopes',
-        'grantTypes' => 'grantTypes'
+        'grantTypes' => 'grantTypes',
+        'cibaEnabled' => 'cibaEnabled'
     ];
 
     /**
@@ -226,7 +230,8 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         'createdAt' => 'setCreatedAt',
         'redirectUris' => 'setRedirectUris',
         'scopes' => 'setScopes',
-        'grantTypes' => 'setGrantTypes'
+        'grantTypes' => 'setGrantTypes',
+        'cibaEnabled' => 'setCibaEnabled'
     ];
 
     /**
@@ -245,7 +250,8 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         'createdAt' => 'getCreatedAt',
         'redirectUris' => 'getRedirectUris',
         'scopes' => 'getScopes',
-        'grantTypes' => 'getGrantTypes'
+        'grantTypes' => 'getGrantTypes',
+        'cibaEnabled' => 'getCibaEnabled'
     ];
 
     /**
@@ -316,6 +322,7 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('redirectUris', $data ?? [], null);
         $this->setIfExists('scopes', $data ?? [], null);
         $this->setIfExists('grantTypes', $data ?? [], null);
+        $this->setIfExists('cibaEnabled', $data ?? [], null);
     }
 
     /**
@@ -677,6 +684,33 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable grantTypes cannot be null');
         }
         $this->container['grantTypes'] = $grantTypes;
+
+        return $this;
+    }
+
+    /**
+     * Gets cibaEnabled
+     *
+     * @return bool|null
+     */
+    public function getCibaEnabled()
+    {
+        return $this->container['cibaEnabled'];
+    }
+
+    /**
+     * Sets cibaEnabled
+     *
+     * @param bool|null $cibaEnabled Detailed responses only. Whether the client may use CIBA (backchannel authentication).
+     *
+     * @return self
+     */
+    public function setCibaEnabled($cibaEnabled)
+    {
+        if (is_null($cibaEnabled)) {
+            throw new \InvalidArgumentException('non-nullable cibaEnabled cannot be null');
+        }
+        $this->container['cibaEnabled'] = $cibaEnabled;
 
         return $this;
     }

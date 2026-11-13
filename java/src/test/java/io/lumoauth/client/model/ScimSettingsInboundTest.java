@@ -22,8 +22,6 @@ import io.lumoauth.client.model.RedactedSecret;
 import io.lumoauth.client.model.ScimSettingsInboundProtectedAttributes;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -120,14 +118,6 @@ public class ScimSettingsInboundTest {
     @Test
     public void protectedAttributesTest() {
         // TODO: test protectedAttributes
-    }
-
-    /**
-     * Test the property 'attributeMapping'
-     */
-    @Test
-    public void attributeMappingTest() {
-        // TODO: test attributeMapping
     }
 
     /**

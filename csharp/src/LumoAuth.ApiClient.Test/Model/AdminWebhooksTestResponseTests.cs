@@ -74,6 +74,15 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'DeliveryId'
+        /// </summary>
+        [Fact]
+        public void DeliveryIdTest()
+        {
+            // TODO unit test for the property 'DeliveryId'
+        }
+
+        /// <summary>
         /// Test the property 'Message'
         /// </summary>
         [Fact]

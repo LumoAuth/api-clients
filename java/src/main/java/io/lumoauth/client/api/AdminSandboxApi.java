@@ -354,7 +354,8 @@ public class AdminSandboxApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> Sandbox created </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Sandbox created. &#x60;data.api_key&#x60; is shown only once. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The organization lacks the Developer sandboxes add-on (&#x60;feature_not_in_plan&#x60;), or it is itself a sandbox </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Per-owner active-sandbox cap reached </td><td>  -  </td></tr>
      </table>
      */
@@ -417,7 +418,7 @@ public class AdminSandboxApi {
 
     /**
      * Spawn a sandbox tenant
-     * 
+     * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
      * @param orgId  (required)
      * @param adminSandboxSpawnRequest  (optional)
      * @return AdminSandboxSpawnResponse
@@ -426,7 +427,8 @@ public class AdminSandboxApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> Sandbox created </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Sandbox created. &#x60;data.api_key&#x60; is shown only once. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The organization lacks the Developer sandboxes add-on (&#x60;feature_not_in_plan&#x60;), or it is itself a sandbox </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Per-owner active-sandbox cap reached </td><td>  -  </td></tr>
      </table>
      */
@@ -437,7 +439,7 @@ public class AdminSandboxApi {
 
     /**
      * Spawn a sandbox tenant
-     * 
+     * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
      * @param orgId  (required)
      * @param adminSandboxSpawnRequest  (optional)
      * @return ApiResponse&lt;AdminSandboxSpawnResponse&gt;
@@ -446,7 +448,8 @@ public class AdminSandboxApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> Sandbox created </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Sandbox created. &#x60;data.api_key&#x60; is shown only once. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The organization lacks the Developer sandboxes add-on (&#x60;feature_not_in_plan&#x60;), or it is itself a sandbox </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Per-owner active-sandbox cap reached </td><td>  -  </td></tr>
      </table>
      */
@@ -458,7 +461,7 @@ public class AdminSandboxApi {
 
     /**
      * Spawn a sandbox tenant (asynchronously)
-     * 
+     * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
      * @param orgId  (required)
      * @param adminSandboxSpawnRequest  (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -468,7 +471,8 @@ public class AdminSandboxApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> Sandbox created </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Sandbox created. &#x60;data.api_key&#x60; is shown only once. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The organization lacks the Developer sandboxes add-on (&#x60;feature_not_in_plan&#x60;), or it is itself a sandbox </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Per-owner active-sandbox cap reached </td><td>  -  </td></tr>
      </table>
      */

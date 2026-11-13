@@ -6,7 +6,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **string** |  | [default to undefined]
-**idp_id** | **number** | SAML IdP config id (type&#x3D;saml) | [optional] [default to undefined]
+**idp_id** | **number** | SAML IdP config id (type&#x3D;saml) or OpenID Connect connection id (type&#x3D;oidc) | [optional] [default to undefined]
+**subject** | **string** | Subject the OpenID Connect provider issues for this user (type&#x3D;oidc) | [optional] [default to undefined]
 **name_id** | **string** | NameID the IdP asserts for this user (type&#x3D;saml) | [optional] [default to undefined]
 **ldap_config_id** | **number** | LDAP directory id (type&#x3D;ldap) | [optional] [default to undefined]
 **dn** | **string** | Distinguished name (type&#x3D;ldap); omitted &#x3D; look up | [optional] [default to undefined]
@@ -20,6 +21,7 @@ import { AdminIdentitiesLinkRequest } from '@lumoauth/api-client';
 const instance: AdminIdentitiesLinkRequest = {
     type,
     idp_id,
+    subject,
     name_id,
     ldap_config_id,
     dn,

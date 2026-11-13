@@ -18,20 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
 class AuthenticationSettingsPasswordRotationPolicy(BaseModel):
     """
-    AuthenticationSettingsPasswordRotationPolicy
+    A write is merged with the stored object.
     """ # noqa: E501
     enabled: Optional[StrictBool] = None
-    max_age_days: Optional[StrictInt] = None
-    notify_before_days: Optional[StrictInt] = None
-    history_count: Optional[StrictInt] = None
-    __properties: ClassVar[List[str]] = ["enabled", "max_age_days", "notify_before_days", "history_count"]
+    max_age_days: Optional[Annotated[int, Field(le=730, strict=True, ge=1)]] = None
+    __properties: ClassVar[List[str]] = ["enabled", "max_age_days"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -85,9 +84,7 @@ class AuthenticationSettingsPasswordRotationPolicy(BaseModel):
 
         _obj = cls.model_validate({
             "enabled": obj.get("enabled"),
-            "max_age_days": obj.get("max_age_days"),
-            "notify_before_days": obj.get("notify_before_days"),
-            "history_count": obj.get("history_count")
+            "max_age_days": obj.get("max_age_days")
         })
         return _obj
 

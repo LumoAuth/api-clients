@@ -437,7 +437,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Continuous access evaluation (CAEP) result for the task. |  -  |
 **401** | Authentication required. |  -  |
-**403** | Cross-tenant evaluation is not permitted. |  -  |
+**403** | The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission. |  -  |
 **404** | Tenant or task not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -606,7 +606,7 @@ Name | Type | Description  | Notes
 **401** | Invalid or missing agent token. |  -  |
 **403** | Request belongs to a different agent, is not yet approved, is no longer redeemable (expired window, ended task, inactive agent/organization), or a JIT token was used. |  -  |
 **404** | Tenant or request not found. |  -  |
-**429** | Rate limit or agent budget exceeded. |  -  |
+**429** | rate_limit_exceeded, or budget_exceeded when the agent budget is spent (Retry-After holds the seconds until the spent window starts again). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -784,7 +784,7 @@ Name | Type | Description  | Notes
 **201** | Permission request created (auto-approved for low risk, otherwise pending HITL). |  -  |
 **400** | Missing/invalid task_id, authorization_details, or the task is not active. |  -  |
 **401** | Invalid or missing agent token. |  -  |
-**403** | Task belongs to a different agent. |  -  |
+**403** | Task belongs to a different agent, or task_suspended: continuous access evaluation suspended the task on this request. |  -  |
 **404** | Tenant or task not found. |  -  |
 **429** | Rate limit exceeded. |  -  |
 

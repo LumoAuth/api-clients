@@ -34,6 +34,10 @@ import type { RegisterClientResponse } from '../models';
 // @ts-ignore
 import type { RegisteredClientMetadata } from '../models';
 // @ts-ignore
+import type { RequestMagicLinkRequest } from '../models';
+// @ts-ignore
+import type { RequestMagicLinkResponse } from '../models';
+// @ts-ignore
 import type { SubmitLoginJsonResponse } from '../models';
 // @ts-ignore
 import type { TokenResponse } from '../models';
@@ -377,6 +381,46 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to `return_to`, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by `client_id`.
+         * @summary Request a sign-in link by email
+         * @param {string} orgId 
+         * @param {RequestMagicLinkRequest} requestMagicLinkRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        requestMagicLink: async (orgId: string, requestMagicLinkRequest: RequestMagicLinkRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('requestMagicLink', 'orgId', orgId)
+            // verify required parameter 'requestMagicLinkRequest' is not null or undefined
+            assertParamExists('requestMagicLink', 'requestMagicLinkRequest', requestMagicLinkRequest)
+            const localVarPath = `/orgs/{orgId}/api/v1/oauth/magic-link`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestMagicLinkRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -838,6 +882,20 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to `return_to`, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by `client_id`.
+         * @summary Request a sign-in link by email
+         * @param {string} orgId 
+         * @param {RequestMagicLinkRequest} requestMagicLinkRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async requestMagicLink(orgId: string, requestMagicLinkRequest: RequestMagicLinkRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RequestMagicLinkResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.requestMagicLink(orgId, requestMagicLinkRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OAuthApi.requestMagicLink']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
          * @summary Token revocation (RFC 7009)
          * @param {string} orgId 
@@ -1058,6 +1116,16 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.registerClient(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
+         * For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to `return_to`, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by `client_id`.
+         * @summary Request a sign-in link by email
+         * @param {OAuthApiRequestMagicLinkRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        requestMagicLink(requestParameters: OAuthApiRequestMagicLinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<RequestMagicLinkResponse> {
+            return localVarFp.requestMagicLink(requestParameters.orgId, requestParameters.requestMagicLinkRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
          * @summary Token revocation (RFC 7009)
          * @param {OAuthApiRevokeRequest} requestParameters Request parameters.
@@ -1245,6 +1313,16 @@ export interface OAuthApiInterface {
      * @memberof OAuthApiInterface
      */
     registerClient(requestParameters: OAuthApiRegisterClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisterClientResponse>;
+
+    /**
+     * For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to `return_to`, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by `client_id`.
+     * @summary Request a sign-in link by email
+     * @param {OAuthApiRequestMagicLinkRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OAuthApiInterface
+     */
+    requestMagicLink(requestParameters: OAuthApiRequestMagicLinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<RequestMagicLinkResponse>;
 
     /**
      * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
@@ -1469,6 +1547,27 @@ export interface OAuthApiRegisterClientRequest {
      * @memberof OAuthApiRegisterClient
      */
     readonly orgId: string
+}
+
+/**
+ * Request parameters for requestMagicLink operation in OAuthApi.
+ * @export
+ * @interface OAuthApiRequestMagicLinkRequest
+ */
+export interface OAuthApiRequestMagicLinkRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiRequestMagicLink
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {RequestMagicLinkRequest}
+     * @memberof OAuthApiRequestMagicLink
+     */
+    readonly requestMagicLinkRequest: RequestMagicLinkRequest
 }
 
 /**
@@ -1731,6 +1830,18 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
      */
     public registerClient(requestParameters: OAuthApiRegisterClientRequest, options?: RawAxiosRequestConfig) {
         return OAuthApiFp(this.configuration).registerClient(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to `return_to`, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by `client_id`.
+     * @summary Request a sign-in link by email
+     * @param {OAuthApiRequestMagicLinkRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OAuthApi
+     */
+    public requestMagicLink(requestParameters: OAuthApiRequestMagicLinkRequest, options?: RawAxiosRequestConfig) {
+        return OAuthApiFp(this.configuration).requestMagicLink(requestParameters.orgId, requestParameters.requestMagicLinkRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

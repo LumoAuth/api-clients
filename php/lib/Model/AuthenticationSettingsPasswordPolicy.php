@@ -36,6 +36,7 @@ use \LumoAuth\ApiClient\ObjectSerializer;
  * AuthenticationSettingsPasswordPolicy Class Doc Comment
  *
  * @category Class
+ * @description The password rules that apply. A write is merged with the stored object. A named template sets its own rules; rules sent without a template make the policy custom.
  * @package  LumoAuth\ApiClient
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -62,7 +63,11 @@ class AuthenticationSettingsPasswordPolicy implements ModelInterface, ArrayAcces
         'minLength' => 'int',
         'requireSpecial' => 'bool',
         'requireNumbers' => 'bool',
-        'requireUppercase' => 'bool'
+        'requireUppercase' => 'bool',
+        'requireLowercase' => 'bool',
+        'rejectBreachedPasswords' => 'bool',
+        'breachedPasswordMinCount' => 'int',
+        'checkBreachedOnLogin' => 'bool'
     ];
 
     /**
@@ -77,7 +82,11 @@ class AuthenticationSettingsPasswordPolicy implements ModelInterface, ArrayAcces
         'minLength' => null,
         'requireSpecial' => null,
         'requireNumbers' => null,
-        'requireUppercase' => null
+        'requireUppercase' => null,
+        'requireLowercase' => null,
+        'rejectBreachedPasswords' => null,
+        'breachedPasswordMinCount' => null,
+        'checkBreachedOnLogin' => null
     ];
 
     /**
@@ -90,7 +99,11 @@ class AuthenticationSettingsPasswordPolicy implements ModelInterface, ArrayAcces
         'minLength' => false,
         'requireSpecial' => false,
         'requireNumbers' => false,
-        'requireUppercase' => false
+        'requireUppercase' => false,
+        'requireLowercase' => false,
+        'rejectBreachedPasswords' => false,
+        'breachedPasswordMinCount' => false,
+        'checkBreachedOnLogin' => false
     ];
 
     /**
@@ -183,7 +196,11 @@ class AuthenticationSettingsPasswordPolicy implements ModelInterface, ArrayAcces
         'minLength' => 'min_length',
         'requireSpecial' => 'require_special',
         'requireNumbers' => 'require_numbers',
-        'requireUppercase' => 'require_uppercase'
+        'requireUppercase' => 'require_uppercase',
+        'requireLowercase' => 'require_lowercase',
+        'rejectBreachedPasswords' => 'reject_breached_passwords',
+        'breachedPasswordMinCount' => 'breached_password_min_count',
+        'checkBreachedOnLogin' => 'check_breached_on_login'
     ];
 
     /**
@@ -196,7 +213,11 @@ class AuthenticationSettingsPasswordPolicy implements ModelInterface, ArrayAcces
         'minLength' => 'setMinLength',
         'requireSpecial' => 'setRequireSpecial',
         'requireNumbers' => 'setRequireNumbers',
-        'requireUppercase' => 'setRequireUppercase'
+        'requireUppercase' => 'setRequireUppercase',
+        'requireLowercase' => 'setRequireLowercase',
+        'rejectBreachedPasswords' => 'setRejectBreachedPasswords',
+        'breachedPasswordMinCount' => 'setBreachedPasswordMinCount',
+        'checkBreachedOnLogin' => 'setCheckBreachedOnLogin'
     ];
 
     /**
@@ -209,7 +230,11 @@ class AuthenticationSettingsPasswordPolicy implements ModelInterface, ArrayAcces
         'minLength' => 'getMinLength',
         'requireSpecial' => 'getRequireSpecial',
         'requireNumbers' => 'getRequireNumbers',
-        'requireUppercase' => 'getRequireUppercase'
+        'requireUppercase' => 'getRequireUppercase',
+        'requireLowercase' => 'getRequireLowercase',
+        'rejectBreachedPasswords' => 'getRejectBreachedPasswords',
+        'breachedPasswordMinCount' => 'getBreachedPasswordMinCount',
+        'checkBreachedOnLogin' => 'getCheckBreachedOnLogin'
     ];
 
     /**
@@ -293,6 +318,10 @@ class AuthenticationSettingsPasswordPolicy implements ModelInterface, ArrayAcces
         $this->setIfExists('requireSpecial', $data ?? [], null);
         $this->setIfExists('requireNumbers', $data ?? [], null);
         $this->setIfExists('requireUppercase', $data ?? [], null);
+        $this->setIfExists('requireLowercase', $data ?? [], null);
+        $this->setIfExists('rejectBreachedPasswords', $data ?? [], null);
+        $this->setIfExists('breachedPasswordMinCount', $data ?? [], null);
+        $this->setIfExists('checkBreachedOnLogin', $data ?? [], null);
     }
 
     /**
@@ -329,6 +358,18 @@ class AuthenticationSettingsPasswordPolicy implements ModelInterface, ArrayAcces
                 $this->container['template'],
                 implode("', '", $allowedValues)
             );
+        }
+
+        if (!is_null($this->container['minLength']) && ($this->container['minLength'] > 128)) {
+            $invalidProperties[] = "invalid value for 'minLength', must be smaller than or equal to 128.";
+        }
+
+        if (!is_null($this->container['minLength']) && ($this->container['minLength'] < 8)) {
+            $invalidProperties[] = "invalid value for 'minLength', must be bigger than or equal to 8.";
+        }
+
+        if (!is_null($this->container['breachedPasswordMinCount']) && ($this->container['breachedPasswordMinCount'] < 1)) {
+            $invalidProperties[] = "invalid value for 'breachedPasswordMinCount', must be bigger than or equal to 1.";
         }
 
         return $invalidProperties;
@@ -405,6 +446,14 @@ class AuthenticationSettingsPasswordPolicy implements ModelInterface, ArrayAcces
         if (is_null($minLength)) {
             throw new \InvalidArgumentException('non-nullable minLength cannot be null');
         }
+
+        if (($minLength > 128)) {
+            throw new \InvalidArgumentException('invalid value for $minLength when calling AuthenticationSettingsPasswordPolicy., must be smaller than or equal to 128.');
+        }
+        if (($minLength < 8)) {
+            throw new \InvalidArgumentException('invalid value for $minLength when calling AuthenticationSettingsPasswordPolicy., must be bigger than or equal to 8.');
+        }
+
         $this->container['minLength'] = $minLength;
 
         return $this;
@@ -487,6 +536,119 @@ class AuthenticationSettingsPasswordPolicy implements ModelInterface, ArrayAcces
             throw new \InvalidArgumentException('non-nullable requireUppercase cannot be null');
         }
         $this->container['requireUppercase'] = $requireUppercase;
+
+        return $this;
+    }
+
+    /**
+     * Gets requireLowercase
+     *
+     * @return bool|null
+     */
+    public function getRequireLowercase()
+    {
+        return $this->container['requireLowercase'];
+    }
+
+    /**
+     * Sets requireLowercase
+     *
+     * @param bool|null $requireLowercase requireLowercase
+     *
+     * @return self
+     */
+    public function setRequireLowercase($requireLowercase)
+    {
+        if (is_null($requireLowercase)) {
+            throw new \InvalidArgumentException('non-nullable requireLowercase cannot be null');
+        }
+        $this->container['requireLowercase'] = $requireLowercase;
+
+        return $this;
+    }
+
+    /**
+     * Gets rejectBreachedPasswords
+     *
+     * @return bool|null
+     */
+    public function getRejectBreachedPasswords()
+    {
+        return $this->container['rejectBreachedPasswords'];
+    }
+
+    /**
+     * Sets rejectBreachedPasswords
+     *
+     * @param bool|null $rejectBreachedPasswords rejectBreachedPasswords
+     *
+     * @return self
+     */
+    public function setRejectBreachedPasswords($rejectBreachedPasswords)
+    {
+        if (is_null($rejectBreachedPasswords)) {
+            throw new \InvalidArgumentException('non-nullable rejectBreachedPasswords cannot be null');
+        }
+        $this->container['rejectBreachedPasswords'] = $rejectBreachedPasswords;
+
+        return $this;
+    }
+
+    /**
+     * Gets breachedPasswordMinCount
+     *
+     * @return int|null
+     */
+    public function getBreachedPasswordMinCount()
+    {
+        return $this->container['breachedPasswordMinCount'];
+    }
+
+    /**
+     * Sets breachedPasswordMinCount
+     *
+     * @param int|null $breachedPasswordMinCount breachedPasswordMinCount
+     *
+     * @return self
+     */
+    public function setBreachedPasswordMinCount($breachedPasswordMinCount)
+    {
+        if (is_null($breachedPasswordMinCount)) {
+            throw new \InvalidArgumentException('non-nullable breachedPasswordMinCount cannot be null');
+        }
+
+        if (($breachedPasswordMinCount < 1)) {
+            throw new \InvalidArgumentException('invalid value for $breachedPasswordMinCount when calling AuthenticationSettingsPasswordPolicy., must be bigger than or equal to 1.');
+        }
+
+        $this->container['breachedPasswordMinCount'] = $breachedPasswordMinCount;
+
+        return $this;
+    }
+
+    /**
+     * Gets checkBreachedOnLogin
+     *
+     * @return bool|null
+     */
+    public function getCheckBreachedOnLogin()
+    {
+        return $this->container['checkBreachedOnLogin'];
+    }
+
+    /**
+     * Sets checkBreachedOnLogin
+     *
+     * @param bool|null $checkBreachedOnLogin checkBreachedOnLogin
+     *
+     * @return self
+     */
+    public function setCheckBreachedOnLogin($checkBreachedOnLogin)
+    {
+        if (is_null($checkBreachedOnLogin)) {
+            throw new \InvalidArgumentException('non-nullable checkBreachedOnLogin cannot be null');
+        }
+        $this->container['checkBreachedOnLogin'] = $checkBreachedOnLogin;
 
         return $this;
     }

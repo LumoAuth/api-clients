@@ -11,7 +11,7 @@ The verified workload identity.
 |**provider** | **String** |  |  [optional] |
 |**subject** | **String** |  |  [optional] |
 |**issuer** | **String** |  |  [optional] |
-|**audienceGeneric** | **Boolean** | True when the registered audience is not specific to this deployment (operators should move to the agent-specific audience). |  [optional] |
+|**audienceGeneric** | **Boolean** | True when the registered audience is not specific to LumoAuth (move to the agent-specific audience). |  [optional] |
 
 
 

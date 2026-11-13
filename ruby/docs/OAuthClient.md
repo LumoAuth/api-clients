@@ -15,6 +15,7 @@
 | **redirect_uris** | **Array&lt;String&gt;** | Detailed responses only | [optional] |
 | **scopes** | **Array&lt;String&gt;** | Detailed responses only | [optional] |
 | **grant_types** | **Array&lt;String&gt;** | Detailed responses only | [optional] |
+| **ciba_enabled** | **Boolean** | Detailed responses only. Whether the client may use CIBA (backchannel authentication). | [optional] |
 
 ## Example
 
@@ -32,7 +33,8 @@ instance = LumoAuthApiClient::OAuthClient.new(
   created_at: null,
   redirect_uris: null,
   scopes: null,
-  grant_types: null
+  grant_types: null,
+  ciba_enabled: null
 )
 ```
 

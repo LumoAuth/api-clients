@@ -4,7 +4,7 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **secret** | **String** | Plaintext client secret — returned only once, never retrievable again | [optional] |
+| **secret** | **String** | Plaintext client secret — returned only once, never retrievable again. Absent for a public client | [optional] |
 | **_note** | **String** |  | [optional] |
 
 ## Example

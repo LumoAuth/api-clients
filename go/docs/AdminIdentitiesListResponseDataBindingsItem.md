@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Type** | Pointer to **string** |  | [optional] 
 **IdpId** | Pointer to **NullableInt32** |  | [optional] 
 **NameId** | Pointer to **NullableString** |  | [optional] 
+**Subject** | Pointer to **NullableString** |  | [optional] 
 **Legacy** | Pointer to **bool** |  | [optional] 
 **LdapConfigId** | Pointer to **NullableInt32** |  | [optional] 
 **Dn** | Pointer to **NullableString** |  | [optional] 
@@ -126,6 +127,41 @@ HasNameId returns a boolean if a field has been set.
 `func (o *AdminIdentitiesListResponseDataBindingsItem) UnsetNameId()`
 
 UnsetNameId ensures that no value is present for NameId, not even an explicit nil
+### GetSubject
+
+`func (o *AdminIdentitiesListResponseDataBindingsItem) GetSubject() string`
+
+GetSubject returns the Subject field if non-nil, zero value otherwise.
+
+### GetSubjectOk
+
+`func (o *AdminIdentitiesListResponseDataBindingsItem) GetSubjectOk() (*string, bool)`
+
+GetSubjectOk returns a tuple with the Subject field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubject
+
+`func (o *AdminIdentitiesListResponseDataBindingsItem) SetSubject(v string)`
+
+SetSubject sets Subject field to given value.
+
+### HasSubject
+
+`func (o *AdminIdentitiesListResponseDataBindingsItem) HasSubject() bool`
+
+HasSubject returns a boolean if a field has been set.
+
+### SetSubjectNil
+
+`func (o *AdminIdentitiesListResponseDataBindingsItem) SetSubjectNil(b bool)`
+
+ SetSubjectNil sets the value for Subject to be an explicit nil
+
+### UnsetSubject
+`func (o *AdminIdentitiesListResponseDataBindingsItem) UnsetSubject()`
+
+UnsetSubject ensures that no value is present for Subject, not even an explicit nil
 ### GetLegacy
 
 `func (o *AdminIdentitiesListResponseDataBindingsItem) GetLegacy() bool`

@@ -11,25 +11,21 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
+/// AuthenticationSettingsPasswordRotationPolicy : A write is merged with the stored object.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AuthenticationSettingsPasswordRotationPolicy {
     #[serde(rename = "enabled", skip_serializing_if = "Option::is_none")]
     pub enabled: Option<bool>,
     #[serde(rename = "max_age_days", skip_serializing_if = "Option::is_none")]
     pub max_age_days: Option<i32>,
-    #[serde(rename = "notify_before_days", skip_serializing_if = "Option::is_none")]
-    pub notify_before_days: Option<i32>,
-    #[serde(rename = "history_count", skip_serializing_if = "Option::is_none")]
-    pub history_count: Option<i32>,
 }
 
 impl AuthenticationSettingsPasswordRotationPolicy {
+    /// A write is merged with the stored object.
     pub fn new() -> AuthenticationSettingsPasswordRotationPolicy {
         AuthenticationSettingsPasswordRotationPolicy {
             enabled: None,
             max_age_days: None,
-            notify_before_days: None,
-            history_count: None,
         }
     }
 }

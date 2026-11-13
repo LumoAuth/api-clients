@@ -46,9 +46,9 @@ import java.util.Set;
 import io.lumoauth.client.JSON;
 
 /**
- * Attribute name &#x3D;&gt; true when SCIM may not change it.
+ * Attribute name &#x3D;&gt; true when SCIM may not change it. role_membership stops every /Groups request that would add or remove a member of a role.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T14:48:44.873539119Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class ScimSettingsInboundProtectedAttributes {
   public static final String SERIALIZED_NAME_EMAIL = "email";
   @SerializedName(SERIALIZED_NAME_EMAIL)
@@ -65,15 +65,10 @@ public class ScimSettingsInboundProtectedAttributes {
   @javax.annotation.Nullable
   private Boolean active;
 
-  public static final String SERIALIZED_NAME_ROLES = "roles";
-  @SerializedName(SERIALIZED_NAME_ROLES)
+  public static final String SERIALIZED_NAME_ROLE_MEMBERSHIP = "role_membership";
+  @SerializedName(SERIALIZED_NAME_ROLE_MEMBERSHIP)
   @javax.annotation.Nullable
-  private Boolean roles;
-
-  public static final String SERIALIZED_NAME_PERMISSIONS = "permissions";
-  @SerializedName(SERIALIZED_NAME_PERMISSIONS)
-  @javax.annotation.Nullable
-  private Boolean permissions;
+  private Boolean roleMembership;
 
   public ScimSettingsInboundProtectedAttributes() {
   }
@@ -135,87 +130,24 @@ public class ScimSettingsInboundProtectedAttributes {
   }
 
 
-  public ScimSettingsInboundProtectedAttributes roles(@javax.annotation.Nullable Boolean roles) {
-    this.roles = roles;
+  public ScimSettingsInboundProtectedAttributes roleMembership(@javax.annotation.Nullable Boolean roleMembership) {
+    this.roleMembership = roleMembership;
     return this;
   }
 
   /**
-   * Get roles
-   * @return roles
+   * Get roleMembership
+   * @return roleMembership
    */
   @javax.annotation.Nullable
-  public Boolean getRoles() {
-    return roles;
+  public Boolean getRoleMembership() {
+    return roleMembership;
   }
 
-  public void setRoles(@javax.annotation.Nullable Boolean roles) {
-    this.roles = roles;
+  public void setRoleMembership(@javax.annotation.Nullable Boolean roleMembership) {
+    this.roleMembership = roleMembership;
   }
 
-
-  public ScimSettingsInboundProtectedAttributes permissions(@javax.annotation.Nullable Boolean permissions) {
-    this.permissions = permissions;
-    return this;
-  }
-
-  /**
-   * Get permissions
-   * @return permissions
-   */
-  @javax.annotation.Nullable
-  public Boolean getPermissions() {
-    return permissions;
-  }
-
-  public void setPermissions(@javax.annotation.Nullable Boolean permissions) {
-    this.permissions = permissions;
-  }
-
-  /**
-   * A container for additional, undeclared properties.
-   * This is a holder for any undeclared properties as specified with
-   * the 'additionalProperties' keyword in the OAS document.
-   */
-  private Map<String, Object> additionalProperties;
-
-  /**
-   * Set the additional (undeclared) property with the specified name and value.
-   * If the property does not already exist, create it otherwise replace it.
-   *
-   * @param key name of the property
-   * @param value value of the property
-   * @return the ScimSettingsInboundProtectedAttributes instance itself
-   */
-  public ScimSettingsInboundProtectedAttributes putAdditionalProperty(String key, Object value) {
-    if (this.additionalProperties == null) {
-        this.additionalProperties = new HashMap<String, Object>();
-    }
-    this.additionalProperties.put(key, value);
-    return this;
-  }
-
-  /**
-   * Return the additional (undeclared) property.
-   *
-   * @return a map of objects
-   */
-  public Map<String, Object> getAdditionalProperties() {
-    return additionalProperties;
-  }
-
-  /**
-   * Return the additional (undeclared) property with the specified name.
-   *
-   * @param key name of the property
-   * @return an object
-   */
-  public Object getAdditionalProperty(String key) {
-    if (this.additionalProperties == null) {
-        return null;
-    }
-    return this.additionalProperties.get(key);
-  }
 
 
   @Override
@@ -230,14 +162,12 @@ public class ScimSettingsInboundProtectedAttributes {
     return Objects.equals(this.email, scimSettingsInboundProtectedAttributes.email) &&
         Objects.equals(this.name, scimSettingsInboundProtectedAttributes.name) &&
         Objects.equals(this.active, scimSettingsInboundProtectedAttributes.active) &&
-        Objects.equals(this.roles, scimSettingsInboundProtectedAttributes.roles) &&
-        Objects.equals(this.permissions, scimSettingsInboundProtectedAttributes.permissions)&&
-        Objects.equals(this.additionalProperties, scimSettingsInboundProtectedAttributes.additionalProperties);
+        Objects.equals(this.roleMembership, scimSettingsInboundProtectedAttributes.roleMembership);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(email, name, active, roles, permissions, additionalProperties);
+    return Objects.hash(email, name, active, roleMembership);
   }
 
   @Override
@@ -247,9 +177,7 @@ public class ScimSettingsInboundProtectedAttributes {
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    active: ").append(toIndentedString(active)).append("\n");
-    sb.append("    roles: ").append(toIndentedString(roles)).append("\n");
-    sb.append("    permissions: ").append(toIndentedString(permissions)).append("\n");
-    sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
+    sb.append("    roleMembership: ").append(toIndentedString(roleMembership)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -271,7 +199,7 @@ public class ScimSettingsInboundProtectedAttributes {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("email", "name", "active", "roles", "permissions"));
+    openapiFields = new HashSet<String>(Arrays.asList("email", "name", "active", "role_membership"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -287,6 +215,14 @@ public class ScimSettingsInboundProtectedAttributes {
       if (jsonElement == null) {
         if (!ScimSettingsInboundProtectedAttributes.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in ScimSettingsInboundProtectedAttributes is not found in the empty JSON string", ScimSettingsInboundProtectedAttributes.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Map.Entry<String, JsonElement> entry : entries) {
+        if (!ScimSettingsInboundProtectedAttributes.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ScimSettingsInboundProtectedAttributes` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
@@ -307,28 +243,6 @@ public class ScimSettingsInboundProtectedAttributes {
            @Override
            public void write(JsonWriter out, ScimSettingsInboundProtectedAttributes value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
-             obj.remove("additionalProperties");
-             // serialize additional properties
-             if (value.getAdditionalProperties() != null) {
-               for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
-                 if (entry.getValue() instanceof String)
-                   obj.addProperty(entry.getKey(), (String) entry.getValue());
-                 else if (entry.getValue() instanceof Number)
-                   obj.addProperty(entry.getKey(), (Number) entry.getValue());
-                 else if (entry.getValue() instanceof Boolean)
-                   obj.addProperty(entry.getKey(), (Boolean) entry.getValue());
-                 else if (entry.getValue() instanceof Character)
-                   obj.addProperty(entry.getKey(), (Character) entry.getValue());
-                 else {
-                   JsonElement jsonElement = gson.toJsonTree(entry.getValue());
-                   if (jsonElement.isJsonArray()) {
-                     obj.add(entry.getKey(), jsonElement.getAsJsonArray());
-                   } else {
-                     obj.add(entry.getKey(), jsonElement.getAsJsonObject());
-                   }
-                 }
-               }
-             }
              elementAdapter.write(out, obj);
            }
 
@@ -336,28 +250,7 @@ public class ScimSettingsInboundProtectedAttributes {
            public ScimSettingsInboundProtectedAttributes read(JsonReader in) throws IOException {
              JsonElement jsonElement = elementAdapter.read(in);
              validateJsonElement(jsonElement);
-             JsonObject jsonObj = jsonElement.getAsJsonObject();
-             // store additional fields in the deserialized instance
-             ScimSettingsInboundProtectedAttributes instance = thisAdapter.fromJsonTree(jsonObj);
-             for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
-               if (!openapiFields.contains(entry.getKey())) {
-                 if (entry.getValue().isJsonPrimitive()) { // primitive type
-                   if (entry.getValue().getAsJsonPrimitive().isString())
-                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsString());
-                   else if (entry.getValue().getAsJsonPrimitive().isNumber())
-                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsNumber());
-                   else if (entry.getValue().getAsJsonPrimitive().isBoolean())
-                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsBoolean());
-                   else
-                     throw new IllegalArgumentException(String.format("The field `%s` has unknown primitive type. Value: %s", entry.getKey(), entry.getValue().toString()));
-                 } else if (entry.getValue().isJsonArray()) {
-                     instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), List.class));
-                 } else { // JSON object
-                     instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), HashMap.class));
-                 }
-               }
-             }
-             return instance;
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

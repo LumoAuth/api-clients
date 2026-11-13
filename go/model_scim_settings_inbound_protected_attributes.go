@@ -18,17 +18,13 @@ import (
 // checks if the ScimSettingsInboundProtectedAttributes type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ScimSettingsInboundProtectedAttributes{}
 
-// ScimSettingsInboundProtectedAttributes Attribute name => true when SCIM may not change it.
+// ScimSettingsInboundProtectedAttributes Attribute name => true when SCIM may not change it. role_membership stops every /Groups request that would add or remove a member of a role.
 type ScimSettingsInboundProtectedAttributes struct {
 	Email *bool `json:"email,omitempty"`
 	Name *bool `json:"name,omitempty"`
 	Active *bool `json:"active,omitempty"`
-	Roles *bool `json:"roles,omitempty"`
-	Permissions *bool `json:"permissions,omitempty"`
-	AdditionalProperties map[string]interface{}
+	RoleMembership *bool `json:"role_membership,omitempty"`
 }
-
-type _ScimSettingsInboundProtectedAttributes ScimSettingsInboundProtectedAttributes
 
 // NewScimSettingsInboundProtectedAttributes instantiates a new ScimSettingsInboundProtectedAttributes object
 // This constructor will assign default values to properties that have it defined,
@@ -143,68 +139,36 @@ func (o *ScimSettingsInboundProtectedAttributes) SetActive(v bool) {
 	o.Active = &v
 }
 
-// GetRoles returns the Roles field value if set, zero value otherwise.
-func (o *ScimSettingsInboundProtectedAttributes) GetRoles() bool {
-	if o == nil || IsNil(o.Roles) {
+// GetRoleMembership returns the RoleMembership field value if set, zero value otherwise.
+func (o *ScimSettingsInboundProtectedAttributes) GetRoleMembership() bool {
+	if o == nil || IsNil(o.RoleMembership) {
 		var ret bool
 		return ret
 	}
-	return *o.Roles
+	return *o.RoleMembership
 }
 
-// GetRolesOk returns a tuple with the Roles field value if set, nil otherwise
+// GetRoleMembershipOk returns a tuple with the RoleMembership field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ScimSettingsInboundProtectedAttributes) GetRolesOk() (*bool, bool) {
-	if o == nil || IsNil(o.Roles) {
+func (o *ScimSettingsInboundProtectedAttributes) GetRoleMembershipOk() (*bool, bool) {
+	if o == nil || IsNil(o.RoleMembership) {
 		return nil, false
 	}
-	return o.Roles, true
+	return o.RoleMembership, true
 }
 
-// HasRoles returns a boolean if a field has been set.
-func (o *ScimSettingsInboundProtectedAttributes) HasRoles() bool {
-	if o != nil && !IsNil(o.Roles) {
+// HasRoleMembership returns a boolean if a field has been set.
+func (o *ScimSettingsInboundProtectedAttributes) HasRoleMembership() bool {
+	if o != nil && !IsNil(o.RoleMembership) {
 		return true
 	}
 
 	return false
 }
 
-// SetRoles gets a reference to the given bool and assigns it to the Roles field.
-func (o *ScimSettingsInboundProtectedAttributes) SetRoles(v bool) {
-	o.Roles = &v
-}
-
-// GetPermissions returns the Permissions field value if set, zero value otherwise.
-func (o *ScimSettingsInboundProtectedAttributes) GetPermissions() bool {
-	if o == nil || IsNil(o.Permissions) {
-		var ret bool
-		return ret
-	}
-	return *o.Permissions
-}
-
-// GetPermissionsOk returns a tuple with the Permissions field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ScimSettingsInboundProtectedAttributes) GetPermissionsOk() (*bool, bool) {
-	if o == nil || IsNil(o.Permissions) {
-		return nil, false
-	}
-	return o.Permissions, true
-}
-
-// HasPermissions returns a boolean if a field has been set.
-func (o *ScimSettingsInboundProtectedAttributes) HasPermissions() bool {
-	if o != nil && !IsNil(o.Permissions) {
-		return true
-	}
-
-	return false
-}
-
-// SetPermissions gets a reference to the given bool and assigns it to the Permissions field.
-func (o *ScimSettingsInboundProtectedAttributes) SetPermissions(v bool) {
-	o.Permissions = &v
+// SetRoleMembership gets a reference to the given bool and assigns it to the RoleMembership field.
+func (o *ScimSettingsInboundProtectedAttributes) SetRoleMembership(v bool) {
+	o.RoleMembership = &v
 }
 
 func (o ScimSettingsInboundProtectedAttributes) MarshalJSON() ([]byte, error) {
@@ -226,43 +190,10 @@ func (o ScimSettingsInboundProtectedAttributes) ToMap() (map[string]interface{},
 	if !IsNil(o.Active) {
 		toSerialize["active"] = o.Active
 	}
-	if !IsNil(o.Roles) {
-		toSerialize["roles"] = o.Roles
+	if !IsNil(o.RoleMembership) {
+		toSerialize["role_membership"] = o.RoleMembership
 	}
-	if !IsNil(o.Permissions) {
-		toSerialize["permissions"] = o.Permissions
-	}
-
-	for key, value := range o.AdditionalProperties {
-		toSerialize[key] = value
-	}
-
 	return toSerialize, nil
-}
-
-func (o *ScimSettingsInboundProtectedAttributes) UnmarshalJSON(data []byte) (err error) {
-	varScimSettingsInboundProtectedAttributes := _ScimSettingsInboundProtectedAttributes{}
-
-	err = json.Unmarshal(data, &varScimSettingsInboundProtectedAttributes)
-
-	if err != nil {
-		return err
-	}
-
-	*o = ScimSettingsInboundProtectedAttributes(varScimSettingsInboundProtectedAttributes)
-
-	additionalProperties := make(map[string]interface{})
-
-	if err = json.Unmarshal(data, &additionalProperties); err == nil {
-		delete(additionalProperties, "email")
-		delete(additionalProperties, "name")
-		delete(additionalProperties, "active")
-		delete(additionalProperties, "roles")
-		delete(additionalProperties, "permissions")
-		o.AdditionalProperties = additionalProperties
-	}
-
-	return err
 }
 
 type NullableScimSettingsInboundProtectedAttributes struct {

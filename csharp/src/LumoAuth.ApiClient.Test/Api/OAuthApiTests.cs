@@ -164,6 +164,19 @@ namespace LumoAuth.ApiClient.Test.Api
         }
 
         /// <summary>
+        /// Test RequestMagicLink
+        /// </summary>
+        [Fact]
+        public void RequestMagicLinkTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //RequestMagicLinkRequest requestMagicLinkRequest = null;
+            //var response = instance.RequestMagicLink(orgId, requestMagicLinkRequest);
+            //Assert.IsType<RequestMagicLinkResponse>(response);
+        }
+
+        /// <summary>
         /// Test Revoke
         /// </summary>
         [Fact]

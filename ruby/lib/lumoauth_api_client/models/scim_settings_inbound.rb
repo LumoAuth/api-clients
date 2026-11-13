@@ -38,9 +38,6 @@ module LumoAuthApiClient
 
     attr_accessor :protected_attributes
 
-    # SCIM attribute => user field.
-    attr_accessor :attribute_mapping
-
     attr_accessor :auto_activate_users
 
     attr_accessor :deprovisioning_action
@@ -80,7 +77,6 @@ module LumoAuthApiClient
         :'allow_user_deletion' => :'allow_user_deletion',
         :'allow_group_operations' => :'allow_group_operations',
         :'protected_attributes' => :'protected_attributes',
-        :'attribute_mapping' => :'attribute_mapping',
         :'auto_activate_users' => :'auto_activate_users',
         :'deprovisioning_action' => :'deprovisioning_action'
       }
@@ -109,7 +105,6 @@ module LumoAuthApiClient
         :'allow_user_deletion' => :'Boolean',
         :'allow_group_operations' => :'Boolean',
         :'protected_attributes' => :'ScimSettingsInboundProtectedAttributes',
-        :'attribute_mapping' => :'Hash<String, String>',
         :'auto_activate_users' => :'Boolean',
         :'deprovisioning_action' => :'String'
       }
@@ -181,12 +176,6 @@ module LumoAuthApiClient
         self.protected_attributes = attributes[:'protected_attributes']
       end
 
-      if attributes.key?(:'attribute_mapping')
-        if (value = attributes[:'attribute_mapping']).is_a?(Hash)
-          self.attribute_mapping = value
-        end
-      end
-
       if attributes.key?(:'auto_activate_users')
         self.auto_activate_users = attributes[:'auto_activate_users']
       end
@@ -238,7 +227,6 @@ module LumoAuthApiClient
           allow_user_deletion == o.allow_user_deletion &&
           allow_group_operations == o.allow_group_operations &&
           protected_attributes == o.protected_attributes &&
-          attribute_mapping == o.attribute_mapping &&
           auto_activate_users == o.auto_activate_users &&
           deprovisioning_action == o.deprovisioning_action
     end
@@ -252,7 +240,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [enabled, bearer_token, bearer_token_hash, bearer_token_preview, token_created_at, allow_user_creation, allow_user_updates, allow_user_deletion, allow_group_operations, protected_attributes, attribute_mapping, auto_activate_users, deprovisioning_action].hash
+      [enabled, bearer_token, bearer_token_hash, bearer_token_preview, token_created_at, allow_user_creation, allow_user_updates, allow_user_deletion, allow_group_operations, protected_attributes, auto_activate_users, deprovisioning_action].hash
     end
 
     # Builds the object from hash

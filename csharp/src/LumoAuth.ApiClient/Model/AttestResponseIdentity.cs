@@ -39,7 +39,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="provider">provider.</param>
         /// <param name="subject">subject.</param>
         /// <param name="issuer">issuer.</param>
-        /// <param name="audienceGeneric">True when the registered audience is not specific to this deployment (operators should move to the agent-specific audience)..</param>
+        /// <param name="audienceGeneric">True when the registered audience is not specific to LumoAuth (move to the agent-specific audience)..</param>
         public AttestResponseIdentity(string provider = default, string subject = default, string issuer = default, bool audienceGeneric = default)
         {
             this.Provider = provider;
@@ -70,9 +70,9 @@ namespace LumoAuth.ApiClient.Model
         public string Issuer { get; set; }
 
         /// <summary>
-        /// True when the registered audience is not specific to this deployment (operators should move to the agent-specific audience).
+        /// True when the registered audience is not specific to LumoAuth (move to the agent-specific audience).
         /// </summary>
-        /// <value>True when the registered audience is not specific to this deployment (operators should move to the agent-specific audience).</value>
+        /// <value>True when the registered audience is not specific to LumoAuth (move to the agent-specific audience).</value>
         [DataMember(Name = "audience_generic", EmitDefaultValue = true)]
         public bool AudienceGeneric { get; set; }
 

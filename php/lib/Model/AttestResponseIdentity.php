@@ -406,7 +406,7 @@ class AttestResponseIdentity implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets audienceGeneric
      *
-     * @param bool|null $audienceGeneric True when the registered audience is not specific to this deployment (operators should move to the agent-specific audience).
+     * @param bool|null $audienceGeneric True when the registered audience is not specific to LumoAuth (move to the agent-specific audience).
      *
      * @return self
      */

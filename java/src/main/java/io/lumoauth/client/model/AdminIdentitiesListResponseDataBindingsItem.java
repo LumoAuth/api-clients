@@ -49,7 +49,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminIdentitiesListResponseDataBindingsItem
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T14:48:44.873539119Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminIdentitiesListResponseDataBindingsItem {
   /**
    * Gets or Sets type
@@ -57,6 +57,8 @@ public class AdminIdentitiesListResponseDataBindingsItem {
   @JsonAdapter(TypeEnum.Adapter.class)
   public enum TypeEnum {
     SAML("saml"),
+    
+    OIDC("oidc"),
     
     LDAP("ldap"),
     
@@ -121,6 +123,11 @@ public class AdminIdentitiesListResponseDataBindingsItem {
   @SerializedName(SERIALIZED_NAME_NAME_ID)
   @javax.annotation.Nullable
   private String nameId;
+
+  public static final String SERIALIZED_NAME_SUBJECT = "subject";
+  @SerializedName(SERIALIZED_NAME_SUBJECT)
+  @javax.annotation.Nullable
+  private String subject;
 
   public static final String SERIALIZED_NAME_LEGACY = "legacy";
   @SerializedName(SERIALIZED_NAME_LEGACY)
@@ -199,6 +206,25 @@ public class AdminIdentitiesListResponseDataBindingsItem {
 
   public void setNameId(@javax.annotation.Nullable String nameId) {
     this.nameId = nameId;
+  }
+
+
+  public AdminIdentitiesListResponseDataBindingsItem subject(@javax.annotation.Nullable String subject) {
+    this.subject = subject;
+    return this;
+  }
+
+  /**
+   * Get subject
+   * @return subject
+   */
+  @javax.annotation.Nullable
+  public String getSubject() {
+    return subject;
+  }
+
+  public void setSubject(@javax.annotation.Nullable String subject) {
+    this.subject = subject;
   }
 
 
@@ -291,6 +317,7 @@ public class AdminIdentitiesListResponseDataBindingsItem {
     return Objects.equals(this.type, adminIdentitiesListResponseDataBindingsItem.type) &&
         Objects.equals(this.idpId, adminIdentitiesListResponseDataBindingsItem.idpId) &&
         Objects.equals(this.nameId, adminIdentitiesListResponseDataBindingsItem.nameId) &&
+        Objects.equals(this.subject, adminIdentitiesListResponseDataBindingsItem.subject) &&
         Objects.equals(this.legacy, adminIdentitiesListResponseDataBindingsItem.legacy) &&
         Objects.equals(this.ldapConfigId, adminIdentitiesListResponseDataBindingsItem.ldapConfigId) &&
         Objects.equals(this.dn, adminIdentitiesListResponseDataBindingsItem.dn) &&
@@ -303,7 +330,7 @@ public class AdminIdentitiesListResponseDataBindingsItem {
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, idpId, nameId, legacy, ldapConfigId, dn, provider);
+    return Objects.hash(type, idpId, nameId, subject, legacy, ldapConfigId, dn, provider);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -320,6 +347,7 @@ public class AdminIdentitiesListResponseDataBindingsItem {
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    idpId: ").append(toIndentedString(idpId)).append("\n");
     sb.append("    nameId: ").append(toIndentedString(nameId)).append("\n");
+    sb.append("    subject: ").append(toIndentedString(subject)).append("\n");
     sb.append("    legacy: ").append(toIndentedString(legacy)).append("\n");
     sb.append("    ldapConfigId: ").append(toIndentedString(ldapConfigId)).append("\n");
     sb.append("    dn: ").append(toIndentedString(dn)).append("\n");
@@ -345,7 +373,7 @@ public class AdminIdentitiesListResponseDataBindingsItem {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("type", "idp_id", "name_id", "legacy", "ldap_config_id", "dn", "provider"));
+    openapiFields = new HashSet<String>(Arrays.asList("type", "idp_id", "name_id", "subject", "legacy", "ldap_config_id", "dn", "provider"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -381,6 +409,9 @@ public class AdminIdentitiesListResponseDataBindingsItem {
       }
       if ((jsonObj.get("name_id") != null && !jsonObj.get("name_id").isJsonNull()) && !jsonObj.get("name_id").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `name_id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("name_id").toString()));
+      }
+      if ((jsonObj.get("subject") != null && !jsonObj.get("subject").isJsonNull()) && !jsonObj.get("subject").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `subject` to be a primitive type in the JSON string but got `%s`", jsonObj.get("subject").toString()));
       }
       if ((jsonObj.get("dn") != null && !jsonObj.get("dn").isJsonNull()) && !jsonObj.get("dn").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `dn` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dn").toString()));

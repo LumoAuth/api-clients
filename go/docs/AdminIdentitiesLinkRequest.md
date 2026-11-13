@@ -5,7 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | **string** |  | 
-**IdpId** | Pointer to **int32** | SAML IdP config id (type&#x3D;saml) | [optional] 
+**IdpId** | Pointer to **int32** | SAML IdP config id (type&#x3D;saml) or OpenID Connect connection id (type&#x3D;oidc) | [optional] 
+**Subject** | Pointer to **string** | Subject the OpenID Connect provider issues for this user (type&#x3D;oidc) | [optional] 
 **NameId** | Pointer to **string** | NameID the IdP asserts for this user (type&#x3D;saml) | [optional] 
 **LdapConfigId** | Pointer to **int32** | LDAP directory id (type&#x3D;ldap) | [optional] 
 **Dn** | Pointer to **string** | Distinguished name (type&#x3D;ldap); omitted &#x3D; look up | [optional] 
@@ -74,6 +75,31 @@ SetIdpId sets IdpId field to given value.
 `func (o *AdminIdentitiesLinkRequest) HasIdpId() bool`
 
 HasIdpId returns a boolean if a field has been set.
+
+### GetSubject
+
+`func (o *AdminIdentitiesLinkRequest) GetSubject() string`
+
+GetSubject returns the Subject field if non-nil, zero value otherwise.
+
+### GetSubjectOk
+
+`func (o *AdminIdentitiesLinkRequest) GetSubjectOk() (*string, bool)`
+
+GetSubjectOk returns a tuple with the Subject field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubject
+
+`func (o *AdminIdentitiesLinkRequest) SetSubject(v string)`
+
+SetSubject sets Subject field to given value.
+
+### HasSubject
+
+`func (o *AdminIdentitiesLinkRequest) HasSubject() bool`
+
+HasSubject returns a boolean if a field has been set.
 
 ### GetNameId
 

@@ -13,14 +13,22 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AdminAuditLogsRetentionResponseData {
-    /// Effective retention, capped by the plan limit
+    /// The organization's own period, between minRetentionDays and maxRetentionDays. It applies while data retention is on and autoDelete is not false.
     #[serde(rename = "retentionDays", skip_serializing_if = "Option::is_none")]
     pub retention_days: Option<i32>,
+    /// false switches the organization's own period off; the plan's period still applies
     #[serde(rename = "autoDelete", skip_serializing_if = "Option::is_none")]
     pub auto_delete: Option<bool>,
-    /// Plan cap; null when unlimited or billing enforcement is off
+    /// The plan's period: older entries are not returned and are deleted. null when the plan has no limit.
     #[serde(rename = "planLimitDays", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub plan_limit_days: Option<Option<i32>>,
+    /// How long entries are kept now; null when nothing is deleted
+    #[serde(rename = "effectiveRetentionDays", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub effective_retention_days: Option<Option<i32>>,
+    #[serde(rename = "minRetentionDays", skip_serializing_if = "Option::is_none")]
+    pub min_retention_days: Option<i32>,
+    #[serde(rename = "maxRetentionDays", skip_serializing_if = "Option::is_none")]
+    pub max_retention_days: Option<i32>,
 }
 
 impl AdminAuditLogsRetentionResponseData {
@@ -29,6 +37,9 @@ impl AdminAuditLogsRetentionResponseData {
             retention_days: None,
             auto_delete: None,
             plan_limit_days: None,
+            effective_retention_days: None,
+            min_retention_days: None,
+            max_retention_days: None,
         }
     }
 }

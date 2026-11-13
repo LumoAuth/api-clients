@@ -18,8 +18,6 @@ module LumoAuthApiClient
   class AuthenticationSettings
     attr_accessor :passkey_enabled
 
-    attr_accessor :biometric_enabled
-
     attr_accessor :passkeys
 
     attr_accessor :mfa_required
@@ -34,6 +32,7 @@ module LumoAuthApiClient
 
     attr_accessor :push_app_name
 
+    # Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag.
     attr_accessor :social_login_enabled
 
     attr_accessor :social_providers
@@ -53,10 +52,8 @@ module LumoAuthApiClient
 
     attr_accessor :no_mfa_action
 
-    # Seconds.
+    # Idle timeout in seconds.
     attr_accessor :session_timeout
-
-    attr_accessor :encrypt_client_secrets
 
     attr_accessor :dynamic_client_registration_enabled
 
@@ -99,7 +96,6 @@ module LumoAuthApiClient
     def self.attribute_map
       {
         :'passkey_enabled' => :'passkey_enabled',
-        :'biometric_enabled' => :'biometric_enabled',
         :'passkeys' => :'passkeys',
         :'mfa_required' => :'mfa_required',
         :'mfa_methods' => :'mfa_methods',
@@ -116,7 +112,6 @@ module LumoAuthApiClient
         :'password_rotation_policy' => :'password_rotation_policy',
         :'no_mfa_action' => :'no_mfa_action',
         :'session_timeout' => :'session_timeout',
-        :'encrypt_client_secrets' => :'encrypt_client_secrets',
         :'dynamic_client_registration_enabled' => :'dynamic_client_registration_enabled',
         :'cimd_enabled' => :'cimd_enabled',
         :'cimd_allowed_domains' => :'cimd_allowed_domains',
@@ -141,7 +136,6 @@ module LumoAuthApiClient
     def self.openapi_types
       {
         :'passkey_enabled' => :'Boolean',
-        :'biometric_enabled' => :'Boolean',
         :'passkeys' => :'AuthenticationSettingsPasskeys',
         :'mfa_required' => :'Boolean',
         :'mfa_methods' => :'Array<String>',
@@ -158,7 +152,6 @@ module LumoAuthApiClient
         :'password_rotation_policy' => :'AuthenticationSettingsPasswordRotationPolicy',
         :'no_mfa_action' => :'String',
         :'session_timeout' => :'Integer',
-        :'encrypt_client_secrets' => :'Boolean',
         :'dynamic_client_registration_enabled' => :'Boolean',
         :'cimd_enabled' => :'Boolean',
         :'cimd_allowed_domains' => :'Array<String>',
@@ -194,10 +187,6 @@ module LumoAuthApiClient
 
       if attributes.key?(:'passkey_enabled')
         self.passkey_enabled = attributes[:'passkey_enabled']
-      end
-
-      if attributes.key?(:'biometric_enabled')
-        self.biometric_enabled = attributes[:'biometric_enabled']
       end
 
       if attributes.key?(:'passkeys')
@@ -270,10 +259,6 @@ module LumoAuthApiClient
         self.session_timeout = attributes[:'session_timeout']
       end
 
-      if attributes.key?(:'encrypt_client_secrets')
-        self.encrypt_client_secrets = attributes[:'encrypt_client_secrets']
-      end
-
       if attributes.key?(:'dynamic_client_registration_enabled')
         self.dynamic_client_registration_enabled = attributes[:'dynamic_client_registration_enabled']
       end
@@ -312,6 +297,14 @@ module LumoAuthApiClient
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if !@session_timeout.nil? && @session_timeout > 1209600
+        invalid_properties.push('invalid value for "session_timeout", must be smaller than or equal to 1209600.')
+      end
+
+      if !@session_timeout.nil? && @session_timeout < 300
+        invalid_properties.push('invalid value for "session_timeout", must be greater than or equal to 300.')
+      end
+
       invalid_properties
     end
 
@@ -319,9 +312,41 @@ module LumoAuthApiClient
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      no_mfa_action_validator = EnumAttributeValidator.new('String', ["allow", "prompt", "email", "block"])
+      return false unless no_mfa_action_validator.valid?(@no_mfa_action)
+      return false if !@session_timeout.nil? && @session_timeout > 1209600
+      return false if !@session_timeout.nil? && @session_timeout < 300
       cimd_localhost_redirect_policy_validator = EnumAttributeValidator.new('String', ["warn", "block"])
       return false unless cimd_localhost_redirect_policy_validator.valid?(@cimd_localhost_redirect_policy)
       true
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] no_mfa_action Object to be assigned
+    def no_mfa_action=(no_mfa_action)
+      validator = EnumAttributeValidator.new('String', ["allow", "prompt", "email", "block"])
+      unless validator.valid?(no_mfa_action)
+        fail ArgumentError, "invalid value for \"no_mfa_action\", must be one of #{validator.allowable_values}."
+      end
+      @no_mfa_action = no_mfa_action
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] session_timeout Value to be assigned
+    def session_timeout=(session_timeout)
+      if session_timeout.nil?
+        fail ArgumentError, 'session_timeout cannot be nil'
+      end
+
+      if session_timeout > 1209600
+        fail ArgumentError, 'invalid value for "session_timeout", must be smaller than or equal to 1209600.'
+      end
+
+      if session_timeout < 300
+        fail ArgumentError, 'invalid value for "session_timeout", must be greater than or equal to 300.'
+      end
+
+      @session_timeout = session_timeout
     end
 
     # Custom attribute writer method checking allowed values (enum).
@@ -340,7 +365,6 @@ module LumoAuthApiClient
       return true if self.equal?(o)
       self.class == o.class &&
           passkey_enabled == o.passkey_enabled &&
-          biometric_enabled == o.biometric_enabled &&
           passkeys == o.passkeys &&
           mfa_required == o.mfa_required &&
           mfa_methods == o.mfa_methods &&
@@ -357,7 +381,6 @@ module LumoAuthApiClient
           password_rotation_policy == o.password_rotation_policy &&
           no_mfa_action == o.no_mfa_action &&
           session_timeout == o.session_timeout &&
-          encrypt_client_secrets == o.encrypt_client_secrets &&
           dynamic_client_registration_enabled == o.dynamic_client_registration_enabled &&
           cimd_enabled == o.cimd_enabled &&
           cimd_allowed_domains == o.cimd_allowed_domains &&
@@ -376,7 +399,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [passkey_enabled, biometric_enabled, passkeys, mfa_required, mfa_methods, mfa_sms_enabled, mfa_policy, push_auth_required, push_app_name, social_login_enabled, social_providers, social_configs, password_min_length, password_require_special, password_policy, password_rotation_policy, no_mfa_action, session_timeout, encrypt_client_secrets, dynamic_client_registration_enabled, cimd_enabled, cimd_allowed_domains, cimd_localhost_redirect_policy, xaa_idp_enabled, xaa_resource_enabled, progressive_profiling].hash
+      [passkey_enabled, passkeys, mfa_required, mfa_methods, mfa_sms_enabled, mfa_policy, push_auth_required, push_app_name, social_login_enabled, social_providers, social_configs, password_min_length, password_require_special, password_policy, password_rotation_policy, no_mfa_action, session_timeout, dynamic_client_registration_enabled, cimd_enabled, cimd_allowed_domains, cimd_localhost_redirect_policy, xaa_idp_enabled, xaa_resource_enabled, progressive_profiling].hash
     end
 
     # Builds the object from hash

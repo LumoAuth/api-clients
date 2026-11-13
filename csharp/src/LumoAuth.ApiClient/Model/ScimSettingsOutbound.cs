@@ -108,8 +108,8 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="oauth2ClientSecret">oauth2ClientSecret.</param>
         /// <param name="oauth2TokenUrl">oauth2TokenUrl.</param>
         /// <param name="oauth2Scope">oauth2Scope.</param>
-        /// <param name="tlsCertificate">Optional PEM CA certificate used for TLS verification..</param>
-        /// <param name="verifyTls">verifyTls.</param>
+        /// <param name="tlsCertificate">Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets..</param>
+        /// <param name="verifyTls">Always true. The endpoint certificate is always verified; false is rejected with 400..</param>
         /// <param name="pushUserCreates">pushUserCreates.</param>
         /// <param name="pushUserUpdates">pushUserUpdates.</param>
         /// <param name="pushUserDeletes">pushUserDeletes.</param>
@@ -117,7 +117,6 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="syncOnLogin">syncOnLogin.</param>
         /// <param name="batchSyncEnabled">batchSyncEnabled.</param>
         /// <param name="batchSyncInterval">batchSyncInterval.</param>
-        /// <param name="attributeMapping">User field &#x3D;&gt; SCIM attribute..</param>
         /// <param name="lastSyncAt">lastSyncAt.</param>
         /// <param name="lastSyncStatus">lastSyncStatus.</param>
         /// <param name="lastSyncError">lastSyncError.</param>
@@ -125,7 +124,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="lastBatchSyncStatus">lastBatchSyncStatus.</param>
         /// <param name="lastBatchSyncError">lastBatchSyncError.</param>
         /// <param name="lastBatchSyncCounts">Free-form counters of the last batch reconcile..</param>
-        public ScimSettingsOutbound(bool enabled = default, string endpointUrl = default, RedactedSecret bearerToken = default, AuthTypeEnum? authType = default, string basicUsername = default, RedactedSecret basicPassword = default, string oauth2ClientId = default, RedactedSecret oauth2ClientSecret = default, string oauth2TokenUrl = default, string oauth2Scope = default, string tlsCertificate = default, bool verifyTls = default, bool pushUserCreates = default, bool pushUserUpdates = default, bool pushUserDeletes = default, bool pushGroupChanges = default, bool syncOnLogin = default, bool batchSyncEnabled = default, BatchSyncIntervalEnum? batchSyncInterval = default, Dictionary<string, string> attributeMapping = default, string lastSyncAt = default, string lastSyncStatus = default, string lastSyncError = default, string lastBatchSyncAt = default, string lastBatchSyncStatus = default, string lastBatchSyncError = default, Dictionary<string, Object> lastBatchSyncCounts = default)
+        public ScimSettingsOutbound(bool enabled = default, string endpointUrl = default, RedactedSecret bearerToken = default, AuthTypeEnum? authType = default, string basicUsername = default, RedactedSecret basicPassword = default, string oauth2ClientId = default, RedactedSecret oauth2ClientSecret = default, string oauth2TokenUrl = default, string oauth2Scope = default, string tlsCertificate = default, bool verifyTls = default, bool pushUserCreates = default, bool pushUserUpdates = default, bool pushUserDeletes = default, bool pushGroupChanges = default, bool syncOnLogin = default, bool batchSyncEnabled = default, BatchSyncIntervalEnum? batchSyncInterval = default, string lastSyncAt = default, string lastSyncStatus = default, string lastSyncError = default, string lastBatchSyncAt = default, string lastBatchSyncStatus = default, string lastBatchSyncError = default, Dictionary<string, Object> lastBatchSyncCounts = default)
         {
             this.Enabled = enabled;
             this.EndpointUrl = endpointUrl;
@@ -146,7 +145,6 @@ namespace LumoAuth.ApiClient.Model
             this.SyncOnLogin = syncOnLogin;
             this.BatchSyncEnabled = batchSyncEnabled;
             this.BatchSyncInterval = batchSyncInterval;
-            this.AttributeMapping = attributeMapping;
             this.LastSyncAt = lastSyncAt;
             this.LastSyncStatus = lastSyncStatus;
             this.LastSyncError = lastSyncError;
@@ -211,15 +209,16 @@ namespace LumoAuth.ApiClient.Model
         public string Oauth2Scope { get; set; }
 
         /// <summary>
-        /// Optional PEM CA certificate used for TLS verification.
+        /// Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets.
         /// </summary>
-        /// <value>Optional PEM CA certificate used for TLS verification.</value>
+        /// <value>Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets.</value>
         [DataMember(Name = "tls_certificate", EmitDefaultValue = true)]
         public string TlsCertificate { get; set; }
 
         /// <summary>
-        /// Gets or Sets VerifyTls
+        /// Always true. The endpoint certificate is always verified; false is rejected with 400.
         /// </summary>
+        /// <value>Always true. The endpoint certificate is always verified; false is rejected with 400.</value>
         [DataMember(Name = "verify_tls", EmitDefaultValue = true)]
         public bool VerifyTls { get; set; }
 
@@ -258,13 +257,6 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         [DataMember(Name = "batch_sync_enabled", EmitDefaultValue = true)]
         public bool BatchSyncEnabled { get; set; }
-
-        /// <summary>
-        /// User field &#x3D;&gt; SCIM attribute.
-        /// </summary>
-        /// <value>User field &#x3D;&gt; SCIM attribute.</value>
-        [DataMember(Name = "attribute_mapping", EmitDefaultValue = false)]
-        public Dictionary<string, string> AttributeMapping { get; set; }
 
         /// <summary>
         /// Gets or Sets LastSyncAt
@@ -336,7 +328,6 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  SyncOnLogin: ").Append(SyncOnLogin).Append("\n");
             sb.Append("  BatchSyncEnabled: ").Append(BatchSyncEnabled).Append("\n");
             sb.Append("  BatchSyncInterval: ").Append(BatchSyncInterval).Append("\n");
-            sb.Append("  AttributeMapping: ").Append(AttributeMapping).Append("\n");
             sb.Append("  LastSyncAt: ").Append(LastSyncAt).Append("\n");
             sb.Append("  LastSyncStatus: ").Append(LastSyncStatus).Append("\n");
             sb.Append("  LastSyncError: ").Append(LastSyncError).Append("\n");

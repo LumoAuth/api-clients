@@ -37,7 +37,7 @@ module LumoAuthApiClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'data' => :'SandboxTenant'
+        :'data' => :'AdminSandboxSpawnResponseData'
       }
     end
 

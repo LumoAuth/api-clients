@@ -220,6 +220,29 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of RegisterClientResponse</returns>
         ApiResponse<RegisterClientResponse> RegisterClientWithHttpInfo(string orgId);
         /// <summary>
+        /// Request a sign-in link by email
+        /// </summary>
+        /// <remarks>
+        /// For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to &#x60;return_to&#x60;, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="requestMagicLinkRequest"></param>
+        /// <returns>RequestMagicLinkResponse</returns>
+        RequestMagicLinkResponse RequestMagicLink(string orgId, RequestMagicLinkRequest requestMagicLinkRequest);
+
+        /// <summary>
+        /// Request a sign-in link by email
+        /// </summary>
+        /// <remarks>
+        /// For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to &#x60;return_to&#x60;, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="requestMagicLinkRequest"></param>
+        /// <returns>ApiResponse of RequestMagicLinkResponse</returns>
+        ApiResponse<RequestMagicLinkResponse> RequestMagicLinkWithHttpInfo(string orgId, RequestMagicLinkRequest requestMagicLinkRequest);
+        /// <summary>
         /// Token revocation (RFC 7009)
         /// </summary>
         /// <remarks>
@@ -632,6 +655,31 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (RegisterClientResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<RegisterClientResponse>> RegisterClientWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Request a sign-in link by email
+        /// </summary>
+        /// <remarks>
+        /// For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to &#x60;return_to&#x60;, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="requestMagicLinkRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of RequestMagicLinkResponse</returns>
+        System.Threading.Tasks.Task<RequestMagicLinkResponse> RequestMagicLinkAsync(string orgId, RequestMagicLinkRequest requestMagicLinkRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Request a sign-in link by email
+        /// </summary>
+        /// <remarks>
+        /// For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to &#x60;return_to&#x60;, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="requestMagicLinkRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (RequestMagicLinkResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<RequestMagicLinkResponse>> RequestMagicLinkWithHttpInfoAsync(string orgId, RequestMagicLinkRequest requestMagicLinkRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Token revocation (RFC 7009)
         /// </summary>
@@ -2193,6 +2241,137 @@ namespace LumoAuth.ApiClient.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("RegisterClient", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Request a sign-in link by email For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to &#x60;return_to&#x60;, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="requestMagicLinkRequest"></param>
+        /// <returns>RequestMagicLinkResponse</returns>
+        public RequestMagicLinkResponse RequestMagicLink(string orgId, RequestMagicLinkRequest requestMagicLinkRequest)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<RequestMagicLinkResponse> localVarResponse = RequestMagicLinkWithHttpInfo(orgId, requestMagicLinkRequest);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Request a sign-in link by email For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to &#x60;return_to&#x60;, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="requestMagicLinkRequest"></param>
+        /// <returns>ApiResponse of RequestMagicLinkResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<RequestMagicLinkResponse> RequestMagicLinkWithHttpInfo(string orgId, RequestMagicLinkRequest requestMagicLinkRequest)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->RequestMagicLink");
+
+            // verify the required parameter 'requestMagicLinkRequest' is set
+            if (requestMagicLinkRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'requestMagicLinkRequest' when calling OAuthApi->RequestMagicLink");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = requestMagicLinkRequest;
+
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<RequestMagicLinkResponse>("/orgs/{orgId}/api/v1/oauth/magic-link", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("RequestMagicLink", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Request a sign-in link by email For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to &#x60;return_to&#x60;, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="requestMagicLinkRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of RequestMagicLinkResponse</returns>
+        public async System.Threading.Tasks.Task<RequestMagicLinkResponse> RequestMagicLinkAsync(string orgId, RequestMagicLinkRequest requestMagicLinkRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<RequestMagicLinkResponse> localVarResponse = await RequestMagicLinkWithHttpInfoAsync(orgId, requestMagicLinkRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Request a sign-in link by email For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to &#x60;return_to&#x60;, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="requestMagicLinkRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (RequestMagicLinkResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<RequestMagicLinkResponse>> RequestMagicLinkWithHttpInfoAsync(string orgId, RequestMagicLinkRequest requestMagicLinkRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->RequestMagicLink");
+
+            // verify the required parameter 'requestMagicLinkRequest' is set
+            if (requestMagicLinkRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'requestMagicLinkRequest' when calling OAuthApi->RequestMagicLink");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = requestMagicLinkRequest;
+
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<RequestMagicLinkResponse>("/orgs/{orgId}/api/v1/oauth/magic-link", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("RequestMagicLink", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 

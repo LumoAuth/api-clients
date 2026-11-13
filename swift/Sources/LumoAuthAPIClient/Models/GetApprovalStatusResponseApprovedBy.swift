@@ -12,9 +12,9 @@ import AnyCodable
 
 public struct GetApprovalStatusResponseApprovedBy: Codable, JSONEncodable, Hashable {
 
-    public var userId: Int?
+    public var userId: UUID?
 
-    public init(userId: Int? = nil) {
+    public init(userId: UUID? = nil) {
         self.userId = userId
     }
 

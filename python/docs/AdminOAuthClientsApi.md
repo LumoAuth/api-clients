@@ -18,7 +18,7 @@ Method | HTTP request | Description
 [**put_admin_clients_update_branding**](AdminOAuthClientsApi.md#put_admin_clients_update_branding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client&#39;s login and/or consent page branding
 [**rotate_client_secret**](AdminOAuthClientsApi.md#rotate_client_secret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret
 [**set_client_scopes**](AdminOAuthClientsApi.md#set_client_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
-[**update_client**](AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
+[**update_client**](AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client (same as PATCH: only the fields that are sent change)
 
 
 # **admin_clients_cimd_check**
@@ -277,7 +277,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | Created — the plaintext secret is included once and never shown again |  -  |
+**201** | Created. For a confidential client the plaintext secret is included once and never shown again; a public client (isConfidential false) has no secret and the field is absent |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1233,7 +1233,7 @@ Name | Type | Description  | Notes
 # **update_client**
 > UpdateClientResponse update_client(org_id, client_id)
 
-Replace an OAuth client
+Update an OAuth client (same as PATCH: only the fields that are sent change)
 
 ### Example
 
@@ -1276,7 +1276,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     client_id = 'client_id_example' # str | 
 
     try:
-        # Replace an OAuth client
+        # Update an OAuth client (same as PATCH: only the fields that are sent change)
         api_response = api_instance.update_client(org_id, client_id)
         print("The response of AdminOAuthClientsApi->update_client:\n")
         pprint(api_response)

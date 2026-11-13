@@ -72,23 +72,5 @@ namespace LumoAuth.ApiClient.Test.Model
         {
             // TODO unit test for the property 'MaxAgeDays'
         }
-
-        /// <summary>
-        /// Test the property 'NotifyBeforeDays'
-        /// </summary>
-        [Fact]
-        public void NotifyBeforeDaysTest()
-        {
-            // TODO unit test for the property 'NotifyBeforeDays'
-        }
-
-        /// <summary>
-        /// Test the property 'HistoryCount'
-        /// </summary>
-        [Fact]
-        public void HistoryCountTest()
-        {
-            // TODO unit test for the property 'HistoryCount'
-        }
     }
 }

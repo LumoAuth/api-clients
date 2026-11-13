@@ -37,7 +37,7 @@ namespace LumoAuth.ApiClient.Model
         /// Initializes a new instance of the <see cref="GetApprovalStatusResponseApprovedBy" /> class.
         /// </summary>
         /// <param name="userId">userId.</param>
-        public GetApprovalStatusResponseApprovedBy(int userId = default)
+        public GetApprovalStatusResponseApprovedBy(Guid userId = default)
         {
             this.UserId = userId;
         }
@@ -46,7 +46,7 @@ namespace LumoAuth.ApiClient.Model
         /// Gets or Sets UserId
         /// </summary>
         [DataMember(Name = "user_id", EmitDefaultValue = false)]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

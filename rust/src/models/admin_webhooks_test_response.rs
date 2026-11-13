@@ -18,6 +18,9 @@ pub struct AdminWebhooksTestResponse {
     /// HTTP status returned by the receiver
     #[serde(rename = "statusCode", skip_serializing_if = "Option::is_none")]
     pub status_code: Option<i32>,
+    /// Id of the delivery row (the `X-LumoAuth-Delivery` header of the request)
+    #[serde(rename = "deliveryId", skip_serializing_if = "Option::is_none")]
+    pub delivery_id: Option<String>,
     #[serde(rename = "message", skip_serializing_if = "Option::is_none")]
     pub message: Option<String>,
 }
@@ -27,6 +30,7 @@ impl AdminWebhooksTestResponse {
         AdminWebhooksTestResponse {
             success: None,
             status_code: None,
+            delivery_id: None,
             message: None,
         }
     }

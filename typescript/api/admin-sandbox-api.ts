@@ -122,7 +122,7 @@ export const AdminSandboxApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
          * @summary Spawn a sandbox tenant
          * @param {string} orgId 
          * @param {AdminSandboxSpawnRequest} [adminSandboxSpawnRequest] 
@@ -204,7 +204,7 @@ export const AdminSandboxApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
          * @summary Spawn a sandbox tenant
          * @param {string} orgId 
          * @param {AdminSandboxSpawnRequest} [adminSandboxSpawnRequest] 
@@ -248,7 +248,7 @@ export const AdminSandboxApiFactory = function (configuration?: Configuration, b
             return localVarFp.adminSandboxList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
          * @summary Spawn a sandbox tenant
          * @param {AdminSandboxApiAdminSandboxSpawnRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -287,7 +287,7 @@ export interface AdminSandboxApiInterface {
     adminSandboxList(requestParameters: AdminSandboxApiAdminSandboxListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSandboxListResponse>;
 
     /**
-     * 
+     * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
      * @summary Spawn a sandbox tenant
      * @param {AdminSandboxApiAdminSandboxSpawnRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -386,7 +386,7 @@ export class AdminSandboxApi extends BaseAPI implements AdminSandboxApiInterface
     }
 
     /**
-     * 
+     * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
      * @summary Spawn a sandbox tenant
      * @param {AdminSandboxApiAdminSandboxSpawnRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

@@ -69,6 +69,7 @@ class CreateClientResponseData implements ModelInterface, ArrayAccess, \JsonSeri
         'redirectUris' => 'string[]',
         'scopes' => 'string[]',
         'grantTypes' => 'string[]',
+        'cibaEnabled' => 'bool',
         'secret' => 'string',
         'note' => 'string'
     ];
@@ -92,6 +93,7 @@ class CreateClientResponseData implements ModelInterface, ArrayAccess, \JsonSeri
         'redirectUris' => null,
         'scopes' => null,
         'grantTypes' => null,
+        'cibaEnabled' => null,
         'secret' => null,
         'note' => null
     ];
@@ -113,6 +115,7 @@ class CreateClientResponseData implements ModelInterface, ArrayAccess, \JsonSeri
         'redirectUris' => false,
         'scopes' => false,
         'grantTypes' => false,
+        'cibaEnabled' => false,
         'secret' => false,
         'note' => false
     ];
@@ -214,6 +217,7 @@ class CreateClientResponseData implements ModelInterface, ArrayAccess, \JsonSeri
         'redirectUris' => 'redirectUris',
         'scopes' => 'scopes',
         'grantTypes' => 'grantTypes',
+        'cibaEnabled' => 'cibaEnabled',
         'secret' => 'secret',
         'note' => '_note'
     ];
@@ -235,6 +239,7 @@ class CreateClientResponseData implements ModelInterface, ArrayAccess, \JsonSeri
         'redirectUris' => 'setRedirectUris',
         'scopes' => 'setScopes',
         'grantTypes' => 'setGrantTypes',
+        'cibaEnabled' => 'setCibaEnabled',
         'secret' => 'setSecret',
         'note' => 'setNote'
     ];
@@ -256,6 +261,7 @@ class CreateClientResponseData implements ModelInterface, ArrayAccess, \JsonSeri
         'redirectUris' => 'getRedirectUris',
         'scopes' => 'getScopes',
         'grantTypes' => 'getGrantTypes',
+        'cibaEnabled' => 'getCibaEnabled',
         'secret' => 'getSecret',
         'note' => 'getNote'
     ];
@@ -328,6 +334,7 @@ class CreateClientResponseData implements ModelInterface, ArrayAccess, \JsonSeri
         $this->setIfExists('redirectUris', $data ?? [], null);
         $this->setIfExists('scopes', $data ?? [], null);
         $this->setIfExists('grantTypes', $data ?? [], null);
+        $this->setIfExists('cibaEnabled', $data ?? [], null);
         $this->setIfExists('secret', $data ?? [], null);
         $this->setIfExists('note', $data ?? [], null);
     }
@@ -696,6 +703,33 @@ class CreateClientResponseData implements ModelInterface, ArrayAccess, \JsonSeri
     }
 
     /**
+     * Gets cibaEnabled
+     *
+     * @return bool|null
+     */
+    public function getCibaEnabled()
+    {
+        return $this->container['cibaEnabled'];
+    }
+
+    /**
+     * Sets cibaEnabled
+     *
+     * @param bool|null $cibaEnabled Detailed responses only. Whether the client may use CIBA (backchannel authentication).
+     *
+     * @return self
+     */
+    public function setCibaEnabled($cibaEnabled)
+    {
+        if (is_null($cibaEnabled)) {
+            throw new \InvalidArgumentException('non-nullable cibaEnabled cannot be null');
+        }
+        $this->container['cibaEnabled'] = $cibaEnabled;
+
+        return $this;
+    }
+
+    /**
      * Gets secret
      *
      * @return string|null
@@ -708,7 +742,7 @@ class CreateClientResponseData implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets secret
      *
-     * @param string|null $secret Plaintext client secret — returned only once, never retrievable again
+     * @param string|null $secret Plaintext client secret — returned only once, never retrievable again. Absent for a public client
      *
      * @return self
      */

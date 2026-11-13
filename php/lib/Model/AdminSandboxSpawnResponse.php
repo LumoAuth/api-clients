@@ -58,7 +58,7 @@ class AdminSandboxSpawnResponse implements ModelInterface, ArrayAccess, \JsonSer
       * @var string[]
       */
     protected static $openAPITypes = [
-        'data' => '\LumoAuth\ApiClient\Model\SandboxTenant'
+        'data' => '\LumoAuth\ApiClient\Model\AdminSandboxSpawnResponseData'
     ];
 
     /**
@@ -293,7 +293,7 @@ class AdminSandboxSpawnResponse implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Gets data
      *
-     * @return \LumoAuth\ApiClient\Model\SandboxTenant|null
+     * @return \LumoAuth\ApiClient\Model\AdminSandboxSpawnResponseData|null
      */
     public function getData()
     {
@@ -303,7 +303,7 @@ class AdminSandboxSpawnResponse implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets data
      *
-     * @param \LumoAuth\ApiClient\Model\SandboxTenant|null $data data
+     * @param \LumoAuth\ApiClient\Model\AdminSandboxSpawnResponseData|null $data data
      *
      * @return self
      */

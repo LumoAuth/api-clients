@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **message** | **string** |  | [optional] [default to undefined]
 **api_key** | **string** | The new plaintext API key — shown only in this response. | [optional] [default to undefined]
+**api_key_expires_at** | **string** | When the new key expires; null &#x3D; never. | [optional] [default to undefined]
 
 ## Example
 
@@ -16,6 +17,7 @@ import { AdminAgentsAgentsRotateKeyResponse } from '@lumoauth/api-client';
 const instance: AdminAgentsAgentsRotateKeyResponse = {
     message,
     api_key,
+    api_key_expires_at,
 };
 ```
 

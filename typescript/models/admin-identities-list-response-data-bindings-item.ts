@@ -40,6 +40,12 @@ export interface AdminIdentitiesListResponseDataBindingsItem {
     'name_id'?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof AdminIdentitiesListResponseDataBindingsItem
+     */
+    'subject'?: string | null;
+    /**
+     * 
      * @type {boolean}
      * @memberof AdminIdentitiesListResponseDataBindingsItem
      */
@@ -70,6 +76,7 @@ export interface AdminIdentitiesListResponseDataBindingsItem {
     */
 export enum AdminIdentitiesListResponseDataBindingsItemType {
     SAML = 'saml',
+    OIDC = 'oidc',
     LDAP = 'ldap',
     SOCIAL = 'social',
     SOCIAL_ACCOUNT = 'social_account'

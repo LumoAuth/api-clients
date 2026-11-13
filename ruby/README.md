@@ -206,7 +206,7 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AdminOAuthClientsApi* | [**put_admin_clients_update_branding**](docs/AdminOAuthClientsApi.md#put_admin_clients_update_branding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client's login and/or consent page branding
 *LumoAuthApiClient::AdminOAuthClientsApi* | [**rotate_client_secret**](docs/AdminOAuthClientsApi.md#rotate_client_secret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret
 *LumoAuthApiClient::AdminOAuthClientsApi* | [**set_client_scopes**](docs/AdminOAuthClientsApi.md#set_client_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
-*LumoAuthApiClient::AdminOAuthClientsApi* | [**update_client**](docs/AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
+*LumoAuthApiClient::AdminOAuthClientsApi* | [**update_client**](docs/AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client (same as PATCH: only the fields that are sent change)
 *LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_invitations_create**](docs/AdminOrganizationsApi.md#admin_org_invitations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | Invite a user to an organization
 *LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_invitations_list**](docs/AdminOrganizationsApi.md#admin_org_invitations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | List organization invitations
 *LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_invitations_resend**](docs/AdminOrganizationsApi.md#admin_org_invitations_resend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | Resend an invitation
@@ -302,9 +302,9 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AdminUsersApi* | [**add_user_role**](docs/AdminUsersApi.md#add_user_role) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Assign a role to a user
 *LumoAuthApiClient::AdminUsersApi* | [**admin_identities_legacy_saml_relink**](docs/AdminUsersApi.md#admin_identities_legacy_saml_relink) | **POST** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Relink legacy SAML users to an IdP
 *LumoAuthApiClient::AdminUsersApi* | [**admin_identities_legacy_saml_report**](docs/AdminUsersApi.md#admin_identities_legacy_saml_report) | **GET** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Legacy SAML bindings report
-*LumoAuthApiClient::AdminUsersApi* | [**admin_identities_link**](docs/AdminUsersApi.md#admin_identities_link) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML or LDAP identity to a user
+*LumoAuthApiClient::AdminUsersApi* | [**admin_identities_link**](docs/AdminUsersApi.md#admin_identities_link) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user
 *LumoAuthApiClient::AdminUsersApi* | [**admin_identities_list**](docs/AdminUsersApi.md#admin_identities_list) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user's federated identity links
-*LumoAuthApiClient::AdminUsersApi* | [**admin_identities_unlink**](docs/AdminUsersApi.md#admin_identities_unlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user's SAML, LDAP or social identity
+*LumoAuthApiClient::AdminUsersApi* | [**admin_identities_unlink**](docs/AdminUsersApi.md#admin_identities_unlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user's SAML, OpenID Connect, LDAP or social identity
 *LumoAuthApiClient::AdminUsersApi* | [**block_user**](docs/AdminUsersApi.md#block_user) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user
 *LumoAuthApiClient::AdminUsersApi* | [**create_user**](docs/AdminUsersApi.md#create_user) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user
 *LumoAuthApiClient::AdminUsersApi* | [**delete_user**](docs/AdminUsersApi.md#delete_user) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user
@@ -410,6 +410,7 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::OAuthApi* | [**introspect**](docs/OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662)
 *LumoAuthApiClient::OAuthApi* | [**par**](docs/OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126)
 *LumoAuthApiClient::OAuthApi* | [**register_client**](docs/OAuthApi.md#register_client) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR)
+*LumoAuthApiClient::OAuthApi* | [**request_magic_link**](docs/OAuthApi.md#request_magic_link) | **POST** /orgs/{orgId}/api/v1/oauth/magic-link | Request a sign-in link by email
 *LumoAuthApiClient::OAuthApi* | [**revoke**](docs/OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009)
 *LumoAuthApiClient::OAuthApi* | [**social_callback**](docs/OAuthApi.md#social_callback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback
 *LumoAuthApiClient::OAuthApi* | [**social_callback_post**](docs/OAuthApi.md#social_callback_post) | **POST** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback (form_post)
@@ -454,6 +455,7 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::AdminAgentsActivateResponse](docs/AdminAgentsActivateResponse.md)
  - [LumoAuthApiClient::AdminAgentsAgentsDisableResponse](docs/AdminAgentsAgentsDisableResponse.md)
  - [LumoAuthApiClient::AdminAgentsAgentsEnableResponse](docs/AdminAgentsAgentsEnableResponse.md)
+ - [LumoAuthApiClient::AdminAgentsAgentsRotateKeyRequest](docs/AdminAgentsAgentsRotateKeyRequest.md)
  - [LumoAuthApiClient::AdminAgentsAgentsRotateKeyResponse](docs/AdminAgentsAgentsRotateKeyResponse.md)
  - [LumoAuthApiClient::AdminAgentsCreateRequest](docs/AdminAgentsCreateRequest.md)
  - [LumoAuthApiClient::AdminAgentsCreateResponse](docs/AdminAgentsCreateResponse.md)
@@ -549,6 +551,8 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::AdminSandboxListResponse](docs/AdminSandboxListResponse.md)
  - [LumoAuthApiClient::AdminSandboxSpawnRequest](docs/AdminSandboxSpawnRequest.md)
  - [LumoAuthApiClient::AdminSandboxSpawnResponse](docs/AdminSandboxSpawnResponse.md)
+ - [LumoAuthApiClient::AdminSandboxSpawnResponseData](docs/AdminSandboxSpawnResponseData.md)
+ - [LumoAuthApiClient::AdminSandboxSpawnResponseData1](docs/AdminSandboxSpawnResponseData1.md)
  - [LumoAuthApiClient::AdminScopesCreateResponse](docs/AdminScopesCreateResponse.md)
  - [LumoAuthApiClient::AdminScopesListResponse](docs/AdminScopesListResponse.md)
  - [LumoAuthApiClient::AdminScopesListResponseMeta](docs/AdminScopesListResponseMeta.md)
@@ -590,6 +594,7 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::AdminWebhooksDeliveriesListResponse](docs/AdminWebhooksDeliveriesListResponse.md)
  - [LumoAuthApiClient::AdminWebhooksDeliveriesListResponseMeta](docs/AdminWebhooksDeliveriesListResponseMeta.md)
  - [LumoAuthApiClient::AdminWebhooksDeliveryReplayResponse](docs/AdminWebhooksDeliveryReplayResponse.md)
+ - [LumoAuthApiClient::AdminWebhooksDeliveryReplayResponseData](docs/AdminWebhooksDeliveryReplayResponseData.md)
  - [LumoAuthApiClient::AdminWebhooksDeliveryShowResponse](docs/AdminWebhooksDeliveryShowResponse.md)
  - [LumoAuthApiClient::AdminWebhooksDeliveryShowResponseData](docs/AdminWebhooksDeliveryShowResponseData.md)
  - [LumoAuthApiClient::AdminWebhooksDeliveryShowResponseData1AttemptsItem](docs/AdminWebhooksDeliveryShowResponseData1AttemptsItem.md)
@@ -788,6 +793,8 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::RemoveUserPermissionResponse](docs/RemoveUserPermissionResponse.md)
  - [LumoAuthApiClient::RemoveUserRoleResponse](docs/RemoveUserRoleResponse.md)
  - [LumoAuthApiClient::ReportAgentUsageResponse](docs/ReportAgentUsageResponse.md)
+ - [LumoAuthApiClient::RequestMagicLinkRequest](docs/RequestMagicLinkRequest.md)
+ - [LumoAuthApiClient::RequestMagicLinkResponse](docs/RequestMagicLinkResponse.md)
  - [LumoAuthApiClient::RequestPermissionRequest](docs/RequestPermissionRequest.md)
  - [LumoAuthApiClient::RequestPermissionResponse](docs/RequestPermissionResponse.md)
  - [LumoAuthApiClient::RevokeAgentTokenRequest](docs/RevokeAgentTokenRequest.md)

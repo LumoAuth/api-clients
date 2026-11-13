@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **type** | **str** |  | [optional] 
 **idp_id** | **int** |  | [optional] 
 **name_id** | **str** |  | [optional] 
+**subject** | **str** |  | [optional] 
 **legacy** | **bool** |  | [optional] 
 **ldap_config_id** | **int** |  | [optional] 
 **dn** | **str** |  | [optional] 

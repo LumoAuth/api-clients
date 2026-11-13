@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Message** | Pointer to **string** |  | [optional] 
 **ApiKey** | Pointer to **string** | The new plaintext API key — shown only in this response. | [optional] 
+**ApiKeyExpiresAt** | Pointer to **NullableTime** | When the new key expires; null &#x3D; never. | [optional] 
 
 ## Methods
 
@@ -76,6 +77,41 @@ SetApiKey sets ApiKey field to given value.
 
 HasApiKey returns a boolean if a field has been set.
 
+### GetApiKeyExpiresAt
+
+`func (o *AdminAgentsAgentsRotateKeyResponse) GetApiKeyExpiresAt() time.Time`
+
+GetApiKeyExpiresAt returns the ApiKeyExpiresAt field if non-nil, zero value otherwise.
+
+### GetApiKeyExpiresAtOk
+
+`func (o *AdminAgentsAgentsRotateKeyResponse) GetApiKeyExpiresAtOk() (*time.Time, bool)`
+
+GetApiKeyExpiresAtOk returns a tuple with the ApiKeyExpiresAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetApiKeyExpiresAt
+
+`func (o *AdminAgentsAgentsRotateKeyResponse) SetApiKeyExpiresAt(v time.Time)`
+
+SetApiKeyExpiresAt sets ApiKeyExpiresAt field to given value.
+
+### HasApiKeyExpiresAt
+
+`func (o *AdminAgentsAgentsRotateKeyResponse) HasApiKeyExpiresAt() bool`
+
+HasApiKeyExpiresAt returns a boolean if a field has been set.
+
+### SetApiKeyExpiresAtNil
+
+`func (o *AdminAgentsAgentsRotateKeyResponse) SetApiKeyExpiresAtNil(b bool)`
+
+ SetApiKeyExpiresAtNil sets the value for ApiKeyExpiresAt to be an explicit nil
+
+### UnsetApiKeyExpiresAt
+`func (o *AdminAgentsAgentsRotateKeyResponse) UnsetApiKeyExpiresAt()`
+
+UnsetApiKeyExpiresAt ensures that no value is present for ApiKeyExpiresAt, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

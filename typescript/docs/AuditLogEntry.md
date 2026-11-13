@@ -27,7 +27,7 @@ Name | Type | Description | Notes
 **geoLocation** | **{ [key: string]: any; }** | Detailed responses only | [optional] [default to undefined]
 **sessionId** | **string** | Detailed responses only | [optional] [default to undefined]
 **requestId** | **string** | Detailed responses only | [optional] [default to undefined]
-**status** | **string** | Detailed responses only | [optional] [default to undefined]
+**status** | **string** | Result of the event: success, failure, pending or partial | [optional] [default to undefined]
 **statusReason** | **string** | Detailed responses only | [optional] [default to undefined]
 **oldValue** | **{ [key: string]: any; }** | Detailed responses only | [optional] [default to undefined]
 **newValue** | **{ [key: string]: any; }** | Detailed responses only | [optional] [default to undefined]

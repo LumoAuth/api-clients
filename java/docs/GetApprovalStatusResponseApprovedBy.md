@@ -7,7 +7,7 @@
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-|**userId** | **Integer** |  |  [optional] |
+|**userId** | **UUID** |  |  [optional] |
 
 
 

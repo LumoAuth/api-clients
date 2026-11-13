@@ -7,8 +7,7 @@ Name | Type | Description | Notes
 **Email** | Pointer to **bool** |  | [optional] 
 **Name** | Pointer to **bool** |  | [optional] 
 **Active** | Pointer to **bool** |  | [optional] 
-**Roles** | Pointer to **bool** |  | [optional] 
-**Permissions** | Pointer to **bool** |  | [optional] 
+**RoleMembership** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -104,55 +103,30 @@ SetActive sets Active field to given value.
 
 HasActive returns a boolean if a field has been set.
 
-### GetRoles
+### GetRoleMembership
 
-`func (o *ScimSettingsInboundProtectedAttributes) GetRoles() bool`
+`func (o *ScimSettingsInboundProtectedAttributes) GetRoleMembership() bool`
 
-GetRoles returns the Roles field if non-nil, zero value otherwise.
+GetRoleMembership returns the RoleMembership field if non-nil, zero value otherwise.
 
-### GetRolesOk
+### GetRoleMembershipOk
 
-`func (o *ScimSettingsInboundProtectedAttributes) GetRolesOk() (*bool, bool)`
+`func (o *ScimSettingsInboundProtectedAttributes) GetRoleMembershipOk() (*bool, bool)`
 
-GetRolesOk returns a tuple with the Roles field if it's non-nil, zero value otherwise
+GetRoleMembershipOk returns a tuple with the RoleMembership field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetRoles
+### SetRoleMembership
 
-`func (o *ScimSettingsInboundProtectedAttributes) SetRoles(v bool)`
+`func (o *ScimSettingsInboundProtectedAttributes) SetRoleMembership(v bool)`
 
-SetRoles sets Roles field to given value.
+SetRoleMembership sets RoleMembership field to given value.
 
-### HasRoles
+### HasRoleMembership
 
-`func (o *ScimSettingsInboundProtectedAttributes) HasRoles() bool`
+`func (o *ScimSettingsInboundProtectedAttributes) HasRoleMembership() bool`
 
-HasRoles returns a boolean if a field has been set.
-
-### GetPermissions
-
-`func (o *ScimSettingsInboundProtectedAttributes) GetPermissions() bool`
-
-GetPermissions returns the Permissions field if non-nil, zero value otherwise.
-
-### GetPermissionsOk
-
-`func (o *ScimSettingsInboundProtectedAttributes) GetPermissionsOk() (*bool, bool)`
-
-GetPermissionsOk returns a tuple with the Permissions field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPermissions
-
-`func (o *ScimSettingsInboundProtectedAttributes) SetPermissions(v bool)`
-
-SetPermissions sets Permissions field to given value.
-
-### HasPermissions
-
-`func (o *ScimSettingsInboundProtectedAttributes) HasPermissions() bool`
-
-HasPermissions returns a boolean if a field has been set.
+HasRoleMembership returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

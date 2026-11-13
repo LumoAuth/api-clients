@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **name** | **string** | Required. Human-readable agent name. | [optional] [default to undefined]
 **description** | **string** |  | [optional] [default to undefined]
 **capabilities** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
+**budgetPolicy** | **{ [key: string]: any; }** | The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. Leave it out for an agent without a budget. | [optional] [default to undefined]
 
 ## Example
 
@@ -18,6 +19,7 @@ const instance: AdminAgentsCreateRequest = {
     name,
     description,
     capabilities,
+    budgetPolicy,
 };
 ```
 

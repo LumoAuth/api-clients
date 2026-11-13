@@ -85,10 +85,10 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** | The provider access token. |  -  |
 | **400** | invalid_user_id. |  -  |
-| **403** | agent_token_required, cross_tenant, delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. |  -  |
+| **403** | agent_token_required, cross_tenant, insufficient_scope (the token was narrowed with a scope), delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. |  -  |
 | **404** | tenant_not_found, connection_not_found or grant_not_found. |  -  |
 | **409** | grant_revoked, grant_expired or refresh_failed. |  -  |
-| **429** | rate_limited. |  -  |
+| **429** | rate_limited, or budget_exceeded when the agent budget is spent. |  -  |
 | **503** | refresh_in_progress (Retry-After: 2) or provider_unavailable. |  -  |
 
 <a id="listConnections"></a>
