@@ -155,6 +155,8 @@ Name | Type | Description  | Notes
 
 Spawn a sandbox tenant
 
+
+
 ### Example
 
 ```go

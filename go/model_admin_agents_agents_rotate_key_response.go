@@ -13,6 +13,7 @@ package lumoauthclient
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the AdminAgentsAgentsRotateKeyResponse type satisfies the MappedNullable interface at compile time
@@ -23,6 +24,8 @@ type AdminAgentsAgentsRotateKeyResponse struct {
 	Message *string `json:"message,omitempty"`
 	// The new plaintext API key — shown only in this response.
 	ApiKey *string `json:"api_key,omitempty"`
+	// When the new key expires; null = never.
+	ApiKeyExpiresAt NullableTime `json:"api_key_expires_at,omitempty"`
 }
 
 // NewAdminAgentsAgentsRotateKeyResponse instantiates a new AdminAgentsAgentsRotateKeyResponse object
@@ -106,6 +109,48 @@ func (o *AdminAgentsAgentsRotateKeyResponse) SetApiKey(v string) {
 	o.ApiKey = &v
 }
 
+// GetApiKeyExpiresAt returns the ApiKeyExpiresAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AdminAgentsAgentsRotateKeyResponse) GetApiKeyExpiresAt() time.Time {
+	if o == nil || IsNil(o.ApiKeyExpiresAt.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.ApiKeyExpiresAt.Get()
+}
+
+// GetApiKeyExpiresAtOk returns a tuple with the ApiKeyExpiresAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AdminAgentsAgentsRotateKeyResponse) GetApiKeyExpiresAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ApiKeyExpiresAt.Get(), o.ApiKeyExpiresAt.IsSet()
+}
+
+// HasApiKeyExpiresAt returns a boolean if a field has been set.
+func (o *AdminAgentsAgentsRotateKeyResponse) HasApiKeyExpiresAt() bool {
+	if o != nil && o.ApiKeyExpiresAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetApiKeyExpiresAt gets a reference to the given NullableTime and assigns it to the ApiKeyExpiresAt field.
+func (o *AdminAgentsAgentsRotateKeyResponse) SetApiKeyExpiresAt(v time.Time) {
+	o.ApiKeyExpiresAt.Set(&v)
+}
+// SetApiKeyExpiresAtNil sets the value for ApiKeyExpiresAt to be an explicit nil
+func (o *AdminAgentsAgentsRotateKeyResponse) SetApiKeyExpiresAtNil() {
+	o.ApiKeyExpiresAt.Set(nil)
+}
+
+// UnsetApiKeyExpiresAt ensures that no value is present for ApiKeyExpiresAt, not even an explicit nil
+func (o *AdminAgentsAgentsRotateKeyResponse) UnsetApiKeyExpiresAt() {
+	o.ApiKeyExpiresAt.Unset()
+}
+
 func (o AdminAgentsAgentsRotateKeyResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -121,6 +166,9 @@ func (o AdminAgentsAgentsRotateKeyResponse) ToMap() (map[string]interface{}, err
 	}
 	if !IsNil(o.ApiKey) {
 		toSerialize["api_key"] = o.ApiKey
+	}
+	if o.ApiKeyExpiresAt.IsSet() {
+		toSerialize["api_key_expires_at"] = o.ApiKeyExpiresAt.Get()
 	}
 	return toSerialize, nil
 }

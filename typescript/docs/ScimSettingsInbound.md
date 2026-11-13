@@ -16,7 +16,6 @@ Name | Type | Description | Notes
 **allow_user_deletion** | **boolean** |  | [optional] [default to undefined]
 **allow_group_operations** | **boolean** |  | [optional] [default to undefined]
 **protected_attributes** | [**ScimSettingsInboundProtectedAttributes**](ScimSettingsInboundProtectedAttributes.md) |  | [optional] [default to undefined]
-**attribute_mapping** | **{ [key: string]: string; }** | SCIM attribute &#x3D;&gt; user field. | [optional] [default to undefined]
 **auto_activate_users** | **boolean** |  | [optional] [default to undefined]
 **deprovisioning_action** | **string** |  | [optional] [default to undefined]
 
@@ -36,7 +35,6 @@ const instance: ScimSettingsInbound = {
     allow_user_deletion,
     allow_group_operations,
     protected_attributes,
-    attribute_mapping,
     auto_activate_users,
     deprovisioning_action,
 };

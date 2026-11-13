@@ -275,7 +275,7 @@ const { status, data } = await apiInstance.abacPoliciesCreate(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**201** | Created |  -  |
-|**400** | Invalid effect or policy conditions |  -  |
+|**400** | Invalid effect, priority (a whole number from 0 to 1000) or policy conditions |  -  |
 |**409** | A policy with this slug already exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -14,8 +14,8 @@
 | **oauth2_client_secret** | [**RedactedSecret**](RedactedSecret.md) |  | [optional] |
 | **oauth2_token_url** | **String** |  | [optional] |
 | **oauth2_scope** | **String** |  | [optional] |
-| **tls_certificate** | **String** | Optional PEM CA certificate used for TLS verification. | [optional] |
-| **verify_tls** | **Boolean** |  | [optional] |
+| **tls_certificate** | **String** | Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets. | [optional] |
+| **verify_tls** | **Boolean** | Always true. The endpoint certificate is always verified; false is rejected with 400. | [optional] |
 | **push_user_creates** | **Boolean** |  | [optional] |
 | **push_user_updates** | **Boolean** |  | [optional] |
 | **push_user_deletes** | **Boolean** |  | [optional] |
@@ -23,7 +23,6 @@
 | **sync_on_login** | **Boolean** |  | [optional] |
 | **batch_sync_enabled** | **Boolean** |  | [optional] |
 | **batch_sync_interval** | **String** |  | [optional] |
-| **attribute_mapping** | **Hash&lt;String, String&gt;** | User field &#x3D;&gt; SCIM attribute. | [optional] |
 | **last_sync_at** | **String** |  | [optional] |
 | **last_sync_status** | **String** |  | [optional] |
 | **last_sync_error** | **String** |  | [optional] |
@@ -57,7 +56,6 @@ instance = LumoAuthApiClient::ScimSettingsOutbound.new(
   sync_on_login: null,
   batch_sync_enabled: null,
   batch_sync_interval: null,
-  attribute_mapping: null,
   last_sync_at: null,
   last_sync_status: null,
   last_sync_error: null,

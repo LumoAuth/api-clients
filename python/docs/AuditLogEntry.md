@@ -27,7 +27,7 @@ Name | Type | Description | Notes
 **geo_location** | **Dict[str, object]** | Detailed responses only | [optional] 
 **session_id** | **str** | Detailed responses only | [optional] 
 **request_id** | **str** | Detailed responses only | [optional] 
-**status** | **str** | Detailed responses only | [optional] 
+**status** | **str** | Result of the event: success, failure, pending or partial | [optional] 
 **status_reason** | **str** | Detailed responses only | [optional] 
 **old_value** | **Dict[str, object]** | Detailed responses only | [optional] 
 **new_value** | **Dict[str, object]** | Detailed responses only | [optional] 

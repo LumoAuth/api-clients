@@ -127,9 +127,9 @@ public class AdminUsersApiTest {
     }
 
     /**
-     * Link a SAML or LDAP identity to a user
+     * Link a SAML, OpenID Connect or LDAP identity to a user
      *
-     * Sets (or replaces) the user&#39;s SAML binding (&#x60;idp_id&#x60; + &#x60;name_id&#x60;) or LDAP binding (&#x60;ldap_config_id&#x60; + &#x60;dn&#x60;; omit &#x60;dn&#x60; to look the entry up in the directory by the user&#39;s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user&#39;s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+     * Sets (or replaces) the user&#39;s SAML binding (&#x60;idp_id&#x60; + &#x60;name_id&#x60;), enterprise OpenID Connect binding (&#x60;idp_id&#x60; + &#x60;subject&#x60;: the value of the connection&#39;s user identifier claim; a person can sign in through such a connection only after this link exists) or LDAP binding (&#x60;ldap_config_id&#x60; + &#x60;dn&#x60;; omit &#x60;dn&#x60; to look the entry up in the directory by the user&#39;s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user&#39;s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
      *
      * @throws ApiException if the Api call fails
      */
@@ -145,7 +145,7 @@ public class AdminUsersApiTest {
     /**
      * List a user&#39;s federated identity links
      *
-     * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with &#x60;legacy: true&#x60; stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+     * SAML (IdP + NameID), enterprise OpenID Connect (connection + subject), LDAP (directory + DN) and social provider links. A SAML link with &#x60;legacy: true&#x60; stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP. An OpenID Connect link with &#x60;hashed: true&#x60; stores a long subject as a hash, so &#x60;subject&#x60; is null.
      *
      * @throws ApiException if the Api call fails
      */
@@ -158,9 +158,9 @@ public class AdminUsersApiTest {
     }
 
     /**
-     * Unlink a user&#39;s SAML, LDAP or social identity
+     * Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity
      *
-     * Removes the binding of the given type (&#x60;saml&#x60;, &#x60;ldap&#x60; or &#x60;social&#x60;). Revokes the user&#39;s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+     * Removes the binding of the given type (&#x60;saml&#x60;, &#x60;oidc&#x60;, &#x60;ldap&#x60; or &#x60;social&#x60;). Revokes the user&#39;s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
      *
      * @throws ApiException if the Api call fails
      */

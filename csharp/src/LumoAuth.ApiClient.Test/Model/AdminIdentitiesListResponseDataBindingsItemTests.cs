@@ -83,6 +83,15 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'Subject'
+        /// </summary>
+        [Fact]
+        public void SubjectTest()
+        {
+            // TODO unit test for the property 'Subject'
+        }
+
+        /// <summary>
         /// Test the property 'Legacy'
         /// </summary>
         [Fact]

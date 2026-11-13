@@ -83,21 +83,12 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'Roles'
+        /// Test the property 'RoleMembership'
         /// </summary>
         [Fact]
-        public void RolesTest()
+        public void RoleMembershipTest()
         {
-            // TODO unit test for the property 'Roles'
-        }
-
-        /// <summary>
-        /// Test the property 'Permissions'
-        /// </summary>
-        [Fact]
-        public void PermissionsTest()
-        {
-            // TODO unit test for the property 'Permissions'
+            // TODO unit test for the property 'RoleMembership'
         }
     }
 }

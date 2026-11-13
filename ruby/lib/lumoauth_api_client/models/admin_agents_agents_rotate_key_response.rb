@@ -20,11 +20,15 @@ module LumoAuthApiClient
     # The new plaintext API key — shown only in this response.
     attr_accessor :api_key
 
+    # When the new key expires; null = never.
+    attr_accessor :api_key_expires_at
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'message' => :'message',
-        :'api_key' => :'api_key'
+        :'api_key' => :'api_key',
+        :'api_key_expires_at' => :'api_key_expires_at'
       }
     end
 
@@ -42,13 +46,15 @@ module LumoAuthApiClient
     def self.openapi_types
       {
         :'message' => :'String',
-        :'api_key' => :'String'
+        :'api_key' => :'String',
+        :'api_key_expires_at' => :'Time'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'api_key_expires_at'
       ])
     end
 
@@ -75,6 +81,10 @@ module LumoAuthApiClient
       if attributes.key?(:'api_key')
         self.api_key = attributes[:'api_key']
       end
+
+      if attributes.key?(:'api_key_expires_at')
+        self.api_key_expires_at = attributes[:'api_key_expires_at']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -98,7 +108,8 @@ module LumoAuthApiClient
       return true if self.equal?(o)
       self.class == o.class &&
           message == o.message &&
-          api_key == o.api_key
+          api_key == o.api_key &&
+          api_key_expires_at == o.api_key_expires_at
     end
 
     # @see the `==` method
@@ -110,7 +121,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [message, api_key].hash
+      [message, api_key, api_key_expires_at].hash
     end
 
     # Builds the object from hash

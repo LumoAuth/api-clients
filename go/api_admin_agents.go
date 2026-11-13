@@ -627,6 +627,13 @@ type ApiAdminAgentsAgentsRotateKeyRequest struct {
 	ApiService AdminAgentsAPI
 	orgId string
 	agentId string
+	adminAgentsAgentsRotateKeyRequest *AdminAgentsAgentsRotateKeyRequest
+}
+
+// Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
+func (r ApiAdminAgentsAgentsRotateKeyRequest) AdminAgentsAgentsRotateKeyRequest(adminAgentsAgentsRotateKeyRequest AdminAgentsAgentsRotateKeyRequest) ApiAdminAgentsAgentsRotateKeyRequest {
+	r.adminAgentsAgentsRotateKeyRequest = &adminAgentsAgentsRotateKeyRequest
+	return r
 }
 
 func (r ApiAdminAgentsAgentsRotateKeyRequest) Execute() (*AdminAgentsAgentsRotateKeyResponse, *http.Response, error) {
@@ -674,7 +681,7 @@ func (a *AdminAgentsAPIService) AdminAgentsAgentsRotateKeyExecute(r ApiAdminAgen
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -690,6 +697,8 @@ func (a *AdminAgentsAPIService) AdminAgentsAgentsRotateKeyExecute(r ApiAdminAgen
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminAgentsAgentsRotateKeyRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1841,6 +1850,13 @@ type ApiAdminAgentsRotateCredentialsRequest struct {
 	ApiService AdminAgentsAPI
 	orgId string
 	agentId string
+	adminAgentsAgentsRotateKeyRequest *AdminAgentsAgentsRotateKeyRequest
+}
+
+// For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
+func (r ApiAdminAgentsRotateCredentialsRequest) AdminAgentsAgentsRotateKeyRequest(adminAgentsAgentsRotateKeyRequest AdminAgentsAgentsRotateKeyRequest) ApiAdminAgentsRotateCredentialsRequest {
+	r.adminAgentsAgentsRotateKeyRequest = &adminAgentsAgentsRotateKeyRequest
+	return r
 }
 
 func (r ApiAdminAgentsRotateCredentialsRequest) Execute() (*AdminAgentsRotateCredentialsResponse, *http.Response, error) {
@@ -1888,7 +1904,7 @@ func (a *AdminAgentsAPIService) AdminAgentsRotateCredentialsExecute(r ApiAdminAg
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1904,6 +1920,8 @@ func (a *AdminAgentsAPIService) AdminAgentsRotateCredentialsExecute(r ApiAdminAg
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminAgentsAgentsRotateKeyRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

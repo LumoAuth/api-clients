@@ -14,7 +14,6 @@ Name | Type | Description | Notes
 **allowUserDeletion** | **bool** |  | [optional]
 **allowGroupOperations** | **bool** |  | [optional]
 **protectedAttributes** | [**\LumoAuth\ApiClient\Model\ScimSettingsInboundProtectedAttributes**](ScimSettingsInboundProtectedAttributes.md) |  | [optional]
-**attributeMapping** | **array<string,string>** | SCIM attribute &#x3D;&gt; user field. | [optional]
 **autoActivateUsers** | **bool** |  | [optional]
 **deprovisioningAction** | **string** |  | [optional]
 

@@ -18,7 +18,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**putAdminClientsUpdateBranding**](AdminOAuthClientsApi.md#putAdminClientsUpdateBranding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client&#39;s login and/or consent page branding |
 | [**rotateClientSecret**](AdminOAuthClientsApi.md#rotateClientSecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret |
 | [**setClientScopes**](AdminOAuthClientsApi.md#setClientScopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client |
-| [**updateClient**](AdminOAuthClientsApi.md#updateClient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client |
+| [**updateClient**](AdminOAuthClientsApi.md#updateClient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client (same as PATCH: only the fields that are sent change) |
 
 
 <a id="adminClientsCimdCheck"></a>
@@ -242,7 +242,7 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **201** | Created — the plaintext secret is included once and never shown again |  -  |
+| **201** | Created. For a confidential client the plaintext secret is included once and never shown again; a public client (isConfidential false) has no secret and the field is absent |  -  |
 
 <a id="deleteClient"></a>
 # **deleteClient**
@@ -1063,7 +1063,7 @@ public class Example {
 # **updateClient**
 > UpdateClientResponse updateClient(orgId, clientId)
 
-Replace an OAuth client
+Update an OAuth client (same as PATCH: only the fields that are sent change)
 
 ### Example
 ```java

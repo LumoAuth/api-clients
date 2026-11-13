@@ -10,44 +10,26 @@ import Foundation
 import AnyCodable
 #endif
 
-/** Attribute name &#x3D;&gt; true when SCIM may not change it. */
+/** Attribute name &#x3D;&gt; true when SCIM may not change it. role_membership stops every /Groups request that would add or remove a member of a role. */
 public struct ScimSettingsInboundProtectedAttributes: Codable, JSONEncodable, Hashable {
 
     public var email: Bool?
     public var name: Bool?
     public var active: Bool?
-    public var roles: Bool?
-    public var permissions: Bool?
+    public var roleMembership: Bool?
 
-    public init(email: Bool? = nil, name: Bool? = nil, active: Bool? = nil, roles: Bool? = nil, permissions: Bool? = nil) {
+    public init(email: Bool? = nil, name: Bool? = nil, active: Bool? = nil, roleMembership: Bool? = nil) {
         self.email = email
         self.name = name
         self.active = active
-        self.roles = roles
-        self.permissions = permissions
+        self.roleMembership = roleMembership
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case email
         case name
         case active
-        case roles
-        case permissions
-    }
-
-    public var additionalProperties: [String: Bool] = [:]
-
-    public subscript(key: String) -> Bool? {
-        get {
-            if let value = additionalProperties[key] {
-                return value
-            }
-            return nil
-        }
-
-        set {
-            additionalProperties[key] = newValue
-        }
+        case roleMembership = "role_membership"
     }
 
     // Encodable protocol methods
@@ -57,30 +39,7 @@ public struct ScimSettingsInboundProtectedAttributes: Codable, JSONEncodable, Ha
         try container.encodeIfPresent(email, forKey: .email)
         try container.encodeIfPresent(name, forKey: .name)
         try container.encodeIfPresent(active, forKey: .active)
-        try container.encodeIfPresent(roles, forKey: .roles)
-        try container.encodeIfPresent(permissions, forKey: .permissions)
-        var additionalPropertiesContainer = encoder.container(keyedBy: String.self)
-        try additionalPropertiesContainer.encodeMap(additionalProperties)
-    }
-
-    // Decodable protocol methods
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        email = try container.decodeIfPresent(Bool.self, forKey: .email)
-        name = try container.decodeIfPresent(Bool.self, forKey: .name)
-        active = try container.decodeIfPresent(Bool.self, forKey: .active)
-        roles = try container.decodeIfPresent(Bool.self, forKey: .roles)
-        permissions = try container.decodeIfPresent(Bool.self, forKey: .permissions)
-        var nonAdditionalPropertyKeys = Set<String>()
-        nonAdditionalPropertyKeys.insert("email")
-        nonAdditionalPropertyKeys.insert("name")
-        nonAdditionalPropertyKeys.insert("active")
-        nonAdditionalPropertyKeys.insert("roles")
-        nonAdditionalPropertyKeys.insert("permissions")
-        let additionalPropertiesContainer = try decoder.container(keyedBy: String.self)
-        additionalProperties = try additionalPropertiesContainer.decodeMap(Bool.self, excludedKeys: nonAdditionalPropertyKeys)
+        try container.encodeIfPresent(roleMembership, forKey: .roleMembership)
     }
 }
 

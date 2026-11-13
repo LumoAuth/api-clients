@@ -19,6 +19,8 @@ pub struct AdminIdentitiesListResponseDataBindingsItem {
     pub idp_id: Option<Option<i32>>,
     #[serde(rename = "name_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub name_id: Option<Option<String>>,
+    #[serde(rename = "subject", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub subject: Option<Option<String>>,
     #[serde(rename = "legacy", skip_serializing_if = "Option::is_none")]
     pub legacy: Option<bool>,
     #[serde(rename = "ldap_config_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
@@ -35,6 +37,7 @@ impl AdminIdentitiesListResponseDataBindingsItem {
             r#type: None,
             idp_id: None,
             name_id: None,
+            subject: None,
             legacy: None,
             ldap_config_id: None,
             dn: None,
@@ -47,6 +50,8 @@ impl AdminIdentitiesListResponseDataBindingsItem {
 pub enum Type {
     #[serde(rename = "saml")]
     Saml,
+    #[serde(rename = "oidc")]
+    Oidc,
     #[serde(rename = "ldap")]
     Ldap,
     #[serde(rename = "social")]

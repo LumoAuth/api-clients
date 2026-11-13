@@ -7,6 +7,7 @@
 | **type** | **String** |  | [optional] |
 | **idp_id** | **Integer** |  | [optional] |
 | **name_id** | **String** |  | [optional] |
+| **subject** | **String** |  | [optional] |
 | **legacy** | **Boolean** |  | [optional] |
 | **ldap_config_id** | **Integer** |  | [optional] |
 | **dn** | **String** |  | [optional] |
@@ -21,6 +22,7 @@ instance = LumoAuthApiClient::AdminIdentitiesListResponseDataBindingsItem.new(
   type: null,
   idp_id: null,
   name_id: null,
+  subject: null,
   legacy: null,
   ldap_config_id: null,
   dn: null,

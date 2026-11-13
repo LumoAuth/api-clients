@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **type** | **string** |  | [optional] [default to undefined]
 **idp_id** | **number** |  | [optional] [default to undefined]
 **name_id** | **string** |  | [optional] [default to undefined]
+**subject** | **string** |  | [optional] [default to undefined]
 **legacy** | **boolean** |  | [optional] [default to undefined]
 **ldap_config_id** | **number** |  | [optional] [default to undefined]
 **dn** | **string** |  | [optional] [default to undefined]
@@ -22,6 +23,7 @@ const instance: AdminIdentitiesListResponseDataBindingsItem = {
     type,
     idp_id,
     name_id,
+    subject,
     legacy,
     ldap_config_id,
     dn,

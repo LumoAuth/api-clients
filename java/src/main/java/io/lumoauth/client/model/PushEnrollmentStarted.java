@@ -50,7 +50,7 @@ import io.lumoauth.client.JSON;
 /**
  * PushEnrollmentStarted
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T09:01:05.226277396-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class PushEnrollmentStarted {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -222,7 +222,7 @@ public class PushEnrollmentStarted {
   }
 
   /**
-   * Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.
+   * Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when it is not available.
    * @return deepLinkAndroid
    */
   @javax.annotation.Nullable

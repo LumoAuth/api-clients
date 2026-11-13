@@ -1072,15 +1072,16 @@ class AdminAgentsApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $agentId agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest|null $adminAgentsAgentsRotateKeyRequest Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsAgentsRotateKey'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyResponse
      */
-    public function adminAgentsAgentsRotateKey($orgId, $agentId, string $contentType = self::contentTypes['adminAgentsAgentsRotateKey'][0])
+    public function adminAgentsAgentsRotateKey($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest = null, string $contentType = self::contentTypes['adminAgentsAgentsRotateKey'][0])
     {
-        list($response) = $this->adminAgentsAgentsRotateKeyWithHttpInfo($orgId, $agentId, $contentType);
+        list($response) = $this->adminAgentsAgentsRotateKeyWithHttpInfo($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest, $contentType);
         return $response;
     }
 
@@ -1091,15 +1092,16 @@ class AdminAgentsApi
      *
      * @param  string $orgId (required)
      * @param  string $agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest|null $adminAgentsAgentsRotateKeyRequest Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsAgentsRotateKey'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminAgentsAgentsRotateKeyWithHttpInfo($orgId, $agentId, string $contentType = self::contentTypes['adminAgentsAgentsRotateKey'][0])
+    public function adminAgentsAgentsRotateKeyWithHttpInfo($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest = null, string $contentType = self::contentTypes['adminAgentsAgentsRotateKey'][0])
     {
-        $request = $this->adminAgentsAgentsRotateKeyRequest($orgId, $agentId, $contentType);
+        $request = $this->adminAgentsAgentsRotateKeyRequest($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1177,14 +1179,15 @@ class AdminAgentsApi
      *
      * @param  string $orgId (required)
      * @param  string $agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest|null $adminAgentsAgentsRotateKeyRequest Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsAgentsRotateKey'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminAgentsAgentsRotateKeyAsync($orgId, $agentId, string $contentType = self::contentTypes['adminAgentsAgentsRotateKey'][0])
+    public function adminAgentsAgentsRotateKeyAsync($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest = null, string $contentType = self::contentTypes['adminAgentsAgentsRotateKey'][0])
     {
-        return $this->adminAgentsAgentsRotateKeyAsyncWithHttpInfo($orgId, $agentId, $contentType)
+        return $this->adminAgentsAgentsRotateKeyAsyncWithHttpInfo($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1199,15 +1202,16 @@ class AdminAgentsApi
      *
      * @param  string $orgId (required)
      * @param  string $agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest|null $adminAgentsAgentsRotateKeyRequest Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsAgentsRotateKey'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminAgentsAgentsRotateKeyAsyncWithHttpInfo($orgId, $agentId, string $contentType = self::contentTypes['adminAgentsAgentsRotateKey'][0])
+    public function adminAgentsAgentsRotateKeyAsyncWithHttpInfo($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest = null, string $contentType = self::contentTypes['adminAgentsAgentsRotateKey'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyResponse';
-        $request = $this->adminAgentsAgentsRotateKeyRequest($orgId, $agentId, $contentType);
+        $request = $this->adminAgentsAgentsRotateKeyRequest($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1250,12 +1254,13 @@ class AdminAgentsApi
      *
      * @param  string $orgId (required)
      * @param  string $agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest|null $adminAgentsAgentsRotateKeyRequest Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsAgentsRotateKey'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminAgentsAgentsRotateKeyRequest($orgId, $agentId, string $contentType = self::contentTypes['adminAgentsAgentsRotateKey'][0])
+    public function adminAgentsAgentsRotateKeyRequest($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest = null, string $contentType = self::contentTypes['adminAgentsAgentsRotateKey'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -1271,6 +1276,7 @@ class AdminAgentsApi
                 'Missing the required parameter $agentId when calling adminAgentsAgentsRotateKey'
             );
         }
+
 
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-key';
@@ -1307,7 +1313,14 @@ class AdminAgentsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($adminAgentsAgentsRotateKeyRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminAgentsAgentsRotateKeyRequest));
+            } else {
+                $httpBody = $adminAgentsAgentsRotateKeyRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -4053,15 +4066,16 @@ class AdminAgentsApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $agentId agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest|null $adminAgentsAgentsRotateKeyRequest For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsRotateCredentials'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminAgentsRotateCredentialsResponse
      */
-    public function adminAgentsRotateCredentials($orgId, $agentId, string $contentType = self::contentTypes['adminAgentsRotateCredentials'][0])
+    public function adminAgentsRotateCredentials($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest = null, string $contentType = self::contentTypes['adminAgentsRotateCredentials'][0])
     {
-        list($response) = $this->adminAgentsRotateCredentialsWithHttpInfo($orgId, $agentId, $contentType);
+        list($response) = $this->adminAgentsRotateCredentialsWithHttpInfo($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest, $contentType);
         return $response;
     }
 
@@ -4072,15 +4086,16 @@ class AdminAgentsApi
      *
      * @param  string $orgId (required)
      * @param  string $agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest|null $adminAgentsAgentsRotateKeyRequest For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsRotateCredentials'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminAgentsRotateCredentialsResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminAgentsRotateCredentialsWithHttpInfo($orgId, $agentId, string $contentType = self::contentTypes['adminAgentsRotateCredentials'][0])
+    public function adminAgentsRotateCredentialsWithHttpInfo($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest = null, string $contentType = self::contentTypes['adminAgentsRotateCredentials'][0])
     {
-        $request = $this->adminAgentsRotateCredentialsRequest($orgId, $agentId, $contentType);
+        $request = $this->adminAgentsRotateCredentialsRequest($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -4158,14 +4173,15 @@ class AdminAgentsApi
      *
      * @param  string $orgId (required)
      * @param  string $agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest|null $adminAgentsAgentsRotateKeyRequest For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsRotateCredentials'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminAgentsRotateCredentialsAsync($orgId, $agentId, string $contentType = self::contentTypes['adminAgentsRotateCredentials'][0])
+    public function adminAgentsRotateCredentialsAsync($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest = null, string $contentType = self::contentTypes['adminAgentsRotateCredentials'][0])
     {
-        return $this->adminAgentsRotateCredentialsAsyncWithHttpInfo($orgId, $agentId, $contentType)
+        return $this->adminAgentsRotateCredentialsAsyncWithHttpInfo($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4180,15 +4196,16 @@ class AdminAgentsApi
      *
      * @param  string $orgId (required)
      * @param  string $agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest|null $adminAgentsAgentsRotateKeyRequest For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsRotateCredentials'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminAgentsRotateCredentialsAsyncWithHttpInfo($orgId, $agentId, string $contentType = self::contentTypes['adminAgentsRotateCredentials'][0])
+    public function adminAgentsRotateCredentialsAsyncWithHttpInfo($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest = null, string $contentType = self::contentTypes['adminAgentsRotateCredentials'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminAgentsRotateCredentialsResponse';
-        $request = $this->adminAgentsRotateCredentialsRequest($orgId, $agentId, $contentType);
+        $request = $this->adminAgentsRotateCredentialsRequest($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -4231,12 +4248,13 @@ class AdminAgentsApi
      *
      * @param  string $orgId (required)
      * @param  string $agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest|null $adminAgentsAgentsRotateKeyRequest For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsRotateCredentials'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminAgentsRotateCredentialsRequest($orgId, $agentId, string $contentType = self::contentTypes['adminAgentsRotateCredentials'][0])
+    public function adminAgentsRotateCredentialsRequest($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest = null, string $contentType = self::contentTypes['adminAgentsRotateCredentials'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -4252,6 +4270,7 @@ class AdminAgentsApi
                 'Missing the required parameter $agentId when calling adminAgentsRotateCredentials'
             );
         }
+
 
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials';
@@ -4288,7 +4307,14 @@ class AdminAgentsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($adminAgentsAgentsRotateKeyRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminAgentsAgentsRotateKeyRequest));
+            } else {
+                $httpBody = $adminAgentsAgentsRotateKeyRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

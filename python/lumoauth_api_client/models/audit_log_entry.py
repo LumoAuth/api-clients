@@ -50,7 +50,7 @@ class AuditLogEntry(BaseModel):
     geo_location: Optional[Dict[str, Any]] = Field(default=None, description="Detailed responses only", alias="geoLocation")
     session_id: Optional[StrictStr] = Field(default=None, description="Detailed responses only", alias="sessionId")
     request_id: Optional[StrictStr] = Field(default=None, description="Detailed responses only", alias="requestId")
-    status: Optional[StrictStr] = Field(default=None, description="Detailed responses only")
+    status: Optional[StrictStr] = Field(default=None, description="Result of the event: success, failure, pending or partial")
     status_reason: Optional[StrictStr] = Field(default=None, description="Detailed responses only", alias="statusReason")
     old_value: Optional[Dict[str, Any]] = Field(default=None, description="Detailed responses only", alias="oldValue")
     new_value: Optional[Dict[str, Any]] = Field(default=None, description="Detailed responses only", alias="newValue")

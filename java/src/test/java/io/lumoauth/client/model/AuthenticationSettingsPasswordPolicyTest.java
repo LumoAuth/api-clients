@@ -77,4 +77,36 @@ public class AuthenticationSettingsPasswordPolicyTest {
         // TODO: test requireUppercase
     }
 
+    /**
+     * Test the property 'requireLowercase'
+     */
+    @Test
+    public void requireLowercaseTest() {
+        // TODO: test requireLowercase
+    }
+
+    /**
+     * Test the property 'rejectBreachedPasswords'
+     */
+    @Test
+    public void rejectBreachedPasswordsTest() {
+        // TODO: test rejectBreachedPasswords
+    }
+
+    /**
+     * Test the property 'breachedPasswordMinCount'
+     */
+    @Test
+    public void breachedPasswordMinCountTest() {
+        // TODO: test breachedPasswordMinCount
+    }
+
+    /**
+     * Test the property 'checkBreachedOnLogin'
+     */
+    @Test
+    public void checkBreachedOnLoginTest() {
+        // TODO: test checkBreachedOnLogin
+    }
+
 }

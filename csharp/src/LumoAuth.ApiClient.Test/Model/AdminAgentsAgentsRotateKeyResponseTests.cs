@@ -72,5 +72,14 @@ namespace LumoAuth.ApiClient.Test.Model
         {
             // TODO unit test for the property 'ApiKey'
         }
+
+        /// <summary>
+        /// Test the property 'ApiKeyExpiresAt'
+        /// </summary>
+        [Fact]
+        public void ApiKeyExpiresAtTest()
+        {
+            // TODO unit test for the property 'ApiKeyExpiresAt'
+        }
     }
 }

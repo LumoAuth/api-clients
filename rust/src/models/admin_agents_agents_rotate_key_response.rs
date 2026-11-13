@@ -18,6 +18,9 @@ pub struct AdminAgentsAgentsRotateKeyResponse {
     /// The new plaintext API key — shown only in this response.
     #[serde(rename = "api_key", skip_serializing_if = "Option::is_none")]
     pub api_key: Option<String>,
+    /// When the new key expires; null = never.
+    #[serde(rename = "api_key_expires_at", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub api_key_expires_at: Option<Option<String>>,
 }
 
 impl AdminAgentsAgentsRotateKeyResponse {
@@ -25,6 +28,7 @@ impl AdminAgentsAgentsRotateKeyResponse {
         AdminAgentsAgentsRotateKeyResponse {
             message: None,
             api_key: None,
+            api_key_expires_at: None,
         }
     }
 }

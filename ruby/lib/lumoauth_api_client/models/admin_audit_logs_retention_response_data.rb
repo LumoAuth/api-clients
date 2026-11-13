@@ -15,20 +15,31 @@ require 'time'
 
 module LumoAuthApiClient
   class AdminAuditLogsRetentionResponseData
-    # Effective retention, capped by the plan limit
+    # The organization's own period, between minRetentionDays and maxRetentionDays. It applies while data retention is on and autoDelete is not false.
     attr_accessor :retention_days
 
+    # false switches the organization's own period off; the plan's period still applies
     attr_accessor :auto_delete
 
-    # Plan cap; null when unlimited or billing enforcement is off
+    # The plan's period: older entries are not returned and are deleted. null when the plan has no limit.
     attr_accessor :plan_limit_days
+
+    # How long entries are kept now; null when nothing is deleted
+    attr_accessor :effective_retention_days
+
+    attr_accessor :min_retention_days
+
+    attr_accessor :max_retention_days
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'retention_days' => :'retentionDays',
         :'auto_delete' => :'autoDelete',
-        :'plan_limit_days' => :'planLimitDays'
+        :'plan_limit_days' => :'planLimitDays',
+        :'effective_retention_days' => :'effectiveRetentionDays',
+        :'min_retention_days' => :'minRetentionDays',
+        :'max_retention_days' => :'maxRetentionDays'
       }
     end
 
@@ -47,14 +58,18 @@ module LumoAuthApiClient
       {
         :'retention_days' => :'Integer',
         :'auto_delete' => :'Boolean',
-        :'plan_limit_days' => :'Integer'
+        :'plan_limit_days' => :'Integer',
+        :'effective_retention_days' => :'Integer',
+        :'min_retention_days' => :'Integer',
+        :'max_retention_days' => :'Integer'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'plan_limit_days'
+        :'plan_limit_days',
+        :'effective_retention_days',
       ])
     end
 
@@ -85,6 +100,18 @@ module LumoAuthApiClient
       if attributes.key?(:'plan_limit_days')
         self.plan_limit_days = attributes[:'plan_limit_days']
       end
+
+      if attributes.key?(:'effective_retention_days')
+        self.effective_retention_days = attributes[:'effective_retention_days']
+      end
+
+      if attributes.key?(:'min_retention_days')
+        self.min_retention_days = attributes[:'min_retention_days']
+      end
+
+      if attributes.key?(:'max_retention_days')
+        self.max_retention_days = attributes[:'max_retention_days']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -109,7 +136,10 @@ module LumoAuthApiClient
       self.class == o.class &&
           retention_days == o.retention_days &&
           auto_delete == o.auto_delete &&
-          plan_limit_days == o.plan_limit_days
+          plan_limit_days == o.plan_limit_days &&
+          effective_retention_days == o.effective_retention_days &&
+          min_retention_days == o.min_retention_days &&
+          max_retention_days == o.max_retention_days
     end
 
     # @see the `==` method
@@ -121,7 +151,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [retention_days, auto_delete, plan_limit_days].hash
+      [retention_days, auto_delete, plan_limit_days, effective_retention_days, min_retention_days, max_retention_days].hash
     end
 
     # Builds the object from hash

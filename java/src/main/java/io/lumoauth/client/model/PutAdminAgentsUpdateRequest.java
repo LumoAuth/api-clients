@@ -22,7 +22,10 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,7 +53,7 @@ import io.lumoauth.client.JSON;
 /**
  * PutAdminAgentsUpdateRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T09:01:05.226277396-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class PutAdminAgentsUpdateRequest {
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
@@ -66,6 +69,11 @@ public class PutAdminAgentsUpdateRequest {
   @SerializedName(SERIALIZED_NAME_CAPABILITIES)
   @javax.annotation.Nullable
   private List<String> capabilities = new ArrayList<>();
+
+  public static final String SERIALIZED_NAME_BUDGET_POLICY = "budgetPolicy";
+  @SerializedName(SERIALIZED_NAME_BUDGET_POLICY)
+  @javax.annotation.Nullable
+  private Map<String, Object> budgetPolicy;
 
   public PutAdminAgentsUpdateRequest() {
   }
@@ -135,6 +143,33 @@ public class PutAdminAgentsUpdateRequest {
   }
 
 
+  public PutAdminAgentsUpdateRequest budgetPolicy(@javax.annotation.Nullable Map<String, Object> budgetPolicy) {
+    this.budgetPolicy = budgetPolicy;
+    return this;
+  }
+
+  public PutAdminAgentsUpdateRequest putBudgetPolicyItem(String key, Object budgetPolicyItem) {
+    if (this.budgetPolicy == null) {
+      this.budgetPolicy = new HashMap<>();
+    }
+    this.budgetPolicy.put(key, budgetPolicyItem);
+    return this;
+  }
+
+  /**
+   * The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is.
+   * @return budgetPolicy
+   */
+  @javax.annotation.Nullable
+  public Map<String, Object> getBudgetPolicy() {
+    return budgetPolicy;
+  }
+
+  public void setBudgetPolicy(@javax.annotation.Nullable Map<String, Object> budgetPolicy) {
+    this.budgetPolicy = budgetPolicy;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -147,12 +182,24 @@ public class PutAdminAgentsUpdateRequest {
     PutAdminAgentsUpdateRequest putAdminAgentsUpdateRequest = (PutAdminAgentsUpdateRequest) o;
     return Objects.equals(this.name, putAdminAgentsUpdateRequest.name) &&
         Objects.equals(this.description, putAdminAgentsUpdateRequest.description) &&
-        Objects.equals(this.capabilities, putAdminAgentsUpdateRequest.capabilities);
+        Objects.equals(this.capabilities, putAdminAgentsUpdateRequest.capabilities) &&
+        Objects.equals(this.budgetPolicy, putAdminAgentsUpdateRequest.budgetPolicy);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, description, capabilities);
+    return Objects.hash(name, description, capabilities, budgetPolicy);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -162,6 +209,7 @@ public class PutAdminAgentsUpdateRequest {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    capabilities: ").append(toIndentedString(capabilities)).append("\n");
+    sb.append("    budgetPolicy: ").append(toIndentedString(budgetPolicy)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -183,7 +231,7 @@ public class PutAdminAgentsUpdateRequest {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("name", "description", "capabilities"));
+    openapiFields = new HashSet<String>(Arrays.asList("name", "description", "capabilities", "budgetPolicy"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);

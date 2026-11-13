@@ -199,7 +199,8 @@ const { status, data } = await apiInstance.adminAgentsAgentsEnable(
 ```typescript
 import {
     AdminAgentsApi,
-    Configuration
+    Configuration,
+    AdminAgentsAgentsRotateKeyRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -207,10 +208,12 @@ const apiInstance = new AdminAgentsApi(configuration);
 
 let orgId: string; // (default to undefined)
 let agentId: string; // (default to undefined)
+let adminAgentsAgentsRotateKeyRequest: AdminAgentsAgentsRotateKeyRequest; //Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
 
 const { status, data } = await apiInstance.adminAgentsAgentsRotateKey(
     orgId,
-    agentId
+    agentId,
+    adminAgentsAgentsRotateKeyRequest
 );
 ```
 
@@ -218,6 +221,7 @@ const { status, data } = await apiInstance.adminAgentsAgentsRotateKey(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminAgentsAgentsRotateKeyRequest** | **AdminAgentsAgentsRotateKeyRequest**| Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **agentId** | [**string**] |  | defaults to undefined|
 
@@ -232,7 +236,7 @@ const { status, data } = await apiInstance.adminAgentsAgentsRotateKey(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -240,6 +244,7 @@ const { status, data } = await apiInstance.adminAgentsAgentsRotateKey(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | API key rotated. The new key is returned ONCE and cannot be retrieved again. |  -  |
+|**400** | The agent does not authenticate with an API key (identity type other than api_key), or the lifetime is invalid. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
 |**404** | Tenant or agent not found. |  -  |
@@ -297,7 +302,7 @@ const { status, data } = await apiInstance.adminAgentsCreate(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**201** | Agent created. The generated credential/secret is returned ONCE and cannot be retrieved again. |  -  |
-|**400** | Missing required field: name. |  -  |
+|**400** | Missing required field: name, or an invalid budgetPolicy (unknown key, or a value that is not a number greater than zero). |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
 |**404** | Tenant not found. |  -  |
@@ -470,10 +475,11 @@ const { status, data } = await apiInstance.adminAgentsGenerateToken(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | A generated agent token. The token value is returned ONCE. |  -  |
-|**400** | Inactive agent, requested scopes outside the agent\&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. |  -  |
+|**400** | Inactive agent, an agent that only takes DPoP-bound tokens (a minted token cannot be bound to its key), requested scopes outside the agent\&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
 |**404** | Tenant or agent not found. |  -  |
+|**429** | budget_exceeded: the agent budget is spent. A token mint counts as one call. Retry-After holds the seconds until the spent window starts again. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -769,7 +775,8 @@ const { status, data } = await apiInstance.adminAgentsRevokeKey(
 ```typescript
 import {
     AdminAgentsApi,
-    Configuration
+    Configuration,
+    AdminAgentsAgentsRotateKeyRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -777,10 +784,12 @@ const apiInstance = new AdminAgentsApi(configuration);
 
 let orgId: string; // (default to undefined)
 let agentId: string; // (default to undefined)
+let adminAgentsAgentsRotateKeyRequest: AdminAgentsAgentsRotateKeyRequest; //For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
 
 const { status, data } = await apiInstance.adminAgentsRotateCredentials(
     orgId,
-    agentId
+    agentId,
+    adminAgentsAgentsRotateKeyRequest
 );
 ```
 
@@ -788,6 +797,7 @@ const { status, data } = await apiInstance.adminAgentsRotateCredentials(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminAgentsAgentsRotateKeyRequest** | **AdminAgentsAgentsRotateKeyRequest**| For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **agentId** | [**string**] |  | defaults to undefined|
 
@@ -802,7 +812,7 @@ const { status, data } = await apiInstance.adminAgentsRotateCredentials(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -932,6 +942,7 @@ const { status, data } = await apiInstance.patchAdminAgentsUpdate(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Agent updated. |  -  |
+|**400** | Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
 |**404** | Tenant or agent not found. |  -  |
@@ -992,6 +1003,7 @@ const { status, data } = await apiInstance.putAdminAgentsUpdate(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Agent updated. |  -  |
+|**400** | Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
 |**404** | Tenant or agent not found. |  -  |

@@ -49,7 +49,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminAuditLogsRetentionResponseData
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T09:01:05.226277396-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class AdminAuditLogsRetentionResponseData {
   public static final String SERIALIZED_NAME_RETENTION_DAYS = "retentionDays";
   @SerializedName(SERIALIZED_NAME_RETENTION_DAYS)
@@ -66,6 +66,21 @@ public class AdminAuditLogsRetentionResponseData {
   @javax.annotation.Nullable
   private Integer planLimitDays;
 
+  public static final String SERIALIZED_NAME_EFFECTIVE_RETENTION_DAYS = "effectiveRetentionDays";
+  @SerializedName(SERIALIZED_NAME_EFFECTIVE_RETENTION_DAYS)
+  @javax.annotation.Nullable
+  private Integer effectiveRetentionDays;
+
+  public static final String SERIALIZED_NAME_MIN_RETENTION_DAYS = "minRetentionDays";
+  @SerializedName(SERIALIZED_NAME_MIN_RETENTION_DAYS)
+  @javax.annotation.Nullable
+  private Integer minRetentionDays;
+
+  public static final String SERIALIZED_NAME_MAX_RETENTION_DAYS = "maxRetentionDays";
+  @SerializedName(SERIALIZED_NAME_MAX_RETENTION_DAYS)
+  @javax.annotation.Nullable
+  private Integer maxRetentionDays;
+
   public AdminAuditLogsRetentionResponseData() {
   }
 
@@ -75,7 +90,7 @@ public class AdminAuditLogsRetentionResponseData {
   }
 
   /**
-   * Effective retention, capped by the plan limit
+   * The organization&#39;s own period, between minRetentionDays and maxRetentionDays. It applies while data retention is on and autoDelete is not false.
    * @return retentionDays
    */
   @javax.annotation.Nullable
@@ -94,7 +109,7 @@ public class AdminAuditLogsRetentionResponseData {
   }
 
   /**
-   * Get autoDelete
+   * false switches the organization&#39;s own period off; the plan&#39;s period still applies
    * @return autoDelete
    */
   @javax.annotation.Nullable
@@ -113,7 +128,7 @@ public class AdminAuditLogsRetentionResponseData {
   }
 
   /**
-   * Plan cap; null when unlimited or billing enforcement is off
+   * The plan&#39;s period: older entries are not returned and are deleted. null when the plan has no limit.
    * @return planLimitDays
    */
   @javax.annotation.Nullable
@@ -123,6 +138,63 @@ public class AdminAuditLogsRetentionResponseData {
 
   public void setPlanLimitDays(@javax.annotation.Nullable Integer planLimitDays) {
     this.planLimitDays = planLimitDays;
+  }
+
+
+  public AdminAuditLogsRetentionResponseData effectiveRetentionDays(@javax.annotation.Nullable Integer effectiveRetentionDays) {
+    this.effectiveRetentionDays = effectiveRetentionDays;
+    return this;
+  }
+
+  /**
+   * How long entries are kept now; null when nothing is deleted
+   * @return effectiveRetentionDays
+   */
+  @javax.annotation.Nullable
+  public Integer getEffectiveRetentionDays() {
+    return effectiveRetentionDays;
+  }
+
+  public void setEffectiveRetentionDays(@javax.annotation.Nullable Integer effectiveRetentionDays) {
+    this.effectiveRetentionDays = effectiveRetentionDays;
+  }
+
+
+  public AdminAuditLogsRetentionResponseData minRetentionDays(@javax.annotation.Nullable Integer minRetentionDays) {
+    this.minRetentionDays = minRetentionDays;
+    return this;
+  }
+
+  /**
+   * Get minRetentionDays
+   * @return minRetentionDays
+   */
+  @javax.annotation.Nullable
+  public Integer getMinRetentionDays() {
+    return minRetentionDays;
+  }
+
+  public void setMinRetentionDays(@javax.annotation.Nullable Integer minRetentionDays) {
+    this.minRetentionDays = minRetentionDays;
+  }
+
+
+  public AdminAuditLogsRetentionResponseData maxRetentionDays(@javax.annotation.Nullable Integer maxRetentionDays) {
+    this.maxRetentionDays = maxRetentionDays;
+    return this;
+  }
+
+  /**
+   * Get maxRetentionDays
+   * @return maxRetentionDays
+   */
+  @javax.annotation.Nullable
+  public Integer getMaxRetentionDays() {
+    return maxRetentionDays;
+  }
+
+  public void setMaxRetentionDays(@javax.annotation.Nullable Integer maxRetentionDays) {
+    this.maxRetentionDays = maxRetentionDays;
   }
 
 
@@ -138,7 +210,10 @@ public class AdminAuditLogsRetentionResponseData {
     AdminAuditLogsRetentionResponseData adminAuditLogsRetentionResponseData = (AdminAuditLogsRetentionResponseData) o;
     return Objects.equals(this.retentionDays, adminAuditLogsRetentionResponseData.retentionDays) &&
         Objects.equals(this.autoDelete, adminAuditLogsRetentionResponseData.autoDelete) &&
-        Objects.equals(this.planLimitDays, adminAuditLogsRetentionResponseData.planLimitDays);
+        Objects.equals(this.planLimitDays, adminAuditLogsRetentionResponseData.planLimitDays) &&
+        Objects.equals(this.effectiveRetentionDays, adminAuditLogsRetentionResponseData.effectiveRetentionDays) &&
+        Objects.equals(this.minRetentionDays, adminAuditLogsRetentionResponseData.minRetentionDays) &&
+        Objects.equals(this.maxRetentionDays, adminAuditLogsRetentionResponseData.maxRetentionDays);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -147,7 +222,7 @@ public class AdminAuditLogsRetentionResponseData {
 
   @Override
   public int hashCode() {
-    return Objects.hash(retentionDays, autoDelete, planLimitDays);
+    return Objects.hash(retentionDays, autoDelete, planLimitDays, effectiveRetentionDays, minRetentionDays, maxRetentionDays);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -164,6 +239,9 @@ public class AdminAuditLogsRetentionResponseData {
     sb.append("    retentionDays: ").append(toIndentedString(retentionDays)).append("\n");
     sb.append("    autoDelete: ").append(toIndentedString(autoDelete)).append("\n");
     sb.append("    planLimitDays: ").append(toIndentedString(planLimitDays)).append("\n");
+    sb.append("    effectiveRetentionDays: ").append(toIndentedString(effectiveRetentionDays)).append("\n");
+    sb.append("    minRetentionDays: ").append(toIndentedString(minRetentionDays)).append("\n");
+    sb.append("    maxRetentionDays: ").append(toIndentedString(maxRetentionDays)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -185,7 +263,7 @@ public class AdminAuditLogsRetentionResponseData {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("retentionDays", "autoDelete", "planLimitDays"));
+    openapiFields = new HashSet<String>(Arrays.asList("retentionDays", "autoDelete", "planLimitDays", "effectiveRetentionDays", "minRetentionDays", "maxRetentionDays"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);

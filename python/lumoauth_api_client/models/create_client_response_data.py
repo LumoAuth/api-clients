@@ -39,9 +39,10 @@ class CreateClientResponseData(BaseModel):
     redirect_uris: Optional[List[StrictStr]] = Field(default=None, description="Detailed responses only", alias="redirectUris")
     scopes: Optional[List[StrictStr]] = Field(default=None, description="Detailed responses only")
     grant_types: Optional[List[StrictStr]] = Field(default=None, description="Detailed responses only", alias="grantTypes")
-    secret: Optional[StrictStr] = Field(default=None, description="Plaintext client secret — returned only once, never retrievable again")
+    ciba_enabled: Optional[StrictBool] = Field(default=None, description="Detailed responses only. Whether the client may use CIBA (backchannel authentication).", alias="cibaEnabled")
+    secret: Optional[StrictStr] = Field(default=None, description="Plaintext client secret — returned only once, never retrievable again. Absent for a public client")
     note: Optional[StrictStr] = Field(default=None, alias="_note")
-    __properties: ClassVar[List[str]] = ["id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt", "redirectUris", "scopes", "grantTypes", "secret", "_note"]
+    __properties: ClassVar[List[str]] = ["id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt", "redirectUris", "scopes", "grantTypes", "cibaEnabled", "secret", "_note"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -105,6 +106,7 @@ class CreateClientResponseData(BaseModel):
             "redirectUris": obj.get("redirectUris"),
             "scopes": obj.get("scopes"),
             "grantTypes": obj.get("grantTypes"),
+            "cibaEnabled": obj.get("cibaEnabled"),
             "secret": obj.get("secret"),
             "_note": obj.get("_note")
         })

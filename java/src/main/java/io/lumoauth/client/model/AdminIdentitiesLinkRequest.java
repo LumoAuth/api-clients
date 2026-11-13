@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminIdentitiesLinkRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T09:01:05.226277396-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class AdminIdentitiesLinkRequest {
   /**
    * Gets or Sets type
@@ -56,6 +56,8 @@ public class AdminIdentitiesLinkRequest {
   @JsonAdapter(TypeEnum.Adapter.class)
   public enum TypeEnum {
     SAML("saml"),
+    
+    OIDC("oidc"),
     
     LDAP("ldap");
 
@@ -112,6 +114,11 @@ public class AdminIdentitiesLinkRequest {
   @javax.annotation.Nullable
   private Integer idpId;
 
+  public static final String SERIALIZED_NAME_SUBJECT = "subject";
+  @SerializedName(SERIALIZED_NAME_SUBJECT)
+  @javax.annotation.Nullable
+  private String subject;
+
   public static final String SERIALIZED_NAME_NAME_ID = "name_id";
   @SerializedName(SERIALIZED_NAME_NAME_ID)
   @javax.annotation.Nullable
@@ -160,7 +167,7 @@ public class AdminIdentitiesLinkRequest {
   }
 
   /**
-   * SAML IdP config id (type&#x3D;saml)
+   * SAML IdP config id (type&#x3D;saml) or OpenID Connect connection id (type&#x3D;oidc)
    * @return idpId
    */
   @javax.annotation.Nullable
@@ -170,6 +177,25 @@ public class AdminIdentitiesLinkRequest {
 
   public void setIdpId(@javax.annotation.Nullable Integer idpId) {
     this.idpId = idpId;
+  }
+
+
+  public AdminIdentitiesLinkRequest subject(@javax.annotation.Nullable String subject) {
+    this.subject = subject;
+    return this;
+  }
+
+  /**
+   * Subject the OpenID Connect provider issues for this user (type&#x3D;oidc)
+   * @return subject
+   */
+  @javax.annotation.Nullable
+  public String getSubject() {
+    return subject;
+  }
+
+  public void setSubject(@javax.annotation.Nullable String subject) {
+    this.subject = subject;
   }
 
 
@@ -261,6 +287,7 @@ public class AdminIdentitiesLinkRequest {
     AdminIdentitiesLinkRequest adminIdentitiesLinkRequest = (AdminIdentitiesLinkRequest) o;
     return Objects.equals(this.type, adminIdentitiesLinkRequest.type) &&
         Objects.equals(this.idpId, adminIdentitiesLinkRequest.idpId) &&
+        Objects.equals(this.subject, adminIdentitiesLinkRequest.subject) &&
         Objects.equals(this.nameId, adminIdentitiesLinkRequest.nameId) &&
         Objects.equals(this.ldapConfigId, adminIdentitiesLinkRequest.ldapConfigId) &&
         Objects.equals(this.dn, adminIdentitiesLinkRequest.dn) &&
@@ -269,7 +296,7 @@ public class AdminIdentitiesLinkRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, idpId, nameId, ldapConfigId, dn, ldapOnly);
+    return Objects.hash(type, idpId, subject, nameId, ldapConfigId, dn, ldapOnly);
   }
 
   @Override
@@ -278,6 +305,7 @@ public class AdminIdentitiesLinkRequest {
     sb.append("class AdminIdentitiesLinkRequest {\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    idpId: ").append(toIndentedString(idpId)).append("\n");
+    sb.append("    subject: ").append(toIndentedString(subject)).append("\n");
     sb.append("    nameId: ").append(toIndentedString(nameId)).append("\n");
     sb.append("    ldapConfigId: ").append(toIndentedString(ldapConfigId)).append("\n");
     sb.append("    dn: ").append(toIndentedString(dn)).append("\n");
@@ -303,7 +331,7 @@ public class AdminIdentitiesLinkRequest {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("type", "idp_id", "name_id", "ldap_config_id", "dn", "ldap_only"));
+    openapiFields = new HashSet<String>(Arrays.asList("type", "idp_id", "subject", "name_id", "ldap_config_id", "dn", "ldap_only"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("type"));
@@ -342,6 +370,9 @@ public class AdminIdentitiesLinkRequest {
       }
       // validate the required field `type`
       TypeEnum.validateJsonElement(jsonObj.get("type"));
+      if ((jsonObj.get("subject") != null && !jsonObj.get("subject").isJsonNull()) && !jsonObj.get("subject").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `subject` to be a primitive type in the JSON string but got `%s`", jsonObj.get("subject").toString()));
+      }
       if ((jsonObj.get("name_id") != null && !jsonObj.get("name_id").isJsonNull()) && !jsonObj.get("name_id").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `name_id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("name_id").toString()));
       }

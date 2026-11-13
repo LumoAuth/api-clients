@@ -16,7 +16,8 @@ Name | Type | Description | Notes
 **redirectUris** | **Array&lt;string&gt;** | Detailed responses only | [optional] [default to undefined]
 **scopes** | **Array&lt;string&gt;** | Detailed responses only | [optional] [default to undefined]
 **grantTypes** | **Array&lt;string&gt;** | Detailed responses only | [optional] [default to undefined]
-**secret** | **string** | Plaintext client secret — returned only once, never retrievable again | [optional] [default to undefined]
+**cibaEnabled** | **boolean** | Detailed responses only. Whether the client may use CIBA (backchannel authentication). | [optional] [default to undefined]
+**secret** | **string** | Plaintext client secret — returned only once, never retrievable again. Absent for a public client | [optional] [default to undefined]
 **_note** | **string** |  | [optional] [default to undefined]
 
 ## Example
@@ -36,6 +37,7 @@ const instance: CreateClientResponseData = {
     redirectUris,
     scopes,
     grantTypes,
+    cibaEnabled,
     secret,
     _note,
 };

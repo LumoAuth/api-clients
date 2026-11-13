@@ -636,7 +636,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid effect or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority (a whole number from 0 to 1000) or policy conditions </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> A policy with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
@@ -707,7 +707,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid effect or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority (a whole number from 0 to 1000) or policy conditions </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> A policy with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
@@ -727,7 +727,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid effect or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority (a whole number from 0 to 1000) or policy conditions </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> A policy with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
@@ -749,7 +749,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid effect or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority (a whole number from 0 to 1000) or policy conditions </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> A policy with this slug already exists </td><td>  -  </td></tr>
      </table>
      */

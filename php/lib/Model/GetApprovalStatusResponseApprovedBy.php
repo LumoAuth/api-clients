@@ -58,7 +58,7 @@ class GetApprovalStatusResponseApprovedBy implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'userId' => 'int'
+        'userId' => 'string'
     ];
 
     /**
@@ -69,7 +69,7 @@ class GetApprovalStatusResponseApprovedBy implements ModelInterface, ArrayAccess
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'userId' => null
+        'userId' => 'uuid'
     ];
 
     /**
@@ -293,7 +293,7 @@ class GetApprovalStatusResponseApprovedBy implements ModelInterface, ArrayAccess
     /**
      * Gets userId
      *
-     * @return int|null
+     * @return string|null
      */
     public function getUserId()
     {
@@ -303,7 +303,7 @@ class GetApprovalStatusResponseApprovedBy implements ModelInterface, ArrayAccess
     /**
      * Sets userId
      *
-     * @param int|null $userId userId
+     * @param string|null $userId userId
      *
      * @return self
      */

@@ -36,6 +36,7 @@ use \LumoAuth\ApiClient\ObjectSerializer;
  * AuthenticationSettingsPasswordRotationPolicy Class Doc Comment
  *
  * @category Class
+ * @description A write is merged with the stored object.
  * @package  LumoAuth\ApiClient
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -59,9 +60,7 @@ class AuthenticationSettingsPasswordRotationPolicy implements ModelInterface, Ar
       */
     protected static $openAPITypes = [
         'enabled' => 'bool',
-        'maxAgeDays' => 'int',
-        'notifyBeforeDays' => 'int',
-        'historyCount' => 'int'
+        'maxAgeDays' => 'int'
     ];
 
     /**
@@ -73,9 +72,7 @@ class AuthenticationSettingsPasswordRotationPolicy implements ModelInterface, Ar
       */
     protected static $openAPIFormats = [
         'enabled' => null,
-        'maxAgeDays' => null,
-        'notifyBeforeDays' => null,
-        'historyCount' => null
+        'maxAgeDays' => null
     ];
 
     /**
@@ -85,9 +82,7 @@ class AuthenticationSettingsPasswordRotationPolicy implements ModelInterface, Ar
       */
     protected static array $openAPINullables = [
         'enabled' => false,
-        'maxAgeDays' => false,
-        'notifyBeforeDays' => false,
-        'historyCount' => false
+        'maxAgeDays' => false
     ];
 
     /**
@@ -177,9 +172,7 @@ class AuthenticationSettingsPasswordRotationPolicy implements ModelInterface, Ar
      */
     protected static $attributeMap = [
         'enabled' => 'enabled',
-        'maxAgeDays' => 'max_age_days',
-        'notifyBeforeDays' => 'notify_before_days',
-        'historyCount' => 'history_count'
+        'maxAgeDays' => 'max_age_days'
     ];
 
     /**
@@ -189,9 +182,7 @@ class AuthenticationSettingsPasswordRotationPolicy implements ModelInterface, Ar
      */
     protected static $setters = [
         'enabled' => 'setEnabled',
-        'maxAgeDays' => 'setMaxAgeDays',
-        'notifyBeforeDays' => 'setNotifyBeforeDays',
-        'historyCount' => 'setHistoryCount'
+        'maxAgeDays' => 'setMaxAgeDays'
     ];
 
     /**
@@ -201,9 +192,7 @@ class AuthenticationSettingsPasswordRotationPolicy implements ModelInterface, Ar
      */
     protected static $getters = [
         'enabled' => 'getEnabled',
-        'maxAgeDays' => 'getMaxAgeDays',
-        'notifyBeforeDays' => 'getNotifyBeforeDays',
-        'historyCount' => 'getHistoryCount'
+        'maxAgeDays' => 'getMaxAgeDays'
     ];
 
     /**
@@ -265,8 +254,6 @@ class AuthenticationSettingsPasswordRotationPolicy implements ModelInterface, Ar
     {
         $this->setIfExists('enabled', $data ?? [], null);
         $this->setIfExists('maxAgeDays', $data ?? [], null);
-        $this->setIfExists('notifyBeforeDays', $data ?? [], null);
-        $this->setIfExists('historyCount', $data ?? [], null);
     }
 
     /**
@@ -295,6 +282,14 @@ class AuthenticationSettingsPasswordRotationPolicy implements ModelInterface, Ar
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        if (!is_null($this->container['maxAgeDays']) && ($this->container['maxAgeDays'] > 730)) {
+            $invalidProperties[] = "invalid value for 'maxAgeDays', must be smaller than or equal to 730.";
+        }
+
+        if (!is_null($this->container['maxAgeDays']) && ($this->container['maxAgeDays'] < 1)) {
+            $invalidProperties[] = "invalid value for 'maxAgeDays', must be bigger than or equal to 1.";
+        }
 
         return $invalidProperties;
     }
@@ -360,61 +355,15 @@ class AuthenticationSettingsPasswordRotationPolicy implements ModelInterface, Ar
         if (is_null($maxAgeDays)) {
             throw new \InvalidArgumentException('non-nullable maxAgeDays cannot be null');
         }
+
+        if (($maxAgeDays > 730)) {
+            throw new \InvalidArgumentException('invalid value for $maxAgeDays when calling AuthenticationSettingsPasswordRotationPolicy., must be smaller than or equal to 730.');
+        }
+        if (($maxAgeDays < 1)) {
+            throw new \InvalidArgumentException('invalid value for $maxAgeDays when calling AuthenticationSettingsPasswordRotationPolicy., must be bigger than or equal to 1.');
+        }
+
         $this->container['maxAgeDays'] = $maxAgeDays;
-
-        return $this;
-    }
-
-    /**
-     * Gets notifyBeforeDays
-     *
-     * @return int|null
-     */
-    public function getNotifyBeforeDays()
-    {
-        return $this->container['notifyBeforeDays'];
-    }
-
-    /**
-     * Sets notifyBeforeDays
-     *
-     * @param int|null $notifyBeforeDays notifyBeforeDays
-     *
-     * @return self
-     */
-    public function setNotifyBeforeDays($notifyBeforeDays)
-    {
-        if (is_null($notifyBeforeDays)) {
-            throw new \InvalidArgumentException('non-nullable notifyBeforeDays cannot be null');
-        }
-        $this->container['notifyBeforeDays'] = $notifyBeforeDays;
-
-        return $this;
-    }
-
-    /**
-     * Gets historyCount
-     *
-     * @return int|null
-     */
-    public function getHistoryCount()
-    {
-        return $this->container['historyCount'];
-    }
-
-    /**
-     * Sets historyCount
-     *
-     * @param int|null $historyCount historyCount
-     *
-     * @return self
-     */
-    public function setHistoryCount($historyCount)
-    {
-        if (is_null($historyCount)) {
-            throw new \InvalidArgumentException('non-nullable historyCount cannot be null');
-        }
-        $this->container['historyCount'] = $historyCount;
 
         return $this;
     }

@@ -18,6 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
@@ -29,7 +30,8 @@ class AdminAgentsAgentsRotateKeyResponse(BaseModel):
     """ # noqa: E501
     message: Optional[StrictStr] = None
     api_key: Optional[StrictStr] = Field(default=None, description="The new plaintext API key — shown only in this response.")
-    __properties: ClassVar[List[str]] = ["message", "api_key"]
+    api_key_expires_at: Optional[datetime] = Field(default=None, description="When the new key expires; null = never.")
+    __properties: ClassVar[List[str]] = ["message", "api_key", "api_key_expires_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -70,6 +72,11 @@ class AdminAgentsAgentsRotateKeyResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if api_key_expires_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.api_key_expires_at is None and "api_key_expires_at" in self.model_fields_set:
+            _dict['api_key_expires_at'] = None
+
         return _dict
 
     @classmethod
@@ -83,7 +90,8 @@ class AdminAgentsAgentsRotateKeyResponse(BaseModel):
 
         _obj = cls.model_validate({
             "message": obj.get("message"),
-            "api_key": obj.get("api_key")
+            "api_key": obj.get("api_key"),
+            "api_key_expires_at": obj.get("api_key_expires_at")
         })
         return _obj
 

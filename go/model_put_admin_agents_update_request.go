@@ -23,6 +23,8 @@ type PutAdminAgentsUpdateRequest struct {
 	Name *string `json:"name,omitempty"`
 	Description *string `json:"description,omitempty"`
 	Capabilities []string `json:"capabilities,omitempty"`
+	// The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is.
+	BudgetPolicy map[string]interface{} `json:"budgetPolicy,omitempty"`
 }
 
 // NewPutAdminAgentsUpdateRequest instantiates a new PutAdminAgentsUpdateRequest object
@@ -138,6 +140,39 @@ func (o *PutAdminAgentsUpdateRequest) SetCapabilities(v []string) {
 	o.Capabilities = v
 }
 
+// GetBudgetPolicy returns the BudgetPolicy field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *PutAdminAgentsUpdateRequest) GetBudgetPolicy() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.BudgetPolicy
+}
+
+// GetBudgetPolicyOk returns a tuple with the BudgetPolicy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PutAdminAgentsUpdateRequest) GetBudgetPolicyOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.BudgetPolicy) {
+		return map[string]interface{}{}, false
+	}
+	return o.BudgetPolicy, true
+}
+
+// HasBudgetPolicy returns a boolean if a field has been set.
+func (o *PutAdminAgentsUpdateRequest) HasBudgetPolicy() bool {
+	if o != nil && !IsNil(o.BudgetPolicy) {
+		return true
+	}
+
+	return false
+}
+
+// SetBudgetPolicy gets a reference to the given map[string]interface{} and assigns it to the BudgetPolicy field.
+func (o *PutAdminAgentsUpdateRequest) SetBudgetPolicy(v map[string]interface{}) {
+	o.BudgetPolicy = v
+}
+
 func (o PutAdminAgentsUpdateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -156,6 +191,9 @@ func (o PutAdminAgentsUpdateRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Capabilities) {
 		toSerialize["capabilities"] = o.Capabilities
+	}
+	if o.BudgetPolicy != nil {
+		toSerialize["budgetPolicy"] = o.BudgetPolicy
 	}
 	return toSerialize, nil
 }

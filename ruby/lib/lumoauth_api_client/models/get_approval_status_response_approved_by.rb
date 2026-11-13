@@ -37,7 +37,7 @@ module LumoAuthApiClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'user_id' => :'Integer'
+        :'user_id' => :'String'
       }
     end
 

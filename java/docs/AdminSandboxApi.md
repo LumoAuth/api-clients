@@ -160,6 +160,8 @@ public class Example {
 
 Spawn a sandbox tenant
 
+Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
+
 ### Example
 ```java
 // Import classes:
@@ -225,6 +227,7 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **201** | Sandbox created |  -  |
+| **201** | Sandbox created. &#x60;data.api_key&#x60; is shown only once. |  -  |
+| **403** | The organization lacks the Developer sandboxes add-on (&#x60;feature_not_in_plan&#x60;), or it is itself a sandbox |  -  |
 | **429** | Per-owner active-sandbox cap reached |  -  |
 

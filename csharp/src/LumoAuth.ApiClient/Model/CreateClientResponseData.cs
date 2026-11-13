@@ -52,9 +52,10 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="redirectUris">Detailed responses only.</param>
         /// <param name="scopes">Detailed responses only.</param>
         /// <param name="grantTypes">Detailed responses only.</param>
-        /// <param name="secret">Plaintext client secret — returned only once, never retrievable again.</param>
+        /// <param name="cibaEnabled">Detailed responses only. Whether the client may use CIBA (backchannel authentication)..</param>
+        /// <param name="secret">Plaintext client secret — returned only once, never retrievable again. Absent for a public client.</param>
         /// <param name="note">note.</param>
-        public CreateClientResponseData(int id = default, string clientId = default, string name = default, bool isConfidential = default, bool isPublic = default, bool isActive = default, bool requiresPkce = default, DateTime createdAt = default, List<string> redirectUris = default, List<string> scopes = default, List<string> grantTypes = default, string secret = default, string note = default)
+        public CreateClientResponseData(int id = default, string clientId = default, string name = default, bool isConfidential = default, bool isPublic = default, bool isActive = default, bool requiresPkce = default, DateTime createdAt = default, List<string> redirectUris = default, List<string> scopes = default, List<string> grantTypes = default, bool cibaEnabled = default, string secret = default, string note = default)
         {
             this.Id = id;
             // to ensure "clientId" is required (not null)
@@ -77,6 +78,7 @@ namespace LumoAuth.ApiClient.Model
             this.RedirectUris = redirectUris;
             this.Scopes = scopes;
             this.GrantTypes = grantTypes;
+            this.CibaEnabled = cibaEnabled;
             this.Secret = secret;
             this.Note = note;
         }
@@ -151,9 +153,16 @@ namespace LumoAuth.ApiClient.Model
         public List<string> GrantTypes { get; set; }
 
         /// <summary>
-        /// Plaintext client secret — returned only once, never retrievable again
+        /// Detailed responses only. Whether the client may use CIBA (backchannel authentication).
         /// </summary>
-        /// <value>Plaintext client secret — returned only once, never retrievable again</value>
+        /// <value>Detailed responses only. Whether the client may use CIBA (backchannel authentication).</value>
+        [DataMember(Name = "cibaEnabled", EmitDefaultValue = true)]
+        public bool CibaEnabled { get; set; }
+
+        /// <summary>
+        /// Plaintext client secret — returned only once, never retrievable again. Absent for a public client
+        /// </summary>
+        /// <value>Plaintext client secret — returned only once, never retrievable again. Absent for a public client</value>
         [DataMember(Name = "secret", EmitDefaultValue = false)]
         public string Secret { get; set; }
 
@@ -185,6 +194,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  RedirectUris: ").Append(RedirectUris).Append("\n");
             sb.Append("  Scopes: ").Append(Scopes).Append("\n");
             sb.Append("  GrantTypes: ").Append(GrantTypes).Append("\n");
+            sb.Append("  CibaEnabled: ").Append(CibaEnabled).Append("\n");
             sb.Append("  Secret: ").Append(Secret).Append("\n");
             sb.Append("  Note: ").Append(Note).Append("\n");
             sb.Append("}\n");

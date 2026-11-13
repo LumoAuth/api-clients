@@ -7,7 +7,7 @@
 > `github.com/lumoauth/lumo-auth-go`), prefer it.
 > Do not edit by hand: changes are overwritten on the next regeneration.
 
-## @lumoauth/api-client@1.4.0
+## @lumoauth/api-client@1.5.0
 
 This generator creates TypeScript/JavaScript client that utilizes [axios](https://github.com/axios/axios). The generated Node module can be used in the following environments:
 
@@ -45,7 +45,7 @@ navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install @lumoauth/api-client@1.4.0 --save
+npm install @lumoauth/api-client@1.5.0 --save
 ```
 
 _unPublished (not recommended):_
@@ -168,7 +168,7 @@ Class | Method | HTTP request | Description
 *AdminOAuthClientsApi* | [**putAdminClientsUpdateBranding**](docs/AdminOAuthClientsApi.md#putadminclientsupdatebranding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client\&#39;s login and/or consent page branding
 *AdminOAuthClientsApi* | [**rotateClientSecret**](docs/AdminOAuthClientsApi.md#rotateclientsecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret
 *AdminOAuthClientsApi* | [**setClientScopes**](docs/AdminOAuthClientsApi.md#setclientscopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
-*AdminOAuthClientsApi* | [**updateClient**](docs/AdminOAuthClientsApi.md#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
+*AdminOAuthClientsApi* | [**updateClient**](docs/AdminOAuthClientsApi.md#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client (same as PATCH: only the fields that are sent change)
 *AdminOrganizationsApi* | [**adminOrgInvitationsCreate**](docs/AdminOrganizationsApi.md#adminorginvitationscreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | Invite a user to an organization
 *AdminOrganizationsApi* | [**adminOrgInvitationsList**](docs/AdminOrganizationsApi.md#adminorginvitationslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | List organization invitations
 *AdminOrganizationsApi* | [**adminOrgInvitationsResend**](docs/AdminOrganizationsApi.md#adminorginvitationsresend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | Resend an invitation
@@ -264,9 +264,9 @@ Class | Method | HTTP request | Description
 *AdminUsersApi* | [**addUserRole**](docs/AdminUsersApi.md#adduserrole) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Assign a role to a user
 *AdminUsersApi* | [**adminIdentitiesLegacySamlRelink**](docs/AdminUsersApi.md#adminidentitieslegacysamlrelink) | **POST** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Relink legacy SAML users to an IdP
 *AdminUsersApi* | [**adminIdentitiesLegacySamlReport**](docs/AdminUsersApi.md#adminidentitieslegacysamlreport) | **GET** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Legacy SAML bindings report
-*AdminUsersApi* | [**adminIdentitiesLink**](docs/AdminUsersApi.md#adminidentitieslink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML or LDAP identity to a user
+*AdminUsersApi* | [**adminIdentitiesLink**](docs/AdminUsersApi.md#adminidentitieslink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user
 *AdminUsersApi* | [**adminIdentitiesList**](docs/AdminUsersApi.md#adminidentitieslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user\&#39;s federated identity links
-*AdminUsersApi* | [**adminIdentitiesUnlink**](docs/AdminUsersApi.md#adminidentitiesunlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user\&#39;s SAML, LDAP or social identity
+*AdminUsersApi* | [**adminIdentitiesUnlink**](docs/AdminUsersApi.md#adminidentitiesunlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user\&#39;s SAML, OpenID Connect, LDAP or social identity
 *AdminUsersApi* | [**blockUser**](docs/AdminUsersApi.md#blockuser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user
 *AdminUsersApi* | [**createUser**](docs/AdminUsersApi.md#createuser) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user
 *AdminUsersApi* | [**deleteUser**](docs/AdminUsersApi.md#deleteuser) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user
@@ -372,6 +372,7 @@ Class | Method | HTTP request | Description
 *OAuthApi* | [**introspect**](docs/OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662)
 *OAuthApi* | [**par**](docs/OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126)
 *OAuthApi* | [**registerClient**](docs/OAuthApi.md#registerclient) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR)
+*OAuthApi* | [**requestMagicLink**](docs/OAuthApi.md#requestmagiclink) | **POST** /orgs/{orgId}/api/v1/oauth/magic-link | Request a sign-in link by email
 *OAuthApi* | [**revoke**](docs/OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009)
 *OAuthApi* | [**socialCallback**](docs/OAuthApi.md#socialcallback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback
 *OAuthApi* | [**socialCallbackPost**](docs/OAuthApi.md#socialcallbackpost) | **POST** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback (form_post)
@@ -416,6 +417,7 @@ Class | Method | HTTP request | Description
  - [AdminAgentsActivateResponse](docs/AdminAgentsActivateResponse.md)
  - [AdminAgentsAgentsDisableResponse](docs/AdminAgentsAgentsDisableResponse.md)
  - [AdminAgentsAgentsEnableResponse](docs/AdminAgentsAgentsEnableResponse.md)
+ - [AdminAgentsAgentsRotateKeyRequest](docs/AdminAgentsAgentsRotateKeyRequest.md)
  - [AdminAgentsAgentsRotateKeyResponse](docs/AdminAgentsAgentsRotateKeyResponse.md)
  - [AdminAgentsCreateRequest](docs/AdminAgentsCreateRequest.md)
  - [AdminAgentsCreateResponse](docs/AdminAgentsCreateResponse.md)
@@ -511,6 +513,8 @@ Class | Method | HTTP request | Description
  - [AdminSandboxListResponse](docs/AdminSandboxListResponse.md)
  - [AdminSandboxSpawnRequest](docs/AdminSandboxSpawnRequest.md)
  - [AdminSandboxSpawnResponse](docs/AdminSandboxSpawnResponse.md)
+ - [AdminSandboxSpawnResponseData](docs/AdminSandboxSpawnResponseData.md)
+ - [AdminSandboxSpawnResponseData1](docs/AdminSandboxSpawnResponseData1.md)
  - [AdminScopesCreateResponse](docs/AdminScopesCreateResponse.md)
  - [AdminScopesListResponse](docs/AdminScopesListResponse.md)
  - [AdminScopesListResponseMeta](docs/AdminScopesListResponseMeta.md)
@@ -552,6 +556,7 @@ Class | Method | HTTP request | Description
  - [AdminWebhooksDeliveriesListResponse](docs/AdminWebhooksDeliveriesListResponse.md)
  - [AdminWebhooksDeliveriesListResponseMeta](docs/AdminWebhooksDeliveriesListResponseMeta.md)
  - [AdminWebhooksDeliveryReplayResponse](docs/AdminWebhooksDeliveryReplayResponse.md)
+ - [AdminWebhooksDeliveryReplayResponseData](docs/AdminWebhooksDeliveryReplayResponseData.md)
  - [AdminWebhooksDeliveryShowResponse](docs/AdminWebhooksDeliveryShowResponse.md)
  - [AdminWebhooksDeliveryShowResponseData](docs/AdminWebhooksDeliveryShowResponseData.md)
  - [AdminWebhooksDeliveryShowResponseData1AttemptsItem](docs/AdminWebhooksDeliveryShowResponseData1AttemptsItem.md)
@@ -750,6 +755,8 @@ Class | Method | HTTP request | Description
  - [RemoveUserPermissionResponse](docs/RemoveUserPermissionResponse.md)
  - [RemoveUserRoleResponse](docs/RemoveUserRoleResponse.md)
  - [ReportAgentUsageResponse](docs/ReportAgentUsageResponse.md)
+ - [RequestMagicLinkRequest](docs/RequestMagicLinkRequest.md)
+ - [RequestMagicLinkResponse](docs/RequestMagicLinkResponse.md)
  - [RequestPermissionRequest](docs/RequestPermissionRequest.md)
  - [RequestPermissionResponse](docs/RequestPermissionResponse.md)
  - [RevokeAgentTokenRequest](docs/RevokeAgentTokenRequest.md)

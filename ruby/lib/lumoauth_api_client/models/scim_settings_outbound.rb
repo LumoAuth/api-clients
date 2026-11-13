@@ -36,9 +36,10 @@ module LumoAuthApiClient
 
     attr_accessor :oauth2_scope
 
-    # Optional PEM CA certificate used for TLS verification.
+    # Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets.
     attr_accessor :tls_certificate
 
+    # Always true. The endpoint certificate is always verified; false is rejected with 400.
     attr_accessor :verify_tls
 
     attr_accessor :push_user_creates
@@ -54,9 +55,6 @@ module LumoAuthApiClient
     attr_accessor :batch_sync_enabled
 
     attr_accessor :batch_sync_interval
-
-    # User field => SCIM attribute.
-    attr_accessor :attribute_mapping
 
     attr_accessor :last_sync_at
 
@@ -117,7 +115,6 @@ module LumoAuthApiClient
         :'sync_on_login' => :'sync_on_login',
         :'batch_sync_enabled' => :'batch_sync_enabled',
         :'batch_sync_interval' => :'batch_sync_interval',
-        :'attribute_mapping' => :'attribute_mapping',
         :'last_sync_at' => :'last_sync_at',
         :'last_sync_status' => :'last_sync_status',
         :'last_sync_error' => :'last_sync_error',
@@ -160,7 +157,6 @@ module LumoAuthApiClient
         :'sync_on_login' => :'Boolean',
         :'batch_sync_enabled' => :'Boolean',
         :'batch_sync_interval' => :'String',
-        :'attribute_mapping' => :'Hash<String, String>',
         :'last_sync_at' => :'String',
         :'last_sync_status' => :'String',
         :'last_sync_error' => :'String',
@@ -285,12 +281,6 @@ module LumoAuthApiClient
         self.batch_sync_interval = attributes[:'batch_sync_interval']
       end
 
-      if attributes.key?(:'attribute_mapping')
-        if (value = attributes[:'attribute_mapping']).is_a?(Hash)
-          self.attribute_mapping = value
-        end
-      end
-
       if attributes.key?(:'last_sync_at')
         self.last_sync_at = attributes[:'last_sync_at']
       end
@@ -385,7 +375,6 @@ module LumoAuthApiClient
           sync_on_login == o.sync_on_login &&
           batch_sync_enabled == o.batch_sync_enabled &&
           batch_sync_interval == o.batch_sync_interval &&
-          attribute_mapping == o.attribute_mapping &&
           last_sync_at == o.last_sync_at &&
           last_sync_status == o.last_sync_status &&
           last_sync_error == o.last_sync_error &&
@@ -404,7 +393,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [enabled, endpoint_url, bearer_token, auth_type, basic_username, basic_password, oauth2_client_id, oauth2_client_secret, oauth2_token_url, oauth2_scope, tls_certificate, verify_tls, push_user_creates, push_user_updates, push_user_deletes, push_group_changes, sync_on_login, batch_sync_enabled, batch_sync_interval, attribute_mapping, last_sync_at, last_sync_status, last_sync_error, last_batch_sync_at, last_batch_sync_status, last_batch_sync_error, last_batch_sync_counts].hash
+      [enabled, endpoint_url, bearer_token, auth_type, basic_username, basic_password, oauth2_client_id, oauth2_client_secret, oauth2_token_url, oauth2_scope, tls_certificate, verify_tls, push_user_creates, push_user_updates, push_user_deletes, push_group_changes, sync_on_login, batch_sync_enabled, batch_sync_interval, last_sync_at, last_sync_status, last_sync_error, last_batch_sync_at, last_batch_sync_status, last_batch_sync_error, last_batch_sync_counts].hash
     end
 
     # Builds the object from hash

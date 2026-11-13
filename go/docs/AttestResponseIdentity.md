@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Provider** | Pointer to **string** |  | [optional] 
 **Subject** | Pointer to **string** |  | [optional] 
 **Issuer** | Pointer to **string** |  | [optional] 
-**AudienceGeneric** | Pointer to **bool** | True when the registered audience is not specific to this deployment (operators should move to the agent-specific audience). | [optional] 
+**AudienceGeneric** | Pointer to **bool** | True when the registered audience is not specific to LumoAuth (move to the agent-specific audience). | [optional] 
 
 ## Methods
 

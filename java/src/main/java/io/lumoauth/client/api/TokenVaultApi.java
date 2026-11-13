@@ -88,10 +88,10 @@ public class TokenVaultApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The provider access token. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_user_id. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> agent_token_required, cross_tenant, delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> agent_token_required, cross_tenant, insufficient_scope (the token was narrowed with a scope), delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> tenant_not_found, connection_not_found or grant_not_found. </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> grant_revoked, grant_expired or refresh_failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> rate_limited. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited, or budget_exceeded when the agent budget is spent. </td><td>  -  </td></tr>
         <tr><td> 503 </td><td> refresh_in_progress (Retry-After: 2) or provider_unavailable. </td><td>  -  </td></tr>
      </table>
      */
@@ -172,10 +172,10 @@ public class TokenVaultApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The provider access token. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_user_id. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> agent_token_required, cross_tenant, delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> agent_token_required, cross_tenant, insufficient_scope (the token was narrowed with a scope), delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> tenant_not_found, connection_not_found or grant_not_found. </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> grant_revoked, grant_expired or refresh_failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> rate_limited. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited, or budget_exceeded when the agent budget is spent. </td><td>  -  </td></tr>
         <tr><td> 503 </td><td> refresh_in_progress (Retry-After: 2) or provider_unavailable. </td><td>  -  </td></tr>
      </table>
      */
@@ -198,10 +198,10 @@ public class TokenVaultApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The provider access token. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_user_id. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> agent_token_required, cross_tenant, delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> agent_token_required, cross_tenant, insufficient_scope (the token was narrowed with a scope), delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> tenant_not_found, connection_not_found or grant_not_found. </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> grant_revoked, grant_expired or refresh_failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> rate_limited. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited, or budget_exceeded when the agent budget is spent. </td><td>  -  </td></tr>
         <tr><td> 503 </td><td> refresh_in_progress (Retry-After: 2) or provider_unavailable. </td><td>  -  </td></tr>
      </table>
      */
@@ -226,10 +226,10 @@ public class TokenVaultApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The provider access token. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_user_id. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> agent_token_required, cross_tenant, delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> agent_token_required, cross_tenant, insufficient_scope (the token was narrowed with a scope), delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> tenant_not_found, connection_not_found or grant_not_found. </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> grant_revoked, grant_expired or refresh_failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> rate_limited. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited, or budget_exceeded when the agent budget is spent. </td><td>  -  </td></tr>
         <tr><td> 503 </td><td> refresh_in_progress (Retry-After: 2) or provider_unavailable. </td><td>  -  </td></tr>
      </table>
      */

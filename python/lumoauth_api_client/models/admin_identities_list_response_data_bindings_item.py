@@ -30,11 +30,12 @@ class AdminIdentitiesListResponseDataBindingsItem(BaseModel):
     type: Optional[StrictStr] = None
     idp_id: Optional[StrictInt] = None
     name_id: Optional[StrictStr] = None
+    subject: Optional[StrictStr] = None
     legacy: Optional[StrictBool] = None
     ldap_config_id: Optional[StrictInt] = None
     dn: Optional[StrictStr] = None
     provider: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["type", "idp_id", "name_id", "legacy", "ldap_config_id", "dn", "provider"]
+    __properties: ClassVar[List[str]] = ["type", "idp_id", "name_id", "subject", "legacy", "ldap_config_id", "dn", "provider"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -42,8 +43,8 @@ class AdminIdentitiesListResponseDataBindingsItem(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['saml', 'ldap', 'social', 'social_account']):
-            raise ValueError("must be one of enum values ('saml', 'ldap', 'social', 'social_account')")
+        if value not in set(['saml', 'oidc', 'ldap', 'social', 'social_account']):
+            raise ValueError("must be one of enum values ('saml', 'oidc', 'ldap', 'social', 'social_account')")
         return value
 
     model_config = ConfigDict(
@@ -95,6 +96,11 @@ class AdminIdentitiesListResponseDataBindingsItem(BaseModel):
         if self.name_id is None and "name_id" in self.model_fields_set:
             _dict['name_id'] = None
 
+        # set to None if subject (nullable) is None
+        # and model_fields_set contains the field
+        if self.subject is None and "subject" in self.model_fields_set:
+            _dict['subject'] = None
+
         # set to None if ldap_config_id (nullable) is None
         # and model_fields_set contains the field
         if self.ldap_config_id is None and "ldap_config_id" in self.model_fields_set:
@@ -125,6 +131,7 @@ class AdminIdentitiesListResponseDataBindingsItem(BaseModel):
             "type": obj.get("type"),
             "idp_id": obj.get("idp_id"),
             "name_id": obj.get("name_id"),
+            "subject": obj.get("subject"),
             "legacy": obj.get("legacy"),
             "ldap_config_id": obj.get("ldap_config_id"),
             "dn": obj.get("dn"),

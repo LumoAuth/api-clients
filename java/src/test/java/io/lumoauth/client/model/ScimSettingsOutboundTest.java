@@ -194,14 +194,6 @@ public class ScimSettingsOutboundTest {
     }
 
     /**
-     * Test the property 'attributeMapping'
-     */
-    @Test
-    public void attributeMappingTest() {
-        // TODO: test attributeMapping
-    }
-
-    /**
      * Test the property 'lastSyncAt'
      */
     @Test

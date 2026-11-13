@@ -10,25 +10,21 @@ import Foundation
 import AnyCodable
 #endif
 
+/** A write is merged with the stored object. */
 public struct AuthenticationSettingsPasswordRotationPolicy: Codable, JSONEncodable, Hashable {
 
+    public static let maxAgeDaysRule = NumericRule<Int>(minimum: 1, exclusiveMinimum: false, maximum: 730, exclusiveMaximum: false, multipleOf: nil)
     public var enabled: Bool?
     public var maxAgeDays: Int?
-    public var notifyBeforeDays: Int?
-    public var historyCount: Int?
 
-    public init(enabled: Bool? = nil, maxAgeDays: Int? = nil, notifyBeforeDays: Int? = nil, historyCount: Int? = nil) {
+    public init(enabled: Bool? = nil, maxAgeDays: Int? = nil) {
         self.enabled = enabled
         self.maxAgeDays = maxAgeDays
-        self.notifyBeforeDays = notifyBeforeDays
-        self.historyCount = historyCount
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case enabled
         case maxAgeDays = "max_age_days"
-        case notifyBeforeDays = "notify_before_days"
-        case historyCount = "history_count"
     }
 
     // Encodable protocol methods
@@ -37,8 +33,6 @@ public struct AuthenticationSettingsPasswordRotationPolicy: Codable, JSONEncodab
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(enabled, forKey: .enabled)
         try container.encodeIfPresent(maxAgeDays, forKey: .maxAgeDays)
-        try container.encodeIfPresent(notifyBeforeDays, forKey: .notifyBeforeDays)
-        try container.encodeIfPresent(historyCount, forKey: .historyCount)
     }
 }
 

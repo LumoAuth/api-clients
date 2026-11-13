@@ -38,10 +38,12 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         /// <param name="message">message.</param>
         /// <param name="apiKey">The new plaintext API key — shown only in this response..</param>
-        public AdminAgentsAgentsRotateKeyResponse(string message = default, string apiKey = default)
+        /// <param name="apiKeyExpiresAt">When the new key expires; null &#x3D; never..</param>
+        public AdminAgentsAgentsRotateKeyResponse(string message = default, string apiKey = default, DateTime? apiKeyExpiresAt = default)
         {
             this.Message = message;
             this.ApiKey = apiKey;
+            this.ApiKeyExpiresAt = apiKeyExpiresAt;
         }
 
         /// <summary>
@@ -61,6 +63,13 @@ namespace LumoAuth.ApiClient.Model
         public string ApiKey { get; set; }
 
         /// <summary>
+        /// When the new key expires; null &#x3D; never.
+        /// </summary>
+        /// <value>When the new key expires; null &#x3D; never.</value>
+        [DataMember(Name = "api_key_expires_at", EmitDefaultValue = true)]
+        public DateTime? ApiKeyExpiresAt { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -70,6 +79,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("class AdminAgentsAgentsRotateKeyResponse {\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("  ApiKey: ").Append(ApiKey).Append("\n");
+            sb.Append("  ApiKeyExpiresAt: ").Append(ApiKeyExpiresAt).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

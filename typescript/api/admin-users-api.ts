@@ -310,8 +310,8 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
-         * @summary Link a SAML or LDAP identity to a user
+         * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`), enterprise OpenID Connect binding (`idp_id` + `subject`: the value of the connection\'s user identifier claim; a person can sign in through such a connection only after this link exists) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+         * @summary Link a SAML, OpenID Connect or LDAP identity to a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {AdminIdentitiesLinkRequest} adminIdentitiesLinkRequest 
@@ -361,7 +361,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+         * SAML (IdP + NameID), enterprise OpenID Connect (connection + subject), LDAP (directory + DN) and social provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP. An OpenID Connect link with `hashed: true` stores a long subject as a hash, so `subject` is null.
          * @summary List a user\'s federated identity links
          * @param {string} orgId 
          * @param {string} userId 
@@ -406,8 +406,8 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
-         * @summary Unlink a user\'s SAML, LDAP or social identity
+         * Removes the binding of the given type (`saml`, `oidc`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+         * @summary Unlink a user\'s SAML, OpenID Connect, LDAP or social identity
          * @param {AdminIdentitiesUnlinkType} type 
          * @param {string} orgId 
          * @param {string} userId 
@@ -1530,8 +1530,8 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
-         * @summary Link a SAML or LDAP identity to a user
+         * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`), enterprise OpenID Connect binding (`idp_id` + `subject`: the value of the connection\'s user identifier claim; a person can sign in through such a connection only after this link exists) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+         * @summary Link a SAML, OpenID Connect or LDAP identity to a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {AdminIdentitiesLinkRequest} adminIdentitiesLinkRequest 
@@ -1545,7 +1545,7 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+         * SAML (IdP + NameID), enterprise OpenID Connect (connection + subject), LDAP (directory + DN) and social provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP. An OpenID Connect link with `hashed: true` stores a long subject as a hash, so `subject` is null.
          * @summary List a user\'s federated identity links
          * @param {string} orgId 
          * @param {string} userId 
@@ -1559,8 +1559,8 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
-         * @summary Unlink a user\'s SAML, LDAP or social identity
+         * Removes the binding of the given type (`saml`, `oidc`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+         * @summary Unlink a user\'s SAML, OpenID Connect, LDAP or social identity
          * @param {AdminIdentitiesUnlinkType} type 
          * @param {string} orgId 
          * @param {string} userId 
@@ -1944,8 +1944,8 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.adminIdentitiesLegacySamlReport(requestParameters.orgId, requestParameters.idpId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
-         * @summary Link a SAML or LDAP identity to a user
+         * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`), enterprise OpenID Connect binding (`idp_id` + `subject`: the value of the connection\'s user identifier claim; a person can sign in through such a connection only after this link exists) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+         * @summary Link a SAML, OpenID Connect or LDAP identity to a user
          * @param {AdminUsersApiAdminIdentitiesLinkRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1954,7 +1954,7 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.adminIdentitiesLink(requestParameters.orgId, requestParameters.userId, requestParameters.adminIdentitiesLinkRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+         * SAML (IdP + NameID), enterprise OpenID Connect (connection + subject), LDAP (directory + DN) and social provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP. An OpenID Connect link with `hashed: true` stores a long subject as a hash, so `subject` is null.
          * @summary List a user\'s federated identity links
          * @param {AdminUsersApiAdminIdentitiesListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1964,8 +1964,8 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.adminIdentitiesList(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
-         * @summary Unlink a user\'s SAML, LDAP or social identity
+         * Removes the binding of the given type (`saml`, `oidc`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+         * @summary Unlink a user\'s SAML, OpenID Connect, LDAP or social identity
          * @param {AdminUsersApiAdminIdentitiesUnlinkRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2254,8 +2254,8 @@ export interface AdminUsersApiInterface {
     adminIdentitiesLegacySamlReport(requestParameters: AdminUsersApiAdminIdentitiesLegacySamlReportRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminIdentitiesLegacySamlReportResponse>;
 
     /**
-     * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
-     * @summary Link a SAML or LDAP identity to a user
+     * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`), enterprise OpenID Connect binding (`idp_id` + `subject`: the value of the connection\'s user identifier claim; a person can sign in through such a connection only after this link exists) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+     * @summary Link a SAML, OpenID Connect or LDAP identity to a user
      * @param {AdminUsersApiAdminIdentitiesLinkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2264,7 +2264,7 @@ export interface AdminUsersApiInterface {
     adminIdentitiesLink(requestParameters: AdminUsersApiAdminIdentitiesLinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsGetResponse>;
 
     /**
-     * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+     * SAML (IdP + NameID), enterprise OpenID Connect (connection + subject), LDAP (directory + DN) and social provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP. An OpenID Connect link with `hashed: true` stores a long subject as a hash, so `subject` is null.
      * @summary List a user\'s federated identity links
      * @param {AdminUsersApiAdminIdentitiesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2274,8 +2274,8 @@ export interface AdminUsersApiInterface {
     adminIdentitiesList(requestParameters: AdminUsersApiAdminIdentitiesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminIdentitiesListResponse>;
 
     /**
-     * Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
-     * @summary Unlink a user\'s SAML, LDAP or social identity
+     * Removes the binding of the given type (`saml`, `oidc`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+     * @summary Unlink a user\'s SAML, OpenID Connect, LDAP or social identity
      * @param {AdminUsersApiAdminIdentitiesUnlinkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2668,7 +2668,7 @@ export interface AdminUsersApiAdminIdentitiesListRequest {
 export interface AdminUsersApiAdminIdentitiesUnlinkRequest {
     /**
      * 
-     * @type {'saml' | 'ldap' | 'social'}
+     * @type {'saml' | 'oidc' | 'ldap' | 'social'}
      * @memberof AdminUsersApiAdminIdentitiesUnlink
      */
     readonly type: AdminIdentitiesUnlinkType
@@ -3225,8 +3225,8 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
     }
 
     /**
-     * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
-     * @summary Link a SAML or LDAP identity to a user
+     * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`), enterprise OpenID Connect binding (`idp_id` + `subject`: the value of the connection\'s user identifier claim; a person can sign in through such a connection only after this link exists) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+     * @summary Link a SAML, OpenID Connect or LDAP identity to a user
      * @param {AdminUsersApiAdminIdentitiesLinkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3237,7 +3237,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
     }
 
     /**
-     * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+     * SAML (IdP + NameID), enterprise OpenID Connect (connection + subject), LDAP (directory + DN) and social provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP. An OpenID Connect link with `hashed: true` stores a long subject as a hash, so `subject` is null.
      * @summary List a user\'s federated identity links
      * @param {AdminUsersApiAdminIdentitiesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3249,8 +3249,8 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
     }
 
     /**
-     * Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
-     * @summary Unlink a user\'s SAML, LDAP or social identity
+     * Removes the binding of the given type (`saml`, `oidc`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+     * @summary Unlink a user\'s SAML, OpenID Connect, LDAP or social identity
      * @param {AdminUsersApiAdminIdentitiesUnlinkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3532,6 +3532,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
   */
 export enum AdminIdentitiesUnlinkType {
     SAML = 'saml',
+    OIDC = 'oidc',
     LDAP = 'ldap',
     SOCIAL = 'social'
 }

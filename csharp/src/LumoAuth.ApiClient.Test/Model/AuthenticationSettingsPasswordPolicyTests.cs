@@ -99,5 +99,41 @@ namespace LumoAuth.ApiClient.Test.Model
         {
             // TODO unit test for the property 'RequireUppercase'
         }
+
+        /// <summary>
+        /// Test the property 'RequireLowercase'
+        /// </summary>
+        [Fact]
+        public void RequireLowercaseTest()
+        {
+            // TODO unit test for the property 'RequireLowercase'
+        }
+
+        /// <summary>
+        /// Test the property 'RejectBreachedPasswords'
+        /// </summary>
+        [Fact]
+        public void RejectBreachedPasswordsTest()
+        {
+            // TODO unit test for the property 'RejectBreachedPasswords'
+        }
+
+        /// <summary>
+        /// Test the property 'BreachedPasswordMinCount'
+        /// </summary>
+        [Fact]
+        public void BreachedPasswordMinCountTest()
+        {
+            // TODO unit test for the property 'BreachedPasswordMinCount'
+        }
+
+        /// <summary>
+        /// Test the property 'CheckBreachedOnLogin'
+        /// </summary>
+        [Fact]
+        public void CheckBreachedOnLoginTest()
+        {
+            // TODO unit test for the property 'CheckBreachedOnLogin'
+        }
     }
 }

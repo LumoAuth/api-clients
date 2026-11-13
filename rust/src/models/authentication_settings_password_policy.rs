@@ -11,6 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
+/// AuthenticationSettingsPasswordPolicy : The password rules that apply. A write is merged with the stored object. A named template sets its own rules; rules sent without a template make the policy custom.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AuthenticationSettingsPasswordPolicy {
     #[serde(rename = "template", skip_serializing_if = "Option::is_none")]
@@ -23,9 +24,18 @@ pub struct AuthenticationSettingsPasswordPolicy {
     pub require_numbers: Option<bool>,
     #[serde(rename = "require_uppercase", skip_serializing_if = "Option::is_none")]
     pub require_uppercase: Option<bool>,
+    #[serde(rename = "require_lowercase", skip_serializing_if = "Option::is_none")]
+    pub require_lowercase: Option<bool>,
+    #[serde(rename = "reject_breached_passwords", skip_serializing_if = "Option::is_none")]
+    pub reject_breached_passwords: Option<bool>,
+    #[serde(rename = "breached_password_min_count", skip_serializing_if = "Option::is_none")]
+    pub breached_password_min_count: Option<i32>,
+    #[serde(rename = "check_breached_on_login", skip_serializing_if = "Option::is_none")]
+    pub check_breached_on_login: Option<bool>,
 }
 
 impl AuthenticationSettingsPasswordPolicy {
+    /// The password rules that apply. A write is merged with the stored object. A named template sets its own rules; rules sent without a template make the policy custom.
     pub fn new() -> AuthenticationSettingsPasswordPolicy {
         AuthenticationSettingsPasswordPolicy {
             template: None,
@@ -33,6 +43,10 @@ impl AuthenticationSettingsPasswordPolicy {
             require_special: None,
             require_numbers: None,
             require_uppercase: None,
+            require_lowercase: None,
+            reject_breached_passwords: None,
+            breached_password_min_count: None,
+            check_breached_on_login: None,
         }
     }
 }

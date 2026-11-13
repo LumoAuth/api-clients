@@ -20,6 +20,7 @@ use super::{Error, configuration, ContentType};
 #[serde(untagged)]
 pub enum AskError {
     Status400(),
+    Status403(),
     Status429(),
     UnknownValue(serde_json::Value),
 }
@@ -43,6 +44,7 @@ pub enum AuthorizeMcpError {
     Status403(),
     Status400(),
     Status404(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -63,6 +65,7 @@ pub enum CreateApprovalError {
 #[serde(untagged)]
 pub enum GetAgentCardError {
     Status404(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 

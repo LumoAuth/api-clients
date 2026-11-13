@@ -54,6 +54,14 @@ public class AdminIdentitiesLinkRequestTest {
     }
 
     /**
+     * Test the property 'subject'
+     */
+    @Test
+    public void subjectTest() {
+        // TODO: test subject
+    }
+
+    /**
      * Test the property 'nameId'
      */
     @Test

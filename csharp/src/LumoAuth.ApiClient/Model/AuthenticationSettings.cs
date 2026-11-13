@@ -34,6 +34,43 @@ namespace LumoAuth.ApiClient.Model
     public partial class AuthenticationSettings : IValidatableObject
     {
         /// <summary>
+        /// Defines NoMfaAction
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum NoMfaActionEnum
+        {
+            /// <summary>
+            /// Enum Allow for value: allow
+            /// </summary>
+            [EnumMember(Value = "allow")]
+            Allow = 1,
+
+            /// <summary>
+            /// Enum Prompt for value: prompt
+            /// </summary>
+            [EnumMember(Value = "prompt")]
+            Prompt = 2,
+
+            /// <summary>
+            /// Enum Email for value: email
+            /// </summary>
+            [EnumMember(Value = "email")]
+            Email = 3,
+
+            /// <summary>
+            /// Enum Block for value: block
+            /// </summary>
+            [EnumMember(Value = "block")]
+            Block = 4
+        }
+
+
+        /// <summary>
+        /// Gets or Sets NoMfaAction
+        /// </summary>
+        [DataMember(Name = "no_mfa_action", EmitDefaultValue = false)]
+        public NoMfaActionEnum? NoMfaAction { get; set; }
+        /// <summary>
         /// Defines CimdLocalhostRedirectPolicy
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
@@ -62,7 +99,6 @@ namespace LumoAuth.ApiClient.Model
         /// Initializes a new instance of the <see cref="AuthenticationSettings" /> class.
         /// </summary>
         /// <param name="passkeyEnabled">passkeyEnabled.</param>
-        /// <param name="biometricEnabled">biometricEnabled.</param>
         /// <param name="passkeys">passkeys.</param>
         /// <param name="mfaRequired">mfaRequired.</param>
         /// <param name="mfaMethods">mfaMethods.</param>
@@ -70,7 +106,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="mfaPolicy">mfaPolicy.</param>
         /// <param name="pushAuthRequired">pushAuthRequired.</param>
         /// <param name="pushAppName">pushAppName.</param>
-        /// <param name="socialLoginEnabled">socialLoginEnabled.</param>
+        /// <param name="socialLoginEnabled">Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag..</param>
         /// <param name="socialProviders">socialProviders.</param>
         /// <param name="socialConfigs">Per-provider OAuth credentials keyed by provider (google, github, microsoft, facebook, apple, linkedin). Each value is a free-form object of provider fields (client_id, hosted_domain, tenant_id, team_id, key_id, ...); the secret fields client_secret and private_key are returned as the redaction marker {\&quot;configured\&quot;: true, \&quot;redacted\&quot;: true} when set, null otherwise..</param>
         /// <param name="passwordMinLength">Legacy; mirrored by password_policy.min_length..</param>
@@ -78,8 +114,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="passwordPolicy">passwordPolicy.</param>
         /// <param name="passwordRotationPolicy">passwordRotationPolicy.</param>
         /// <param name="noMfaAction">noMfaAction.</param>
-        /// <param name="sessionTimeout">Seconds..</param>
-        /// <param name="encryptClientSecrets">encryptClientSecrets.</param>
+        /// <param name="sessionTimeout">Idle timeout in seconds..</param>
         /// <param name="dynamicClientRegistrationEnabled">dynamicClientRegistrationEnabled.</param>
         /// <param name="cimdEnabled">Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out. (default to true).</param>
         /// <param name="cimdAllowedDomains">cimdAllowedDomains.</param>
@@ -87,10 +122,9 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="xaaIdpEnabled">xaaIdpEnabled.</param>
         /// <param name="xaaResourceEnabled">xaaResourceEnabled.</param>
         /// <param name="progressiveProfiling">progressiveProfiling.</param>
-        public AuthenticationSettings(bool passkeyEnabled = default, bool biometricEnabled = default, AuthenticationSettingsPasskeys passkeys = default, bool mfaRequired = default, List<string> mfaMethods = default, bool mfaSmsEnabled = default, AuthenticationSettingsMfaPolicy mfaPolicy = default, bool pushAuthRequired = default, string pushAppName = default, bool socialLoginEnabled = default, List<string> socialProviders = default, Dictionary<string, Dictionary<string, Object>> socialConfigs = default, int passwordMinLength = default, bool passwordRequireSpecial = default, AuthenticationSettingsPasswordPolicy passwordPolicy = default, AuthenticationSettingsPasswordRotationPolicy passwordRotationPolicy = default, string noMfaAction = default, int sessionTimeout = default, bool encryptClientSecrets = default, bool dynamicClientRegistrationEnabled = default, bool cimdEnabled = true, List<string> cimdAllowedDomains = default, CimdLocalhostRedirectPolicyEnum? cimdLocalhostRedirectPolicy = default, bool xaaIdpEnabled = default, bool xaaResourceEnabled = default, AuthenticationSettingsProgressiveProfiling progressiveProfiling = default)
+        public AuthenticationSettings(bool passkeyEnabled = default, AuthenticationSettingsPasskeys passkeys = default, bool mfaRequired = default, List<string> mfaMethods = default, bool mfaSmsEnabled = default, AuthenticationSettingsMfaPolicy mfaPolicy = default, bool pushAuthRequired = default, string pushAppName = default, bool socialLoginEnabled = default, List<string> socialProviders = default, Dictionary<string, Dictionary<string, Object>> socialConfigs = default, int passwordMinLength = default, bool passwordRequireSpecial = default, AuthenticationSettingsPasswordPolicy passwordPolicy = default, AuthenticationSettingsPasswordRotationPolicy passwordRotationPolicy = default, NoMfaActionEnum? noMfaAction = default, int sessionTimeout = default, bool dynamicClientRegistrationEnabled = default, bool cimdEnabled = true, List<string> cimdAllowedDomains = default, CimdLocalhostRedirectPolicyEnum? cimdLocalhostRedirectPolicy = default, bool xaaIdpEnabled = default, bool xaaResourceEnabled = default, AuthenticationSettingsProgressiveProfiling progressiveProfiling = default)
         {
             this.PasskeyEnabled = passkeyEnabled;
-            this.BiometricEnabled = biometricEnabled;
             this.Passkeys = passkeys;
             this.MfaRequired = mfaRequired;
             this.MfaMethods = mfaMethods;
@@ -107,7 +141,6 @@ namespace LumoAuth.ApiClient.Model
             this.PasswordRotationPolicy = passwordRotationPolicy;
             this.NoMfaAction = noMfaAction;
             this.SessionTimeout = sessionTimeout;
-            this.EncryptClientSecrets = encryptClientSecrets;
             this.DynamicClientRegistrationEnabled = dynamicClientRegistrationEnabled;
             this.CimdEnabled = cimdEnabled;
             this.CimdAllowedDomains = cimdAllowedDomains;
@@ -123,12 +156,6 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         [DataMember(Name = "passkey_enabled", EmitDefaultValue = true)]
         public bool PasskeyEnabled { get; set; }
-
-        /// <summary>
-        /// Gets or Sets BiometricEnabled
-        /// </summary>
-        [DataMember(Name = "biometric_enabled", EmitDefaultValue = true)]
-        public bool BiometricEnabled { get; set; }
 
         /// <summary>
         /// Gets or Sets Passkeys
@@ -173,8 +200,9 @@ namespace LumoAuth.ApiClient.Model
         public string PushAppName { get; set; }
 
         /// <summary>
-        /// Gets or Sets SocialLoginEnabled
+        /// Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag.
         /// </summary>
+        /// <value>Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag.</value>
         [DataMember(Name = "social_login_enabled", EmitDefaultValue = true)]
         public bool SocialLoginEnabled { get; set; }
 
@@ -218,23 +246,11 @@ namespace LumoAuth.ApiClient.Model
         public AuthenticationSettingsPasswordRotationPolicy PasswordRotationPolicy { get; set; }
 
         /// <summary>
-        /// Gets or Sets NoMfaAction
+        /// Idle timeout in seconds.
         /// </summary>
-        [DataMember(Name = "no_mfa_action", EmitDefaultValue = false)]
-        public string NoMfaAction { get; set; }
-
-        /// <summary>
-        /// Seconds.
-        /// </summary>
-        /// <value>Seconds.</value>
+        /// <value>Idle timeout in seconds.</value>
         [DataMember(Name = "session_timeout", EmitDefaultValue = false)]
         public int SessionTimeout { get; set; }
-
-        /// <summary>
-        /// Gets or Sets EncryptClientSecrets
-        /// </summary>
-        [DataMember(Name = "encrypt_client_secrets", EmitDefaultValue = true)]
-        public bool EncryptClientSecrets { get; set; }
 
         /// <summary>
         /// Gets or Sets DynamicClientRegistrationEnabled
@@ -288,7 +304,6 @@ namespace LumoAuth.ApiClient.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class AuthenticationSettings {\n");
             sb.Append("  PasskeyEnabled: ").Append(PasskeyEnabled).Append("\n");
-            sb.Append("  BiometricEnabled: ").Append(BiometricEnabled).Append("\n");
             sb.Append("  Passkeys: ").Append(Passkeys).Append("\n");
             sb.Append("  MfaRequired: ").Append(MfaRequired).Append("\n");
             sb.Append("  MfaMethods: ").Append(MfaMethods).Append("\n");
@@ -305,7 +320,6 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  PasswordRotationPolicy: ").Append(PasswordRotationPolicy).Append("\n");
             sb.Append("  NoMfaAction: ").Append(NoMfaAction).Append("\n");
             sb.Append("  SessionTimeout: ").Append(SessionTimeout).Append("\n");
-            sb.Append("  EncryptClientSecrets: ").Append(EncryptClientSecrets).Append("\n");
             sb.Append("  DynamicClientRegistrationEnabled: ").Append(DynamicClientRegistrationEnabled).Append("\n");
             sb.Append("  CimdEnabled: ").Append(CimdEnabled).Append("\n");
             sb.Append("  CimdAllowedDomains: ").Append(CimdAllowedDomains).Append("\n");
@@ -334,6 +348,18 @@ namespace LumoAuth.ApiClient.Model
         /// <returns>Validation Result</returns>
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // SessionTimeout (int) maximum
+            if (this.SessionTimeout > (int)1209600)
+            {
+                yield return new ValidationResult("Invalid value for SessionTimeout, must be a value less than or equal to 1209600.", new [] { "SessionTimeout" });
+            }
+
+            // SessionTimeout (int) minimum
+            if (this.SessionTimeout < (int)300)
+            {
+                yield return new ValidationResult("Invalid value for SessionTimeout, must be a value greater than or equal to 300.", new [] { "SessionTimeout" });
+            }
+
             yield break;
         }
     }

@@ -7,8 +7,7 @@
 | **email** | **Boolean** |  | [optional] |
 | **name** | **Boolean** |  | [optional] |
 | **active** | **Boolean** |  | [optional] |
-| **roles** | **Boolean** |  | [optional] |
-| **permissions** | **Boolean** |  | [optional] |
+| **role_membership** | **Boolean** |  | [optional] |
 
 ## Example
 
@@ -19,8 +18,7 @@ instance = LumoAuthApiClient::ScimSettingsInboundProtectedAttributes.new(
   email: null,
   name: null,
   active: null,
-  roles: null,
-  permissions: null
+  role_membership: null
 )
 ```
 

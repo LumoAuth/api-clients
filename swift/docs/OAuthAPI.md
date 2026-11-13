@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**introspect**](OAuthAPI.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662)
 [**par**](OAuthAPI.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126)
 [**registerClient**](OAuthAPI.md#registerclient) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR)
+[**requestMagicLink**](OAuthAPI.md#requestmagiclink) | **POST** /orgs/{orgId}/api/v1/oauth/magic-link | Request a sign-in link by email
 [**revoke**](OAuthAPI.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009)
 [**socialCallback**](OAuthAPI.md#socialcallback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback
 [**socialCallbackPost**](OAuthAPI.md#socialcallbackpost) | **POST** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback (form_post)
@@ -472,6 +473,58 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **requestMagicLink**
+```swift
+    open class func requestMagicLink(orgId: String, requestMagicLinkRequest: RequestMagicLinkRequest, completion: @escaping (_ data: RequestMagicLinkResponse?, _ error: Error?) -> Void)
+```
+
+Request a sign-in link by email
+
+For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to `return_to`, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by `client_id`.
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import LumoAuthAPIClient
+
+let orgId = "orgId_example" // String | 
+let requestMagicLinkRequest = RequestMagicLinkRequest(email: "email_example", clientId: "clientId_example", returnTo: "returnTo_example", captchaToken: "captchaToken_example") // RequestMagicLinkRequest | 
+
+// Request a sign-in link by email
+OAuthAPI.requestMagicLink(orgId: orgId, requestMagicLinkRequest: requestMagicLinkRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **String** |  | 
+ **requestMagicLinkRequest** | [**RequestMagicLinkRequest**](RequestMagicLinkRequest.md) |  | 
+
+### Return type
+
+[**RequestMagicLinkResponse**](RequestMagicLinkResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **message** | **str** |  | [optional] 
 **api_key** | **str** | The new plaintext API key — shown only in this response. | [optional] 
+**api_key_expires_at** | **datetime** | When the new key expires; null &#x3D; never. | [optional] 
 
 ## Example
 

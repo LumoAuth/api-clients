@@ -239,7 +239,7 @@ Name | Type | Description  | Notes
 
 ## AdminAgentsAgentsRotateKey
 
-> AdminAgentsAgentsRotateKeyResponse AdminAgentsAgentsRotateKey(ctx, orgId, agentId).Execute()
+> AdminAgentsAgentsRotateKeyResponse AdminAgentsAgentsRotateKey(ctx, orgId, agentId).AdminAgentsAgentsRotateKeyRequest(adminAgentsAgentsRotateKeyRequest).Execute()
 
 Rotate agent API key
 
@@ -258,10 +258,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	agentId := "agentId_example" // string | 
+	adminAgentsAgentsRotateKeyRequest := *openapiclient.NewAdminAgentsAgentsRotateKeyRequest() // AdminAgentsAgentsRotateKeyRequest | Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminAgentsAPI.AdminAgentsAgentsRotateKey(context.Background(), orgId, agentId).Execute()
+	resp, r, err := apiClient.AdminAgentsAPI.AdminAgentsAgentsRotateKey(context.Background(), orgId, agentId).AdminAgentsAgentsRotateKeyRequest(adminAgentsAgentsRotateKeyRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAgentsAPI.AdminAgentsAgentsRotateKey``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -289,6 +290,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **adminAgentsAgentsRotateKeyRequest** | [**AdminAgentsAgentsRotateKeyRequest**](AdminAgentsAgentsRotateKeyRequest.md) | Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | 
 
 ### Return type
 
@@ -300,7 +302,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -951,7 +953,7 @@ Name | Type | Description  | Notes
 
 ## AdminAgentsRotateCredentials
 
-> AdminAgentsRotateCredentialsResponse AdminAgentsRotateCredentials(ctx, orgId, agentId).Execute()
+> AdminAgentsRotateCredentialsResponse AdminAgentsRotateCredentials(ctx, orgId, agentId).AdminAgentsAgentsRotateKeyRequest(adminAgentsAgentsRotateKeyRequest).Execute()
 
 Rotate agent credentials
 
@@ -970,10 +972,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	agentId := "agentId_example" // string | 
+	adminAgentsAgentsRotateKeyRequest := *openapiclient.NewAdminAgentsAgentsRotateKeyRequest() // AdminAgentsAgentsRotateKeyRequest | For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminAgentsAPI.AdminAgentsRotateCredentials(context.Background(), orgId, agentId).Execute()
+	resp, r, err := apiClient.AdminAgentsAPI.AdminAgentsRotateCredentials(context.Background(), orgId, agentId).AdminAgentsAgentsRotateKeyRequest(adminAgentsAgentsRotateKeyRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAgentsAPI.AdminAgentsRotateCredentials``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1001,6 +1004,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **adminAgentsAgentsRotateKeyRequest** | [**AdminAgentsAgentsRotateKeyRequest**](AdminAgentsAgentsRotateKeyRequest.md) | For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | 
 
 ### Return type
 
@@ -1012,7 +1016,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

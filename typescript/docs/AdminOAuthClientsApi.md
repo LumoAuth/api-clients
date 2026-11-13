@@ -18,7 +18,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**putAdminClientsUpdateBranding**](#putadminclientsupdatebranding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client\&#39;s login and/or consent page branding|
 |[**rotateClientSecret**](#rotateclientsecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret|
 |[**setClientScopes**](#setclientscopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client|
-|[**updateClient**](#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client|
+|[**updateClient**](#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client (same as PATCH: only the fields that are sent change)|
 
 # **adminClientsCimdCheck**
 > AdminClientsCimdCheckResponse adminClientsCimdCheck(adminClientsCimdCheckRequest)
@@ -177,7 +177,7 @@ const { status, data } = await apiInstance.createClient(
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**201** | Created — the plaintext secret is included once and never shown again |  -  |
+|**201** | Created. For a confidential client the plaintext secret is included once and never shown again; a public client (isConfidential false) has no secret and the field is absent |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

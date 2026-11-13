@@ -46,9 +46,9 @@ import java.util.Set;
 import io.lumoauth.client.JSON;
 
 /**
- * AuthenticationSettingsPasswordPolicy
+ * The password rules that apply. A write is merged with the stored object. A named template sets its own rules; rules sent without a template make the policy custom.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T09:01:05.226277396-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class AuthenticationSettingsPasswordPolicy {
   /**
    * Gets or Sets template
@@ -131,6 +131,26 @@ public class AuthenticationSettingsPasswordPolicy {
   @javax.annotation.Nullable
   private Boolean requireUppercase;
 
+  public static final String SERIALIZED_NAME_REQUIRE_LOWERCASE = "require_lowercase";
+  @SerializedName(SERIALIZED_NAME_REQUIRE_LOWERCASE)
+  @javax.annotation.Nullable
+  private Boolean requireLowercase;
+
+  public static final String SERIALIZED_NAME_REJECT_BREACHED_PASSWORDS = "reject_breached_passwords";
+  @SerializedName(SERIALIZED_NAME_REJECT_BREACHED_PASSWORDS)
+  @javax.annotation.Nullable
+  private Boolean rejectBreachedPasswords;
+
+  public static final String SERIALIZED_NAME_BREACHED_PASSWORD_MIN_COUNT = "breached_password_min_count";
+  @SerializedName(SERIALIZED_NAME_BREACHED_PASSWORD_MIN_COUNT)
+  @javax.annotation.Nullable
+  private Integer breachedPasswordMinCount;
+
+  public static final String SERIALIZED_NAME_CHECK_BREACHED_ON_LOGIN = "check_breached_on_login";
+  @SerializedName(SERIALIZED_NAME_CHECK_BREACHED_ON_LOGIN)
+  @javax.annotation.Nullable
+  private Boolean checkBreachedOnLogin;
+
   public AuthenticationSettingsPasswordPolicy() {
   }
 
@@ -160,6 +180,8 @@ public class AuthenticationSettingsPasswordPolicy {
 
   /**
    * Get minLength
+   * minimum: 8
+   * maximum: 128
    * @return minLength
    */
   @javax.annotation.Nullable
@@ -229,6 +251,83 @@ public class AuthenticationSettingsPasswordPolicy {
   }
 
 
+  public AuthenticationSettingsPasswordPolicy requireLowercase(@javax.annotation.Nullable Boolean requireLowercase) {
+    this.requireLowercase = requireLowercase;
+    return this;
+  }
+
+  /**
+   * Get requireLowercase
+   * @return requireLowercase
+   */
+  @javax.annotation.Nullable
+  public Boolean getRequireLowercase() {
+    return requireLowercase;
+  }
+
+  public void setRequireLowercase(@javax.annotation.Nullable Boolean requireLowercase) {
+    this.requireLowercase = requireLowercase;
+  }
+
+
+  public AuthenticationSettingsPasswordPolicy rejectBreachedPasswords(@javax.annotation.Nullable Boolean rejectBreachedPasswords) {
+    this.rejectBreachedPasswords = rejectBreachedPasswords;
+    return this;
+  }
+
+  /**
+   * Get rejectBreachedPasswords
+   * @return rejectBreachedPasswords
+   */
+  @javax.annotation.Nullable
+  public Boolean getRejectBreachedPasswords() {
+    return rejectBreachedPasswords;
+  }
+
+  public void setRejectBreachedPasswords(@javax.annotation.Nullable Boolean rejectBreachedPasswords) {
+    this.rejectBreachedPasswords = rejectBreachedPasswords;
+  }
+
+
+  public AuthenticationSettingsPasswordPolicy breachedPasswordMinCount(@javax.annotation.Nullable Integer breachedPasswordMinCount) {
+    this.breachedPasswordMinCount = breachedPasswordMinCount;
+    return this;
+  }
+
+  /**
+   * Get breachedPasswordMinCount
+   * minimum: 1
+   * @return breachedPasswordMinCount
+   */
+  @javax.annotation.Nullable
+  public Integer getBreachedPasswordMinCount() {
+    return breachedPasswordMinCount;
+  }
+
+  public void setBreachedPasswordMinCount(@javax.annotation.Nullable Integer breachedPasswordMinCount) {
+    this.breachedPasswordMinCount = breachedPasswordMinCount;
+  }
+
+
+  public AuthenticationSettingsPasswordPolicy checkBreachedOnLogin(@javax.annotation.Nullable Boolean checkBreachedOnLogin) {
+    this.checkBreachedOnLogin = checkBreachedOnLogin;
+    return this;
+  }
+
+  /**
+   * Get checkBreachedOnLogin
+   * @return checkBreachedOnLogin
+   */
+  @javax.annotation.Nullable
+  public Boolean getCheckBreachedOnLogin() {
+    return checkBreachedOnLogin;
+  }
+
+  public void setCheckBreachedOnLogin(@javax.annotation.Nullable Boolean checkBreachedOnLogin) {
+    this.checkBreachedOnLogin = checkBreachedOnLogin;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -243,12 +342,16 @@ public class AuthenticationSettingsPasswordPolicy {
         Objects.equals(this.minLength, authenticationSettingsPasswordPolicy.minLength) &&
         Objects.equals(this.requireSpecial, authenticationSettingsPasswordPolicy.requireSpecial) &&
         Objects.equals(this.requireNumbers, authenticationSettingsPasswordPolicy.requireNumbers) &&
-        Objects.equals(this.requireUppercase, authenticationSettingsPasswordPolicy.requireUppercase);
+        Objects.equals(this.requireUppercase, authenticationSettingsPasswordPolicy.requireUppercase) &&
+        Objects.equals(this.requireLowercase, authenticationSettingsPasswordPolicy.requireLowercase) &&
+        Objects.equals(this.rejectBreachedPasswords, authenticationSettingsPasswordPolicy.rejectBreachedPasswords) &&
+        Objects.equals(this.breachedPasswordMinCount, authenticationSettingsPasswordPolicy.breachedPasswordMinCount) &&
+        Objects.equals(this.checkBreachedOnLogin, authenticationSettingsPasswordPolicy.checkBreachedOnLogin);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(template, minLength, requireSpecial, requireNumbers, requireUppercase);
+    return Objects.hash(template, minLength, requireSpecial, requireNumbers, requireUppercase, requireLowercase, rejectBreachedPasswords, breachedPasswordMinCount, checkBreachedOnLogin);
   }
 
   @Override
@@ -260,6 +363,10 @@ public class AuthenticationSettingsPasswordPolicy {
     sb.append("    requireSpecial: ").append(toIndentedString(requireSpecial)).append("\n");
     sb.append("    requireNumbers: ").append(toIndentedString(requireNumbers)).append("\n");
     sb.append("    requireUppercase: ").append(toIndentedString(requireUppercase)).append("\n");
+    sb.append("    requireLowercase: ").append(toIndentedString(requireLowercase)).append("\n");
+    sb.append("    rejectBreachedPasswords: ").append(toIndentedString(rejectBreachedPasswords)).append("\n");
+    sb.append("    breachedPasswordMinCount: ").append(toIndentedString(breachedPasswordMinCount)).append("\n");
+    sb.append("    checkBreachedOnLogin: ").append(toIndentedString(checkBreachedOnLogin)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -281,7 +388,7 @@ public class AuthenticationSettingsPasswordPolicy {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("template", "min_length", "require_special", "require_numbers", "require_uppercase"));
+    openapiFields = new HashSet<String>(Arrays.asList("template", "min_length", "require_special", "require_numbers", "require_uppercase", "require_lowercase", "reject_breached_passwords", "breached_password_min_count", "check_breached_on_login"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);

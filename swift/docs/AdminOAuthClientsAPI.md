@@ -18,7 +18,7 @@ Method | HTTP request | Description
 [**putAdminClientsUpdateBranding**](AdminOAuthClientsAPI.md#putadminclientsupdatebranding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client&#39;s login and/or consent page branding
 [**rotateClientSecret**](AdminOAuthClientsAPI.md#rotateclientsecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret
 [**setClientScopes**](AdminOAuthClientsAPI.md#setclientscopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
-[**updateClient**](AdminOAuthClientsAPI.md#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
+[**updateClient**](AdminOAuthClientsAPI.md#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client (same as PATCH: only the fields that are sent change)
 
 
 # **adminClientsCimdCheck**
@@ -730,7 +730,7 @@ Name | Type | Description  | Notes
     open class func updateClient(orgId: String, clientId: String, completion: @escaping (_ data: UpdateClientResponse?, _ error: Error?) -> Void)
 ```
 
-Replace an OAuth client
+Update an OAuth client (same as PATCH: only the fields that are sent change)
 
 ### Example
 ```swift
@@ -740,7 +740,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let clientId = "clientId_example" // String | 
 
-// Replace an OAuth client
+// Update an OAuth client (same as PATCH: only the fields that are sent change)
 AdminOAuthClientsAPI.updateClient(orgId: orgId, clientId: clientId) { (response, error) in
     guard error == nil else {
         print(error)

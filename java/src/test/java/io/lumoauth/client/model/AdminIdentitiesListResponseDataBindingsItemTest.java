@@ -63,6 +63,14 @@ public class AdminIdentitiesListResponseDataBindingsItemTest {
     }
 
     /**
+     * Test the property 'subject'
+     */
+    @Test
+    public void subjectTest() {
+        // TODO: test subject
+    }
+
+    /**
      * Test the property 'legacy'
      */
     @Test

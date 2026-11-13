@@ -14,6 +14,7 @@ require 'date'
 require 'time'
 
 module LumoAuthApiClient
+  # The password rules that apply. A write is merged with the stored object. A named template sets its own rules; rules sent without a template make the policy custom.
   class AuthenticationSettingsPasswordPolicy
     attr_accessor :template
 
@@ -24,6 +25,14 @@ module LumoAuthApiClient
     attr_accessor :require_numbers
 
     attr_accessor :require_uppercase
+
+    attr_accessor :require_lowercase
+
+    attr_accessor :reject_breached_passwords
+
+    attr_accessor :breached_password_min_count
+
+    attr_accessor :check_breached_on_login
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -54,7 +63,11 @@ module LumoAuthApiClient
         :'min_length' => :'min_length',
         :'require_special' => :'require_special',
         :'require_numbers' => :'require_numbers',
-        :'require_uppercase' => :'require_uppercase'
+        :'require_uppercase' => :'require_uppercase',
+        :'require_lowercase' => :'require_lowercase',
+        :'reject_breached_passwords' => :'reject_breached_passwords',
+        :'breached_password_min_count' => :'breached_password_min_count',
+        :'check_breached_on_login' => :'check_breached_on_login'
       }
     end
 
@@ -75,7 +88,11 @@ module LumoAuthApiClient
         :'min_length' => :'Integer',
         :'require_special' => :'Boolean',
         :'require_numbers' => :'Boolean',
-        :'require_uppercase' => :'Boolean'
+        :'require_uppercase' => :'Boolean',
+        :'require_lowercase' => :'Boolean',
+        :'reject_breached_passwords' => :'Boolean',
+        :'breached_password_min_count' => :'Integer',
+        :'check_breached_on_login' => :'Boolean'
       }
     end
 
@@ -120,6 +137,22 @@ module LumoAuthApiClient
       if attributes.key?(:'require_uppercase')
         self.require_uppercase = attributes[:'require_uppercase']
       end
+
+      if attributes.key?(:'require_lowercase')
+        self.require_lowercase = attributes[:'require_lowercase']
+      end
+
+      if attributes.key?(:'reject_breached_passwords')
+        self.reject_breached_passwords = attributes[:'reject_breached_passwords']
+      end
+
+      if attributes.key?(:'breached_password_min_count')
+        self.breached_password_min_count = attributes[:'breached_password_min_count']
+      end
+
+      if attributes.key?(:'check_breached_on_login')
+        self.check_breached_on_login = attributes[:'check_breached_on_login']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -127,6 +160,18 @@ module LumoAuthApiClient
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if !@min_length.nil? && @min_length > 128
+        invalid_properties.push('invalid value for "min_length", must be smaller than or equal to 128.')
+      end
+
+      if !@min_length.nil? && @min_length < 8
+        invalid_properties.push('invalid value for "min_length", must be greater than or equal to 8.')
+      end
+
+      if !@breached_password_min_count.nil? && @breached_password_min_count < 1
+        invalid_properties.push('invalid value for "breached_password_min_count", must be greater than or equal to 1.')
+      end
+
       invalid_properties
     end
 
@@ -136,6 +181,9 @@ module LumoAuthApiClient
       warn '[DEPRECATED] the `valid?` method is obsolete'
       template_validator = EnumAttributeValidator.new('String', ["fair", "moderate", "strict", "custom"])
       return false unless template_validator.valid?(@template)
+      return false if !@min_length.nil? && @min_length > 128
+      return false if !@min_length.nil? && @min_length < 8
+      return false if !@breached_password_min_count.nil? && @breached_password_min_count < 1
       true
     end
 
@@ -149,6 +197,38 @@ module LumoAuthApiClient
       @template = template
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] min_length Value to be assigned
+    def min_length=(min_length)
+      if min_length.nil?
+        fail ArgumentError, 'min_length cannot be nil'
+      end
+
+      if min_length > 128
+        fail ArgumentError, 'invalid value for "min_length", must be smaller than or equal to 128.'
+      end
+
+      if min_length < 8
+        fail ArgumentError, 'invalid value for "min_length", must be greater than or equal to 8.'
+      end
+
+      @min_length = min_length
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] breached_password_min_count Value to be assigned
+    def breached_password_min_count=(breached_password_min_count)
+      if breached_password_min_count.nil?
+        fail ArgumentError, 'breached_password_min_count cannot be nil'
+      end
+
+      if breached_password_min_count < 1
+        fail ArgumentError, 'invalid value for "breached_password_min_count", must be greater than or equal to 1.'
+      end
+
+      @breached_password_min_count = breached_password_min_count
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -158,7 +238,11 @@ module LumoAuthApiClient
           min_length == o.min_length &&
           require_special == o.require_special &&
           require_numbers == o.require_numbers &&
-          require_uppercase == o.require_uppercase
+          require_uppercase == o.require_uppercase &&
+          require_lowercase == o.require_lowercase &&
+          reject_breached_passwords == o.reject_breached_passwords &&
+          breached_password_min_count == o.breached_password_min_count &&
+          check_breached_on_login == o.check_breached_on_login
     end
 
     # @see the `==` method
@@ -170,7 +254,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [template, min_length, require_special, require_numbers, require_uppercase].hash
+      [template, min_length, require_special, require_numbers, require_uppercase, require_lowercase, reject_breached_passwords, breached_password_min_count, check_breached_on_login].hash
     end
 
     # Builds the object from hash

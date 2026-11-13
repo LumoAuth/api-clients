@@ -53,20 +53,4 @@ public class AuthenticationSettingsPasswordRotationPolicyTest {
         // TODO: test maxAgeDays
     }
 
-    /**
-     * Test the property 'notifyBeforeDays'
-     */
-    @Test
-    public void notifyBeforeDaysTest() {
-        // TODO: test notifyBeforeDays
-    }
-
-    /**
-     * Test the property 'historyCount'
-     */
-    @Test
-    public void historyCountTest() {
-        // TODO: test historyCount
-    }
-
 }

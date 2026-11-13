@@ -18,7 +18,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**put_admin_clients_update_branding**](AdminOAuthClientsApi.md#put_admin_clients_update_branding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client&#39;s login and/or consent page branding |
 | [**rotate_client_secret**](AdminOAuthClientsApi.md#rotate_client_secret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret |
 | [**set_client_scopes**](AdminOAuthClientsApi.md#set_client_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client |
-| [**update_client**](AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client |
+| [**update_client**](AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client (same as PATCH: only the fields that are sent change) |
 
 
 ## admin_clients_cimd_check
@@ -1069,7 +1069,7 @@ end
 
 > <UpdateClientResponse> update_client(org_id, client_id)
 
-Replace an OAuth client
+Update an OAuth client (same as PATCH: only the fields that are sent change)
 
 ### Examples
 
@@ -1092,7 +1092,7 @@ org_id = 'org_id_example' # String |
 client_id = 'client_id_example' # String | 
 
 begin
-  # Replace an OAuth client
+  # Update an OAuth client (same as PATCH: only the fields that are sent change)
   result = api_instance.update_client(org_id, client_id)
   p result
 rescue LumoAuthApiClient::ApiError => e
@@ -1108,7 +1108,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # Replace an OAuth client
+  # Update an OAuth client (same as PATCH: only the fields that are sent change)
   data, status_code, headers = api_instance.update_client_with_http_info(org_id, client_id)
   p status_code # => 2xx
   p headers # => { ... }

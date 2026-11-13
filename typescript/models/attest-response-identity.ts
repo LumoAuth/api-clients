@@ -39,7 +39,7 @@ export interface AttestResponseIdentity {
      */
     'issuer'?: string;
     /**
-     * True when the registered audience is not specific to this deployment (operators should move to the agent-specific audience).
+     * True when the registered audience is not specific to LumoAuth (move to the agent-specific audience).
      * @type {boolean}
      * @memberof AttestResponseIdentity
      */

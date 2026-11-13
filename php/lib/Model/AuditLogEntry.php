@@ -1232,7 +1232,7 @@ class AuditLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets status
      *
-     * @param string|null $status Detailed responses only
+     * @param string|null $status Result of the event: success, failure, pending or partial
      *
      * @return self
      */

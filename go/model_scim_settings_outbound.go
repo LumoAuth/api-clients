@@ -30,8 +30,9 @@ type ScimSettingsOutbound struct {
 	Oauth2ClientSecret NullableRedactedSecret `json:"oauth2_client_secret,omitempty"`
 	Oauth2TokenUrl NullableString `json:"oauth2_token_url,omitempty"`
 	Oauth2Scope NullableString `json:"oauth2_scope,omitempty"`
-	// Optional PEM CA certificate used for TLS verification.
+	// Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets.
 	TlsCertificate NullableString `json:"tls_certificate,omitempty"`
+	// Always true. The endpoint certificate is always verified; false is rejected with 400.
 	VerifyTls *bool `json:"verify_tls,omitempty"`
 	PushUserCreates *bool `json:"push_user_creates,omitempty"`
 	PushUserUpdates *bool `json:"push_user_updates,omitempty"`
@@ -40,8 +41,6 @@ type ScimSettingsOutbound struct {
 	SyncOnLogin *bool `json:"sync_on_login,omitempty"`
 	BatchSyncEnabled *bool `json:"batch_sync_enabled,omitempty"`
 	BatchSyncInterval *string `json:"batch_sync_interval,omitempty"`
-	// User field => SCIM attribute.
-	AttributeMapping *map[string]string `json:"attribute_mapping,omitempty"`
 	LastSyncAt NullableString `json:"last_sync_at,omitempty"`
 	LastSyncStatus NullableString `json:"last_sync_status,omitempty"`
 	LastSyncError NullableString `json:"last_sync_error,omitempty"`
@@ -767,38 +766,6 @@ func (o *ScimSettingsOutbound) SetBatchSyncInterval(v string) {
 	o.BatchSyncInterval = &v
 }
 
-// GetAttributeMapping returns the AttributeMapping field value if set, zero value otherwise.
-func (o *ScimSettingsOutbound) GetAttributeMapping() map[string]string {
-	if o == nil || IsNil(o.AttributeMapping) {
-		var ret map[string]string
-		return ret
-	}
-	return *o.AttributeMapping
-}
-
-// GetAttributeMappingOk returns a tuple with the AttributeMapping field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ScimSettingsOutbound) GetAttributeMappingOk() (*map[string]string, bool) {
-	if o == nil || IsNil(o.AttributeMapping) {
-		return nil, false
-	}
-	return o.AttributeMapping, true
-}
-
-// HasAttributeMapping returns a boolean if a field has been set.
-func (o *ScimSettingsOutbound) HasAttributeMapping() bool {
-	if o != nil && !IsNil(o.AttributeMapping) {
-		return true
-	}
-
-	return false
-}
-
-// SetAttributeMapping gets a reference to the given map[string]string and assigns it to the AttributeMapping field.
-func (o *ScimSettingsOutbound) SetAttributeMapping(v map[string]string) {
-	o.AttributeMapping = &v
-}
-
 // GetLastSyncAt returns the LastSyncAt field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ScimSettingsOutbound) GetLastSyncAt() string {
 	if o == nil || IsNil(o.LastSyncAt.Get()) {
@@ -1150,9 +1117,6 @@ func (o ScimSettingsOutbound) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.BatchSyncInterval) {
 		toSerialize["batch_sync_interval"] = o.BatchSyncInterval
-	}
-	if !IsNil(o.AttributeMapping) {
-		toSerialize["attribute_mapping"] = o.AttributeMapping
 	}
 	if o.LastSyncAt.IsSet() {
 		toSerialize["last_sync_at"] = o.LastSyncAt.Get()

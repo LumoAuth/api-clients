@@ -14,8 +14,8 @@ Name | Type | Description | Notes
 **Oauth2ClientSecret** | Pointer to [**NullableRedactedSecret**](RedactedSecret.md) |  | [optional] 
 **Oauth2TokenUrl** | Pointer to **NullableString** |  | [optional] 
 **Oauth2Scope** | Pointer to **NullableString** |  | [optional] 
-**TlsCertificate** | Pointer to **NullableString** | Optional PEM CA certificate used for TLS verification. | [optional] 
-**VerifyTls** | Pointer to **bool** |  | [optional] 
+**TlsCertificate** | Pointer to **NullableString** | Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets. | [optional] 
+**VerifyTls** | Pointer to **bool** | Always true. The endpoint certificate is always verified; false is rejected with 400. | [optional] 
 **PushUserCreates** | Pointer to **bool** |  | [optional] 
 **PushUserUpdates** | Pointer to **bool** |  | [optional] 
 **PushUserDeletes** | Pointer to **bool** |  | [optional] 
@@ -23,7 +23,6 @@ Name | Type | Description | Notes
 **SyncOnLogin** | Pointer to **bool** |  | [optional] 
 **BatchSyncEnabled** | Pointer to **bool** |  | [optional] 
 **BatchSyncInterval** | Pointer to **string** |  | [optional] 
-**AttributeMapping** | Pointer to **map[string]string** | User field &#x3D;&gt; SCIM attribute. | [optional] 
 **LastSyncAt** | Pointer to **NullableString** |  | [optional] 
 **LastSyncStatus** | Pointer to **NullableString** |  | [optional] 
 **LastSyncError** | Pointer to **NullableString** |  | [optional] 
@@ -615,31 +614,6 @@ SetBatchSyncInterval sets BatchSyncInterval field to given value.
 `func (o *ScimSettingsOutbound) HasBatchSyncInterval() bool`
 
 HasBatchSyncInterval returns a boolean if a field has been set.
-
-### GetAttributeMapping
-
-`func (o *ScimSettingsOutbound) GetAttributeMapping() map[string]string`
-
-GetAttributeMapping returns the AttributeMapping field if non-nil, zero value otherwise.
-
-### GetAttributeMappingOk
-
-`func (o *ScimSettingsOutbound) GetAttributeMappingOk() (*map[string]string, bool)`
-
-GetAttributeMappingOk returns a tuple with the AttributeMapping field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAttributeMapping
-
-`func (o *ScimSettingsOutbound) SetAttributeMapping(v map[string]string)`
-
-SetAttributeMapping sets AttributeMapping field to given value.
-
-### HasAttributeMapping
-
-`func (o *ScimSettingsOutbound) HasAttributeMapping() bool`
-
-HasAttributeMapping returns a boolean if a field has been set.
 
 ### GetLastSyncAt
 

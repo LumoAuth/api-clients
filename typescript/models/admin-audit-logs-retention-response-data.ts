@@ -21,22 +21,40 @@
  */
 export interface AdminAuditLogsRetentionResponseData {
     /**
-     * Effective retention, capped by the plan limit
+     * The organization\'s own period, between minRetentionDays and maxRetentionDays. It applies while data retention is on and autoDelete is not false.
      * @type {number}
      * @memberof AdminAuditLogsRetentionResponseData
      */
     'retentionDays'?: number;
     /**
-     * 
+     * false switches the organization\'s own period off; the plan\'s period still applies
      * @type {boolean}
      * @memberof AdminAuditLogsRetentionResponseData
      */
     'autoDelete'?: boolean;
     /**
-     * Plan cap; null when unlimited or billing enforcement is off
+     * The plan\'s period: older entries are not returned and are deleted. null when the plan has no limit.
      * @type {number}
      * @memberof AdminAuditLogsRetentionResponseData
      */
     'planLimitDays'?: number | null;
+    /**
+     * How long entries are kept now; null when nothing is deleted
+     * @type {number}
+     * @memberof AdminAuditLogsRetentionResponseData
+     */
+    'effectiveRetentionDays'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminAuditLogsRetentionResponseData
+     */
+    'minRetentionDays'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminAuditLogsRetentionResponseData
+     */
+    'maxRetentionDays'?: number;
 }
 

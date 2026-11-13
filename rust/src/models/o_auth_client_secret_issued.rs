@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OAuthClientSecretIssued {
-    /// Plaintext client secret — returned only once, never retrievable again
+    /// Plaintext client secret — returned only once, never retrievable again. Absent for a public client
     #[serde(rename = "secret", skip_serializing_if = "Option::is_none")]
     pub secret: Option<String>,
     #[serde(rename = "_note", skip_serializing_if = "Option::is_none")]

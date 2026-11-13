@@ -38,7 +38,10 @@ pub struct CreateClientResponseData {
     /// Detailed responses only
     #[serde(rename = "grantTypes", skip_serializing_if = "Option::is_none")]
     pub grant_types: Option<Vec<String>>,
-    /// Plaintext client secret — returned only once, never retrievable again
+    /// Detailed responses only. Whether the client may use CIBA (backchannel authentication).
+    #[serde(rename = "cibaEnabled", skip_serializing_if = "Option::is_none")]
+    pub ciba_enabled: Option<bool>,
+    /// Plaintext client secret — returned only once, never retrievable again. Absent for a public client
     #[serde(rename = "secret", skip_serializing_if = "Option::is_none")]
     pub secret: Option<String>,
     #[serde(rename = "_note", skip_serializing_if = "Option::is_none")]
@@ -59,6 +62,7 @@ impl CreateClientResponseData {
             redirect_uris: None,
             scopes: None,
             grant_types: None,
+            ciba_enabled: None,
             secret: None,
             _note: None,
         }

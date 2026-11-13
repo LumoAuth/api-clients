@@ -14,7 +14,7 @@ public struct ListPermissionsResponsePermissionsItem: Codable, JSONEncodable, Ha
 
     public var slug: String?
     public var description: String?
-    /** role:<role name> that grants it */
+    /** role:<role name> that grants it, or direct for a permission granted to the user directly */
     public var source: String?
 
     public init(slug: String? = nil, description: String? = nil, source: String? = nil) {

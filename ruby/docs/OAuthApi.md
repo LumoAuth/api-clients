@@ -13,6 +13,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**introspect**](OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662) |
 | [**par**](OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126) |
 | [**register_client**](OAuthApi.md#register_client) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR) |
+| [**request_magic_link**](OAuthApi.md#request_magic_link) | **POST** /orgs/{orgId}/api/v1/oauth/magic-link | Request a sign-in link by email |
 | [**revoke**](OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009) |
 | [**social_callback**](OAuthApi.md#social_callback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback |
 | [**social_callback_post**](OAuthApi.md#social_callback_post) | **POST** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback (form_post) |
@@ -643,6 +644,72 @@ end
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## request_magic_link
+
+> <RequestMagicLinkResponse> request_magic_link(org_id, request_magic_link_request)
+
+Request a sign-in link by email
+
+For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to `return_to`, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by `client_id`.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+
+api_instance = LumoAuthApiClient::OAuthApi.new
+org_id = 'org_id_example' # String | 
+request_magic_link_request = LumoAuthApiClient::RequestMagicLinkRequest.new({email: 'email_example', client_id: 'client_id_example'}) # RequestMagicLinkRequest | 
+
+begin
+  # Request a sign-in link by email
+  result = api_instance.request_magic_link(org_id, request_magic_link_request)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling OAuthApi->request_magic_link: #{e}"
+end
+```
+
+#### Using the request_magic_link_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<RequestMagicLinkResponse>, Integer, Hash)> request_magic_link_with_http_info(org_id, request_magic_link_request)
+
+```ruby
+begin
+  # Request a sign-in link by email
+  data, status_code, headers = api_instance.request_magic_link_with_http_info(org_id, request_magic_link_request)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <RequestMagicLinkResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling OAuthApi->request_magic_link_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **request_magic_link_request** | [**RequestMagicLinkRequest**](RequestMagicLinkRequest.md) |  |  |
+
+### Return type
+
+[**RequestMagicLinkResponse**](RequestMagicLinkResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 

@@ -1598,7 +1598,7 @@ public class AAuthApi {
         <tr><td> 400 </td><td> Invalid exchange request (grant_type / subject_token). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> The AAuth token is invalid, expired, or revoked, or the RFC 9421 request signature is missing/invalid/replayed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Denied by a conditional access policy. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limit exceeded (per IP or per agent). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded (per IP or per agent), or the agent budget is spent (access_denied). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call issuePlatformTokenCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull IssuePlatformTokenRequest issuePlatformTokenRequest, final ApiCallback _callback) throws ApiException {
@@ -1678,7 +1678,7 @@ public class AAuthApi {
         <tr><td> 400 </td><td> Invalid exchange request (grant_type / subject_token). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> The AAuth token is invalid, expired, or revoked, or the RFC 9421 request signature is missing/invalid/replayed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Denied by a conditional access policy. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limit exceeded (per IP or per agent). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded (per IP or per agent), or the agent budget is spent (access_denied). </td><td>  -  </td></tr>
      </table>
      */
     public IssuePlatformTokenResponse issuePlatformToken(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull IssuePlatformTokenRequest issuePlatformTokenRequest) throws ApiException {
@@ -1701,7 +1701,7 @@ public class AAuthApi {
         <tr><td> 400 </td><td> Invalid exchange request (grant_type / subject_token). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> The AAuth token is invalid, expired, or revoked, or the RFC 9421 request signature is missing/invalid/replayed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Denied by a conditional access policy. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limit exceeded (per IP or per agent). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded (per IP or per agent), or the agent budget is spent (access_denied). </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<IssuePlatformTokenResponse> issuePlatformTokenWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull IssuePlatformTokenRequest issuePlatformTokenRequest) throws ApiException {
@@ -1726,7 +1726,7 @@ public class AAuthApi {
         <tr><td> 400 </td><td> Invalid exchange request (grant_type / subject_token). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> The AAuth token is invalid, expired, or revoked, or the RFC 9421 request signature is missing/invalid/replayed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Denied by a conditional access policy. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limit exceeded (per IP or per agent). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded (per IP or per agent), or the agent budget is spent (access_denied). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call issuePlatformTokenAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull IssuePlatformTokenRequest issuePlatformTokenRequest, final ApiCallback<IssuePlatformTokenResponse> _callback) throws ApiException {

@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Slug** | Pointer to **string** |  | [optional] 
 **Description** | Pointer to **NullableString** |  | [optional] 
-**Source** | Pointer to **string** | role:&lt;role name&gt; that grants it | [optional] 
+**Source** | Pointer to **string** | role:&lt;role name&gt; that grants it, or direct for a permission granted to the user directly | [optional] 
 
 ## Methods
 

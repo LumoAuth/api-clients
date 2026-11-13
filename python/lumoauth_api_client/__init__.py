@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.0"
+__version__ = "1.5.0"
 
 # Define package exports
 __all__ = [
@@ -73,6 +73,7 @@ __all__ = [
     "AdminAgentsActivateResponse",
     "AdminAgentsAgentsDisableResponse",
     "AdminAgentsAgentsEnableResponse",
+    "AdminAgentsAgentsRotateKeyRequest",
     "AdminAgentsAgentsRotateKeyResponse",
     "AdminAgentsCreateRequest",
     "AdminAgentsCreateResponse",
@@ -168,6 +169,8 @@ __all__ = [
     "AdminSandboxListResponse",
     "AdminSandboxSpawnRequest",
     "AdminSandboxSpawnResponse",
+    "AdminSandboxSpawnResponseData",
+    "AdminSandboxSpawnResponseData1",
     "AdminScopesCreateResponse",
     "AdminScopesListResponse",
     "AdminScopesListResponseMeta",
@@ -209,6 +212,7 @@ __all__ = [
     "AdminWebhooksDeliveriesListResponse",
     "AdminWebhooksDeliveriesListResponseMeta",
     "AdminWebhooksDeliveryReplayResponse",
+    "AdminWebhooksDeliveryReplayResponseData",
     "AdminWebhooksDeliveryShowResponse",
     "AdminWebhooksDeliveryShowResponseData",
     "AdminWebhooksDeliveryShowResponseData1AttemptsItem",
@@ -407,6 +411,8 @@ __all__ = [
     "RemoveUserPermissionResponse",
     "RemoveUserRoleResponse",
     "ReportAgentUsageResponse",
+    "RequestMagicLinkRequest",
+    "RequestMagicLinkResponse",
     "RequestPermissionRequest",
     "RequestPermissionResponse",
     "RevokeAgentTokenRequest",
@@ -523,6 +529,7 @@ from lumoauth_api_client.models.add_user_role_response import AddUserRoleRespons
 from lumoauth_api_client.models.admin_agents_activate_response import AdminAgentsActivateResponse as AdminAgentsActivateResponse
 from lumoauth_api_client.models.admin_agents_agents_disable_response import AdminAgentsAgentsDisableResponse as AdminAgentsAgentsDisableResponse
 from lumoauth_api_client.models.admin_agents_agents_enable_response import AdminAgentsAgentsEnableResponse as AdminAgentsAgentsEnableResponse
+from lumoauth_api_client.models.admin_agents_agents_rotate_key_request import AdminAgentsAgentsRotateKeyRequest as AdminAgentsAgentsRotateKeyRequest
 from lumoauth_api_client.models.admin_agents_agents_rotate_key_response import AdminAgentsAgentsRotateKeyResponse as AdminAgentsAgentsRotateKeyResponse
 from lumoauth_api_client.models.admin_agents_create_request import AdminAgentsCreateRequest as AdminAgentsCreateRequest
 from lumoauth_api_client.models.admin_agents_create_response import AdminAgentsCreateResponse as AdminAgentsCreateResponse
@@ -618,6 +625,8 @@ from lumoauth_api_client.models.admin_roles_list_response import AdminRolesListR
 from lumoauth_api_client.models.admin_sandbox_list_response import AdminSandboxListResponse as AdminSandboxListResponse
 from lumoauth_api_client.models.admin_sandbox_spawn_request import AdminSandboxSpawnRequest as AdminSandboxSpawnRequest
 from lumoauth_api_client.models.admin_sandbox_spawn_response import AdminSandboxSpawnResponse as AdminSandboxSpawnResponse
+from lumoauth_api_client.models.admin_sandbox_spawn_response_data import AdminSandboxSpawnResponseData as AdminSandboxSpawnResponseData
+from lumoauth_api_client.models.admin_sandbox_spawn_response_data1 import AdminSandboxSpawnResponseData1 as AdminSandboxSpawnResponseData1
 from lumoauth_api_client.models.admin_scopes_create_response import AdminScopesCreateResponse as AdminScopesCreateResponse
 from lumoauth_api_client.models.admin_scopes_list_response import AdminScopesListResponse as AdminScopesListResponse
 from lumoauth_api_client.models.admin_scopes_list_response_meta import AdminScopesListResponseMeta as AdminScopesListResponseMeta
@@ -659,6 +668,7 @@ from lumoauth_api_client.models.admin_webhooks_create_response_data import Admin
 from lumoauth_api_client.models.admin_webhooks_deliveries_list_response import AdminWebhooksDeliveriesListResponse as AdminWebhooksDeliveriesListResponse
 from lumoauth_api_client.models.admin_webhooks_deliveries_list_response_meta import AdminWebhooksDeliveriesListResponseMeta as AdminWebhooksDeliveriesListResponseMeta
 from lumoauth_api_client.models.admin_webhooks_delivery_replay_response import AdminWebhooksDeliveryReplayResponse as AdminWebhooksDeliveryReplayResponse
+from lumoauth_api_client.models.admin_webhooks_delivery_replay_response_data import AdminWebhooksDeliveryReplayResponseData as AdminWebhooksDeliveryReplayResponseData
 from lumoauth_api_client.models.admin_webhooks_delivery_show_response import AdminWebhooksDeliveryShowResponse as AdminWebhooksDeliveryShowResponse
 from lumoauth_api_client.models.admin_webhooks_delivery_show_response_data import AdminWebhooksDeliveryShowResponseData as AdminWebhooksDeliveryShowResponseData
 from lumoauth_api_client.models.admin_webhooks_delivery_show_response_data1_attempts_item import AdminWebhooksDeliveryShowResponseData1AttemptsItem as AdminWebhooksDeliveryShowResponseData1AttemptsItem
@@ -857,6 +867,8 @@ from lumoauth_api_client.models.remove_user_group_response import RemoveUserGrou
 from lumoauth_api_client.models.remove_user_permission_response import RemoveUserPermissionResponse as RemoveUserPermissionResponse
 from lumoauth_api_client.models.remove_user_role_response import RemoveUserRoleResponse as RemoveUserRoleResponse
 from lumoauth_api_client.models.report_agent_usage_response import ReportAgentUsageResponse as ReportAgentUsageResponse
+from lumoauth_api_client.models.request_magic_link_request import RequestMagicLinkRequest as RequestMagicLinkRequest
+from lumoauth_api_client.models.request_magic_link_response import RequestMagicLinkResponse as RequestMagicLinkResponse
 from lumoauth_api_client.models.request_permission_request import RequestPermissionRequest as RequestPermissionRequest
 from lumoauth_api_client.models.request_permission_response import RequestPermissionResponse as RequestPermissionResponse
 from lumoauth_api_client.models.revoke_agent_token_request import RevokeAgentTokenRequest as RevokeAgentTokenRequest

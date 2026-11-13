@@ -38,7 +38,7 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         /// <param name="data">data.</param>
         /// <param name="message">message.</param>
-        public AdminWebhooksDeliveryReplayResponse(WebhookDelivery data = default, string message = default)
+        public AdminWebhooksDeliveryReplayResponse(AdminWebhooksDeliveryReplayResponseData data = default, string message = default)
         {
             this.Data = data;
             this.Message = message;
@@ -48,7 +48,7 @@ namespace LumoAuth.ApiClient.Model
         /// Gets or Sets Data
         /// </summary>
         [DataMember(Name = "data", EmitDefaultValue = false)]
-        public WebhookDelivery Data { get; set; }
+        public AdminWebhooksDeliveryReplayResponseData Data { get; set; }
 
         /// <summary>
         /// Gets or Sets Message

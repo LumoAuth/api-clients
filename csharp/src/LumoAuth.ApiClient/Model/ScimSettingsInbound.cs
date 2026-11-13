@@ -77,10 +77,9 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="allowUserDeletion">allowUserDeletion.</param>
         /// <param name="allowGroupOperations">allowGroupOperations.</param>
         /// <param name="protectedAttributes">protectedAttributes.</param>
-        /// <param name="attributeMapping">SCIM attribute &#x3D;&gt; user field..</param>
         /// <param name="autoActivateUsers">autoActivateUsers.</param>
         /// <param name="deprovisioningAction">deprovisioningAction.</param>
-        public ScimSettingsInbound(bool enabled = default, string bearerToken = default, RedactedSecret bearerTokenHash = default, string bearerTokenPreview = default, string tokenCreatedAt = default, bool allowUserCreation = default, bool allowUserUpdates = default, bool allowUserDeletion = default, bool allowGroupOperations = default, ScimSettingsInboundProtectedAttributes protectedAttributes = default, Dictionary<string, string> attributeMapping = default, bool autoActivateUsers = default, DeprovisioningActionEnum? deprovisioningAction = default)
+        public ScimSettingsInbound(bool enabled = default, string bearerToken = default, RedactedSecret bearerTokenHash = default, string bearerTokenPreview = default, string tokenCreatedAt = default, bool allowUserCreation = default, bool allowUserUpdates = default, bool allowUserDeletion = default, bool allowGroupOperations = default, ScimSettingsInboundProtectedAttributes protectedAttributes = default, bool autoActivateUsers = default, DeprovisioningActionEnum? deprovisioningAction = default)
         {
             this.Enabled = enabled;
             this.BearerToken = bearerToken;
@@ -92,7 +91,6 @@ namespace LumoAuth.ApiClient.Model
             this.AllowUserDeletion = allowUserDeletion;
             this.AllowGroupOperations = allowGroupOperations;
             this.ProtectedAttributes = protectedAttributes;
-            this.AttributeMapping = attributeMapping;
             this.AutoActivateUsers = autoActivateUsers;
             this.DeprovisioningAction = deprovisioningAction;
         }
@@ -160,13 +158,6 @@ namespace LumoAuth.ApiClient.Model
         public ScimSettingsInboundProtectedAttributes ProtectedAttributes { get; set; }
 
         /// <summary>
-        /// SCIM attribute &#x3D;&gt; user field.
-        /// </summary>
-        /// <value>SCIM attribute &#x3D;&gt; user field.</value>
-        [DataMember(Name = "attribute_mapping", EmitDefaultValue = false)]
-        public Dictionary<string, string> AttributeMapping { get; set; }
-
-        /// <summary>
         /// Gets or Sets AutoActivateUsers
         /// </summary>
         [DataMember(Name = "auto_activate_users", EmitDefaultValue = true)]
@@ -190,7 +181,6 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  AllowUserDeletion: ").Append(AllowUserDeletion).Append("\n");
             sb.Append("  AllowGroupOperations: ").Append(AllowGroupOperations).Append("\n");
             sb.Append("  ProtectedAttributes: ").Append(ProtectedAttributes).Append("\n");
-            sb.Append("  AttributeMapping: ").Append(AttributeMapping).Append("\n");
             sb.Append("  AutoActivateUsers: ").Append(AutoActivateUsers).Append("\n");
             sb.Append("  DeprovisioningAction: ").Append(DeprovisioningAction).Append("\n");
             sb.Append("}\n");

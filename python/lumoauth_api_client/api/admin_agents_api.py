@@ -17,11 +17,13 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import Field, StrictStr
 from typing import Optional
+from typing_extensions import Annotated
 from lumoauth_api_client.models.admin_agents_activate_response import AdminAgentsActivateResponse
 from lumoauth_api_client.models.admin_agents_agents_disable_response import AdminAgentsAgentsDisableResponse
 from lumoauth_api_client.models.admin_agents_agents_enable_response import AdminAgentsAgentsEnableResponse
+from lumoauth_api_client.models.admin_agents_agents_rotate_key_request import AdminAgentsAgentsRotateKeyRequest
 from lumoauth_api_client.models.admin_agents_agents_rotate_key_response import AdminAgentsAgentsRotateKeyResponse
 from lumoauth_api_client.models.admin_agents_create_request import AdminAgentsCreateRequest
 from lumoauth_api_client.models.admin_agents_create_response import AdminAgentsCreateResponse
@@ -913,6 +915,7 @@ class AdminAgentsApi:
         self,
         org_id: StrictStr,
         agent_id: StrictStr,
+        admin_agents_agents_rotate_key_request: Annotated[Optional[AdminAgentsAgentsRotateKeyRequest], Field(description="Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -933,6 +936,8 @@ class AdminAgentsApi:
         :type org_id: str
         :param agent_id: (required)
         :type agent_id: str
+        :param admin_agents_agents_rotate_key_request: Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
+        :type admin_agents_agents_rotate_key_request: AdminAgentsAgentsRotateKeyRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -958,6 +963,7 @@ class AdminAgentsApi:
         _param = self._admin_agents_agents_rotate_key_serialize(
             org_id=org_id,
             agent_id=agent_id,
+            admin_agents_agents_rotate_key_request=admin_agents_agents_rotate_key_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -966,6 +972,7 @@ class AdminAgentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AdminAgentsAgentsRotateKeyResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,
@@ -986,6 +993,7 @@ class AdminAgentsApi:
         self,
         org_id: StrictStr,
         agent_id: StrictStr,
+        admin_agents_agents_rotate_key_request: Annotated[Optional[AdminAgentsAgentsRotateKeyRequest], Field(description="Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1006,6 +1014,8 @@ class AdminAgentsApi:
         :type org_id: str
         :param agent_id: (required)
         :type agent_id: str
+        :param admin_agents_agents_rotate_key_request: Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
+        :type admin_agents_agents_rotate_key_request: AdminAgentsAgentsRotateKeyRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1031,6 +1041,7 @@ class AdminAgentsApi:
         _param = self._admin_agents_agents_rotate_key_serialize(
             org_id=org_id,
             agent_id=agent_id,
+            admin_agents_agents_rotate_key_request=admin_agents_agents_rotate_key_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1039,6 +1050,7 @@ class AdminAgentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AdminAgentsAgentsRotateKeyResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,
@@ -1059,6 +1071,7 @@ class AdminAgentsApi:
         self,
         org_id: StrictStr,
         agent_id: StrictStr,
+        admin_agents_agents_rotate_key_request: Annotated[Optional[AdminAgentsAgentsRotateKeyRequest], Field(description="Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1079,6 +1092,8 @@ class AdminAgentsApi:
         :type org_id: str
         :param agent_id: (required)
         :type agent_id: str
+        :param admin_agents_agents_rotate_key_request: Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
+        :type admin_agents_agents_rotate_key_request: AdminAgentsAgentsRotateKeyRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1104,6 +1119,7 @@ class AdminAgentsApi:
         _param = self._admin_agents_agents_rotate_key_serialize(
             org_id=org_id,
             agent_id=agent_id,
+            admin_agents_agents_rotate_key_request=admin_agents_agents_rotate_key_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1112,6 +1128,7 @@ class AdminAgentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AdminAgentsAgentsRotateKeyResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,
@@ -1127,6 +1144,7 @@ class AdminAgentsApi:
         self,
         org_id,
         agent_id,
+        admin_agents_agents_rotate_key_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1156,6 +1174,8 @@ class AdminAgentsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_agents_agents_rotate_key_request is not None:
+            _body_params = admin_agents_agents_rotate_key_request
 
 
         # set the HTTP header `Accept`
@@ -1166,6 +1186,19 @@ class AdminAgentsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2122,6 +2155,7 @@ class AdminAgentsApi:
             '401': None,
             '403': None,
             '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2200,6 +2234,7 @@ class AdminAgentsApi:
             '401': None,
             '403': None,
             '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2278,6 +2313,7 @@ class AdminAgentsApi:
             '401': None,
             '403': None,
             '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3809,6 +3845,7 @@ class AdminAgentsApi:
         self,
         org_id: StrictStr,
         agent_id: StrictStr,
+        admin_agents_agents_rotate_key_request: Annotated[Optional[AdminAgentsAgentsRotateKeyRequest], Field(description="For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3829,6 +3866,8 @@ class AdminAgentsApi:
         :type org_id: str
         :param agent_id: (required)
         :type agent_id: str
+        :param admin_agents_agents_rotate_key_request: For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
+        :type admin_agents_agents_rotate_key_request: AdminAgentsAgentsRotateKeyRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3854,6 +3893,7 @@ class AdminAgentsApi:
         _param = self._admin_agents_rotate_credentials_serialize(
             org_id=org_id,
             agent_id=agent_id,
+            admin_agents_agents_rotate_key_request=admin_agents_agents_rotate_key_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3883,6 +3923,7 @@ class AdminAgentsApi:
         self,
         org_id: StrictStr,
         agent_id: StrictStr,
+        admin_agents_agents_rotate_key_request: Annotated[Optional[AdminAgentsAgentsRotateKeyRequest], Field(description="For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3903,6 +3944,8 @@ class AdminAgentsApi:
         :type org_id: str
         :param agent_id: (required)
         :type agent_id: str
+        :param admin_agents_agents_rotate_key_request: For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
+        :type admin_agents_agents_rotate_key_request: AdminAgentsAgentsRotateKeyRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3928,6 +3971,7 @@ class AdminAgentsApi:
         _param = self._admin_agents_rotate_credentials_serialize(
             org_id=org_id,
             agent_id=agent_id,
+            admin_agents_agents_rotate_key_request=admin_agents_agents_rotate_key_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3957,6 +4001,7 @@ class AdminAgentsApi:
         self,
         org_id: StrictStr,
         agent_id: StrictStr,
+        admin_agents_agents_rotate_key_request: Annotated[Optional[AdminAgentsAgentsRotateKeyRequest], Field(description="For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3977,6 +4022,8 @@ class AdminAgentsApi:
         :type org_id: str
         :param agent_id: (required)
         :type agent_id: str
+        :param admin_agents_agents_rotate_key_request: For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
+        :type admin_agents_agents_rotate_key_request: AdminAgentsAgentsRotateKeyRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4002,6 +4049,7 @@ class AdminAgentsApi:
         _param = self._admin_agents_rotate_credentials_serialize(
             org_id=org_id,
             agent_id=agent_id,
+            admin_agents_agents_rotate_key_request=admin_agents_agents_rotate_key_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4026,6 +4074,7 @@ class AdminAgentsApi:
         self,
         org_id,
         agent_id,
+        admin_agents_agents_rotate_key_request,
         _request_auth,
         _content_type,
         _headers,
@@ -4055,6 +4104,8 @@ class AdminAgentsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_agents_agents_rotate_key_request is not None:
+            _body_params = admin_agents_agents_rotate_key_request
 
 
         # set the HTTP header `Accept`
@@ -4065,6 +4116,19 @@ class AdminAgentsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -4466,6 +4530,7 @@ class AdminAgentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminAgentsUpdateResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,
@@ -4543,6 +4608,7 @@ class AdminAgentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminAgentsUpdateResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,
@@ -4620,6 +4686,7 @@ class AdminAgentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminAgentsUpdateResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,
@@ -4777,6 +4844,7 @@ class AdminAgentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminAgentsUpdateResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,
@@ -4854,6 +4922,7 @@ class AdminAgentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminAgentsUpdateResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,
@@ -4931,6 +5000,7 @@ class AdminAgentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminAgentsUpdateResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,

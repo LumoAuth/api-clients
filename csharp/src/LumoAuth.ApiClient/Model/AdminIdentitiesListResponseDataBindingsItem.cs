@@ -46,22 +46,28 @@ namespace LumoAuth.ApiClient.Model
             Saml = 1,
 
             /// <summary>
+            /// Enum Oidc for value: oidc
+            /// </summary>
+            [EnumMember(Value = "oidc")]
+            Oidc = 2,
+
+            /// <summary>
             /// Enum Ldap for value: ldap
             /// </summary>
             [EnumMember(Value = "ldap")]
-            Ldap = 2,
+            Ldap = 3,
 
             /// <summary>
             /// Enum Social for value: social
             /// </summary>
             [EnumMember(Value = "social")]
-            Social = 3,
+            Social = 4,
 
             /// <summary>
             /// Enum SocialAccount for value: social_account
             /// </summary>
             [EnumMember(Value = "social_account")]
-            SocialAccount = 4
+            SocialAccount = 5
         }
 
 
@@ -76,15 +82,17 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="type">type.</param>
         /// <param name="idpId">idpId.</param>
         /// <param name="nameId">nameId.</param>
+        /// <param name="subject">subject.</param>
         /// <param name="legacy">legacy.</param>
         /// <param name="ldapConfigId">ldapConfigId.</param>
         /// <param name="dn">dn.</param>
         /// <param name="provider">provider.</param>
-        public AdminIdentitiesListResponseDataBindingsItem(TypeEnum? type = default, int? idpId = default, string nameId = default, bool legacy = default, int? ldapConfigId = default, string dn = default, string provider = default)
+        public AdminIdentitiesListResponseDataBindingsItem(TypeEnum? type = default, int? idpId = default, string nameId = default, string subject = default, bool legacy = default, int? ldapConfigId = default, string dn = default, string provider = default)
         {
             this.Type = type;
             this.IdpId = idpId;
             this.NameId = nameId;
+            this.Subject = subject;
             this.Legacy = legacy;
             this.LdapConfigId = ldapConfigId;
             this.Dn = dn;
@@ -102,6 +110,12 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         [DataMember(Name = "name_id", EmitDefaultValue = true)]
         public string NameId { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Subject
+        /// </summary>
+        [DataMember(Name = "subject", EmitDefaultValue = true)]
+        public string Subject { get; set; }
 
         /// <summary>
         /// Gets or Sets Legacy
@@ -138,6 +152,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  IdpId: ").Append(IdpId).Append("\n");
             sb.Append("  NameId: ").Append(NameId).Append("\n");
+            sb.Append("  Subject: ").Append(Subject).Append("\n");
             sb.Append("  Legacy: ").Append(Legacy).Append("\n");
             sb.Append("  LdapConfigId: ").Append(LdapConfigId).Append("\n");
             sb.Append("  Dn: ").Append(Dn).Append("\n");

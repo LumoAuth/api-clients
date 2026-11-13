@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** |  | [optional] 
 **Description** | Pointer to **string** |  | [optional] 
 **Capabilities** | Pointer to **[]string** |  | [optional] 
+**BudgetPolicy** | Pointer to **map[string]interface{}** | The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is. | [optional] 
 
 ## Methods
 
@@ -102,6 +103,41 @@ SetCapabilities sets Capabilities field to given value.
 
 HasCapabilities returns a boolean if a field has been set.
 
+### GetBudgetPolicy
+
+`func (o *PutAdminAgentsUpdateRequest) GetBudgetPolicy() map[string]interface{}`
+
+GetBudgetPolicy returns the BudgetPolicy field if non-nil, zero value otherwise.
+
+### GetBudgetPolicyOk
+
+`func (o *PutAdminAgentsUpdateRequest) GetBudgetPolicyOk() (*map[string]interface{}, bool)`
+
+GetBudgetPolicyOk returns a tuple with the BudgetPolicy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBudgetPolicy
+
+`func (o *PutAdminAgentsUpdateRequest) SetBudgetPolicy(v map[string]interface{})`
+
+SetBudgetPolicy sets BudgetPolicy field to given value.
+
+### HasBudgetPolicy
+
+`func (o *PutAdminAgentsUpdateRequest) HasBudgetPolicy() bool`
+
+HasBudgetPolicy returns a boolean if a field has been set.
+
+### SetBudgetPolicyNil
+
+`func (o *PutAdminAgentsUpdateRequest) SetBudgetPolicyNil(b bool)`
+
+ SetBudgetPolicyNil sets the value for BudgetPolicy to be an explicit nil
+
+### UnsetBudgetPolicy
+`func (o *PutAdminAgentsUpdateRequest) UnsetBudgetPolicy()`
+
+UnsetBudgetPolicy ensures that no value is present for BudgetPolicy, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

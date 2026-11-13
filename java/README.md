@@ -11,7 +11,7 @@
 
 LumoAuth API
 - API version: 1.0.0
-  - Build date: 2026-11-07T05:36:43.246317554Z[Etc/UTC]
+  - Build date: 2026-11-13T09:01:05.226277396-08:00[America/Los_Angeles]
   - Generator version: 7.14.0
 
 LumoAuth REST API — authentication, authorization, agent registry,
@@ -54,7 +54,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>io.lumoauth</groupId>
   <artifactId>lumoauth-api-client</artifactId>
-  <version>1.4.0</version>
+  <version>1.5.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -70,7 +70,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "io.lumoauth:lumoauth-api-client:1.4.0"
+     implementation "io.lumoauth:lumoauth-api-client:1.5.0"
   }
 ```
 
@@ -84,7 +84,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/lumoauth-api-client-1.4.0.jar`
+* `target/lumoauth-api-client-1.5.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -240,7 +240,7 @@ Class | Method | HTTP request | Description
 *AdminOAuthClientsApi* | [**putAdminClientsUpdateBranding**](docs/AdminOAuthClientsApi.md#putAdminClientsUpdateBranding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client&#39;s login and/or consent page branding
 *AdminOAuthClientsApi* | [**rotateClientSecret**](docs/AdminOAuthClientsApi.md#rotateClientSecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret
 *AdminOAuthClientsApi* | [**setClientScopes**](docs/AdminOAuthClientsApi.md#setClientScopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
-*AdminOAuthClientsApi* | [**updateClient**](docs/AdminOAuthClientsApi.md#updateClient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
+*AdminOAuthClientsApi* | [**updateClient**](docs/AdminOAuthClientsApi.md#updateClient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client (same as PATCH: only the fields that are sent change)
 *AdminOrganizationsApi* | [**adminOrgInvitationsCreate**](docs/AdminOrganizationsApi.md#adminOrgInvitationsCreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | Invite a user to an organization
 *AdminOrganizationsApi* | [**adminOrgInvitationsList**](docs/AdminOrganizationsApi.md#adminOrgInvitationsList) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | List organization invitations
 *AdminOrganizationsApi* | [**adminOrgInvitationsResend**](docs/AdminOrganizationsApi.md#adminOrgInvitationsResend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | Resend an invitation
@@ -336,9 +336,9 @@ Class | Method | HTTP request | Description
 *AdminUsersApi* | [**addUserRole**](docs/AdminUsersApi.md#addUserRole) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Assign a role to a user
 *AdminUsersApi* | [**adminIdentitiesLegacySamlRelink**](docs/AdminUsersApi.md#adminIdentitiesLegacySamlRelink) | **POST** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Relink legacy SAML users to an IdP
 *AdminUsersApi* | [**adminIdentitiesLegacySamlReport**](docs/AdminUsersApi.md#adminIdentitiesLegacySamlReport) | **GET** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Legacy SAML bindings report
-*AdminUsersApi* | [**adminIdentitiesLink**](docs/AdminUsersApi.md#adminIdentitiesLink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML or LDAP identity to a user
+*AdminUsersApi* | [**adminIdentitiesLink**](docs/AdminUsersApi.md#adminIdentitiesLink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user
 *AdminUsersApi* | [**adminIdentitiesList**](docs/AdminUsersApi.md#adminIdentitiesList) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links
-*AdminUsersApi* | [**adminIdentitiesUnlink**](docs/AdminUsersApi.md#adminIdentitiesUnlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, LDAP or social identity
+*AdminUsersApi* | [**adminIdentitiesUnlink**](docs/AdminUsersApi.md#adminIdentitiesUnlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity
 *AdminUsersApi* | [**blockUser**](docs/AdminUsersApi.md#blockUser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user
 *AdminUsersApi* | [**createUser**](docs/AdminUsersApi.md#createUser) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user
 *AdminUsersApi* | [**deleteUser**](docs/AdminUsersApi.md#deleteUser) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user
@@ -444,6 +444,7 @@ Class | Method | HTTP request | Description
 *OAuthApi* | [**introspect**](docs/OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662)
 *OAuthApi* | [**par**](docs/OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126)
 *OAuthApi* | [**registerClient**](docs/OAuthApi.md#registerClient) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR)
+*OAuthApi* | [**requestMagicLink**](docs/OAuthApi.md#requestMagicLink) | **POST** /orgs/{orgId}/api/v1/oauth/magic-link | Request a sign-in link by email
 *OAuthApi* | [**revoke**](docs/OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009)
 *OAuthApi* | [**socialCallback**](docs/OAuthApi.md#socialCallback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback
 *OAuthApi* | [**socialCallbackPost**](docs/OAuthApi.md#socialCallbackPost) | **POST** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback (form_post)
@@ -488,6 +489,7 @@ Class | Method | HTTP request | Description
  - [AdminAgentsActivateResponse](docs/AdminAgentsActivateResponse.md)
  - [AdminAgentsAgentsDisableResponse](docs/AdminAgentsAgentsDisableResponse.md)
  - [AdminAgentsAgentsEnableResponse](docs/AdminAgentsAgentsEnableResponse.md)
+ - [AdminAgentsAgentsRotateKeyRequest](docs/AdminAgentsAgentsRotateKeyRequest.md)
  - [AdminAgentsAgentsRotateKeyResponse](docs/AdminAgentsAgentsRotateKeyResponse.md)
  - [AdminAgentsCreateRequest](docs/AdminAgentsCreateRequest.md)
  - [AdminAgentsCreateResponse](docs/AdminAgentsCreateResponse.md)
@@ -583,6 +585,8 @@ Class | Method | HTTP request | Description
  - [AdminSandboxListResponse](docs/AdminSandboxListResponse.md)
  - [AdminSandboxSpawnRequest](docs/AdminSandboxSpawnRequest.md)
  - [AdminSandboxSpawnResponse](docs/AdminSandboxSpawnResponse.md)
+ - [AdminSandboxSpawnResponseData](docs/AdminSandboxSpawnResponseData.md)
+ - [AdminSandboxSpawnResponseData1](docs/AdminSandboxSpawnResponseData1.md)
  - [AdminScopesCreateResponse](docs/AdminScopesCreateResponse.md)
  - [AdminScopesListResponse](docs/AdminScopesListResponse.md)
  - [AdminScopesListResponseMeta](docs/AdminScopesListResponseMeta.md)
@@ -624,6 +628,7 @@ Class | Method | HTTP request | Description
  - [AdminWebhooksDeliveriesListResponse](docs/AdminWebhooksDeliveriesListResponse.md)
  - [AdminWebhooksDeliveriesListResponseMeta](docs/AdminWebhooksDeliveriesListResponseMeta.md)
  - [AdminWebhooksDeliveryReplayResponse](docs/AdminWebhooksDeliveryReplayResponse.md)
+ - [AdminWebhooksDeliveryReplayResponseData](docs/AdminWebhooksDeliveryReplayResponseData.md)
  - [AdminWebhooksDeliveryShowResponse](docs/AdminWebhooksDeliveryShowResponse.md)
  - [AdminWebhooksDeliveryShowResponseData](docs/AdminWebhooksDeliveryShowResponseData.md)
  - [AdminWebhooksDeliveryShowResponseData1AttemptsItem](docs/AdminWebhooksDeliveryShowResponseData1AttemptsItem.md)
@@ -822,6 +827,8 @@ Class | Method | HTTP request | Description
  - [RemoveUserPermissionResponse](docs/RemoveUserPermissionResponse.md)
  - [RemoveUserRoleResponse](docs/RemoveUserRoleResponse.md)
  - [ReportAgentUsageResponse](docs/ReportAgentUsageResponse.md)
+ - [RequestMagicLinkRequest](docs/RequestMagicLinkRequest.md)
+ - [RequestMagicLinkResponse](docs/RequestMagicLinkResponse.md)
  - [RequestPermissionRequest](docs/RequestPermissionRequest.md)
  - [RequestPermissionResponse](docs/RequestPermissionResponse.md)
  - [RevokeAgentTokenRequest](docs/RevokeAgentTokenRequest.md)

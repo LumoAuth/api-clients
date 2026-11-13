@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// ScimSettingsInboundProtectedAttributes : Attribute name => true when SCIM may not change it.
+/// ScimSettingsInboundProtectedAttributes : Attribute name => true when SCIM may not change it. role_membership stops every /Groups request that would add or remove a member of a role.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ScimSettingsInboundProtectedAttributes {
     #[serde(rename = "email", skip_serializing_if = "Option::is_none")]
@@ -20,21 +20,18 @@ pub struct ScimSettingsInboundProtectedAttributes {
     pub name: Option<bool>,
     #[serde(rename = "active", skip_serializing_if = "Option::is_none")]
     pub active: Option<bool>,
-    #[serde(rename = "roles", skip_serializing_if = "Option::is_none")]
-    pub roles: Option<bool>,
-    #[serde(rename = "permissions", skip_serializing_if = "Option::is_none")]
-    pub permissions: Option<bool>,
+    #[serde(rename = "role_membership", skip_serializing_if = "Option::is_none")]
+    pub role_membership: Option<bool>,
 }
 
 impl ScimSettingsInboundProtectedAttributes {
-    /// Attribute name => true when SCIM may not change it.
+    /// Attribute name => true when SCIM may not change it. role_membership stops every /Groups request that would add or remove a member of a role.
     pub fn new() -> ScimSettingsInboundProtectedAttributes {
         ScimSettingsInboundProtectedAttributes {
             email: None,
             name: None,
             active: None,
-            roles: None,
-            permissions: None,
+            role_membership: None,
         }
     }
 }

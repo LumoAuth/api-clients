@@ -128,4 +128,12 @@ public class OAuthClientTest {
         // TODO: test grantTypes
     }
 
+    /**
+     * Test the property 'cibaEnabled'
+     */
+    @Test
+    public void cibaEnabledTest() {
+        // TODO: test cibaEnabled
+    }
+
 }

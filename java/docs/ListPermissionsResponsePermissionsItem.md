@@ -9,7 +9,7 @@
 |------------ | ------------- | ------------- | -------------|
 |**slug** | **String** |  |  [optional] |
 |**description** | **String** |  |  [optional] |
-|**source** | **String** | role:&lt;role name&gt; that grants it |  [optional] |
+|**source** | **String** | role:&lt;role name&gt; that grants it, or direct for a permission granted to the user directly |  [optional] |
 
 
 

@@ -26,7 +26,7 @@ Name | Type | Description | Notes
 **geo_location** | Option<[**std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)> | Detailed responses only | [optional]
 **session_id** | Option<**String**> | Detailed responses only | [optional]
 **request_id** | Option<**String**> | Detailed responses only | [optional]
-**status** | Option<**String**> | Detailed responses only | [optional]
+**status** | Option<**String**> | Result of the event: success, failure, pending or partial | [optional]
 **status_reason** | Option<**String**> | Detailed responses only | [optional]
 **old_value** | Option<[**std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)> | Detailed responses only | [optional]
 **new_value** | Option<[**std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)> | Detailed responses only | [optional]

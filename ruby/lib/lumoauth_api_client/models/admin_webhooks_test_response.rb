@@ -20,6 +20,9 @@ module LumoAuthApiClient
     # HTTP status returned by the receiver
     attr_accessor :status_code
 
+    # Id of the delivery row (the `X-LumoAuth-Delivery` header of the request)
+    attr_accessor :delivery_id
+
     attr_accessor :message
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -27,6 +30,7 @@ module LumoAuthApiClient
       {
         :'success' => :'success',
         :'status_code' => :'statusCode',
+        :'delivery_id' => :'deliveryId',
         :'message' => :'message'
       }
     end
@@ -46,6 +50,7 @@ module LumoAuthApiClient
       {
         :'success' => :'Boolean',
         :'status_code' => :'Integer',
+        :'delivery_id' => :'String',
         :'message' => :'String'
       }
     end
@@ -80,6 +85,10 @@ module LumoAuthApiClient
         self.status_code = attributes[:'status_code']
       end
 
+      if attributes.key?(:'delivery_id')
+        self.delivery_id = attributes[:'delivery_id']
+      end
+
       if attributes.key?(:'message')
         self.message = attributes[:'message']
       end
@@ -107,6 +116,7 @@ module LumoAuthApiClient
       self.class == o.class &&
           success == o.success &&
           status_code == o.status_code &&
+          delivery_id == o.delivery_id &&
           message == o.message
     end
 
@@ -119,7 +129,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [success, status_code, message].hash
+      [success, status_code, delivery_id, message].hash
     end
 
     # Builds the object from hash

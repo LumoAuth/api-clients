@@ -36,7 +36,7 @@ use \LumoAuth\ApiClient\ObjectSerializer;
  * ScimSettingsInboundProtectedAttributes Class Doc Comment
  *
  * @category Class
- * @description Attribute name &#x3D;&gt; true when SCIM may not change it.
+ * @description Attribute name &#x3D;&gt; true when SCIM may not change it. role_membership stops every /Groups request that would add or remove a member of a role.
  * @package  LumoAuth\ApiClient
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -62,8 +62,7 @@ class ScimSettingsInboundProtectedAttributes implements ModelInterface, ArrayAcc
         'email' => 'bool',
         'name' => 'bool',
         'active' => 'bool',
-        'roles' => 'bool',
-        'permissions' => 'bool'
+        'roleMembership' => 'bool'
     ];
 
     /**
@@ -77,8 +76,7 @@ class ScimSettingsInboundProtectedAttributes implements ModelInterface, ArrayAcc
         'email' => null,
         'name' => null,
         'active' => null,
-        'roles' => null,
-        'permissions' => null
+        'roleMembership' => null
     ];
 
     /**
@@ -90,8 +88,7 @@ class ScimSettingsInboundProtectedAttributes implements ModelInterface, ArrayAcc
         'email' => false,
         'name' => false,
         'active' => false,
-        'roles' => false,
-        'permissions' => false
+        'roleMembership' => false
     ];
 
     /**
@@ -183,8 +180,7 @@ class ScimSettingsInboundProtectedAttributes implements ModelInterface, ArrayAcc
         'email' => 'email',
         'name' => 'name',
         'active' => 'active',
-        'roles' => 'roles',
-        'permissions' => 'permissions'
+        'roleMembership' => 'role_membership'
     ];
 
     /**
@@ -196,8 +192,7 @@ class ScimSettingsInboundProtectedAttributes implements ModelInterface, ArrayAcc
         'email' => 'setEmail',
         'name' => 'setName',
         'active' => 'setActive',
-        'roles' => 'setRoles',
-        'permissions' => 'setPermissions'
+        'roleMembership' => 'setRoleMembership'
     ];
 
     /**
@@ -209,8 +204,7 @@ class ScimSettingsInboundProtectedAttributes implements ModelInterface, ArrayAcc
         'email' => 'getEmail',
         'name' => 'getName',
         'active' => 'getActive',
-        'roles' => 'getRoles',
-        'permissions' => 'getPermissions'
+        'roleMembership' => 'getRoleMembership'
     ];
 
     /**
@@ -273,8 +267,7 @@ class ScimSettingsInboundProtectedAttributes implements ModelInterface, ArrayAcc
         $this->setIfExists('email', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('active', $data ?? [], null);
-        $this->setIfExists('roles', $data ?? [], null);
-        $this->setIfExists('permissions', $data ?? [], null);
+        $this->setIfExists('roleMembership', $data ?? [], null);
     }
 
     /**
@@ -401,55 +394,28 @@ class ScimSettingsInboundProtectedAttributes implements ModelInterface, ArrayAcc
     }
 
     /**
-     * Gets roles
+     * Gets roleMembership
      *
      * @return bool|null
      */
-    public function getRoles()
+    public function getRoleMembership()
     {
-        return $this->container['roles'];
+        return $this->container['roleMembership'];
     }
 
     /**
-     * Sets roles
+     * Sets roleMembership
      *
-     * @param bool|null $roles roles
+     * @param bool|null $roleMembership roleMembership
      *
      * @return self
      */
-    public function setRoles($roles)
+    public function setRoleMembership($roleMembership)
     {
-        if (is_null($roles)) {
-            throw new \InvalidArgumentException('non-nullable roles cannot be null');
+        if (is_null($roleMembership)) {
+            throw new \InvalidArgumentException('non-nullable roleMembership cannot be null');
         }
-        $this->container['roles'] = $roles;
-
-        return $this;
-    }
-
-    /**
-     * Gets permissions
-     *
-     * @return bool|null
-     */
-    public function getPermissions()
-    {
-        return $this->container['permissions'];
-    }
-
-    /**
-     * Sets permissions
-     *
-     * @param bool|null $permissions permissions
-     *
-     * @return self
-     */
-    public function setPermissions($permissions)
-    {
-        if (is_null($permissions)) {
-            throw new \InvalidArgumentException('non-nullable permissions cannot be null');
-        }
-        $this->container['permissions'] = $permissions;
+        $this->container['roleMembership'] = $roleMembership;
 
         return $this;
     }

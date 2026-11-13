@@ -9,9 +9,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**addUserRole**](#adduserrole) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Assign a role to a user|
 |[**adminIdentitiesLegacySamlRelink**](#adminidentitieslegacysamlrelink) | **POST** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Relink legacy SAML users to an IdP|
 |[**adminIdentitiesLegacySamlReport**](#adminidentitieslegacysamlreport) | **GET** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Legacy SAML bindings report|
-|[**adminIdentitiesLink**](#adminidentitieslink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML or LDAP identity to a user|
+|[**adminIdentitiesLink**](#adminidentitieslink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user|
 |[**adminIdentitiesList**](#adminidentitieslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user\&#39;s federated identity links|
-|[**adminIdentitiesUnlink**](#adminidentitiesunlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user\&#39;s SAML, LDAP or social identity|
+|[**adminIdentitiesUnlink**](#adminidentitiesunlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user\&#39;s SAML, OpenID Connect, LDAP or social identity|
 |[**blockUser**](#blockuser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user|
 |[**createUser**](#createuser) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user|
 |[**deleteUser**](#deleteuser) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user|
@@ -310,7 +310,7 @@ const { status, data } = await apiInstance.adminIdentitiesLegacySamlReport(
 # **adminIdentitiesLink**
 > AdminAgentsGetResponse adminIdentitiesLink(adminIdentitiesLinkRequest)
 
-Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`), enterprise OpenID Connect binding (`idp_id` + `subject`: the value of the connection\'s user identifier claim; a person can sign in through such a connection only after this link exists) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
 
 ### Example
 
@@ -363,7 +363,7 @@ const { status, data } = await apiInstance.adminIdentitiesLink(
 |-------------|-------------|------------------|
 |**201** | Linked |  -  |
 |**403** | Actor does not outrank the user, or step_up_required |  -  |
-|**404** | User, IdP or directory not found |  -  |
+|**404** | User, identity provider or directory not found |  -  |
 |**409** | identity_conflict |  -  |
 |**422** | invalid_identity / directory_lookup_failed |  -  |
 
@@ -372,7 +372,7 @@ const { status, data } = await apiInstance.adminIdentitiesLink(
 # **adminIdentitiesList**
 > AdminIdentitiesListResponse adminIdentitiesList()
 
-SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+SAML (IdP + NameID), enterprise OpenID Connect (connection + subject), LDAP (directory + DN) and social provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP. An OpenID Connect link with `hashed: true` stores a long subject as a hash, so `subject` is null.
 
 ### Example
 
@@ -427,7 +427,7 @@ const { status, data } = await apiInstance.adminIdentitiesList(
 # **adminIdentitiesUnlink**
 > AdminAgentsGetResponse adminIdentitiesUnlink()
 
-Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+Removes the binding of the given type (`saml`, `oidc`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
 
 ### Example
 
@@ -440,7 +440,7 @@ import {
 const configuration = new Configuration();
 const apiInstance = new AdminUsersApi(configuration);
 
-let type: 'saml' | 'ldap' | 'social'; // (default to undefined)
+let type: 'saml' | 'oidc' | 'ldap' | 'social'; // (default to undefined)
 let orgId: string; // (default to undefined)
 let userId: string; // (default to undefined)
 
@@ -455,7 +455,7 @@ const { status, data } = await apiInstance.adminIdentitiesUnlink(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **type** | [**&#39;saml&#39; | &#39;ldap&#39; | &#39;social&#39;**]**Array<&#39;saml&#39; &#124; &#39;ldap&#39; &#124; &#39;social&#39;>** |  | defaults to undefined|
+| **type** | [**&#39;saml&#39; | &#39;oidc&#39; | &#39;ldap&#39; | &#39;social&#39;**]**Array<&#39;saml&#39; &#124; &#39;oidc&#39; &#124; &#39;ldap&#39; &#124; &#39;social&#39;>** |  | defaults to undefined|
 | **orgId** | [**string**] |  | defaults to undefined|
 | **userId** | [**string**] |  | defaults to undefined|
 

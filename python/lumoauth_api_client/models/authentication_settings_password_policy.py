@@ -18,21 +18,26 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
 class AuthenticationSettingsPasswordPolicy(BaseModel):
     """
-    AuthenticationSettingsPasswordPolicy
+    The password rules that apply. A write is merged with the stored object. A named template sets its own rules; rules sent without a template make the policy custom.
     """ # noqa: E501
     template: Optional[StrictStr] = None
-    min_length: Optional[StrictInt] = None
+    min_length: Optional[Annotated[int, Field(le=128, strict=True, ge=8)]] = None
     require_special: Optional[StrictBool] = None
     require_numbers: Optional[StrictBool] = None
     require_uppercase: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["template", "min_length", "require_special", "require_numbers", "require_uppercase"]
+    require_lowercase: Optional[StrictBool] = None
+    reject_breached_passwords: Optional[StrictBool] = None
+    breached_password_min_count: Optional[Annotated[int, Field(strict=True, ge=1)]] = None
+    check_breached_on_login: Optional[StrictBool] = None
+    __properties: ClassVar[List[str]] = ["template", "min_length", "require_special", "require_numbers", "require_uppercase", "require_lowercase", "reject_breached_passwords", "breached_password_min_count", "check_breached_on_login"]
 
     @field_validator('template')
     def template_validate_enum(cls, value):
@@ -99,7 +104,11 @@ class AuthenticationSettingsPasswordPolicy(BaseModel):
             "min_length": obj.get("min_length"),
             "require_special": obj.get("require_special"),
             "require_numbers": obj.get("require_numbers"),
-            "require_uppercase": obj.get("require_uppercase")
+            "require_uppercase": obj.get("require_uppercase"),
+            "require_lowercase": obj.get("require_lowercase"),
+            "reject_breached_passwords": obj.get("reject_breached_passwords"),
+            "breached_password_min_count": obj.get("breached_password_min_count"),
+            "check_breached_on_login": obj.get("check_breached_on_login")
         })
         return _obj
 

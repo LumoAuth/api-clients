@@ -15,15 +15,19 @@ public struct AdminAgentsAgentsRotateKeyResponse: Codable, JSONEncodable, Hashab
     public var message: String?
     /** The new plaintext API key — shown only in this response. */
     public var apiKey: String?
+    /** When the new key expires; null = never. */
+    public var apiKeyExpiresAt: Date?
 
-    public init(message: String? = nil, apiKey: String? = nil) {
+    public init(message: String? = nil, apiKey: String? = nil, apiKeyExpiresAt: Date? = nil) {
         self.message = message
         self.apiKey = apiKey
+        self.apiKeyExpiresAt = apiKeyExpiresAt
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case message
         case apiKey = "api_key"
+        case apiKeyExpiresAt = "api_key_expires_at"
     }
 
     // Encodable protocol methods
@@ -32,6 +36,7 @@ public struct AdminAgentsAgentsRotateKeyResponse: Codable, JSONEncodable, Hashab
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(message, forKey: .message)
         try container.encodeIfPresent(apiKey, forKey: .apiKey)
+        try container.encodeIfPresent(apiKeyExpiresAt, forKey: .apiKeyExpiresAt)
     }
 }
 

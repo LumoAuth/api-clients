@@ -87,12 +87,6 @@ export interface ScimSettingsInbound {
      */
     'protected_attributes'?: ScimSettingsInboundProtectedAttributes;
     /**
-     * SCIM attribute => user field.
-     * @type {{ [key: string]: string; }}
-     * @memberof ScimSettingsInbound
-     */
-    'attribute_mapping'?: { [key: string]: string; };
-    /**
      * 
      * @type {boolean}
      * @memberof ScimSettingsInbound

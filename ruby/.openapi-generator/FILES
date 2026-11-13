@@ -22,6 +22,7 @@ docs/AdminAbacApi.md
 docs/AdminAgentsActivateResponse.md
 docs/AdminAgentsAgentsDisableResponse.md
 docs/AdminAgentsAgentsEnableResponse.md
+docs/AdminAgentsAgentsRotateKeyRequest.md
 docs/AdminAgentsAgentsRotateKeyResponse.md
 docs/AdminAgentsApi.md
 docs/AdminAgentsCreateRequest.md
@@ -129,6 +130,8 @@ docs/AdminSandboxApi.md
 docs/AdminSandboxListResponse.md
 docs/AdminSandboxSpawnRequest.md
 docs/AdminSandboxSpawnResponse.md
+docs/AdminSandboxSpawnResponseData.md
+docs/AdminSandboxSpawnResponseData1.md
 docs/AdminScopesCreateResponse.md
 docs/AdminScopesListResponse.md
 docs/AdminScopesListResponseMeta.md
@@ -174,6 +177,7 @@ docs/AdminWebhooksCreateResponseData.md
 docs/AdminWebhooksDeliveriesListResponse.md
 docs/AdminWebhooksDeliveriesListResponseMeta.md
 docs/AdminWebhooksDeliveryReplayResponse.md
+docs/AdminWebhooksDeliveryReplayResponseData.md
 docs/AdminWebhooksDeliveryShowResponse.md
 docs/AdminWebhooksDeliveryShowResponseData.md
 docs/AdminWebhooksDeliveryShowResponseData1AttemptsItem.md
@@ -380,6 +384,8 @@ docs/RemoveUserGroupResponse.md
 docs/RemoveUserPermissionResponse.md
 docs/RemoveUserRoleResponse.md
 docs/ReportAgentUsageResponse.md
+docs/RequestMagicLinkRequest.md
+docs/RequestMagicLinkResponse.md
 docs/RequestPermissionRequest.md
 docs/RequestPermissionResponse.md
 docs/RevokeAgentTokenRequest.md
@@ -487,6 +493,7 @@ lib/lumoauth_api_client/models/add_user_role_response.rb
 lib/lumoauth_api_client/models/admin_agents_activate_response.rb
 lib/lumoauth_api_client/models/admin_agents_agents_disable_response.rb
 lib/lumoauth_api_client/models/admin_agents_agents_enable_response.rb
+lib/lumoauth_api_client/models/admin_agents_agents_rotate_key_request.rb
 lib/lumoauth_api_client/models/admin_agents_agents_rotate_key_response.rb
 lib/lumoauth_api_client/models/admin_agents_create_request.rb
 lib/lumoauth_api_client/models/admin_agents_create_response.rb
@@ -582,6 +589,8 @@ lib/lumoauth_api_client/models/admin_roles_list_response.rb
 lib/lumoauth_api_client/models/admin_sandbox_list_response.rb
 lib/lumoauth_api_client/models/admin_sandbox_spawn_request.rb
 lib/lumoauth_api_client/models/admin_sandbox_spawn_response.rb
+lib/lumoauth_api_client/models/admin_sandbox_spawn_response_data.rb
+lib/lumoauth_api_client/models/admin_sandbox_spawn_response_data1.rb
 lib/lumoauth_api_client/models/admin_scopes_create_response.rb
 lib/lumoauth_api_client/models/admin_scopes_list_response.rb
 lib/lumoauth_api_client/models/admin_scopes_list_response_meta.rb
@@ -623,6 +632,7 @@ lib/lumoauth_api_client/models/admin_webhooks_create_response_data.rb
 lib/lumoauth_api_client/models/admin_webhooks_deliveries_list_response.rb
 lib/lumoauth_api_client/models/admin_webhooks_deliveries_list_response_meta.rb
 lib/lumoauth_api_client/models/admin_webhooks_delivery_replay_response.rb
+lib/lumoauth_api_client/models/admin_webhooks_delivery_replay_response_data.rb
 lib/lumoauth_api_client/models/admin_webhooks_delivery_show_response.rb
 lib/lumoauth_api_client/models/admin_webhooks_delivery_show_response_data.rb
 lib/lumoauth_api_client/models/admin_webhooks_delivery_show_response_data1_attempts_item.rb
@@ -821,6 +831,8 @@ lib/lumoauth_api_client/models/remove_user_group_response.rb
 lib/lumoauth_api_client/models/remove_user_permission_response.rb
 lib/lumoauth_api_client/models/remove_user_role_response.rb
 lib/lumoauth_api_client/models/report_agent_usage_response.rb
+lib/lumoauth_api_client/models/request_magic_link_request.rb
+lib/lumoauth_api_client/models/request_magic_link_response.rb
 lib/lumoauth_api_client/models/request_permission_request.rb
 lib/lumoauth_api_client/models/request_permission_response.rb
 lib/lumoauth_api_client/models/revoke_agent_token_request.rb

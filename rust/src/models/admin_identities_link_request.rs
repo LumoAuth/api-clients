@@ -15,9 +15,12 @@ use serde::{Deserialize, Serialize};
 pub struct AdminIdentitiesLinkRequest {
     #[serde(rename = "type")]
     pub r#type: Type,
-    /// SAML IdP config id (type=saml)
+    /// SAML IdP config id (type=saml) or OpenID Connect connection id (type=oidc)
     #[serde(rename = "idp_id", skip_serializing_if = "Option::is_none")]
     pub idp_id: Option<i32>,
+    /// Subject the OpenID Connect provider issues for this user (type=oidc)
+    #[serde(rename = "subject", skip_serializing_if = "Option::is_none")]
+    pub subject: Option<String>,
     /// NameID the IdP asserts for this user (type=saml)
     #[serde(rename = "name_id", skip_serializing_if = "Option::is_none")]
     pub name_id: Option<String>,
@@ -37,6 +40,7 @@ impl AdminIdentitiesLinkRequest {
         AdminIdentitiesLinkRequest {
             r#type,
             idp_id: None,
+            subject: None,
             name_id: None,
             ldap_config_id: None,
             dn: None,
@@ -49,6 +53,8 @@ impl AdminIdentitiesLinkRequest {
 pub enum Type {
     #[serde(rename = "saml")]
     Saml,
+    #[serde(rename = "oidc")]
+    Oidc,
     #[serde(rename = "ldap")]
     Ldap,
 }

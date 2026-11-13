@@ -28,7 +28,7 @@ using OpenAPIDateConverter = LumoAuth.ApiClient.Client.OpenAPIDateConverter;
 namespace LumoAuth.ApiClient.Model
 {
     /// <summary>
-    /// AuthenticationSettingsPasswordRotationPolicy
+    /// A write is merged with the stored object.
     /// </summary>
     [DataContract(Name = "AuthenticationSettings_password_rotation_policy")]
     public partial class AuthenticationSettingsPasswordRotationPolicy : IValidatableObject
@@ -38,14 +38,10 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         /// <param name="enabled">enabled.</param>
         /// <param name="maxAgeDays">maxAgeDays.</param>
-        /// <param name="notifyBeforeDays">notifyBeforeDays.</param>
-        /// <param name="historyCount">historyCount.</param>
-        public AuthenticationSettingsPasswordRotationPolicy(bool enabled = default, int maxAgeDays = default, int notifyBeforeDays = default, int historyCount = default)
+        public AuthenticationSettingsPasswordRotationPolicy(bool enabled = default, int maxAgeDays = default)
         {
             this.Enabled = enabled;
             this.MaxAgeDays = maxAgeDays;
-            this.NotifyBeforeDays = notifyBeforeDays;
-            this.HistoryCount = historyCount;
         }
 
         /// <summary>
@@ -61,18 +57,6 @@ namespace LumoAuth.ApiClient.Model
         public int MaxAgeDays { get; set; }
 
         /// <summary>
-        /// Gets or Sets NotifyBeforeDays
-        /// </summary>
-        [DataMember(Name = "notify_before_days", EmitDefaultValue = false)]
-        public int NotifyBeforeDays { get; set; }
-
-        /// <summary>
-        /// Gets or Sets HistoryCount
-        /// </summary>
-        [DataMember(Name = "history_count", EmitDefaultValue = false)]
-        public int HistoryCount { get; set; }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -82,8 +66,6 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("class AuthenticationSettingsPasswordRotationPolicy {\n");
             sb.Append("  Enabled: ").Append(Enabled).Append("\n");
             sb.Append("  MaxAgeDays: ").Append(MaxAgeDays).Append("\n");
-            sb.Append("  NotifyBeforeDays: ").Append(NotifyBeforeDays).Append("\n");
-            sb.Append("  HistoryCount: ").Append(HistoryCount).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -104,6 +86,18 @@ namespace LumoAuth.ApiClient.Model
         /// <returns>Validation Result</returns>
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // MaxAgeDays (int) maximum
+            if (this.MaxAgeDays > (int)730)
+            {
+                yield return new ValidationResult("Invalid value for MaxAgeDays, must be a value less than or equal to 730.", new [] { "MaxAgeDays" });
+            }
+
+            // MaxAgeDays (int) minimum
+            if (this.MaxAgeDays < (int)1)
+            {
+                yield return new ValidationResult("Invalid value for MaxAgeDays, must be a value greater than or equal to 1.", new [] { "MaxAgeDays" });
+            }
+
             yield break;
         }
     }

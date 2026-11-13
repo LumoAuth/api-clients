@@ -37,6 +37,8 @@ type OAuthClient struct {
 	Scopes []string `json:"scopes,omitempty"`
 	// Detailed responses only
 	GrantTypes []string `json:"grantTypes,omitempty"`
+	// Detailed responses only. Whether the client may use CIBA (backchannel authentication).
+	CibaEnabled *bool `json:"cibaEnabled,omitempty"`
 }
 
 type _OAuthClient OAuthClient
@@ -354,6 +356,38 @@ func (o *OAuthClient) SetGrantTypes(v []string) {
 	o.GrantTypes = v
 }
 
+// GetCibaEnabled returns the CibaEnabled field value if set, zero value otherwise.
+func (o *OAuthClient) GetCibaEnabled() bool {
+	if o == nil || IsNil(o.CibaEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.CibaEnabled
+}
+
+// GetCibaEnabledOk returns a tuple with the CibaEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OAuthClient) GetCibaEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.CibaEnabled) {
+		return nil, false
+	}
+	return o.CibaEnabled, true
+}
+
+// HasCibaEnabled returns a boolean if a field has been set.
+func (o *OAuthClient) HasCibaEnabled() bool {
+	if o != nil && !IsNil(o.CibaEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetCibaEnabled gets a reference to the given bool and assigns it to the CibaEnabled field.
+func (o *OAuthClient) SetCibaEnabled(v bool) {
+	o.CibaEnabled = &v
+}
+
 func (o OAuthClient) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -380,6 +414,9 @@ func (o OAuthClient) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.GrantTypes) {
 		toSerialize["grantTypes"] = o.GrantTypes
+	}
+	if !IsNil(o.CibaEnabled) {
+		toSerialize["cibaEnabled"] = o.CibaEnabled
 	}
 	return toSerialize, nil
 }

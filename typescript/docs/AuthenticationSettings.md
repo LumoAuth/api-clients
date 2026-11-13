@@ -7,7 +7,6 @@ Authentication settings (entity defaults merged with the stored values). Any oth
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **passkey_enabled** | **boolean** |  | [optional] [default to undefined]
-**biometric_enabled** | **boolean** |  | [optional] [default to undefined]
 **passkeys** | [**AuthenticationSettingsPasskeys**](AuthenticationSettingsPasskeys.md) |  | [optional] [default to undefined]
 **mfa_required** | **boolean** |  | [optional] [default to undefined]
 **mfa_methods** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
@@ -15,7 +14,7 @@ Name | Type | Description | Notes
 **mfa_policy** | [**AuthenticationSettingsMfaPolicy**](AuthenticationSettingsMfaPolicy.md) |  | [optional] [default to undefined]
 **push_auth_required** | **boolean** |  | [optional] [default to undefined]
 **push_app_name** | **string** |  | [optional] [default to undefined]
-**social_login_enabled** | **boolean** |  | [optional] [default to undefined]
+**social_login_enabled** | **boolean** | Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag. | [optional] [default to undefined]
 **social_providers** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **social_configs** | **{ [key: string]: { [key: string]: any; }; }** | Per-provider OAuth credentials keyed by provider (google, github, microsoft, facebook, apple, linkedin). Each value is a free-form object of provider fields (client_id, hosted_domain, tenant_id, team_id, key_id, ...); the secret fields client_secret and private_key are returned as the redaction marker {\&quot;configured\&quot;: true, \&quot;redacted\&quot;: true} when set, null otherwise. | [optional] [default to undefined]
 **password_min_length** | **number** | Legacy; mirrored by password_policy.min_length. | [optional] [default to undefined]
@@ -23,8 +22,7 @@ Name | Type | Description | Notes
 **password_policy** | [**AuthenticationSettingsPasswordPolicy**](AuthenticationSettingsPasswordPolicy.md) |  | [optional] [default to undefined]
 **password_rotation_policy** | [**AuthenticationSettingsPasswordRotationPolicy**](AuthenticationSettingsPasswordRotationPolicy.md) |  | [optional] [default to undefined]
 **no_mfa_action** | **string** |  | [optional] [default to undefined]
-**session_timeout** | **number** | Seconds. | [optional] [default to undefined]
-**encrypt_client_secrets** | **boolean** |  | [optional] [default to undefined]
+**session_timeout** | **number** | Idle timeout in seconds. | [optional] [default to undefined]
 **dynamic_client_registration_enabled** | **boolean** |  | [optional] [default to undefined]
 **cimd_enabled** | **boolean** | Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out. | [optional] [default to true]
 **cimd_allowed_domains** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
@@ -40,7 +38,6 @@ import { AuthenticationSettings } from '@lumoauth/api-client';
 
 const instance: AuthenticationSettings = {
     passkey_enabled,
-    biometric_enabled,
     passkeys,
     mfa_required,
     mfa_methods,
@@ -57,7 +54,6 @@ const instance: AuthenticationSettings = {
     password_rotation_policy,
     no_mfa_action,
     session_timeout,
-    encrypt_client_secrets,
     dynamic_client_registration_enabled,
     cimd_enabled,
     cimd_allowed_domains,

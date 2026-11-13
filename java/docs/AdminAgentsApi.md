@@ -253,7 +253,7 @@ public class Example {
 
 <a id="adminAgentsAgentsRotateKey"></a>
 # **adminAgentsAgentsRotateKey**
-> AdminAgentsAgentsRotateKeyResponse adminAgentsAgentsRotateKey(orgId, agentId)
+> AdminAgentsAgentsRotateKeyResponse adminAgentsAgentsRotateKey(orgId, agentId, adminAgentsAgentsRotateKeyRequest)
 
 Rotate agent API key
 
@@ -285,8 +285,9 @@ public class Example {
     AdminAgentsApi apiInstance = new AdminAgentsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String agentId = "agentId_example"; // String | 
+    AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest = new AdminAgentsAgentsRotateKeyRequest(); // AdminAgentsAgentsRotateKeyRequest | Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
     try {
-      AdminAgentsAgentsRotateKeyResponse result = apiInstance.adminAgentsAgentsRotateKey(orgId, agentId);
+      AdminAgentsAgentsRotateKeyResponse result = apiInstance.adminAgentsAgentsRotateKey(orgId, agentId, adminAgentsAgentsRotateKeyRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAgentsApi#adminAgentsAgentsRotateKey");
@@ -305,6 +306,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **agentId** | **String**|  | |
+| **adminAgentsAgentsRotateKeyRequest** | [**AdminAgentsAgentsRotateKeyRequest**](AdminAgentsAgentsRotateKeyRequest.md)| Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | [optional] |
 
 ### Return type
 
@@ -316,13 +318,14 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | API key rotated. The new key is returned ONCE and cannot be retrieved again. |  -  |
+| **400** | The agent does not authenticate with an API key (identity type other than api_key), or the lifetime is invalid. |  -  |
 | **401** | Authentication required. |  -  |
 | **403** | Admin privileges required. |  -  |
 | **404** | Tenant or agent not found. |  -  |
@@ -399,7 +402,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Agent created. The generated credential/secret is returned ONCE and cannot be retrieved again. |  -  |
-| **400** | Missing required field: name. |  -  |
+| **400** | Missing required field: name, or an invalid budgetPolicy (unknown key, or a value that is not a number greater than zero). |  -  |
 | **401** | Authentication required. |  -  |
 | **403** | Admin privileges required. |  -  |
 | **404** | Tenant not found. |  -  |
@@ -630,10 +633,11 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | A generated agent token. The token value is returned ONCE. |  -  |
-| **400** | Inactive agent, requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. |  -  |
+| **400** | Inactive agent, an agent that only takes DPoP-bound tokens (a minted token cannot be bound to its key), requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. |  -  |
 | **401** | Authentication required. |  -  |
 | **403** | Admin privileges required. |  -  |
 | **404** | Tenant or agent not found. |  -  |
+| **429** | budget_exceeded: the agent budget is spent. A token mint counts as one call. Retry-After holds the seconds until the spent window starts again. |  -  |
 
 <a id="adminAgentsGet"></a>
 # **adminAgentsGet**
@@ -1020,7 +1024,7 @@ public class Example {
 
 <a id="adminAgentsRotateCredentials"></a>
 # **adminAgentsRotateCredentials**
-> AdminAgentsRotateCredentialsResponse adminAgentsRotateCredentials(orgId, agentId)
+> AdminAgentsRotateCredentialsResponse adminAgentsRotateCredentials(orgId, agentId, adminAgentsAgentsRotateKeyRequest)
 
 Rotate agent credentials
 
@@ -1052,8 +1056,9 @@ public class Example {
     AdminAgentsApi apiInstance = new AdminAgentsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String agentId = "agentId_example"; // String | 
+    AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest = new AdminAgentsAgentsRotateKeyRequest(); // AdminAgentsAgentsRotateKeyRequest | For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
     try {
-      AdminAgentsRotateCredentialsResponse result = apiInstance.adminAgentsRotateCredentials(orgId, agentId);
+      AdminAgentsRotateCredentialsResponse result = apiInstance.adminAgentsRotateCredentials(orgId, agentId, adminAgentsAgentsRotateKeyRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAgentsApi#adminAgentsRotateCredentials");
@@ -1072,6 +1077,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **agentId** | **String**|  | |
+| **adminAgentsAgentsRotateKeyRequest** | [**AdminAgentsAgentsRotateKeyRequest**](AdminAgentsAgentsRotateKeyRequest.md)| For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | [optional] |
 
 ### Return type
 
@@ -1083,7 +1089,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1248,6 +1254,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Agent updated. |  -  |
+| **400** | Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. |  -  |
 | **401** | Authentication required. |  -  |
 | **403** | Admin privileges required. |  -  |
 | **404** | Tenant or agent not found. |  -  |
@@ -1326,6 +1333,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Agent updated. |  -  |
+| **400** | Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. |  -  |
 | **401** | Authentication required. |  -  |
 | **403** | Admin privileges required. |  -  |
 | **404** | Tenant or agent not found. |  -  |

@@ -378,7 +378,7 @@ class ListPermissionsResponsePermissionsItem implements ModelInterface, ArrayAcc
     /**
      * Sets source
      *
-     * @param string|null $source role:<role name> that grants it
+     * @param string|null $source role:<role name> that grants it, or direct for a permission granted to the user directly
      *
      * @return self
      */

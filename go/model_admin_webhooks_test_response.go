@@ -23,6 +23,8 @@ type AdminWebhooksTestResponse struct {
 	Success *bool `json:"success,omitempty"`
 	// HTTP status returned by the receiver
 	StatusCode *int32 `json:"statusCode,omitempty"`
+	// Id of the delivery row (the `X-LumoAuth-Delivery` header of the request)
+	DeliveryId *string `json:"deliveryId,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
@@ -107,6 +109,38 @@ func (o *AdminWebhooksTestResponse) SetStatusCode(v int32) {
 	o.StatusCode = &v
 }
 
+// GetDeliveryId returns the DeliveryId field value if set, zero value otherwise.
+func (o *AdminWebhooksTestResponse) GetDeliveryId() string {
+	if o == nil || IsNil(o.DeliveryId) {
+		var ret string
+		return ret
+	}
+	return *o.DeliveryId
+}
+
+// GetDeliveryIdOk returns a tuple with the DeliveryId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminWebhooksTestResponse) GetDeliveryIdOk() (*string, bool) {
+	if o == nil || IsNil(o.DeliveryId) {
+		return nil, false
+	}
+	return o.DeliveryId, true
+}
+
+// HasDeliveryId returns a boolean if a field has been set.
+func (o *AdminWebhooksTestResponse) HasDeliveryId() bool {
+	if o != nil && !IsNil(o.DeliveryId) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeliveryId gets a reference to the given string and assigns it to the DeliveryId field.
+func (o *AdminWebhooksTestResponse) SetDeliveryId(v string) {
+	o.DeliveryId = &v
+}
+
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *AdminWebhooksTestResponse) GetMessage() string {
 	if o == nil || IsNil(o.Message) {
@@ -154,6 +188,9 @@ func (o AdminWebhooksTestResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.StatusCode) {
 		toSerialize["statusCode"] = o.StatusCode
+	}
+	if !IsNil(o.DeliveryId) {
+		toSerialize["deliveryId"] = o.DeliveryId
 	}
 	if !IsNil(o.Message) {
 		toSerialize["message"] = o.Message

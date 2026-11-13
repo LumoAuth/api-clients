@@ -12,22 +12,33 @@ import AnyCodable
 
 public struct AdminAuditLogsRetentionResponseData: Codable, JSONEncodable, Hashable {
 
-    /** Effective retention, capped by the plan limit */
+    /** The organization's own period, between minRetentionDays and maxRetentionDays. It applies while data retention is on and autoDelete is not false. */
     public var retentionDays: Int?
+    /** false switches the organization's own period off; the plan's period still applies */
     public var autoDelete: Bool?
-    /** Plan cap; null when unlimited or billing enforcement is off */
+    /** The plan's period: older entries are not returned and are deleted. null when the plan has no limit. */
     public var planLimitDays: Int?
+    /** How long entries are kept now; null when nothing is deleted */
+    public var effectiveRetentionDays: Int?
+    public var minRetentionDays: Int?
+    public var maxRetentionDays: Int?
 
-    public init(retentionDays: Int? = nil, autoDelete: Bool? = nil, planLimitDays: Int? = nil) {
+    public init(retentionDays: Int? = nil, autoDelete: Bool? = nil, planLimitDays: Int? = nil, effectiveRetentionDays: Int? = nil, minRetentionDays: Int? = nil, maxRetentionDays: Int? = nil) {
         self.retentionDays = retentionDays
         self.autoDelete = autoDelete
         self.planLimitDays = planLimitDays
+        self.effectiveRetentionDays = effectiveRetentionDays
+        self.minRetentionDays = minRetentionDays
+        self.maxRetentionDays = maxRetentionDays
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case retentionDays
         case autoDelete
         case planLimitDays
+        case effectiveRetentionDays
+        case minRetentionDays
+        case maxRetentionDays
     }
 
     // Encodable protocol methods
@@ -37,6 +48,9 @@ public struct AdminAuditLogsRetentionResponseData: Codable, JSONEncodable, Hasha
         try container.encodeIfPresent(retentionDays, forKey: .retentionDays)
         try container.encodeIfPresent(autoDelete, forKey: .autoDelete)
         try container.encodeIfPresent(planLimitDays, forKey: .planLimitDays)
+        try container.encodeIfPresent(effectiveRetentionDays, forKey: .effectiveRetentionDays)
+        try container.encodeIfPresent(minRetentionDays, forKey: .minRetentionDays)
+        try container.encodeIfPresent(maxRetentionDays, forKey: .maxRetentionDays)
     }
 }
 

@@ -315,7 +315,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of SetClientScopesResponse</returns>
         ApiResponse<SetClientScopesResponse> SetClientScopesWithHttpInfo(string orgId, string clientId);
         /// <summary>
-        /// Replace an OAuth client
+        /// Update an OAuth client (same as PATCH: only the fields that are sent change)
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -324,7 +324,7 @@ namespace LumoAuth.ApiClient.Api
         UpdateClientResponse UpdateClient(string orgId, string clientId);
 
         /// <summary>
-        /// Replace an OAuth client
+        /// Update an OAuth client (same as PATCH: only the fields that are sent change)
         /// </summary>
         /// <remarks>
         /// 
@@ -694,7 +694,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (SetClientScopesResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<SetClientScopesResponse>> SetClientScopesWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Replace an OAuth client
+        /// Update an OAuth client (same as PATCH: only the fields that are sent change)
         /// </summary>
         /// <remarks>
         /// 
@@ -707,7 +707,7 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task<UpdateClientResponse> UpdateClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Replace an OAuth client
+        /// Update an OAuth client (same as PATCH: only the fields that are sent change)
         /// </summary>
         /// <remarks>
         /// 
@@ -3036,7 +3036,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replace an OAuth client 
+        /// Update an OAuth client (same as PATCH: only the fields that are sent change) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3049,7 +3049,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replace an OAuth client 
+        /// Update an OAuth client (same as PATCH: only the fields that are sent change) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3109,7 +3109,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replace an OAuth client 
+        /// Update an OAuth client (same as PATCH: only the fields that are sent change) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3123,7 +3123,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replace an OAuth client 
+        /// Update an OAuth client (same as PATCH: only the fields that are sent change) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

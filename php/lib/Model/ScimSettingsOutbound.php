@@ -78,7 +78,6 @@ class ScimSettingsOutbound implements ModelInterface, ArrayAccess, \JsonSerializ
         'syncOnLogin' => 'bool',
         'batchSyncEnabled' => 'bool',
         'batchSyncInterval' => 'string',
-        'attributeMapping' => 'array<string,string>',
         'lastSyncAt' => 'string',
         'lastSyncStatus' => 'string',
         'lastSyncError' => 'string',
@@ -115,7 +114,6 @@ class ScimSettingsOutbound implements ModelInterface, ArrayAccess, \JsonSerializ
         'syncOnLogin' => null,
         'batchSyncEnabled' => null,
         'batchSyncInterval' => null,
-        'attributeMapping' => null,
         'lastSyncAt' => null,
         'lastSyncStatus' => null,
         'lastSyncError' => null,
@@ -150,7 +148,6 @@ class ScimSettingsOutbound implements ModelInterface, ArrayAccess, \JsonSerializ
         'syncOnLogin' => false,
         'batchSyncEnabled' => false,
         'batchSyncInterval' => false,
-        'attributeMapping' => false,
         'lastSyncAt' => true,
         'lastSyncStatus' => true,
         'lastSyncError' => true,
@@ -265,7 +262,6 @@ class ScimSettingsOutbound implements ModelInterface, ArrayAccess, \JsonSerializ
         'syncOnLogin' => 'sync_on_login',
         'batchSyncEnabled' => 'batch_sync_enabled',
         'batchSyncInterval' => 'batch_sync_interval',
-        'attributeMapping' => 'attribute_mapping',
         'lastSyncAt' => 'last_sync_at',
         'lastSyncStatus' => 'last_sync_status',
         'lastSyncError' => 'last_sync_error',
@@ -300,7 +296,6 @@ class ScimSettingsOutbound implements ModelInterface, ArrayAccess, \JsonSerializ
         'syncOnLogin' => 'setSyncOnLogin',
         'batchSyncEnabled' => 'setBatchSyncEnabled',
         'batchSyncInterval' => 'setBatchSyncInterval',
-        'attributeMapping' => 'setAttributeMapping',
         'lastSyncAt' => 'setLastSyncAt',
         'lastSyncStatus' => 'setLastSyncStatus',
         'lastSyncError' => 'setLastSyncError',
@@ -335,7 +330,6 @@ class ScimSettingsOutbound implements ModelInterface, ArrayAccess, \JsonSerializ
         'syncOnLogin' => 'getSyncOnLogin',
         'batchSyncEnabled' => 'getBatchSyncEnabled',
         'batchSyncInterval' => 'getBatchSyncInterval',
-        'attributeMapping' => 'getAttributeMapping',
         'lastSyncAt' => 'getLastSyncAt',
         'lastSyncStatus' => 'getLastSyncStatus',
         'lastSyncError' => 'getLastSyncError',
@@ -455,7 +449,6 @@ class ScimSettingsOutbound implements ModelInterface, ArrayAccess, \JsonSerializ
         $this->setIfExists('syncOnLogin', $data ?? [], null);
         $this->setIfExists('batchSyncEnabled', $data ?? [], null);
         $this->setIfExists('batchSyncInterval', $data ?? [], null);
-        $this->setIfExists('attributeMapping', $data ?? [], null);
         $this->setIfExists('lastSyncAt', $data ?? [], null);
         $this->setIfExists('lastSyncStatus', $data ?? [], null);
         $this->setIfExists('lastSyncError', $data ?? [], null);
@@ -874,7 +867,7 @@ class ScimSettingsOutbound implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets tlsCertificate
      *
-     * @param string|null $tlsCertificate Optional PEM CA certificate used for TLS verification.
+     * @param string|null $tlsCertificate Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets.
      *
      * @return self
      */
@@ -908,7 +901,7 @@ class ScimSettingsOutbound implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets verifyTls
      *
-     * @param bool|null $verifyTls verifyTls
+     * @param bool|null $verifyTls Always true. The endpoint certificate is always verified; false is rejected with 400.
      *
      * @return self
      */
@@ -1117,33 +1110,6 @@ class ScimSettingsOutbound implements ModelInterface, ArrayAccess, \JsonSerializ
             );
         }
         $this->container['batchSyncInterval'] = $batchSyncInterval;
-
-        return $this;
-    }
-
-    /**
-     * Gets attributeMapping
-     *
-     * @return array<string,string>|null
-     */
-    public function getAttributeMapping()
-    {
-        return $this->container['attributeMapping'];
-    }
-
-    /**
-     * Sets attributeMapping
-     *
-     * @param array<string,string>|null $attributeMapping User field => SCIM attribute.
-     *
-     * @return self
-     */
-    public function setAttributeMapping($attributeMapping)
-    {
-        if (is_null($attributeMapping)) {
-            throw new \InvalidArgumentException('non-nullable attributeMapping cannot be null');
-        }
-        $this->container['attributeMapping'] = $attributeMapping;
 
         return $this;
     }

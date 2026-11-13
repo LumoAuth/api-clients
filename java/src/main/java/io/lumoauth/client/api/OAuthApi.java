@@ -33,6 +33,8 @@ import io.lumoauth.client.model.IntrospectResponse;
 import io.lumoauth.client.model.ParResponse;
 import io.lumoauth.client.model.RegisterClientResponse;
 import io.lumoauth.client.model.RegisteredClientMetadata;
+import io.lumoauth.client.model.RequestMagicLinkRequest;
+import io.lumoauth.client.model.RequestMagicLinkResponse;
 import io.lumoauth.client.model.SubmitLoginJsonResponse;
 import io.lumoauth.client.model.TokenResponse;
 
@@ -1065,7 +1067,7 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the tenant is unknown. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
@@ -1137,7 +1139,7 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the tenant is unknown. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
@@ -1158,7 +1160,7 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the tenant is unknown. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
@@ -1181,7 +1183,7 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the tenant is unknown. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
@@ -1333,6 +1335,159 @@ public class OAuthApi {
 
         okhttp3.Call localVarCall = registerClientValidateBeforeCall(orgId, _callback);
         Type localVarReturnType = new TypeToken<RegisterClientResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for requestMagicLink
+     * @param orgId  (required)
+     * @param requestMagicLinkRequest  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The request was accepted. The answer is the same whether or not the address belongs to an account. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> &#x60;{\&quot;error\&quot;: …, \&quot;message\&quot;: …}&#x60; with error &#x60;invalid_request&#x60;, &#x60;invalid_client&#x60;, &#x60;invalid_return_to&#x60;, &#x60;captcha_required&#x60; or &#x60;captcha_failed&#x60;. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> &#x60;{\&quot;error\&quot;:\&quot;origin_not_allowed\&quot;}&#x60;: the page that made the request is not one of the application&#39;s allowed origins. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> &#x60;{\&quot;error\&quot;:\&quot;not_found\&quot;}&#x60; for an unknown organization, &#x60;{\&quot;error\&quot;:\&quot;magic_link_disabled\&quot;}&#x60; when the organization does not offer sign-in links. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> &#x60;{\&quot;error\&quot;:\&quot;rate_limited\&quot;}&#x60;. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call requestMagicLinkCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RequestMagicLinkRequest requestMagicLinkRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = requestMagicLinkRequest;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/oauth/magic-link"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call requestMagicLinkValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RequestMagicLinkRequest requestMagicLinkRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling requestMagicLink(Async)");
+        }
+
+        // verify the required parameter 'requestMagicLinkRequest' is set
+        if (requestMagicLinkRequest == null) {
+            throw new ApiException("Missing the required parameter 'requestMagicLinkRequest' when calling requestMagicLink(Async)");
+        }
+
+        return requestMagicLinkCall(orgId, requestMagicLinkRequest, _callback);
+
+    }
+
+    /**
+     * Request a sign-in link by email
+     * For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to &#x60;return_to&#x60;, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+     * @param orgId  (required)
+     * @param requestMagicLinkRequest  (required)
+     * @return RequestMagicLinkResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The request was accepted. The answer is the same whether or not the address belongs to an account. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> &#x60;{\&quot;error\&quot;: …, \&quot;message\&quot;: …}&#x60; with error &#x60;invalid_request&#x60;, &#x60;invalid_client&#x60;, &#x60;invalid_return_to&#x60;, &#x60;captcha_required&#x60; or &#x60;captcha_failed&#x60;. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> &#x60;{\&quot;error\&quot;:\&quot;origin_not_allowed\&quot;}&#x60;: the page that made the request is not one of the application&#39;s allowed origins. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> &#x60;{\&quot;error\&quot;:\&quot;not_found\&quot;}&#x60; for an unknown organization, &#x60;{\&quot;error\&quot;:\&quot;magic_link_disabled\&quot;}&#x60; when the organization does not offer sign-in links. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> &#x60;{\&quot;error\&quot;:\&quot;rate_limited\&quot;}&#x60;. </td><td>  -  </td></tr>
+     </table>
+     */
+    public RequestMagicLinkResponse requestMagicLink(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RequestMagicLinkRequest requestMagicLinkRequest) throws ApiException {
+        ApiResponse<RequestMagicLinkResponse> localVarResp = requestMagicLinkWithHttpInfo(orgId, requestMagicLinkRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Request a sign-in link by email
+     * For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to &#x60;return_to&#x60;, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+     * @param orgId  (required)
+     * @param requestMagicLinkRequest  (required)
+     * @return ApiResponse&lt;RequestMagicLinkResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The request was accepted. The answer is the same whether or not the address belongs to an account. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> &#x60;{\&quot;error\&quot;: …, \&quot;message\&quot;: …}&#x60; with error &#x60;invalid_request&#x60;, &#x60;invalid_client&#x60;, &#x60;invalid_return_to&#x60;, &#x60;captcha_required&#x60; or &#x60;captcha_failed&#x60;. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> &#x60;{\&quot;error\&quot;:\&quot;origin_not_allowed\&quot;}&#x60;: the page that made the request is not one of the application&#39;s allowed origins. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> &#x60;{\&quot;error\&quot;:\&quot;not_found\&quot;}&#x60; for an unknown organization, &#x60;{\&quot;error\&quot;:\&quot;magic_link_disabled\&quot;}&#x60; when the organization does not offer sign-in links. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> &#x60;{\&quot;error\&quot;:\&quot;rate_limited\&quot;}&#x60;. </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<RequestMagicLinkResponse> requestMagicLinkWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RequestMagicLinkRequest requestMagicLinkRequest) throws ApiException {
+        okhttp3.Call localVarCall = requestMagicLinkValidateBeforeCall(orgId, requestMagicLinkRequest, null);
+        Type localVarReturnType = new TypeToken<RequestMagicLinkResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Request a sign-in link by email (asynchronously)
+     * For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to &#x60;return_to&#x60;, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+     * @param orgId  (required)
+     * @param requestMagicLinkRequest  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The request was accepted. The answer is the same whether or not the address belongs to an account. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> &#x60;{\&quot;error\&quot;: …, \&quot;message\&quot;: …}&#x60; with error &#x60;invalid_request&#x60;, &#x60;invalid_client&#x60;, &#x60;invalid_return_to&#x60;, &#x60;captcha_required&#x60; or &#x60;captcha_failed&#x60;. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> &#x60;{\&quot;error\&quot;:\&quot;origin_not_allowed\&quot;}&#x60;: the page that made the request is not one of the application&#39;s allowed origins. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> &#x60;{\&quot;error\&quot;:\&quot;not_found\&quot;}&#x60; for an unknown organization, &#x60;{\&quot;error\&quot;:\&quot;magic_link_disabled\&quot;}&#x60; when the organization does not offer sign-in links. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> &#x60;{\&quot;error\&quot;:\&quot;rate_limited\&quot;}&#x60;. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call requestMagicLinkAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RequestMagicLinkRequest requestMagicLinkRequest, final ApiCallback<RequestMagicLinkResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = requestMagicLinkValidateBeforeCall(orgId, requestMagicLinkRequest, _callback);
+        Type localVarReturnType = new TypeToken<RequestMagicLinkResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -2162,7 +2317,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Signed in (status&#x3D;complete — continue to /oauth/authorize) or a second factor is required (status&#x3D;mfa_required with the challenge page URL). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> {\&quot;status\&quot;:\&quot;invalid_request\&quot;} or {\&quot;status\&quot;:\&quot;captcha_required\&quot;,\&quot;message\&quot;:…}. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}; {\&quot;status\&quot;:\&quot;sso_required\&quot;,\&quot;redirect_url\&quot;:…} for an administrator of an organization that requires single sign-on for administrators. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> {\&quot;status\&quot;:\&quot;not_found\&quot;} — unknown or inactive organization. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
@@ -2236,7 +2391,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Signed in (status&#x3D;complete — continue to /oauth/authorize) or a second factor is required (status&#x3D;mfa_required with the challenge page URL). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> {\&quot;status\&quot;:\&quot;invalid_request\&quot;} or {\&quot;status\&quot;:\&quot;captcha_required\&quot;,\&quot;message\&quot;:…}. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}; {\&quot;status\&quot;:\&quot;sso_required\&quot;,\&quot;redirect_url\&quot;:…} for an administrator of an organization that requires single sign-on for administrators. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> {\&quot;status\&quot;:\&quot;not_found\&quot;} — unknown or inactive organization. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
@@ -2259,7 +2414,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Signed in (status&#x3D;complete — continue to /oauth/authorize) or a second factor is required (status&#x3D;mfa_required with the challenge page URL). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> {\&quot;status\&quot;:\&quot;invalid_request\&quot;} or {\&quot;status\&quot;:\&quot;captcha_required\&quot;,\&quot;message\&quot;:…}. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}; {\&quot;status\&quot;:\&quot;sso_required\&quot;,\&quot;redirect_url\&quot;:…} for an administrator of an organization that requires single sign-on for administrators. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> {\&quot;status\&quot;:\&quot;not_found\&quot;} — unknown or inactive organization. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
@@ -2284,7 +2439,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Signed in (status&#x3D;complete — continue to /oauth/authorize) or a second factor is required (status&#x3D;mfa_required with the challenge page URL). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> {\&quot;status\&quot;:\&quot;invalid_request\&quot;} or {\&quot;status\&quot;:\&quot;captcha_required\&quot;,\&quot;message\&quot;:…}. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}; {\&quot;status\&quot;:\&quot;sso_required\&quot;,\&quot;redirect_url\&quot;:…} for an administrator of an organization that requires single sign-on for administrators. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> {\&quot;status\&quot;:\&quot;not_found\&quot;} — unknown or inactive organization. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
@@ -2444,6 +2599,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
         <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -2516,6 +2672,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
         <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -2537,6 +2694,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
         <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -2560,6 +2718,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
         <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */

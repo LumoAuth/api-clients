@@ -22,12 +22,16 @@ module LumoAuthApiClient
 
     attr_accessor :capabilities
 
+    # The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. Leave it out for an agent without a budget.
+    attr_accessor :budget_policy
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'name' => :'name',
         :'description' => :'description',
-        :'capabilities' => :'capabilities'
+        :'capabilities' => :'capabilities',
+        :'budget_policy' => :'budgetPolicy'
       }
     end
 
@@ -46,13 +50,15 @@ module LumoAuthApiClient
       {
         :'name' => :'String',
         :'description' => :'String',
-        :'capabilities' => :'Array<String>'
+        :'capabilities' => :'Array<String>',
+        :'budget_policy' => :'Hash<String, Object>'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'budget_policy'
       ])
     end
 
@@ -85,6 +91,12 @@ module LumoAuthApiClient
           self.capabilities = value
         end
       end
+
+      if attributes.key?(:'budget_policy')
+        if (value = attributes[:'budget_policy']).is_a?(Hash)
+          self.budget_policy = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -109,7 +121,8 @@ module LumoAuthApiClient
       self.class == o.class &&
           name == o.name &&
           description == o.description &&
-          capabilities == o.capabilities
+          capabilities == o.capabilities &&
+          budget_policy == o.budget_policy
     end
 
     # @see the `==` method
@@ -121,7 +134,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, description, capabilities].hash
+      [name, description, capabilities, budget_policy].hash
     end
 
     # Builds the object from hash

@@ -9,9 +9,9 @@ Method | HTTP request | Description
 [**addUserRole**](AdminUsersAPI.md#adduserrole) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Assign a role to a user
 [**adminIdentitiesLegacySamlRelink**](AdminUsersAPI.md#adminidentitieslegacysamlrelink) | **POST** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Relink legacy SAML users to an IdP
 [**adminIdentitiesLegacySamlReport**](AdminUsersAPI.md#adminidentitieslegacysamlreport) | **GET** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Legacy SAML bindings report
-[**adminIdentitiesLink**](AdminUsersAPI.md#adminidentitieslink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML or LDAP identity to a user
+[**adminIdentitiesLink**](AdminUsersAPI.md#adminidentitieslink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user
 [**adminIdentitiesList**](AdminUsersAPI.md#adminidentitieslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links
-[**adminIdentitiesUnlink**](AdminUsersAPI.md#adminidentitiesunlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, LDAP or social identity
+[**adminIdentitiesUnlink**](AdminUsersAPI.md#adminidentitiesunlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity
 [**blockUser**](AdminUsersAPI.md#blockuser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user
 [**createUser**](AdminUsersAPI.md#createuser) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user
 [**deleteUser**](AdminUsersAPI.md#deleteuser) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user
@@ -295,9 +295,9 @@ Name | Type | Description  | Notes
     open class func adminIdentitiesLink(orgId: String, userId: String, adminIdentitiesLinkRequest: AdminIdentitiesLinkRequest, completion: @escaping (_ data: AdminAgentsGetResponse?, _ error: Error?) -> Void)
 ```
 
-Link a SAML or LDAP identity to a user
+Link a SAML, OpenID Connect or LDAP identity to a user
 
-Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`), enterprise OpenID Connect binding (`idp_id` + `subject`: the value of the connection's user identifier claim; a person can sign in through such a connection only after this link exists) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
 
 ### Example
 ```swift
@@ -306,9 +306,9 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
-let adminIdentitiesLinkRequest = AdminIdentitiesLinkRequest(type: "type_example", idpId: 123, nameId: "nameId_example", ldapConfigId: 123, dn: "dn_example", ldapOnly: false) // AdminIdentitiesLinkRequest | 
+let adminIdentitiesLinkRequest = AdminIdentitiesLinkRequest(type: "type_example", idpId: 123, subject: "subject_example", nameId: "nameId_example", ldapConfigId: 123, dn: "dn_example", ldapOnly: false) // AdminIdentitiesLinkRequest | 
 
-// Link a SAML or LDAP identity to a user
+// Link a SAML, OpenID Connect or LDAP identity to a user
 AdminUsersAPI.adminIdentitiesLink(orgId: orgId, userId: userId, adminIdentitiesLinkRequest: adminIdentitiesLinkRequest) { (response, error) in
     guard error == nil else {
         print(error)
@@ -351,7 +351,7 @@ Name | Type | Description  | Notes
 
 List a user's federated identity links
 
-SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+SAML (IdP + NameID), enterprise OpenID Connect (connection + subject), LDAP (directory + DN) and social provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP. An OpenID Connect link with `hashed: true` stores a long subject as a hash, so `subject` is null.
 
 ### Example
 ```swift
@@ -401,9 +401,9 @@ Name | Type | Description  | Notes
     open class func adminIdentitiesUnlink(type: ModelType_adminIdentitiesUnlink, orgId: String, userId: String, completion: @escaping (_ data: AdminAgentsGetResponse?, _ error: Error?) -> Void)
 ```
 
-Unlink a user's SAML, LDAP or social identity
+Unlink a user's SAML, OpenID Connect, LDAP or social identity
 
-Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+Removes the binding of the given type (`saml`, `oidc`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
 
 ### Example
 ```swift
@@ -414,7 +414,7 @@ let type = "type_example" // String |
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
 
-// Unlink a user's SAML, LDAP or social identity
+// Unlink a user's SAML, OpenID Connect, LDAP or social identity
 AdminUsersAPI.adminIdentitiesUnlink(type: type, orgId: orgId, userId: userId) { (response, error) in
     guard error == nil else {
         print(error)

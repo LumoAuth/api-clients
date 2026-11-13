@@ -43,6 +43,7 @@ pub enum AdminWebhooksDeliveriesListError {
 #[serde(untagged)]
 pub enum AdminWebhooksDeliveryReplayError {
     Status404(),
+    Status409(),
     UnknownValue(serde_json::Value),
 }
 
@@ -151,7 +152,7 @@ pub enum PutAdminWebhooksUpdateError {
 }
 
 
-/// The signing secret is generated server-side and returned once in this response only.
+/// Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
 pub async fn admin_webhooks_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminWebhooksCreateResponse, Error<AdminWebhooksCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -296,7 +297,7 @@ pub async fn admin_webhooks_deliveries_list(configuration: &configuration::Confi
     }
 }
 
-/// Resets the delivery's failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+/// Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
 pub async fn admin_webhooks_delivery_replay(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str, delivery_id: &str) -> Result<models::AdminWebhooksDeliveryReplayResponse, Error<AdminWebhooksDeliveryReplayError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -539,7 +540,7 @@ pub async fn admin_webhooks_list(configuration: &configuration::Configuration, o
     }
 }
 
-/// Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+/// Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries `X-LumoAuth-Signature-Previous`, signed with the secret that was replaced, so the receiver can be updated without losing events. The `kid` of `X-LumoAuth-Signature` changes with every rotation.
 pub async fn admin_webhooks_rotate_secret(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::AdminWebhooksRotateSecretResponse, Error<AdminWebhooksRotateSecretError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -588,7 +589,7 @@ pub async fn admin_webhooks_rotate_secret(configuration: &configuration::Configu
     }
 }
 
-/// POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver's status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
+/// Sends one `webhook.test` event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with `success: false`; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
 pub async fn admin_webhooks_test(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::AdminWebhooksTestResponse, Error<AdminWebhooksTestError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -927,6 +928,7 @@ pub async fn patch_admin_webhooks_update(configuration: &configuration::Configur
     }
 }
 
+/// Changes only the fields that are sent: `url`, `events`, `isActive` (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`. A new `url` for a webhook that has a signing secret needs `rotateSecret: true`; the response then carries the new `secret` once. Unknown fields, `secret` and event names that are not in the catalogue are refused with 400.
 pub async fn put_admin_webhooks_update(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::PutAdminWebhooksUpdateResponse, Error<PutAdminWebhooksUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;

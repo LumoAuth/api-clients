@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **r#type** | Option<**String**> |  | [optional]
 **idp_id** | Option<**i32**> |  | [optional]
 **name_id** | Option<**String**> |  | [optional]
+**subject** | Option<**String**> |  | [optional]
 **legacy** | Option<**bool**> |  | [optional]
 **ldap_config_id** | Option<**i32**> |  | [optional]
 **dn** | Option<**String**> |  | [optional]

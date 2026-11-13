@@ -37,7 +37,7 @@ namespace LumoAuth.ApiClient.Model
         /// Initializes a new instance of the <see cref="AdminSandboxSpawnResponse" /> class.
         /// </summary>
         /// <param name="data">data.</param>
-        public AdminSandboxSpawnResponse(SandboxTenant data = default)
+        public AdminSandboxSpawnResponse(AdminSandboxSpawnResponseData data = default)
         {
             this.Data = data;
         }
@@ -46,7 +46,7 @@ namespace LumoAuth.ApiClient.Model
         /// Gets or Sets Data
         /// </summary>
         [DataMember(Name = "data", EmitDefaultValue = false)]
-        public SandboxTenant Data { get; set; }
+        public AdminSandboxSpawnResponseData Data { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

@@ -32,7 +32,7 @@ namespace LumoAuth.ApiClient.Api
         /// Create a webhook
         /// </summary>
         /// <remarks>
-        /// The signing secret is generated server-side and returned once in this response only.
+        /// Accepts &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60; and &#x60;configuration&#x60;. The signing secret is generated server-side and returned once in this response only: a &#x60;secret&#x60; in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -43,7 +43,7 @@ namespace LumoAuth.ApiClient.Api
         /// Create a webhook
         /// </summary>
         /// <remarks>
-        /// The signing secret is generated server-side and returned once in this response only.
+        /// Accepts &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60; and &#x60;configuration&#x60;. The signing secret is generated server-side and returned once in this response only: a &#x60;secret&#x60; in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -96,7 +96,7 @@ namespace LumoAuth.ApiClient.Api
         /// Replay a delivery
         /// </summary>
         /// <remarks>
-        /// Resets the delivery&#39;s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+        /// Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -109,7 +109,7 @@ namespace LumoAuth.ApiClient.Api
         /// Replay a delivery
         /// </summary>
         /// <remarks>
-        /// Resets the delivery&#39;s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+        /// Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -205,7 +205,7 @@ namespace LumoAuth.ApiClient.Api
         /// Rotate the signing secret
         /// </summary>
         /// <remarks>
-        /// Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+        /// Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries &#x60;X-LumoAuth-Signature-Previous&#x60;, signed with the secret that was replaced, so the receiver can be updated without losing events. The &#x60;kid&#x60; of &#x60;X-LumoAuth-Signature&#x60; changes with every rotation.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -217,7 +217,7 @@ namespace LumoAuth.ApiClient.Api
         /// Rotate the signing secret
         /// </summary>
         /// <remarks>
-        /// Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+        /// Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries &#x60;X-LumoAuth-Signature-Previous&#x60;, signed with the secret that was replaced, so the receiver can be updated without losing events. The &#x60;kid&#x60; of &#x60;X-LumoAuth-Signature&#x60; changes with every rotation.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -228,7 +228,7 @@ namespace LumoAuth.ApiClient.Api
         /// Send a test delivery
         /// </summary>
         /// <remarks>
-        /// POSTs a signed &#x60;test.webhook&#x60; payload to the webhook URL and reports the receiver&#39;s status. A non-2xx receiver response still yields HTTP 200 with &#x60;success: false&#x60;; a transport failure yields 502.
+        /// Sends one &#x60;webhook.test&#x60; event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with &#x60;success: false&#x60;; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -240,7 +240,7 @@ namespace LumoAuth.ApiClient.Api
         /// Send a test delivery
         /// </summary>
         /// <remarks>
-        /// POSTs a signed &#x60;test.webhook&#x60; payload to the webhook URL and reports the receiver&#39;s status. A non-2xx receiver response still yields HTTP 200 with &#x60;success: false&#x60;; a transport failure yields 502.
+        /// Sends one &#x60;webhook.test&#x60; event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with &#x60;success: false&#x60;; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -377,6 +377,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Update a webhook
         /// </summary>
+        /// <remarks>
+        /// Changes only the fields that are sent: &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60;, &#x60;configuration&#x60;, &#x60;rotateSecret&#x60;. A new &#x60;url&#x60; for a webhook that has a signing secret needs &#x60;rotateSecret: true&#x60;; the response then carries the new &#x60;secret&#x60; once. Unknown fields, &#x60;secret&#x60; and event names that are not in the catalogue are refused with 400.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
@@ -387,7 +390,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update a webhook
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes only the fields that are sent: &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60;, &#x60;configuration&#x60;, &#x60;rotateSecret&#x60;. A new &#x60;url&#x60; for a webhook that has a signing secret needs &#x60;rotateSecret: true&#x60;; the response then carries the new &#x60;secret&#x60; once. Unknown fields, &#x60;secret&#x60; and event names that are not in the catalogue are refused with 400.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -407,7 +410,7 @@ namespace LumoAuth.ApiClient.Api
         /// Create a webhook
         /// </summary>
         /// <remarks>
-        /// The signing secret is generated server-side and returned once in this response only.
+        /// Accepts &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60; and &#x60;configuration&#x60;. The signing secret is generated server-side and returned once in this response only: a &#x60;secret&#x60; in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -419,7 +422,7 @@ namespace LumoAuth.ApiClient.Api
         /// Create a webhook
         /// </summary>
         /// <remarks>
-        /// The signing secret is generated server-side and returned once in this response only.
+        /// Accepts &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60; and &#x60;configuration&#x60;. The signing secret is generated server-side and returned once in this response only: a &#x60;secret&#x60; in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -480,7 +483,7 @@ namespace LumoAuth.ApiClient.Api
         /// Replay a delivery
         /// </summary>
         /// <remarks>
-        /// Resets the delivery&#39;s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+        /// Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -494,7 +497,7 @@ namespace LumoAuth.ApiClient.Api
         /// Replay a delivery
         /// </summary>
         /// <remarks>
-        /// Resets the delivery&#39;s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+        /// Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -605,7 +608,7 @@ namespace LumoAuth.ApiClient.Api
         /// Rotate the signing secret
         /// </summary>
         /// <remarks>
-        /// Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+        /// Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries &#x60;X-LumoAuth-Signature-Previous&#x60;, signed with the secret that was replaced, so the receiver can be updated without losing events. The &#x60;kid&#x60; of &#x60;X-LumoAuth-Signature&#x60; changes with every rotation.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -618,7 +621,7 @@ namespace LumoAuth.ApiClient.Api
         /// Rotate the signing secret
         /// </summary>
         /// <remarks>
-        /// Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+        /// Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries &#x60;X-LumoAuth-Signature-Previous&#x60;, signed with the secret that was replaced, so the receiver can be updated without losing events. The &#x60;kid&#x60; of &#x60;X-LumoAuth-Signature&#x60; changes with every rotation.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -630,7 +633,7 @@ namespace LumoAuth.ApiClient.Api
         /// Send a test delivery
         /// </summary>
         /// <remarks>
-        /// POSTs a signed &#x60;test.webhook&#x60; payload to the webhook URL and reports the receiver&#39;s status. A non-2xx receiver response still yields HTTP 200 with &#x60;success: false&#x60;; a transport failure yields 502.
+        /// Sends one &#x60;webhook.test&#x60; event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with &#x60;success: false&#x60;; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -643,7 +646,7 @@ namespace LumoAuth.ApiClient.Api
         /// Send a test delivery
         /// </summary>
         /// <remarks>
-        /// POSTs a signed &#x60;test.webhook&#x60; payload to the webhook URL and reports the receiver&#39;s status. A non-2xx receiver response still yields HTTP 200 with &#x60;success: false&#x60;; a transport failure yields 502.
+        /// Sends one &#x60;webhook.test&#x60; event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with &#x60;success: false&#x60;; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -803,7 +806,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update a webhook
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes only the fields that are sent: &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60;, &#x60;configuration&#x60;, &#x60;rotateSecret&#x60;. A new &#x60;url&#x60; for a webhook that has a signing secret needs &#x60;rotateSecret: true&#x60;; the response then carries the new &#x60;secret&#x60; once. Unknown fields, &#x60;secret&#x60; and event names that are not in the catalogue are refused with 400.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -816,7 +819,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update a webhook
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes only the fields that are sent: &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60;, &#x60;configuration&#x60;, &#x60;rotateSecret&#x60;. A new &#x60;url&#x60; for a webhook that has a signing secret needs &#x60;rotateSecret: true&#x60;; the response then carries the new &#x60;secret&#x60; once. Unknown fields, &#x60;secret&#x60; and event names that are not in the catalogue are refused with 400.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1038,7 +1041,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a webhook The signing secret is generated server-side and returned once in this response only.
+        /// Create a webhook Accepts &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60; and &#x60;configuration&#x60;. The signing secret is generated server-side and returned once in this response only: a &#x60;secret&#x60; in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1050,7 +1053,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a webhook The signing secret is generated server-side and returned once in this response only.
+        /// Create a webhook Accepts &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60; and &#x60;configuration&#x60;. The signing secret is generated server-side and returned once in this response only: a &#x60;secret&#x60; in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1104,7 +1107,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a webhook The signing secret is generated server-side and returned once in this response only.
+        /// Create a webhook Accepts &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60; and &#x60;configuration&#x60;. The signing secret is generated server-side and returned once in this response only: a &#x60;secret&#x60; in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1117,7 +1120,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a webhook The signing secret is generated server-side and returned once in this response only.
+        /// Create a webhook Accepts &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60; and &#x60;configuration&#x60;. The signing secret is generated server-side and returned once in this response only: a &#x60;secret&#x60; in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1477,7 +1480,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replay a delivery Resets the delivery&#39;s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+        /// Replay a delivery Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1491,7 +1494,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replay a delivery Resets the delivery&#39;s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+        /// Replay a delivery Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1557,7 +1560,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replay a delivery Resets the delivery&#39;s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+        /// Replay a delivery Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1572,7 +1575,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replay a delivery Resets the delivery&#39;s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+        /// Replay a delivery Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2232,7 +2235,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Rotate the signing secret Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+        /// Rotate the signing secret Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries &#x60;X-LumoAuth-Signature-Previous&#x60;, signed with the secret that was replaced, so the receiver can be updated without losing events. The &#x60;kid&#x60; of &#x60;X-LumoAuth-Signature&#x60; changes with every rotation.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2245,7 +2248,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Rotate the signing secret Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+        /// Rotate the signing secret Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries &#x60;X-LumoAuth-Signature-Previous&#x60;, signed with the secret that was replaced, so the receiver can be updated without losing events. The &#x60;kid&#x60; of &#x60;X-LumoAuth-Signature&#x60; changes with every rotation.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2305,7 +2308,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Rotate the signing secret Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+        /// Rotate the signing secret Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries &#x60;X-LumoAuth-Signature-Previous&#x60;, signed with the secret that was replaced, so the receiver can be updated without losing events. The &#x60;kid&#x60; of &#x60;X-LumoAuth-Signature&#x60; changes with every rotation.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2319,7 +2322,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Rotate the signing secret Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+        /// Rotate the signing secret Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries &#x60;X-LumoAuth-Signature-Previous&#x60;, signed with the secret that was replaced, so the receiver can be updated without losing events. The &#x60;kid&#x60; of &#x60;X-LumoAuth-Signature&#x60; changes with every rotation.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2383,7 +2386,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Send a test delivery POSTs a signed &#x60;test.webhook&#x60; payload to the webhook URL and reports the receiver&#39;s status. A non-2xx receiver response still yields HTTP 200 with &#x60;success: false&#x60;; a transport failure yields 502.
+        /// Send a test delivery Sends one &#x60;webhook.test&#x60; event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with &#x60;success: false&#x60;; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2396,7 +2399,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Send a test delivery POSTs a signed &#x60;test.webhook&#x60; payload to the webhook URL and reports the receiver&#39;s status. A non-2xx receiver response still yields HTTP 200 with &#x60;success: false&#x60;; a transport failure yields 502.
+        /// Send a test delivery Sends one &#x60;webhook.test&#x60; event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with &#x60;success: false&#x60;; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2456,7 +2459,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Send a test delivery POSTs a signed &#x60;test.webhook&#x60; payload to the webhook URL and reports the receiver&#39;s status. A non-2xx receiver response still yields HTTP 200 with &#x60;success: false&#x60;; a transport failure yields 502.
+        /// Send a test delivery Sends one &#x60;webhook.test&#x60; event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with &#x60;success: false&#x60;; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2470,7 +2473,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Send a test delivery POSTs a signed &#x60;test.webhook&#x60; payload to the webhook URL and reports the receiver&#39;s status. A non-2xx receiver response still yields HTTP 200 with &#x60;success: false&#x60;; a transport failure yields 502.
+        /// Send a test delivery Sends one &#x60;webhook.test&#x60; event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with &#x60;success: false&#x60;; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3426,7 +3429,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update a webhook 
+        /// Update a webhook Changes only the fields that are sent: &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60;, &#x60;configuration&#x60;, &#x60;rotateSecret&#x60;. A new &#x60;url&#x60; for a webhook that has a signing secret needs &#x60;rotateSecret: true&#x60;; the response then carries the new &#x60;secret&#x60; once. Unknown fields, &#x60;secret&#x60; and event names that are not in the catalogue are refused with 400.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3439,7 +3442,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update a webhook 
+        /// Update a webhook Changes only the fields that are sent: &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60;, &#x60;configuration&#x60;, &#x60;rotateSecret&#x60;. A new &#x60;url&#x60; for a webhook that has a signing secret needs &#x60;rotateSecret: true&#x60;; the response then carries the new &#x60;secret&#x60; once. Unknown fields, &#x60;secret&#x60; and event names that are not in the catalogue are refused with 400.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3499,7 +3502,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update a webhook 
+        /// Update a webhook Changes only the fields that are sent: &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60;, &#x60;configuration&#x60;, &#x60;rotateSecret&#x60;. A new &#x60;url&#x60; for a webhook that has a signing secret needs &#x60;rotateSecret: true&#x60;; the response then carries the new &#x60;secret&#x60; once. Unknown fields, &#x60;secret&#x60; and event names that are not in the catalogue are refused with 400.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3513,7 +3516,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update a webhook 
+        /// Update a webhook Changes only the fields that are sent: &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60;, &#x60;configuration&#x60;, &#x60;rotateSecret&#x60;. A new &#x60;url&#x60; for a webhook that has a signing secret needs &#x60;rotateSecret: true&#x60;; the response then carries the new &#x60;secret&#x60; once. Unknown fields, &#x60;secret&#x60; and event names that are not in the catalogue are refused with 400.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

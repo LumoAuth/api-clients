@@ -21,6 +21,7 @@ docs/AdminAbacApi.md
 docs/AdminAgentsActivateResponse.md
 docs/AdminAgentsAgentsDisableResponse.md
 docs/AdminAgentsAgentsEnableResponse.md
+docs/AdminAgentsAgentsRotateKeyRequest.md
 docs/AdminAgentsAgentsRotateKeyResponse.md
 docs/AdminAgentsApi.md
 docs/AdminAgentsCreateRequest.md
@@ -128,6 +129,8 @@ docs/AdminSandboxApi.md
 docs/AdminSandboxListResponse.md
 docs/AdminSandboxSpawnRequest.md
 docs/AdminSandboxSpawnResponse.md
+docs/AdminSandboxSpawnResponseData.md
+docs/AdminSandboxSpawnResponseData1.md
 docs/AdminScopesCreateResponse.md
 docs/AdminScopesListResponse.md
 docs/AdminScopesListResponseMeta.md
@@ -173,6 +176,7 @@ docs/AdminWebhooksCreateResponseData.md
 docs/AdminWebhooksDeliveriesListResponse.md
 docs/AdminWebhooksDeliveriesListResponseMeta.md
 docs/AdminWebhooksDeliveryReplayResponse.md
+docs/AdminWebhooksDeliveryReplayResponseData.md
 docs/AdminWebhooksDeliveryShowResponse.md
 docs/AdminWebhooksDeliveryShowResponseData.md
 docs/AdminWebhooksDeliveryShowResponseData1AttemptsItem.md
@@ -379,6 +383,8 @@ docs/RemoveUserGroupResponse.md
 docs/RemoveUserPermissionResponse.md
 docs/RemoveUserRoleResponse.md
 docs/ReportAgentUsageResponse.md
+docs/RequestMagicLinkRequest.md
+docs/RequestMagicLinkResponse.md
 docs/RequestPermissionRequest.md
 docs/RequestPermissionResponse.md
 docs/RevokeAgentTokenRequest.md
@@ -508,6 +514,7 @@ src/main/java/io/lumoauth/client/model/AddUserRoleResponse.java
 src/main/java/io/lumoauth/client/model/AdminAgentsActivateResponse.java
 src/main/java/io/lumoauth/client/model/AdminAgentsAgentsDisableResponse.java
 src/main/java/io/lumoauth/client/model/AdminAgentsAgentsEnableResponse.java
+src/main/java/io/lumoauth/client/model/AdminAgentsAgentsRotateKeyRequest.java
 src/main/java/io/lumoauth/client/model/AdminAgentsAgentsRotateKeyResponse.java
 src/main/java/io/lumoauth/client/model/AdminAgentsCreateRequest.java
 src/main/java/io/lumoauth/client/model/AdminAgentsCreateResponse.java
@@ -603,6 +610,8 @@ src/main/java/io/lumoauth/client/model/AdminRolesListResponse.java
 src/main/java/io/lumoauth/client/model/AdminSandboxListResponse.java
 src/main/java/io/lumoauth/client/model/AdminSandboxSpawnRequest.java
 src/main/java/io/lumoauth/client/model/AdminSandboxSpawnResponse.java
+src/main/java/io/lumoauth/client/model/AdminSandboxSpawnResponseData.java
+src/main/java/io/lumoauth/client/model/AdminSandboxSpawnResponseData1.java
 src/main/java/io/lumoauth/client/model/AdminScopesCreateResponse.java
 src/main/java/io/lumoauth/client/model/AdminScopesListResponse.java
 src/main/java/io/lumoauth/client/model/AdminScopesListResponseMeta.java
@@ -644,6 +653,7 @@ src/main/java/io/lumoauth/client/model/AdminWebhooksCreateResponseData.java
 src/main/java/io/lumoauth/client/model/AdminWebhooksDeliveriesListResponse.java
 src/main/java/io/lumoauth/client/model/AdminWebhooksDeliveriesListResponseMeta.java
 src/main/java/io/lumoauth/client/model/AdminWebhooksDeliveryReplayResponse.java
+src/main/java/io/lumoauth/client/model/AdminWebhooksDeliveryReplayResponseData.java
 src/main/java/io/lumoauth/client/model/AdminWebhooksDeliveryShowResponse.java
 src/main/java/io/lumoauth/client/model/AdminWebhooksDeliveryShowResponseData.java
 src/main/java/io/lumoauth/client/model/AdminWebhooksDeliveryShowResponseData1AttemptsItem.java
@@ -842,6 +852,8 @@ src/main/java/io/lumoauth/client/model/RemoveUserGroupResponse.java
 src/main/java/io/lumoauth/client/model/RemoveUserPermissionResponse.java
 src/main/java/io/lumoauth/client/model/RemoveUserRoleResponse.java
 src/main/java/io/lumoauth/client/model/ReportAgentUsageResponse.java
+src/main/java/io/lumoauth/client/model/RequestMagicLinkRequest.java
+src/main/java/io/lumoauth/client/model/RequestMagicLinkResponse.java
 src/main/java/io/lumoauth/client/model/RequestPermissionRequest.java
 src/main/java/io/lumoauth/client/model/RequestPermissionResponse.java
 src/main/java/io/lumoauth/client/model/RevokeAgentTokenRequest.java
@@ -942,6 +954,7 @@ src/test/java/io/lumoauth/client/model/AddUserRoleResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminAgentsActivateResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminAgentsAgentsDisableResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminAgentsAgentsEnableResponseTest.java
+src/test/java/io/lumoauth/client/model/AdminAgentsAgentsRotateKeyRequestTest.java
 src/test/java/io/lumoauth/client/model/AdminAgentsAgentsRotateKeyResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminAgentsCreateRequestTest.java
 src/test/java/io/lumoauth/client/model/AdminAgentsCreateResponseTest.java
@@ -1036,6 +1049,8 @@ src/test/java/io/lumoauth/client/model/AdminRolesGetUsersResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminRolesListResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminSandboxListResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminSandboxSpawnRequestTest.java
+src/test/java/io/lumoauth/client/model/AdminSandboxSpawnResponseData1Test.java
+src/test/java/io/lumoauth/client/model/AdminSandboxSpawnResponseDataTest.java
 src/test/java/io/lumoauth/client/model/AdminSandboxSpawnResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminScopesCreateResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminScopesListResponseMetaTest.java
@@ -1077,6 +1092,7 @@ src/test/java/io/lumoauth/client/model/AdminWebhooksCreateResponseDataTest.java
 src/test/java/io/lumoauth/client/model/AdminWebhooksCreateResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminWebhooksDeliveriesListResponseMetaTest.java
 src/test/java/io/lumoauth/client/model/AdminWebhooksDeliveriesListResponseTest.java
+src/test/java/io/lumoauth/client/model/AdminWebhooksDeliveryReplayResponseDataTest.java
 src/test/java/io/lumoauth/client/model/AdminWebhooksDeliveryReplayResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminWebhooksDeliveryShowResponseData1AttemptsItemTest.java
 src/test/java/io/lumoauth/client/model/AdminWebhooksDeliveryShowResponseDataTest.java
@@ -1276,6 +1292,8 @@ src/test/java/io/lumoauth/client/model/RemoveUserGroupResponseTest.java
 src/test/java/io/lumoauth/client/model/RemoveUserPermissionResponseTest.java
 src/test/java/io/lumoauth/client/model/RemoveUserRoleResponseTest.java
 src/test/java/io/lumoauth/client/model/ReportAgentUsageResponseTest.java
+src/test/java/io/lumoauth/client/model/RequestMagicLinkRequestTest.java
+src/test/java/io/lumoauth/client/model/RequestMagicLinkResponseTest.java
 src/test/java/io/lumoauth/client/model/RequestPermissionRequestTest.java
 src/test/java/io/lumoauth/client/model/RequestPermissionResponseTest.java
 src/test/java/io/lumoauth/client/model/RevokeAgentTokenRequestTest.java

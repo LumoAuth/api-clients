@@ -4,7 +4,7 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **user_id** | **Integer** |  | [optional] |
+| **user_id** | **String** |  | [optional] |
 
 ## Example
 

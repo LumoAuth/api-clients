@@ -30,6 +30,7 @@ import java.io.IOException;
 import io.lumoauth.client.model.AdminAgentsActivateResponse;
 import io.lumoauth.client.model.AdminAgentsAgentsDisableResponse;
 import io.lumoauth.client.model.AdminAgentsAgentsEnableResponse;
+import io.lumoauth.client.model.AdminAgentsAgentsRotateKeyRequest;
 import io.lumoauth.client.model.AdminAgentsAgentsRotateKeyResponse;
 import io.lumoauth.client.model.AdminAgentsCreateRequest;
 import io.lumoauth.client.model.AdminAgentsCreateResponse;
@@ -543,6 +544,7 @@ public class AdminAgentsApi {
      * Build call for adminAgentsAgentsRotateKey
      * @param orgId  (required)
      * @param agentId  (required)
+     * @param adminAgentsAgentsRotateKeyRequest Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -551,12 +553,13 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> API key rotated. The new key is returned ONCE and cannot be retrieved again. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The agent does not authenticate with an API key (identity type other than api_key), or the lifetime is invalid. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAgentsAgentsRotateKeyCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminAgentsAgentsRotateKeyCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -570,7 +573,7 @@ public class AdminAgentsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminAgentsAgentsRotateKeyRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-key"
@@ -592,6 +595,7 @@ public class AdminAgentsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -603,7 +607,7 @@ public class AdminAgentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminAgentsAgentsRotateKeyValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminAgentsAgentsRotateKeyValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminAgentsAgentsRotateKey(Async)");
@@ -614,7 +618,7 @@ public class AdminAgentsApi {
             throw new ApiException("Missing the required parameter 'agentId' when calling adminAgentsAgentsRotateKey(Async)");
         }
 
-        return adminAgentsAgentsRotateKeyCall(orgId, agentId, _callback);
+        return adminAgentsAgentsRotateKeyCall(orgId, agentId, adminAgentsAgentsRotateKeyRequest, _callback);
 
     }
 
@@ -623,6 +627,7 @@ public class AdminAgentsApi {
      * 
      * @param orgId  (required)
      * @param agentId  (required)
+     * @param adminAgentsAgentsRotateKeyRequest Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @return AdminAgentsAgentsRotateKeyResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -630,13 +635,14 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> API key rotated. The new key is returned ONCE and cannot be retrieved again. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The agent does not authenticate with an API key (identity type other than api_key), or the lifetime is invalid. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
      </table>
      */
-    public AdminAgentsAgentsRotateKeyResponse adminAgentsAgentsRotateKey(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
-        ApiResponse<AdminAgentsAgentsRotateKeyResponse> localVarResp = adminAgentsAgentsRotateKeyWithHttpInfo(orgId, agentId);
+    public AdminAgentsAgentsRotateKeyResponse adminAgentsAgentsRotateKey(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest) throws ApiException {
+        ApiResponse<AdminAgentsAgentsRotateKeyResponse> localVarResp = adminAgentsAgentsRotateKeyWithHttpInfo(orgId, agentId, adminAgentsAgentsRotateKeyRequest);
         return localVarResp.getData();
     }
 
@@ -645,6 +651,7 @@ public class AdminAgentsApi {
      * 
      * @param orgId  (required)
      * @param agentId  (required)
+     * @param adminAgentsAgentsRotateKeyRequest Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @return ApiResponse&lt;AdminAgentsAgentsRotateKeyResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -652,13 +659,14 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> API key rotated. The new key is returned ONCE and cannot be retrieved again. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The agent does not authenticate with an API key (identity type other than api_key), or the lifetime is invalid. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminAgentsAgentsRotateKeyResponse> adminAgentsAgentsRotateKeyWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
-        okhttp3.Call localVarCall = adminAgentsAgentsRotateKeyValidateBeforeCall(orgId, agentId, null);
+    public ApiResponse<AdminAgentsAgentsRotateKeyResponse> adminAgentsAgentsRotateKeyWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminAgentsAgentsRotateKeyValidateBeforeCall(orgId, agentId, adminAgentsAgentsRotateKeyRequest, null);
         Type localVarReturnType = new TypeToken<AdminAgentsAgentsRotateKeyResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -668,6 +676,7 @@ public class AdminAgentsApi {
      * 
      * @param orgId  (required)
      * @param agentId  (required)
+     * @param adminAgentsAgentsRotateKeyRequest Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -676,14 +685,15 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> API key rotated. The new key is returned ONCE and cannot be retrieved again. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The agent does not authenticate with an API key (identity type other than api_key), or the lifetime is invalid. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAgentsAgentsRotateKeyAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<AdminAgentsAgentsRotateKeyResponse> _callback) throws ApiException {
+    public okhttp3.Call adminAgentsAgentsRotateKeyAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest, final ApiCallback<AdminAgentsAgentsRotateKeyResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminAgentsAgentsRotateKeyValidateBeforeCall(orgId, agentId, _callback);
+        okhttp3.Call localVarCall = adminAgentsAgentsRotateKeyValidateBeforeCall(orgId, agentId, adminAgentsAgentsRotateKeyRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminAgentsAgentsRotateKeyResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -700,7 +710,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Agent created. The generated credential/secret is returned ONCE and cannot be retrieved again. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing required field: name. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing required field: name, or an invalid budgetPolicy (unknown key, or a value that is not a number greater than zero). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
@@ -780,7 +790,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Agent created. The generated credential/secret is returned ONCE and cannot be retrieved again. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing required field: name. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing required field: name, or an invalid budgetPolicy (unknown key, or a value that is not a number greater than zero). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
@@ -803,7 +813,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Agent created. The generated credential/secret is returned ONCE and cannot be retrieved again. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing required field: name. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing required field: name, or an invalid budgetPolicy (unknown key, or a value that is not a number greater than zero). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
@@ -828,7 +838,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Agent created. The generated credential/secret is returned ONCE and cannot be retrieved again. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing required field: name. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing required field: name, or an invalid budgetPolicy (unknown key, or a value that is not a number greater than zero). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
@@ -1152,10 +1162,11 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A generated agent token. The token value is returned ONCE. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Inactive agent, requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Inactive agent, an agent that only takes DPoP-bound tokens (a minted token cannot be bound to its key), requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. A token mint counts as one call. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsGenerateTokenCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsGenerateTokenRequest adminAgentsGenerateTokenRequest, final ApiCallback _callback) throws ApiException {
@@ -1234,10 +1245,11 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A generated agent token. The token value is returned ONCE. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Inactive agent, requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Inactive agent, an agent that only takes DPoP-bound tokens (a minted token cannot be bound to its key), requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. A token mint counts as one call. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsGenerateTokenResponse adminAgentsGenerateToken(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsGenerateTokenRequest adminAgentsGenerateTokenRequest) throws ApiException {
@@ -1258,10 +1270,11 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A generated agent token. The token value is returned ONCE. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Inactive agent, requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Inactive agent, an agent that only takes DPoP-bound tokens (a minted token cannot be bound to its key), requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. A token mint counts as one call. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsGenerateTokenResponse> adminAgentsGenerateTokenWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsGenerateTokenRequest adminAgentsGenerateTokenRequest) throws ApiException {
@@ -1284,10 +1297,11 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A generated agent token. The token value is returned ONCE. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Inactive agent, requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Inactive agent, an agent that only takes DPoP-bound tokens (a minted token cannot be bound to its key), requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. A token mint counts as one call. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsGenerateTokenAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsGenerateTokenRequest adminAgentsGenerateTokenRequest, final ApiCallback<AdminAgentsGenerateTokenResponse> _callback) throws ApiException {
@@ -2050,6 +2064,7 @@ public class AdminAgentsApi {
      * Build call for adminAgentsRotateCredentials
      * @param orgId  (required)
      * @param agentId  (required)
+     * @param adminAgentsAgentsRotateKeyRequest For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2064,7 +2079,7 @@ public class AdminAgentsApi {
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAgentsRotateCredentialsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminAgentsRotateCredentialsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2078,7 +2093,7 @@ public class AdminAgentsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminAgentsAgentsRotateKeyRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials"
@@ -2100,6 +2115,7 @@ public class AdminAgentsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2111,7 +2127,7 @@ public class AdminAgentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminAgentsRotateCredentialsValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminAgentsRotateCredentialsValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminAgentsRotateCredentials(Async)");
@@ -2122,7 +2138,7 @@ public class AdminAgentsApi {
             throw new ApiException("Missing the required parameter 'agentId' when calling adminAgentsRotateCredentials(Async)");
         }
 
-        return adminAgentsRotateCredentialsCall(orgId, agentId, _callback);
+        return adminAgentsRotateCredentialsCall(orgId, agentId, adminAgentsAgentsRotateKeyRequest, _callback);
 
     }
 
@@ -2131,6 +2147,7 @@ public class AdminAgentsApi {
      * 
      * @param orgId  (required)
      * @param agentId  (required)
+     * @param adminAgentsAgentsRotateKeyRequest For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @return AdminAgentsRotateCredentialsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2144,8 +2161,8 @@ public class AdminAgentsApi {
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
      </table>
      */
-    public AdminAgentsRotateCredentialsResponse adminAgentsRotateCredentials(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
-        ApiResponse<AdminAgentsRotateCredentialsResponse> localVarResp = adminAgentsRotateCredentialsWithHttpInfo(orgId, agentId);
+    public AdminAgentsRotateCredentialsResponse adminAgentsRotateCredentials(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest) throws ApiException {
+        ApiResponse<AdminAgentsRotateCredentialsResponse> localVarResp = adminAgentsRotateCredentialsWithHttpInfo(orgId, agentId, adminAgentsAgentsRotateKeyRequest);
         return localVarResp.getData();
     }
 
@@ -2154,6 +2171,7 @@ public class AdminAgentsApi {
      * 
      * @param orgId  (required)
      * @param agentId  (required)
+     * @param adminAgentsAgentsRotateKeyRequest For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @return ApiResponse&lt;AdminAgentsRotateCredentialsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2167,8 +2185,8 @@ public class AdminAgentsApi {
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminAgentsRotateCredentialsResponse> adminAgentsRotateCredentialsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
-        okhttp3.Call localVarCall = adminAgentsRotateCredentialsValidateBeforeCall(orgId, agentId, null);
+    public ApiResponse<AdminAgentsRotateCredentialsResponse> adminAgentsRotateCredentialsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminAgentsRotateCredentialsValidateBeforeCall(orgId, agentId, adminAgentsAgentsRotateKeyRequest, null);
         Type localVarReturnType = new TypeToken<AdminAgentsRotateCredentialsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2178,6 +2196,7 @@ public class AdminAgentsApi {
      * 
      * @param orgId  (required)
      * @param agentId  (required)
+     * @param adminAgentsAgentsRotateKeyRequest For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2192,9 +2211,9 @@ public class AdminAgentsApi {
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAgentsRotateCredentialsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<AdminAgentsRotateCredentialsResponse> _callback) throws ApiException {
+    public okhttp3.Call adminAgentsRotateCredentialsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest, final ApiCallback<AdminAgentsRotateCredentialsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminAgentsRotateCredentialsValidateBeforeCall(orgId, agentId, _callback);
+        okhttp3.Call localVarCall = adminAgentsRotateCredentialsValidateBeforeCall(orgId, agentId, adminAgentsAgentsRotateKeyRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminAgentsRotateCredentialsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2375,6 +2394,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2461,6 +2481,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2484,6 +2505,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2509,6 +2531,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2534,6 +2557,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2620,6 +2644,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2643,6 +2668,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2668,6 +2694,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>

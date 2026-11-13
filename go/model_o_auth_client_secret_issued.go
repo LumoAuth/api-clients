@@ -20,7 +20,7 @@ var _ MappedNullable = &OAuthClientSecretIssued{}
 
 // OAuthClientSecretIssued struct for OAuthClientSecretIssued
 type OAuthClientSecretIssued struct {
-	// Plaintext client secret — returned only once, never retrievable again
+	// Plaintext client secret — returned only once, never retrievable again. Absent for a public client
 	Secret *string `json:"secret,omitempty"`
 	Note *string `json:"_note,omitempty"`
 }

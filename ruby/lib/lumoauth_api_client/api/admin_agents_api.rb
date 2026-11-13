@@ -224,6 +224,7 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param agent_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [AdminAgentsAgentsRotateKeyRequest] :admin_agents_agents_rotate_key_request Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
     # @return [AdminAgentsAgentsRotateKeyResponse]
     def admin_agents_agents_rotate_key(org_id, agent_id, opts = {})
       data, _status_code, _headers = admin_agents_agents_rotate_key_with_http_info(org_id, agent_id, opts)
@@ -234,6 +235,7 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param agent_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [AdminAgentsAgentsRotateKeyRequest] :admin_agents_agents_rotate_key_request Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
     # @return [Array<(AdminAgentsAgentsRotateKeyResponse, Integer, Hash)>] AdminAgentsAgentsRotateKeyResponse data, response status code and response headers
     def admin_agents_agents_rotate_key_with_http_info(org_id, agent_id, opts = {})
       if @api_client.config.debugging
@@ -257,12 +259,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'admin_agents_agents_rotate_key_request'])
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminAgentsAgentsRotateKeyResponse'
@@ -913,6 +920,7 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param agent_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [AdminAgentsAgentsRotateKeyRequest] :admin_agents_agents_rotate_key_request For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
     # @return [AdminAgentsRotateCredentialsResponse]
     def admin_agents_rotate_credentials(org_id, agent_id, opts = {})
       data, _status_code, _headers = admin_agents_rotate_credentials_with_http_info(org_id, agent_id, opts)
@@ -923,6 +931,7 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param agent_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [AdminAgentsAgentsRotateKeyRequest] :admin_agents_agents_rotate_key_request For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
     # @return [Array<(AdminAgentsRotateCredentialsResponse, Integer, Hash)>] AdminAgentsRotateCredentialsResponse data, response status code and response headers
     def admin_agents_rotate_credentials_with_http_info(org_id, agent_id, opts = {})
       if @api_client.config.debugging
@@ -946,12 +955,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'admin_agents_agents_rotate_key_request'])
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminAgentsRotateCredentialsResponse'

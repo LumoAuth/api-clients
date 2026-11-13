@@ -46,6 +46,7 @@ docs/Model/AddUserRoleResponse.md
 docs/Model/AdminAgentsActivateResponse.md
 docs/Model/AdminAgentsAgentsDisableResponse.md
 docs/Model/AdminAgentsAgentsEnableResponse.md
+docs/Model/AdminAgentsAgentsRotateKeyRequest.md
 docs/Model/AdminAgentsAgentsRotateKeyResponse.md
 docs/Model/AdminAgentsCreateRequest.md
 docs/Model/AdminAgentsCreateResponse.md
@@ -141,6 +142,8 @@ docs/Model/AdminRolesListResponse.md
 docs/Model/AdminSandboxListResponse.md
 docs/Model/AdminSandboxSpawnRequest.md
 docs/Model/AdminSandboxSpawnResponse.md
+docs/Model/AdminSandboxSpawnResponseData.md
+docs/Model/AdminSandboxSpawnResponseData1.md
 docs/Model/AdminScopesCreateResponse.md
 docs/Model/AdminScopesListResponse.md
 docs/Model/AdminScopesListResponseMeta.md
@@ -182,6 +185,7 @@ docs/Model/AdminWebhooksCreateResponseData.md
 docs/Model/AdminWebhooksDeliveriesListResponse.md
 docs/Model/AdminWebhooksDeliveriesListResponseMeta.md
 docs/Model/AdminWebhooksDeliveryReplayResponse.md
+docs/Model/AdminWebhooksDeliveryReplayResponseData.md
 docs/Model/AdminWebhooksDeliveryShowResponse.md
 docs/Model/AdminWebhooksDeliveryShowResponseData.md
 docs/Model/AdminWebhooksDeliveryShowResponseData1AttemptsItem.md
@@ -380,6 +384,8 @@ docs/Model/RemoveUserGroupResponse.md
 docs/Model/RemoveUserPermissionResponse.md
 docs/Model/RemoveUserRoleResponse.md
 docs/Model/ReportAgentUsageResponse.md
+docs/Model/RequestMagicLinkRequest.md
+docs/Model/RequestMagicLinkResponse.md
 docs/Model/RequestPermissionRequest.md
 docs/Model/RequestPermissionResponse.md
 docs/Model/RevokeAgentTokenRequest.md
@@ -484,6 +490,7 @@ lib/Model/AddUserRoleResponse.php
 lib/Model/AdminAgentsActivateResponse.php
 lib/Model/AdminAgentsAgentsDisableResponse.php
 lib/Model/AdminAgentsAgentsEnableResponse.php
+lib/Model/AdminAgentsAgentsRotateKeyRequest.php
 lib/Model/AdminAgentsAgentsRotateKeyResponse.php
 lib/Model/AdminAgentsCreateRequest.php
 lib/Model/AdminAgentsCreateResponse.php
@@ -579,6 +586,8 @@ lib/Model/AdminRolesListResponse.php
 lib/Model/AdminSandboxListResponse.php
 lib/Model/AdminSandboxSpawnRequest.php
 lib/Model/AdminSandboxSpawnResponse.php
+lib/Model/AdminSandboxSpawnResponseData.php
+lib/Model/AdminSandboxSpawnResponseData1.php
 lib/Model/AdminScopesCreateResponse.php
 lib/Model/AdminScopesListResponse.php
 lib/Model/AdminScopesListResponseMeta.php
@@ -620,6 +629,7 @@ lib/Model/AdminWebhooksCreateResponseData.php
 lib/Model/AdminWebhooksDeliveriesListResponse.php
 lib/Model/AdminWebhooksDeliveriesListResponseMeta.php
 lib/Model/AdminWebhooksDeliveryReplayResponse.php
+lib/Model/AdminWebhooksDeliveryReplayResponseData.php
 lib/Model/AdminWebhooksDeliveryShowResponse.php
 lib/Model/AdminWebhooksDeliveryShowResponseData.php
 lib/Model/AdminWebhooksDeliveryShowResponseData1AttemptsItem.php
@@ -819,6 +829,8 @@ lib/Model/RemoveUserGroupResponse.php
 lib/Model/RemoveUserPermissionResponse.php
 lib/Model/RemoveUserRoleResponse.php
 lib/Model/ReportAgentUsageResponse.php
+lib/Model/RequestMagicLinkRequest.php
+lib/Model/RequestMagicLinkResponse.php
 lib/Model/RequestPermissionRequest.php
 lib/Model/RequestPermissionResponse.php
 lib/Model/RevokeAgentTokenRequest.php

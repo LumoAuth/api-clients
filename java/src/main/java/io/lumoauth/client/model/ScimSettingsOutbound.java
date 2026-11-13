@@ -52,7 +52,7 @@ import io.lumoauth.client.JSON;
 /**
  * Outbound SCIM client settings (entity defaults merged with the stored values).
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T09:01:05.226277396-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class ScimSettingsOutbound {
   public static final String SERIALIZED_NAME_ENABLED = "enabled";
   @SerializedName(SERIALIZED_NAME_ENABLED)
@@ -256,11 +256,6 @@ public class ScimSettingsOutbound {
   @SerializedName(SERIALIZED_NAME_BATCH_SYNC_INTERVAL)
   @javax.annotation.Nullable
   private BatchSyncIntervalEnum batchSyncInterval;
-
-  public static final String SERIALIZED_NAME_ATTRIBUTE_MAPPING = "attribute_mapping";
-  @SerializedName(SERIALIZED_NAME_ATTRIBUTE_MAPPING)
-  @javax.annotation.Nullable
-  private Map<String, String> attributeMapping = new HashMap<>();
 
   public static final String SERIALIZED_NAME_LAST_SYNC_AT = "last_sync_at";
   @SerializedName(SERIALIZED_NAME_LAST_SYNC_AT)
@@ -496,7 +491,7 @@ public class ScimSettingsOutbound {
   }
 
   /**
-   * Optional PEM CA certificate used for TLS verification.
+   * Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets.
    * @return tlsCertificate
    */
   @javax.annotation.Nullable
@@ -515,7 +510,7 @@ public class ScimSettingsOutbound {
   }
 
   /**
-   * Get verifyTls
+   * Always true. The endpoint certificate is always verified; false is rejected with 400.
    * @return verifyTls
    */
   @javax.annotation.Nullable
@@ -658,33 +653,6 @@ public class ScimSettingsOutbound {
 
   public void setBatchSyncInterval(@javax.annotation.Nullable BatchSyncIntervalEnum batchSyncInterval) {
     this.batchSyncInterval = batchSyncInterval;
-  }
-
-
-  public ScimSettingsOutbound attributeMapping(@javax.annotation.Nullable Map<String, String> attributeMapping) {
-    this.attributeMapping = attributeMapping;
-    return this;
-  }
-
-  public ScimSettingsOutbound putAttributeMappingItem(String key, String attributeMappingItem) {
-    if (this.attributeMapping == null) {
-      this.attributeMapping = new HashMap<>();
-    }
-    this.attributeMapping.put(key, attributeMappingItem);
-    return this;
-  }
-
-  /**
-   * User field &#x3D;&gt; SCIM attribute.
-   * @return attributeMapping
-   */
-  @javax.annotation.Nullable
-  public Map<String, String> getAttributeMapping() {
-    return attributeMapping;
-  }
-
-  public void setAttributeMapping(@javax.annotation.Nullable Map<String, String> attributeMapping) {
-    this.attributeMapping = attributeMapping;
   }
 
 
@@ -858,7 +826,6 @@ public class ScimSettingsOutbound {
         Objects.equals(this.syncOnLogin, scimSettingsOutbound.syncOnLogin) &&
         Objects.equals(this.batchSyncEnabled, scimSettingsOutbound.batchSyncEnabled) &&
         Objects.equals(this.batchSyncInterval, scimSettingsOutbound.batchSyncInterval) &&
-        Objects.equals(this.attributeMapping, scimSettingsOutbound.attributeMapping) &&
         Objects.equals(this.lastSyncAt, scimSettingsOutbound.lastSyncAt) &&
         Objects.equals(this.lastSyncStatus, scimSettingsOutbound.lastSyncStatus) &&
         Objects.equals(this.lastSyncError, scimSettingsOutbound.lastSyncError) &&
@@ -874,7 +841,7 @@ public class ScimSettingsOutbound {
 
   @Override
   public int hashCode() {
-    return Objects.hash(enabled, endpointUrl, bearerToken, authType, basicUsername, basicPassword, oauth2ClientId, oauth2ClientSecret, oauth2TokenUrl, oauth2Scope, tlsCertificate, verifyTls, pushUserCreates, pushUserUpdates, pushUserDeletes, pushGroupChanges, syncOnLogin, batchSyncEnabled, batchSyncInterval, attributeMapping, lastSyncAt, lastSyncStatus, lastSyncError, lastBatchSyncAt, lastBatchSyncStatus, lastBatchSyncError, lastBatchSyncCounts);
+    return Objects.hash(enabled, endpointUrl, bearerToken, authType, basicUsername, basicPassword, oauth2ClientId, oauth2ClientSecret, oauth2TokenUrl, oauth2Scope, tlsCertificate, verifyTls, pushUserCreates, pushUserUpdates, pushUserDeletes, pushGroupChanges, syncOnLogin, batchSyncEnabled, batchSyncInterval, lastSyncAt, lastSyncStatus, lastSyncError, lastBatchSyncAt, lastBatchSyncStatus, lastBatchSyncError, lastBatchSyncCounts);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -907,7 +874,6 @@ public class ScimSettingsOutbound {
     sb.append("    syncOnLogin: ").append(toIndentedString(syncOnLogin)).append("\n");
     sb.append("    batchSyncEnabled: ").append(toIndentedString(batchSyncEnabled)).append("\n");
     sb.append("    batchSyncInterval: ").append(toIndentedString(batchSyncInterval)).append("\n");
-    sb.append("    attributeMapping: ").append(toIndentedString(attributeMapping)).append("\n");
     sb.append("    lastSyncAt: ").append(toIndentedString(lastSyncAt)).append("\n");
     sb.append("    lastSyncStatus: ").append(toIndentedString(lastSyncStatus)).append("\n");
     sb.append("    lastSyncError: ").append(toIndentedString(lastSyncError)).append("\n");
@@ -936,7 +902,7 @@ public class ScimSettingsOutbound {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("enabled", "endpoint_url", "bearer_token", "auth_type", "basic_username", "basic_password", "oauth2_client_id", "oauth2_client_secret", "oauth2_token_url", "oauth2_scope", "tls_certificate", "verify_tls", "push_user_creates", "push_user_updates", "push_user_deletes", "push_group_changes", "sync_on_login", "batch_sync_enabled", "batch_sync_interval", "attribute_mapping", "last_sync_at", "last_sync_status", "last_sync_error", "last_batch_sync_at", "last_batch_sync_status", "last_batch_sync_error", "last_batch_sync_counts"));
+    openapiFields = new HashSet<String>(Arrays.asList("enabled", "endpoint_url", "bearer_token", "auth_type", "basic_username", "basic_password", "oauth2_client_id", "oauth2_client_secret", "oauth2_token_url", "oauth2_scope", "tls_certificate", "verify_tls", "push_user_creates", "push_user_updates", "push_user_deletes", "push_group_changes", "sync_on_login", "batch_sync_enabled", "batch_sync_interval", "last_sync_at", "last_sync_status", "last_sync_error", "last_batch_sync_at", "last_batch_sync_status", "last_batch_sync_error", "last_batch_sync_counts"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);

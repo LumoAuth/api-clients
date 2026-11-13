@@ -15,7 +15,8 @@ Name | Type | Description | Notes
 **RedirectUris** | Pointer to **[]string** | Detailed responses only | [optional] 
 **Scopes** | Pointer to **[]string** | Detailed responses only | [optional] 
 **GrantTypes** | Pointer to **[]string** | Detailed responses only | [optional] 
-**Secret** | Pointer to **string** | Plaintext client secret — returned only once, never retrievable again | [optional] 
+**CibaEnabled** | Pointer to **bool** | Detailed responses only. Whether the client may use CIBA (backchannel authentication). | [optional] 
+**Secret** | Pointer to **string** | Plaintext client secret — returned only once, never retrievable again. Absent for a public client | [optional] 
 **Note** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -271,6 +272,31 @@ SetGrantTypes sets GrantTypes field to given value.
 `func (o *CreateClientResponseData) HasGrantTypes() bool`
 
 HasGrantTypes returns a boolean if a field has been set.
+
+### GetCibaEnabled
+
+`func (o *CreateClientResponseData) GetCibaEnabled() bool`
+
+GetCibaEnabled returns the CibaEnabled field if non-nil, zero value otherwise.
+
+### GetCibaEnabledOk
+
+`func (o *CreateClientResponseData) GetCibaEnabledOk() (*bool, bool)`
+
+GetCibaEnabledOk returns a tuple with the CibaEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCibaEnabled
+
+`func (o *CreateClientResponseData) SetCibaEnabled(v bool)`
+
+SetCibaEnabled sets CibaEnabled field to given value.
+
+### HasCibaEnabled
+
+`func (o *CreateClientResponseData) HasCibaEnabled() bool`
+
+HasCibaEnabled returns a boolean if a field has been set.
 
 ### GetSecret
 

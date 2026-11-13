@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **slug** | Option<**String**> |  | [optional]
 **description** | Option<**String**> |  | [optional]
-**source** | Option<**String**> | role:<role name> that grants it | [optional]
+**source** | Option<**String**> | role:<role name> that grants it, or direct for a permission granted to the user directly | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

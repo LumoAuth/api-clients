@@ -1,5 +1,6 @@
 # AuthenticationSettingsPasswordPolicy
 
+The password rules that apply. A write is merged with the stored object. A named template sets its own rules; rules sent without a template make the policy custom.
 
 ## Properties
 
@@ -10,6 +11,10 @@ Name | Type | Description | Notes
 **require_special** | **bool** |  | [optional] 
 **require_numbers** | **bool** |  | [optional] 
 **require_uppercase** | **bool** |  | [optional] 
+**require_lowercase** | **bool** |  | [optional] 
+**reject_breached_passwords** | **bool** |  | [optional] 
+**breached_password_min_count** | **int** |  | [optional] 
+**check_breached_on_login** | **bool** |  | [optional] 
 
 ## Example
 

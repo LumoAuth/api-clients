@@ -19,7 +19,9 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -51,6 +53,14 @@ public class AdminAgentsAgentsRotateKeyResponseTest {
     @Test
     public void apiKeyTest() {
         // TODO: test apiKey
+    }
+
+    /**
+     * Test the property 'apiKeyExpiresAt'
+     */
+    @Test
+    public void apiKeyExpiresAtTest() {
+        // TODO: test apiKeyExpiresAt
     }
 
 }

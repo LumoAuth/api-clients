@@ -12,9 +12,9 @@ import AnyCodable
 
 public struct AdminSandboxSpawnResponse: Codable, JSONEncodable, Hashable {
 
-    public var data: SandboxTenant?
+    public var data: AdminSandboxSpawnResponseData?
 
-    public init(data: SandboxTenant? = nil) {
+    public init(data: AdminSandboxSpawnResponseData? = nil) {
         self.data = data
     }
 

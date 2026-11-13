@@ -58,17 +58,12 @@ import io.lumoauth.client.JSON;
 /**
  * Authentication settings (entity defaults merged with the stored values). Any other stored key is returned as-is; secret-looking keys (e.g. initial_access_tokens) are redacted.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T09:01:05.226277396-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class AuthenticationSettings {
   public static final String SERIALIZED_NAME_PASSKEY_ENABLED = "passkey_enabled";
   @SerializedName(SERIALIZED_NAME_PASSKEY_ENABLED)
   @javax.annotation.Nullable
   private Boolean passkeyEnabled;
-
-  public static final String SERIALIZED_NAME_BIOMETRIC_ENABLED = "biometric_enabled";
-  @SerializedName(SERIALIZED_NAME_BIOMETRIC_ENABLED)
-  @javax.annotation.Nullable
-  private Boolean biometricEnabled;
 
   public static final String SERIALIZED_NAME_PASSKEYS = "passkeys";
   @SerializedName(SERIALIZED_NAME_PASSKEYS)
@@ -140,20 +135,71 @@ public class AuthenticationSettings {
   @javax.annotation.Nullable
   private AuthenticationSettingsPasswordRotationPolicy passwordRotationPolicy;
 
+  /**
+   * Gets or Sets noMfaAction
+   */
+  @JsonAdapter(NoMfaActionEnum.Adapter.class)
+  public enum NoMfaActionEnum {
+    ALLOW("allow"),
+    
+    PROMPT("prompt"),
+    
+    EMAIL("email"),
+    
+    BLOCK("block");
+
+    private String value;
+
+    NoMfaActionEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static NoMfaActionEnum fromValue(String value) {
+      for (NoMfaActionEnum b : NoMfaActionEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<NoMfaActionEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final NoMfaActionEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public NoMfaActionEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return NoMfaActionEnum.fromValue(value);
+      }
+    }
+
+    public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      String value = jsonElement.getAsString();
+      NoMfaActionEnum.fromValue(value);
+    }
+  }
+
   public static final String SERIALIZED_NAME_NO_MFA_ACTION = "no_mfa_action";
   @SerializedName(SERIALIZED_NAME_NO_MFA_ACTION)
   @javax.annotation.Nullable
-  private String noMfaAction;
+  private NoMfaActionEnum noMfaAction;
 
   public static final String SERIALIZED_NAME_SESSION_TIMEOUT = "session_timeout";
   @SerializedName(SERIALIZED_NAME_SESSION_TIMEOUT)
   @javax.annotation.Nullable
   private Integer sessionTimeout;
-
-  public static final String SERIALIZED_NAME_ENCRYPT_CLIENT_SECRETS = "encrypt_client_secrets";
-  @SerializedName(SERIALIZED_NAME_ENCRYPT_CLIENT_SECRETS)
-  @javax.annotation.Nullable
-  private Boolean encryptClientSecrets;
 
   public static final String SERIALIZED_NAME_DYNAMIC_CLIENT_REGISTRATION_ENABLED = "dynamic_client_registration_enabled";
   @SerializedName(SERIALIZED_NAME_DYNAMIC_CLIENT_REGISTRATION_ENABLED)
@@ -261,25 +307,6 @@ public class AuthenticationSettings {
 
   public void setPasskeyEnabled(@javax.annotation.Nullable Boolean passkeyEnabled) {
     this.passkeyEnabled = passkeyEnabled;
-  }
-
-
-  public AuthenticationSettings biometricEnabled(@javax.annotation.Nullable Boolean biometricEnabled) {
-    this.biometricEnabled = biometricEnabled;
-    return this;
-  }
-
-  /**
-   * Get biometricEnabled
-   * @return biometricEnabled
-   */
-  @javax.annotation.Nullable
-  public Boolean getBiometricEnabled() {
-    return biometricEnabled;
-  }
-
-  public void setBiometricEnabled(@javax.annotation.Nullable Boolean biometricEnabled) {
-    this.biometricEnabled = biometricEnabled;
   }
 
 
@@ -430,7 +457,7 @@ public class AuthenticationSettings {
   }
 
   /**
-   * Get socialLoginEnabled
+   * Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag.
    * @return socialLoginEnabled
    */
   @javax.annotation.Nullable
@@ -573,7 +600,7 @@ public class AuthenticationSettings {
   }
 
 
-  public AuthenticationSettings noMfaAction(@javax.annotation.Nullable String noMfaAction) {
+  public AuthenticationSettings noMfaAction(@javax.annotation.Nullable NoMfaActionEnum noMfaAction) {
     this.noMfaAction = noMfaAction;
     return this;
   }
@@ -583,11 +610,11 @@ public class AuthenticationSettings {
    * @return noMfaAction
    */
   @javax.annotation.Nullable
-  public String getNoMfaAction() {
+  public NoMfaActionEnum getNoMfaAction() {
     return noMfaAction;
   }
 
-  public void setNoMfaAction(@javax.annotation.Nullable String noMfaAction) {
+  public void setNoMfaAction(@javax.annotation.Nullable NoMfaActionEnum noMfaAction) {
     this.noMfaAction = noMfaAction;
   }
 
@@ -598,7 +625,9 @@ public class AuthenticationSettings {
   }
 
   /**
-   * Seconds.
+   * Idle timeout in seconds.
+   * minimum: 300
+   * maximum: 1209600
    * @return sessionTimeout
    */
   @javax.annotation.Nullable
@@ -608,25 +637,6 @@ public class AuthenticationSettings {
 
   public void setSessionTimeout(@javax.annotation.Nullable Integer sessionTimeout) {
     this.sessionTimeout = sessionTimeout;
-  }
-
-
-  public AuthenticationSettings encryptClientSecrets(@javax.annotation.Nullable Boolean encryptClientSecrets) {
-    this.encryptClientSecrets = encryptClientSecrets;
-    return this;
-  }
-
-  /**
-   * Get encryptClientSecrets
-   * @return encryptClientSecrets
-   */
-  @javax.annotation.Nullable
-  public Boolean getEncryptClientSecrets() {
-    return encryptClientSecrets;
-  }
-
-  public void setEncryptClientSecrets(@javax.annotation.Nullable Boolean encryptClientSecrets) {
-    this.encryptClientSecrets = encryptClientSecrets;
   }
 
 
@@ -826,7 +836,6 @@ public class AuthenticationSettings {
     }
     AuthenticationSettings authenticationSettings = (AuthenticationSettings) o;
     return Objects.equals(this.passkeyEnabled, authenticationSettings.passkeyEnabled) &&
-        Objects.equals(this.biometricEnabled, authenticationSettings.biometricEnabled) &&
         Objects.equals(this.passkeys, authenticationSettings.passkeys) &&
         Objects.equals(this.mfaRequired, authenticationSettings.mfaRequired) &&
         Objects.equals(this.mfaMethods, authenticationSettings.mfaMethods) &&
@@ -843,7 +852,6 @@ public class AuthenticationSettings {
         Objects.equals(this.passwordRotationPolicy, authenticationSettings.passwordRotationPolicy) &&
         Objects.equals(this.noMfaAction, authenticationSettings.noMfaAction) &&
         Objects.equals(this.sessionTimeout, authenticationSettings.sessionTimeout) &&
-        Objects.equals(this.encryptClientSecrets, authenticationSettings.encryptClientSecrets) &&
         Objects.equals(this.dynamicClientRegistrationEnabled, authenticationSettings.dynamicClientRegistrationEnabled) &&
         Objects.equals(this.cimdEnabled, authenticationSettings.cimdEnabled) &&
         Objects.equals(this.cimdAllowedDomains, authenticationSettings.cimdAllowedDomains) &&
@@ -860,7 +868,7 @@ public class AuthenticationSettings {
 
   @Override
   public int hashCode() {
-    return Objects.hash(passkeyEnabled, biometricEnabled, passkeys, mfaRequired, mfaMethods, mfaSmsEnabled, mfaPolicy, pushAuthRequired, pushAppName, socialLoginEnabled, socialProviders, socialConfigs, passwordMinLength, passwordRequireSpecial, passwordPolicy, passwordRotationPolicy, noMfaAction, sessionTimeout, encryptClientSecrets, dynamicClientRegistrationEnabled, cimdEnabled, cimdAllowedDomains, cimdLocalhostRedirectPolicy, xaaIdpEnabled, xaaResourceEnabled, progressiveProfiling, additionalProperties);
+    return Objects.hash(passkeyEnabled, passkeys, mfaRequired, mfaMethods, mfaSmsEnabled, mfaPolicy, pushAuthRequired, pushAppName, socialLoginEnabled, socialProviders, socialConfigs, passwordMinLength, passwordRequireSpecial, passwordPolicy, passwordRotationPolicy, noMfaAction, sessionTimeout, dynamicClientRegistrationEnabled, cimdEnabled, cimdAllowedDomains, cimdLocalhostRedirectPolicy, xaaIdpEnabled, xaaResourceEnabled, progressiveProfiling, additionalProperties);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -875,7 +883,6 @@ public class AuthenticationSettings {
     StringBuilder sb = new StringBuilder();
     sb.append("class AuthenticationSettings {\n");
     sb.append("    passkeyEnabled: ").append(toIndentedString(passkeyEnabled)).append("\n");
-    sb.append("    biometricEnabled: ").append(toIndentedString(biometricEnabled)).append("\n");
     sb.append("    passkeys: ").append(toIndentedString(passkeys)).append("\n");
     sb.append("    mfaRequired: ").append(toIndentedString(mfaRequired)).append("\n");
     sb.append("    mfaMethods: ").append(toIndentedString(mfaMethods)).append("\n");
@@ -892,7 +899,6 @@ public class AuthenticationSettings {
     sb.append("    passwordRotationPolicy: ").append(toIndentedString(passwordRotationPolicy)).append("\n");
     sb.append("    noMfaAction: ").append(toIndentedString(noMfaAction)).append("\n");
     sb.append("    sessionTimeout: ").append(toIndentedString(sessionTimeout)).append("\n");
-    sb.append("    encryptClientSecrets: ").append(toIndentedString(encryptClientSecrets)).append("\n");
     sb.append("    dynamicClientRegistrationEnabled: ").append(toIndentedString(dynamicClientRegistrationEnabled)).append("\n");
     sb.append("    cimdEnabled: ").append(toIndentedString(cimdEnabled)).append("\n");
     sb.append("    cimdAllowedDomains: ").append(toIndentedString(cimdAllowedDomains)).append("\n");
@@ -922,7 +928,7 @@ public class AuthenticationSettings {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("passkey_enabled", "biometric_enabled", "passkeys", "mfa_required", "mfa_methods", "mfa_sms_enabled", "mfa_policy", "push_auth_required", "push_app_name", "social_login_enabled", "social_providers", "social_configs", "password_min_length", "password_require_special", "password_policy", "password_rotation_policy", "no_mfa_action", "session_timeout", "encrypt_client_secrets", "dynamic_client_registration_enabled", "cimd_enabled", "cimd_allowed_domains", "cimd_localhost_redirect_policy", "xaa_idp_enabled", "xaa_resource_enabled", "progressive_profiling"));
+    openapiFields = new HashSet<String>(Arrays.asList("passkey_enabled", "passkeys", "mfa_required", "mfa_methods", "mfa_sms_enabled", "mfa_policy", "push_auth_required", "push_app_name", "social_login_enabled", "social_providers", "social_configs", "password_min_length", "password_require_special", "password_policy", "password_rotation_policy", "no_mfa_action", "session_timeout", "dynamic_client_registration_enabled", "cimd_enabled", "cimd_allowed_domains", "cimd_localhost_redirect_policy", "xaa_idp_enabled", "xaa_resource_enabled", "progressive_profiling"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -970,6 +976,10 @@ public class AuthenticationSettings {
       }
       if ((jsonObj.get("no_mfa_action") != null && !jsonObj.get("no_mfa_action").isJsonNull()) && !jsonObj.get("no_mfa_action").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `no_mfa_action` to be a primitive type in the JSON string but got `%s`", jsonObj.get("no_mfa_action").toString()));
+      }
+      // validate the optional field `no_mfa_action`
+      if (jsonObj.get("no_mfa_action") != null && !jsonObj.get("no_mfa_action").isJsonNull()) {
+        NoMfaActionEnum.validateJsonElement(jsonObj.get("no_mfa_action"));
       }
       // ensure the optional json data is an array if present
       if (jsonObj.get("cimd_allowed_domains") != null && !jsonObj.get("cimd_allowed_domains").isJsonNull() && !jsonObj.get("cimd_allowed_domains").isJsonArray()) {

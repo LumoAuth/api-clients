@@ -26,7 +26,7 @@ type PushEnrollmentStarted struct {
 	QrDataUri *string `json:"qr_data_uri,omitempty"`
 	// https://<server>/push-auth/enroll?d=… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it).
 	DeepLink *string `json:"deep_link,omitempty"`
-	// Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.
+	// Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when it is not available.
 	DeepLinkAndroid NullableString `json:"deep_link_android,omitempty"`
 	ActivationCode *string `json:"activation_code,omitempty"`
 	ExpiresAt *time.Time `json:"expires_at,omitempty"`

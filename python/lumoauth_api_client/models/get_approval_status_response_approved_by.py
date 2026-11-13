@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -27,7 +27,7 @@ class GetApprovalStatusResponseApprovedBy(BaseModel):
     """
     GetApprovalStatusResponseApprovedBy
     """ # noqa: E501
-    user_id: Optional[StrictInt] = None
+    user_id: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = ["user_id"]
 
     model_config = ConfigDict(

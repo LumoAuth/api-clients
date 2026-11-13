@@ -13,6 +13,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | [**introspect()**](OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662) |
 | [**par()**](OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126) |
 | [**registerClient()**](OAuthApi.md#registerClient) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR) |
+| [**requestMagicLink()**](OAuthApi.md#requestMagicLink) | **POST** /orgs/{orgId}/api/v1/oauth/magic-link | Request a sign-in link by email |
 | [**revoke()**](OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009) |
 | [**socialCallback()**](OAuthApi.md#socialCallback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback |
 | [**socialCallbackPost()**](OAuthApi.md#socialCallbackPost) | **POST** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback (form_post) |
@@ -566,6 +567,64 @@ try {
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `requestMagicLink()`
+
+```php
+requestMagicLink($orgId, $requestMagicLinkRequest): \LumoAuth\ApiClient\Model\RequestMagicLinkResponse
+```
+
+Request a sign-in link by email
+
+For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to `return_to`, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by `client_id`.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\OAuthApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client()
+);
+$orgId = 'orgId_example'; // string
+$requestMagicLinkRequest = new \LumoAuth\ApiClient\Model\RequestMagicLinkRequest(); // \LumoAuth\ApiClient\Model\RequestMagicLinkRequest
+
+try {
+    $result = $apiInstance->requestMagicLink($orgId, $requestMagicLinkRequest);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling OAuthApi->requestMagicLink: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+| **requestMagicLinkRequest** | [**\LumoAuth\ApiClient\Model\RequestMagicLinkRequest**](../Model/RequestMagicLinkRequest.md)|  | |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\RequestMagicLinkResponse**](../Model/RequestMagicLinkResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

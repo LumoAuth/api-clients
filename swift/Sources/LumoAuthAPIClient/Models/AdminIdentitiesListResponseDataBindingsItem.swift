@@ -14,6 +14,7 @@ public struct AdminIdentitiesListResponseDataBindingsItem: Codable, JSONEncodabl
 
     public enum ModelType: String, Codable, CaseIterable {
         case saml = "saml"
+        case oidc = "oidc"
         case ldap = "ldap"
         case social = "social"
         case socialAccount = "social_account"
@@ -21,15 +22,17 @@ public struct AdminIdentitiesListResponseDataBindingsItem: Codable, JSONEncodabl
     public var type: ModelType?
     public var idpId: Int?
     public var nameId: String?
+    public var subject: String?
     public var legacy: Bool?
     public var ldapConfigId: Int?
     public var dn: String?
     public var provider: String?
 
-    public init(type: ModelType? = nil, idpId: Int? = nil, nameId: String? = nil, legacy: Bool? = nil, ldapConfigId: Int? = nil, dn: String? = nil, provider: String? = nil) {
+    public init(type: ModelType? = nil, idpId: Int? = nil, nameId: String? = nil, subject: String? = nil, legacy: Bool? = nil, ldapConfigId: Int? = nil, dn: String? = nil, provider: String? = nil) {
         self.type = type
         self.idpId = idpId
         self.nameId = nameId
+        self.subject = subject
         self.legacy = legacy
         self.ldapConfigId = ldapConfigId
         self.dn = dn
@@ -40,6 +43,7 @@ public struct AdminIdentitiesListResponseDataBindingsItem: Codable, JSONEncodabl
         case type
         case idpId = "idp_id"
         case nameId = "name_id"
+        case subject
         case legacy
         case ldapConfigId = "ldap_config_id"
         case dn
@@ -53,6 +57,7 @@ public struct AdminIdentitiesListResponseDataBindingsItem: Codable, JSONEncodabl
         try container.encodeIfPresent(type, forKey: .type)
         try container.encodeIfPresent(idpId, forKey: .idpId)
         try container.encodeIfPresent(nameId, forKey: .nameId)
+        try container.encodeIfPresent(subject, forKey: .subject)
         try container.encodeIfPresent(legacy, forKey: .legacy)
         try container.encodeIfPresent(ldapConfigId, forKey: .ldapConfigId)
         try container.encodeIfPresent(dn, forKey: .dn)

@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from lumoauth_api_client.models.webhook_delivery import WebhookDelivery
+from lumoauth_api_client.models.admin_webhooks_delivery_replay_response_data import AdminWebhooksDeliveryReplayResponseData
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class AdminWebhooksDeliveryReplayResponse(BaseModel):
     """
     AdminWebhooksDeliveryReplayResponse
     """ # noqa: E501
-    data: Optional[WebhookDelivery] = None
+    data: Optional[AdminWebhooksDeliveryReplayResponseData] = None
     message: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = ["data", "message"]
 
@@ -86,7 +86,7 @@ class AdminWebhooksDeliveryReplayResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "data": WebhookDelivery.from_dict(obj["data"]) if obj.get("data") is not None else None,
+            "data": AdminWebhooksDeliveryReplayResponseData.from_dict(obj["data"]) if obj.get("data") is not None else None,
             "message": obj.get("message")
         })
         return _obj

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **type** | **string** |  | [optional]
 **idpId** | **int** |  | [optional]
 **nameId** | **string** |  | [optional]
+**subject** | **string** |  | [optional]
 **legacy** | **bool** |  | [optional]
 **ldapConfigId** | **int** |  | [optional]
 **dn** | **string** |  | [optional]

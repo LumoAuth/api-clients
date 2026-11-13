@@ -59,7 +59,8 @@ class AdminAgentsAgentsRotateKeyResponse implements ModelInterface, ArrayAccess,
       */
     protected static $openAPITypes = [
         'message' => 'string',
-        'apiKey' => 'string'
+        'apiKey' => 'string',
+        'apiKeyExpiresAt' => '\DateTime'
     ];
 
     /**
@@ -71,7 +72,8 @@ class AdminAgentsAgentsRotateKeyResponse implements ModelInterface, ArrayAccess,
       */
     protected static $openAPIFormats = [
         'message' => null,
-        'apiKey' => null
+        'apiKey' => null,
+        'apiKeyExpiresAt' => 'date-time'
     ];
 
     /**
@@ -81,7 +83,8 @@ class AdminAgentsAgentsRotateKeyResponse implements ModelInterface, ArrayAccess,
       */
     protected static array $openAPINullables = [
         'message' => false,
-        'apiKey' => false
+        'apiKey' => false,
+        'apiKeyExpiresAt' => true
     ];
 
     /**
@@ -171,7 +174,8 @@ class AdminAgentsAgentsRotateKeyResponse implements ModelInterface, ArrayAccess,
      */
     protected static $attributeMap = [
         'message' => 'message',
-        'apiKey' => 'api_key'
+        'apiKey' => 'api_key',
+        'apiKeyExpiresAt' => 'api_key_expires_at'
     ];
 
     /**
@@ -181,7 +185,8 @@ class AdminAgentsAgentsRotateKeyResponse implements ModelInterface, ArrayAccess,
      */
     protected static $setters = [
         'message' => 'setMessage',
-        'apiKey' => 'setApiKey'
+        'apiKey' => 'setApiKey',
+        'apiKeyExpiresAt' => 'setApiKeyExpiresAt'
     ];
 
     /**
@@ -191,7 +196,8 @@ class AdminAgentsAgentsRotateKeyResponse implements ModelInterface, ArrayAccess,
      */
     protected static $getters = [
         'message' => 'getMessage',
-        'apiKey' => 'getApiKey'
+        'apiKey' => 'getApiKey',
+        'apiKeyExpiresAt' => 'getApiKeyExpiresAt'
     ];
 
     /**
@@ -253,6 +259,7 @@ class AdminAgentsAgentsRotateKeyResponse implements ModelInterface, ArrayAccess,
     {
         $this->setIfExists('message', $data ?? [], null);
         $this->setIfExists('apiKey', $data ?? [], null);
+        $this->setIfExists('apiKeyExpiresAt', $data ?? [], null);
     }
 
     /**
@@ -347,6 +354,40 @@ class AdminAgentsAgentsRotateKeyResponse implements ModelInterface, ArrayAccess,
             throw new \InvalidArgumentException('non-nullable apiKey cannot be null');
         }
         $this->container['apiKey'] = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * Gets apiKeyExpiresAt
+     *
+     * @return \DateTime|null
+     */
+    public function getApiKeyExpiresAt()
+    {
+        return $this->container['apiKeyExpiresAt'];
+    }
+
+    /**
+     * Sets apiKeyExpiresAt
+     *
+     * @param \DateTime|null $apiKeyExpiresAt When the new key expires; null = never.
+     *
+     * @return self
+     */
+    public function setApiKeyExpiresAt($apiKeyExpiresAt)
+    {
+        if (is_null($apiKeyExpiresAt)) {
+            array_push($this->openAPINullablesSetToNull, 'apiKeyExpiresAt');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('apiKeyExpiresAt', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['apiKeyExpiresAt'] = $apiKeyExpiresAt;
 
         return $this;
     }

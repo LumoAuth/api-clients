@@ -60,7 +60,8 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
     protected static $openAPITypes = [
         'name' => 'string',
         'description' => 'string',
-        'capabilities' => 'string[]'
+        'capabilities' => 'string[]',
+        'budgetPolicy' => 'array<string,mixed>'
     ];
 
     /**
@@ -73,7 +74,8 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
     protected static $openAPIFormats = [
         'name' => null,
         'description' => null,
-        'capabilities' => null
+        'capabilities' => null,
+        'budgetPolicy' => null
     ];
 
     /**
@@ -84,7 +86,8 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
     protected static array $openAPINullables = [
         'name' => false,
         'description' => false,
-        'capabilities' => false
+        'capabilities' => false,
+        'budgetPolicy' => true
     ];
 
     /**
@@ -175,7 +178,8 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
     protected static $attributeMap = [
         'name' => 'name',
         'description' => 'description',
-        'capabilities' => 'capabilities'
+        'capabilities' => 'capabilities',
+        'budgetPolicy' => 'budgetPolicy'
     ];
 
     /**
@@ -186,7 +190,8 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
     protected static $setters = [
         'name' => 'setName',
         'description' => 'setDescription',
-        'capabilities' => 'setCapabilities'
+        'capabilities' => 'setCapabilities',
+        'budgetPolicy' => 'setBudgetPolicy'
     ];
 
     /**
@@ -197,7 +202,8 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
     protected static $getters = [
         'name' => 'getName',
         'description' => 'getDescription',
-        'capabilities' => 'getCapabilities'
+        'capabilities' => 'getCapabilities',
+        'budgetPolicy' => 'getBudgetPolicy'
     ];
 
     /**
@@ -260,6 +266,7 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('description', $data ?? [], null);
         $this->setIfExists('capabilities', $data ?? [], null);
+        $this->setIfExists('budgetPolicy', $data ?? [], null);
     }
 
     /**
@@ -381,6 +388,40 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
             throw new \InvalidArgumentException('non-nullable capabilities cannot be null');
         }
         $this->container['capabilities'] = $capabilities;
+
+        return $this;
+    }
+
+    /**
+     * Gets budgetPolicy
+     *
+     * @return array<string,mixed>|null
+     */
+    public function getBudgetPolicy()
+    {
+        return $this->container['budgetPolicy'];
+    }
+
+    /**
+     * Sets budgetPolicy
+     *
+     * @param array<string,mixed>|null $budgetPolicy The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is.
+     *
+     * @return self
+     */
+    public function setBudgetPolicy($budgetPolicy)
+    {
+        if (is_null($budgetPolicy)) {
+            array_push($this->openAPINullablesSetToNull, 'budgetPolicy');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('budgetPolicy', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['budgetPolicy'] = $budgetPolicy;
 
         return $this;
     }

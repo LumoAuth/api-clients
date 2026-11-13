@@ -968,7 +968,7 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Replace an OAuth client
+    # Update an OAuth client (same as PATCH: only the fields that are sent change)
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
@@ -978,7 +978,7 @@ module LumoAuthApiClient
       data
     end
 
-    # Replace an OAuth client
+    # Update an OAuth client (same as PATCH: only the fields that are sent change)
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters

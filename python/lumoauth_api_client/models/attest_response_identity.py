@@ -30,7 +30,7 @@ class AttestResponseIdentity(BaseModel):
     provider: Optional[StrictStr] = None
     subject: Optional[StrictStr] = None
     issuer: Optional[StrictStr] = None
-    audience_generic: Optional[StrictBool] = Field(default=None, description="True when the registered audience is not specific to this deployment (operators should move to the agent-specific audience).")
+    audience_generic: Optional[StrictBool] = Field(default=None, description="True when the registered audience is not specific to LumoAuth (move to the agent-specific audience).")
     __properties: ClassVar[List[str]] = ["provider", "subject", "issuer", "audience_generic"]
 
     model_config = ConfigDict(
