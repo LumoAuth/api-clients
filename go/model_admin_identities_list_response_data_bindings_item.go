@@ -23,6 +23,7 @@ type AdminIdentitiesListResponseDataBindingsItem struct {
 	Type *string `json:"type,omitempty"`
 	IdpId NullableInt32 `json:"idp_id,omitempty"`
 	NameId NullableString `json:"name_id,omitempty"`
+	Subject NullableString `json:"subject,omitempty"`
 	Legacy *bool `json:"legacy,omitempty"`
 	LdapConfigId NullableInt32 `json:"ldap_config_id,omitempty"`
 	Dn NullableString `json:"dn,omitempty"`
@@ -160,6 +161,48 @@ func (o *AdminIdentitiesListResponseDataBindingsItem) SetNameIdNil() {
 // UnsetNameId ensures that no value is present for NameId, not even an explicit nil
 func (o *AdminIdentitiesListResponseDataBindingsItem) UnsetNameId() {
 	o.NameId.Unset()
+}
+
+// GetSubject returns the Subject field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AdminIdentitiesListResponseDataBindingsItem) GetSubject() string {
+	if o == nil || IsNil(o.Subject.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Subject.Get()
+}
+
+// GetSubjectOk returns a tuple with the Subject field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AdminIdentitiesListResponseDataBindingsItem) GetSubjectOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Subject.Get(), o.Subject.IsSet()
+}
+
+// HasSubject returns a boolean if a field has been set.
+func (o *AdminIdentitiesListResponseDataBindingsItem) HasSubject() bool {
+	if o != nil && o.Subject.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSubject gets a reference to the given NullableString and assigns it to the Subject field.
+func (o *AdminIdentitiesListResponseDataBindingsItem) SetSubject(v string) {
+	o.Subject.Set(&v)
+}
+// SetSubjectNil sets the value for Subject to be an explicit nil
+func (o *AdminIdentitiesListResponseDataBindingsItem) SetSubjectNil() {
+	o.Subject.Set(nil)
+}
+
+// UnsetSubject ensures that no value is present for Subject, not even an explicit nil
+func (o *AdminIdentitiesListResponseDataBindingsItem) UnsetSubject() {
+	o.Subject.Unset()
 }
 
 // GetLegacy returns the Legacy field value if set, zero value otherwise.
@@ -338,6 +381,9 @@ func (o AdminIdentitiesListResponseDataBindingsItem) ToMap() (map[string]interfa
 	}
 	if o.NameId.IsSet() {
 		toSerialize["name_id"] = o.NameId.Get()
+	}
+	if o.Subject.IsSet() {
+		toSerialize["subject"] = o.Subject.Get()
 	}
 	if !IsNil(o.Legacy) {
 		toSerialize["legacy"] = o.Legacy

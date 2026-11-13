@@ -221,7 +221,7 @@ try {
 ## `adminAgentsAgentsRotateKey()`
 
 ```php
-adminAgentsAgentsRotateKey($orgId, $agentId): \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyResponse
+adminAgentsAgentsRotateKey($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest): \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyResponse
 ```
 
 Rotate agent API key
@@ -250,9 +250,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminAgentsApi(
 );
 $orgId = 'orgId_example'; // string
 $agentId = 'agentId_example'; // string
+$adminAgentsAgentsRotateKeyRequest = new \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest(); // \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest | Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
 
 try {
-    $result = $apiInstance->adminAgentsAgentsRotateKey($orgId, $agentId);
+    $result = $apiInstance->adminAgentsAgentsRotateKey($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminAgentsApi->adminAgentsAgentsRotateKey: ', $e->getMessage(), PHP_EOL;
@@ -265,6 +266,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **agentId** | **string**|  | |
+| **adminAgentsAgentsRotateKeyRequest** | [**\LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest**](../Model/AdminAgentsAgentsRotateKeyRequest.md)| Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | [optional] |
 
 ### Return type
 
@@ -276,7 +278,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -875,7 +877,7 @@ try {
 ## `adminAgentsRotateCredentials()`
 
 ```php
-adminAgentsRotateCredentials($orgId, $agentId): \LumoAuth\ApiClient\Model\AdminAgentsRotateCredentialsResponse
+adminAgentsRotateCredentials($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest): \LumoAuth\ApiClient\Model\AdminAgentsRotateCredentialsResponse
 ```
 
 Rotate agent credentials
@@ -904,9 +906,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminAgentsApi(
 );
 $orgId = 'orgId_example'; // string
 $agentId = 'agentId_example'; // string
+$adminAgentsAgentsRotateKeyRequest = new \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest(); // \LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest | For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
 
 try {
-    $result = $apiInstance->adminAgentsRotateCredentials($orgId, $agentId);
+    $result = $apiInstance->adminAgentsRotateCredentials($orgId, $agentId, $adminAgentsAgentsRotateKeyRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminAgentsApi->adminAgentsRotateCredentials: ', $e->getMessage(), PHP_EOL;
@@ -919,6 +922,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **agentId** | **string**|  | |
+| **adminAgentsAgentsRotateKeyRequest** | [**\LumoAuth\ApiClient\Model\AdminAgentsAgentsRotateKeyRequest**](../Model/AdminAgentsAgentsRotateKeyRequest.md)| For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | [optional] |
 
 ### Return type
 
@@ -930,7 +934,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

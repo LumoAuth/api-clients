@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * The verified workload identity.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T14:48:44.873539119Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AttestResponseIdentity {
   public static final String SERIALIZED_NAME_PROVIDER = "provider";
   @SerializedName(SERIALIZED_NAME_PROVIDER)
@@ -136,7 +136,7 @@ public class AttestResponseIdentity {
   }
 
   /**
-   * True when the registered audience is not specific to this deployment (operators should move to the agent-specific audience).
+   * True when the registered audience is not specific to LumoAuth (move to the agent-specific audience).
    * @return audienceGeneric
    */
   @javax.annotation.Nullable

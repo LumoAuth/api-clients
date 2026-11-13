@@ -40,7 +40,10 @@ module LumoAuthApiClient
     # Detailed responses only
     attr_accessor :grant_types
 
-    # Plaintext client secret — returned only once, never retrievable again
+    # Detailed responses only. Whether the client may use CIBA (backchannel authentication).
+    attr_accessor :ciba_enabled
+
+    # Plaintext client secret — returned only once, never retrievable again. Absent for a public client
     attr_accessor :secret
 
     attr_accessor :_note
@@ -59,6 +62,7 @@ module LumoAuthApiClient
         :'redirect_uris' => :'redirectUris',
         :'scopes' => :'scopes',
         :'grant_types' => :'grantTypes',
+        :'ciba_enabled' => :'cibaEnabled',
         :'secret' => :'secret',
         :'_note' => :'_note'
       }
@@ -88,6 +92,7 @@ module LumoAuthApiClient
         :'redirect_uris' => :'Array<String>',
         :'scopes' => :'Array<String>',
         :'grant_types' => :'Array<String>',
+        :'ciba_enabled' => :'Boolean',
         :'secret' => :'String',
         :'_note' => :'String'
       }
@@ -187,6 +192,10 @@ module LumoAuthApiClient
         if (value = attributes[:'grant_types']).is_a?(Array)
           self.grant_types = value
         end
+      end
+
+      if attributes.key?(:'ciba_enabled')
+        self.ciba_enabled = attributes[:'ciba_enabled']
       end
 
       if attributes.key?(:'secret')
@@ -349,6 +358,7 @@ module LumoAuthApiClient
           redirect_uris == o.redirect_uris &&
           scopes == o.scopes &&
           grant_types == o.grant_types &&
+          ciba_enabled == o.ciba_enabled &&
           secret == o.secret &&
           _note == o._note
     end
@@ -362,7 +372,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, client_id, name, is_confidential, is_public, is_active, requires_pkce, created_at, redirect_uris, scopes, grant_types, secret, _note].hash
+      [id, client_id, name, is_confidential, is_public, is_active, requires_pkce, created_at, redirect_uris, scopes, grant_types, ciba_enabled, secret, _note].hash
     end
 
     # Builds the object from hash

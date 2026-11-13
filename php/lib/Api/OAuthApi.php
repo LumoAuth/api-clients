@@ -102,6 +102,9 @@ class OAuthApi
         'registerClient' => [
             'application/json',
         ],
+        'requestMagicLink' => [
+            'application/json',
+        ],
         'revoke' => [
             'application/json',
         ],
@@ -2649,6 +2652,293 @@ class OAuthApi
         if (!empty($this->config->getAccessToken())) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation requestMagicLink
+     *
+     * Request a sign-in link by email
+     *
+     * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RequestMagicLinkRequest $requestMagicLinkRequest requestMagicLinkRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestMagicLink'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \LumoAuth\ApiClient\Model\RequestMagicLinkResponse
+     */
+    public function requestMagicLink($orgId, $requestMagicLinkRequest, string $contentType = self::contentTypes['requestMagicLink'][0])
+    {
+        list($response) = $this->requestMagicLinkWithHttpInfo($orgId, $requestMagicLinkRequest, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation requestMagicLinkWithHttpInfo
+     *
+     * Request a sign-in link by email
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RequestMagicLinkRequest $requestMagicLinkRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestMagicLink'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \LumoAuth\ApiClient\Model\RequestMagicLinkResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function requestMagicLinkWithHttpInfo($orgId, $requestMagicLinkRequest, string $contentType = self::contentTypes['requestMagicLink'][0])
+    {
+        $request = $this->requestMagicLinkRequest($orgId, $requestMagicLinkRequest, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\LumoAuth\ApiClient\Model\RequestMagicLinkResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\LumoAuth\ApiClient\Model\RequestMagicLinkResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\LumoAuth\ApiClient\Model\RequestMagicLinkResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation requestMagicLinkAsync
+     *
+     * Request a sign-in link by email
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RequestMagicLinkRequest $requestMagicLinkRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestMagicLink'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function requestMagicLinkAsync($orgId, $requestMagicLinkRequest, string $contentType = self::contentTypes['requestMagicLink'][0])
+    {
+        return $this->requestMagicLinkAsyncWithHttpInfo($orgId, $requestMagicLinkRequest, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation requestMagicLinkAsyncWithHttpInfo
+     *
+     * Request a sign-in link by email
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RequestMagicLinkRequest $requestMagicLinkRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestMagicLink'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function requestMagicLinkAsyncWithHttpInfo($orgId, $requestMagicLinkRequest, string $contentType = self::contentTypes['requestMagicLink'][0])
+    {
+        $returnType = '\LumoAuth\ApiClient\Model\RequestMagicLinkResponse';
+        $request = $this->requestMagicLinkRequest($orgId, $requestMagicLinkRequest, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'requestMagicLink'
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RequestMagicLinkRequest $requestMagicLinkRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestMagicLink'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function requestMagicLinkRequest($orgId, $requestMagicLinkRequest, string $contentType = self::contentTypes['requestMagicLink'][0])
+    {
+
+        // verify the required parameter 'orgId' is set
+        if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $orgId when calling requestMagicLink'
+            );
+        }
+
+        // verify the required parameter 'requestMagicLinkRequest' is set
+        if ($requestMagicLinkRequest === null || (is_array($requestMagicLinkRequest) && count($requestMagicLinkRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $requestMagicLinkRequest when calling requestMagicLink'
+            );
+        }
+
+
+        $resourcePath = '/orgs/{orgId}/api/v1/oauth/magic-link';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($orgId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'orgId' . '}',
+                ObjectSerializer::toPathValue($orgId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($requestMagicLinkRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($requestMagicLinkRequest));
+            } else {
+                $httpBody = $requestMagicLinkRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

@@ -32,7 +32,7 @@ class PushEnrollmentStarted(BaseModel):
     state: Optional[StrictStr] = None
     qr_data_uri: Optional[StrictStr] = None
     deep_link: Optional[StrictStr] = Field(default=None, description="https://<server>/push-auth/enroll?d=… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it).")
-    deep_link_android: Optional[StrictStr] = Field(default=None, description="Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.")
+    deep_link_android: Optional[StrictStr] = Field(default=None, description="Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when it is not available.")
     activation_code: Optional[StrictStr] = None
     expires_at: Optional[datetime] = None
     __properties: ClassVar[List[str]] = ["id", "state", "qr_data_uri", "deep_link", "deep_link_android", "activation_code", "expires_at"]

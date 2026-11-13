@@ -153,7 +153,7 @@ export interface AuditLogEntry {
      */
     'requestId'?: string | null;
     /**
-     * Detailed responses only
+     * Result of the event: success, failure, pending or partial
      * @type {string}
      * @memberof AuditLogEntry
      */

@@ -18,6 +18,7 @@
 |**redirectUris** | **List&lt;String&gt;** | Detailed responses only |  [optional] |
 |**scopes** | **List&lt;String&gt;** | Detailed responses only |  [optional] |
 |**grantTypes** | **List&lt;String&gt;** | Detailed responses only |  [optional] |
+|**cibaEnabled** | **Boolean** | Detailed responses only. Whether the client may use CIBA (backchannel authentication). |  [optional] |
 
 
 

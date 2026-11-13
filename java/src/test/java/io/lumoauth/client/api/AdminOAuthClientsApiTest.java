@@ -232,7 +232,7 @@ public class AdminOAuthClientsApiTest {
     }
 
     /**
-     * Replace an OAuth client
+     * Update an OAuth client (same as PATCH: only the fields that are sent change)
      *
      * @throws ApiException if the Api call fails
      */

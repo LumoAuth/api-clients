@@ -14,22 +14,17 @@ require 'date'
 require 'time'
 
 module LumoAuthApiClient
+  # A write is merged with the stored object.
   class AuthenticationSettingsPasswordRotationPolicy
     attr_accessor :enabled
 
     attr_accessor :max_age_days
 
-    attr_accessor :notify_before_days
-
-    attr_accessor :history_count
-
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'enabled' => :'enabled',
-        :'max_age_days' => :'max_age_days',
-        :'notify_before_days' => :'notify_before_days',
-        :'history_count' => :'history_count'
+        :'max_age_days' => :'max_age_days'
       }
     end
 
@@ -47,9 +42,7 @@ module LumoAuthApiClient
     def self.openapi_types
       {
         :'enabled' => :'Boolean',
-        :'max_age_days' => :'Integer',
-        :'notify_before_days' => :'Integer',
-        :'history_count' => :'Integer'
+        :'max_age_days' => :'Integer'
       }
     end
 
@@ -82,14 +75,6 @@ module LumoAuthApiClient
       if attributes.key?(:'max_age_days')
         self.max_age_days = attributes[:'max_age_days']
       end
-
-      if attributes.key?(:'notify_before_days')
-        self.notify_before_days = attributes[:'notify_before_days']
-      end
-
-      if attributes.key?(:'history_count')
-        self.history_count = attributes[:'history_count']
-      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -97,6 +82,14 @@ module LumoAuthApiClient
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if !@max_age_days.nil? && @max_age_days > 730
+        invalid_properties.push('invalid value for "max_age_days", must be smaller than or equal to 730.')
+      end
+
+      if !@max_age_days.nil? && @max_age_days < 1
+        invalid_properties.push('invalid value for "max_age_days", must be greater than or equal to 1.')
+      end
+
       invalid_properties
     end
 
@@ -104,7 +97,27 @@ module LumoAuthApiClient
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if !@max_age_days.nil? && @max_age_days > 730
+      return false if !@max_age_days.nil? && @max_age_days < 1
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] max_age_days Value to be assigned
+    def max_age_days=(max_age_days)
+      if max_age_days.nil?
+        fail ArgumentError, 'max_age_days cannot be nil'
+      end
+
+      if max_age_days > 730
+        fail ArgumentError, 'invalid value for "max_age_days", must be smaller than or equal to 730.'
+      end
+
+      if max_age_days < 1
+        fail ArgumentError, 'invalid value for "max_age_days", must be greater than or equal to 1.'
+      end
+
+      @max_age_days = max_age_days
     end
 
     # Checks equality by comparing each attribute.
@@ -113,9 +126,7 @@ module LumoAuthApiClient
       return true if self.equal?(o)
       self.class == o.class &&
           enabled == o.enabled &&
-          max_age_days == o.max_age_days &&
-          notify_before_days == o.notify_before_days &&
-          history_count == o.history_count
+          max_age_days == o.max_age_days
     end
 
     # @see the `==` method
@@ -127,7 +138,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [enabled, max_age_days, notify_before_days, history_count].hash
+      [enabled, max_age_days].hash
     end
 
     # Builds the object from hash

@@ -113,7 +113,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_agents_agents_rotate_key
 
-> models::AdminAgentsAgentsRotateKeyResponse admin_agents_agents_rotate_key(org_id, agent_id)
+> models::AdminAgentsAgentsRotateKeyResponse admin_agents_agents_rotate_key(org_id, agent_id, admin_agents_agents_rotate_key_request)
 Rotate agent API key
 
 ### Parameters
@@ -123,6 +123,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **agent_id** | **String** |  | [required] |
+**admin_agents_agents_rotate_key_request** | Option<[**AdminAgentsAgentsRotateKeyRequest**](AdminAgentsAgentsRotateKeyRequest.md)> | Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). |  |
 
 ### Return type
 
@@ -134,7 +135,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -406,7 +407,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_agents_rotate_credentials
 
-> models::AdminAgentsRotateCredentialsResponse admin_agents_rotate_credentials(org_id, agent_id)
+> models::AdminAgentsRotateCredentialsResponse admin_agents_rotate_credentials(org_id, agent_id, admin_agents_agents_rotate_key_request)
 Rotate agent credentials
 
 ### Parameters
@@ -416,6 +417,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **agent_id** | **String** |  | [required] |
+**admin_agents_agents_rotate_key_request** | Option<[**AdminAgentsAgentsRotateKeyRequest**](AdminAgentsAgentsRotateKeyRequest.md)> | For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). |  |
 
 ### Return type
 
@@ -427,7 +429,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -20,7 +20,9 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,7 +50,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminAgentsAgentsRotateKeyResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T14:48:44.873539119Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminAgentsAgentsRotateKeyResponse {
   public static final String SERIALIZED_NAME_MESSAGE = "message";
   @SerializedName(SERIALIZED_NAME_MESSAGE)
@@ -59,6 +61,11 @@ public class AdminAgentsAgentsRotateKeyResponse {
   @SerializedName(SERIALIZED_NAME_API_KEY)
   @javax.annotation.Nullable
   private String apiKey;
+
+  public static final String SERIALIZED_NAME_API_KEY_EXPIRES_AT = "api_key_expires_at";
+  @SerializedName(SERIALIZED_NAME_API_KEY_EXPIRES_AT)
+  @javax.annotation.Nullable
+  private OffsetDateTime apiKeyExpiresAt;
 
   public AdminAgentsAgentsRotateKeyResponse() {
   }
@@ -101,6 +108,25 @@ public class AdminAgentsAgentsRotateKeyResponse {
   }
 
 
+  public AdminAgentsAgentsRotateKeyResponse apiKeyExpiresAt(@javax.annotation.Nullable OffsetDateTime apiKeyExpiresAt) {
+    this.apiKeyExpiresAt = apiKeyExpiresAt;
+    return this;
+  }
+
+  /**
+   * When the new key expires; null &#x3D; never.
+   * @return apiKeyExpiresAt
+   */
+  @javax.annotation.Nullable
+  public OffsetDateTime getApiKeyExpiresAt() {
+    return apiKeyExpiresAt;
+  }
+
+  public void setApiKeyExpiresAt(@javax.annotation.Nullable OffsetDateTime apiKeyExpiresAt) {
+    this.apiKeyExpiresAt = apiKeyExpiresAt;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -112,12 +138,24 @@ public class AdminAgentsAgentsRotateKeyResponse {
     }
     AdminAgentsAgentsRotateKeyResponse adminAgentsAgentsRotateKeyResponse = (AdminAgentsAgentsRotateKeyResponse) o;
     return Objects.equals(this.message, adminAgentsAgentsRotateKeyResponse.message) &&
-        Objects.equals(this.apiKey, adminAgentsAgentsRotateKeyResponse.apiKey);
+        Objects.equals(this.apiKey, adminAgentsAgentsRotateKeyResponse.apiKey) &&
+        Objects.equals(this.apiKeyExpiresAt, adminAgentsAgentsRotateKeyResponse.apiKeyExpiresAt);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(message, apiKey);
+    return Objects.hash(message, apiKey, apiKeyExpiresAt);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -126,6 +164,7 @@ public class AdminAgentsAgentsRotateKeyResponse {
     sb.append("class AdminAgentsAgentsRotateKeyResponse {\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    apiKey: ").append(toIndentedString(apiKey)).append("\n");
+    sb.append("    apiKeyExpiresAt: ").append(toIndentedString(apiKeyExpiresAt)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -147,7 +186,7 @@ public class AdminAgentsAgentsRotateKeyResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("message", "api_key"));
+    openapiFields = new HashSet<String>(Arrays.asList("message", "api_key", "api_key_expires_at"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);

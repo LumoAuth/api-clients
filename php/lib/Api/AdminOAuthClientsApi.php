@@ -4314,7 +4314,7 @@ class AdminOAuthClientsApi
     /**
      * Operation updateClient
      *
-     * Replace an OAuth client
+     * Update an OAuth client (same as PATCH: only the fields that are sent change)
      *
      * @param  string $orgId orgId (required)
      * @param  string $clientId clientId (required)
@@ -4333,7 +4333,7 @@ class AdminOAuthClientsApi
     /**
      * Operation updateClientWithHttpInfo
      *
-     * Replace an OAuth client
+     * Update an OAuth client (same as PATCH: only the fields that are sent change)
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)
@@ -4419,7 +4419,7 @@ class AdminOAuthClientsApi
     /**
      * Operation updateClientAsync
      *
-     * Replace an OAuth client
+     * Update an OAuth client (same as PATCH: only the fields that are sent change)
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)
@@ -4441,7 +4441,7 @@ class AdminOAuthClientsApi
     /**
      * Operation updateClientAsyncWithHttpInfo
      *
-     * Replace an OAuth client
+     * Update an OAuth client (same as PATCH: only the fields that are sent change)
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)

@@ -45,7 +45,7 @@ export interface PushEnrollmentStarted {
      */
     'deep_link'?: string;
     /**
-     * Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.
+     * Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when it is not available.
      * @type {string}
      * @memberof PushEnrollmentStarted
      */

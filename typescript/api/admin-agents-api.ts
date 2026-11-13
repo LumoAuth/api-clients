@@ -28,6 +28,8 @@ import type { AdminAgentsAgentsDisableResponse } from '../models';
 // @ts-ignore
 import type { AdminAgentsAgentsEnableResponse } from '../models';
 // @ts-ignore
+import type { AdminAgentsAgentsRotateKeyRequest } from '../models';
+// @ts-ignore
 import type { AdminAgentsAgentsRotateKeyResponse } from '../models';
 // @ts-ignore
 import type { AdminAgentsCreateRequest } from '../models';
@@ -209,10 +211,11 @@ export const AdminAgentsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Rotate agent API key
          * @param {string} orgId 
          * @param {string} agentId 
+         * @param {AdminAgentsAgentsRotateKeyRequest} [adminAgentsAgentsRotateKeyRequest] Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAgentsAgentsRotateKey: async (orgId: string, agentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminAgentsAgentsRotateKey: async (orgId: string, agentId: string, adminAgentsAgentsRotateKeyRequest?: AdminAgentsAgentsRotateKeyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminAgentsAgentsRotateKey', 'orgId', orgId)
             // verify required parameter 'agentId' is not null or undefined
@@ -240,9 +243,12 @@ export const AdminAgentsApiAxiosParamCreator = function (configuration?: Configu
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminAgentsAgentsRotateKeyRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -667,10 +673,11 @@ export const AdminAgentsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Rotate agent credentials
          * @param {string} orgId 
          * @param {string} agentId 
+         * @param {AdminAgentsAgentsRotateKeyRequest} [adminAgentsAgentsRotateKeyRequest] For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAgentsRotateCredentials: async (orgId: string, agentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminAgentsRotateCredentials: async (orgId: string, agentId: string, adminAgentsAgentsRotateKeyRequest?: AdminAgentsAgentsRotateKeyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminAgentsRotateCredentials', 'orgId', orgId)
             // verify required parameter 'agentId' is not null or undefined
@@ -698,9 +705,12 @@ export const AdminAgentsApiAxiosParamCreator = function (configuration?: Configu
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminAgentsAgentsRotateKeyRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -917,11 +927,12 @@ export const AdminAgentsApiFp = function(configuration?: Configuration) {
          * @summary Rotate agent API key
          * @param {string} orgId 
          * @param {string} agentId 
+         * @param {AdminAgentsAgentsRotateKeyRequest} [adminAgentsAgentsRotateKeyRequest] Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAgentsAgentsRotateKey(orgId: string, agentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAgentsAgentsRotateKeyResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAgentsAgentsRotateKey(orgId, agentId, options);
+        async adminAgentsAgentsRotateKey(orgId: string, agentId: string, adminAgentsAgentsRotateKeyRequest?: AdminAgentsAgentsRotateKeyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAgentsAgentsRotateKeyResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAgentsAgentsRotateKey(orgId, agentId, adminAgentsAgentsRotateKeyRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAgentsApi.adminAgentsAgentsRotateKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1058,11 +1069,12 @@ export const AdminAgentsApiFp = function(configuration?: Configuration) {
          * @summary Rotate agent credentials
          * @param {string} orgId 
          * @param {string} agentId 
+         * @param {AdminAgentsAgentsRotateKeyRequest} [adminAgentsAgentsRotateKeyRequest] For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAgentsRotateCredentials(orgId: string, agentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAgentsRotateCredentialsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAgentsRotateCredentials(orgId, agentId, options);
+        async adminAgentsRotateCredentials(orgId: string, agentId: string, adminAgentsAgentsRotateKeyRequest?: AdminAgentsAgentsRotateKeyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAgentsRotateCredentialsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAgentsRotateCredentials(orgId, agentId, adminAgentsAgentsRotateKeyRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAgentsApi.adminAgentsRotateCredentials']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1160,7 +1172,7 @@ export const AdminAgentsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         adminAgentsAgentsRotateKey(requestParameters: AdminAgentsApiAdminAgentsAgentsRotateKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsAgentsRotateKeyResponse> {
-            return localVarFp.adminAgentsAgentsRotateKey(requestParameters.orgId, requestParameters.agentId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminAgentsAgentsRotateKey(requestParameters.orgId, requestParameters.agentId, requestParameters.adminAgentsAgentsRotateKeyRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1260,7 +1272,7 @@ export const AdminAgentsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         adminAgentsRotateCredentials(requestParameters: AdminAgentsApiAdminAgentsRotateCredentialsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsRotateCredentialsResponse> {
-            return localVarFp.adminAgentsRotateCredentials(requestParameters.orgId, requestParameters.agentId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminAgentsRotateCredentials(requestParameters.orgId, requestParameters.agentId, requestParameters.adminAgentsAgentsRotateKeyRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1555,6 +1567,13 @@ export interface AdminAgentsApiAdminAgentsAgentsRotateKeyRequest {
      * @memberof AdminAgentsApiAdminAgentsAgentsRotateKey
      */
     readonly agentId: string
+
+    /**
+     * Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
+     * @type {AdminAgentsAgentsRotateKeyRequest}
+     * @memberof AdminAgentsApiAdminAgentsAgentsRotateKey
+     */
+    readonly adminAgentsAgentsRotateKeyRequest?: AdminAgentsAgentsRotateKeyRequest
 }
 
 /**
@@ -1772,6 +1791,13 @@ export interface AdminAgentsApiAdminAgentsRotateCredentialsRequest {
      * @memberof AdminAgentsApiAdminAgentsRotateCredentials
      */
     readonly agentId: string
+
+    /**
+     * For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days).
+     * @type {AdminAgentsAgentsRotateKeyRequest}
+     * @memberof AdminAgentsApiAdminAgentsRotateCredentials
+     */
+    readonly adminAgentsAgentsRotateKeyRequest?: AdminAgentsAgentsRotateKeyRequest
 }
 
 /**
@@ -1910,7 +1936,7 @@ export class AdminAgentsApi extends BaseAPI implements AdminAgentsApiInterface {
      * @memberof AdminAgentsApi
      */
     public adminAgentsAgentsRotateKey(requestParameters: AdminAgentsApiAdminAgentsAgentsRotateKeyRequest, options?: RawAxiosRequestConfig) {
-        return AdminAgentsApiFp(this.configuration).adminAgentsAgentsRotateKey(requestParameters.orgId, requestParameters.agentId, options).then((request) => request(this.axios, this.basePath));
+        return AdminAgentsApiFp(this.configuration).adminAgentsAgentsRotateKey(requestParameters.orgId, requestParameters.agentId, requestParameters.adminAgentsAgentsRotateKeyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2030,7 +2056,7 @@ export class AdminAgentsApi extends BaseAPI implements AdminAgentsApiInterface {
      * @memberof AdminAgentsApi
      */
     public adminAgentsRotateCredentials(requestParameters: AdminAgentsApiAdminAgentsRotateCredentialsRequest, options?: RawAxiosRequestConfig) {
-        return AdminAgentsApiFp(this.configuration).adminAgentsRotateCredentials(requestParameters.orgId, requestParameters.agentId, options).then((request) => request(this.axios, this.basePath));
+        return AdminAgentsApiFp(this.configuration).adminAgentsRotateCredentials(requestParameters.orgId, requestParameters.agentId, requestParameters.adminAgentsAgentsRotateKeyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

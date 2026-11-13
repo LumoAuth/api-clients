@@ -20,7 +20,7 @@ var _ MappedNullable = &AdminSandboxSpawnResponse{}
 
 // AdminSandboxSpawnResponse struct for AdminSandboxSpawnResponse
 type AdminSandboxSpawnResponse struct {
-	Data *SandboxTenant `json:"data,omitempty"`
+	Data *AdminSandboxSpawnResponseData `json:"data,omitempty"`
 }
 
 // NewAdminSandboxSpawnResponse instantiates a new AdminSandboxSpawnResponse object
@@ -41,9 +41,9 @@ func NewAdminSandboxSpawnResponseWithDefaults() *AdminSandboxSpawnResponse {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *AdminSandboxSpawnResponse) GetData() SandboxTenant {
+func (o *AdminSandboxSpawnResponse) GetData() AdminSandboxSpawnResponseData {
 	if o == nil || IsNil(o.Data) {
-		var ret SandboxTenant
+		var ret AdminSandboxSpawnResponseData
 		return ret
 	}
 	return *o.Data
@@ -51,7 +51,7 @@ func (o *AdminSandboxSpawnResponse) GetData() SandboxTenant {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AdminSandboxSpawnResponse) GetDataOk() (*SandboxTenant, bool) {
+func (o *AdminSandboxSpawnResponse) GetDataOk() (*AdminSandboxSpawnResponseData, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -67,8 +67,8 @@ func (o *AdminSandboxSpawnResponse) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given SandboxTenant and assigns it to the Data field.
-func (o *AdminSandboxSpawnResponse) SetData(v SandboxTenant) {
+// SetData gets a reference to the given AdminSandboxSpawnResponseData and assigns it to the Data field.
+func (o *AdminSandboxSpawnResponse) SetData(v AdminSandboxSpawnResponseData) {
 	o.Data = &v
 }
 

@@ -61,6 +61,7 @@ class AdminIdentitiesListResponseDataBindingsItem implements ModelInterface, Arr
         'type' => 'string',
         'idpId' => 'int',
         'nameId' => 'string',
+        'subject' => 'string',
         'legacy' => 'bool',
         'ldapConfigId' => 'int',
         'dn' => 'string',
@@ -78,6 +79,7 @@ class AdminIdentitiesListResponseDataBindingsItem implements ModelInterface, Arr
         'type' => null,
         'idpId' => null,
         'nameId' => null,
+        'subject' => null,
         'legacy' => null,
         'ldapConfigId' => null,
         'dn' => null,
@@ -93,6 +95,7 @@ class AdminIdentitiesListResponseDataBindingsItem implements ModelInterface, Arr
         'type' => false,
         'idpId' => true,
         'nameId' => true,
+        'subject' => true,
         'legacy' => false,
         'ldapConfigId' => true,
         'dn' => true,
@@ -188,6 +191,7 @@ class AdminIdentitiesListResponseDataBindingsItem implements ModelInterface, Arr
         'type' => 'type',
         'idpId' => 'idp_id',
         'nameId' => 'name_id',
+        'subject' => 'subject',
         'legacy' => 'legacy',
         'ldapConfigId' => 'ldap_config_id',
         'dn' => 'dn',
@@ -203,6 +207,7 @@ class AdminIdentitiesListResponseDataBindingsItem implements ModelInterface, Arr
         'type' => 'setType',
         'idpId' => 'setIdpId',
         'nameId' => 'setNameId',
+        'subject' => 'setSubject',
         'legacy' => 'setLegacy',
         'ldapConfigId' => 'setLdapConfigId',
         'dn' => 'setDn',
@@ -218,6 +223,7 @@ class AdminIdentitiesListResponseDataBindingsItem implements ModelInterface, Arr
         'type' => 'getType',
         'idpId' => 'getIdpId',
         'nameId' => 'getNameId',
+        'subject' => 'getSubject',
         'legacy' => 'getLegacy',
         'ldapConfigId' => 'getLdapConfigId',
         'dn' => 'getDn',
@@ -266,6 +272,7 @@ class AdminIdentitiesListResponseDataBindingsItem implements ModelInterface, Arr
     }
 
     public const TYPE_SAML = 'saml';
+    public const TYPE_OIDC = 'oidc';
     public const TYPE_LDAP = 'ldap';
     public const TYPE_SOCIAL = 'social';
     public const TYPE_SOCIAL_ACCOUNT = 'social_account';
@@ -279,6 +286,7 @@ class AdminIdentitiesListResponseDataBindingsItem implements ModelInterface, Arr
     {
         return [
             self::TYPE_SAML,
+            self::TYPE_OIDC,
             self::TYPE_LDAP,
             self::TYPE_SOCIAL,
             self::TYPE_SOCIAL_ACCOUNT,
@@ -303,6 +311,7 @@ class AdminIdentitiesListResponseDataBindingsItem implements ModelInterface, Arr
         $this->setIfExists('type', $data ?? [], null);
         $this->setIfExists('idpId', $data ?? [], null);
         $this->setIfExists('nameId', $data ?? [], null);
+        $this->setIfExists('subject', $data ?? [], null);
         $this->setIfExists('legacy', $data ?? [], null);
         $this->setIfExists('ldapConfigId', $data ?? [], null);
         $this->setIfExists('dn', $data ?? [], null);
@@ -461,6 +470,40 @@ class AdminIdentitiesListResponseDataBindingsItem implements ModelInterface, Arr
             }
         }
         $this->container['nameId'] = $nameId;
+
+        return $this;
+    }
+
+    /**
+     * Gets subject
+     *
+     * @return string|null
+     */
+    public function getSubject()
+    {
+        return $this->container['subject'];
+    }
+
+    /**
+     * Sets subject
+     *
+     * @param string|null $subject subject
+     *
+     * @return self
+     */
+    public function setSubject($subject)
+    {
+        if (is_null($subject)) {
+            array_push($this->openAPINullablesSetToNull, 'subject');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('subject', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['subject'] = $subject;
 
         return $this;
     }

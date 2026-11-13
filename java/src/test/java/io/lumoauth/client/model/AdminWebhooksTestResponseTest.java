@@ -54,6 +54,14 @@ public class AdminWebhooksTestResponseTest {
     }
 
     /**
+     * Test the property 'deliveryId'
+     */
+    @Test
+    public void deliveryIdTest() {
+        // TODO: test deliveryId
+    }
+
+    /**
      * Test the property 'message'
      */
     @Test

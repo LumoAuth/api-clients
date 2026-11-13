@@ -15,7 +15,6 @@ Name | Type | Description | Notes
 **AllowUserDeletion** | **bool** |  | [optional] 
 **AllowGroupOperations** | **bool** |  | [optional] 
 **ProtectedAttributes** | [**ScimSettingsInboundProtectedAttributes**](ScimSettingsInboundProtectedAttributes.md) |  | [optional] 
-**AttributeMapping** | **Dictionary&lt;string, string&gt;** | SCIM attribute &#x3D;&gt; user field. | [optional] 
 **AutoActivateUsers** | **bool** |  | [optional] 
 **DeprovisioningAction** | **string** |  | [optional] 
 

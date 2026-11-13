@@ -39,7 +39,8 @@ class OAuthClient(BaseModel):
     redirect_uris: Optional[List[StrictStr]] = Field(default=None, description="Detailed responses only", alias="redirectUris")
     scopes: Optional[List[StrictStr]] = Field(default=None, description="Detailed responses only")
     grant_types: Optional[List[StrictStr]] = Field(default=None, description="Detailed responses only", alias="grantTypes")
-    __properties: ClassVar[List[str]] = ["id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt", "redirectUris", "scopes", "grantTypes"]
+    ciba_enabled: Optional[StrictBool] = Field(default=None, description="Detailed responses only. Whether the client may use CIBA (backchannel authentication).", alias="cibaEnabled")
+    __properties: ClassVar[List[str]] = ["id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt", "redirectUris", "scopes", "grantTypes", "cibaEnabled"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -102,7 +103,8 @@ class OAuthClient(BaseModel):
             "createdAt": obj.get("createdAt"),
             "redirectUris": obj.get("redirectUris"),
             "scopes": obj.get("scopes"),
-            "grantTypes": obj.get("grantTypes")
+            "grantTypes": obj.get("grantTypes"),
+            "cibaEnabled": obj.get("cibaEnabled")
         })
         return _obj
 

@@ -7,7 +7,6 @@ Authentication settings (entity defaults merged with the stored values). Any oth
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **passkey_enabled** | **bool** |  | [optional] 
-**biometric_enabled** | **bool** |  | [optional] 
 **passkeys** | [**AuthenticationSettingsPasskeys**](AuthenticationSettingsPasskeys.md) |  | [optional] 
 **mfa_required** | **bool** |  | [optional] 
 **mfa_methods** | **List[str]** |  | [optional] 
@@ -15,7 +14,7 @@ Name | Type | Description | Notes
 **mfa_policy** | [**AuthenticationSettingsMfaPolicy**](AuthenticationSettingsMfaPolicy.md) |  | [optional] 
 **push_auth_required** | **bool** |  | [optional] 
 **push_app_name** | **str** |  | [optional] 
-**social_login_enabled** | **bool** |  | [optional] 
+**social_login_enabled** | **bool** | Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag. | [optional] 
 **social_providers** | **List[str]** |  | [optional] 
 **social_configs** | **Dict[str, Dict[str, object]]** | Per-provider OAuth credentials keyed by provider (google, github, microsoft, facebook, apple, linkedin). Each value is a free-form object of provider fields (client_id, hosted_domain, tenant_id, team_id, key_id, ...); the secret fields client_secret and private_key are returned as the redaction marker {\&quot;configured\&quot;: true, \&quot;redacted\&quot;: true} when set, null otherwise. | [optional] 
 **password_min_length** | **int** | Legacy; mirrored by password_policy.min_length. | [optional] 
@@ -23,8 +22,7 @@ Name | Type | Description | Notes
 **password_policy** | [**AuthenticationSettingsPasswordPolicy**](AuthenticationSettingsPasswordPolicy.md) |  | [optional] 
 **password_rotation_policy** | [**AuthenticationSettingsPasswordRotationPolicy**](AuthenticationSettingsPasswordRotationPolicy.md) |  | [optional] 
 **no_mfa_action** | **str** |  | [optional] 
-**session_timeout** | **int** | Seconds. | [optional] 
-**encrypt_client_secrets** | **bool** |  | [optional] 
+**session_timeout** | **int** | Idle timeout in seconds. | [optional] 
 **dynamic_client_registration_enabled** | **bool** |  | [optional] 
 **cimd_enabled** | **bool** | Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out. | [optional] [default to True]
 **cimd_allowed_domains** | **List[str]** |  | [optional] 

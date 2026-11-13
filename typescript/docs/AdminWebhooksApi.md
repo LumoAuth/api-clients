@@ -25,7 +25,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 # **adminWebhooksCreate**
 > AdminWebhooksCreateResponse adminWebhooksCreate()
 
-The signing secret is generated server-side and returned once in this response only.
+Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
 
 ### Example
 
@@ -185,7 +185,7 @@ const { status, data } = await apiInstance.adminWebhooksDeliveriesList(
 # **adminWebhooksDeliveryReplay**
 > AdminWebhooksDeliveryReplayResponse adminWebhooksDeliveryReplay()
 
-Resets the delivery\'s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
 
 ### Example
 
@@ -235,8 +235,9 @@ const { status, data } = await apiInstance.adminWebhooksDeliveryReplay(
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Delivery re-enqueued |  -  |
+|**200** | Replay queued |  -  |
 |**404** | Webhook or delivery not found |  -  |
+|**409** | The webhook is disabled |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -456,7 +457,7 @@ const { status, data } = await apiInstance.adminWebhooksList(
 # **adminWebhooksRotateSecret**
 > AdminWebhooksRotateSecretResponse adminWebhooksRotateSecret()
 
-Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries `X-LumoAuth-Signature-Previous`, signed with the secret that was replaced, so the receiver can be updated without losing events. The `kid` of `X-LumoAuth-Signature` changes with every rotation.
 
 ### Example
 
@@ -511,7 +512,7 @@ const { status, data } = await apiInstance.adminWebhooksRotateSecret(
 # **adminWebhooksTest**
 > AdminWebhooksTestResponse adminWebhooksTest()
 
-POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver\'s status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
+Sends one `webhook.test` event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with `success: false`; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
 
 ### Example
 
@@ -892,6 +893,7 @@ const { status, data } = await apiInstance.patchAdminWebhooksUpdate(
 # **putAdminWebhooksUpdate**
 > PutAdminWebhooksUpdateResponse putAdminWebhooksUpdate()
 
+Changes only the fields that are sent: `url`, `events`, `isActive` (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`. A new `url` for a webhook that has a signing secret needs `rotateSecret: true`; the response then carries the new `secret` once. Unknown fields, `secret` and event names that are not in the catalogue are refused with 400.
 
 ### Example
 

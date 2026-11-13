@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | [**SandboxTenant**](SandboxTenant.md) |  | [optional] [default to undefined]
+**data** | [**AdminSandboxSpawnResponseData**](AdminSandboxSpawnResponseData.md) |  | [optional] [default to undefined]
 
 ## Example
 

@@ -213,7 +213,7 @@ Class | Method | HTTP request | Description
 *AdminOAuthClientsApi* | [**put_admin_clients_update_branding**](docs/AdminOAuthClientsApi.md#put_admin_clients_update_branding) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding | Replace an OAuth client&#39;s login and/or consent page branding
 *AdminOAuthClientsApi* | [**rotate_client_secret**](docs/AdminOAuthClientsApi.md#rotate_client_secret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret
 *AdminOAuthClientsApi* | [**set_client_scopes**](docs/AdminOAuthClientsApi.md#set_client_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
-*AdminOAuthClientsApi* | [**update_client**](docs/AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
+*AdminOAuthClientsApi* | [**update_client**](docs/AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client (same as PATCH: only the fields that are sent change)
 *AdminOrganizationsApi* | [**admin_org_invitations_create**](docs/AdminOrganizationsApi.md#admin_org_invitations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | Invite a user to an organization
 *AdminOrganizationsApi* | [**admin_org_invitations_list**](docs/AdminOrganizationsApi.md#admin_org_invitations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | List organization invitations
 *AdminOrganizationsApi* | [**admin_org_invitations_resend**](docs/AdminOrganizationsApi.md#admin_org_invitations_resend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | Resend an invitation
@@ -309,9 +309,9 @@ Class | Method | HTTP request | Description
 *AdminUsersApi* | [**add_user_role**](docs/AdminUsersApi.md#add_user_role) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Assign a role to a user
 *AdminUsersApi* | [**admin_identities_legacy_saml_relink**](docs/AdminUsersApi.md#admin_identities_legacy_saml_relink) | **POST** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Relink legacy SAML users to an IdP
 *AdminUsersApi* | [**admin_identities_legacy_saml_report**](docs/AdminUsersApi.md#admin_identities_legacy_saml_report) | **GET** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Legacy SAML bindings report
-*AdminUsersApi* | [**admin_identities_link**](docs/AdminUsersApi.md#admin_identities_link) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML or LDAP identity to a user
+*AdminUsersApi* | [**admin_identities_link**](docs/AdminUsersApi.md#admin_identities_link) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user
 *AdminUsersApi* | [**admin_identities_list**](docs/AdminUsersApi.md#admin_identities_list) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links
-*AdminUsersApi* | [**admin_identities_unlink**](docs/AdminUsersApi.md#admin_identities_unlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, LDAP or social identity
+*AdminUsersApi* | [**admin_identities_unlink**](docs/AdminUsersApi.md#admin_identities_unlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity
 *AdminUsersApi* | [**block_user**](docs/AdminUsersApi.md#block_user) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user
 *AdminUsersApi* | [**create_user**](docs/AdminUsersApi.md#create_user) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user
 *AdminUsersApi* | [**delete_user**](docs/AdminUsersApi.md#delete_user) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user
@@ -417,6 +417,7 @@ Class | Method | HTTP request | Description
 *OAuthApi* | [**introspect**](docs/OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662)
 *OAuthApi* | [**par**](docs/OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126)
 *OAuthApi* | [**register_client**](docs/OAuthApi.md#register_client) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR)
+*OAuthApi* | [**request_magic_link**](docs/OAuthApi.md#request_magic_link) | **POST** /orgs/{orgId}/api/v1/oauth/magic-link | Request a sign-in link by email
 *OAuthApi* | [**revoke**](docs/OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009)
 *OAuthApi* | [**social_callback**](docs/OAuthApi.md#social_callback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback
 *OAuthApi* | [**social_callback_post**](docs/OAuthApi.md#social_callback_post) | **POST** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback (form_post)
@@ -461,6 +462,7 @@ Class | Method | HTTP request | Description
  - [AdminAgentsActivateResponse](docs/AdminAgentsActivateResponse.md)
  - [AdminAgentsAgentsDisableResponse](docs/AdminAgentsAgentsDisableResponse.md)
  - [AdminAgentsAgentsEnableResponse](docs/AdminAgentsAgentsEnableResponse.md)
+ - [AdminAgentsAgentsRotateKeyRequest](docs/AdminAgentsAgentsRotateKeyRequest.md)
  - [AdminAgentsAgentsRotateKeyResponse](docs/AdminAgentsAgentsRotateKeyResponse.md)
  - [AdminAgentsCreateRequest](docs/AdminAgentsCreateRequest.md)
  - [AdminAgentsCreateResponse](docs/AdminAgentsCreateResponse.md)
@@ -556,6 +558,8 @@ Class | Method | HTTP request | Description
  - [AdminSandboxListResponse](docs/AdminSandboxListResponse.md)
  - [AdminSandboxSpawnRequest](docs/AdminSandboxSpawnRequest.md)
  - [AdminSandboxSpawnResponse](docs/AdminSandboxSpawnResponse.md)
+ - [AdminSandboxSpawnResponseData](docs/AdminSandboxSpawnResponseData.md)
+ - [AdminSandboxSpawnResponseData1](docs/AdminSandboxSpawnResponseData1.md)
  - [AdminScopesCreateResponse](docs/AdminScopesCreateResponse.md)
  - [AdminScopesListResponse](docs/AdminScopesListResponse.md)
  - [AdminScopesListResponseMeta](docs/AdminScopesListResponseMeta.md)
@@ -597,6 +601,7 @@ Class | Method | HTTP request | Description
  - [AdminWebhooksDeliveriesListResponse](docs/AdminWebhooksDeliveriesListResponse.md)
  - [AdminWebhooksDeliveriesListResponseMeta](docs/AdminWebhooksDeliveriesListResponseMeta.md)
  - [AdminWebhooksDeliveryReplayResponse](docs/AdminWebhooksDeliveryReplayResponse.md)
+ - [AdminWebhooksDeliveryReplayResponseData](docs/AdminWebhooksDeliveryReplayResponseData.md)
  - [AdminWebhooksDeliveryShowResponse](docs/AdminWebhooksDeliveryShowResponse.md)
  - [AdminWebhooksDeliveryShowResponseData](docs/AdminWebhooksDeliveryShowResponseData.md)
  - [AdminWebhooksDeliveryShowResponseData1AttemptsItem](docs/AdminWebhooksDeliveryShowResponseData1AttemptsItem.md)
@@ -795,6 +800,8 @@ Class | Method | HTTP request | Description
  - [RemoveUserPermissionResponse](docs/RemoveUserPermissionResponse.md)
  - [RemoveUserRoleResponse](docs/RemoveUserRoleResponse.md)
  - [ReportAgentUsageResponse](docs/ReportAgentUsageResponse.md)
+ - [RequestMagicLinkRequest](docs/RequestMagicLinkRequest.md)
+ - [RequestMagicLinkResponse](docs/RequestMagicLinkResponse.md)
  - [RequestPermissionRequest](docs/RequestPermissionRequest.md)
  - [RequestPermissionResponse](docs/RequestPermissionResponse.md)
  - [RevokeAgentTokenRequest](docs/RevokeAgentTokenRequest.md)

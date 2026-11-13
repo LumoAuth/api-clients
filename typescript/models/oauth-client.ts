@@ -86,5 +86,11 @@ export interface OAuthClient {
      * @memberof OAuthClient
      */
     'grantTypes'?: Array<string>;
+    /**
+     * Detailed responses only. Whether the client may use CIBA (backchannel authentication).
+     * @type {boolean}
+     * @memberof OAuthClient
+     */
+    'cibaEnabled'?: boolean;
 }
 

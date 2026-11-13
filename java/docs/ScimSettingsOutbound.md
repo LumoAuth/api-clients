@@ -18,8 +18,8 @@ Outbound SCIM client settings (entity defaults merged with the stored values).
 |**oauth2ClientSecret** | [**RedactedSecret**](RedactedSecret.md) |  |  [optional] |
 |**oauth2TokenUrl** | **String** |  |  [optional] |
 |**oauth2Scope** | **String** |  |  [optional] |
-|**tlsCertificate** | **String** | Optional PEM CA certificate used for TLS verification. |  [optional] |
-|**verifyTls** | **Boolean** |  |  [optional] |
+|**tlsCertificate** | **String** | Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets. |  [optional] |
+|**verifyTls** | **Boolean** | Always true. The endpoint certificate is always verified; false is rejected with 400. |  [optional] |
 |**pushUserCreates** | **Boolean** |  |  [optional] |
 |**pushUserUpdates** | **Boolean** |  |  [optional] |
 |**pushUserDeletes** | **Boolean** |  |  [optional] |
@@ -27,7 +27,6 @@ Outbound SCIM client settings (entity defaults merged with the stored values).
 |**syncOnLogin** | **Boolean** |  |  [optional] |
 |**batchSyncEnabled** | **Boolean** |  |  [optional] |
 |**batchSyncInterval** | [**BatchSyncIntervalEnum**](#BatchSyncIntervalEnum) |  |  [optional] |
-|**attributeMapping** | **Map&lt;String, String&gt;** | User field &#x3D;&gt; SCIM attribute. |  [optional] |
 |**lastSyncAt** | **String** |  |  [optional] |
 |**lastSyncStatus** | **String** |  |  [optional] |
 |**lastSyncError** | **String** |  |  [optional] |

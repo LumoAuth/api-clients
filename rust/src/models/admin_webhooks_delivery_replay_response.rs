@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AdminWebhooksDeliveryReplayResponse {
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: Option<Box<models::WebhookDelivery>>,
+    pub data: Option<Box<models::AdminWebhooksDeliveryReplayResponseData>>,
     #[serde(rename = "message", skip_serializing_if = "Option::is_none")]
     pub message: Option<String>,
 }

@@ -28,18 +28,19 @@ class AdminIdentitiesLinkRequest(BaseModel):
     AdminIdentitiesLinkRequest
     """ # noqa: E501
     type: StrictStr
-    idp_id: Optional[StrictInt] = Field(default=None, description="SAML IdP config id (type=saml)")
+    idp_id: Optional[StrictInt] = Field(default=None, description="SAML IdP config id (type=saml) or OpenID Connect connection id (type=oidc)")
+    subject: Optional[StrictStr] = Field(default=None, description="Subject the OpenID Connect provider issues for this user (type=oidc)")
     name_id: Optional[StrictStr] = Field(default=None, description="NameID the IdP asserts for this user (type=saml)")
     ldap_config_id: Optional[StrictInt] = Field(default=None, description="LDAP directory id (type=ldap)")
     dn: Optional[StrictStr] = Field(default=None, description="Distinguished name (type=ldap); omitted = look up")
     ldap_only: Optional[StrictBool] = Field(default=False, description="Also disable the local password (type=ldap)")
-    __properties: ClassVar[List[str]] = ["type", "idp_id", "name_id", "ldap_config_id", "dn", "ldap_only"]
+    __properties: ClassVar[List[str]] = ["type", "idp_id", "subject", "name_id", "ldap_config_id", "dn", "ldap_only"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['saml', 'ldap']):
-            raise ValueError("must be one of enum values ('saml', 'ldap')")
+        if value not in set(['saml', 'oidc', 'ldap']):
+            raise ValueError("must be one of enum values ('saml', 'oidc', 'ldap')")
         return value
 
     model_config = ConfigDict(
@@ -95,6 +96,7 @@ class AdminIdentitiesLinkRequest(BaseModel):
         _obj = cls.model_validate({
             "type": obj.get("type"),
             "idp_id": obj.get("idp_id"),
+            "subject": obj.get("subject"),
             "name_id": obj.get("name_id"),
             "ldap_config_id": obj.get("ldap_config_id"),
             "dn": obj.get("dn"),

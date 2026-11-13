@@ -18,13 +18,17 @@ import (
 // checks if the AuthenticationSettingsPasswordPolicy type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AuthenticationSettingsPasswordPolicy{}
 
-// AuthenticationSettingsPasswordPolicy struct for AuthenticationSettingsPasswordPolicy
+// AuthenticationSettingsPasswordPolicy The password rules that apply. A write is merged with the stored object. A named template sets its own rules; rules sent without a template make the policy custom.
 type AuthenticationSettingsPasswordPolicy struct {
 	Template *string `json:"template,omitempty"`
 	MinLength *int32 `json:"min_length,omitempty"`
 	RequireSpecial *bool `json:"require_special,omitempty"`
 	RequireNumbers *bool `json:"require_numbers,omitempty"`
 	RequireUppercase *bool `json:"require_uppercase,omitempty"`
+	RequireLowercase *bool `json:"require_lowercase,omitempty"`
+	RejectBreachedPasswords *bool `json:"reject_breached_passwords,omitempty"`
+	BreachedPasswordMinCount *int32 `json:"breached_password_min_count,omitempty"`
+	CheckBreachedOnLogin *bool `json:"check_breached_on_login,omitempty"`
 }
 
 // NewAuthenticationSettingsPasswordPolicy instantiates a new AuthenticationSettingsPasswordPolicy object
@@ -204,6 +208,134 @@ func (o *AuthenticationSettingsPasswordPolicy) SetRequireUppercase(v bool) {
 	o.RequireUppercase = &v
 }
 
+// GetRequireLowercase returns the RequireLowercase field value if set, zero value otherwise.
+func (o *AuthenticationSettingsPasswordPolicy) GetRequireLowercase() bool {
+	if o == nil || IsNil(o.RequireLowercase) {
+		var ret bool
+		return ret
+	}
+	return *o.RequireLowercase
+}
+
+// GetRequireLowercaseOk returns a tuple with the RequireLowercase field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AuthenticationSettingsPasswordPolicy) GetRequireLowercaseOk() (*bool, bool) {
+	if o == nil || IsNil(o.RequireLowercase) {
+		return nil, false
+	}
+	return o.RequireLowercase, true
+}
+
+// HasRequireLowercase returns a boolean if a field has been set.
+func (o *AuthenticationSettingsPasswordPolicy) HasRequireLowercase() bool {
+	if o != nil && !IsNil(o.RequireLowercase) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequireLowercase gets a reference to the given bool and assigns it to the RequireLowercase field.
+func (o *AuthenticationSettingsPasswordPolicy) SetRequireLowercase(v bool) {
+	o.RequireLowercase = &v
+}
+
+// GetRejectBreachedPasswords returns the RejectBreachedPasswords field value if set, zero value otherwise.
+func (o *AuthenticationSettingsPasswordPolicy) GetRejectBreachedPasswords() bool {
+	if o == nil || IsNil(o.RejectBreachedPasswords) {
+		var ret bool
+		return ret
+	}
+	return *o.RejectBreachedPasswords
+}
+
+// GetRejectBreachedPasswordsOk returns a tuple with the RejectBreachedPasswords field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AuthenticationSettingsPasswordPolicy) GetRejectBreachedPasswordsOk() (*bool, bool) {
+	if o == nil || IsNil(o.RejectBreachedPasswords) {
+		return nil, false
+	}
+	return o.RejectBreachedPasswords, true
+}
+
+// HasRejectBreachedPasswords returns a boolean if a field has been set.
+func (o *AuthenticationSettingsPasswordPolicy) HasRejectBreachedPasswords() bool {
+	if o != nil && !IsNil(o.RejectBreachedPasswords) {
+		return true
+	}
+
+	return false
+}
+
+// SetRejectBreachedPasswords gets a reference to the given bool and assigns it to the RejectBreachedPasswords field.
+func (o *AuthenticationSettingsPasswordPolicy) SetRejectBreachedPasswords(v bool) {
+	o.RejectBreachedPasswords = &v
+}
+
+// GetBreachedPasswordMinCount returns the BreachedPasswordMinCount field value if set, zero value otherwise.
+func (o *AuthenticationSettingsPasswordPolicy) GetBreachedPasswordMinCount() int32 {
+	if o == nil || IsNil(o.BreachedPasswordMinCount) {
+		var ret int32
+		return ret
+	}
+	return *o.BreachedPasswordMinCount
+}
+
+// GetBreachedPasswordMinCountOk returns a tuple with the BreachedPasswordMinCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AuthenticationSettingsPasswordPolicy) GetBreachedPasswordMinCountOk() (*int32, bool) {
+	if o == nil || IsNil(o.BreachedPasswordMinCount) {
+		return nil, false
+	}
+	return o.BreachedPasswordMinCount, true
+}
+
+// HasBreachedPasswordMinCount returns a boolean if a field has been set.
+func (o *AuthenticationSettingsPasswordPolicy) HasBreachedPasswordMinCount() bool {
+	if o != nil && !IsNil(o.BreachedPasswordMinCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetBreachedPasswordMinCount gets a reference to the given int32 and assigns it to the BreachedPasswordMinCount field.
+func (o *AuthenticationSettingsPasswordPolicy) SetBreachedPasswordMinCount(v int32) {
+	o.BreachedPasswordMinCount = &v
+}
+
+// GetCheckBreachedOnLogin returns the CheckBreachedOnLogin field value if set, zero value otherwise.
+func (o *AuthenticationSettingsPasswordPolicy) GetCheckBreachedOnLogin() bool {
+	if o == nil || IsNil(o.CheckBreachedOnLogin) {
+		var ret bool
+		return ret
+	}
+	return *o.CheckBreachedOnLogin
+}
+
+// GetCheckBreachedOnLoginOk returns a tuple with the CheckBreachedOnLogin field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AuthenticationSettingsPasswordPolicy) GetCheckBreachedOnLoginOk() (*bool, bool) {
+	if o == nil || IsNil(o.CheckBreachedOnLogin) {
+		return nil, false
+	}
+	return o.CheckBreachedOnLogin, true
+}
+
+// HasCheckBreachedOnLogin returns a boolean if a field has been set.
+func (o *AuthenticationSettingsPasswordPolicy) HasCheckBreachedOnLogin() bool {
+	if o != nil && !IsNil(o.CheckBreachedOnLogin) {
+		return true
+	}
+
+	return false
+}
+
+// SetCheckBreachedOnLogin gets a reference to the given bool and assigns it to the CheckBreachedOnLogin field.
+func (o *AuthenticationSettingsPasswordPolicy) SetCheckBreachedOnLogin(v bool) {
+	o.CheckBreachedOnLogin = &v
+}
+
 func (o AuthenticationSettingsPasswordPolicy) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -228,6 +360,18 @@ func (o AuthenticationSettingsPasswordPolicy) ToMap() (map[string]interface{}, e
 	}
 	if !IsNil(o.RequireUppercase) {
 		toSerialize["require_uppercase"] = o.RequireUppercase
+	}
+	if !IsNil(o.RequireLowercase) {
+		toSerialize["require_lowercase"] = o.RequireLowercase
+	}
+	if !IsNil(o.RejectBreachedPasswords) {
+		toSerialize["reject_breached_passwords"] = o.RejectBreachedPasswords
+	}
+	if !IsNil(o.BreachedPasswordMinCount) {
+		toSerialize["breached_password_min_count"] = o.BreachedPasswordMinCount
+	}
+	if !IsNil(o.CheckBreachedOnLogin) {
+		toSerialize["check_breached_on_login"] = o.CheckBreachedOnLogin
 	}
 	return toSerialize, nil
 }

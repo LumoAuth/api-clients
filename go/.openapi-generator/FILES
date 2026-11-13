@@ -51,6 +51,7 @@ docs/AdminAgentsAPI.md
 docs/AdminAgentsActivateResponse.md
 docs/AdminAgentsAgentsDisableResponse.md
 docs/AdminAgentsAgentsEnableResponse.md
+docs/AdminAgentsAgentsRotateKeyRequest.md
 docs/AdminAgentsAgentsRotateKeyResponse.md
 docs/AdminAgentsCreateRequest.md
 docs/AdminAgentsCreateResponse.md
@@ -157,6 +158,8 @@ docs/AdminSandboxAPI.md
 docs/AdminSandboxListResponse.md
 docs/AdminSandboxSpawnRequest.md
 docs/AdminSandboxSpawnResponse.md
+docs/AdminSandboxSpawnResponseData.md
+docs/AdminSandboxSpawnResponseData1.md
 docs/AdminScopesCreateResponse.md
 docs/AdminScopesListResponse.md
 docs/AdminScopesListResponseMeta.md
@@ -202,6 +205,7 @@ docs/AdminWebhooksCreateResponseData.md
 docs/AdminWebhooksDeliveriesListResponse.md
 docs/AdminWebhooksDeliveriesListResponseMeta.md
 docs/AdminWebhooksDeliveryReplayResponse.md
+docs/AdminWebhooksDeliveryReplayResponseData.md
 docs/AdminWebhooksDeliveryShowResponse.md
 docs/AdminWebhooksDeliveryShowResponseData.md
 docs/AdminWebhooksDeliveryShowResponseData1AttemptsItem.md
@@ -408,6 +412,8 @@ docs/RemoveUserGroupResponse.md
 docs/RemoveUserPermissionResponse.md
 docs/RemoveUserRoleResponse.md
 docs/ReportAgentUsageResponse.md
+docs/RequestMagicLinkRequest.md
+docs/RequestMagicLinkResponse.md
 docs/RequestPermissionRequest.md
 docs/RequestPermissionResponse.md
 docs/RevokeAgentTokenRequest.md
@@ -484,6 +490,7 @@ model_add_user_role_response.go
 model_admin_agents_activate_response.go
 model_admin_agents_agents_disable_response.go
 model_admin_agents_agents_enable_response.go
+model_admin_agents_agents_rotate_key_request.go
 model_admin_agents_agents_rotate_key_response.go
 model_admin_agents_create_request.go
 model_admin_agents_create_response.go
@@ -579,6 +586,8 @@ model_admin_roles_list_response.go
 model_admin_sandbox_list_response.go
 model_admin_sandbox_spawn_request.go
 model_admin_sandbox_spawn_response.go
+model_admin_sandbox_spawn_response_data.go
+model_admin_sandbox_spawn_response_data1.go
 model_admin_scopes_create_response.go
 model_admin_scopes_list_response.go
 model_admin_scopes_list_response_meta.go
@@ -620,6 +629,7 @@ model_admin_webhooks_create_response_data.go
 model_admin_webhooks_deliveries_list_response.go
 model_admin_webhooks_deliveries_list_response_meta.go
 model_admin_webhooks_delivery_replay_response.go
+model_admin_webhooks_delivery_replay_response_data.go
 model_admin_webhooks_delivery_show_response.go
 model_admin_webhooks_delivery_show_response_data.go
 model_admin_webhooks_delivery_show_response_data1_attempts_item.go
@@ -818,6 +828,8 @@ model_remove_user_group_response.go
 model_remove_user_permission_response.go
 model_remove_user_role_response.go
 model_report_agent_usage_response.go
+model_request_magic_link_request.go
+model_request_magic_link_response.go
 model_request_permission_request.go
 model_request_permission_response.go
 model_revoke_agent_token_request.go

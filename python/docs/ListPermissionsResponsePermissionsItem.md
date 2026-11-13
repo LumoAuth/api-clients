@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **slug** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
-**source** | **str** | role:&lt;role name&gt; that grants it | [optional] 
+**source** | **str** | role:&lt;role name&gt; that grants it, or direct for a permission granted to the user directly | [optional] 
 
 ## Example
 

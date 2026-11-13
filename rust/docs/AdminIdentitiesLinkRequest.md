@@ -5,7 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **r#type** | **String** |  | 
-**idp_id** | Option<**i32**> | SAML IdP config id (type=saml) | [optional]
+**idp_id** | Option<**i32**> | SAML IdP config id (type=saml) or OpenID Connect connection id (type=oidc) | [optional]
+**subject** | Option<**String**> | Subject the OpenID Connect provider issues for this user (type=oidc) | [optional]
 **name_id** | Option<**String**> | NameID the IdP asserts for this user (type=saml) | [optional]
 **ldap_config_id** | Option<**i32**> | LDAP directory id (type=ldap) | [optional]
 **dn** | Option<**String**> | Distinguished name (type=ldap); omitted = look up | [optional]

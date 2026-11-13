@@ -30,12 +30,10 @@ public struct ScimSettingsInbound: Codable, JSONEncodable, Hashable {
     public var allowUserDeletion: Bool?
     public var allowGroupOperations: Bool?
     public var protectedAttributes: ScimSettingsInboundProtectedAttributes?
-    /** SCIM attribute => user field. */
-    public var attributeMapping: [String: String]?
     public var autoActivateUsers: Bool?
     public var deprovisioningAction: DeprovisioningAction?
 
-    public init(enabled: Bool? = nil, bearerToken: String? = nil, bearerTokenHash: RedactedSecret? = nil, bearerTokenPreview: String? = nil, tokenCreatedAt: String? = nil, allowUserCreation: Bool? = nil, allowUserUpdates: Bool? = nil, allowUserDeletion: Bool? = nil, allowGroupOperations: Bool? = nil, protectedAttributes: ScimSettingsInboundProtectedAttributes? = nil, attributeMapping: [String: String]? = nil, autoActivateUsers: Bool? = nil, deprovisioningAction: DeprovisioningAction? = nil) {
+    public init(enabled: Bool? = nil, bearerToken: String? = nil, bearerTokenHash: RedactedSecret? = nil, bearerTokenPreview: String? = nil, tokenCreatedAt: String? = nil, allowUserCreation: Bool? = nil, allowUserUpdates: Bool? = nil, allowUserDeletion: Bool? = nil, allowGroupOperations: Bool? = nil, protectedAttributes: ScimSettingsInboundProtectedAttributes? = nil, autoActivateUsers: Bool? = nil, deprovisioningAction: DeprovisioningAction? = nil) {
         self.enabled = enabled
         self.bearerToken = bearerToken
         self.bearerTokenHash = bearerTokenHash
@@ -46,7 +44,6 @@ public struct ScimSettingsInbound: Codable, JSONEncodable, Hashable {
         self.allowUserDeletion = allowUserDeletion
         self.allowGroupOperations = allowGroupOperations
         self.protectedAttributes = protectedAttributes
-        self.attributeMapping = attributeMapping
         self.autoActivateUsers = autoActivateUsers
         self.deprovisioningAction = deprovisioningAction
     }
@@ -62,7 +59,6 @@ public struct ScimSettingsInbound: Codable, JSONEncodable, Hashable {
         case allowUserDeletion = "allow_user_deletion"
         case allowGroupOperations = "allow_group_operations"
         case protectedAttributes = "protected_attributes"
-        case attributeMapping = "attribute_mapping"
         case autoActivateUsers = "auto_activate_users"
         case deprovisioningAction = "deprovisioning_action"
     }
@@ -81,7 +77,6 @@ public struct ScimSettingsInbound: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(allowUserDeletion, forKey: .allowUserDeletion)
         try container.encodeIfPresent(allowGroupOperations, forKey: .allowGroupOperations)
         try container.encodeIfPresent(protectedAttributes, forKey: .protectedAttributes)
-        try container.encodeIfPresent(attributeMapping, forKey: .attributeMapping)
         try container.encodeIfPresent(autoActivateUsers, forKey: .autoActivateUsers)
         try container.encodeIfPresent(deprovisioningAction, forKey: .deprovisioningAction)
     }

@@ -100,7 +100,8 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authorization decision for the requested action. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Missing required field: action. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Agent budget exceeded. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call askCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AskRequest askRequest, final ApiCallback _callback) throws ApiException {
@@ -178,7 +179,8 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authorization decision for the requested action. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Missing required field: action. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Agent budget exceeded. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
     public AskResponse ask(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AskRequest askRequest) throws ApiException {
@@ -199,7 +201,8 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authorization decision for the requested action. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Missing required field: action. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Agent budget exceeded. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AskResponse> askWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AskRequest askRequest) throws ApiException {
@@ -222,7 +225,8 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authorization decision for the requested action. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Missing required field: action. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Agent budget exceeded. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call askAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AskRequest askRequest, final ApiCallback<AskResponse> _callback) throws ApiException {
@@ -414,6 +418,7 @@ public class AgentsApi {
         <tr><td> 403 </td><td> Denied — no matching per-tool or server-wide grant. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> server_id and tool are required, or contain forbidden characters, or are too long together. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> unknown_server — server_id is not an active MCP server of this organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call authorizeMcpCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthorizeMcpRequest authorizeMcpRequest, final ApiCallback _callback) throws ApiException {
@@ -493,6 +498,7 @@ public class AgentsApi {
         <tr><td> 403 </td><td> Denied — no matching per-tool or server-wide grant. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> server_id and tool are required, or contain forbidden characters, or are too long together. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> unknown_server — server_id is not an active MCP server of this organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
     public AuthorizeMcpResponse authorizeMcp(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthorizeMcpRequest authorizeMcpRequest) throws ApiException {
@@ -515,6 +521,7 @@ public class AgentsApi {
         <tr><td> 403 </td><td> Denied — no matching per-tool or server-wide grant. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> server_id and tool are required, or contain forbidden characters, or are too long together. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> unknown_server — server_id is not an active MCP server of this organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AuthorizeMcpResponse> authorizeMcpWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthorizeMcpRequest authorizeMcpRequest) throws ApiException {
@@ -539,6 +546,7 @@ public class AgentsApi {
         <tr><td> 403 </td><td> Denied — no matching per-tool or server-wide grant. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> server_id and tool are required, or contain forbidden characters, or are too long together. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> unknown_server — server_id is not an active MCP server of this organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call authorizeMcpAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthorizeMcpRequest authorizeMcpRequest, final ApiCallback<AuthorizeMcpResponse> _callback) throws ApiException {
@@ -562,7 +570,7 @@ public class AgentsApi {
         <tr><td> 201 </td><td> Approval request created and push sent. </td><td>  -  </td></tr>
         <tr><td> 202 </td><td> User has no push device; an email sign-in fallback link was sent. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, or missing on_behalf_of. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, or lacks delegation permission. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or target user not found. </td><td>  -  </td></tr>
         <tr><td> 428 </td><td> User has no enrolled push device and the email fallback could not be sent. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limited (per tenant/agent/user). </td><td>  -  </td></tr>
@@ -644,7 +652,7 @@ public class AgentsApi {
         <tr><td> 201 </td><td> Approval request created and push sent. </td><td>  -  </td></tr>
         <tr><td> 202 </td><td> User has no push device; an email sign-in fallback link was sent. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, or missing on_behalf_of. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, or lacks delegation permission. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or target user not found. </td><td>  -  </td></tr>
         <tr><td> 428 </td><td> User has no enrolled push device and the email fallback could not be sent. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limited (per tenant/agent/user). </td><td>  -  </td></tr>
@@ -669,7 +677,7 @@ public class AgentsApi {
         <tr><td> 201 </td><td> Approval request created and push sent. </td><td>  -  </td></tr>
         <tr><td> 202 </td><td> User has no push device; an email sign-in fallback link was sent. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, or missing on_behalf_of. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, or lacks delegation permission. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or target user not found. </td><td>  -  </td></tr>
         <tr><td> 428 </td><td> User has no enrolled push device and the email fallback could not be sent. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limited (per tenant/agent/user). </td><td>  -  </td></tr>
@@ -696,7 +704,7 @@ public class AgentsApi {
         <tr><td> 201 </td><td> Approval request created and push sent. </td><td>  -  </td></tr>
         <tr><td> 202 </td><td> User has no push device; an email sign-in fallback link was sent. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, or missing on_behalf_of. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, or lacks delegation permission. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or target user not found. </td><td>  -  </td></tr>
         <tr><td> 428 </td><td> User has no enrolled push device and the email fallback could not be sent. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limited (per tenant/agent/user). </td><td>  -  </td></tr>
@@ -722,6 +730,7 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The A2A AgentCard with a detached JWS signature over its JCS-canonical content (signatures[].protected + signature, verifiable against this organization&#39;s JWKS). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or the agent is unknown, inactive or has no published A2A card. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited — too many card requests from this address (Retry-After). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getAgentCardCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
@@ -799,6 +808,7 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The A2A AgentCard with a detached JWS signature over its JCS-canonical content (signatures[].protected + signature, verifiable against this organization&#39;s JWKS). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or the agent is unknown, inactive or has no published A2A card. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited — too many card requests from this address (Retry-After). </td><td>  -  </td></tr>
      </table>
      */
     public SignedAgentCard getAgentCard(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -819,6 +829,7 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The A2A AgentCard with a detached JWS signature over its JCS-canonical content (signatures[].protected + signature, verifiable against this organization&#39;s JWKS). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or the agent is unknown, inactive or has no published A2A card. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited — too many card requests from this address (Retry-After). </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<SignedAgentCard> getAgentCardWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -841,6 +852,7 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The A2A AgentCard with a detached JWS signature over its JCS-canonical content (signatures[].protected + signature, verifiable against this organization&#39;s JWKS). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or the agent is unknown, inactive or has no published A2A card. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited — too many card requests from this address (Retry-After). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getAgentCardAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<SignedAgentCard> _callback) throws ApiException {
@@ -1266,7 +1278,7 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Recorded. &#x60;budget&#x60; has the same shape as &#x60;budget_policy&#x60; in UserInfo; &#x60;exhausted: true&#x60; means that the next metered call gets 429. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request: tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> test_token_not_accepted or cross_tenant. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> test_token_not_accepted, cross_tenant or insufficient_scope (the token was narrowed with a scope). </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> rate_limited: too many reports from this agent. </td><td>  -  </td></tr>
      </table>
      */
@@ -1345,7 +1357,7 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Recorded. &#x60;budget&#x60; has the same shape as &#x60;budget_policy&#x60; in UserInfo; &#x60;exhausted: true&#x60; means that the next metered call gets 429. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request: tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> test_token_not_accepted or cross_tenant. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> test_token_not_accepted, cross_tenant or insufficient_scope (the token was narrowed with a scope). </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> rate_limited: too many reports from this agent. </td><td>  -  </td></tr>
      </table>
      */
@@ -1367,7 +1379,7 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Recorded. &#x60;budget&#x60; has the same shape as &#x60;budget_policy&#x60; in UserInfo; &#x60;exhausted: true&#x60; means that the next metered call gets 429. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request: tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> test_token_not_accepted or cross_tenant. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> test_token_not_accepted, cross_tenant or insufficient_scope (the token was narrowed with a scope). </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> rate_limited: too many reports from this agent. </td><td>  -  </td></tr>
      </table>
      */
@@ -1391,7 +1403,7 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Recorded. &#x60;budget&#x60; has the same shape as &#x60;budget_policy&#x60; in UserInfo; &#x60;exhausted: true&#x60; means that the next metered call gets 429. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request: tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> test_token_not_accepted or cross_tenant. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> test_token_not_accepted, cross_tenant or insufficient_scope (the token was narrowed with a scope). </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> rate_limited: too many reports from this agent. </td><td>  -  </td></tr>
      </table>
      */

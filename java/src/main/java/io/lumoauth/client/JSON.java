@@ -112,6 +112,7 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminAgentsActivateResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminAgentsAgentsDisableResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminAgentsAgentsEnableResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminAgentsAgentsRotateKeyRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminAgentsAgentsRotateKeyResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminAgentsCreateRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminAgentsCreateResponse.CustomTypeAdapterFactory());
@@ -207,6 +208,8 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminSandboxListResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminSandboxSpawnRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminSandboxSpawnResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminSandboxSpawnResponseData.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminSandboxSpawnResponseData1.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminScopesCreateResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminScopesListResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminScopesListResponseMeta.CustomTypeAdapterFactory());
@@ -248,6 +251,7 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminWebhooksDeliveriesListResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminWebhooksDeliveriesListResponseMeta.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminWebhooksDeliveryReplayResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminWebhooksDeliveryReplayResponseData.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminWebhooksDeliveryShowResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminWebhooksDeliveryShowResponseData.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.AdminWebhooksDeliveryShowResponseData1AttemptsItem.CustomTypeAdapterFactory());
@@ -446,6 +450,8 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.RemoveUserPermissionResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.RemoveUserRoleResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.ReportAgentUsageResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.RequestMagicLinkRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.RequestMagicLinkResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.RequestPermissionRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.RequestPermissionResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.RevokeAgentTokenRequest.CustomTypeAdapterFactory());

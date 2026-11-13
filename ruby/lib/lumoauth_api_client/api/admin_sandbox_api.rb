@@ -148,6 +148,7 @@ module LumoAuthApiClient
     end
 
     # Spawn a sandbox tenant
+    # Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @option opts [AdminSandboxSpawnRequest] :admin_sandbox_spawn_request 
@@ -158,6 +159,7 @@ module LumoAuthApiClient
     end
 
     # Spawn a sandbox tenant
+    # Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @option opts [AdminSandboxSpawnRequest] :admin_sandbox_spawn_request 

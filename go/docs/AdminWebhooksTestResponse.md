@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Success** | Pointer to **bool** |  | [optional] 
 **StatusCode** | Pointer to **int32** | HTTP status returned by the receiver | [optional] 
+**DeliveryId** | Pointer to **string** | Id of the delivery row (the &#x60;X-LumoAuth-Delivery&#x60; header of the request) | [optional] 
 **Message** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -76,6 +77,31 @@ SetStatusCode sets StatusCode field to given value.
 `func (o *AdminWebhooksTestResponse) HasStatusCode() bool`
 
 HasStatusCode returns a boolean if a field has been set.
+
+### GetDeliveryId
+
+`func (o *AdminWebhooksTestResponse) GetDeliveryId() string`
+
+GetDeliveryId returns the DeliveryId field if non-nil, zero value otherwise.
+
+### GetDeliveryIdOk
+
+`func (o *AdminWebhooksTestResponse) GetDeliveryIdOk() (*string, bool)`
+
+GetDeliveryIdOk returns a tuple with the DeliveryId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeliveryId
+
+`func (o *AdminWebhooksTestResponse) SetDeliveryId(v string)`
+
+SetDeliveryId sets DeliveryId field to given value.
+
+### HasDeliveryId
+
+`func (o *AdminWebhooksTestResponse) HasDeliveryId() bool`
+
+HasDeliveryId returns a boolean if a field has been set.
 
 ### GetMessage
 

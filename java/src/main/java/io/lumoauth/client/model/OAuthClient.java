@@ -51,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * OAuthClient
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T14:48:44.873539119Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class OAuthClient {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -107,6 +107,11 @@ public class OAuthClient {
   @SerializedName(SERIALIZED_NAME_GRANT_TYPES)
   @javax.annotation.Nullable
   private List<String> grantTypes = new ArrayList<>();
+
+  public static final String SERIALIZED_NAME_CIBA_ENABLED = "cibaEnabled";
+  @SerializedName(SERIALIZED_NAME_CIBA_ENABLED)
+  @javax.annotation.Nullable
+  private Boolean cibaEnabled;
 
   public OAuthClient() {
   }
@@ -344,6 +349,25 @@ public class OAuthClient {
   }
 
 
+  public OAuthClient cibaEnabled(@javax.annotation.Nullable Boolean cibaEnabled) {
+    this.cibaEnabled = cibaEnabled;
+    return this;
+  }
+
+  /**
+   * Detailed responses only. Whether the client may use CIBA (backchannel authentication).
+   * @return cibaEnabled
+   */
+  @javax.annotation.Nullable
+  public Boolean getCibaEnabled() {
+    return cibaEnabled;
+  }
+
+  public void setCibaEnabled(@javax.annotation.Nullable Boolean cibaEnabled) {
+    this.cibaEnabled = cibaEnabled;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -364,12 +388,13 @@ public class OAuthClient {
         Objects.equals(this.createdAt, oauthClient.createdAt) &&
         Objects.equals(this.redirectUris, oauthClient.redirectUris) &&
         Objects.equals(this.scopes, oauthClient.scopes) &&
-        Objects.equals(this.grantTypes, oauthClient.grantTypes);
+        Objects.equals(this.grantTypes, oauthClient.grantTypes) &&
+        Objects.equals(this.cibaEnabled, oauthClient.cibaEnabled);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, clientId, name, isConfidential, isPublic, isActive, requiresPkce, createdAt, redirectUris, scopes, grantTypes);
+    return Objects.hash(id, clientId, name, isConfidential, isPublic, isActive, requiresPkce, createdAt, redirectUris, scopes, grantTypes, cibaEnabled);
   }
 
   @Override
@@ -387,6 +412,7 @@ public class OAuthClient {
     sb.append("    redirectUris: ").append(toIndentedString(redirectUris)).append("\n");
     sb.append("    scopes: ").append(toIndentedString(scopes)).append("\n");
     sb.append("    grantTypes: ").append(toIndentedString(grantTypes)).append("\n");
+    sb.append("    cibaEnabled: ").append(toIndentedString(cibaEnabled)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -408,7 +434,7 @@ public class OAuthClient {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt", "redirectUris", "scopes", "grantTypes"));
+    openapiFields = new HashSet<String>(Arrays.asList("id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt", "redirectUris", "scopes", "grantTypes", "cibaEnabled"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt"));

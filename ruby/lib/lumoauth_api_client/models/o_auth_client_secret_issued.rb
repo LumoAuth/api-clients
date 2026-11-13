@@ -15,7 +15,7 @@ require 'time'
 
 module LumoAuthApiClient
   class OAuthClientSecretIssued
-    # Plaintext client secret — returned only once, never retrievable again
+    # Plaintext client secret — returned only once, never retrievable again. Absent for a public client
     attr_accessor :secret
 
     attr_accessor :_note

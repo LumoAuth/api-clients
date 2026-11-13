@@ -146,15 +146,6 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'AttributeMapping'
-        /// </summary>
-        [Fact]
-        public void AttributeMappingTest()
-        {
-            // TODO unit test for the property 'AttributeMapping'
-        }
-
-        /// <summary>
         /// Test the property 'AutoActivateUsers'
         /// </summary>
         [Fact]

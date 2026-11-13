@@ -23,7 +23,7 @@ type AttestResponseIdentity struct {
 	Provider *string `json:"provider,omitempty"`
 	Subject *string `json:"subject,omitempty"`
 	Issuer *string `json:"issuer,omitempty"`
-	// True when the registered audience is not specific to this deployment (operators should move to the agent-specific audience).
+	// True when the registered audience is not specific to LumoAuth (move to the agent-specific audience).
 	AudienceGeneric *bool `json:"audience_generic,omitempty"`
 }
 

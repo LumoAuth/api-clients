@@ -52,6 +52,7 @@ docs/AdminAbacApi.md
 docs/AdminAgentsActivateResponse.md
 docs/AdminAgentsAgentsDisableResponse.md
 docs/AdminAgentsAgentsEnableResponse.md
+docs/AdminAgentsAgentsRotateKeyRequest.md
 docs/AdminAgentsAgentsRotateKeyResponse.md
 docs/AdminAgentsApi.md
 docs/AdminAgentsCreateRequest.md
@@ -159,6 +160,8 @@ docs/AdminSandboxApi.md
 docs/AdminSandboxListResponse.md
 docs/AdminSandboxSpawnRequest.md
 docs/AdminSandboxSpawnResponse.md
+docs/AdminSandboxSpawnResponseData.md
+docs/AdminSandboxSpawnResponseData1.md
 docs/AdminScopesCreateResponse.md
 docs/AdminScopesListResponse.md
 docs/AdminScopesListResponseMeta.md
@@ -204,6 +207,7 @@ docs/AdminWebhooksCreateResponseData.md
 docs/AdminWebhooksDeliveriesListResponse.md
 docs/AdminWebhooksDeliveriesListResponseMeta.md
 docs/AdminWebhooksDeliveryReplayResponse.md
+docs/AdminWebhooksDeliveryReplayResponseData.md
 docs/AdminWebhooksDeliveryShowResponse.md
 docs/AdminWebhooksDeliveryShowResponseData.md
 docs/AdminWebhooksDeliveryShowResponseData1AttemptsItem.md
@@ -410,6 +414,8 @@ docs/RemoveUserGroupResponse.md
 docs/RemoveUserPermissionResponse.md
 docs/RemoveUserRoleResponse.md
 docs/ReportAgentUsageResponse.md
+docs/RequestMagicLinkRequest.md
+docs/RequestMagicLinkResponse.md
 docs/RequestPermissionRequest.md
 docs/RequestPermissionResponse.md
 docs/RevokeAgentTokenRequest.md
@@ -485,6 +491,7 @@ models/add-user-role-response.ts
 models/admin-agents-activate-response.ts
 models/admin-agents-agents-disable-response.ts
 models/admin-agents-agents-enable-response.ts
+models/admin-agents-agents-rotate-key-request.ts
 models/admin-agents-agents-rotate-key-response.ts
 models/admin-agents-create-request.ts
 models/admin-agents-create-response.ts
@@ -579,6 +586,8 @@ models/admin-roles-get-users-response.ts
 models/admin-roles-list-response.ts
 models/admin-sandbox-list-response.ts
 models/admin-sandbox-spawn-request.ts
+models/admin-sandbox-spawn-response-data.ts
+models/admin-sandbox-spawn-response-data1.ts
 models/admin-sandbox-spawn-response.ts
 models/admin-scopes-create-response.ts
 models/admin-scopes-list-response-meta.ts
@@ -620,6 +629,7 @@ models/admin-webhooks-create-response-data.ts
 models/admin-webhooks-create-response.ts
 models/admin-webhooks-deliveries-list-response-meta.ts
 models/admin-webhooks-deliveries-list-response.ts
+models/admin-webhooks-delivery-replay-response-data.ts
 models/admin-webhooks-delivery-replay-response.ts
 models/admin-webhooks-delivery-show-response-data.ts
 models/admin-webhooks-delivery-show-response-data1-attempts-item.ts
@@ -820,6 +830,8 @@ models/remove-user-group-response.ts
 models/remove-user-permission-response.ts
 models/remove-user-role-response.ts
 models/report-agent-usage-response.ts
+models/request-magic-link-request.ts
+models/request-magic-link-response.ts
 models/request-permission-request.ts
 models/request-permission-response.ts
 models/revoke-agent-token-request.ts

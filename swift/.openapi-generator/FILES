@@ -57,6 +57,7 @@ Sources/LumoAuthAPIClient/Models/AddUserRoleResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminAgentsActivateResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminAgentsAgentsDisableResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminAgentsAgentsEnableResponse.swift
+Sources/LumoAuthAPIClient/Models/AdminAgentsAgentsRotateKeyRequest.swift
 Sources/LumoAuthAPIClient/Models/AdminAgentsAgentsRotateKeyResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminAgentsCreateRequest.swift
 Sources/LumoAuthAPIClient/Models/AdminAgentsCreateResponse.swift
@@ -152,6 +153,8 @@ Sources/LumoAuthAPIClient/Models/AdminRolesListResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminSandboxListResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminSandboxSpawnRequest.swift
 Sources/LumoAuthAPIClient/Models/AdminSandboxSpawnResponse.swift
+Sources/LumoAuthAPIClient/Models/AdminSandboxSpawnResponseData.swift
+Sources/LumoAuthAPIClient/Models/AdminSandboxSpawnResponseData1.swift
 Sources/LumoAuthAPIClient/Models/AdminScopesCreateResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminScopesListResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminScopesListResponseMeta.swift
@@ -193,6 +196,7 @@ Sources/LumoAuthAPIClient/Models/AdminWebhooksCreateResponseData.swift
 Sources/LumoAuthAPIClient/Models/AdminWebhooksDeliveriesListResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminWebhooksDeliveriesListResponseMeta.swift
 Sources/LumoAuthAPIClient/Models/AdminWebhooksDeliveryReplayResponse.swift
+Sources/LumoAuthAPIClient/Models/AdminWebhooksDeliveryReplayResponseData.swift
 Sources/LumoAuthAPIClient/Models/AdminWebhooksDeliveryShowResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminWebhooksDeliveryShowResponseData.swift
 Sources/LumoAuthAPIClient/Models/AdminWebhooksDeliveryShowResponseData1AttemptsItem.swift
@@ -391,6 +395,8 @@ Sources/LumoAuthAPIClient/Models/RemoveUserGroupResponse.swift
 Sources/LumoAuthAPIClient/Models/RemoveUserPermissionResponse.swift
 Sources/LumoAuthAPIClient/Models/RemoveUserRoleResponse.swift
 Sources/LumoAuthAPIClient/Models/ReportAgentUsageResponse.swift
+Sources/LumoAuthAPIClient/Models/RequestMagicLinkRequest.swift
+Sources/LumoAuthAPIClient/Models/RequestMagicLinkResponse.swift
 Sources/LumoAuthAPIClient/Models/RequestPermissionRequest.swift
 Sources/LumoAuthAPIClient/Models/RequestPermissionResponse.swift
 Sources/LumoAuthAPIClient/Models/RevokeAgentTokenRequest.swift
@@ -469,6 +475,7 @@ docs/AdminAgentsAPI.md
 docs/AdminAgentsActivateResponse.md
 docs/AdminAgentsAgentsDisableResponse.md
 docs/AdminAgentsAgentsEnableResponse.md
+docs/AdminAgentsAgentsRotateKeyRequest.md
 docs/AdminAgentsAgentsRotateKeyResponse.md
 docs/AdminAgentsCreateRequest.md
 docs/AdminAgentsCreateResponse.md
@@ -575,6 +582,8 @@ docs/AdminSandboxAPI.md
 docs/AdminSandboxListResponse.md
 docs/AdminSandboxSpawnRequest.md
 docs/AdminSandboxSpawnResponse.md
+docs/AdminSandboxSpawnResponseData.md
+docs/AdminSandboxSpawnResponseData1.md
 docs/AdminScopesCreateResponse.md
 docs/AdminScopesListResponse.md
 docs/AdminScopesListResponseMeta.md
@@ -620,6 +629,7 @@ docs/AdminWebhooksCreateResponseData.md
 docs/AdminWebhooksDeliveriesListResponse.md
 docs/AdminWebhooksDeliveriesListResponseMeta.md
 docs/AdminWebhooksDeliveryReplayResponse.md
+docs/AdminWebhooksDeliveryReplayResponseData.md
 docs/AdminWebhooksDeliveryShowResponse.md
 docs/AdminWebhooksDeliveryShowResponseData.md
 docs/AdminWebhooksDeliveryShowResponseData1AttemptsItem.md
@@ -826,6 +836,8 @@ docs/RemoveUserGroupResponse.md
 docs/RemoveUserPermissionResponse.md
 docs/RemoveUserRoleResponse.md
 docs/ReportAgentUsageResponse.md
+docs/RequestMagicLinkRequest.md
+docs/RequestMagicLinkResponse.md
 docs/RequestPermissionRequest.md
 docs/RequestPermissionResponse.md
 docs/RevokeAgentTokenRequest.md

@@ -17,8 +17,7 @@ Inbound SCIM server settings (entity defaults merged with the stored values).
 |**allowUserUpdates** | **Boolean** |  |  [optional] |
 |**allowUserDeletion** | **Boolean** |  |  [optional] |
 |**allowGroupOperations** | **Boolean** |  |  [optional] |
-|**protectedAttributes** | **ScimSettingsInboundProtectedAttributes** |  |  [optional] |
-|**attributeMapping** | **Map&lt;String, String&gt;** | SCIM attribute &#x3D;&gt; user field. |  [optional] |
+|**protectedAttributes** | [**ScimSettingsInboundProtectedAttributes**](ScimSettingsInboundProtectedAttributes.md) |  |  [optional] |
 |**autoActivateUsers** | **Boolean** |  |  [optional] |
 |**deprovisioningAction** | [**DeprovisioningActionEnum**](#DeprovisioningActionEnum) |  |  [optional] |
 

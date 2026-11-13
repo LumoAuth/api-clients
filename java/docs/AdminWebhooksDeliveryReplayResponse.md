@@ -7,7 +7,7 @@
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-|**data** | [**WebhookDelivery**](WebhookDelivery.md) |  |  [optional] |
+|**data** | [**AdminWebhooksDeliveryReplayResponseData**](AdminWebhooksDeliveryReplayResponseData.md) |  |  [optional] |
 |**message** | **String** |  |  [optional] |
 
 

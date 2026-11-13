@@ -26,7 +26,7 @@
 | **geo_location** | **Hash&lt;String, Object&gt;** | Detailed responses only | [optional] |
 | **session_id** | **String** | Detailed responses only | [optional] |
 | **request_id** | **String** | Detailed responses only | [optional] |
-| **status** | **String** | Detailed responses only | [optional] |
+| **status** | **String** | Result of the event: success, failure, pending or partial | [optional] |
 | **status_reason** | **String** | Detailed responses only | [optional] |
 | **old_value** | **Hash&lt;String, Object&gt;** | Detailed responses only | [optional] |
 | **new_value** | **Hash&lt;String, Object&gt;** | Detailed responses only | [optional] |

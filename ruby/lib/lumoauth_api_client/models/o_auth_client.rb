@@ -40,6 +40,9 @@ module LumoAuthApiClient
     # Detailed responses only
     attr_accessor :grant_types
 
+    # Detailed responses only. Whether the client may use CIBA (backchannel authentication).
+    attr_accessor :ciba_enabled
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -53,7 +56,8 @@ module LumoAuthApiClient
         :'created_at' => :'createdAt',
         :'redirect_uris' => :'redirectUris',
         :'scopes' => :'scopes',
-        :'grant_types' => :'grantTypes'
+        :'grant_types' => :'grantTypes',
+        :'ciba_enabled' => :'cibaEnabled'
       }
     end
 
@@ -80,7 +84,8 @@ module LumoAuthApiClient
         :'created_at' => :'Time',
         :'redirect_uris' => :'Array<String>',
         :'scopes' => :'Array<String>',
-        :'grant_types' => :'Array<String>'
+        :'grant_types' => :'Array<String>',
+        :'ciba_enabled' => :'Boolean'
       }
     end
 
@@ -170,6 +175,10 @@ module LumoAuthApiClient
         if (value = attributes[:'grant_types']).is_a?(Array)
           self.grant_types = value
         end
+      end
+
+      if attributes.key?(:'ciba_enabled')
+        self.ciba_enabled = attributes[:'ciba_enabled']
       end
     end
 
@@ -323,7 +332,8 @@ module LumoAuthApiClient
           created_at == o.created_at &&
           redirect_uris == o.redirect_uris &&
           scopes == o.scopes &&
-          grant_types == o.grant_types
+          grant_types == o.grant_types &&
+          ciba_enabled == o.ciba_enabled
     end
 
     # @see the `==` method
@@ -335,7 +345,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, client_id, name, is_confidential, is_public, is_active, requires_pkce, created_at, redirect_uris, scopes, grant_types].hash
+      [id, client_id, name, is_confidential, is_public, is_active, requires_pkce, created_at, redirect_uris, scopes, grant_types, ciba_enabled].hash
     end
 
     # Builds the object from hash

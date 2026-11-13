@@ -38,11 +38,13 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         /// <param name="success">success.</param>
         /// <param name="statusCode">HTTP status returned by the receiver.</param>
+        /// <param name="deliveryId">Id of the delivery row (the &#x60;X-LumoAuth-Delivery&#x60; header of the request).</param>
         /// <param name="message">message.</param>
-        public AdminWebhooksTestResponse(bool success = default, int statusCode = default, string message = default)
+        public AdminWebhooksTestResponse(bool success = default, int statusCode = default, string deliveryId = default, string message = default)
         {
             this.Success = success;
             this.StatusCode = statusCode;
+            this.DeliveryId = deliveryId;
             this.Message = message;
         }
 
@@ -58,6 +60,13 @@ namespace LumoAuth.ApiClient.Model
         /// <value>HTTP status returned by the receiver</value>
         [DataMember(Name = "statusCode", EmitDefaultValue = false)]
         public int StatusCode { get; set; }
+
+        /// <summary>
+        /// Id of the delivery row (the &#x60;X-LumoAuth-Delivery&#x60; header of the request)
+        /// </summary>
+        /// <value>Id of the delivery row (the &#x60;X-LumoAuth-Delivery&#x60; header of the request)</value>
+        [DataMember(Name = "deliveryId", EmitDefaultValue = false)]
+        public string DeliveryId { get; set; }
 
         /// <summary>
         /// Gets or Sets Message
@@ -78,6 +87,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("class AdminWebhooksTestResponse {\n");
             sb.Append("  Success: ").Append(Success).Append("\n");
             sb.Append("  StatusCode: ").Append(StatusCode).Append("\n");
+            sb.Append("  DeliveryId: ").Append(DeliveryId).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("}\n");
             return sb.ToString();

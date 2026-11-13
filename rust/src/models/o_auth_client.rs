@@ -38,6 +38,9 @@ pub struct OAuthClient {
     /// Detailed responses only
     #[serde(rename = "grantTypes", skip_serializing_if = "Option::is_none")]
     pub grant_types: Option<Vec<String>>,
+    /// Detailed responses only. Whether the client may use CIBA (backchannel authentication).
+    #[serde(rename = "cibaEnabled", skip_serializing_if = "Option::is_none")]
+    pub ciba_enabled: Option<bool>,
 }
 
 impl OAuthClient {
@@ -54,6 +57,7 @@ impl OAuthClient {
             redirect_uris: None,
             scopes: None,
             grant_types: None,
+            ciba_enabled: None,
         }
     }
 }

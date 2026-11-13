@@ -16,7 +16,7 @@ public struct AttestResponseIdentity: Codable, JSONEncodable, Hashable {
     public var provider: String?
     public var subject: String?
     public var issuer: String?
-    /** True when the registered audience is not specific to this deployment (operators should move to the agent-specific audience). */
+    /** True when the registered audience is not specific to LumoAuth (move to the agent-specific audience). */
     public var audienceGeneric: Bool?
 
     public init(provider: String? = nil, subject: String? = nil, issuer: String? = nil, audienceGeneric: Bool? = nil) {

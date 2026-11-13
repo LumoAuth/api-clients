@@ -887,7 +887,7 @@ Name | Type | Description  | Notes
 **400** | Invalid exchange request (grant_type / subject_token). |  -  |
 **401** | The AAuth token is invalid, expired, or revoked, or the RFC 9421 request signature is missing/invalid/replayed. |  -  |
 **403** | Denied by a conditional access policy. |  -  |
-**429** | Rate limit exceeded (per IP or per agent). |  -  |
+**429** | Rate limit exceeded (per IP or per agent), or the agent budget is spent (access_denied). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

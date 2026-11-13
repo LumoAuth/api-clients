@@ -56,14 +56,6 @@ public class AuthenticationSettingsTest {
     }
 
     /**
-     * Test the property 'biometricEnabled'
-     */
-    @Test
-    public void biometricEnabledTest() {
-        // TODO: test biometricEnabled
-    }
-
-    /**
      * Test the property 'passkeys'
      */
     @Test
@@ -189,14 +181,6 @@ public class AuthenticationSettingsTest {
     @Test
     public void sessionTimeoutTest() {
         // TODO: test sessionTimeout
-    }
-
-    /**
-     * Test the property 'encryptClientSecrets'
-     */
-    @Test
-    public void encryptClientSecretsTest() {
-        // TODO: test encryptClientSecrets
     }
 
     /**

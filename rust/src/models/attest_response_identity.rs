@@ -20,7 +20,7 @@ pub struct AttestResponseIdentity {
     pub subject: Option<String>,
     #[serde(rename = "issuer", skip_serializing_if = "Option::is_none")]
     pub issuer: Option<String>,
-    /// True when the registered audience is not specific to this deployment (operators should move to the agent-specific audience).
+    /// True when the registered audience is not specific to LumoAuth (move to the agent-specific audience).
     #[serde(rename = "audience_generic", skip_serializing_if = "Option::is_none")]
     pub audience_generic: Option<bool>,
 }

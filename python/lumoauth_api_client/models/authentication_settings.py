@@ -20,6 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from lumoauth_api_client.models.authentication_settings_mfa_policy import AuthenticationSettingsMfaPolicy
 from lumoauth_api_client.models.authentication_settings_passkeys import AuthenticationSettingsPasskeys
 from lumoauth_api_client.models.authentication_settings_password_policy import AuthenticationSettingsPasswordPolicy
@@ -33,7 +34,6 @@ class AuthenticationSettings(BaseModel):
     Authentication settings (entity defaults merged with the stored values). Any other stored key is returned as-is; secret-looking keys (e.g. initial_access_tokens) are redacted.
     """ # noqa: E501
     passkey_enabled: Optional[StrictBool] = None
-    biometric_enabled: Optional[StrictBool] = None
     passkeys: Optional[AuthenticationSettingsPasskeys] = None
     mfa_required: Optional[StrictBool] = None
     mfa_methods: Optional[List[StrictStr]] = None
@@ -41,7 +41,7 @@ class AuthenticationSettings(BaseModel):
     mfa_policy: Optional[AuthenticationSettingsMfaPolicy] = None
     push_auth_required: Optional[StrictBool] = None
     push_app_name: Optional[StrictStr] = None
-    social_login_enabled: Optional[StrictBool] = None
+    social_login_enabled: Optional[StrictBool] = Field(default=None, description="Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag.")
     social_providers: Optional[List[StrictStr]] = None
     social_configs: Optional[Dict[str, Dict[str, Any]]] = Field(default=None, description="Per-provider OAuth credentials keyed by provider (google, github, microsoft, facebook, apple, linkedin). Each value is a free-form object of provider fields (client_id, hosted_domain, tenant_id, team_id, key_id, ...); the secret fields client_secret and private_key are returned as the redaction marker {\"configured\": true, \"redacted\": true} when set, null otherwise.")
     password_min_length: Optional[StrictInt] = Field(default=None, description="Legacy; mirrored by password_policy.min_length.")
@@ -49,8 +49,7 @@ class AuthenticationSettings(BaseModel):
     password_policy: Optional[AuthenticationSettingsPasswordPolicy] = None
     password_rotation_policy: Optional[AuthenticationSettingsPasswordRotationPolicy] = None
     no_mfa_action: Optional[StrictStr] = None
-    session_timeout: Optional[StrictInt] = Field(default=None, description="Seconds.")
-    encrypt_client_secrets: Optional[StrictBool] = None
+    session_timeout: Optional[Annotated[int, Field(le=1209600, strict=True, ge=300)]] = Field(default=None, description="Idle timeout in seconds.")
     dynamic_client_registration_enabled: Optional[StrictBool] = None
     cimd_enabled: Optional[StrictBool] = Field(default=True, description="Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out.")
     cimd_allowed_domains: Optional[List[StrictStr]] = None
@@ -59,7 +58,17 @@ class AuthenticationSettings(BaseModel):
     xaa_resource_enabled: Optional[StrictBool] = None
     progressive_profiling: Optional[AuthenticationSettingsProgressiveProfiling] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["passkey_enabled", "biometric_enabled", "passkeys", "mfa_required", "mfa_methods", "mfa_sms_enabled", "mfa_policy", "push_auth_required", "push_app_name", "social_login_enabled", "social_providers", "social_configs", "password_min_length", "password_require_special", "password_policy", "password_rotation_policy", "no_mfa_action", "session_timeout", "encrypt_client_secrets", "dynamic_client_registration_enabled", "cimd_enabled", "cimd_allowed_domains", "cimd_localhost_redirect_policy", "xaa_idp_enabled", "xaa_resource_enabled", "progressive_profiling"]
+    __properties: ClassVar[List[str]] = ["passkey_enabled", "passkeys", "mfa_required", "mfa_methods", "mfa_sms_enabled", "mfa_policy", "push_auth_required", "push_app_name", "social_login_enabled", "social_providers", "social_configs", "password_min_length", "password_require_special", "password_policy", "password_rotation_policy", "no_mfa_action", "session_timeout", "dynamic_client_registration_enabled", "cimd_enabled", "cimd_allowed_domains", "cimd_localhost_redirect_policy", "xaa_idp_enabled", "xaa_resource_enabled", "progressive_profiling"]
+
+    @field_validator('no_mfa_action')
+    def no_mfa_action_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['allow', 'prompt', 'email', 'block']):
+            raise ValueError("must be one of enum values ('allow', 'prompt', 'email', 'block')")
+        return value
 
     @field_validator('cimd_localhost_redirect_policy')
     def cimd_localhost_redirect_policy_validate_enum(cls, value):
@@ -150,7 +159,6 @@ class AuthenticationSettings(BaseModel):
 
         _obj = cls.model_validate({
             "passkey_enabled": obj.get("passkey_enabled"),
-            "biometric_enabled": obj.get("biometric_enabled"),
             "passkeys": AuthenticationSettingsPasskeys.from_dict(obj["passkeys"]) if obj.get("passkeys") is not None else None,
             "mfa_required": obj.get("mfa_required"),
             "mfa_methods": obj.get("mfa_methods"),
@@ -167,7 +175,6 @@ class AuthenticationSettings(BaseModel):
             "password_rotation_policy": AuthenticationSettingsPasswordRotationPolicy.from_dict(obj["password_rotation_policy"]) if obj.get("password_rotation_policy") is not None else None,
             "no_mfa_action": obj.get("no_mfa_action"),
             "session_timeout": obj.get("session_timeout"),
-            "encrypt_client_secrets": obj.get("encrypt_client_secrets"),
             "dynamic_client_registration_enabled": obj.get("dynamic_client_registration_enabled"),
             "cimd_enabled": obj.get("cimd_enabled") if obj.get("cimd_enabled") is not None else True,
             "cimd_allowed_domains": obj.get("cimd_allowed_domains"),

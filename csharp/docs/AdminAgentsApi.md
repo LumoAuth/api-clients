@@ -339,7 +339,7 @@ catch (ApiException e)
 
 <a id="adminagentsagentsrotatekey"></a>
 # **AdminAgentsAgentsRotateKey**
-> AdminAgentsAgentsRotateKeyResponse AdminAgentsAgentsRotateKey (string orgId, string agentId)
+> AdminAgentsAgentsRotateKeyResponse AdminAgentsAgentsRotateKey (string orgId, string agentId, AdminAgentsAgentsRotateKeyRequest? adminAgentsAgentsRotateKeyRequest = null)
 
 Rotate agent API key
 
@@ -373,11 +373,12 @@ namespace Example
             var apiInstance = new AdminAgentsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var agentId = "agentId_example";  // string | 
+            var adminAgentsAgentsRotateKeyRequest = new AdminAgentsAgentsRotateKeyRequest?(); // AdminAgentsAgentsRotateKeyRequest? | Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional) 
 
             try
             {
                 // Rotate agent API key
-                AdminAgentsAgentsRotateKeyResponse result = apiInstance.AdminAgentsAgentsRotateKey(orgId, agentId);
+                AdminAgentsAgentsRotateKeyResponse result = apiInstance.AdminAgentsAgentsRotateKey(orgId, agentId, adminAgentsAgentsRotateKeyRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -398,7 +399,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Rotate agent API key
-    ApiResponse<AdminAgentsAgentsRotateKeyResponse> response = apiInstance.AdminAgentsAgentsRotateKeyWithHttpInfo(orgId, agentId);
+    ApiResponse<AdminAgentsAgentsRotateKeyResponse> response = apiInstance.AdminAgentsAgentsRotateKeyWithHttpInfo(orgId, agentId, adminAgentsAgentsRotateKeyRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -417,6 +418,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **agentId** | **string** |  |  |
+| **adminAgentsAgentsRotateKeyRequest** | [**AdminAgentsAgentsRotateKeyRequest?**](AdminAgentsAgentsRotateKeyRequest?.md) | Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | [optional]  |
 
 ### Return type
 
@@ -428,7 +430,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -436,6 +438,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | API key rotated. The new key is returned ONCE and cannot be retrieved again. |  -  |
+| **400** | The agent does not authenticate with an API key (identity type other than api_key), or the lifetime is invalid. |  -  |
 | **401** | Authentication required. |  -  |
 | **403** | Admin privileges required. |  -  |
 | **404** | Tenant or agent not found. |  -  |
@@ -541,7 +544,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Agent created. The generated credential/secret is returned ONCE and cannot be retrieved again. |  -  |
-| **400** | Missing required field: name. |  -  |
+| **400** | Missing required field: name, or an invalid budgetPolicy (unknown key, or a value that is not a number greater than zero). |  -  |
 | **401** | Authentication required. |  -  |
 | **403** | Admin privileges required. |  -  |
 | **404** | Tenant not found. |  -  |
@@ -859,10 +862,11 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | A generated agent token. The token value is returned ONCE. |  -  |
-| **400** | Inactive agent, requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. |  -  |
+| **400** | Inactive agent, an agent that only takes DPoP-bound tokens (a minted token cannot be bound to its key), requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. |  -  |
 | **401** | Authentication required. |  -  |
 | **403** | Admin privileges required. |  -  |
 | **404** | Tenant or agent not found. |  -  |
+| **429** | budget_exceeded: the agent budget is spent. A token mint counts as one call. Retry-After holds the seconds until the spent window starts again. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1396,7 +1400,7 @@ catch (ApiException e)
 
 <a id="adminagentsrotatecredentials"></a>
 # **AdminAgentsRotateCredentials**
-> AdminAgentsRotateCredentialsResponse AdminAgentsRotateCredentials (string orgId, string agentId)
+> AdminAgentsRotateCredentialsResponse AdminAgentsRotateCredentials (string orgId, string agentId, AdminAgentsAgentsRotateKeyRequest? adminAgentsAgentsRotateKeyRequest = null)
 
 Rotate agent credentials
 
@@ -1430,11 +1434,12 @@ namespace Example
             var apiInstance = new AdminAgentsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var agentId = "agentId_example";  // string | 
+            var adminAgentsAgentsRotateKeyRequest = new AdminAgentsAgentsRotateKeyRequest?(); // AdminAgentsAgentsRotateKeyRequest? | For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional) 
 
             try
             {
                 // Rotate agent credentials
-                AdminAgentsRotateCredentialsResponse result = apiInstance.AdminAgentsRotateCredentials(orgId, agentId);
+                AdminAgentsRotateCredentialsResponse result = apiInstance.AdminAgentsRotateCredentials(orgId, agentId, adminAgentsAgentsRotateKeyRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1455,7 +1460,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Rotate agent credentials
-    ApiResponse<AdminAgentsRotateCredentialsResponse> response = apiInstance.AdminAgentsRotateCredentialsWithHttpInfo(orgId, agentId);
+    ApiResponse<AdminAgentsRotateCredentialsResponse> response = apiInstance.AdminAgentsRotateCredentialsWithHttpInfo(orgId, agentId, adminAgentsAgentsRotateKeyRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1474,6 +1479,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **agentId** | **string** |  |  |
+| **adminAgentsAgentsRotateKeyRequest** | [**AdminAgentsAgentsRotateKeyRequest?**](AdminAgentsAgentsRotateKeyRequest?.md) | For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | [optional]  |
 
 ### Return type
 
@@ -1485,7 +1491,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1709,6 +1715,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Agent updated. |  -  |
+| **400** | Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. |  -  |
 | **401** | Authentication required. |  -  |
 | **403** | Admin privileges required. |  -  |
 | **404** | Tenant or agent not found. |  -  |
@@ -1816,6 +1823,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Agent updated. |  -  |
+| **400** | Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. |  -  |
 | **401** | Authentication required. |  -  |
 | **403** | Admin privileges required. |  -  |
 | **404** | Tenant or agent not found. |  -  |

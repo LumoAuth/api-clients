@@ -30,7 +30,8 @@ class AdminAgentsCreateRequest(BaseModel):
     name: Optional[StrictStr] = Field(default=None, description="Required. Human-readable agent name.")
     description: Optional[StrictStr] = None
     capabilities: Optional[List[StrictStr]] = None
-    __properties: ClassVar[List[str]] = ["name", "description", "capabilities"]
+    budget_policy: Optional[Dict[str, Any]] = Field(default=None, description="The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. Leave it out for an agent without a budget.", alias="budgetPolicy")
+    __properties: ClassVar[List[str]] = ["name", "description", "capabilities", "budgetPolicy"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -71,6 +72,11 @@ class AdminAgentsCreateRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if budget_policy (nullable) is None
+        # and model_fields_set contains the field
+        if self.budget_policy is None and "budget_policy" in self.model_fields_set:
+            _dict['budgetPolicy'] = None
+
         return _dict
 
     @classmethod
@@ -85,7 +91,8 @@ class AdminAgentsCreateRequest(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "description": obj.get("description"),
-            "capabilities": obj.get("capabilities")
+            "capabilities": obj.get("capabilities"),
+            "budgetPolicy": obj.get("budgetPolicy")
         })
         return _obj
 

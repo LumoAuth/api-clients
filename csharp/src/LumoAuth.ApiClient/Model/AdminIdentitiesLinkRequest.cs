@@ -46,10 +46,16 @@ namespace LumoAuth.ApiClient.Model
             Saml = 1,
 
             /// <summary>
+            /// Enum Oidc for value: oidc
+            /// </summary>
+            [EnumMember(Value = "oidc")]
+            Oidc = 2,
+
+            /// <summary>
             /// Enum Ldap for value: ldap
             /// </summary>
             [EnumMember(Value = "ldap")]
-            Ldap = 2
+            Ldap = 3
         }
 
 
@@ -67,15 +73,17 @@ namespace LumoAuth.ApiClient.Model
         /// Initializes a new instance of the <see cref="AdminIdentitiesLinkRequest" /> class.
         /// </summary>
         /// <param name="type">type (required).</param>
-        /// <param name="idpId">SAML IdP config id (type&#x3D;saml).</param>
+        /// <param name="idpId">SAML IdP config id (type&#x3D;saml) or OpenID Connect connection id (type&#x3D;oidc).</param>
+        /// <param name="subject">Subject the OpenID Connect provider issues for this user (type&#x3D;oidc).</param>
         /// <param name="nameId">NameID the IdP asserts for this user (type&#x3D;saml).</param>
         /// <param name="ldapConfigId">LDAP directory id (type&#x3D;ldap).</param>
         /// <param name="dn">Distinguished name (type&#x3D;ldap); omitted &#x3D; look up.</param>
         /// <param name="ldapOnly">Also disable the local password (type&#x3D;ldap) (default to false).</param>
-        public AdminIdentitiesLinkRequest(TypeEnum type = default, int idpId = default, string nameId = default, int ldapConfigId = default, string dn = default, bool ldapOnly = false)
+        public AdminIdentitiesLinkRequest(TypeEnum type = default, int idpId = default, string subject = default, string nameId = default, int ldapConfigId = default, string dn = default, bool ldapOnly = false)
         {
             this.Type = type;
             this.IdpId = idpId;
+            this.Subject = subject;
             this.NameId = nameId;
             this.LdapConfigId = ldapConfigId;
             this.Dn = dn;
@@ -83,11 +91,21 @@ namespace LumoAuth.ApiClient.Model
         }
 
         /// <summary>
-        /// SAML IdP config id (type&#x3D;saml)
+        /// SAML IdP config id (type&#x3D;saml) or OpenID Connect connection id (type&#x3D;oidc)
         /// </summary>
-        /// <value>SAML IdP config id (type&#x3D;saml)</value>
+        /// <value>SAML IdP config id (type&#x3D;saml) or OpenID Connect connection id (type&#x3D;oidc)</value>
         [DataMember(Name = "idp_id", EmitDefaultValue = false)]
         public int IdpId { get; set; }
+
+        /// <summary>
+        /// Subject the OpenID Connect provider issues for this user (type&#x3D;oidc)
+        /// </summary>
+        /// <value>Subject the OpenID Connect provider issues for this user (type&#x3D;oidc)</value>
+        /*
+        <example>00u1abcd2EFGH3ijk4x5</example>
+        */
+        [DataMember(Name = "subject", EmitDefaultValue = false)]
+        public string Subject { get; set; }
 
         /// <summary>
         /// NameID the IdP asserts for this user (type&#x3D;saml)
@@ -133,6 +151,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("class AdminIdentitiesLinkRequest {\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  IdpId: ").Append(IdpId).Append("\n");
+            sb.Append("  Subject: ").Append(Subject).Append("\n");
             sb.Append("  NameId: ").Append(NameId).Append("\n");
             sb.Append("  LdapConfigId: ").Append(LdapConfigId).Append("\n");
             sb.Append("  Dn: ").Append(Dn).Append("\n");

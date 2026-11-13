@@ -23,8 +23,6 @@ import io.lumoauth.client.model.RedactedSecret;
 import io.lumoauth.client.model.ScimSettingsInboundProtectedAttributes;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
@@ -53,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * Inbound SCIM server settings (entity defaults merged with the stored values).
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T14:48:44.873539119Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class ScimSettingsInbound {
   public static final String SERIALIZED_NAME_ENABLED = "enabled";
   @SerializedName(SERIALIZED_NAME_ENABLED)
@@ -104,11 +102,6 @@ public class ScimSettingsInbound {
   @SerializedName(SERIALIZED_NAME_PROTECTED_ATTRIBUTES)
   @javax.annotation.Nullable
   private ScimSettingsInboundProtectedAttributes protectedAttributes;
-
-  public static final String SERIALIZED_NAME_ATTRIBUTE_MAPPING = "attribute_mapping";
-  @SerializedName(SERIALIZED_NAME_ATTRIBUTE_MAPPING)
-  @javax.annotation.Nullable
-  private Map<String, String> attributeMapping = new HashMap<>();
 
   public static final String SERIALIZED_NAME_AUTO_ACTIVATE_USERS = "auto_activate_users";
   @SerializedName(SERIALIZED_NAME_AUTO_ACTIVATE_USERS)
@@ -367,33 +360,6 @@ public class ScimSettingsInbound {
   }
 
 
-  public ScimSettingsInbound attributeMapping(@javax.annotation.Nullable Map<String, String> attributeMapping) {
-    this.attributeMapping = attributeMapping;
-    return this;
-  }
-
-  public ScimSettingsInbound putAttributeMappingItem(String key, String attributeMappingItem) {
-    if (this.attributeMapping == null) {
-      this.attributeMapping = new HashMap<>();
-    }
-    this.attributeMapping.put(key, attributeMappingItem);
-    return this;
-  }
-
-  /**
-   * SCIM attribute &#x3D;&gt; user field.
-   * @return attributeMapping
-   */
-  @javax.annotation.Nullable
-  public Map<String, String> getAttributeMapping() {
-    return attributeMapping;
-  }
-
-  public void setAttributeMapping(@javax.annotation.Nullable Map<String, String> attributeMapping) {
-    this.attributeMapping = attributeMapping;
-  }
-
-
   public ScimSettingsInbound autoActivateUsers(@javax.annotation.Nullable Boolean autoActivateUsers) {
     this.autoActivateUsers = autoActivateUsers;
     return this;
@@ -452,7 +418,6 @@ public class ScimSettingsInbound {
         Objects.equals(this.allowUserDeletion, scimSettingsInbound.allowUserDeletion) &&
         Objects.equals(this.allowGroupOperations, scimSettingsInbound.allowGroupOperations) &&
         Objects.equals(this.protectedAttributes, scimSettingsInbound.protectedAttributes) &&
-        Objects.equals(this.attributeMapping, scimSettingsInbound.attributeMapping) &&
         Objects.equals(this.autoActivateUsers, scimSettingsInbound.autoActivateUsers) &&
         Objects.equals(this.deprovisioningAction, scimSettingsInbound.deprovisioningAction);
   }
@@ -463,7 +428,7 @@ public class ScimSettingsInbound {
 
   @Override
   public int hashCode() {
-    return Objects.hash(enabled, bearerToken, bearerTokenHash, bearerTokenPreview, tokenCreatedAt, allowUserCreation, allowUserUpdates, allowUserDeletion, allowGroupOperations, protectedAttributes, attributeMapping, autoActivateUsers, deprovisioningAction);
+    return Objects.hash(enabled, bearerToken, bearerTokenHash, bearerTokenPreview, tokenCreatedAt, allowUserCreation, allowUserUpdates, allowUserDeletion, allowGroupOperations, protectedAttributes, autoActivateUsers, deprovisioningAction);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -487,7 +452,6 @@ public class ScimSettingsInbound {
     sb.append("    allowUserDeletion: ").append(toIndentedString(allowUserDeletion)).append("\n");
     sb.append("    allowGroupOperations: ").append(toIndentedString(allowGroupOperations)).append("\n");
     sb.append("    protectedAttributes: ").append(toIndentedString(protectedAttributes)).append("\n");
-    sb.append("    attributeMapping: ").append(toIndentedString(attributeMapping)).append("\n");
     sb.append("    autoActivateUsers: ").append(toIndentedString(autoActivateUsers)).append("\n");
     sb.append("    deprovisioningAction: ").append(toIndentedString(deprovisioningAction)).append("\n");
     sb.append("}");
@@ -511,7 +475,7 @@ public class ScimSettingsInbound {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("enabled", "bearer_token", "bearer_token_hash", "bearer_token_preview", "token_created_at", "allow_user_creation", "allow_user_updates", "allow_user_deletion", "allow_group_operations", "protected_attributes", "attribute_mapping", "auto_activate_users", "deprovisioning_action"));
+    openapiFields = new HashSet<String>(Arrays.asList("enabled", "bearer_token", "bearer_token_hash", "bearer_token_preview", "token_created_at", "allow_user_creation", "allow_user_updates", "allow_user_deletion", "allow_group_operations", "protected_attributes", "auto_activate_users", "deprovisioning_action"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -550,6 +514,10 @@ public class ScimSettingsInbound {
       }
       if ((jsonObj.get("token_created_at") != null && !jsonObj.get("token_created_at").isJsonNull()) && !jsonObj.get("token_created_at").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `token_created_at` to be a primitive type in the JSON string but got `%s`", jsonObj.get("token_created_at").toString()));
+      }
+      // validate the optional field `protected_attributes`
+      if (jsonObj.get("protected_attributes") != null && !jsonObj.get("protected_attributes").isJsonNull()) {
+        ScimSettingsInboundProtectedAttributes.validateJsonElement(jsonObj.get("protected_attributes"));
       }
       if ((jsonObj.get("deprovisioning_action") != null && !jsonObj.get("deprovisioning_action").isJsonNull()) && !jsonObj.get("deprovisioning_action").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `deprovisioning_action` to be a primitive type in the JSON string but got `%s`", jsonObj.get("deprovisioning_action").toString()));

@@ -29,7 +29,7 @@
 |**geoLocation** | **Map&lt;String, Object&gt;** | Detailed responses only |  [optional] |
 |**sessionId** | **String** | Detailed responses only |  [optional] |
 |**requestId** | **String** | Detailed responses only |  [optional] |
-|**status** | **String** | Detailed responses only |  [optional] |
+|**status** | **String** | Result of the event: success, failure, pending or partial |  [optional] |
 |**statusReason** | **String** | Detailed responses only |  [optional] |
 |**oldValue** | **Map&lt;String, Object&gt;** | Detailed responses only |  [optional] |
 |**newValue** | **Map&lt;String, Object&gt;** | Detailed responses only |  [optional] |

@@ -100,6 +100,17 @@ pub enum RegisterClientError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`request_magic_link`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum RequestMagicLinkError {
+    Status400(),
+    Status403(),
+    Status404(),
+    Status429(),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`revoke`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -174,6 +185,7 @@ pub enum SubmitOrgSelectionError {
 pub enum TokenError {
     Status400(),
     Status401(),
+    Status403(),
     Status429(),
     UnknownValue(serde_json::Value),
 }
@@ -543,6 +555,45 @@ pub async fn register_client(configuration: &configuration::Configuration, org_i
     } else {
         let content = resp.text().await?;
         let entity: Option<RegisterClientError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to `return_to`, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by `client_id`.
+pub async fn request_magic_link(configuration: &configuration::Configuration, org_id: &str, request_magic_link_request: models::RequestMagicLinkRequest) -> Result<models::RequestMagicLinkResponse, Error<RequestMagicLinkError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_request_magic_link_request = request_magic_link_request;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/oauth/magic-link", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    req_builder = req_builder.json(&p_request_magic_link_request);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::RequestMagicLinkResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::RequestMagicLinkResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<RequestMagicLinkError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

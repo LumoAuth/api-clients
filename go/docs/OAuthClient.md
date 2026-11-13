@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **RedirectUris** | Pointer to **[]string** | Detailed responses only | [optional] 
 **Scopes** | Pointer to **[]string** | Detailed responses only | [optional] 
 **GrantTypes** | Pointer to **[]string** | Detailed responses only | [optional] 
+**CibaEnabled** | Pointer to **bool** | Detailed responses only. Whether the client may use CIBA (backchannel authentication). | [optional] 
 
 ## Methods
 
@@ -269,6 +270,31 @@ SetGrantTypes sets GrantTypes field to given value.
 `func (o *OAuthClient) HasGrantTypes() bool`
 
 HasGrantTypes returns a boolean if a field has been set.
+
+### GetCibaEnabled
+
+`func (o *OAuthClient) GetCibaEnabled() bool`
+
+GetCibaEnabled returns the CibaEnabled field if non-nil, zero value otherwise.
+
+### GetCibaEnabledOk
+
+`func (o *OAuthClient) GetCibaEnabledOk() (*bool, bool)`
+
+GetCibaEnabledOk returns a tuple with the CibaEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCibaEnabled
+
+`func (o *OAuthClient) SetCibaEnabled(v bool)`
+
+SetCibaEnabled sets CibaEnabled field to given value.
+
+### HasCibaEnabled
+
+`func (o *OAuthClient) HasCibaEnabled() bool`
+
+HasCibaEnabled returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

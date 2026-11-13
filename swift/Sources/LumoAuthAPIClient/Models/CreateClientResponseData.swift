@@ -26,11 +26,13 @@ public struct CreateClientResponseData: Codable, JSONEncodable, Hashable {
     public var scopes: [String]?
     /** Detailed responses only */
     public var grantTypes: [String]?
-    /** Plaintext client secret — returned only once, never retrievable again */
+    /** Detailed responses only. Whether the client may use CIBA (backchannel authentication). */
+    public var cibaEnabled: Bool?
+    /** Plaintext client secret — returned only once, never retrievable again. Absent for a public client */
     public var secret: String?
     public var note: String?
 
-    public init(id: Int, clientId: String, name: String, isConfidential: Bool, isPublic: Bool, isActive: Bool, requiresPkce: Bool, createdAt: Date, redirectUris: [String]? = nil, scopes: [String]? = nil, grantTypes: [String]? = nil, secret: String? = nil, note: String? = nil) {
+    public init(id: Int, clientId: String, name: String, isConfidential: Bool, isPublic: Bool, isActive: Bool, requiresPkce: Bool, createdAt: Date, redirectUris: [String]? = nil, scopes: [String]? = nil, grantTypes: [String]? = nil, cibaEnabled: Bool? = nil, secret: String? = nil, note: String? = nil) {
         self.id = id
         self.clientId = clientId
         self.name = name
@@ -42,6 +44,7 @@ public struct CreateClientResponseData: Codable, JSONEncodable, Hashable {
         self.redirectUris = redirectUris
         self.scopes = scopes
         self.grantTypes = grantTypes
+        self.cibaEnabled = cibaEnabled
         self.secret = secret
         self.note = note
     }
@@ -58,6 +61,7 @@ public struct CreateClientResponseData: Codable, JSONEncodable, Hashable {
         case redirectUris
         case scopes
         case grantTypes
+        case cibaEnabled
         case secret
         case note = "_note"
     }
@@ -77,6 +81,7 @@ public struct CreateClientResponseData: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(redirectUris, forKey: .redirectUris)
         try container.encodeIfPresent(scopes, forKey: .scopes)
         try container.encodeIfPresent(grantTypes, forKey: .grantTypes)
+        try container.encodeIfPresent(cibaEnabled, forKey: .cibaEnabled)
         try container.encodeIfPresent(secret, forKey: .secret)
         try container.encodeIfPresent(note, forKey: .note)
     }

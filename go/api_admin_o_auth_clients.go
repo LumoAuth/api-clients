@@ -221,7 +221,7 @@ type AdminOAuthClientsAPI interface {
 	SetClientScopesExecute(r ApiSetClientScopesRequest) (*SetClientScopesResponse, *http.Response, error)
 
 	/*
-	UpdateClient Replace an OAuth client
+	UpdateClient Update an OAuth client (same as PATCH: only the fields that are sent change)
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -1935,7 +1935,7 @@ func (r ApiUpdateClientRequest) Execute() (*UpdateClientResponse, *http.Response
 }
 
 /*
-UpdateClient Replace an OAuth client
+UpdateClient Update an OAuth client (same as PATCH: only the fields that are sent change)
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId

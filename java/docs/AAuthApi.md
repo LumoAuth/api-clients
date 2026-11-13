@@ -794,7 +794,7 @@ public class Example {
 | **400** | Invalid exchange request (grant_type / subject_token). |  -  |
 | **401** | The AAuth token is invalid, expired, or revoked, or the RFC 9421 request signature is missing/invalid/replayed. |  -  |
 | **403** | Denied by a conditional access policy. |  -  |
-| **429** | Rate limit exceeded (per IP or per agent). |  -  |
+| **429** | Rate limit exceeded (per IP or per agent), or the agent budget is spent (access_denied). |  -  |
 
 <a id="issueResourceToken"></a>
 # **issueResourceToken**

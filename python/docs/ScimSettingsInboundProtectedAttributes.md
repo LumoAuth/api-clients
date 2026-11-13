@@ -1,6 +1,6 @@
 # ScimSettingsInboundProtectedAttributes
 
-Attribute name => true when SCIM may not change it.
+Attribute name => true when SCIM may not change it. role_membership stops every /Groups request that would add or remove a member of a role.
 
 ## Properties
 
@@ -9,8 +9,7 @@ Name | Type | Description | Notes
 **email** | **bool** |  | [optional] 
 **name** | **bool** |  | [optional] 
 **active** | **bool** |  | [optional] 
-**roles** | **bool** |  | [optional] 
-**permissions** | **bool** |  | [optional] 
+**role_membership** | **bool** |  | [optional] 
 
 ## Example
 

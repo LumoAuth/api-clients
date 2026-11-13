@@ -20,6 +20,7 @@ docs/AdminAbacApi.md
 docs/AdminAgentsActivateResponse.md
 docs/AdminAgentsAgentsDisableResponse.md
 docs/AdminAgentsAgentsEnableResponse.md
+docs/AdminAgentsAgentsRotateKeyRequest.md
 docs/AdminAgentsAgentsRotateKeyResponse.md
 docs/AdminAgentsApi.md
 docs/AdminAgentsCreateRequest.md
@@ -127,6 +128,8 @@ docs/AdminSandboxApi.md
 docs/AdminSandboxListResponse.md
 docs/AdminSandboxSpawnRequest.md
 docs/AdminSandboxSpawnResponse.md
+docs/AdminSandboxSpawnResponseData.md
+docs/AdminSandboxSpawnResponseData1.md
 docs/AdminScopesCreateResponse.md
 docs/AdminScopesListResponse.md
 docs/AdminScopesListResponseMeta.md
@@ -172,6 +175,7 @@ docs/AdminWebhooksCreateResponseData.md
 docs/AdminWebhooksDeliveriesListResponse.md
 docs/AdminWebhooksDeliveriesListResponseMeta.md
 docs/AdminWebhooksDeliveryReplayResponse.md
+docs/AdminWebhooksDeliveryReplayResponseData.md
 docs/AdminWebhooksDeliveryShowResponse.md
 docs/AdminWebhooksDeliveryShowResponseData.md
 docs/AdminWebhooksDeliveryShowResponseData1AttemptsItem.md
@@ -378,6 +382,8 @@ docs/RemoveUserGroupResponse.md
 docs/RemoveUserPermissionResponse.md
 docs/RemoveUserRoleResponse.md
 docs/ReportAgentUsageResponse.md
+docs/RequestMagicLinkRequest.md
+docs/RequestMagicLinkResponse.md
 docs/RequestPermissionRequest.md
 docs/RequestPermissionResponse.md
 docs/RevokeAgentTokenRequest.md
@@ -482,6 +488,7 @@ src/LumoAuth.ApiClient.Test/Model/AddUserRoleResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminAgentsActivateResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminAgentsAgentsDisableResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminAgentsAgentsEnableResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/AdminAgentsAgentsRotateKeyRequestTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminAgentsAgentsRotateKeyResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminAgentsCreateRequestTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminAgentsCreateResponseTests.cs
@@ -576,6 +583,8 @@ src/LumoAuth.ApiClient.Test/Model/AdminRolesGetUsersResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminRolesListResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminSandboxListResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminSandboxSpawnRequestTests.cs
+src/LumoAuth.ApiClient.Test/Model/AdminSandboxSpawnResponseData1Tests.cs
+src/LumoAuth.ApiClient.Test/Model/AdminSandboxSpawnResponseDataTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminSandboxSpawnResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminScopesCreateResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminScopesListResponseMetaTests.cs
@@ -617,6 +626,7 @@ src/LumoAuth.ApiClient.Test/Model/AdminWebhooksCreateResponseDataTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminWebhooksCreateResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminWebhooksDeliveriesListResponseMetaTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminWebhooksDeliveriesListResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/AdminWebhooksDeliveryReplayResponseDataTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminWebhooksDeliveryReplayResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminWebhooksDeliveryShowResponseData1AttemptsItemTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminWebhooksDeliveryShowResponseDataTests.cs
@@ -816,6 +826,8 @@ src/LumoAuth.ApiClient.Test/Model/RemoveUserGroupResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/RemoveUserPermissionResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/RemoveUserRoleResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/ReportAgentUsageResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/RequestMagicLinkRequestTests.cs
+src/LumoAuth.ApiClient.Test/Model/RequestMagicLinkResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/RequestPermissionRequestTests.cs
 src/LumoAuth.ApiClient.Test/Model/RequestPermissionResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/RevokeAgentTokenRequestTests.cs
@@ -935,6 +947,7 @@ src/LumoAuth.ApiClient/Model/AddUserRoleResponse.cs
 src/LumoAuth.ApiClient/Model/AdminAgentsActivateResponse.cs
 src/LumoAuth.ApiClient/Model/AdminAgentsAgentsDisableResponse.cs
 src/LumoAuth.ApiClient/Model/AdminAgentsAgentsEnableResponse.cs
+src/LumoAuth.ApiClient/Model/AdminAgentsAgentsRotateKeyRequest.cs
 src/LumoAuth.ApiClient/Model/AdminAgentsAgentsRotateKeyResponse.cs
 src/LumoAuth.ApiClient/Model/AdminAgentsCreateRequest.cs
 src/LumoAuth.ApiClient/Model/AdminAgentsCreateResponse.cs
@@ -1030,6 +1043,8 @@ src/LumoAuth.ApiClient/Model/AdminRolesListResponse.cs
 src/LumoAuth.ApiClient/Model/AdminSandboxListResponse.cs
 src/LumoAuth.ApiClient/Model/AdminSandboxSpawnRequest.cs
 src/LumoAuth.ApiClient/Model/AdminSandboxSpawnResponse.cs
+src/LumoAuth.ApiClient/Model/AdminSandboxSpawnResponseData.cs
+src/LumoAuth.ApiClient/Model/AdminSandboxSpawnResponseData1.cs
 src/LumoAuth.ApiClient/Model/AdminScopesCreateResponse.cs
 src/LumoAuth.ApiClient/Model/AdminScopesListResponse.cs
 src/LumoAuth.ApiClient/Model/AdminScopesListResponseMeta.cs
@@ -1071,6 +1086,7 @@ src/LumoAuth.ApiClient/Model/AdminWebhooksCreateResponseData.cs
 src/LumoAuth.ApiClient/Model/AdminWebhooksDeliveriesListResponse.cs
 src/LumoAuth.ApiClient/Model/AdminWebhooksDeliveriesListResponseMeta.cs
 src/LumoAuth.ApiClient/Model/AdminWebhooksDeliveryReplayResponse.cs
+src/LumoAuth.ApiClient/Model/AdminWebhooksDeliveryReplayResponseData.cs
 src/LumoAuth.ApiClient/Model/AdminWebhooksDeliveryShowResponse.cs
 src/LumoAuth.ApiClient/Model/AdminWebhooksDeliveryShowResponseData.cs
 src/LumoAuth.ApiClient/Model/AdminWebhooksDeliveryShowResponseData1AttemptsItem.cs
@@ -1269,6 +1285,8 @@ src/LumoAuth.ApiClient/Model/RemoveUserGroupResponse.cs
 src/LumoAuth.ApiClient/Model/RemoveUserPermissionResponse.cs
 src/LumoAuth.ApiClient/Model/RemoveUserRoleResponse.cs
 src/LumoAuth.ApiClient/Model/ReportAgentUsageResponse.cs
+src/LumoAuth.ApiClient/Model/RequestMagicLinkRequest.cs
+src/LumoAuth.ApiClient/Model/RequestMagicLinkResponse.cs
 src/LumoAuth.ApiClient/Model/RequestPermissionRequest.cs
 src/LumoAuth.ApiClient/Model/RequestPermissionResponse.cs
 src/LumoAuth.ApiClient/Model/RevokeAgentTokenRequest.cs

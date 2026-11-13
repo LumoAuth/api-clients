@@ -592,6 +592,80 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Request a sign-in link by email
+    # For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to `return_to`, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by `client_id`.
+    # @param org_id [String] 
+    # @param request_magic_link_request [RequestMagicLinkRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [RequestMagicLinkResponse]
+    def request_magic_link(org_id, request_magic_link_request, opts = {})
+      data, _status_code, _headers = request_magic_link_with_http_info(org_id, request_magic_link_request, opts)
+      data
+    end
+
+    # Request a sign-in link by email
+    # For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to &#x60;return_to&#x60;, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+    # @param org_id [String] 
+    # @param request_magic_link_request [RequestMagicLinkRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(RequestMagicLinkResponse, Integer, Hash)>] RequestMagicLinkResponse data, response status code and response headers
+    def request_magic_link_with_http_info(org_id, request_magic_link_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: OAuthApi.request_magic_link ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling OAuthApi.request_magic_link"
+      end
+      # verify the required parameter 'request_magic_link_request' is set
+      if @api_client.config.client_side_validation && request_magic_link_request.nil?
+        fail ArgumentError, "Missing the required parameter 'request_magic_link_request' when calling OAuthApi.request_magic_link"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/oauth/magic-link'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(request_magic_link_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'RequestMagicLinkResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"OAuthApi.request_magic_link",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: OAuthApi#request_magic_link\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Token revocation (RFC 7009)
     # Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
     # @param org_id [String] 

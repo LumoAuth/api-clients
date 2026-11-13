@@ -36,20 +36,26 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="AdminAuditLogsRetentionResponseData" /> class.
         /// </summary>
-        /// <param name="retentionDays">Effective retention, capped by the plan limit.</param>
-        /// <param name="autoDelete">autoDelete.</param>
-        /// <param name="planLimitDays">Plan cap; null when unlimited or billing enforcement is off.</param>
-        public AdminAuditLogsRetentionResponseData(int retentionDays = default, bool autoDelete = default, int? planLimitDays = default)
+        /// <param name="retentionDays">The organization&#39;s own period, between minRetentionDays and maxRetentionDays. It applies while data retention is on and autoDelete is not false..</param>
+        /// <param name="autoDelete">false switches the organization&#39;s own period off; the plan&#39;s period still applies.</param>
+        /// <param name="planLimitDays">The plan&#39;s period: older entries are not returned and are deleted. null when the plan has no limit..</param>
+        /// <param name="effectiveRetentionDays">How long entries are kept now; null when nothing is deleted.</param>
+        /// <param name="minRetentionDays">minRetentionDays.</param>
+        /// <param name="maxRetentionDays">maxRetentionDays.</param>
+        public AdminAuditLogsRetentionResponseData(int retentionDays = default, bool autoDelete = default, int? planLimitDays = default, int? effectiveRetentionDays = default, int minRetentionDays = default, int maxRetentionDays = default)
         {
             this.RetentionDays = retentionDays;
             this.AutoDelete = autoDelete;
             this.PlanLimitDays = planLimitDays;
+            this.EffectiveRetentionDays = effectiveRetentionDays;
+            this.MinRetentionDays = minRetentionDays;
+            this.MaxRetentionDays = maxRetentionDays;
         }
 
         /// <summary>
-        /// Effective retention, capped by the plan limit
+        /// The organization&#39;s own period, between minRetentionDays and maxRetentionDays. It applies while data retention is on and autoDelete is not false.
         /// </summary>
-        /// <value>Effective retention, capped by the plan limit</value>
+        /// <value>The organization&#39;s own period, between minRetentionDays and maxRetentionDays. It applies while data retention is on and autoDelete is not false.</value>
         /*
         <example>90</example>
         */
@@ -57,17 +63,37 @@ namespace LumoAuth.ApiClient.Model
         public int RetentionDays { get; set; }
 
         /// <summary>
-        /// Gets or Sets AutoDelete
+        /// false switches the organization&#39;s own period off; the plan&#39;s period still applies
         /// </summary>
+        /// <value>false switches the organization&#39;s own period off; the plan&#39;s period still applies</value>
         [DataMember(Name = "autoDelete", EmitDefaultValue = true)]
         public bool AutoDelete { get; set; }
 
         /// <summary>
-        /// Plan cap; null when unlimited or billing enforcement is off
+        /// The plan&#39;s period: older entries are not returned and are deleted. null when the plan has no limit.
         /// </summary>
-        /// <value>Plan cap; null when unlimited or billing enforcement is off</value>
+        /// <value>The plan&#39;s period: older entries are not returned and are deleted. null when the plan has no limit.</value>
         [DataMember(Name = "planLimitDays", EmitDefaultValue = true)]
         public int? PlanLimitDays { get; set; }
+
+        /// <summary>
+        /// How long entries are kept now; null when nothing is deleted
+        /// </summary>
+        /// <value>How long entries are kept now; null when nothing is deleted</value>
+        [DataMember(Name = "effectiveRetentionDays", EmitDefaultValue = true)]
+        public int? EffectiveRetentionDays { get; set; }
+
+        /// <summary>
+        /// Gets or Sets MinRetentionDays
+        /// </summary>
+        [DataMember(Name = "minRetentionDays", EmitDefaultValue = false)]
+        public int MinRetentionDays { get; set; }
+
+        /// <summary>
+        /// Gets or Sets MaxRetentionDays
+        /// </summary>
+        [DataMember(Name = "maxRetentionDays", EmitDefaultValue = false)]
+        public int MaxRetentionDays { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -80,6 +106,9 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  RetentionDays: ").Append(RetentionDays).Append("\n");
             sb.Append("  AutoDelete: ").Append(AutoDelete).Append("\n");
             sb.Append("  PlanLimitDays: ").Append(PlanLimitDays).Append("\n");
+            sb.Append("  EffectiveRetentionDays: ").Append(EffectiveRetentionDays).Append("\n");
+            sb.Append("  MinRetentionDays: ").Append(MinRetentionDays).Append("\n");
+            sb.Append("  MaxRetentionDays: ").Append(MaxRetentionDays).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

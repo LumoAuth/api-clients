@@ -51,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * CreateClientResponseData
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T14:48:44.873539119Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class CreateClientResponseData {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -107,6 +107,11 @@ public class CreateClientResponseData {
   @SerializedName(SERIALIZED_NAME_GRANT_TYPES)
   @javax.annotation.Nullable
   private List<String> grantTypes = new ArrayList<>();
+
+  public static final String SERIALIZED_NAME_CIBA_ENABLED = "cibaEnabled";
+  @SerializedName(SERIALIZED_NAME_CIBA_ENABLED)
+  @javax.annotation.Nullable
+  private Boolean cibaEnabled;
 
   public static final String SERIALIZED_NAME_SECRET = "secret";
   @SerializedName(SERIALIZED_NAME_SECRET)
@@ -354,13 +359,32 @@ public class CreateClientResponseData {
   }
 
 
+  public CreateClientResponseData cibaEnabled(@javax.annotation.Nullable Boolean cibaEnabled) {
+    this.cibaEnabled = cibaEnabled;
+    return this;
+  }
+
+  /**
+   * Detailed responses only. Whether the client may use CIBA (backchannel authentication).
+   * @return cibaEnabled
+   */
+  @javax.annotation.Nullable
+  public Boolean getCibaEnabled() {
+    return cibaEnabled;
+  }
+
+  public void setCibaEnabled(@javax.annotation.Nullable Boolean cibaEnabled) {
+    this.cibaEnabled = cibaEnabled;
+  }
+
+
   public CreateClientResponseData secret(@javax.annotation.Nullable String secret) {
     this.secret = secret;
     return this;
   }
 
   /**
-   * Plaintext client secret — returned only once, never retrievable again
+   * Plaintext client secret — returned only once, never retrievable again. Absent for a public client
    * @return secret
    */
   @javax.annotation.Nullable
@@ -413,13 +437,14 @@ public class CreateClientResponseData {
         Objects.equals(this.redirectUris, createClientResponseData.redirectUris) &&
         Objects.equals(this.scopes, createClientResponseData.scopes) &&
         Objects.equals(this.grantTypes, createClientResponseData.grantTypes) &&
+        Objects.equals(this.cibaEnabled, createClientResponseData.cibaEnabled) &&
         Objects.equals(this.secret, createClientResponseData.secret) &&
         Objects.equals(this.note, createClientResponseData.note);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, clientId, name, isConfidential, isPublic, isActive, requiresPkce, createdAt, redirectUris, scopes, grantTypes, secret, note);
+    return Objects.hash(id, clientId, name, isConfidential, isPublic, isActive, requiresPkce, createdAt, redirectUris, scopes, grantTypes, cibaEnabled, secret, note);
   }
 
   @Override
@@ -437,6 +462,7 @@ public class CreateClientResponseData {
     sb.append("    redirectUris: ").append(toIndentedString(redirectUris)).append("\n");
     sb.append("    scopes: ").append(toIndentedString(scopes)).append("\n");
     sb.append("    grantTypes: ").append(toIndentedString(grantTypes)).append("\n");
+    sb.append("    cibaEnabled: ").append(toIndentedString(cibaEnabled)).append("\n");
     sb.append("    secret: ").append(toIndentedString(secret)).append("\n");
     sb.append("    note: ").append(toIndentedString(note)).append("\n");
     sb.append("}");
@@ -460,7 +486,7 @@ public class CreateClientResponseData {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt", "redirectUris", "scopes", "grantTypes", "secret", "_note"));
+    openapiFields = new HashSet<String>(Arrays.asList("id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt", "redirectUris", "scopes", "grantTypes", "cibaEnabled", "secret", "_note"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt"));

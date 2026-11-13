@@ -102,7 +102,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string agentId = null;
-            //var response = instance.AdminAgentsAgentsRotateKey(orgId, agentId);
+            //AdminAgentsAgentsRotateKeyRequest? adminAgentsAgentsRotateKeyRequest = null;
+            //var response = instance.AdminAgentsAgentsRotateKey(orgId, agentId, adminAgentsAgentsRotateKeyRequest);
             //Assert.IsType<AdminAgentsAgentsRotateKeyResponse>(response);
         }
 
@@ -233,7 +234,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string agentId = null;
-            //var response = instance.AdminAgentsRotateCredentials(orgId, agentId);
+            //AdminAgentsAgentsRotateKeyRequest? adminAgentsAgentsRotateKeyRequest = null;
+            //var response = instance.AdminAgentsRotateCredentials(orgId, agentId, adminAgentsAgentsRotateKeyRequest);
             //Assert.IsType<AdminAgentsRotateCredentialsResponse>(response);
         }
 

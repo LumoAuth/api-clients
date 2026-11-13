@@ -65,15 +65,6 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'BiometricEnabled'
-        /// </summary>
-        [Fact]
-        public void BiometricEnabledTest()
-        {
-            // TODO unit test for the property 'BiometricEnabled'
-        }
-
-        /// <summary>
         /// Test the property 'Passkeys'
         /// </summary>
         [Fact]
@@ -215,15 +206,6 @@ namespace LumoAuth.ApiClient.Test.Model
         public void SessionTimeoutTest()
         {
             // TODO unit test for the property 'SessionTimeout'
-        }
-
-        /// <summary>
-        /// Test the property 'EncryptClientSecrets'
-        /// </summary>
-        [Fact]
-        public void EncryptClientSecretsTest()
-        {
-            // TODO unit test for the property 'EncryptClientSecrets'
         }
 
         /// <summary>

@@ -53,7 +53,7 @@ type AuditLogEntry struct {
 	SessionId NullableString `json:"sessionId,omitempty"`
 	// Detailed responses only
 	RequestId NullableString `json:"requestId,omitempty"`
-	// Detailed responses only
+	// Result of the event: success, failure, pending or partial
 	Status NullableString `json:"status,omitempty"`
 	// Detailed responses only
 	StatusReason NullableString `json:"statusReason,omitempty"`

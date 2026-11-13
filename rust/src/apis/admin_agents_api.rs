@@ -49,6 +49,7 @@ pub enum AdminAgentsAgentsEnableError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminAgentsAgentsRotateKeyError {
+    Status400(),
     Status401(),
     Status403(),
     Status404(),
@@ -94,6 +95,7 @@ pub enum AdminAgentsGenerateTokenError {
     Status401(),
     Status403(),
     Status404(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -174,6 +176,7 @@ pub enum AdminAgentsSetScopesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminAgentsUpdateError {
+    Status400(),
     Status401(),
     Status403(),
     Status404(),
@@ -184,6 +187,7 @@ pub enum PatchAdminAgentsUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminAgentsUpdateError {
+    Status400(),
     Status401(),
     Status403(),
     Status404(),
@@ -335,10 +339,11 @@ pub async fn admin_agents_agents_enable(configuration: &configuration::Configura
     }
 }
 
-pub async fn admin_agents_agents_rotate_key(configuration: &configuration::Configuration, org_id: &str, agent_id: &str) -> Result<models::AdminAgentsAgentsRotateKeyResponse, Error<AdminAgentsAgentsRotateKeyError>> {
+pub async fn admin_agents_agents_rotate_key(configuration: &configuration::Configuration, org_id: &str, agent_id: &str, admin_agents_agents_rotate_key_request: Option<models::AdminAgentsAgentsRotateKeyRequest>) -> Result<models::AdminAgentsAgentsRotateKeyResponse, Error<AdminAgentsAgentsRotateKeyError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_agent_id = agent_id;
+    let p_admin_agents_agents_rotate_key_request = admin_agents_agents_rotate_key_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-key", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), agentId=crate::apis::urlencode(p_agent_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -357,6 +362,7 @@ pub async fn admin_agents_agents_rotate_key(configuration: &configuration::Confi
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_agents_agents_rotate_key_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -820,10 +826,11 @@ pub async fn admin_agents_revoke_key(configuration: &configuration::Configuratio
     }
 }
 
-pub async fn admin_agents_rotate_credentials(configuration: &configuration::Configuration, org_id: &str, agent_id: &str) -> Result<models::AdminAgentsRotateCredentialsResponse, Error<AdminAgentsRotateCredentialsError>> {
+pub async fn admin_agents_rotate_credentials(configuration: &configuration::Configuration, org_id: &str, agent_id: &str, admin_agents_agents_rotate_key_request: Option<models::AdminAgentsAgentsRotateKeyRequest>) -> Result<models::AdminAgentsRotateCredentialsResponse, Error<AdminAgentsRotateCredentialsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_agent_id = agent_id;
+    let p_admin_agents_agents_rotate_key_request = admin_agents_agents_rotate_key_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), agentId=crate::apis::urlencode(p_agent_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -842,6 +849,7 @@ pub async fn admin_agents_rotate_credentials(configuration: &configuration::Conf
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_agents_agents_rotate_key_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

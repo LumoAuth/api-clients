@@ -52,7 +52,8 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="redirectUris">Detailed responses only.</param>
         /// <param name="scopes">Detailed responses only.</param>
         /// <param name="grantTypes">Detailed responses only.</param>
-        public OAuthClient(int id = default, string clientId = default, string name = default, bool isConfidential = default, bool isPublic = default, bool isActive = default, bool requiresPkce = default, DateTime createdAt = default, List<string> redirectUris = default, List<string> scopes = default, List<string> grantTypes = default)
+        /// <param name="cibaEnabled">Detailed responses only. Whether the client may use CIBA (backchannel authentication)..</param>
+        public OAuthClient(int id = default, string clientId = default, string name = default, bool isConfidential = default, bool isPublic = default, bool isActive = default, bool requiresPkce = default, DateTime createdAt = default, List<string> redirectUris = default, List<string> scopes = default, List<string> grantTypes = default, bool cibaEnabled = default)
         {
             this.Id = id;
             // to ensure "clientId" is required (not null)
@@ -75,6 +76,7 @@ namespace LumoAuth.ApiClient.Model
             this.RedirectUris = redirectUris;
             this.Scopes = scopes;
             this.GrantTypes = grantTypes;
+            this.CibaEnabled = cibaEnabled;
         }
 
         /// <summary>
@@ -147,6 +149,13 @@ namespace LumoAuth.ApiClient.Model
         public List<string> GrantTypes { get; set; }
 
         /// <summary>
+        /// Detailed responses only. Whether the client may use CIBA (backchannel authentication).
+        /// </summary>
+        /// <value>Detailed responses only. Whether the client may use CIBA (backchannel authentication).</value>
+        [DataMember(Name = "cibaEnabled", EmitDefaultValue = true)]
+        public bool CibaEnabled { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -165,6 +174,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  RedirectUris: ").Append(RedirectUris).Append("\n");
             sb.Append("  Scopes: ").Append(Scopes).Append("\n");
             sb.Append("  GrantTypes: ").Append(GrantTypes).Append("\n");
+            sb.Append("  CibaEnabled: ").Append(CibaEnabled).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

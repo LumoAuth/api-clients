@@ -32,5 +32,11 @@ export interface AdminAgentsAgentsRotateKeyResponse {
      * @memberof AdminAgentsAgentsRotateKeyResponse
      */
     'api_key'?: string;
+    /**
+     * When the new key expires; null = never.
+     * @type {string}
+     * @memberof AdminAgentsAgentsRotateKeyResponse
+     */
+    'api_key_expires_at'?: string | null;
 }
 

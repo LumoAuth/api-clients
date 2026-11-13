@@ -164,11 +164,12 @@ open class AdminAgentsAPI {
      
      - parameter orgId: (path)  
      - parameter agentId: (path)  
+     - parameter adminAgentsAgentsRotateKeyRequest: (body) Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      - returns: AdminAgentsAgentsRotateKeyResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminAgentsAgentsRotateKey(orgId: String, agentId: String) async throws -> AdminAgentsAgentsRotateKeyResponse {
-        return try await adminAgentsAgentsRotateKeyWithRequestBuilder(orgId: orgId, agentId: agentId).execute().body
+    open class func adminAgentsAgentsRotateKey(orgId: String, agentId: String, adminAgentsAgentsRotateKeyRequest: AdminAgentsAgentsRotateKeyRequest? = nil) async throws -> AdminAgentsAgentsRotateKeyResponse {
+        return try await adminAgentsAgentsRotateKeyWithRequestBuilder(orgId: orgId, agentId: agentId, adminAgentsAgentsRotateKeyRequest: adminAgentsAgentsRotateKeyRequest).execute().body
     }
 
     /**
@@ -182,9 +183,10 @@ open class AdminAgentsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter agentId: (path)  
+     - parameter adminAgentsAgentsRotateKeyRequest: (body) Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      - returns: RequestBuilder<AdminAgentsAgentsRotateKeyResponse> 
      */
-    open class func adminAgentsAgentsRotateKeyWithRequestBuilder(orgId: String, agentId: String) -> RequestBuilder<AdminAgentsAgentsRotateKeyResponse> {
+    open class func adminAgentsAgentsRotateKeyWithRequestBuilder(orgId: String, agentId: String, adminAgentsAgentsRotateKeyRequest: AdminAgentsAgentsRotateKeyRequest? = nil) -> RequestBuilder<AdminAgentsAgentsRotateKeyResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-key"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -193,12 +195,12 @@ open class AdminAgentsAPI {
         let agentIdPostEscape = agentIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{agentId}", with: agentIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminAgentsAgentsRotateKeyRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -651,11 +653,12 @@ open class AdminAgentsAPI {
      
      - parameter orgId: (path)  
      - parameter agentId: (path)  
+     - parameter adminAgentsAgentsRotateKeyRequest: (body) For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      - returns: AdminAgentsRotateCredentialsResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminAgentsRotateCredentials(orgId: String, agentId: String) async throws -> AdminAgentsRotateCredentialsResponse {
-        return try await adminAgentsRotateCredentialsWithRequestBuilder(orgId: orgId, agentId: agentId).execute().body
+    open class func adminAgentsRotateCredentials(orgId: String, agentId: String, adminAgentsAgentsRotateKeyRequest: AdminAgentsAgentsRotateKeyRequest? = nil) async throws -> AdminAgentsRotateCredentialsResponse {
+        return try await adminAgentsRotateCredentialsWithRequestBuilder(orgId: orgId, agentId: agentId, adminAgentsAgentsRotateKeyRequest: adminAgentsAgentsRotateKeyRequest).execute().body
     }
 
     /**
@@ -669,9 +672,10 @@ open class AdminAgentsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter agentId: (path)  
+     - parameter adminAgentsAgentsRotateKeyRequest: (body) For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
      - returns: RequestBuilder<AdminAgentsRotateCredentialsResponse> 
      */
-    open class func adminAgentsRotateCredentialsWithRequestBuilder(orgId: String, agentId: String) -> RequestBuilder<AdminAgentsRotateCredentialsResponse> {
+    open class func adminAgentsRotateCredentialsWithRequestBuilder(orgId: String, agentId: String, adminAgentsAgentsRotateKeyRequest: AdminAgentsAgentsRotateKeyRequest? = nil) -> RequestBuilder<AdminAgentsRotateCredentialsResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -680,12 +684,12 @@ open class AdminAgentsAPI {
         let agentIdPostEscape = agentIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{agentId}", with: agentIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminAgentsAgentsRotateKeyRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

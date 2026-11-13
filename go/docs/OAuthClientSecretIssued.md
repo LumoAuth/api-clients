@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Secret** | Pointer to **string** | Plaintext client secret — returned only once, never retrievable again | [optional] 
+**Secret** | Pointer to **string** | Plaintext client secret — returned only once, never retrievable again. Absent for a public client | [optional] 
 **Note** | Pointer to **string** |  | [optional] 
 
 ## Methods

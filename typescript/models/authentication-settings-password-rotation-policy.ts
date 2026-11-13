@@ -15,7 +15,7 @@
 
 
 /**
- * 
+ * A write is merged with the stored object.
  * @export
  * @interface AuthenticationSettingsPasswordRotationPolicy
  */
@@ -32,17 +32,5 @@ export interface AuthenticationSettingsPasswordRotationPolicy {
      * @memberof AuthenticationSettingsPasswordRotationPolicy
      */
     'max_age_days'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AuthenticationSettingsPasswordRotationPolicy
-     */
-    'notify_before_days'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AuthenticationSettingsPasswordRotationPolicy
-     */
-    'history_count'?: number;
 }
 

@@ -65,7 +65,7 @@ pub struct AuditLogEntry {
     /// Detailed responses only
     #[serde(rename = "requestId", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub request_id: Option<Option<String>>,
-    /// Detailed responses only
+    /// Result of the event: success, failure, pending or partial
     #[serde(rename = "status", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub status: Option<Option<String>>,
     /// Detailed responses only

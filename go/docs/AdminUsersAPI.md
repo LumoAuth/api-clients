@@ -9,9 +9,9 @@ Method | HTTP request | Description
 [**AddUserRole**](AdminUsersAPI.md#AddUserRole) | **Post** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Assign a role to a user
 [**AdminIdentitiesLegacySamlRelink**](AdminUsersAPI.md#AdminIdentitiesLegacySamlRelink) | **Post** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Relink legacy SAML users to an IdP
 [**AdminIdentitiesLegacySamlReport**](AdminUsersAPI.md#AdminIdentitiesLegacySamlReport) | **Get** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Legacy SAML bindings report
-[**AdminIdentitiesLink**](AdminUsersAPI.md#AdminIdentitiesLink) | **Post** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML or LDAP identity to a user
+[**AdminIdentitiesLink**](AdminUsersAPI.md#AdminIdentitiesLink) | **Post** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user
 [**AdminIdentitiesList**](AdminUsersAPI.md#AdminIdentitiesList) | **Get** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links
-[**AdminIdentitiesUnlink**](AdminUsersAPI.md#AdminIdentitiesUnlink) | **Delete** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, LDAP or social identity
+[**AdminIdentitiesUnlink**](AdminUsersAPI.md#AdminIdentitiesUnlink) | **Delete** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity
 [**BlockUser**](AdminUsersAPI.md#BlockUser) | **Post** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user
 [**CreateUser**](AdminUsersAPI.md#CreateUser) | **Post** /orgs/{orgId}/api/v1/admin/users | Create a user
 [**DeleteUser**](AdminUsersAPI.md#DeleteUser) | **Delete** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user
@@ -398,7 +398,7 @@ Name | Type | Description  | Notes
 
 > AdminAgentsGetResponse AdminIdentitiesLink(ctx, orgId, userId).AdminIdentitiesLinkRequest(adminIdentitiesLinkRequest).Execute()
 
-Link a SAML or LDAP identity to a user
+Link a SAML, OpenID Connect or LDAP identity to a user
 
 
 
@@ -546,7 +546,7 @@ Name | Type | Description  | Notes
 
 > AdminAgentsGetResponse AdminIdentitiesUnlink(ctx, type_, orgId, userId).Execute()
 
-Unlink a user's SAML, LDAP or social identity
+Unlink a user's SAML, OpenID Connect, LDAP or social identity
 
 
 

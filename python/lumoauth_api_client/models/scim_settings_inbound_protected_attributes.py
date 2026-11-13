@@ -25,15 +25,13 @@ from typing_extensions import Self
 
 class ScimSettingsInboundProtectedAttributes(BaseModel):
     """
-    Attribute name => true when SCIM may not change it.
+    Attribute name => true when SCIM may not change it. role_membership stops every /Groups request that would add or remove a member of a role.
     """ # noqa: E501
     email: Optional[StrictBool] = None
     name: Optional[StrictBool] = None
     active: Optional[StrictBool] = None
-    roles: Optional[StrictBool] = None
-    permissions: Optional[StrictBool] = None
-    additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["email", "name", "active", "roles", "permissions"]
+    role_membership: Optional[StrictBool] = None
+    __properties: ClassVar[List[str]] = ["email", "name", "active", "role_membership"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -65,10 +63,8 @@ class ScimSettingsInboundProtectedAttributes(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
-        * Fields in `self.additional_properties` are added to the output dict.
         """
         excluded_fields: Set[str] = set([
-            "additional_properties",
         ])
 
         _dict = self.model_dump(
@@ -76,11 +72,6 @@ class ScimSettingsInboundProtectedAttributes(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # puts key-value pairs in additional_properties in the top level
-        if self.additional_properties is not None:
-            for _key, _value in self.additional_properties.items():
-                _dict[_key] = _value
-
         return _dict
 
     @classmethod
@@ -96,14 +87,8 @@ class ScimSettingsInboundProtectedAttributes(BaseModel):
             "email": obj.get("email"),
             "name": obj.get("name"),
             "active": obj.get("active"),
-            "roles": obj.get("roles"),
-            "permissions": obj.get("permissions")
+            "role_membership": obj.get("role_membership")
         })
-        # store additional fields in additional_properties
-        for _key in obj.keys():
-            if _key not in cls.__properties:
-                _obj.additional_properties[_key] = obj.get(_key)
-
         return _obj
 
 

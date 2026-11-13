@@ -12,10 +12,10 @@ import AnyCodable
 
 public struct AdminWebhooksDeliveryReplayResponse: Codable, JSONEncodable, Hashable {
 
-    public var data: WebhookDelivery?
+    public var data: AdminWebhooksDeliveryReplayResponseData?
     public var message: String?
 
-    public init(data: WebhookDelivery? = nil, message: String? = nil) {
+    public init(data: AdminWebhooksDeliveryReplayResponseData? = nil, message: String? = nil) {
         self.data = data
         self.message = message
     }

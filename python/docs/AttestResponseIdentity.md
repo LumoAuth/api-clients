@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **provider** | **str** |  | [optional] 
 **subject** | **str** |  | [optional] 
 **issuer** | **str** |  | [optional] 
-**audience_generic** | **bool** | True when the registered audience is not specific to this deployment (operators should move to the agent-specific audience). | [optional] 
+**audience_generic** | **bool** | True when the registered audience is not specific to LumoAuth (move to the agent-specific audience). | [optional] 
 
 ## Example
 

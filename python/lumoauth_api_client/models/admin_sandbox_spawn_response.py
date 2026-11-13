@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
-from lumoauth_api_client.models.sandbox_tenant import SandboxTenant
+from lumoauth_api_client.models.admin_sandbox_spawn_response_data import AdminSandboxSpawnResponseData
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class AdminSandboxSpawnResponse(BaseModel):
     """
     AdminSandboxSpawnResponse
     """ # noqa: E501
-    data: Optional[SandboxTenant] = None
+    data: Optional[AdminSandboxSpawnResponseData] = None
     __properties: ClassVar[List[str]] = ["data"]
 
     model_config = ConfigDict(
@@ -85,7 +85,7 @@ class AdminSandboxSpawnResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "data": SandboxTenant.from_dict(obj["data"]) if obj.get("data") is not None else None
+            "data": AdminSandboxSpawnResponseData.from_dict(obj["data"]) if obj.get("data") is not None else None
         })
         return _obj
 

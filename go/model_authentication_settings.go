@@ -21,7 +21,6 @@ var _ MappedNullable = &AuthenticationSettings{}
 // AuthenticationSettings Authentication settings (entity defaults merged with the stored values). Any other stored key is returned as-is; secret-looking keys (e.g. initial_access_tokens) are redacted.
 type AuthenticationSettings struct {
 	PasskeyEnabled *bool `json:"passkey_enabled,omitempty"`
-	BiometricEnabled *bool `json:"biometric_enabled,omitempty"`
 	Passkeys *AuthenticationSettingsPasskeys `json:"passkeys,omitempty"`
 	MfaRequired *bool `json:"mfa_required,omitempty"`
 	MfaMethods []string `json:"mfa_methods,omitempty"`
@@ -29,6 +28,7 @@ type AuthenticationSettings struct {
 	MfaPolicy *AuthenticationSettingsMfaPolicy `json:"mfa_policy,omitempty"`
 	PushAuthRequired *bool `json:"push_auth_required,omitempty"`
 	PushAppName NullableString `json:"push_app_name,omitempty"`
+	// Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag.
 	SocialLoginEnabled *bool `json:"social_login_enabled,omitempty"`
 	SocialProviders []string `json:"social_providers,omitempty"`
 	// Per-provider OAuth credentials keyed by provider (google, github, microsoft, facebook, apple, linkedin). Each value is a free-form object of provider fields (client_id, hosted_domain, tenant_id, team_id, key_id, ...); the secret fields client_secret and private_key are returned as the redaction marker {\"configured\": true, \"redacted\": true} when set, null otherwise.
@@ -40,9 +40,8 @@ type AuthenticationSettings struct {
 	PasswordPolicy *AuthenticationSettingsPasswordPolicy `json:"password_policy,omitempty"`
 	PasswordRotationPolicy *AuthenticationSettingsPasswordRotationPolicy `json:"password_rotation_policy,omitempty"`
 	NoMfaAction *string `json:"no_mfa_action,omitempty"`
-	// Seconds.
+	// Idle timeout in seconds.
 	SessionTimeout *int32 `json:"session_timeout,omitempty"`
-	EncryptClientSecrets *bool `json:"encrypt_client_secrets,omitempty"`
 	DynamicClientRegistrationEnabled *bool `json:"dynamic_client_registration_enabled,omitempty"`
 	// Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out.
 	CimdEnabled *bool `json:"cimd_enabled,omitempty"`
@@ -107,38 +106,6 @@ func (o *AuthenticationSettings) HasPasskeyEnabled() bool {
 // SetPasskeyEnabled gets a reference to the given bool and assigns it to the PasskeyEnabled field.
 func (o *AuthenticationSettings) SetPasskeyEnabled(v bool) {
 	o.PasskeyEnabled = &v
-}
-
-// GetBiometricEnabled returns the BiometricEnabled field value if set, zero value otherwise.
-func (o *AuthenticationSettings) GetBiometricEnabled() bool {
-	if o == nil || IsNil(o.BiometricEnabled) {
-		var ret bool
-		return ret
-	}
-	return *o.BiometricEnabled
-}
-
-// GetBiometricEnabledOk returns a tuple with the BiometricEnabled field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AuthenticationSettings) GetBiometricEnabledOk() (*bool, bool) {
-	if o == nil || IsNil(o.BiometricEnabled) {
-		return nil, false
-	}
-	return o.BiometricEnabled, true
-}
-
-// HasBiometricEnabled returns a boolean if a field has been set.
-func (o *AuthenticationSettings) HasBiometricEnabled() bool {
-	if o != nil && !IsNil(o.BiometricEnabled) {
-		return true
-	}
-
-	return false
-}
-
-// SetBiometricEnabled gets a reference to the given bool and assigns it to the BiometricEnabled field.
-func (o *AuthenticationSettings) SetBiometricEnabled(v bool) {
-	o.BiometricEnabled = &v
 }
 
 // GetPasskeys returns the Passkeys field value if set, zero value otherwise.
@@ -663,38 +630,6 @@ func (o *AuthenticationSettings) SetSessionTimeout(v int32) {
 	o.SessionTimeout = &v
 }
 
-// GetEncryptClientSecrets returns the EncryptClientSecrets field value if set, zero value otherwise.
-func (o *AuthenticationSettings) GetEncryptClientSecrets() bool {
-	if o == nil || IsNil(o.EncryptClientSecrets) {
-		var ret bool
-		return ret
-	}
-	return *o.EncryptClientSecrets
-}
-
-// GetEncryptClientSecretsOk returns a tuple with the EncryptClientSecrets field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AuthenticationSettings) GetEncryptClientSecretsOk() (*bool, bool) {
-	if o == nil || IsNil(o.EncryptClientSecrets) {
-		return nil, false
-	}
-	return o.EncryptClientSecrets, true
-}
-
-// HasEncryptClientSecrets returns a boolean if a field has been set.
-func (o *AuthenticationSettings) HasEncryptClientSecrets() bool {
-	if o != nil && !IsNil(o.EncryptClientSecrets) {
-		return true
-	}
-
-	return false
-}
-
-// SetEncryptClientSecrets gets a reference to the given bool and assigns it to the EncryptClientSecrets field.
-func (o *AuthenticationSettings) SetEncryptClientSecrets(v bool) {
-	o.EncryptClientSecrets = &v
-}
-
 // GetDynamicClientRegistrationEnabled returns the DynamicClientRegistrationEnabled field value if set, zero value otherwise.
 func (o *AuthenticationSettings) GetDynamicClientRegistrationEnabled() bool {
 	if o == nil || IsNil(o.DynamicClientRegistrationEnabled) {
@@ -932,9 +867,6 @@ func (o AuthenticationSettings) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.PasskeyEnabled) {
 		toSerialize["passkey_enabled"] = o.PasskeyEnabled
 	}
-	if !IsNil(o.BiometricEnabled) {
-		toSerialize["biometric_enabled"] = o.BiometricEnabled
-	}
 	if !IsNil(o.Passkeys) {
 		toSerialize["passkeys"] = o.Passkeys
 	}
@@ -983,9 +915,6 @@ func (o AuthenticationSettings) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SessionTimeout) {
 		toSerialize["session_timeout"] = o.SessionTimeout
 	}
-	if !IsNil(o.EncryptClientSecrets) {
-		toSerialize["encrypt_client_secrets"] = o.EncryptClientSecrets
-	}
 	if !IsNil(o.DynamicClientRegistrationEnabled) {
 		toSerialize["dynamic_client_registration_enabled"] = o.DynamicClientRegistrationEnabled
 	}
@@ -1030,7 +959,6 @@ func (o *AuthenticationSettings) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "passkey_enabled")
-		delete(additionalProperties, "biometric_enabled")
 		delete(additionalProperties, "passkeys")
 		delete(additionalProperties, "mfa_required")
 		delete(additionalProperties, "mfa_methods")
@@ -1047,7 +975,6 @@ func (o *AuthenticationSettings) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "password_rotation_policy")
 		delete(additionalProperties, "no_mfa_action")
 		delete(additionalProperties, "session_timeout")
-		delete(additionalProperties, "encrypt_client_secrets")
 		delete(additionalProperties, "dynamic_client_registration_enabled")
 		delete(additionalProperties, "cimd_enabled")
 		delete(additionalProperties, "cimd_allowed_domains")

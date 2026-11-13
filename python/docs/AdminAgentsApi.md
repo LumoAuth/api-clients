@@ -288,7 +288,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_agents_agents_rotate_key**
-> AdminAgentsAgentsRotateKeyResponse admin_agents_agents_rotate_key(org_id, agent_id)
+> AdminAgentsAgentsRotateKeyResponse admin_agents_agents_rotate_key(org_id, agent_id, admin_agents_agents_rotate_key_request=admin_agents_agents_rotate_key_request)
 
 Rotate agent API key
 
@@ -299,6 +299,7 @@ Rotate agent API key
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_agents_agents_rotate_key_request import AdminAgentsAgentsRotateKeyRequest
 from lumoauth_api_client.models.admin_agents_agents_rotate_key_response import AdminAgentsAgentsRotateKeyResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -331,10 +332,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminAgentsApi(api_client)
     org_id = 'org_id_example' # str | 
     agent_id = 'agent_id_example' # str | 
+    admin_agents_agents_rotate_key_request = lumoauth_api_client.AdminAgentsAgentsRotateKeyRequest() # AdminAgentsAgentsRotateKeyRequest | Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
 
     try:
         # Rotate agent API key
-        api_response = api_instance.admin_agents_agents_rotate_key(org_id, agent_id)
+        api_response = api_instance.admin_agents_agents_rotate_key(org_id, agent_id, admin_agents_agents_rotate_key_request=admin_agents_agents_rotate_key_request)
         print("The response of AdminAgentsApi->admin_agents_agents_rotate_key:\n")
         pprint(api_response)
     except Exception as e:
@@ -350,6 +352,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **agent_id** | **str**|  | 
+ **admin_agents_agents_rotate_key_request** | [**AdminAgentsAgentsRotateKeyRequest**](AdminAgentsAgentsRotateKeyRequest.md)| Optional lifetime of the new API key. Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | [optional] 
 
 ### Return type
 
@@ -361,7 +364,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -369,6 +372,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | API key rotated. The new key is returned ONCE and cannot be retrieved again. |  -  |
+**400** | The agent does not authenticate with an API key (identity type other than api_key), or the lifetime is invalid. |  -  |
 **401** | Authentication required. |  -  |
 **403** | Admin privileges required. |  -  |
 **404** | Tenant or agent not found. |  -  |
@@ -458,7 +462,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Agent created. The generated credential/secret is returned ONCE and cannot be retrieved again. |  -  |
-**400** | Missing required field: name. |  -  |
+**400** | Missing required field: name, or an invalid budgetPolicy (unknown key, or a value that is not a number greater than zero). |  -  |
 **401** | Authentication required. |  -  |
 **403** | Admin privileges required. |  -  |
 **404** | Tenant not found. |  -  |
@@ -726,10 +730,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A generated agent token. The token value is returned ONCE. |  -  |
-**400** | Inactive agent, requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. |  -  |
+**400** | Inactive agent, an agent that only takes DPoP-bound tokens (a minted token cannot be bound to its key), requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. |  -  |
 **401** | Authentication required. |  -  |
 **403** | Admin privileges required. |  -  |
 **404** | Tenant or agent not found. |  -  |
+**429** | budget_exceeded: the agent budget is spent. A token mint counts as one call. Retry-After holds the seconds until the spent window starts again. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1178,7 +1183,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_agents_rotate_credentials**
-> AdminAgentsRotateCredentialsResponse admin_agents_rotate_credentials(org_id, agent_id)
+> AdminAgentsRotateCredentialsResponse admin_agents_rotate_credentials(org_id, agent_id, admin_agents_agents_rotate_key_request=admin_agents_agents_rotate_key_request)
 
 Rotate agent credentials
 
@@ -1189,6 +1194,7 @@ Rotate agent credentials
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_agents_agents_rotate_key_request import AdminAgentsAgentsRotateKeyRequest
 from lumoauth_api_client.models.admin_agents_rotate_credentials_response import AdminAgentsRotateCredentialsResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1221,10 +1227,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminAgentsApi(api_client)
     org_id = 'org_id_example' # str | 
     agent_id = 'agent_id_example' # str | 
+    admin_agents_agents_rotate_key_request = lumoauth_api_client.AdminAgentsAgentsRotateKeyRequest() # AdminAgentsAgentsRotateKeyRequest | For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). (optional)
 
     try:
         # Rotate agent credentials
-        api_response = api_instance.admin_agents_rotate_credentials(org_id, agent_id)
+        api_response = api_instance.admin_agents_rotate_credentials(org_id, agent_id, admin_agents_agents_rotate_key_request=admin_agents_agents_rotate_key_request)
         print("The response of AdminAgentsApi->admin_agents_rotate_credentials:\n")
         pprint(api_response)
     except Exception as e:
@@ -1240,6 +1247,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **agent_id** | **str**|  | 
+ **admin_agents_agents_rotate_key_request** | [**AdminAgentsAgentsRotateKeyRequest**](AdminAgentsAgentsRotateKeyRequest.md)| For an api_key agent, the optional lifetime of the new key (ignored for a client secret). Without either field the current expiry date is kept, unless it has already passed (then the new key gets 180 days). | [optional] 
 
 ### Return type
 
@@ -1251,7 +1259,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1443,6 +1451,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Agent updated. |  -  |
+**400** | Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. |  -  |
 **401** | Authentication required. |  -  |
 **403** | Admin privileges required. |  -  |
 **404** | Tenant or agent not found. |  -  |
@@ -1534,6 +1543,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Agent updated. |  -  |
+**400** | Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. |  -  |
 **401** | Authentication required. |  -  |
 **403** | Admin privileges required. |  -  |
 **404** | Tenant or agent not found. |  -  |

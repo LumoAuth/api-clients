@@ -22,9 +22,9 @@
 export interface GetApprovalStatusResponseApprovedBy {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof GetApprovalStatusResponseApprovedBy
      */
-    'user_id'?: number;
+    'user_id'?: string;
 }
 

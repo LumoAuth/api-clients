@@ -53,6 +53,8 @@ type AdminSandboxAPI interface {
 	/*
 	AdminSandboxSpawn Spawn a sandbox tenant
 
+	Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@return ApiAdminSandboxSpawnRequest
@@ -319,6 +321,8 @@ func (r ApiAdminSandboxSpawnRequest) Execute() (*AdminSandboxSpawnResponse, *htt
 
 /*
 AdminSandboxSpawn Spawn a sandbox tenant
+
+Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId

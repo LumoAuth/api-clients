@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PasskeyEnabled** | Pointer to **bool** |  | [optional] 
-**BiometricEnabled** | Pointer to **bool** |  | [optional] 
 **Passkeys** | Pointer to [**AuthenticationSettingsPasskeys**](AuthenticationSettingsPasskeys.md) |  | [optional] 
 **MfaRequired** | Pointer to **bool** |  | [optional] 
 **MfaMethods** | Pointer to **[]string** |  | [optional] 
@@ -13,7 +12,7 @@ Name | Type | Description | Notes
 **MfaPolicy** | Pointer to [**AuthenticationSettingsMfaPolicy**](AuthenticationSettingsMfaPolicy.md) |  | [optional] 
 **PushAuthRequired** | Pointer to **bool** |  | [optional] 
 **PushAppName** | Pointer to **NullableString** |  | [optional] 
-**SocialLoginEnabled** | Pointer to **bool** |  | [optional] 
+**SocialLoginEnabled** | Pointer to **bool** | Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag. | [optional] 
 **SocialProviders** | Pointer to **[]string** |  | [optional] 
 **SocialConfigs** | Pointer to **map[string]map[string]interface{}** | Per-provider OAuth credentials keyed by provider (google, github, microsoft, facebook, apple, linkedin). Each value is a free-form object of provider fields (client_id, hosted_domain, tenant_id, team_id, key_id, ...); the secret fields client_secret and private_key are returned as the redaction marker {\&quot;configured\&quot;: true, \&quot;redacted\&quot;: true} when set, null otherwise. | [optional] 
 **PasswordMinLength** | Pointer to **int32** | Legacy; mirrored by password_policy.min_length. | [optional] 
@@ -21,8 +20,7 @@ Name | Type | Description | Notes
 **PasswordPolicy** | Pointer to [**AuthenticationSettingsPasswordPolicy**](AuthenticationSettingsPasswordPolicy.md) |  | [optional] 
 **PasswordRotationPolicy** | Pointer to [**AuthenticationSettingsPasswordRotationPolicy**](AuthenticationSettingsPasswordRotationPolicy.md) |  | [optional] 
 **NoMfaAction** | Pointer to **string** |  | [optional] 
-**SessionTimeout** | Pointer to **int32** | Seconds. | [optional] 
-**EncryptClientSecrets** | Pointer to **bool** |  | [optional] 
+**SessionTimeout** | Pointer to **int32** | Idle timeout in seconds. | [optional] 
 **DynamicClientRegistrationEnabled** | Pointer to **bool** |  | [optional] 
 **CimdEnabled** | Pointer to **bool** | Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out. | [optional] [default to true]
 **CimdAllowedDomains** | Pointer to **[]string** |  | [optional] 
@@ -74,31 +72,6 @@ SetPasskeyEnabled sets PasskeyEnabled field to given value.
 `func (o *AuthenticationSettings) HasPasskeyEnabled() bool`
 
 HasPasskeyEnabled returns a boolean if a field has been set.
-
-### GetBiometricEnabled
-
-`func (o *AuthenticationSettings) GetBiometricEnabled() bool`
-
-GetBiometricEnabled returns the BiometricEnabled field if non-nil, zero value otherwise.
-
-### GetBiometricEnabledOk
-
-`func (o *AuthenticationSettings) GetBiometricEnabledOk() (*bool, bool)`
-
-GetBiometricEnabledOk returns a tuple with the BiometricEnabled field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetBiometricEnabled
-
-`func (o *AuthenticationSettings) SetBiometricEnabled(v bool)`
-
-SetBiometricEnabled sets BiometricEnabled field to given value.
-
-### HasBiometricEnabled
-
-`func (o *AuthenticationSettings) HasBiometricEnabled() bool`
-
-HasBiometricEnabled returns a boolean if a field has been set.
 
 ### GetPasskeys
 
@@ -509,31 +482,6 @@ SetSessionTimeout sets SessionTimeout field to given value.
 `func (o *AuthenticationSettings) HasSessionTimeout() bool`
 
 HasSessionTimeout returns a boolean if a field has been set.
-
-### GetEncryptClientSecrets
-
-`func (o *AuthenticationSettings) GetEncryptClientSecrets() bool`
-
-GetEncryptClientSecrets returns the EncryptClientSecrets field if non-nil, zero value otherwise.
-
-### GetEncryptClientSecretsOk
-
-`func (o *AuthenticationSettings) GetEncryptClientSecretsOk() (*bool, bool)`
-
-GetEncryptClientSecretsOk returns a tuple with the EncryptClientSecrets field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEncryptClientSecrets
-
-`func (o *AuthenticationSettings) SetEncryptClientSecrets(v bool)`
-
-SetEncryptClientSecrets sets EncryptClientSecrets field to given value.
-
-### HasEncryptClientSecrets
-
-`func (o *AuthenticationSettings) HasEncryptClientSecrets() bool`
-
-HasEncryptClientSecrets returns a boolean if a field has been set.
 
 ### GetDynamicClientRegistrationEnabled
 

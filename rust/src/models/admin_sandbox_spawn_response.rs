@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AdminSandboxSpawnResponse {
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: Option<Box<models::SandboxTenant>>,
+    pub data: Option<Box<models::AdminSandboxSpawnResponseData>>,
 }
 
 impl AdminSandboxSpawnResponse {

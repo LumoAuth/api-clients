@@ -1,6 +1,6 @@
 # ScimSettingsInboundProtectedAttributes
 
-Attribute name => true when SCIM may not change it.
+Attribute name => true when SCIM may not change it. role_membership stops every /Groups request that would add or remove a member of a role.
 
 ## Properties
 
@@ -9,8 +9,7 @@ Name | Type | Description | Notes
 **email** | **boolean** |  | [optional] [default to undefined]
 **name** | **boolean** |  | [optional] [default to undefined]
 **active** | **boolean** |  | [optional] [default to undefined]
-**roles** | **boolean** |  | [optional] [default to undefined]
-**permissions** | **boolean** |  | [optional] [default to undefined]
+**role_membership** | **boolean** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -21,8 +20,7 @@ const instance: ScimSettingsInboundProtectedAttributes = {
     email,
     name,
     active,
-    roles,
-    permissions,
+    role_membership,
 };
 ```
 

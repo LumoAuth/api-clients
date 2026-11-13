@@ -21,6 +21,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.UUID;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,17 +49,17 @@ import io.lumoauth.client.JSON;
 /**
  * GetApprovalStatusResponseApprovedBy
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T14:48:44.873539119Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class GetApprovalStatusResponseApprovedBy {
   public static final String SERIALIZED_NAME_USER_ID = "user_id";
   @SerializedName(SERIALIZED_NAME_USER_ID)
   @javax.annotation.Nullable
-  private Integer userId;
+  private UUID userId;
 
   public GetApprovalStatusResponseApprovedBy() {
   }
 
-  public GetApprovalStatusResponseApprovedBy userId(@javax.annotation.Nullable Integer userId) {
+  public GetApprovalStatusResponseApprovedBy userId(@javax.annotation.Nullable UUID userId) {
     this.userId = userId;
     return this;
   }
@@ -68,11 +69,11 @@ public class GetApprovalStatusResponseApprovedBy {
    * @return userId
    */
   @javax.annotation.Nullable
-  public Integer getUserId() {
+  public UUID getUserId() {
     return userId;
   }
 
-  public void setUserId(@javax.annotation.Nullable Integer userId) {
+  public void setUserId(@javax.annotation.Nullable UUID userId) {
     this.userId = userId;
   }
 
@@ -148,6 +149,9 @@ public class GetApprovalStatusResponseApprovedBy {
         }
       }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
+      if ((jsonObj.get("user_id") != null && !jsonObj.get("user_id").isJsonNull()) && !jsonObj.get("user_id").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `user_id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("user_id").toString()));
+      }
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {

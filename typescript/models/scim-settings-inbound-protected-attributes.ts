@@ -15,13 +15,11 @@
 
 
 /**
- * Attribute name => true when SCIM may not change it.
+ * Attribute name => true when SCIM may not change it. role_membership stops every /Groups request that would add or remove a member of a role.
  * @export
  * @interface ScimSettingsInboundProtectedAttributes
  */
 export interface ScimSettingsInboundProtectedAttributes {
-    [key: string]: boolean | any;
-
     /**
      * 
      * @type {boolean}
@@ -45,12 +43,6 @@ export interface ScimSettingsInboundProtectedAttributes {
      * @type {boolean}
      * @memberof ScimSettingsInboundProtectedAttributes
      */
-    'roles'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ScimSettingsInboundProtectedAttributes
-     */
-    'permissions'?: boolean;
+    'role_membership'?: boolean;
 }
 

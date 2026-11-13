@@ -1986,7 +1986,7 @@ public class AuthorizationApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Permissions from the user&#39;s roles (including group-inherited roles). &#x60;permissions&#x60; and &#x60;data&#x60; are identical. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permissions from the user&#39;s roles (including group-inherited roles) and permissions granted to the user directly. &#x60;permissions&#x60; and &#x60;data&#x60; are identical. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listPermissionsCall(final ApiCallback _callback) throws ApiException {
@@ -2048,7 +2048,7 @@ public class AuthorizationApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Permissions from the user&#39;s roles (including group-inherited roles). &#x60;permissions&#x60; and &#x60;data&#x60; are identical. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permissions from the user&#39;s roles (including group-inherited roles) and permissions granted to the user directly. &#x60;permissions&#x60; and &#x60;data&#x60; are identical. </td><td>  -  </td></tr>
      </table>
      */
     public ListPermissionsResponse listPermissions() throws ApiException {
@@ -2065,7 +2065,7 @@ public class AuthorizationApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Permissions from the user&#39;s roles (including group-inherited roles). &#x60;permissions&#x60; and &#x60;data&#x60; are identical. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permissions from the user&#39;s roles (including group-inherited roles) and permissions granted to the user directly. &#x60;permissions&#x60; and &#x60;data&#x60; are identical. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<ListPermissionsResponse> listPermissionsWithHttpInfo() throws ApiException {
@@ -2084,7 +2084,7 @@ public class AuthorizationApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Permissions from the user&#39;s roles (including group-inherited roles). &#x60;permissions&#x60; and &#x60;data&#x60; are identical. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permissions from the user&#39;s roles (including group-inherited roles) and permissions granted to the user directly. &#x60;permissions&#x60; and &#x60;data&#x60; are identical. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listPermissionsAsync(final ApiCallback<ListPermissionsResponse> _callback) throws ApiException {

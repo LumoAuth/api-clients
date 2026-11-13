@@ -14,7 +14,6 @@ Name | Type | Description | Notes
 **AllowUserDeletion** | Pointer to **bool** |  | [optional] 
 **AllowGroupOperations** | Pointer to **bool** |  | [optional] 
 **ProtectedAttributes** | Pointer to [**ScimSettingsInboundProtectedAttributes**](ScimSettingsInboundProtectedAttributes.md) |  | [optional] 
-**AttributeMapping** | Pointer to **map[string]string** | SCIM attribute &#x3D;&gt; user field. | [optional] 
 **AutoActivateUsers** | Pointer to **bool** |  | [optional] 
 **DeprovisioningAction** | Pointer to **string** |  | [optional] 
 
@@ -326,31 +325,6 @@ SetProtectedAttributes sets ProtectedAttributes field to given value.
 `func (o *ScimSettingsInbound) HasProtectedAttributes() bool`
 
 HasProtectedAttributes returns a boolean if a field has been set.
-
-### GetAttributeMapping
-
-`func (o *ScimSettingsInbound) GetAttributeMapping() map[string]string`
-
-GetAttributeMapping returns the AttributeMapping field if non-nil, zero value otherwise.
-
-### GetAttributeMappingOk
-
-`func (o *ScimSettingsInbound) GetAttributeMappingOk() (*map[string]string, bool)`
-
-GetAttributeMappingOk returns a tuple with the AttributeMapping field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAttributeMapping
-
-`func (o *ScimSettingsInbound) SetAttributeMapping(v map[string]string)`
-
-SetAttributeMapping sets AttributeMapping field to given value.
-
-### HasAttributeMapping
-
-`func (o *ScimSettingsInbound) HasAttributeMapping() bool`
-
-HasAttributeMapping returns a boolean if a field has been set.
 
 ### GetAutoActivateUsers
 

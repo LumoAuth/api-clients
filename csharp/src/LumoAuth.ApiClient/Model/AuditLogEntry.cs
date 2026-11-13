@@ -63,7 +63,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="geoLocation">Detailed responses only.</param>
         /// <param name="sessionId">Detailed responses only.</param>
         /// <param name="requestId">Detailed responses only.</param>
-        /// <param name="status">Detailed responses only.</param>
+        /// <param name="status">Result of the event: success, failure, pending or partial.</param>
         /// <param name="statusReason">Detailed responses only.</param>
         /// <param name="oldValue">Detailed responses only.</param>
         /// <param name="newValue">Detailed responses only.</param>
@@ -242,9 +242,9 @@ namespace LumoAuth.ApiClient.Model
         public string RequestId { get; set; }
 
         /// <summary>
-        /// Detailed responses only
+        /// Result of the event: success, failure, pending or partial
         /// </summary>
-        /// <value>Detailed responses only</value>
+        /// <value>Result of the event: success, failure, pending or partial</value>
         [DataMember(Name = "status", EmitDefaultValue = true)]
         public string Status { get; set; }
 

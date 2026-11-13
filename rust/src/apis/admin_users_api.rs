@@ -485,7 +485,7 @@ pub async fn admin_identities_legacy_saml_report(configuration: &configuration::
     }
 }
 
-/// Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+/// Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`), enterprise OpenID Connect binding (`idp_id` + `subject`: the value of the connection's user identifier claim; a person can sign in through such a connection only after this link exists) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
 pub async fn admin_identities_link(configuration: &configuration::Configuration, org_id: &str, user_id: &str, admin_identities_link_request: models::AdminIdentitiesLinkRequest) -> Result<models::AdminAgentsGetResponse, Error<AdminIdentitiesLinkError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -536,7 +536,7 @@ pub async fn admin_identities_link(configuration: &configuration::Configuration,
     }
 }
 
-/// SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+/// SAML (IdP + NameID), enterprise OpenID Connect (connection + subject), LDAP (directory + DN) and social provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP. An OpenID Connect link with `hashed: true` stores a long subject as a hash, so `subject` is null.
 pub async fn admin_identities_list(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AdminIdentitiesListResponse, Error<AdminIdentitiesListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -585,7 +585,7 @@ pub async fn admin_identities_list(configuration: &configuration::Configuration,
     }
 }
 
-/// Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+/// Removes the binding of the given type (`saml`, `oidc`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
 pub async fn admin_identities_unlink(configuration: &configuration::Configuration, r#type: &str, org_id: &str, user_id: &str) -> Result<models::AdminAgentsGetResponse, Error<AdminIdentitiesUnlinkError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_type = r#type;

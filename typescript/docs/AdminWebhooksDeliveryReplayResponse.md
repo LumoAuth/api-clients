@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | [**WebhookDelivery**](WebhookDelivery.md) |  | [optional] [default to undefined]
+**data** | [**AdminWebhooksDeliveryReplayResponseData**](AdminWebhooksDeliveryReplayResponseData.md) |  | [optional] [default to undefined]
 **message** | **string** |  | [optional] [default to undefined]
 
 ## Example

@@ -35,10 +35,7 @@ pub struct ScimSettingsInbound {
     #[serde(rename = "allow_group_operations", skip_serializing_if = "Option::is_none")]
     pub allow_group_operations: Option<bool>,
     #[serde(rename = "protected_attributes", skip_serializing_if = "Option::is_none")]
-    pub protected_attributes: Option<models::ScimSettingsInboundProtectedAttributes>,
-    /// SCIM attribute => user field.
-    #[serde(rename = "attribute_mapping", skip_serializing_if = "Option::is_none")]
-    pub attribute_mapping: Option<std::collections::HashMap<String, String>>,
+    pub protected_attributes: Option<Box<models::ScimSettingsInboundProtectedAttributes>>,
     #[serde(rename = "auto_activate_users", skip_serializing_if = "Option::is_none")]
     pub auto_activate_users: Option<bool>,
     #[serde(rename = "deprovisioning_action", skip_serializing_if = "Option::is_none")]
@@ -59,7 +56,6 @@ impl ScimSettingsInbound {
             allow_user_deletion: None,
             allow_group_operations: None,
             protected_attributes: None,
-            attribute_mapping: None,
             auto_activate_users: None,
             deprovisioning_action: None,
         }

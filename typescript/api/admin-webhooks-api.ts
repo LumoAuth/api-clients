@@ -56,7 +56,7 @@ import type { PutAdminWebhooksUpdateResponse } from '../models';
 export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * The signing secret is generated server-side and returned once in this response only.
+         * Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
          * @summary Create a webhook
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -187,7 +187,7 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * Resets the delivery\'s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+         * Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
          * @summary Replay a delivery
          * @param {string} orgId 
          * @param {string} webhookId 
@@ -412,7 +412,7 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+         * Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries `X-LumoAuth-Signature-Previous`, signed with the secret that was replaced, so the receiver can be updated without losing events. The `kid` of `X-LumoAuth-Signature` changes with every rotation.
          * @summary Rotate the signing secret
          * @param {string} orgId 
          * @param {string} webhookId 
@@ -457,7 +457,7 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver\'s status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
+         * Sends one `webhook.test` event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with `success: false`; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
          * @summary Send a test delivery
          * @param {string} orgId 
          * @param {string} webhookId 
@@ -768,7 +768,7 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * Changes only the fields that are sent: `url`, `events`, `isActive` (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`. A new `url` for a webhook that has a signing secret needs `rotateSecret: true`; the response then carries the new `secret` once. Unknown fields, `secret` and event names that are not in the catalogue are refused with 400.
          * @summary Update a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
@@ -823,7 +823,7 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AdminWebhooksApiAxiosParamCreator(configuration)
     return {
         /**
-         * The signing secret is generated server-side and returned once in this response only.
+         * Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
          * @summary Create a webhook
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -864,7 +864,7 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Resets the delivery\'s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+         * Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
          * @summary Replay a delivery
          * @param {string} orgId 
          * @param {string} webhookId 
@@ -934,7 +934,7 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+         * Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries `X-LumoAuth-Signature-Previous`, signed with the secret that was replaced, so the receiver can be updated without losing events. The `kid` of `X-LumoAuth-Signature` changes with every rotation.
          * @summary Rotate the signing secret
          * @param {string} orgId 
          * @param {string} webhookId 
@@ -948,7 +948,7 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver\'s status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
+         * Sends one `webhook.test` event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with `success: false`; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
          * @summary Send a test delivery
          * @param {string} orgId 
          * @param {string} webhookId 
@@ -1045,7 +1045,7 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Changes only the fields that are sent: `url`, `events`, `isActive` (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`. A new `url` for a webhook that has a signing secret needs `rotateSecret: true`; the response then carries the new `secret` once. Unknown fields, `secret` and event names that are not in the catalogue are refused with 400.
          * @summary Update a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
@@ -1069,7 +1069,7 @@ export const AdminWebhooksApiFactory = function (configuration?: Configuration, 
     const localVarFp = AdminWebhooksApiFp(configuration)
     return {
         /**
-         * The signing secret is generated server-side and returned once in this response only.
+         * Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
          * @summary Create a webhook
          * @param {AdminWebhooksApiAdminWebhooksCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1099,7 +1099,7 @@ export const AdminWebhooksApiFactory = function (configuration?: Configuration, 
             return localVarFp.adminWebhooksDeliveriesList(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Resets the delivery\'s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+         * Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
          * @summary Replay a delivery
          * @param {AdminWebhooksApiAdminWebhooksDeliveryReplayRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1149,7 +1149,7 @@ export const AdminWebhooksApiFactory = function (configuration?: Configuration, 
             return localVarFp.adminWebhooksList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+         * Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries `X-LumoAuth-Signature-Previous`, signed with the secret that was replaced, so the receiver can be updated without losing events. The `kid` of `X-LumoAuth-Signature` changes with every rotation.
          * @summary Rotate the signing secret
          * @param {AdminWebhooksApiAdminWebhooksRotateSecretRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1159,7 +1159,7 @@ export const AdminWebhooksApiFactory = function (configuration?: Configuration, 
             return localVarFp.adminWebhooksRotateSecret(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
-         * POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver\'s status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
+         * Sends one `webhook.test` event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with `success: false`; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
          * @summary Send a test delivery
          * @param {AdminWebhooksApiAdminWebhooksTestRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1229,7 +1229,7 @@ export const AdminWebhooksApiFactory = function (configuration?: Configuration, 
             return localVarFp.patchAdminWebhooksUpdate(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Changes only the fields that are sent: `url`, `events`, `isActive` (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`. A new `url` for a webhook that has a signing secret needs `rotateSecret: true`; the response then carries the new `secret` once. Unknown fields, `secret` and event names that are not in the catalogue are refused with 400.
          * @summary Update a webhook
          * @param {AdminWebhooksApiPutAdminWebhooksUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1248,7 +1248,7 @@ export const AdminWebhooksApiFactory = function (configuration?: Configuration, 
  */
 export interface AdminWebhooksApiInterface {
     /**
-     * The signing secret is generated server-side and returned once in this response only.
+     * Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
      * @summary Create a webhook
      * @param {AdminWebhooksApiAdminWebhooksCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1278,7 +1278,7 @@ export interface AdminWebhooksApiInterface {
     adminWebhooksDeliveriesList(requestParameters: AdminWebhooksApiAdminWebhooksDeliveriesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksDeliveriesListResponse>;
 
     /**
-     * Resets the delivery\'s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+     * Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
      * @summary Replay a delivery
      * @param {AdminWebhooksApiAdminWebhooksDeliveryReplayRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1328,7 +1328,7 @@ export interface AdminWebhooksApiInterface {
     adminWebhooksList(requestParameters: AdminWebhooksApiAdminWebhooksListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksListResponse>;
 
     /**
-     * Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+     * Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries `X-LumoAuth-Signature-Previous`, signed with the secret that was replaced, so the receiver can be updated without losing events. The `kid` of `X-LumoAuth-Signature` changes with every rotation.
      * @summary Rotate the signing secret
      * @param {AdminWebhooksApiAdminWebhooksRotateSecretRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1338,7 +1338,7 @@ export interface AdminWebhooksApiInterface {
     adminWebhooksRotateSecret(requestParameters: AdminWebhooksApiAdminWebhooksRotateSecretRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksRotateSecretResponse>;
 
     /**
-     * POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver\'s status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
+     * Sends one `webhook.test` event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with `success: false`; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
      * @summary Send a test delivery
      * @param {AdminWebhooksApiAdminWebhooksTestRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1408,7 +1408,7 @@ export interface AdminWebhooksApiInterface {
     patchAdminWebhooksUpdate(requestParameters: AdminWebhooksApiPatchAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminWebhooksUpdateResponse>;
 
     /**
-     * 
+     * Changes only the fields that are sent: `url`, `events`, `isActive` (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`. A new `url` for a webhook that has a signing secret needs `rotateSecret: true`; the response then carries the new `secret` once. Unknown fields, `secret` and event names that are not in the catalogue are refused with 400.
      * @summary Update a webhook
      * @param {AdminWebhooksApiPutAdminWebhooksUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1770,7 +1770,7 @@ export interface AdminWebhooksApiPutAdminWebhooksUpdateRequest {
  */
 export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterface {
     /**
-     * The signing secret is generated server-side and returned once in this response only.
+     * Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
      * @summary Create a webhook
      * @param {AdminWebhooksApiAdminWebhooksCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1806,7 +1806,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * Resets the delivery\'s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+     * Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
      * @summary Replay a delivery
      * @param {AdminWebhooksApiAdminWebhooksDeliveryReplayRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1866,7 +1866,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+     * Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries `X-LumoAuth-Signature-Previous`, signed with the secret that was replaced, so the receiver can be updated without losing events. The `kid` of `X-LumoAuth-Signature` changes with every rotation.
      * @summary Rotate the signing secret
      * @param {AdminWebhooksApiAdminWebhooksRotateSecretRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1878,7 +1878,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver\'s status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
+     * Sends one `webhook.test` event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with `success: false`; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
      * @summary Send a test delivery
      * @param {AdminWebhooksApiAdminWebhooksTestRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1962,7 +1962,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * 
+     * Changes only the fields that are sent: `url`, `events`, `isActive` (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`. A new `url` for a webhook that has a signing secret needs `rotateSecret: true`; the response then carries the new `secret` once. Unknown fields, `secret` and event names that are not in the catalogue are refused with 400.
      * @summary Update a webhook
      * @param {AdminWebhooksApiPutAdminWebhooksUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

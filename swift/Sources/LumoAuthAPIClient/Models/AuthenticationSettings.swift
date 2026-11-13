@@ -13,12 +13,18 @@ import AnyCodable
 /** Authentication settings (entity defaults merged with the stored values). Any other stored key is returned as-is; secret-looking keys (e.g. initial_access_tokens) are redacted. */
 public struct AuthenticationSettings: Codable, JSONEncodable, Hashable {
 
+    public enum NoMfaAction: String, Codable, CaseIterable {
+        case allow = "allow"
+        case prompt = "prompt"
+        case email = "email"
+        case block = "block"
+    }
     public enum CimdLocalhostRedirectPolicy: String, Codable, CaseIterable {
         case warn = "warn"
         case block = "block"
     }
+    public static let sessionTimeoutRule = NumericRule<Int>(minimum: 300, exclusiveMinimum: false, maximum: 1209600, exclusiveMaximum: false, multipleOf: nil)
     public var passkeyEnabled: Bool?
-    public var biometricEnabled: Bool?
     public var passkeys: AuthenticationSettingsPasskeys?
     public var mfaRequired: Bool?
     public var mfaMethods: [String]?
@@ -26,6 +32,7 @@ public struct AuthenticationSettings: Codable, JSONEncodable, Hashable {
     public var mfaPolicy: AuthenticationSettingsMfaPolicy?
     public var pushAuthRequired: Bool?
     public var pushAppName: String?
+    /** Legacy. Switches on the older social sign-in flow that uses social_configs and social_providers. Social sign-in on the hosted sign-in page follows the enabled social providers, not this flag. */
     public var socialLoginEnabled: Bool?
     public var socialProviders: [String]?
     /** Per-provider OAuth credentials keyed by provider (google, github, microsoft, facebook, apple, linkedin). Each value is a free-form object of provider fields (client_id, hosted_domain, tenant_id, team_id, key_id, ...); the secret fields client_secret and private_key are returned as the redaction marker {\"configured\": true, \"redacted\": true} when set, null otherwise. */
@@ -36,10 +43,9 @@ public struct AuthenticationSettings: Codable, JSONEncodable, Hashable {
     public var passwordRequireSpecial: Bool?
     public var passwordPolicy: AuthenticationSettingsPasswordPolicy?
     public var passwordRotationPolicy: AuthenticationSettingsPasswordRotationPolicy?
-    public var noMfaAction: String?
-    /** Seconds. */
+    public var noMfaAction: NoMfaAction?
+    /** Idle timeout in seconds. */
     public var sessionTimeout: Int?
-    public var encryptClientSecrets: Bool?
     public var dynamicClientRegistrationEnabled: Bool?
     /** Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out. */
     public var cimdEnabled: Bool? = true
@@ -49,9 +55,8 @@ public struct AuthenticationSettings: Codable, JSONEncodable, Hashable {
     public var xaaResourceEnabled: Bool?
     public var progressiveProfiling: AuthenticationSettingsProgressiveProfiling?
 
-    public init(passkeyEnabled: Bool? = nil, biometricEnabled: Bool? = nil, passkeys: AuthenticationSettingsPasskeys? = nil, mfaRequired: Bool? = nil, mfaMethods: [String]? = nil, mfaSmsEnabled: Bool? = nil, mfaPolicy: AuthenticationSettingsMfaPolicy? = nil, pushAuthRequired: Bool? = nil, pushAppName: String? = nil, socialLoginEnabled: Bool? = nil, socialProviders: [String]? = nil, socialConfigs: [String: [String: AnyCodable]]? = nil, passwordMinLength: Int? = nil, passwordRequireSpecial: Bool? = nil, passwordPolicy: AuthenticationSettingsPasswordPolicy? = nil, passwordRotationPolicy: AuthenticationSettingsPasswordRotationPolicy? = nil, noMfaAction: String? = nil, sessionTimeout: Int? = nil, encryptClientSecrets: Bool? = nil, dynamicClientRegistrationEnabled: Bool? = nil, cimdEnabled: Bool? = true, cimdAllowedDomains: [String]? = nil, cimdLocalhostRedirectPolicy: CimdLocalhostRedirectPolicy? = nil, xaaIdpEnabled: Bool? = nil, xaaResourceEnabled: Bool? = nil, progressiveProfiling: AuthenticationSettingsProgressiveProfiling? = nil) {
+    public init(passkeyEnabled: Bool? = nil, passkeys: AuthenticationSettingsPasskeys? = nil, mfaRequired: Bool? = nil, mfaMethods: [String]? = nil, mfaSmsEnabled: Bool? = nil, mfaPolicy: AuthenticationSettingsMfaPolicy? = nil, pushAuthRequired: Bool? = nil, pushAppName: String? = nil, socialLoginEnabled: Bool? = nil, socialProviders: [String]? = nil, socialConfigs: [String: [String: AnyCodable]]? = nil, passwordMinLength: Int? = nil, passwordRequireSpecial: Bool? = nil, passwordPolicy: AuthenticationSettingsPasswordPolicy? = nil, passwordRotationPolicy: AuthenticationSettingsPasswordRotationPolicy? = nil, noMfaAction: NoMfaAction? = nil, sessionTimeout: Int? = nil, dynamicClientRegistrationEnabled: Bool? = nil, cimdEnabled: Bool? = true, cimdAllowedDomains: [String]? = nil, cimdLocalhostRedirectPolicy: CimdLocalhostRedirectPolicy? = nil, xaaIdpEnabled: Bool? = nil, xaaResourceEnabled: Bool? = nil, progressiveProfiling: AuthenticationSettingsProgressiveProfiling? = nil) {
         self.passkeyEnabled = passkeyEnabled
-        self.biometricEnabled = biometricEnabled
         self.passkeys = passkeys
         self.mfaRequired = mfaRequired
         self.mfaMethods = mfaMethods
@@ -68,7 +73,6 @@ public struct AuthenticationSettings: Codable, JSONEncodable, Hashable {
         self.passwordRotationPolicy = passwordRotationPolicy
         self.noMfaAction = noMfaAction
         self.sessionTimeout = sessionTimeout
-        self.encryptClientSecrets = encryptClientSecrets
         self.dynamicClientRegistrationEnabled = dynamicClientRegistrationEnabled
         self.cimdEnabled = cimdEnabled
         self.cimdAllowedDomains = cimdAllowedDomains
@@ -80,7 +84,6 @@ public struct AuthenticationSettings: Codable, JSONEncodable, Hashable {
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case passkeyEnabled = "passkey_enabled"
-        case biometricEnabled = "biometric_enabled"
         case passkeys
         case mfaRequired = "mfa_required"
         case mfaMethods = "mfa_methods"
@@ -97,7 +100,6 @@ public struct AuthenticationSettings: Codable, JSONEncodable, Hashable {
         case passwordRotationPolicy = "password_rotation_policy"
         case noMfaAction = "no_mfa_action"
         case sessionTimeout = "session_timeout"
-        case encryptClientSecrets = "encrypt_client_secrets"
         case dynamicClientRegistrationEnabled = "dynamic_client_registration_enabled"
         case cimdEnabled = "cimd_enabled"
         case cimdAllowedDomains = "cimd_allowed_domains"
@@ -127,7 +129,6 @@ public struct AuthenticationSettings: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(passkeyEnabled, forKey: .passkeyEnabled)
-        try container.encodeIfPresent(biometricEnabled, forKey: .biometricEnabled)
         try container.encodeIfPresent(passkeys, forKey: .passkeys)
         try container.encodeIfPresent(mfaRequired, forKey: .mfaRequired)
         try container.encodeIfPresent(mfaMethods, forKey: .mfaMethods)
@@ -144,7 +145,6 @@ public struct AuthenticationSettings: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(passwordRotationPolicy, forKey: .passwordRotationPolicy)
         try container.encodeIfPresent(noMfaAction, forKey: .noMfaAction)
         try container.encodeIfPresent(sessionTimeout, forKey: .sessionTimeout)
-        try container.encodeIfPresent(encryptClientSecrets, forKey: .encryptClientSecrets)
         try container.encodeIfPresent(dynamicClientRegistrationEnabled, forKey: .dynamicClientRegistrationEnabled)
         try container.encodeIfPresent(cimdEnabled, forKey: .cimdEnabled)
         try container.encodeIfPresent(cimdAllowedDomains, forKey: .cimdAllowedDomains)
@@ -162,7 +162,6 @@ public struct AuthenticationSettings: Codable, JSONEncodable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         passkeyEnabled = try container.decodeIfPresent(Bool.self, forKey: .passkeyEnabled)
-        biometricEnabled = try container.decodeIfPresent(Bool.self, forKey: .biometricEnabled)
         passkeys = try container.decodeIfPresent(AuthenticationSettingsPasskeys.self, forKey: .passkeys)
         mfaRequired = try container.decodeIfPresent(Bool.self, forKey: .mfaRequired)
         mfaMethods = try container.decodeIfPresent([String].self, forKey: .mfaMethods)
@@ -177,9 +176,8 @@ public struct AuthenticationSettings: Codable, JSONEncodable, Hashable {
         passwordRequireSpecial = try container.decodeIfPresent(Bool.self, forKey: .passwordRequireSpecial)
         passwordPolicy = try container.decodeIfPresent(AuthenticationSettingsPasswordPolicy.self, forKey: .passwordPolicy)
         passwordRotationPolicy = try container.decodeIfPresent(AuthenticationSettingsPasswordRotationPolicy.self, forKey: .passwordRotationPolicy)
-        noMfaAction = try container.decodeIfPresent(String.self, forKey: .noMfaAction)
+        noMfaAction = try container.decodeIfPresent(NoMfaAction.self, forKey: .noMfaAction)
         sessionTimeout = try container.decodeIfPresent(Int.self, forKey: .sessionTimeout)
-        encryptClientSecrets = try container.decodeIfPresent(Bool.self, forKey: .encryptClientSecrets)
         dynamicClientRegistrationEnabled = try container.decodeIfPresent(Bool.self, forKey: .dynamicClientRegistrationEnabled)
         cimdEnabled = try container.decodeIfPresent(Bool.self, forKey: .cimdEnabled)
         cimdAllowedDomains = try container.decodeIfPresent([String].self, forKey: .cimdAllowedDomains)
@@ -189,7 +187,6 @@ public struct AuthenticationSettings: Codable, JSONEncodable, Hashable {
         progressiveProfiling = try container.decodeIfPresent(AuthenticationSettingsProgressiveProfiling.self, forKey: .progressiveProfiling)
         var nonAdditionalPropertyKeys = Set<String>()
         nonAdditionalPropertyKeys.insert("passkey_enabled")
-        nonAdditionalPropertyKeys.insert("biometric_enabled")
         nonAdditionalPropertyKeys.insert("passkeys")
         nonAdditionalPropertyKeys.insert("mfa_required")
         nonAdditionalPropertyKeys.insert("mfa_methods")
@@ -206,7 +203,6 @@ public struct AuthenticationSettings: Codable, JSONEncodable, Hashable {
         nonAdditionalPropertyKeys.insert("password_rotation_policy")
         nonAdditionalPropertyKeys.insert("no_mfa_action")
         nonAdditionalPropertyKeys.insert("session_timeout")
-        nonAdditionalPropertyKeys.insert("encrypt_client_secrets")
         nonAdditionalPropertyKeys.insert("dynamic_client_registration_enabled")
         nonAdditionalPropertyKeys.insert("cimd_enabled")
         nonAdditionalPropertyKeys.insert("cimd_allowed_domains")

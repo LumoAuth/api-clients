@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **redirect_uris** | **List[str]** | Detailed responses only | [optional] 
 **scopes** | **List[str]** | Detailed responses only | [optional] 
 **grant_types** | **List[str]** | Detailed responses only | [optional] 
+**ciba_enabled** | **bool** | Detailed responses only. Whether the client may use CIBA (backchannel authentication). | [optional] 
 
 ## Example
 

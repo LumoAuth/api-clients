@@ -20,11 +20,16 @@ var _ MappedNullable = &AdminAuditLogsRetentionResponseData{}
 
 // AdminAuditLogsRetentionResponseData struct for AdminAuditLogsRetentionResponseData
 type AdminAuditLogsRetentionResponseData struct {
-	// Effective retention, capped by the plan limit
+	// The organization's own period, between minRetentionDays and maxRetentionDays. It applies while data retention is on and autoDelete is not false.
 	RetentionDays *int32 `json:"retentionDays,omitempty"`
+	// false switches the organization's own period off; the plan's period still applies
 	AutoDelete *bool `json:"autoDelete,omitempty"`
-	// Plan cap; null when unlimited or billing enforcement is off
+	// The plan's period: older entries are not returned and are deleted. null when the plan has no limit.
 	PlanLimitDays NullableInt32 `json:"planLimitDays,omitempty"`
+	// How long entries are kept now; null when nothing is deleted
+	EffectiveRetentionDays NullableInt32 `json:"effectiveRetentionDays,omitempty"`
+	MinRetentionDays *int32 `json:"minRetentionDays,omitempty"`
+	MaxRetentionDays *int32 `json:"maxRetentionDays,omitempty"`
 }
 
 // NewAdminAuditLogsRetentionResponseData instantiates a new AdminAuditLogsRetentionResponseData object
@@ -150,6 +155,112 @@ func (o *AdminAuditLogsRetentionResponseData) UnsetPlanLimitDays() {
 	o.PlanLimitDays.Unset()
 }
 
+// GetEffectiveRetentionDays returns the EffectiveRetentionDays field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AdminAuditLogsRetentionResponseData) GetEffectiveRetentionDays() int32 {
+	if o == nil || IsNil(o.EffectiveRetentionDays.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.EffectiveRetentionDays.Get()
+}
+
+// GetEffectiveRetentionDaysOk returns a tuple with the EffectiveRetentionDays field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AdminAuditLogsRetentionResponseData) GetEffectiveRetentionDaysOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EffectiveRetentionDays.Get(), o.EffectiveRetentionDays.IsSet()
+}
+
+// HasEffectiveRetentionDays returns a boolean if a field has been set.
+func (o *AdminAuditLogsRetentionResponseData) HasEffectiveRetentionDays() bool {
+	if o != nil && o.EffectiveRetentionDays.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEffectiveRetentionDays gets a reference to the given NullableInt32 and assigns it to the EffectiveRetentionDays field.
+func (o *AdminAuditLogsRetentionResponseData) SetEffectiveRetentionDays(v int32) {
+	o.EffectiveRetentionDays.Set(&v)
+}
+// SetEffectiveRetentionDaysNil sets the value for EffectiveRetentionDays to be an explicit nil
+func (o *AdminAuditLogsRetentionResponseData) SetEffectiveRetentionDaysNil() {
+	o.EffectiveRetentionDays.Set(nil)
+}
+
+// UnsetEffectiveRetentionDays ensures that no value is present for EffectiveRetentionDays, not even an explicit nil
+func (o *AdminAuditLogsRetentionResponseData) UnsetEffectiveRetentionDays() {
+	o.EffectiveRetentionDays.Unset()
+}
+
+// GetMinRetentionDays returns the MinRetentionDays field value if set, zero value otherwise.
+func (o *AdminAuditLogsRetentionResponseData) GetMinRetentionDays() int32 {
+	if o == nil || IsNil(o.MinRetentionDays) {
+		var ret int32
+		return ret
+	}
+	return *o.MinRetentionDays
+}
+
+// GetMinRetentionDaysOk returns a tuple with the MinRetentionDays field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminAuditLogsRetentionResponseData) GetMinRetentionDaysOk() (*int32, bool) {
+	if o == nil || IsNil(o.MinRetentionDays) {
+		return nil, false
+	}
+	return o.MinRetentionDays, true
+}
+
+// HasMinRetentionDays returns a boolean if a field has been set.
+func (o *AdminAuditLogsRetentionResponseData) HasMinRetentionDays() bool {
+	if o != nil && !IsNil(o.MinRetentionDays) {
+		return true
+	}
+
+	return false
+}
+
+// SetMinRetentionDays gets a reference to the given int32 and assigns it to the MinRetentionDays field.
+func (o *AdminAuditLogsRetentionResponseData) SetMinRetentionDays(v int32) {
+	o.MinRetentionDays = &v
+}
+
+// GetMaxRetentionDays returns the MaxRetentionDays field value if set, zero value otherwise.
+func (o *AdminAuditLogsRetentionResponseData) GetMaxRetentionDays() int32 {
+	if o == nil || IsNil(o.MaxRetentionDays) {
+		var ret int32
+		return ret
+	}
+	return *o.MaxRetentionDays
+}
+
+// GetMaxRetentionDaysOk returns a tuple with the MaxRetentionDays field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminAuditLogsRetentionResponseData) GetMaxRetentionDaysOk() (*int32, bool) {
+	if o == nil || IsNil(o.MaxRetentionDays) {
+		return nil, false
+	}
+	return o.MaxRetentionDays, true
+}
+
+// HasMaxRetentionDays returns a boolean if a field has been set.
+func (o *AdminAuditLogsRetentionResponseData) HasMaxRetentionDays() bool {
+	if o != nil && !IsNil(o.MaxRetentionDays) {
+		return true
+	}
+
+	return false
+}
+
+// SetMaxRetentionDays gets a reference to the given int32 and assigns it to the MaxRetentionDays field.
+func (o *AdminAuditLogsRetentionResponseData) SetMaxRetentionDays(v int32) {
+	o.MaxRetentionDays = &v
+}
+
 func (o AdminAuditLogsRetentionResponseData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -168,6 +279,15 @@ func (o AdminAuditLogsRetentionResponseData) ToMap() (map[string]interface{}, er
 	}
 	if o.PlanLimitDays.IsSet() {
 		toSerialize["planLimitDays"] = o.PlanLimitDays.Get()
+	}
+	if o.EffectiveRetentionDays.IsSet() {
+		toSerialize["effectiveRetentionDays"] = o.EffectiveRetentionDays.Get()
+	}
+	if !IsNil(o.MinRetentionDays) {
+		toSerialize["minRetentionDays"] = o.MinRetentionDays
+	}
+	if !IsNil(o.MaxRetentionDays) {
+		toSerialize["maxRetentionDays"] = o.MaxRetentionDays
 	}
 	return toSerialize, nil
 }

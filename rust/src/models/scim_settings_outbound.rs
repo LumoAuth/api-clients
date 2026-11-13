@@ -34,9 +34,10 @@ pub struct ScimSettingsOutbound {
     pub oauth2_token_url: Option<Option<String>>,
     #[serde(rename = "oauth2_scope", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub oauth2_scope: Option<Option<String>>,
-    /// Optional PEM CA certificate used for TLS verification.
+    /// Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets.
     #[serde(rename = "tls_certificate", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub tls_certificate: Option<Option<String>>,
+    /// Always true. The endpoint certificate is always verified; false is rejected with 400.
     #[serde(rename = "verify_tls", skip_serializing_if = "Option::is_none")]
     pub verify_tls: Option<bool>,
     #[serde(rename = "push_user_creates", skip_serializing_if = "Option::is_none")]
@@ -53,9 +54,6 @@ pub struct ScimSettingsOutbound {
     pub batch_sync_enabled: Option<bool>,
     #[serde(rename = "batch_sync_interval", skip_serializing_if = "Option::is_none")]
     pub batch_sync_interval: Option<BatchSyncInterval>,
-    /// User field => SCIM attribute.
-    #[serde(rename = "attribute_mapping", skip_serializing_if = "Option::is_none")]
-    pub attribute_mapping: Option<std::collections::HashMap<String, String>>,
     #[serde(rename = "last_sync_at", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub last_sync_at: Option<Option<String>>,
     #[serde(rename = "last_sync_status", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
@@ -96,7 +94,6 @@ impl ScimSettingsOutbound {
             sync_on_login: None,
             batch_sync_enabled: None,
             batch_sync_interval: None,
-            attribute_mapping: None,
             last_sync_at: None,
             last_sync_status: None,
             last_sync_error: None,

@@ -113,6 +113,7 @@ class AgentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AskResponse",
             '400': None,
+            '403': None,
             '429': None,
         }
         response_data = self.api_client.call_api(
@@ -186,6 +187,7 @@ class AgentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AskResponse",
             '400': None,
+            '403': None,
             '429': None,
         }
         response_data = self.api_client.call_api(
@@ -259,6 +261,7 @@ class AgentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AskResponse",
             '400': None,
+            '403': None,
             '429': None,
         }
         response_data = self.api_client.call_api(
@@ -731,6 +734,7 @@ class AgentsApi:
             '403': None,
             '400': None,
             '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -805,6 +809,7 @@ class AgentsApi:
             '403': None,
             '400': None,
             '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -879,6 +884,7 @@ class AgentsApi:
             '403': None,
             '400': None,
             '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1333,6 +1339,7 @@ class AgentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SignedAgentCard",
             '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1405,6 +1412,7 @@ class AgentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SignedAgentCard",
             '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1477,6 +1485,7 @@ class AgentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SignedAgentCard",
             '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,

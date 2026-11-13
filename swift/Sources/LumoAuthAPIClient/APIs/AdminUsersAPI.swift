@@ -257,7 +257,7 @@ open class AdminUsersAPI {
     }
 
     /**
-     Link a SAML or LDAP identity to a user
+     Link a SAML, OpenID Connect or LDAP identity to a user
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
@@ -270,9 +270,9 @@ open class AdminUsersAPI {
     }
 
     /**
-     Link a SAML or LDAP identity to a user
+     Link a SAML, OpenID Connect or LDAP identity to a user
      - POST /orgs/{orgId}/api/v1/admin/users/{userId}/identities
-     - Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+     - Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`), enterprise OpenID Connect binding (`idp_id` + `subject`: the value of the connection's user identifier claim; a person can sign in through such a connection only after this link exists) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -323,7 +323,7 @@ open class AdminUsersAPI {
     /**
      List a user's federated identity links
      - GET /orgs/{orgId}/api/v1/admin/users/{userId}/identities
-     - SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+     - SAML (IdP + NameID), enterprise OpenID Connect (connection + subject), LDAP (directory + DN) and social provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP. An OpenID Connect link with `hashed: true` stores a long subject as a hash, so `subject` is null.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -363,12 +363,13 @@ open class AdminUsersAPI {
      */
     public enum ModelType_adminIdentitiesUnlink: String, CaseIterable {
         case saml = "saml"
+        case oidc = "oidc"
         case ldap = "ldap"
         case social = "social"
     }
 
     /**
-     Unlink a user's SAML, LDAP or social identity
+     Unlink a user's SAML, OpenID Connect, LDAP or social identity
      
      - parameter type: (path)  
      - parameter orgId: (path)  
@@ -381,9 +382,9 @@ open class AdminUsersAPI {
     }
 
     /**
-     Unlink a user's SAML, LDAP or social identity
+     Unlink a user's SAML, OpenID Connect, LDAP or social identity
      - DELETE /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type}
-     - Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+     - Removes the binding of the given type (`saml`, `oidc`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth

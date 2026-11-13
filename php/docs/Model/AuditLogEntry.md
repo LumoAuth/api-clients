@@ -26,7 +26,7 @@ Name | Type | Description | Notes
 **geoLocation** | **array<string,mixed>** | Detailed responses only | [optional]
 **sessionId** | **string** | Detailed responses only | [optional]
 **requestId** | **string** | Detailed responses only | [optional]
-**status** | **string** | Detailed responses only | [optional]
+**status** | **string** | Result of the event: success, failure, pending or partial | [optional]
 **statusReason** | **string** | Detailed responses only | [optional]
 **oldValue** | **array<string,mixed>** | Detailed responses only | [optional]
 **newValue** | **array<string,mixed>** | Detailed responses only | [optional]

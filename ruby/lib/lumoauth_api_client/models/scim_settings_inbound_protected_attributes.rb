@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module LumoAuthApiClient
-  # Attribute name => true when SCIM may not change it.
+  # Attribute name => true when SCIM may not change it. role_membership stops every /Groups request that would add or remove a member of a role.
   class ScimSettingsInboundProtectedAttributes
     attr_accessor :email
 
@@ -22,9 +22,7 @@ module LumoAuthApiClient
 
     attr_accessor :active
 
-    attr_accessor :roles
-
-    attr_accessor :permissions
+    attr_accessor :role_membership
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -32,8 +30,7 @@ module LumoAuthApiClient
         :'email' => :'email',
         :'name' => :'name',
         :'active' => :'active',
-        :'roles' => :'roles',
-        :'permissions' => :'permissions'
+        :'role_membership' => :'role_membership'
       }
     end
 
@@ -53,8 +50,7 @@ module LumoAuthApiClient
         :'email' => :'Boolean',
         :'name' => :'Boolean',
         :'active' => :'Boolean',
-        :'roles' => :'Boolean',
-        :'permissions' => :'Boolean'
+        :'role_membership' => :'Boolean'
       }
     end
 
@@ -92,12 +88,8 @@ module LumoAuthApiClient
         self.active = attributes[:'active']
       end
 
-      if attributes.key?(:'roles')
-        self.roles = attributes[:'roles']
-      end
-
-      if attributes.key?(:'permissions')
-        self.permissions = attributes[:'permissions']
+      if attributes.key?(:'role_membership')
+        self.role_membership = attributes[:'role_membership']
       end
     end
 
@@ -124,8 +116,7 @@ module LumoAuthApiClient
           email == o.email &&
           name == o.name &&
           active == o.active &&
-          roles == o.roles &&
-          permissions == o.permissions
+          role_membership == o.role_membership
     end
 
     # @see the `==` method
@@ -137,7 +128,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [email, name, active, roles, permissions].hash
+      [email, name, active, role_membership].hash
     end
 
     # Builds the object from hash

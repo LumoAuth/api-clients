@@ -13,6 +13,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**introspect**](OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662) |
 | [**par**](OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126) |
 | [**registerClient**](OAuthApi.md#registerClient) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR) |
+| [**requestMagicLink**](OAuthApi.md#requestMagicLink) | **POST** /orgs/{orgId}/api/v1/oauth/magic-link | Request a sign-in link by email |
 | [**revoke**](OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009) |
 | [**socialCallback**](OAuthApi.md#socialCallback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback |
 | [**socialCallbackPost**](OAuthApi.md#socialCallbackPost) | **POST** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback (form_post) |
@@ -575,7 +576,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Pushed authorization request created (RFC 9126 §2.2). |  -  |
-| **400** | invalid_request / invalid_target / invalid_request_object, or the tenant is unknown. |  -  |
+| **400** | invalid_request / invalid_target / invalid_request_object, or the organization is unknown. |  -  |
 | **401** | invalid_client — client authentication failed. |  -  |
 | **429** | too_many_requests — rate limit exceeded. |  -  |
 
@@ -655,6 +656,74 @@ public class Example {
 | **401** | access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). |  -  |
 | **403** | access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. |  -  |
 | **429** | too_many_requests — rate limit exceeded. |  -  |
+
+<a id="requestMagicLink"></a>
+# **requestMagicLink**
+> RequestMagicLinkResponse requestMagicLink(orgId, requestMagicLinkRequest)
+
+Request a sign-in link by email
+
+For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to &#x60;return_to&#x60;, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+
+### Example
+```java
+// Import classes:
+import io.lumoauth.client.ApiClient;
+import io.lumoauth.client.ApiException;
+import io.lumoauth.client.Configuration;
+import io.lumoauth.client.models.*;
+import io.lumoauth.client.api.OAuthApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://app.lumoauth.dev");
+
+    OAuthApi apiInstance = new OAuthApi(defaultClient);
+    String orgId = "orgId_example"; // String | 
+    RequestMagicLinkRequest requestMagicLinkRequest = new RequestMagicLinkRequest(); // RequestMagicLinkRequest | 
+    try {
+      RequestMagicLinkResponse result = apiInstance.requestMagicLink(orgId, requestMagicLinkRequest);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling OAuthApi#requestMagicLink");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | **String**|  | |
+| **requestMagicLinkRequest** | [**RequestMagicLinkRequest**](RequestMagicLinkRequest.md)|  | |
+
+### Return type
+
+[**RequestMagicLinkResponse**](RequestMagicLinkResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The request was accepted. The answer is the same whether or not the address belongs to an account. |  -  |
+| **400** | &#x60;{\&quot;error\&quot;: …, \&quot;message\&quot;: …}&#x60; with error &#x60;invalid_request&#x60;, &#x60;invalid_client&#x60;, &#x60;invalid_return_to&#x60;, &#x60;captcha_required&#x60; or &#x60;captcha_failed&#x60;. |  -  |
+| **403** | &#x60;{\&quot;error\&quot;:\&quot;origin_not_allowed\&quot;}&#x60;: the page that made the request is not one of the application&#39;s allowed origins. |  -  |
+| **404** | &#x60;{\&quot;error\&quot;:\&quot;not_found\&quot;}&#x60; for an unknown organization, &#x60;{\&quot;error\&quot;:\&quot;magic_link_disabled\&quot;}&#x60; when the organization does not offer sign-in links. |  -  |
+| **429** | &#x60;{\&quot;error\&quot;:\&quot;rate_limited\&quot;}&#x60;. |  -  |
 
 <a id="revoke"></a>
 # **revoke**
@@ -1109,7 +1178,7 @@ No authorization required
 | **200** | Signed in (status&#x3D;complete — continue to /oauth/authorize) or a second factor is required (status&#x3D;mfa_required with the challenge page URL). |  -  |
 | **400** | {\&quot;status\&quot;:\&quot;invalid_request\&quot;} or {\&quot;status\&quot;:\&quot;captcha_required\&quot;,\&quot;message\&quot;:…}. |  -  |
 | **401** | {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}. |  -  |
-| **403** | {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}. |  -  |
+| **403** | {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}; {\&quot;status\&quot;:\&quot;sso_required\&quot;,\&quot;redirect_url\&quot;:…} for an administrator of an organization that requires single sign-on for administrators. |  -  |
 | **404** | {\&quot;status\&quot;:\&quot;not_found\&quot;} — unknown or inactive organization. |  -  |
 | **429** | {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. |  -  |
 
@@ -1246,5 +1315,6 @@ public class Example {
 | **200** | Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. |  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  |
 | **400** | invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). |  -  |
 | **401** | invalid_client — client authentication failed. |  -  |
+| **403** | plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. |  -  |
 | **429** | too_many_requests — rate limit exceeded. |  -  |
 

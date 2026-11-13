@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GetApprovalStatusResponseApprovedBy {
     #[serde(rename = "user_id", skip_serializing_if = "Option::is_none")]
-    pub user_id: Option<i32>,
+    pub user_id: Option<uuid::Uuid>,
 }
 
 impl GetApprovalStatusResponseApprovedBy {

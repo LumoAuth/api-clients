@@ -9,9 +9,9 @@ Method | HTTP request | Description
 [**add_user_role**](AdminUsersApi.md#add_user_role) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Assign a role to a user
 [**admin_identities_legacy_saml_relink**](AdminUsersApi.md#admin_identities_legacy_saml_relink) | **POST** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Relink legacy SAML users to an IdP
 [**admin_identities_legacy_saml_report**](AdminUsersApi.md#admin_identities_legacy_saml_report) | **GET** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Legacy SAML bindings report
-[**admin_identities_link**](AdminUsersApi.md#admin_identities_link) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML or LDAP identity to a user
+[**admin_identities_link**](AdminUsersApi.md#admin_identities_link) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user
 [**admin_identities_list**](AdminUsersApi.md#admin_identities_list) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links
-[**admin_identities_unlink**](AdminUsersApi.md#admin_identities_unlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, LDAP or social identity
+[**admin_identities_unlink**](AdminUsersApi.md#admin_identities_unlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity
 [**block_user**](AdminUsersApi.md#block_user) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user
 [**create_user**](AdminUsersApi.md#create_user) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user
 [**delete_user**](AdminUsersApi.md#delete_user) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user
@@ -473,9 +473,9 @@ Name | Type | Description  | Notes
 # **admin_identities_link**
 > AdminAgentsGetResponse admin_identities_link(org_id, user_id, admin_identities_link_request)
 
-Link a SAML or LDAP identity to a user
+Link a SAML, OpenID Connect or LDAP identity to a user
 
-Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`), enterprise OpenID Connect binding (`idp_id` + `subject`: the value of the connection's user identifier claim; a person can sign in through such a connection only after this link exists) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
 
 ### Example
 
@@ -520,7 +520,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     admin_identities_link_request = lumoauth_api_client.AdminIdentitiesLinkRequest() # AdminIdentitiesLinkRequest | 
 
     try:
-        # Link a SAML or LDAP identity to a user
+        # Link a SAML, OpenID Connect or LDAP identity to a user
         api_response = api_instance.admin_identities_link(org_id, user_id, admin_identities_link_request)
         print("The response of AdminUsersApi->admin_identities_link:\n")
         pprint(api_response)
@@ -558,7 +558,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | Linked |  -  |
 **403** | Actor does not outrank the user, or step_up_required |  -  |
-**404** | User, IdP or directory not found |  -  |
+**404** | User, identity provider or directory not found |  -  |
 **409** | identity_conflict |  -  |
 **422** | invalid_identity / directory_lookup_failed |  -  |
 
@@ -569,7 +569,7 @@ Name | Type | Description  | Notes
 
 List a user's federated identity links
 
-SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+SAML (IdP + NameID), enterprise OpenID Connect (connection + subject), LDAP (directory + DN) and social provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP. An OpenID Connect link with `hashed: true` stores a long subject as a hash, so `subject` is null.
 
 ### Example
 
@@ -655,9 +655,9 @@ Name | Type | Description  | Notes
 # **admin_identities_unlink**
 > AdminAgentsGetResponse admin_identities_unlink(type, org_id, user_id)
 
-Unlink a user's SAML, LDAP or social identity
+Unlink a user's SAML, OpenID Connect, LDAP or social identity
 
-Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+Removes the binding of the given type (`saml`, `oidc`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
 
 ### Example
 
@@ -701,7 +701,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     user_id = 'user_id_example' # str | 
 
     try:
-        # Unlink a user's SAML, LDAP or social identity
+        # Unlink a user's SAML, OpenID Connect, LDAP or social identity
         api_response = api_instance.admin_identities_unlink(type, org_id, user_id)
         print("The response of AdminUsersApi->admin_identities_unlink:\n")
         pprint(api_response)

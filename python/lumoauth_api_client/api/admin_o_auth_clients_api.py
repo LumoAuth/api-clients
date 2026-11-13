@@ -3988,7 +3988,7 @@ class AdminOAuthClientsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> UpdateClientResponse:
-        """Replace an OAuth client
+        """Update an OAuth client (same as PATCH: only the fields that are sent change)
 
 
         :param org_id: (required)
@@ -4059,7 +4059,7 @@ class AdminOAuthClientsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[UpdateClientResponse]:
-        """Replace an OAuth client
+        """Update an OAuth client (same as PATCH: only the fields that are sent change)
 
 
         :param org_id: (required)
@@ -4130,7 +4130,7 @@ class AdminOAuthClientsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Replace an OAuth client
+        """Update an OAuth client (same as PATCH: only the fields that are sent change)
 
 
         :param org_id: (required)

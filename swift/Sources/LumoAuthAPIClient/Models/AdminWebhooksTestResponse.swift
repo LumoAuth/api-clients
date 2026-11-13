@@ -15,17 +15,21 @@ public struct AdminWebhooksTestResponse: Codable, JSONEncodable, Hashable {
     public var success: Bool?
     /** HTTP status returned by the receiver */
     public var statusCode: Int?
+    /** Id of the delivery row (the `X-LumoAuth-Delivery` header of the request) */
+    public var deliveryId: String?
     public var message: String?
 
-    public init(success: Bool? = nil, statusCode: Int? = nil, message: String? = nil) {
+    public init(success: Bool? = nil, statusCode: Int? = nil, deliveryId: String? = nil, message: String? = nil) {
         self.success = success
         self.statusCode = statusCode
+        self.deliveryId = deliveryId
         self.message = message
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case success
         case statusCode
+        case deliveryId
         case message
     }
 
@@ -35,6 +39,7 @@ public struct AdminWebhooksTestResponse: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(success, forKey: .success)
         try container.encodeIfPresent(statusCode, forKey: .statusCode)
+        try container.encodeIfPresent(deliveryId, forKey: .deliveryId)
         try container.encodeIfPresent(message, forKey: .message)
     }
 }

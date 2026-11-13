@@ -13,7 +13,6 @@ Name | Type | Description | Notes
 **allowUserDeletion** | **Bool** |  | [optional] 
 **allowGroupOperations** | **Bool** |  | [optional] 
 **protectedAttributes** | [**ScimSettingsInboundProtectedAttributes**](ScimSettingsInboundProtectedAttributes.md) |  | [optional] 
-**attributeMapping** | **[String: String]** | SCIM attribute &#x3D;&gt; user field. | [optional] 
 **autoActivateUsers** | **Bool** |  | [optional] 
 **deprovisioningAction** | **String** |  | [optional] 
 

@@ -28,7 +28,7 @@ using OpenAPIDateConverter = LumoAuth.ApiClient.Client.OpenAPIDateConverter;
 namespace LumoAuth.ApiClient.Model
 {
     /// <summary>
-    /// AuthenticationSettingsPasswordPolicy
+    /// The password rules that apply. A write is merged with the stored object. A named template sets its own rules; rules sent without a template make the policy custom.
     /// </summary>
     [DataContract(Name = "AuthenticationSettings_password_policy")]
     public partial class AuthenticationSettingsPasswordPolicy : IValidatableObject
@@ -78,13 +78,21 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="requireSpecial">requireSpecial.</param>
         /// <param name="requireNumbers">requireNumbers.</param>
         /// <param name="requireUppercase">requireUppercase.</param>
-        public AuthenticationSettingsPasswordPolicy(TemplateEnum? template = default, int minLength = default, bool requireSpecial = default, bool requireNumbers = default, bool requireUppercase = default)
+        /// <param name="requireLowercase">requireLowercase.</param>
+        /// <param name="rejectBreachedPasswords">rejectBreachedPasswords.</param>
+        /// <param name="breachedPasswordMinCount">breachedPasswordMinCount.</param>
+        /// <param name="checkBreachedOnLogin">checkBreachedOnLogin.</param>
+        public AuthenticationSettingsPasswordPolicy(TemplateEnum? template = default, int minLength = default, bool requireSpecial = default, bool requireNumbers = default, bool requireUppercase = default, bool requireLowercase = default, bool rejectBreachedPasswords = default, int breachedPasswordMinCount = default, bool checkBreachedOnLogin = default)
         {
             this.Template = template;
             this.MinLength = minLength;
             this.RequireSpecial = requireSpecial;
             this.RequireNumbers = requireNumbers;
             this.RequireUppercase = requireUppercase;
+            this.RequireLowercase = requireLowercase;
+            this.RejectBreachedPasswords = rejectBreachedPasswords;
+            this.BreachedPasswordMinCount = breachedPasswordMinCount;
+            this.CheckBreachedOnLogin = checkBreachedOnLogin;
         }
 
         /// <summary>
@@ -112,6 +120,30 @@ namespace LumoAuth.ApiClient.Model
         public bool RequireUppercase { get; set; }
 
         /// <summary>
+        /// Gets or Sets RequireLowercase
+        /// </summary>
+        [DataMember(Name = "require_lowercase", EmitDefaultValue = true)]
+        public bool RequireLowercase { get; set; }
+
+        /// <summary>
+        /// Gets or Sets RejectBreachedPasswords
+        /// </summary>
+        [DataMember(Name = "reject_breached_passwords", EmitDefaultValue = true)]
+        public bool RejectBreachedPasswords { get; set; }
+
+        /// <summary>
+        /// Gets or Sets BreachedPasswordMinCount
+        /// </summary>
+        [DataMember(Name = "breached_password_min_count", EmitDefaultValue = false)]
+        public int BreachedPasswordMinCount { get; set; }
+
+        /// <summary>
+        /// Gets or Sets CheckBreachedOnLogin
+        /// </summary>
+        [DataMember(Name = "check_breached_on_login", EmitDefaultValue = true)]
+        public bool CheckBreachedOnLogin { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -124,6 +156,10 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  RequireSpecial: ").Append(RequireSpecial).Append("\n");
             sb.Append("  RequireNumbers: ").Append(RequireNumbers).Append("\n");
             sb.Append("  RequireUppercase: ").Append(RequireUppercase).Append("\n");
+            sb.Append("  RequireLowercase: ").Append(RequireLowercase).Append("\n");
+            sb.Append("  RejectBreachedPasswords: ").Append(RejectBreachedPasswords).Append("\n");
+            sb.Append("  BreachedPasswordMinCount: ").Append(BreachedPasswordMinCount).Append("\n");
+            sb.Append("  CheckBreachedOnLogin: ").Append(CheckBreachedOnLogin).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -144,6 +180,24 @@ namespace LumoAuth.ApiClient.Model
         /// <returns>Validation Result</returns>
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // MinLength (int) maximum
+            if (this.MinLength > (int)128)
+            {
+                yield return new ValidationResult("Invalid value for MinLength, must be a value less than or equal to 128.", new [] { "MinLength" });
+            }
+
+            // MinLength (int) minimum
+            if (this.MinLength < (int)8)
+            {
+                yield return new ValidationResult("Invalid value for MinLength, must be a value greater than or equal to 8.", new [] { "MinLength" });
+            }
+
+            // BreachedPasswordMinCount (int) minimum
+            if (this.BreachedPasswordMinCount < (int)1)
+            {
+                yield return new ValidationResult("Invalid value for BreachedPasswordMinCount, must be a value greater than or equal to 1.", new [] { "BreachedPasswordMinCount" });
+            }
+
             yield break;
         }
     }

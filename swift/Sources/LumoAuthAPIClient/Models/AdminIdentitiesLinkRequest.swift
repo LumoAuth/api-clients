@@ -14,11 +14,14 @@ public struct AdminIdentitiesLinkRequest: Codable, JSONEncodable, Hashable {
 
     public enum ModelType: String, Codable, CaseIterable {
         case saml = "saml"
+        case oidc = "oidc"
         case ldap = "ldap"
     }
     public var type: ModelType
-    /** SAML IdP config id (type=saml) */
+    /** SAML IdP config id (type=saml) or OpenID Connect connection id (type=oidc) */
     public var idpId: Int?
+    /** Subject the OpenID Connect provider issues for this user (type=oidc) */
+    public var subject: String?
     /** NameID the IdP asserts for this user (type=saml) */
     public var nameId: String?
     /** LDAP directory id (type=ldap) */
@@ -28,9 +31,10 @@ public struct AdminIdentitiesLinkRequest: Codable, JSONEncodable, Hashable {
     /** Also disable the local password (type=ldap) */
     public var ldapOnly: Bool? = false
 
-    public init(type: ModelType, idpId: Int? = nil, nameId: String? = nil, ldapConfigId: Int? = nil, dn: String? = nil, ldapOnly: Bool? = false) {
+    public init(type: ModelType, idpId: Int? = nil, subject: String? = nil, nameId: String? = nil, ldapConfigId: Int? = nil, dn: String? = nil, ldapOnly: Bool? = false) {
         self.type = type
         self.idpId = idpId
+        self.subject = subject
         self.nameId = nameId
         self.ldapConfigId = ldapConfigId
         self.dn = dn
@@ -40,6 +44,7 @@ public struct AdminIdentitiesLinkRequest: Codable, JSONEncodable, Hashable {
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case type
         case idpId = "idp_id"
+        case subject
         case nameId = "name_id"
         case ldapConfigId = "ldap_config_id"
         case dn
@@ -52,6 +57,7 @@ public struct AdminIdentitiesLinkRequest: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type, forKey: .type)
         try container.encodeIfPresent(idpId, forKey: .idpId)
+        try container.encodeIfPresent(subject, forKey: .subject)
         try container.encodeIfPresent(nameId, forKey: .nameId)
         try container.encodeIfPresent(ldapConfigId, forKey: .ldapConfigId)
         try container.encodeIfPresent(dn, forKey: .dn)

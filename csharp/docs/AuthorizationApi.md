@@ -1601,7 +1601,7 @@ This endpoint does not need any parameter.
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Permissions from the user&#39;s roles (including group-inherited roles). &#x60;permissions&#x60; and &#x60;data&#x60; are identical. |  -  |
+| **200** | Permissions from the user&#39;s roles (including group-inherited roles) and permissions granted to the user directly. &#x60;permissions&#x60; and &#x60;data&#x60; are identical. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

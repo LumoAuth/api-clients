@@ -2,6 +2,7 @@
 
 # AuthenticationSettingsPasswordRotationPolicy
 
+A write is merged with the stored object.
 
 ## Properties
 
@@ -9,8 +10,6 @@
 |------------ | ------------- | ------------- | -------------|
 |**enabled** | **Boolean** |  |  [optional] |
 |**maxAgeDays** | **Integer** |  |  [optional] |
-|**notifyBeforeDays** | **Integer** |  |  [optional] |
-|**historyCount** | **Integer** |  |  [optional] |
 
 
 

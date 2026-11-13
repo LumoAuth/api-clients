@@ -15,7 +15,8 @@ Name | Type | Description | Notes
 **redirectUris** | **string[]** | Detailed responses only | [optional]
 **scopes** | **string[]** | Detailed responses only | [optional]
 **grantTypes** | **string[]** | Detailed responses only | [optional]
-**secret** | **string** | Plaintext client secret — returned only once, never retrievable again | [optional]
+**cibaEnabled** | **bool** | Detailed responses only. Whether the client may use CIBA (backchannel authentication). | [optional]
+**secret** | **string** | Plaintext client secret — returned only once, never retrievable again. Absent for a public client | [optional]
 **note** | **string** |  | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

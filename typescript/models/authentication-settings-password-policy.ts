@@ -15,7 +15,7 @@
 
 
 /**
- * 
+ * The password rules that apply. A write is merged with the stored object. A named template sets its own rules; rules sent without a template make the policy custom.
  * @export
  * @interface AuthenticationSettingsPasswordPolicy
  */
@@ -50,6 +50,30 @@ export interface AuthenticationSettingsPasswordPolicy {
      * @memberof AuthenticationSettingsPasswordPolicy
      */
     'require_uppercase'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AuthenticationSettingsPasswordPolicy
+     */
+    'require_lowercase'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AuthenticationSettingsPasswordPolicy
+     */
+    'reject_breached_passwords'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof AuthenticationSettingsPasswordPolicy
+     */
+    'breached_password_min_count'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AuthenticationSettingsPasswordPolicy
+     */
+    'check_breached_on_login'?: boolean;
 }
 
 /**

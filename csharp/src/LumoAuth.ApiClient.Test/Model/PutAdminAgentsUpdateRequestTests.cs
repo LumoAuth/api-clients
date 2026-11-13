@@ -81,5 +81,14 @@ namespace LumoAuth.ApiClient.Test.Model
         {
             // TODO unit test for the property 'Capabilities'
         }
+
+        /// <summary>
+        /// Test the property 'BudgetPolicy'
+        /// </summary>
+        [Fact]
+        public void BudgetPolicyTest()
+        {
+            // TODO unit test for the property 'BudgetPolicy'
+        }
     }
 }

@@ -67,7 +67,7 @@ module LumoAuthApiClient
     # Detailed responses only
     attr_accessor :request_id
 
-    # Detailed responses only
+    # Result of the event: success, failure, pending or partial
     attr_accessor :status
 
     # Detailed responses only

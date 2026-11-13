@@ -33,8 +33,9 @@ public struct ScimSettingsOutbound: Codable, JSONEncodable, Hashable {
     public var oauth2ClientSecret: RedactedSecret?
     public var oauth2TokenUrl: String?
     public var oauth2Scope: String?
-    /** Optional PEM CA certificate used for TLS verification. */
+    /** Optional PEM CA certificate used for TLS verification. Send null or an empty string to remove it. Changing it requires re-entering the stored secrets. */
     public var tlsCertificate: String?
+    /** Always true. The endpoint certificate is always verified; false is rejected with 400. */
     public var verifyTls: Bool?
     public var pushUserCreates: Bool?
     public var pushUserUpdates: Bool?
@@ -43,8 +44,6 @@ public struct ScimSettingsOutbound: Codable, JSONEncodable, Hashable {
     public var syncOnLogin: Bool?
     public var batchSyncEnabled: Bool?
     public var batchSyncInterval: BatchSyncInterval?
-    /** User field => SCIM attribute. */
-    public var attributeMapping: [String: String]?
     public var lastSyncAt: String?
     public var lastSyncStatus: String?
     public var lastSyncError: String?
@@ -54,7 +53,7 @@ public struct ScimSettingsOutbound: Codable, JSONEncodable, Hashable {
     /** Free-form counters of the last batch reconcile. */
     public var lastBatchSyncCounts: [String: AnyCodable]?
 
-    public init(enabled: Bool? = nil, endpointUrl: String? = nil, bearerToken: RedactedSecret? = nil, authType: AuthType? = nil, basicUsername: String? = nil, basicPassword: RedactedSecret? = nil, oauth2ClientId: String? = nil, oauth2ClientSecret: RedactedSecret? = nil, oauth2TokenUrl: String? = nil, oauth2Scope: String? = nil, tlsCertificate: String? = nil, verifyTls: Bool? = nil, pushUserCreates: Bool? = nil, pushUserUpdates: Bool? = nil, pushUserDeletes: Bool? = nil, pushGroupChanges: Bool? = nil, syncOnLogin: Bool? = nil, batchSyncEnabled: Bool? = nil, batchSyncInterval: BatchSyncInterval? = nil, attributeMapping: [String: String]? = nil, lastSyncAt: String? = nil, lastSyncStatus: String? = nil, lastSyncError: String? = nil, lastBatchSyncAt: String? = nil, lastBatchSyncStatus: String? = nil, lastBatchSyncError: String? = nil, lastBatchSyncCounts: [String: AnyCodable]? = nil) {
+    public init(enabled: Bool? = nil, endpointUrl: String? = nil, bearerToken: RedactedSecret? = nil, authType: AuthType? = nil, basicUsername: String? = nil, basicPassword: RedactedSecret? = nil, oauth2ClientId: String? = nil, oauth2ClientSecret: RedactedSecret? = nil, oauth2TokenUrl: String? = nil, oauth2Scope: String? = nil, tlsCertificate: String? = nil, verifyTls: Bool? = nil, pushUserCreates: Bool? = nil, pushUserUpdates: Bool? = nil, pushUserDeletes: Bool? = nil, pushGroupChanges: Bool? = nil, syncOnLogin: Bool? = nil, batchSyncEnabled: Bool? = nil, batchSyncInterval: BatchSyncInterval? = nil, lastSyncAt: String? = nil, lastSyncStatus: String? = nil, lastSyncError: String? = nil, lastBatchSyncAt: String? = nil, lastBatchSyncStatus: String? = nil, lastBatchSyncError: String? = nil, lastBatchSyncCounts: [String: AnyCodable]? = nil) {
         self.enabled = enabled
         self.endpointUrl = endpointUrl
         self.bearerToken = bearerToken
@@ -74,7 +73,6 @@ public struct ScimSettingsOutbound: Codable, JSONEncodable, Hashable {
         self.syncOnLogin = syncOnLogin
         self.batchSyncEnabled = batchSyncEnabled
         self.batchSyncInterval = batchSyncInterval
-        self.attributeMapping = attributeMapping
         self.lastSyncAt = lastSyncAt
         self.lastSyncStatus = lastSyncStatus
         self.lastSyncError = lastSyncError
@@ -104,7 +102,6 @@ public struct ScimSettingsOutbound: Codable, JSONEncodable, Hashable {
         case syncOnLogin = "sync_on_login"
         case batchSyncEnabled = "batch_sync_enabled"
         case batchSyncInterval = "batch_sync_interval"
-        case attributeMapping = "attribute_mapping"
         case lastSyncAt = "last_sync_at"
         case lastSyncStatus = "last_sync_status"
         case lastSyncError = "last_sync_error"
@@ -137,7 +134,6 @@ public struct ScimSettingsOutbound: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(syncOnLogin, forKey: .syncOnLogin)
         try container.encodeIfPresent(batchSyncEnabled, forKey: .batchSyncEnabled)
         try container.encodeIfPresent(batchSyncInterval, forKey: .batchSyncInterval)
-        try container.encodeIfPresent(attributeMapping, forKey: .attributeMapping)
         try container.encodeIfPresent(lastSyncAt, forKey: .lastSyncAt)
         try container.encodeIfPresent(lastSyncStatus, forKey: .lastSyncStatus)
         try container.encodeIfPresent(lastSyncError, forKey: .lastSyncError)

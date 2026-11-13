@@ -23,8 +23,10 @@ var _ MappedNullable = &AdminIdentitiesLinkRequest{}
 // AdminIdentitiesLinkRequest struct for AdminIdentitiesLinkRequest
 type AdminIdentitiesLinkRequest struct {
 	Type string `json:"type"`
-	// SAML IdP config id (type=saml)
+	// SAML IdP config id (type=saml) or OpenID Connect connection id (type=oidc)
 	IdpId *int32 `json:"idp_id,omitempty"`
+	// Subject the OpenID Connect provider issues for this user (type=oidc)
+	Subject *string `json:"subject,omitempty"`
 	// NameID the IdP asserts for this user (type=saml)
 	NameId *string `json:"name_id,omitempty"`
 	// LDAP directory id (type=ldap)
@@ -113,6 +115,38 @@ func (o *AdminIdentitiesLinkRequest) HasIdpId() bool {
 // SetIdpId gets a reference to the given int32 and assigns it to the IdpId field.
 func (o *AdminIdentitiesLinkRequest) SetIdpId(v int32) {
 	o.IdpId = &v
+}
+
+// GetSubject returns the Subject field value if set, zero value otherwise.
+func (o *AdminIdentitiesLinkRequest) GetSubject() string {
+	if o == nil || IsNil(o.Subject) {
+		var ret string
+		return ret
+	}
+	return *o.Subject
+}
+
+// GetSubjectOk returns a tuple with the Subject field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminIdentitiesLinkRequest) GetSubjectOk() (*string, bool) {
+	if o == nil || IsNil(o.Subject) {
+		return nil, false
+	}
+	return o.Subject, true
+}
+
+// HasSubject returns a boolean if a field has been set.
+func (o *AdminIdentitiesLinkRequest) HasSubject() bool {
+	if o != nil && !IsNil(o.Subject) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubject gets a reference to the given string and assigns it to the Subject field.
+func (o *AdminIdentitiesLinkRequest) SetSubject(v string) {
+	o.Subject = &v
 }
 
 // GetNameId returns the NameId field value if set, zero value otherwise.
@@ -256,6 +290,9 @@ func (o AdminIdentitiesLinkRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["type"] = o.Type
 	if !IsNil(o.IdpId) {
 		toSerialize["idp_id"] = o.IdpId
+	}
+	if !IsNil(o.Subject) {
+		toSerialize["subject"] = o.Subject
 	}
 	if !IsNil(o.NameId) {
 		toSerialize["name_id"] = o.NameId

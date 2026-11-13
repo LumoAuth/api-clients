@@ -38,7 +38,7 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         /// <param name="slug">slug.</param>
         /// <param name="description">description.</param>
-        /// <param name="source">role:&lt;role name&gt; that grants it.</param>
+        /// <param name="source">role:&lt;role name&gt; that grants it, or direct for a permission granted to the user directly.</param>
         public ListPermissionsResponsePermissionsItem(string slug = default, string description = default, string source = default)
         {
             this.Slug = slug;
@@ -62,9 +62,9 @@ namespace LumoAuth.ApiClient.Model
         public string Description { get; set; }
 
         /// <summary>
-        /// role:&lt;role name&gt; that grants it
+        /// role:&lt;role name&gt; that grants it, or direct for a permission granted to the user directly
         /// </summary>
-        /// <value>role:&lt;role name&gt; that grants it</value>
+        /// <value>role:&lt;role name&gt; that grants it, or direct for a permission granted to the user directly</value>
         /*
         <example>role:Editor</example>
         */

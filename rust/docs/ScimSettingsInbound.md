@@ -14,7 +14,6 @@ Name | Type | Description | Notes
 **allow_user_deletion** | Option<**bool**> |  | [optional]
 **allow_group_operations** | Option<**bool**> |  | [optional]
 **protected_attributes** | Option<[**models::ScimSettingsInboundProtectedAttributes**](ScimSettings_inbound_protected_attributes.md)> |  | [optional]
-**attribute_mapping** | Option<**std::collections::HashMap<String, String>**> | SCIM attribute => user field. | [optional]
 **auto_activate_users** | Option<**bool**> |  | [optional]
 **deprovisioning_action** | Option<**String**> |  | [optional]
 

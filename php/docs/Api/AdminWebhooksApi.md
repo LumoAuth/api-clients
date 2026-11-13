@@ -31,7 +31,7 @@ adminWebhooksCreate($orgId): \LumoAuth\ApiClient\Model\AdminWebhooksCreateRespon
 
 Create a webhook
 
-The signing secret is generated server-side and returned once in this response only.
+Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
 
 ### Example
 
@@ -228,7 +228,7 @@ adminWebhooksDeliveryReplay($orgId, $webhookId, $deliveryId): \LumoAuth\ApiClien
 
 Replay a delivery
 
-Resets the delivery's failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+Queues a new delivery with the same event and payload and returns its id. The original delivery is not changed. A disabled webhook sends nothing, so the call answers 409 until the webhook is enabled.
 
 ### Example
 
@@ -559,7 +559,7 @@ adminWebhooksRotateSecret($orgId, $webhookId): \LumoAuth\ApiClient\Model\AdminWe
 
 Rotate the signing secret
 
-Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+Generates a new HMAC secret and returns it once. For 24 hours every delivery also carries `X-LumoAuth-Signature-Previous`, signed with the secret that was replaced, so the receiver can be updated without losing events. The `kid` of `X-LumoAuth-Signature` changes with every rotation.
 
 ### Example
 
@@ -626,7 +626,7 @@ adminWebhooksTest($orgId, $webhookId): \LumoAuth\ApiClient\Model\AdminWebhooksTe
 
 Send a test delivery
 
-POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver's status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
+Sends one `webhook.test` event to the webhook URL now, with the same body, headers and signature as any event, and records it in the delivery history. A receiver answer outside 2xx still yields HTTP 200 with `success: false`; when no answer was received (connection or TLS error) the endpoint answers 502. A failed test is not retried.
 
 ### Example
 
@@ -1086,6 +1086,8 @@ putAdminWebhooksUpdate($orgId, $webhookId): \LumoAuth\ApiClient\Model\PutAdminWe
 ```
 
 Update a webhook
+
+Changes only the fields that are sent: `url`, `events`, `isActive` (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`. A new `url` for a webhook that has a signing secret needs `rotateSecret: true`; the response then carries the new `secret` once. Unknown fields, `secret` and event names that are not in the catalogue are refused with 400.
 
 ### Example
 

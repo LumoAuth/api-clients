@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { WebhookDelivery } from './webhook-delivery';
+import type { AdminWebhooksDeliveryReplayResponseData } from './admin-webhooks-delivery-replay-response-data';
 
 /**
  * 
@@ -25,10 +25,10 @@ import type { WebhookDelivery } from './webhook-delivery';
 export interface AdminWebhooksDeliveryReplayResponse {
     /**
      * 
-     * @type {WebhookDelivery}
+     * @type {AdminWebhooksDeliveryReplayResponseData}
      * @memberof AdminWebhooksDeliveryReplayResponse
      */
-    'data'?: WebhookDelivery;
+    'data'?: AdminWebhooksDeliveryReplayResponseData;
     /**
      * 
      * @type {string}

@@ -129,6 +129,14 @@ public class CreateClientResponseDataTest {
     }
 
     /**
+     * Test the property 'cibaEnabled'
+     */
+    @Test
+    public void cibaEnabledTest() {
+        // TODO: test cibaEnabled
+    }
+
+    /**
      * Test the property 'secret'
      */
     @Test

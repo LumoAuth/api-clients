@@ -26,7 +26,7 @@ Name | Type | Description | Notes
 **GeoLocation** | Pointer to **map[string]interface{}** | Detailed responses only | [optional] 
 **SessionId** | Pointer to **NullableString** | Detailed responses only | [optional] 
 **RequestId** | Pointer to **NullableString** | Detailed responses only | [optional] 
-**Status** | Pointer to **NullableString** | Detailed responses only | [optional] 
+**Status** | Pointer to **NullableString** | Result of the event: success, failure, pending or partial | [optional] 
 **StatusReason** | Pointer to **NullableString** | Detailed responses only | [optional] 
 **OldValue** | Pointer to **map[string]interface{}** | Detailed responses only | [optional] 
 **NewValue** | Pointer to **map[string]interface{}** | Detailed responses only | [optional] 

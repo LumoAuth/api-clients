@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 **type** | **String** |  | [optional] 
 **idpId** | **Int** |  | [optional] 
 **nameId** | **String** |  | [optional] 
+**subject** | **String** |  | [optional] 
 **legacy** | **Bool** |  | [optional] 
 **ldapConfigId** | **Int** |  | [optional] 
 **dn** | **String** |  | [optional] 

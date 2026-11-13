@@ -393,6 +393,47 @@ open class OAuthAPI {
     }
 
     /**
+     Request a sign-in link by email
+     
+     - parameter orgId: (path)  
+     - parameter requestMagicLinkRequest: (body)  
+     - returns: RequestMagicLinkResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func requestMagicLink(orgId: String, requestMagicLinkRequest: RequestMagicLinkRequest) async throws -> RequestMagicLinkResponse {
+        return try await requestMagicLinkWithRequestBuilder(orgId: orgId, requestMagicLinkRequest: requestMagicLinkRequest).execute().body
+    }
+
+    /**
+     Request a sign-in link by email
+     - POST /orgs/{orgId}/api/v1/oauth/magic-link
+     - For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to `return_to`, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by `client_id`.
+     - parameter orgId: (path)  
+     - parameter requestMagicLinkRequest: (body)  
+     - returns: RequestBuilder<RequestMagicLinkResponse> 
+     */
+    open class func requestMagicLinkWithRequestBuilder(orgId: String, requestMagicLinkRequest: RequestMagicLinkRequest) -> RequestBuilder<RequestMagicLinkResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/oauth/magic-link"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: requestMagicLinkRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<RequestMagicLinkResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
      Token revocation (RFC 7009)
      
      - parameter orgId: (path)  

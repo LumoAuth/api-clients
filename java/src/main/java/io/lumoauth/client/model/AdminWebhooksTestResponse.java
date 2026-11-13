@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminWebhooksTestResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-07T05:36:43.246317554Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T14:48:44.873539119Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminWebhooksTestResponse {
   public static final String SERIALIZED_NAME_SUCCESS = "success";
   @SerializedName(SERIALIZED_NAME_SUCCESS)
@@ -59,6 +59,11 @@ public class AdminWebhooksTestResponse {
   @SerializedName(SERIALIZED_NAME_STATUS_CODE)
   @javax.annotation.Nullable
   private Integer statusCode;
+
+  public static final String SERIALIZED_NAME_DELIVERY_ID = "deliveryId";
+  @SerializedName(SERIALIZED_NAME_DELIVERY_ID)
+  @javax.annotation.Nullable
+  private String deliveryId;
 
   public static final String SERIALIZED_NAME_MESSAGE = "message";
   @SerializedName(SERIALIZED_NAME_MESSAGE)
@@ -106,6 +111,25 @@ public class AdminWebhooksTestResponse {
   }
 
 
+  public AdminWebhooksTestResponse deliveryId(@javax.annotation.Nullable String deliveryId) {
+    this.deliveryId = deliveryId;
+    return this;
+  }
+
+  /**
+   * Id of the delivery row (the &#x60;X-LumoAuth-Delivery&#x60; header of the request)
+   * @return deliveryId
+   */
+  @javax.annotation.Nullable
+  public String getDeliveryId() {
+    return deliveryId;
+  }
+
+  public void setDeliveryId(@javax.annotation.Nullable String deliveryId) {
+    this.deliveryId = deliveryId;
+  }
+
+
   public AdminWebhooksTestResponse message(@javax.annotation.Nullable String message) {
     this.message = message;
     return this;
@@ -137,12 +161,13 @@ public class AdminWebhooksTestResponse {
     AdminWebhooksTestResponse adminWebhooksTestResponse = (AdminWebhooksTestResponse) o;
     return Objects.equals(this.success, adminWebhooksTestResponse.success) &&
         Objects.equals(this.statusCode, adminWebhooksTestResponse.statusCode) &&
+        Objects.equals(this.deliveryId, adminWebhooksTestResponse.deliveryId) &&
         Objects.equals(this.message, adminWebhooksTestResponse.message);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(success, statusCode, message);
+    return Objects.hash(success, statusCode, deliveryId, message);
   }
 
   @Override
@@ -151,6 +176,7 @@ public class AdminWebhooksTestResponse {
     sb.append("class AdminWebhooksTestResponse {\n");
     sb.append("    success: ").append(toIndentedString(success)).append("\n");
     sb.append("    statusCode: ").append(toIndentedString(statusCode)).append("\n");
+    sb.append("    deliveryId: ").append(toIndentedString(deliveryId)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -173,7 +199,7 @@ public class AdminWebhooksTestResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("success", "statusCode", "message"));
+    openapiFields = new HashSet<String>(Arrays.asList("success", "statusCode", "deliveryId", "message"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -200,6 +226,9 @@ public class AdminWebhooksTestResponse {
         }
       }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
+      if ((jsonObj.get("deliveryId") != null && !jsonObj.get("deliveryId").isJsonNull()) && !jsonObj.get("deliveryId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `deliveryId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("deliveryId").toString()));
+      }
       if ((jsonObj.get("message") != null && !jsonObj.get("message").isJsonNull()) && !jsonObj.get("message").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `message` to be a primitive type in the JSON string but got `%s`", jsonObj.get("message").toString()));
       }
