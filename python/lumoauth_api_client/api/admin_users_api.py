@@ -17,8 +17,9 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictInt, StrictStr, field_validator
+from pydantic import Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Optional
+from typing_extensions import Annotated
 from lumoauth_api_client.models.add_user_group_response import AddUserGroupResponse
 from lumoauth_api_client.models.add_user_permission_response import AddUserPermissionResponse
 from lumoauth_api_client.models.add_user_role_response import AddUserRoleResponse
@@ -30,6 +31,7 @@ from lumoauth_api_client.models.admin_identities_legacy_saml_report_response imp
 from lumoauth_api_client.models.admin_identities_link_request import AdminIdentitiesLinkRequest
 from lumoauth_api_client.models.admin_identities_list_response import AdminIdentitiesListResponse
 from lumoauth_api_client.models.admin_roles_get_permissions_response import AdminRolesGetPermissionsResponse
+from lumoauth_api_client.models.admin_users_restore_response import AdminUsersRestoreResponse
 from lumoauth_api_client.models.block_user_response import BlockUserResponse
 from lumoauth_api_client.models.create_user_response import CreateUserResponse
 from lumoauth_api_client.models.delete_user_response import DeleteUserResponse
@@ -359,6 +361,7 @@ class AdminUsersApi:
     ) -> AddUserPermissionResponse:
         """Assign a permission to a user
 
+        Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. A user or permission outside this organization is 404.
 
         :param org_id: (required)
         :type org_id: str
@@ -429,6 +432,7 @@ class AdminUsersApi:
     ) -> ApiResponse[AddUserPermissionResponse]:
         """Assign a permission to a user
 
+        Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. A user or permission outside this organization is 404.
 
         :param org_id: (required)
         :type org_id: str
@@ -499,6 +503,7 @@ class AdminUsersApi:
     ) -> RESTResponseType:
         """Assign a permission to a user
 
+        Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. A user or permission outside this organization is 404.
 
         :param org_id: (required)
         :type org_id: str
@@ -907,7 +912,7 @@ class AdminUsersApi:
     ) -> AdminIdentitiesLegacySamlRelinkResponse:
         """Relink legacy SAML users to an IdP
 
-        Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+        Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
 
         :param org_id: (required)
         :type org_id: str
@@ -981,7 +986,7 @@ class AdminUsersApi:
     ) -> ApiResponse[AdminIdentitiesLegacySamlRelinkResponse]:
         """Relink legacy SAML users to an IdP
 
-        Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+        Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
 
         :param org_id: (required)
         :type org_id: str
@@ -1055,7 +1060,7 @@ class AdminUsersApi:
     ) -> RESTResponseType:
         """Relink legacy SAML users to an IdP
 
-        Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+        Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
 
         :param org_id: (required)
         :type org_id: str
@@ -2351,6 +2356,292 @@ class AdminUsersApi:
         return self.api_client.param_serialize(
             method='DELETE',
             resource_path='/orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def admin_users_restore(
+        self,
+        org_id: StrictStr,
+        user_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AdminUsersRestoreResponse:
+        """Restore a deleted user
+
+        Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param user_id: (required)
+        :type user_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_users_restore_serialize(
+            org_id=org_id,
+            user_id=user_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUsersRestoreResponse",
+            '403': None,
+            '404': None,
+            '409': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def admin_users_restore_with_http_info(
+        self,
+        org_id: StrictStr,
+        user_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AdminUsersRestoreResponse]:
+        """Restore a deleted user
+
+        Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param user_id: (required)
+        :type user_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_users_restore_serialize(
+            org_id=org_id,
+            user_id=user_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUsersRestoreResponse",
+            '403': None,
+            '404': None,
+            '409': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def admin_users_restore_without_preload_content(
+        self,
+        org_id: StrictStr,
+        user_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Restore a deleted user
+
+        Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param user_id: (required)
+        :type user_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_users_restore_serialize(
+            org_id=org_id,
+            user_id=user_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUsersRestoreResponse",
+            '403': None,
+            '404': None,
+            '409': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _admin_users_restore_serialize(
+        self,
+        org_id,
+        user_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if org_id is not None:
+            _path_params['orgId'] = org_id
+        if user_id is not None:
+            _path_params['userId'] = user_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth', 
+            'BearerAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/orgs/{orgId}/api/v1/admin/users/{userId}/restore',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -4273,6 +4564,18 @@ class AdminUsersApi:
     def list_users(
         self,
         org_id: StrictStr,
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="Page number.")] = None,
+        limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Users per page (1 to 100).")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).")] = None,
+        active: Annotated[Optional[StrictBool], Field(description="Only active (`true`) or inactive (`false`) users.")] = None,
+        blocked: Annotated[Optional[StrictBool], Field(description="Only blocked (`true`) or not blocked (`false`) users.")] = None,
+        deleted: Annotated[Optional[StrictBool], Field(description="`true` lists only the users that SCIM deleted (soft-deleted). Without it, or with `false`, the list leaves them out.")] = None,
+        email_verified: Annotated[Optional[StrictBool], Field(description="Only users whose email address is verified (`true`) or not (`false`).")] = None,
+        mfa_enabled: Annotated[Optional[StrictBool], Field(description="Only users with (`true`) or without (`false`) multi-factor authentication.")] = None,
+        role: Annotated[Optional[StrictStr], Field(description="Only users who hold the role with this slug.")] = None,
+        group: Annotated[Optional[StrictStr], Field(description="Only members of the group with this slug.")] = None,
+        sort_by: Annotated[Optional[StrictStr], Field(description="Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.")] = None,
+        sort_dir: Annotated[Optional[StrictStr], Field(description="Sort direction. Used only together with sortBy.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4291,6 +4594,30 @@ class AdminUsersApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param page: Page number.
+        :type page: int
+        :param limit: Users per page (1 to 100).
+        :type limit: int
+        :param search: Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).
+        :type search: str
+        :param active: Only active (`true`) or inactive (`false`) users.
+        :type active: bool
+        :param blocked: Only blocked (`true`) or not blocked (`false`) users.
+        :type blocked: bool
+        :param deleted: `true` lists only the users that SCIM deleted (soft-deleted). Without it, or with `false`, the list leaves them out.
+        :type deleted: bool
+        :param email_verified: Only users whose email address is verified (`true`) or not (`false`).
+        :type email_verified: bool
+        :param mfa_enabled: Only users with (`true`) or without (`false`) multi-factor authentication.
+        :type mfa_enabled: bool
+        :param role: Only users who hold the role with this slug.
+        :type role: str
+        :param group: Only members of the group with this slug.
+        :type group: str
+        :param sort_by: Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.
+        :type sort_by: str
+        :param sort_dir: Sort direction. Used only together with sortBy.
+        :type sort_dir: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4315,6 +4642,18 @@ class AdminUsersApi:
 
         _param = self._list_users_serialize(
             org_id=org_id,
+            page=page,
+            limit=limit,
+            search=search,
+            active=active,
+            blocked=blocked,
+            deleted=deleted,
+            email_verified=email_verified,
+            mfa_enabled=mfa_enabled,
+            role=role,
+            group=group,
+            sort_by=sort_by,
+            sort_dir=sort_dir,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4339,6 +4678,18 @@ class AdminUsersApi:
     def list_users_with_http_info(
         self,
         org_id: StrictStr,
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="Page number.")] = None,
+        limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Users per page (1 to 100).")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).")] = None,
+        active: Annotated[Optional[StrictBool], Field(description="Only active (`true`) or inactive (`false`) users.")] = None,
+        blocked: Annotated[Optional[StrictBool], Field(description="Only blocked (`true`) or not blocked (`false`) users.")] = None,
+        deleted: Annotated[Optional[StrictBool], Field(description="`true` lists only the users that SCIM deleted (soft-deleted). Without it, or with `false`, the list leaves them out.")] = None,
+        email_verified: Annotated[Optional[StrictBool], Field(description="Only users whose email address is verified (`true`) or not (`false`).")] = None,
+        mfa_enabled: Annotated[Optional[StrictBool], Field(description="Only users with (`true`) or without (`false`) multi-factor authentication.")] = None,
+        role: Annotated[Optional[StrictStr], Field(description="Only users who hold the role with this slug.")] = None,
+        group: Annotated[Optional[StrictStr], Field(description="Only members of the group with this slug.")] = None,
+        sort_by: Annotated[Optional[StrictStr], Field(description="Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.")] = None,
+        sort_dir: Annotated[Optional[StrictStr], Field(description="Sort direction. Used only together with sortBy.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4357,6 +4708,30 @@ class AdminUsersApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param page: Page number.
+        :type page: int
+        :param limit: Users per page (1 to 100).
+        :type limit: int
+        :param search: Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).
+        :type search: str
+        :param active: Only active (`true`) or inactive (`false`) users.
+        :type active: bool
+        :param blocked: Only blocked (`true`) or not blocked (`false`) users.
+        :type blocked: bool
+        :param deleted: `true` lists only the users that SCIM deleted (soft-deleted). Without it, or with `false`, the list leaves them out.
+        :type deleted: bool
+        :param email_verified: Only users whose email address is verified (`true`) or not (`false`).
+        :type email_verified: bool
+        :param mfa_enabled: Only users with (`true`) or without (`false`) multi-factor authentication.
+        :type mfa_enabled: bool
+        :param role: Only users who hold the role with this slug.
+        :type role: str
+        :param group: Only members of the group with this slug.
+        :type group: str
+        :param sort_by: Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.
+        :type sort_by: str
+        :param sort_dir: Sort direction. Used only together with sortBy.
+        :type sort_dir: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4381,6 +4756,18 @@ class AdminUsersApi:
 
         _param = self._list_users_serialize(
             org_id=org_id,
+            page=page,
+            limit=limit,
+            search=search,
+            active=active,
+            blocked=blocked,
+            deleted=deleted,
+            email_verified=email_verified,
+            mfa_enabled=mfa_enabled,
+            role=role,
+            group=group,
+            sort_by=sort_by,
+            sort_dir=sort_dir,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4405,6 +4792,18 @@ class AdminUsersApi:
     def list_users_without_preload_content(
         self,
         org_id: StrictStr,
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="Page number.")] = None,
+        limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Users per page (1 to 100).")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).")] = None,
+        active: Annotated[Optional[StrictBool], Field(description="Only active (`true`) or inactive (`false`) users.")] = None,
+        blocked: Annotated[Optional[StrictBool], Field(description="Only blocked (`true`) or not blocked (`false`) users.")] = None,
+        deleted: Annotated[Optional[StrictBool], Field(description="`true` lists only the users that SCIM deleted (soft-deleted). Without it, or with `false`, the list leaves them out.")] = None,
+        email_verified: Annotated[Optional[StrictBool], Field(description="Only users whose email address is verified (`true`) or not (`false`).")] = None,
+        mfa_enabled: Annotated[Optional[StrictBool], Field(description="Only users with (`true`) or without (`false`) multi-factor authentication.")] = None,
+        role: Annotated[Optional[StrictStr], Field(description="Only users who hold the role with this slug.")] = None,
+        group: Annotated[Optional[StrictStr], Field(description="Only members of the group with this slug.")] = None,
+        sort_by: Annotated[Optional[StrictStr], Field(description="Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.")] = None,
+        sort_dir: Annotated[Optional[StrictStr], Field(description="Sort direction. Used only together with sortBy.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4423,6 +4822,30 @@ class AdminUsersApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param page: Page number.
+        :type page: int
+        :param limit: Users per page (1 to 100).
+        :type limit: int
+        :param search: Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).
+        :type search: str
+        :param active: Only active (`true`) or inactive (`false`) users.
+        :type active: bool
+        :param blocked: Only blocked (`true`) or not blocked (`false`) users.
+        :type blocked: bool
+        :param deleted: `true` lists only the users that SCIM deleted (soft-deleted). Without it, or with `false`, the list leaves them out.
+        :type deleted: bool
+        :param email_verified: Only users whose email address is verified (`true`) or not (`false`).
+        :type email_verified: bool
+        :param mfa_enabled: Only users with (`true`) or without (`false`) multi-factor authentication.
+        :type mfa_enabled: bool
+        :param role: Only users who hold the role with this slug.
+        :type role: str
+        :param group: Only members of the group with this slug.
+        :type group: str
+        :param sort_by: Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.
+        :type sort_by: str
+        :param sort_dir: Sort direction. Used only together with sortBy.
+        :type sort_dir: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4447,6 +4870,18 @@ class AdminUsersApi:
 
         _param = self._list_users_serialize(
             org_id=org_id,
+            page=page,
+            limit=limit,
+            search=search,
+            active=active,
+            blocked=blocked,
+            deleted=deleted,
+            email_verified=email_verified,
+            mfa_enabled=mfa_enabled,
+            role=role,
+            group=group,
+            sort_by=sort_by,
+            sort_dir=sort_dir,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4466,6 +4901,18 @@ class AdminUsersApi:
     def _list_users_serialize(
         self,
         org_id,
+        page,
+        limit,
+        search,
+        active,
+        blocked,
+        deleted,
+        email_verified,
+        mfa_enabled,
+        role,
+        group,
+        sort_by,
+        sort_dir,
         _request_auth,
         _content_type,
         _headers,
@@ -4490,6 +4937,54 @@ class AdminUsersApi:
         if org_id is not None:
             _path_params['orgId'] = org_id
         # process the query parameters
+        if page is not None:
+            
+            _query_params.append(('page', page))
+            
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
+        if search is not None:
+            
+            _query_params.append(('search', search))
+            
+        if active is not None:
+            
+            _query_params.append(('active', active))
+            
+        if blocked is not None:
+            
+            _query_params.append(('blocked', blocked))
+            
+        if deleted is not None:
+            
+            _query_params.append(('deleted', deleted))
+            
+        if email_verified is not None:
+            
+            _query_params.append(('emailVerified', email_verified))
+            
+        if mfa_enabled is not None:
+            
+            _query_params.append(('mfaEnabled', mfa_enabled))
+            
+        if role is not None:
+            
+            _query_params.append(('role', role))
+            
+        if group is not None:
+            
+            _query_params.append(('group', group))
+            
+        if sort_by is not None:
+            
+            _query_params.append(('sortBy', sort_by))
+            
+        if sort_dir is not None:
+            
+            _query_params.append(('sortDir', sort_dir))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -5081,7 +5576,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
-        group_id: StrictStr,
+        group_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5155,7 +5650,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
-        group_id: StrictStr,
+        group_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5229,7 +5724,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
-        group_id: StrictStr,
+        group_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5370,7 +5865,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
-        permission_id: StrictStr,
+        permission_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5444,7 +5939,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
-        permission_id: StrictStr,
+        permission_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5518,7 +6013,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
-        permission_id: StrictStr,
+        permission_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5659,7 +6154,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5733,7 +6228,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5807,7 +6302,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6510,6 +7005,7 @@ class AdminUsersApi:
     ) -> SetUserPasswordPostResponse:
         """Set a user's password
 
+        Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
         :param org_id: (required)
         :type org_id: str
@@ -6548,6 +7044,8 @@ class AdminUsersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SetUserPasswordPostResponse",
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6580,6 +7078,7 @@ class AdminUsersApi:
     ) -> ApiResponse[SetUserPasswordPostResponse]:
         """Set a user's password
 
+        Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
         :param org_id: (required)
         :type org_id: str
@@ -6618,6 +7117,8 @@ class AdminUsersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SetUserPasswordPostResponse",
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6650,6 +7151,7 @@ class AdminUsersApi:
     ) -> RESTResponseType:
         """Set a user's password
 
+        Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
         :param org_id: (required)
         :type org_id: str
@@ -6688,6 +7190,8 @@ class AdminUsersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SetUserPasswordPostResponse",
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6784,6 +7288,7 @@ class AdminUsersApi:
     ) -> SetUserPasswordPostResponse:
         """Set a user's password
 
+        Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
         :param org_id: (required)
         :type org_id: str
@@ -6822,6 +7327,8 @@ class AdminUsersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SetUserPasswordPostResponse",
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6854,6 +7361,7 @@ class AdminUsersApi:
     ) -> ApiResponse[SetUserPasswordPostResponse]:
         """Set a user's password
 
+        Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
         :param org_id: (required)
         :type org_id: str
@@ -6892,6 +7400,8 @@ class AdminUsersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SetUserPasswordPostResponse",
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6924,6 +7434,7 @@ class AdminUsersApi:
     ) -> RESTResponseType:
         """Set a user's password
 
+        Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
         :param org_id: (required)
         :type org_id: str
@@ -6962,6 +7473,8 @@ class AdminUsersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SetUserPasswordPostResponse",
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,

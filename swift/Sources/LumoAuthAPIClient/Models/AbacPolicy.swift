@@ -16,21 +16,25 @@ public struct AbacPolicy: Codable, JSONEncodable, Hashable {
         case allow = "allow"
         case deny = "deny"
     }
+    public static let actionRule = StringRule(minLength: nil, maxLength: 100, pattern: nil)
     public var id: Int?
     public var name: String?
     public var slug: String?
     public var description: String?
     public var resourceType: String?
+    /** One action, several separated by commas (read, write), or * for every action. The policy decides a request for each action that it names; spaces around the commas are ignored and actions compare case-sensitively. */
     public var action: String?
     public var effect: Effect?
     public var priority: Int?
     public var conditions: [String: AnyCodable]?
     public var isActive: Bool?
     public var isSystem: Bool?
+    /** True for a policy that LumoAuth provides to every organization. It can be read, but not changed, switched or deleted (403). */
+    public var builtIn: Bool?
     public var createdAt: Date?
     public var updatedAt: Date?
 
-    public init(id: Int? = nil, name: String? = nil, slug: String? = nil, description: String? = nil, resourceType: String? = nil, action: String? = nil, effect: Effect? = nil, priority: Int? = nil, conditions: [String: AnyCodable]? = nil, isActive: Bool? = nil, isSystem: Bool? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
+    public init(id: Int? = nil, name: String? = nil, slug: String? = nil, description: String? = nil, resourceType: String? = nil, action: String? = nil, effect: Effect? = nil, priority: Int? = nil, conditions: [String: AnyCodable]? = nil, isActive: Bool? = nil, isSystem: Bool? = nil, builtIn: Bool? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
         self.id = id
         self.name = name
         self.slug = slug
@@ -42,6 +46,7 @@ public struct AbacPolicy: Codable, JSONEncodable, Hashable {
         self.conditions = conditions
         self.isActive = isActive
         self.isSystem = isSystem
+        self.builtIn = builtIn
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
@@ -58,6 +63,7 @@ public struct AbacPolicy: Codable, JSONEncodable, Hashable {
         case conditions
         case isActive
         case isSystem
+        case builtIn
         case createdAt
         case updatedAt
     }
@@ -77,6 +83,7 @@ public struct AbacPolicy: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(conditions, forKey: .conditions)
         try container.encodeIfPresent(isActive, forKey: .isActive)
         try container.encodeIfPresent(isSystem, forKey: .isSystem)
+        try container.encodeIfPresent(builtIn, forKey: .builtIn)
         try container.encodeIfPresent(createdAt, forKey: .createdAt)
         try container.encodeIfPresent(updatedAt, forKey: .updatedAt)
     }

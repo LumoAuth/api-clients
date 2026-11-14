@@ -31,7 +31,7 @@ Name | Type | Description | Notes
 **request_object_signing_alg_values_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **ui_locales_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **prompt_values_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
-**acr_values_supported** | **Array&lt;string&gt;** | The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings. | [optional] [default to undefined]
+**acr_values_supported** | **Array&lt;string&gt;** | The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session). The list is the same for every organization. | [optional] [default to undefined]
 **code_challenge_methods_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **authorization_response_iss_parameter_supported** | **boolean** |  | [optional] [default to undefined]
 **pushed_authorization_request_endpoint** | **string** |  | [optional] [default to undefined]
@@ -55,8 +55,8 @@ Name | Type | Description | Notes
 **entity_profiles_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **client_id_metadata_document_supported** | **boolean** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] [default to undefined]
 **authorization_grant_profiles_supported** | **Array&lt;string&gt;** | Only when the organization accepts ID-JAGs. | [optional] [default to undefined]
-**op_policy_uri** | **string** | Only when configured. | [optional] [default to undefined]
-**op_tos_uri** | **string** | Only when configured. | [optional] [default to undefined]
+**op_policy_uri** | **string** | The Privacy policy URL of the organization\&#39;s login page settings. Only when it is set. | [optional] [default to undefined]
+**op_tos_uri** | **string** | The Terms of service URL of the organization\&#39;s login page settings. Only when it is set. | [optional] [default to undefined]
 
 ## Example
 

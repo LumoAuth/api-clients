@@ -115,18 +115,6 @@ export interface RegisteredClientMetadata {
      * @type {string}
      * @memberof RegisteredClientMetadata
      */
-    'sector_identifier_uri'?: string;
-    /**
-     * Only when not \"public\".
-     * @type {string}
-     * @memberof RegisteredClientMetadata
-     */
-    'subject_type'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RegisteredClientMetadata
-     */
     'jwks_uri'?: string;
     /**
      * 
@@ -147,12 +135,6 @@ export interface RegisteredClientMetadata {
      */
     'initiate_login_uri'?: string;
     /**
-     * 
-     * @type {Array<string>}
-     * @memberof RegisteredClientMetadata
-     */
-    'request_uris'?: Array<string>;
-    /**
      * Space-separated registered scopes.
      * @type {string}
      * @memberof RegisteredClientMetadata
@@ -164,12 +146,6 @@ export interface RegisteredClientMetadata {
      * @memberof RegisteredClientMetadata
      */
     'id_token_signed_response_alg'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RegisteredClientMetadata
-     */
-    'userinfo_signed_response_alg'?: string;
     /**
      * 
      * @type {string}

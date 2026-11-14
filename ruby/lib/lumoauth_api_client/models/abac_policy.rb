@@ -25,6 +25,7 @@ module LumoAuthApiClient
 
     attr_accessor :resource_type
 
+    # One action, several separated by commas (read, write), or * for every action. The policy decides a request for each action that it names; spaces around the commas are ignored and actions compare case-sensitively.
     attr_accessor :action
 
     attr_accessor :effect
@@ -36,6 +37,9 @@ module LumoAuthApiClient
     attr_accessor :is_active
 
     attr_accessor :is_system
+
+    # True for a policy that LumoAuth provides to every organization. It can be read, but not changed, switched or deleted (403).
+    attr_accessor :built_in
 
     attr_accessor :created_at
 
@@ -77,6 +81,7 @@ module LumoAuthApiClient
         :'conditions' => :'conditions',
         :'is_active' => :'isActive',
         :'is_system' => :'isSystem',
+        :'built_in' => :'builtIn',
         :'created_at' => :'createdAt',
         :'updated_at' => :'updatedAt'
       }
@@ -106,6 +111,7 @@ module LumoAuthApiClient
         :'conditions' => :'Hash<String, Object>',
         :'is_active' => :'Boolean',
         :'is_system' => :'Boolean',
+        :'built_in' => :'Boolean',
         :'created_at' => :'Time',
         :'updated_at' => :'Time'
       }
@@ -181,6 +187,10 @@ module LumoAuthApiClient
         self.is_system = attributes[:'is_system']
       end
 
+      if attributes.key?(:'built_in')
+        self.built_in = attributes[:'built_in']
+      end
+
       if attributes.key?(:'created_at')
         self.created_at = attributes[:'created_at']
       end
@@ -195,6 +205,10 @@ module LumoAuthApiClient
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if !@action.nil? && @action.to_s.length > 100
+        invalid_properties.push('invalid value for "action", the character length must be smaller than or equal to 100.')
+      end
+
       invalid_properties
     end
 
@@ -202,9 +216,24 @@ module LumoAuthApiClient
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if !@action.nil? && @action.to_s.length > 100
       effect_validator = EnumAttributeValidator.new('String', ["allow", "deny"])
       return false unless effect_validator.valid?(@effect)
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] action Value to be assigned
+    def action=(action)
+      if action.nil?
+        fail ArgumentError, 'action cannot be nil'
+      end
+
+      if action.to_s.length > 100
+        fail ArgumentError, 'invalid value for "action", the character length must be smaller than or equal to 100.'
+      end
+
+      @action = action
     end
 
     # Custom attribute writer method checking allowed values (enum).
@@ -233,6 +262,7 @@ module LumoAuthApiClient
           conditions == o.conditions &&
           is_active == o.is_active &&
           is_system == o.is_system &&
+          built_in == o.built_in &&
           created_at == o.created_at &&
           updated_at == o.updated_at
     end
@@ -246,7 +276,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, slug, description, resource_type, action, effect, priority, conditions, is_active, is_system, created_at, updated_at].hash
+      [id, name, slug, description, resource_type, action, effect, priority, conditions, is_active, is_system, built_in, created_at, updated_at].hash
     end
 
     # Builds the object from hash

@@ -479,7 +479,7 @@ Per Section 9: The agent token endpoint is the auth server's endpoint agents use
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
-let issueAgentTokenRequest = IssueAgentTokenRequest(requestType: "requestType_example", resourceToken: "resourceToken_example", redirectUri: "redirectUri_example", code: "code_example", authToken: "authToken_example", refreshToken: "refreshToken_example") // IssueAgentTokenRequest | 
+let issueAgentTokenRequest = IssueAgentTokenRequest(requestType: "requestType_example", resourceToken: "resourceToken_example", redirectUri: "redirectUri_example", code: "code_example", authToken: "authToken_example", refreshToken: "refreshToken_example", scope: "scope_example") // IssueAgentTokenRequest | 
 
 // Agent Token Endpoint
 AAuthAPI.issueAgentToken(orgId: orgId, issueAgentTokenRequest: issueAgentTokenRequest) { (response, error) in

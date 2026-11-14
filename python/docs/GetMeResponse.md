@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **mfa_enabled** | **bool** |  | [optional] 
 **roles** | **List[str]** |  | [optional] 
 **capabilities** | **List[str]** |  | [optional] 
+**scope** | **List[str]** | Agents only: the scope of the presented token. | [optional] 
+**scope_narrowed** | **bool** | Agents only: true when the token scope leaves out one of the agent&#39;s capabilities. | [optional] 
 **tenant** | [**GroupRef**](GroupRef.md) |  | [optional] 
 
 ## Example

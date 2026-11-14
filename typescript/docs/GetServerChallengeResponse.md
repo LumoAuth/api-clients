@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**status** | **string** |  | [default to undefined]
+**status** | **string** | &#x60;no_authorization_required&#x60; for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token. | [default to undefined]
 **server** | **string** | MCP server display name. | [default to undefined]
 **server_id** | **string** |  | [default to undefined]
 

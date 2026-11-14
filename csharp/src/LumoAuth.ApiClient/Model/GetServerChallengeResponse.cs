@@ -34,8 +34,9 @@ namespace LumoAuth.ApiClient.Model
     public partial class GetServerChallengeResponse : IValidatableObject
     {
         /// <summary>
-        /// Defines Status
+        /// &#x60;no_authorization_required&#x60; for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token.
         /// </summary>
+        /// <value>&#x60;no_authorization_required&#x60; for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token.</value>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum StatusEnum
         {
@@ -43,13 +44,20 @@ namespace LumoAuth.ApiClient.Model
             /// Enum Authenticated for value: authenticated
             /// </summary>
             [EnumMember(Value = "authenticated")]
-            Authenticated = 1
+            Authenticated = 1,
+
+            /// <summary>
+            /// Enum NoAuthorizationRequired for value: no_authorization_required
+            /// </summary>
+            [EnumMember(Value = "no_authorization_required")]
+            NoAuthorizationRequired = 2
         }
 
 
         /// <summary>
-        /// Gets or Sets Status
+        /// &#x60;no_authorization_required&#x60; for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token.
         /// </summary>
+        /// <value>&#x60;no_authorization_required&#x60; for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token.</value>
         [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = true)]
         public StatusEnum Status { get; set; }
         /// <summary>
@@ -60,7 +68,7 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetServerChallengeResponse" /> class.
         /// </summary>
-        /// <param name="status">status (required).</param>
+        /// <param name="status">&#x60;no_authorization_required&#x60; for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token. (required).</param>
         /// <param name="server">MCP server display name. (required).</param>
         /// <param name="serverId">serverId (required).</param>
         public GetServerChallengeResponse(StatusEnum status = default, string server = default, string serverId = default)

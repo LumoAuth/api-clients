@@ -306,7 +306,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Get an OAuth client&#39;s login and consent page branding
-     * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+     * Needs &#x60;branding.view&#x60; and &#x60;clients.view&#x60;. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
      * @param orgId  (required)
      * @param clientId  (required)
      * @return AdminClientsGetBrandingResponse
@@ -326,7 +326,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Get an OAuth client&#39;s login and consent page branding
-     * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+     * Needs &#x60;branding.view&#x60; and &#x60;clients.view&#x60;. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
      * @param orgId  (required)
      * @param clientId  (required)
      * @return ApiResponse&lt;AdminClientsGetBrandingResponse&gt;
@@ -347,7 +347,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Get an OAuth client&#39;s login and consent page branding (asynchronously)
-     * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+     * Needs &#x60;branding.view&#x60; and &#x60;clients.view&#x60;. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
      * @param orgId  (required)
      * @param clientId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1408,7 +1408,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Change keys of an OAuth client&#39;s login and/or consent page branding
-     * 
+     * Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
      * @param orgId  (required)
      * @param clientId  (required)
      * @param adminClientsGetBrandingResponseData  (optional)
@@ -1429,7 +1429,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Change keys of an OAuth client&#39;s login and/or consent page branding
-     * 
+     * Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
      * @param orgId  (required)
      * @param clientId  (required)
      * @param adminClientsGetBrandingResponseData  (optional)
@@ -1451,7 +1451,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Change keys of an OAuth client&#39;s login and/or consent page branding (asynchronously)
-     * 
+     * Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
      * @param orgId  (required)
      * @param clientId  (required)
      * @param adminClientsGetBrandingResponseData  (optional)
@@ -1695,7 +1695,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Replace an OAuth client&#39;s login and/or consent page branding
-     * 
+     * Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
      * @param orgId  (required)
      * @param clientId  (required)
      * @param putAdminClientsUpdateBrandingRequest  (optional)
@@ -1716,7 +1716,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Replace an OAuth client&#39;s login and/or consent page branding
-     * 
+     * Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
      * @param orgId  (required)
      * @param clientId  (required)
      * @param putAdminClientsUpdateBrandingRequest  (optional)
@@ -1738,7 +1738,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Replace an OAuth client&#39;s login and/or consent page branding (asynchronously)
-     * 
+     * Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
      * @param orgId  (required)
      * @param clientId  (required)
      * @param putAdminClientsUpdateBrandingRequest  (optional)

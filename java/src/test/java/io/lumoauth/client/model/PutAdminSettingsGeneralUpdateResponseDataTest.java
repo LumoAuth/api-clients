@@ -54,14 +54,6 @@ public class PutAdminSettingsGeneralUpdateResponseDataTest {
     }
 
     /**
-     * Test the property 'timezone'
-     */
-    @Test
-    public void timezoneTest() {
-        // TODO: test timezone
-    }
-
-    /**
      * Test the property 'locale'
      */
     @Test

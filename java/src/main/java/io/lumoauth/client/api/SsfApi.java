@@ -424,7 +424,7 @@ public class SsfApi {
 
     /**
      * Read SSF stream configuration(s)
-     * 
+     * Needs &#x60;webhooks.view&#x60; and &#x60;agents.view&#x60;, as the Security signals page in the portal does.
      * @param orgId  (required)
      * @param streamId  (optional)
      * @return GetStreamConfig200Response
@@ -444,7 +444,7 @@ public class SsfApi {
 
     /**
      * Read SSF stream configuration(s)
-     * 
+     * Needs &#x60;webhooks.view&#x60; and &#x60;agents.view&#x60;, as the Security signals page in the portal does.
      * @param orgId  (required)
      * @param streamId  (optional)
      * @return ApiResponse&lt;GetStreamConfig200Response&gt;
@@ -465,7 +465,7 @@ public class SsfApi {
 
     /**
      * Read SSF stream configuration(s) (asynchronously)
-     * 
+     * Needs &#x60;webhooks.view&#x60; and &#x60;agents.view&#x60;, as the Security signals page in the portal does.
      * @param orgId  (required)
      * @param streamId  (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -559,7 +559,7 @@ public class SsfApi {
 
     /**
      * Request a stream verification event
-     * 
+     * Needs &#x60;settings.manage&#x60;, as the portal does.
      * @param orgId  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -578,7 +578,7 @@ public class SsfApi {
 
     /**
      * Request a stream verification event
-     * 
+     * Needs &#x60;settings.manage&#x60;, as the portal does.
      * @param orgId  (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -599,7 +599,7 @@ public class SsfApi {
 
     /**
      * Request a stream verification event (asynchronously)
-     * 
+     * Needs &#x60;settings.manage&#x60;, as the portal does.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call

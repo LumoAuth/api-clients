@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **client_id** | **str** | Detailed responses only | [optional] 
 **callback_url** | **str** | Detailed responses only | [optional] 
 **requested_scopes** | **List[str]** | Detailed responses only | [optional] 
-**custom_claims** | **Dict[str, object]** | Detailed responses only | [optional] 
+**custom_claims** | **Dict[str, object]** | Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes. | [optional] 
 **claim_mapping** | **Dict[str, object]** | Detailed responses only | [optional] 
 **provider_config** | **Dict[str, object]** | Detailed responses only; secrets redacted | [optional] 
 **authorization_url** | **str** | Detailed responses only | [optional] 

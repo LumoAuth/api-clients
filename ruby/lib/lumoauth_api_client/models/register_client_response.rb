@@ -53,11 +53,6 @@ module LumoAuthApiClient
 
     attr_accessor :tos_uri
 
-    attr_accessor :sector_identifier_uri
-
-    # Only when not \"public\".
-    attr_accessor :subject_type
-
     attr_accessor :jwks_uri
 
     attr_accessor :jwks
@@ -66,15 +61,11 @@ module LumoAuthApiClient
 
     attr_accessor :initiate_login_uri
 
-    attr_accessor :request_uris
-
     # Space-separated registered scopes.
     attr_accessor :scope
 
     # Only when not RS256.
     attr_accessor :id_token_signed_response_alg
-
-    attr_accessor :userinfo_signed_response_alg
 
     attr_accessor :request_object_signing_alg
 
@@ -142,16 +133,12 @@ module LumoAuthApiClient
         :'logo_uri' => :'logo_uri',
         :'policy_uri' => :'policy_uri',
         :'tos_uri' => :'tos_uri',
-        :'sector_identifier_uri' => :'sector_identifier_uri',
-        :'subject_type' => :'subject_type',
         :'jwks_uri' => :'jwks_uri',
         :'jwks' => :'jwks',
         :'post_logout_redirect_uris' => :'post_logout_redirect_uris',
         :'initiate_login_uri' => :'initiate_login_uri',
-        :'request_uris' => :'request_uris',
         :'scope' => :'scope',
         :'id_token_signed_response_alg' => :'id_token_signed_response_alg',
-        :'userinfo_signed_response_alg' => :'userinfo_signed_response_alg',
         :'request_object_signing_alg' => :'request_object_signing_alg',
         :'token_endpoint_auth_signing_alg' => :'token_endpoint_auth_signing_alg',
         :'default_max_age' => :'default_max_age',
@@ -195,16 +182,12 @@ module LumoAuthApiClient
         :'logo_uri' => :'String',
         :'policy_uri' => :'String',
         :'tos_uri' => :'String',
-        :'sector_identifier_uri' => :'String',
-        :'subject_type' => :'String',
         :'jwks_uri' => :'String',
         :'jwks' => :'Hash<String, Object>',
         :'post_logout_redirect_uris' => :'Array<String>',
         :'initiate_login_uri' => :'String',
-        :'request_uris' => :'Array<String>',
         :'scope' => :'String',
         :'id_token_signed_response_alg' => :'String',
-        :'userinfo_signed_response_alg' => :'String',
         :'request_object_signing_alg' => :'String',
         :'token_endpoint_auth_signing_alg' => :'String',
         :'default_max_age' => :'Integer',
@@ -333,14 +316,6 @@ module LumoAuthApiClient
         self.tos_uri = attributes[:'tos_uri']
       end
 
-      if attributes.key?(:'sector_identifier_uri')
-        self.sector_identifier_uri = attributes[:'sector_identifier_uri']
-      end
-
-      if attributes.key?(:'subject_type')
-        self.subject_type = attributes[:'subject_type']
-      end
-
       if attributes.key?(:'jwks_uri')
         self.jwks_uri = attributes[:'jwks_uri']
       end
@@ -361,22 +336,12 @@ module LumoAuthApiClient
         self.initiate_login_uri = attributes[:'initiate_login_uri']
       end
 
-      if attributes.key?(:'request_uris')
-        if (value = attributes[:'request_uris']).is_a?(Array)
-          self.request_uris = value
-        end
-      end
-
       if attributes.key?(:'scope')
         self.scope = attributes[:'scope']
       end
 
       if attributes.key?(:'id_token_signed_response_alg')
         self.id_token_signed_response_alg = attributes[:'id_token_signed_response_alg']
-      end
-
-      if attributes.key?(:'userinfo_signed_response_alg')
-        self.userinfo_signed_response_alg = attributes[:'userinfo_signed_response_alg']
       end
 
       if attributes.key?(:'request_object_signing_alg')
@@ -568,16 +533,12 @@ module LumoAuthApiClient
           logo_uri == o.logo_uri &&
           policy_uri == o.policy_uri &&
           tos_uri == o.tos_uri &&
-          sector_identifier_uri == o.sector_identifier_uri &&
-          subject_type == o.subject_type &&
           jwks_uri == o.jwks_uri &&
           jwks == o.jwks &&
           post_logout_redirect_uris == o.post_logout_redirect_uris &&
           initiate_login_uri == o.initiate_login_uri &&
-          request_uris == o.request_uris &&
           scope == o.scope &&
           id_token_signed_response_alg == o.id_token_signed_response_alg &&
-          userinfo_signed_response_alg == o.userinfo_signed_response_alg &&
           request_object_signing_alg == o.request_object_signing_alg &&
           token_endpoint_auth_signing_alg == o.token_endpoint_auth_signing_alg &&
           default_max_age == o.default_max_age &&
@@ -599,7 +560,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [client_id, client_secret, client_secret_expires_at, client_id_issued_at, registration_access_token, registration_client_uri, client_name, redirect_uris, response_types, grant_types, application_type, token_endpoint_auth_method, contacts, client_uri, logo_uri, policy_uri, tos_uri, sector_identifier_uri, subject_type, jwks_uri, jwks, post_logout_redirect_uris, initiate_login_uri, request_uris, scope, id_token_signed_response_alg, userinfo_signed_response_alg, request_object_signing_alg, token_endpoint_auth_signing_alg, default_max_age, require_auth_time, default_acr_values, frontchannel_logout_uri, frontchannel_logout_session_required, backchannel_logout_uri, backchannel_logout_session_required, audience_uris].hash
+      [client_id, client_secret, client_secret_expires_at, client_id_issued_at, registration_access_token, registration_client_uri, client_name, redirect_uris, response_types, grant_types, application_type, token_endpoint_auth_method, contacts, client_uri, logo_uri, policy_uri, tos_uri, jwks_uri, jwks, post_logout_redirect_uris, initiate_login_uri, scope, id_token_signed_response_alg, request_object_signing_alg, token_endpoint_auth_signing_alg, default_max_age, require_auth_time, default_acr_values, frontchannel_logout_uri, frontchannel_logout_session_required, backchannel_logout_uri, backchannel_logout_session_required, audience_uris].hash
     end
 
     # Builds the object from hash

@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Authentication** | Pointer to [**AuthenticationSettings**](AuthenticationSettings.md) |  | [optional] 
 **Branding** | Pointer to [**BrandingSettings**](BrandingSettings.md) |  | [optional] 
 **Security** | Pointer to [**AdminSettingsAllResponseDataSecurity**](AdminSettingsAllResponseDataSecurity.md) |  | [optional] 
-**Email** | Pointer to **map[string]interface{}** | Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted. | [optional] 
+**Email** | Pointer to [**EmailSenderSettings**](EmailSenderSettings.md) |  | [optional] 
 
 ## Methods
 
@@ -131,20 +131,20 @@ HasSecurity returns a boolean if a field has been set.
 
 ### GetEmail
 
-`func (o *AdminSettingsAllResponseData) GetEmail() map[string]interface{}`
+`func (o *AdminSettingsAllResponseData) GetEmail() EmailSenderSettings`
 
 GetEmail returns the Email field if non-nil, zero value otherwise.
 
 ### GetEmailOk
 
-`func (o *AdminSettingsAllResponseData) GetEmailOk() (*map[string]interface{}, bool)`
+`func (o *AdminSettingsAllResponseData) GetEmailOk() (*EmailSenderSettings, bool)`
 
 GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetEmail
 
-`func (o *AdminSettingsAllResponseData) SetEmail(v map[string]interface{})`
+`func (o *AdminSettingsAllResponseData) SetEmail(v EmailSenderSettings)`
 
 SetEmail sets Email field to given value.
 

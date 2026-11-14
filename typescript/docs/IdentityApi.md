@@ -54,8 +54,8 @@ const { status, data } = await apiInstance.getMe(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | The authenticated principal |  -  |
-|**401** | Unauthorized |  -  |
-|**404** | Tenant not found |  -  |
+|**401** | No credential, an invalid credential, or a credential of another organization |  -  |
+|**404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

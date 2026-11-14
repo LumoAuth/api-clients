@@ -83,15 +83,6 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'IsDefault'
-        /// </summary>
-        [Fact]
-        public void IsDefaultTest()
-        {
-            // TODO unit test for the property 'IsDefault'
-        }
-
-        /// <summary>
         /// Test the property 'IsSystem'
         /// </summary>
         [Fact]

@@ -17,7 +17,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import Field, StrictStr, field_validator
+from typing_extensions import Annotated
 from lumoauth_api_client.models.admin_webhooks_create_response import AdminWebhooksCreateResponse
 from lumoauth_api_client.models.admin_webhooks_deliveries_list_response import AdminWebhooksDeliveriesListResponse
 from lumoauth_api_client.models.admin_webhooks_delivery_replay_response import AdminWebhooksDeliveryReplayResponse
@@ -317,7 +318,7 @@ class AdminWebhooksApi:
     def admin_webhooks_delete(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -388,7 +389,7 @@ class AdminWebhooksApi:
     def admin_webhooks_delete_with_http_info(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -459,7 +460,7 @@ class AdminWebhooksApi:
     def admin_webhooks_delete_without_preload_content(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -594,7 +595,7 @@ class AdminWebhooksApi:
     def admin_webhooks_deliveries_list(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -666,7 +667,7 @@ class AdminWebhooksApi:
     def admin_webhooks_deliveries_list_with_http_info(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -738,7 +739,7 @@ class AdminWebhooksApi:
     def admin_webhooks_deliveries_list_without_preload_content(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -874,7 +875,7 @@ class AdminWebhooksApi:
     def admin_webhooks_delivery_replay(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         delivery_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -951,7 +952,7 @@ class AdminWebhooksApi:
     def admin_webhooks_delivery_replay_with_http_info(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         delivery_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -1028,7 +1029,7 @@ class AdminWebhooksApi:
     def admin_webhooks_delivery_replay_without_preload_content(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         delivery_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -1172,7 +1173,7 @@ class AdminWebhooksApi:
     def admin_webhooks_delivery_show(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         delivery_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -1248,7 +1249,7 @@ class AdminWebhooksApi:
     def admin_webhooks_delivery_show_with_http_info(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         delivery_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -1324,7 +1325,7 @@ class AdminWebhooksApi:
     def admin_webhooks_delivery_show_without_preload_content(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         delivery_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -1726,7 +1727,7 @@ class AdminWebhooksApi:
     def admin_webhooks_get(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1797,7 +1798,7 @@ class AdminWebhooksApi:
     def admin_webhooks_get_with_http_info(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1868,7 +1869,7 @@ class AdminWebhooksApi:
     def admin_webhooks_get_without_preload_content(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2265,7 +2266,7 @@ class AdminWebhooksApi:
     def admin_webhooks_rotate_secret(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2337,7 +2338,7 @@ class AdminWebhooksApi:
     def admin_webhooks_rotate_secret_with_http_info(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2409,7 +2410,7 @@ class AdminWebhooksApi:
     def admin_webhooks_rotate_secret_without_preload_content(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2545,7 +2546,7 @@ class AdminWebhooksApi:
     def admin_webhooks_test(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2618,7 +2619,7 @@ class AdminWebhooksApi:
     def admin_webhooks_test_with_http_info(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2691,7 +2692,7 @@ class AdminWebhooksApi:
     def admin_webhooks_test_without_preload_content(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3090,7 +3091,7 @@ class AdminWebhooksApi:
     def admin_webhooks_tunnel_stop(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3163,7 +3164,7 @@ class AdminWebhooksApi:
     def admin_webhooks_tunnel_stop_with_http_info(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3236,7 +3237,7 @@ class AdminWebhooksApi:
     def admin_webhooks_tunnel_stop_without_preload_content(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3373,7 +3374,7 @@ class AdminWebhooksApi:
     def admin_webhooks_tunnel_stream(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3446,7 +3447,7 @@ class AdminWebhooksApi:
     def admin_webhooks_tunnel_stream_with_http_info(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3519,7 +3520,7 @@ class AdminWebhooksApi:
     def admin_webhooks_tunnel_stream_without_preload_content(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3656,7 +3657,7 @@ class AdminWebhooksApi:
     def admin_webhooks_webhooks_disable(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3727,7 +3728,7 @@ class AdminWebhooksApi:
     def admin_webhooks_webhooks_disable_with_http_info(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3798,7 +3799,7 @@ class AdminWebhooksApi:
     def admin_webhooks_webhooks_disable_without_preload_content(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3933,7 +3934,7 @@ class AdminWebhooksApi:
     def admin_webhooks_webhooks_enable(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4004,7 +4005,7 @@ class AdminWebhooksApi:
     def admin_webhooks_webhooks_enable_with_http_info(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4075,7 +4076,7 @@ class AdminWebhooksApi:
     def admin_webhooks_webhooks_enable_without_preload_content(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4210,7 +4211,7 @@ class AdminWebhooksApi:
     def patch_admin_webhooks_update(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4281,7 +4282,7 @@ class AdminWebhooksApi:
     def patch_admin_webhooks_update_with_http_info(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4352,7 +4353,7 @@ class AdminWebhooksApi:
     def patch_admin_webhooks_update_without_preload_content(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4487,7 +4488,7 @@ class AdminWebhooksApi:
     def put_admin_webhooks_update(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4559,7 +4560,7 @@ class AdminWebhooksApi:
     def put_admin_webhooks_update_with_http_info(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4631,7 +4632,7 @@ class AdminWebhooksApi:
     def put_admin_webhooks_update_without_preload_content(
         self,
         org_id: StrictStr,
-        webhook_id: StrictStr,
+        webhook_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],

@@ -212,6 +212,7 @@ open class AdminSettingsAPI {
     /**
      Get all settings (combined)
      - GET /orgs/{orgId}/api/v1/admin/settings
+     - Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal's branding page; without it the key is left out.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -388,6 +389,7 @@ open class AdminSettingsAPI {
     /**
      Get email settings
      - GET /orgs/{orgId}/api/v1/admin/settings/email
+     - Shows who sends the organization's mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth's sender.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -740,6 +742,7 @@ open class AdminSettingsAPI {
     /**
      Update branding/login page settings
      - PATCH /orgs/{orgId}/api/v1/admin/settings/branding
+     - Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -774,16 +777,18 @@ open class AdminSettingsAPI {
      Update email settings
      
      - parameter orgId: (path)  
+     - parameter putAdminSettingsEmailUpdateRequest: (body)  (optional)
      - returns: PutAdminSettingsEmailUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminSettingsEmailUpdate(orgId: String) async throws -> PutAdminSettingsEmailUpdateResponse {
-        return try await patchAdminSettingsEmailUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func patchAdminSettingsEmailUpdate(orgId: String, putAdminSettingsEmailUpdateRequest: PutAdminSettingsEmailUpdateRequest? = nil) async throws -> PutAdminSettingsEmailUpdateResponse {
+        return try await patchAdminSettingsEmailUpdateWithRequestBuilder(orgId: orgId, putAdminSettingsEmailUpdateRequest: putAdminSettingsEmailUpdateRequest).execute().body
     }
 
     /**
      Update email settings
      - PATCH /orgs/{orgId}/api/v1/admin/settings/email
+     - Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -791,20 +796,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter putAdminSettingsEmailUpdateRequest: (body)  (optional)
      - returns: RequestBuilder<PutAdminSettingsEmailUpdateResponse> 
      */
-    open class func patchAdminSettingsEmailUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminSettingsEmailUpdateResponse> {
+    open class func patchAdminSettingsEmailUpdateWithRequestBuilder(orgId: String, putAdminSettingsEmailUpdateRequest: PutAdminSettingsEmailUpdateRequest? = nil) -> RequestBuilder<PutAdminSettingsEmailUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/email"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminSettingsEmailUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -818,16 +824,18 @@ open class AdminSettingsAPI {
      Update general settings
      
      - parameter orgId: (path)  
+     - parameter putAdminSettingsGeneralUpdateRequest: (body)  (optional)
      - returns: PutAdminSettingsGeneralUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminSettingsGeneralUpdate(orgId: String) async throws -> PutAdminSettingsGeneralUpdateResponse {
-        return try await patchAdminSettingsGeneralUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func patchAdminSettingsGeneralUpdate(orgId: String, putAdminSettingsGeneralUpdateRequest: PutAdminSettingsGeneralUpdateRequest? = nil) async throws -> PutAdminSettingsGeneralUpdateResponse {
+        return try await patchAdminSettingsGeneralUpdateWithRequestBuilder(orgId: orgId, putAdminSettingsGeneralUpdateRequest: putAdminSettingsGeneralUpdateRequest).execute().body
     }
 
     /**
      Update general settings
      - PATCH /orgs/{orgId}/api/v1/admin/settings/general
+     - Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -835,20 +843,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter putAdminSettingsGeneralUpdateRequest: (body)  (optional)
      - returns: RequestBuilder<PutAdminSettingsGeneralUpdateResponse> 
      */
-    open class func patchAdminSettingsGeneralUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminSettingsGeneralUpdateResponse> {
+    open class func patchAdminSettingsGeneralUpdateWithRequestBuilder(orgId: String, putAdminSettingsGeneralUpdateRequest: PutAdminSettingsGeneralUpdateRequest? = nil) -> RequestBuilder<PutAdminSettingsGeneralUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/general"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminSettingsGeneralUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1136,6 +1145,7 @@ open class AdminSettingsAPI {
     /**
      Update branding/login page settings
      - PUT /orgs/{orgId}/api/v1/admin/settings/branding
+     - Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -1170,16 +1180,18 @@ open class AdminSettingsAPI {
      Update email settings
      
      - parameter orgId: (path)  
+     - parameter putAdminSettingsEmailUpdateRequest: (body)  (optional)
      - returns: PutAdminSettingsEmailUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminSettingsEmailUpdate(orgId: String) async throws -> PutAdminSettingsEmailUpdateResponse {
-        return try await putAdminSettingsEmailUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func putAdminSettingsEmailUpdate(orgId: String, putAdminSettingsEmailUpdateRequest: PutAdminSettingsEmailUpdateRequest? = nil) async throws -> PutAdminSettingsEmailUpdateResponse {
+        return try await putAdminSettingsEmailUpdateWithRequestBuilder(orgId: orgId, putAdminSettingsEmailUpdateRequest: putAdminSettingsEmailUpdateRequest).execute().body
     }
 
     /**
      Update email settings
      - PUT /orgs/{orgId}/api/v1/admin/settings/email
+     - Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -1187,20 +1199,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter putAdminSettingsEmailUpdateRequest: (body)  (optional)
      - returns: RequestBuilder<PutAdminSettingsEmailUpdateResponse> 
      */
-    open class func putAdminSettingsEmailUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminSettingsEmailUpdateResponse> {
+    open class func putAdminSettingsEmailUpdateWithRequestBuilder(orgId: String, putAdminSettingsEmailUpdateRequest: PutAdminSettingsEmailUpdateRequest? = nil) -> RequestBuilder<PutAdminSettingsEmailUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/email"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminSettingsEmailUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1214,16 +1227,18 @@ open class AdminSettingsAPI {
      Update general settings
      
      - parameter orgId: (path)  
+     - parameter putAdminSettingsGeneralUpdateRequest: (body)  (optional)
      - returns: PutAdminSettingsGeneralUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminSettingsGeneralUpdate(orgId: String) async throws -> PutAdminSettingsGeneralUpdateResponse {
-        return try await putAdminSettingsGeneralUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func putAdminSettingsGeneralUpdate(orgId: String, putAdminSettingsGeneralUpdateRequest: PutAdminSettingsGeneralUpdateRequest? = nil) async throws -> PutAdminSettingsGeneralUpdateResponse {
+        return try await putAdminSettingsGeneralUpdateWithRequestBuilder(orgId: orgId, putAdminSettingsGeneralUpdateRequest: putAdminSettingsGeneralUpdateRequest).execute().body
     }
 
     /**
      Update general settings
      - PUT /orgs/{orgId}/api/v1/admin/settings/general
+     - Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -1231,20 +1246,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter putAdminSettingsGeneralUpdateRequest: (body)  (optional)
      - returns: RequestBuilder<PutAdminSettingsGeneralUpdateResponse> 
      */
-    open class func putAdminSettingsGeneralUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminSettingsGeneralUpdateResponse> {
+    open class func putAdminSettingsGeneralUpdateWithRequestBuilder(orgId: String, putAdminSettingsGeneralUpdateRequest: PutAdminSettingsGeneralUpdateRequest? = nil) -> RequestBuilder<PutAdminSettingsGeneralUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/general"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminSettingsGeneralUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

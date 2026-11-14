@@ -6,6 +6,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |------------- | ------------- | -------------|
 | [**authorize**](OAuthApi.md#authorize) | **GET** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint |
 | [**backchannelAuthorize**](OAuthApi.md#backchannelAuthorize) | **POST** /orgs/{orgId}/api/v1/oauth/bc-authorize | CIBA backchannel authentication request |
+| [**checkEmailFirst**](OAuthApi.md#checkEmailFirst) | **POST** /orgs/{orgId}/api/v1/oauth/check-email | Sign-in methods for an email-first form |
 | [**deviceAuthorization**](OAuthApi.md#deviceAuthorization) | **POST** /orgs/{orgId}/api/v1/oauth/device_authorization | Device authorization request (RFC 8628) |
 | [**getClientConfiguration**](OAuthApi.md#getClientConfiguration) | **GET** /orgs/{orgId}/api/v1/connect/register/{clientId} | Read a dynamically registered client (RFC 7592 / OIDC DCR §4) |
 | [**getDeviceVerification**](OAuthApi.md#getDeviceVerification) | **GET** /orgs/{orgId}/api/v1/oauth/device | Device verification page (RFC 8628 §3.3) |
@@ -89,7 +90,7 @@ No authorization required
 | **303** | Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. |  * Location -  <br>  |
 | **302** | Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. |  * Location -  <br>  |
 | **400** | HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). |  -  |
-| **429** | too_many_requests (JSON). |  -  |
+| **429** | too_many_requests (JSON); Retry-After names the seconds to wait. |  -  |
 
 <a id="backchannelAuthorize"></a>
 # **backchannelAuthorize**
@@ -161,7 +162,75 @@ public class Example {
 | **400** | invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. |  -  |
 | **401** | invalid_client — client authentication failed. |  -  |
 | **403** | unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. |  -  |
-| **429** | too_many_requests, or slow_down when the target user already has too many pending requests. |  -  |
+| **429** | too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. |  -  |
+
+<a id="checkEmailFirst"></a>
+# **checkEmailFirst**
+> CheckEmailFirstResponse checkEmailFirst(orgId, checkEmailFirstRequest)
+
+Sign-in methods for an email-first form
+
+For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: &#x60;exists&#x60; is always &#x60;true&#x60;, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+
+### Example
+```java
+// Import classes:
+import io.lumoauth.client.ApiClient;
+import io.lumoauth.client.ApiException;
+import io.lumoauth.client.Configuration;
+import io.lumoauth.client.models.*;
+import io.lumoauth.client.api.OAuthApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://app.lumoauth.dev");
+
+    OAuthApi apiInstance = new OAuthApi(defaultClient);
+    String orgId = "orgId_example"; // String | 
+    CheckEmailFirstRequest checkEmailFirstRequest = new CheckEmailFirstRequest(); // CheckEmailFirstRequest | 
+    try {
+      CheckEmailFirstResponse result = apiInstance.checkEmailFirst(orgId, checkEmailFirstRequest);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling OAuthApi#checkEmailFirst");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | **String**|  | |
+| **checkEmailFirstRequest** | [**CheckEmailFirstRequest**](CheckEmailFirstRequest.md)|  | |
+
+### Return type
+
+[**CheckEmailFirstResponse**](CheckEmailFirstResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The organization&#39;s sign-in methods. The same for every address. |  -  |
+| **400** | &#x60;{\&quot;error\&quot;: …, \&quot;message\&quot;: …}&#x60; with error &#x60;invalid_request&#x60; or &#x60;invalid_client&#x60;. |  -  |
+| **403** | &#x60;{\&quot;error\&quot;:\&quot;origin_not_allowed\&quot;}&#x60;: the page that made the request is not one of the application&#39;s allowed origins. |  -  |
+| **404** | &#x60;{\&quot;error\&quot;:\&quot;not_found\&quot;}&#x60; for an unknown organization. |  -  |
+| **429** | &#x60;{\&quot;error\&quot;:\&quot;rate_limited\&quot;}&#x60;; Retry-After names the seconds to wait. |  -  |
 
 <a id="deviceAuthorization"></a>
 # **deviceAuthorization**
@@ -232,7 +301,7 @@ public class Example {
 | **200** | Device authorization response (RFC 8628 §3.2). |  -  |
 | **400** | invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. |  -  |
 | **401** | invalid_client — a confidential client failed to authenticate. |  -  |
-| **429** | too_many_requests — rate limit exceeded. |  -  |
+| **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 <a id="getClientConfiguration"></a>
 # **getClientConfiguration**
@@ -372,7 +441,7 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. |  -  |
 | **302** | Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. |  * Location -  <br>  |
-| **429** | HTML error page — too many attempts. |  -  |
+| **429** | HTML error page — too many attempts (Retry-After header). |  -  |
 
 <a id="getOrgSelection"></a>
 # **getOrgSelection**
@@ -507,7 +576,7 @@ public class Example {
 | **200** | Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. |  -  |
 | **400** | invalid_request — token parameter missing. |  -  |
 | **401** | invalid_client — client authentication failed. |  -  |
-| **429** | Rate limit exceeded. |  -  |
+| **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 <a id="par"></a>
 # **par**
@@ -578,7 +647,7 @@ public class Example {
 | **201** | Pushed authorization request created (RFC 9126 §2.2). |  -  |
 | **400** | invalid_request / invalid_target / invalid_request_object, or the organization is unknown. |  -  |
 | **401** | invalid_client — client authentication failed. |  -  |
-| **429** | too_many_requests — rate limit exceeded. |  -  |
+| **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 <a id="registerClient"></a>
 # **registerClient**
@@ -586,7 +655,7 @@ public class Example {
 
 Dynamic client registration (RFC 7591 / OIDC DCR)
 
-Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
 
 ### Example
 ```java
@@ -655,7 +724,7 @@ public class Example {
 | **400** | invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. |  -  |
 | **401** | access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). |  -  |
 | **403** | access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. |  -  |
-| **429** | too_many_requests — rate limit exceeded. |  -  |
+| **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 <a id="requestMagicLink"></a>
 # **requestMagicLink**
@@ -794,7 +863,7 @@ public class Example {
 | **200** | Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). |  -  |
 | **400** | invalid_request (token parameter missing) or unsupported_token_type. |  -  |
 | **401** | invalid_client — client authentication failed. |  -  |
-| **429** | too_many_requests — rate limit exceeded. |  -  |
+| **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 <a id="socialCallback"></a>
 # **socialCallback**
@@ -1049,7 +1118,7 @@ No authorization required
 | **303** | Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. |  * Location -  <br>  |
 | **302** | Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. |  * Location -  <br>  |
 | **400** | HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). |  -  |
-| **429** | too_many_requests (JSON). |  -  |
+| **429** | too_many_requests (JSON); Retry-After names the seconds to wait. |  -  |
 
 <a id="submitDeviceVerification"></a>
 # **submitDeviceVerification**
@@ -1113,7 +1182,7 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. |  -  |
 | **302** | Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. |  * Location -  <br>  |
-| **429** | HTML error page — too many attempts. |  -  |
+| **429** | HTML error page — too many attempts (Retry-After header). |  -  |
 
 <a id="submitLoginJson"></a>
 # **submitLoginJson**
@@ -1316,5 +1385,5 @@ public class Example {
 | **400** | invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). |  -  |
 | **401** | invalid_client — client authentication failed. |  -  |
 | **403** | plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. |  -  |
-| **429** | too_many_requests — rate limit exceeded. |  -  |
+| **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 

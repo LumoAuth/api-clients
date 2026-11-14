@@ -23,6 +23,7 @@ type AdminGroupsListResponse struct {
 	Data []Group `json:"data,omitempty"`
 	Meta *PaginationMeta `json:"meta,omitempty"`
 	Pagination *PaginationMeta `json:"pagination,omitempty"`
+	ResourceType *string `json:"resourceType,omitempty"`
 }
 
 // NewAdminGroupsListResponse instantiates a new AdminGroupsListResponse object
@@ -138,6 +139,38 @@ func (o *AdminGroupsListResponse) SetPagination(v PaginationMeta) {
 	o.Pagination = &v
 }
 
+// GetResourceType returns the ResourceType field value if set, zero value otherwise.
+func (o *AdminGroupsListResponse) GetResourceType() string {
+	if o == nil || IsNil(o.ResourceType) {
+		var ret string
+		return ret
+	}
+	return *o.ResourceType
+}
+
+// GetResourceTypeOk returns a tuple with the ResourceType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminGroupsListResponse) GetResourceTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.ResourceType) {
+		return nil, false
+	}
+	return o.ResourceType, true
+}
+
+// HasResourceType returns a boolean if a field has been set.
+func (o *AdminGroupsListResponse) HasResourceType() bool {
+	if o != nil && !IsNil(o.ResourceType) {
+		return true
+	}
+
+	return false
+}
+
+// SetResourceType gets a reference to the given string and assigns it to the ResourceType field.
+func (o *AdminGroupsListResponse) SetResourceType(v string) {
+	o.ResourceType = &v
+}
+
 func (o AdminGroupsListResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -156,6 +189,9 @@ func (o AdminGroupsListResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Pagination) {
 		toSerialize["pagination"] = o.Pagination
+	}
+	if !IsNil(o.ResourceType) {
+		toSerialize["resourceType"] = o.ResourceType
 	}
 	return toSerialize, nil
 }

@@ -37,11 +37,12 @@ Name | Type | Description | Notes
 **backchannel_authentication_endpoint** | **string** |  | [optional] [default to undefined]
 **backchannel_token_delivery_modes_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **backchannel_user_code_parameter_supported** | **boolean** |  | [optional] [default to undefined]
+**resource_indicators_supported** | **boolean** |  | [optional] [default to undefined]
 **entity_profiles_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **client_id_metadata_document_supported** | **boolean** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] [default to undefined]
 **authorization_grant_profiles_supported** | **Array&lt;string&gt;** | Only when the organization accepts ID-JAGs. | [optional] [default to undefined]
-**op_policy_uri** | **string** | Only when configured. | [optional] [default to undefined]
-**op_tos_uri** | **string** | Only when configured. | [optional] [default to undefined]
+**op_policy_uri** | **string** | The Privacy policy URL of the organization\&#39;s login page settings. Only when it is set. | [optional] [default to undefined]
+**op_tos_uri** | **string** | The Terms of service URL of the organization\&#39;s login page settings. Only when it is set. | [optional] [default to undefined]
 
 ## Example
 
@@ -81,6 +82,7 @@ const instance: AuthorizationServerMetadata = {
     backchannel_authentication_endpoint,
     backchannel_token_delivery_modes_supported,
     backchannel_user_code_parameter_supported,
+    resource_indicators_supported,
     entity_profiles_supported,
     client_id_metadata_document_supported,
     authorization_grant_profiles_supported,

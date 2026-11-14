@@ -222,7 +222,7 @@ Name | Type | Description  | Required | Notes
 
 ## abac_policies_list
 
-> models::AbacPoliciesListResponse abac_policies_list(org_id)
+> models::AbacPoliciesListResponse abac_policies_list(org_id, action)
 List ABAC policies
 
 ### Parameters
@@ -231,6 +231,7 @@ List ABAC policies
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**action** | Option<**String**> | Only policies that name this action, alone or in a comma-separated list. `*` lists the policies that name `*`. |  |
 
 ### Return type
 

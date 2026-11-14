@@ -67,7 +67,7 @@ pub struct OpenIdConfiguration {
     pub ui_locales_supported: Option<Vec<String>>,
     #[serde(rename = "prompt_values_supported", skip_serializing_if = "Option::is_none")]
     pub prompt_values_supported: Option<Vec<String>>,
-    /// The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
+    /// The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session). The list is the same for every organization.
     #[serde(rename = "acr_values_supported", skip_serializing_if = "Option::is_none")]
     pub acr_values_supported: Option<Vec<String>>,
     #[serde(rename = "code_challenge_methods_supported", skip_serializing_if = "Option::is_none")]
@@ -118,10 +118,10 @@ pub struct OpenIdConfiguration {
     /// Only when the organization accepts ID-JAGs.
     #[serde(rename = "authorization_grant_profiles_supported", skip_serializing_if = "Option::is_none")]
     pub authorization_grant_profiles_supported: Option<Vec<String>>,
-    /// Only when configured.
+    /// The Privacy policy URL of the organization's login page settings. Only when it is set.
     #[serde(rename = "op_policy_uri", skip_serializing_if = "Option::is_none")]
     pub op_policy_uri: Option<String>,
-    /// Only when configured.
+    /// The Terms of service URL of the organization's login page settings. Only when it is set.
     #[serde(rename = "op_tos_uri", skip_serializing_if = "Option::is_none")]
     pub op_tos_uri: Option<String>,
 }

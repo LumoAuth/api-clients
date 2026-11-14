@@ -6,8 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | Option<**i32**> |  | [optional]
 **name** | Option<**String**> |  | [optional]
-**description** | Option<**String**> |  | [optional]
-**is_default** | Option<**bool**> |  | [optional]
+**description** | Option<**String**> | Shown to users on the consent page next to the scope name. | [optional]
 **is_system** | Option<**bool**> |  | [optional]
 **created_at** | Option<**String**> |  | [optional]
 

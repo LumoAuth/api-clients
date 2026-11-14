@@ -983,6 +983,9 @@ paths:
         name: id
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -993,7 +996,7 @@ paths:
                 $ref: "#/components/schemas/MessageResponse"
           description: Deleted
         "403":
-          description: System attribute definitions cannot be deleted
+          description: System and built-in attribute definitions cannot be deleted
         "404":
           description: Attribute definition not found
       summary: Delete an attribute definition
@@ -1015,6 +1018,9 @@ paths:
         name: id
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -1045,6 +1051,9 @@ paths:
         name: id
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -1055,7 +1064,7 @@ paths:
                 $ref: "#/components/schemas/PutAbacAttributesUpdateResponse"
           description: Updated
         "403":
-          description: System attribute definitions cannot be modified
+          description: System and built-in attribute definitions cannot be modified
         "404":
           description: Attribute definition not found
       summary: Partially update an attribute definition
@@ -1077,6 +1086,9 @@ paths:
         name: id
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -1087,7 +1099,7 @@ paths:
                 $ref: "#/components/schemas/PutAbacAttributesUpdateResponse"
           description: Updated
         "403":
-          description: System attribute definitions cannot be modified
+          description: System and built-in attribute definitions cannot be modified
         "404":
           description: Attribute definition not found
       summary: Update an attribute definition
@@ -1098,6 +1110,15 @@ paths:
     get:
       operationId: abacPoliciesList
       parameters:
+      - description: "Only policies that name this action, alone or in a comma-separated\
+          \ list. `*` lists the policies that name `*`."
+        explode: true
+        in: query
+        name: action
+        required: false
+        schema:
+          type: string
+        style: form
       - explode: false
         in: path
         name: orgId
@@ -1134,8 +1155,10 @@ paths:
                 $ref: "#/components/schemas/AbacPoliciesCreateResponse"
           description: Created
         "400":
-          description: "Invalid effect, priority (a whole number from 0 to 1000) or\
-            \ policy conditions"
+          description: "Invalid effect, priority (a whole number from 0 to 1000),\
+            \ resourceType or action (empty, longer than 100 characters, or naming\
+            \ no action), or policy conditions. `action` is one action, several separated\
+            \ by commas (`read, write`), or `*`."
         "409":
           description: A policy with this slug already exists
       summary: Create an ABAC policy
@@ -1158,6 +1181,9 @@ paths:
         name: id
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -1168,7 +1194,7 @@ paths:
                 $ref: "#/components/schemas/MessageResponse"
           description: Deleted
         "403":
-          description: System policies cannot be deleted
+          description: System and built-in policies cannot be deleted
         "404":
           description: Policy not found
       summary: Delete an ABAC policy
@@ -1190,6 +1216,9 @@ paths:
         name: id
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -1220,6 +1249,9 @@ paths:
         name: id
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -1229,8 +1261,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAbacPoliciesUpdateResponse"
           description: Updated
+        "400":
+          description: "Invalid effect, priority, resourceType or action (empty, longer\
+            \ than 100 characters, or naming no action), or policy conditions"
         "403":
-          description: System policies cannot be modified
+          description: System and built-in policies cannot be modified
         "404":
           description: Policy not found
       summary: Partially update an ABAC policy
@@ -1252,6 +1287,9 @@ paths:
         name: id
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -1261,8 +1299,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAbacPoliciesUpdateResponse"
           description: Updated
+        "400":
+          description: "Invalid effect, priority, resourceType or action (empty, longer\
+            \ than 100 characters, or naming no action), or policy conditions"
         "403":
-          description: System policies cannot be modified
+          description: System and built-in policies cannot be modified
         "404":
           description: Policy not found
       summary: Update an ABAC policy
@@ -1285,6 +1326,9 @@ paths:
         name: id
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -1295,7 +1339,7 @@ paths:
                 $ref: "#/components/schemas/AbacPoliciesToggleResponse"
           description: Toggled policy
         "403":
-          description: System policies cannot be modified
+          description: System and built-in policies cannot be modified
         "404":
           description: Policy not found
       summary: Toggle a policy between active and inactive
@@ -1306,6 +1350,32 @@ paths:
     get:
       operationId: adminAgentsList
       parameters:
+      - description: "Sort field. Default: name. Another value is ignored."
+        explode: true
+        in: query
+        name: sortBy
+        required: false
+        schema:
+          enum:
+          - name
+          - agentId
+          - status
+          - createdAt
+          - lastUsedAt
+          type: string
+        style: form
+      - description: "Sort direction, used with sortBy."
+        explode: true
+        in: query
+        name: sortDir
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
       - explode: false
         in: path
         name: orgId
@@ -2007,7 +2077,9 @@ paths:
         name: logId
         required: true
         schema:
-          pattern: \d+
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -2090,6 +2162,8 @@ paths:
       - "Admin: Audit Logs"
       x-symfony-route: api_admin_audit_logs_retention
     patch:
+      description: "Needs `settings.manage` and `gdpr.manage`, as the GDPR settings\
+        \ page in the portal does."
       operationId: patchAdminAuditLogsRetentionUpdate
       parameters:
       - explode: false
@@ -2111,6 +2185,8 @@ paths:
       - "Admin: Audit Logs"
       x-symfony-route: api_admin_audit_logs_retention_update
     put:
+      description: "Needs `settings.manage` and `gdpr.manage`, as the GDPR settings\
+        \ page in the portal does."
       operationId: putAdminAuditLogsRetentionUpdate
       parameters:
       - explode: false
@@ -2133,6 +2209,8 @@ paths:
       x-symfony-route: api_admin_audit_logs_retention_update
   /orgs/{orgId}/api/v1/admin/audit-logs/export:
     get:
+      description: "Needs `audit.export` and `audit.view`, as the export on the portal's\
+        \ audit log page does."
       operationId: adminAuditLogsExport
       parameters:
       - explode: false
@@ -2159,8 +2237,9 @@ paths:
       x-symfony-route: api_admin_audit_logs_export
   /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding:
     get:
-      description: Login settings use the same keys as the organization branding settings
-        (GET /settings/branding); a missing or null value means "same as the organization".
+      description: Needs `branding.view` and `clients.view`. Login settings use the
+        same keys as the organization branding settings (GET /settings/branding);
+        a missing or null value means "same as the organization".
       operationId: adminClientsGetBranding
       parameters:
       - explode: false
@@ -2191,6 +2270,8 @@ paths:
       - "Admin: OAuth Clients"
       x-symfony-route: api_admin_clients_get_branding
     patch:
+      description: "Needs `branding.edit` and `clients.edit`, as the Branding tab\
+        \ of the application in the portal does."
       operationId: patchAdminClientsUpdateBranding
       parameters:
       - explode: false
@@ -2226,6 +2307,8 @@ paths:
       - "Admin: OAuth Clients"
       x-symfony-route: api_admin_clients_update_branding
     put:
+      description: "Needs `branding.edit` and `clients.edit`, as the Branding tab\
+        \ of the application in the portal does."
       operationId: putAdminClientsUpdateBranding
       parameters:
       - explode: false
@@ -2623,6 +2706,8 @@ paths:
       x-symfony-route: api_admin_clients_rotate_secret
   /orgs/{orgId}/api/v1/admin/email-templates:
     get:
+      description: "Needs `settings.manage` and `users.delete`, as the email template\
+        \ pages in the portal do."
       operationId: adminEmailTemplatesList
       parameters:
       - explode: false
@@ -2690,6 +2775,8 @@ paths:
       - "Admin: Email"
       x-symfony-route: api_admin_email_templates_delete
     get:
+      description: "Needs `settings.manage` and `users.delete`, as the email template\
+        \ pages in the portal do."
       operationId: adminEmailTemplatesGet
       parameters:
       - description: "Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant\
@@ -2806,6 +2893,8 @@ paths:
       x-symfony-route: api_admin_email_templates_preview
   /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables:
     get:
+      description: "Needs `settings.manage` and `users.delete`, as the email template\
+        \ pages in the portal do."
       operationId: adminEmailTemplatesVariables
       parameters:
       - explode: false
@@ -2858,6 +2947,14 @@ paths:
       - "Admin: Groups"
       x-symfony-route: api_admin_groups_list
     post:
+      description: "Optional `roles` is a list of role slugs. An unknown slug is 400.\
+        \ A role can be given to a group only when it belongs to this organization\
+        \ and the caller holds every permission in it; otherwise the answer is 403\
+        \ and nothing is stored. The built-in administrator role follows the same\
+        \ rule. When a role opens the admin portal (the built-in one or any role with\
+        \ a portal permission), each active member of the group who is not an administrator\
+        \ yet takes an admin seat (403 `plan_limit_reached` when the plan has too\
+        \ few left)."
       operationId: adminGroupsCreate
       parameters:
       - explode: false
@@ -3114,6 +3211,13 @@ paths:
       - "Admin: Groups"
       x-symfony-route: api_admin_groups_groups_get_roles
     post:
+      description: "A role can be given to a group only when it belongs to this organization\
+        \ and the caller holds every permission in it; otherwise the answer is 403\
+        \ and nothing is stored. The built-in administrator role follows the same\
+        \ rule. When a role opens the admin portal (the built-in one or any role with\
+        \ a portal permission), each active member of the group who is not an administrator\
+        \ yet takes an admin seat (403 `plan_limit_reached` when the plan has too\
+        \ few left)."
       operationId: adminGroupsAddRole
       parameters:
       - explode: false
@@ -3142,6 +3246,15 @@ paths:
       - "Admin: Groups"
       x-symfony-route: api_admin_groups_add_role
     put:
+      description: "`roles` is the full list of role slugs. An unknown slug is 400.\
+        \ A role can be given to a group only when it belongs to this organization\
+        \ and the caller holds every permission in it; otherwise the answer is 403\
+        \ and nothing is stored. The built-in administrator role follows the same\
+        \ rule. When a role opens the admin portal (the built-in one or any role with\
+        \ a portal permission), each active member of the group who is not an administrator\
+        \ yet takes an admin seat (403 `plan_limit_reached` when the plan has too\
+        \ few left). Roles already on the group that the caller could not grant stay\
+        \ on it whatever the list says."
       operationId: adminGroupsUpdateRoles
       parameters:
       - explode: false
@@ -3192,6 +3305,9 @@ paths:
         name: roleId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -3389,7 +3505,9 @@ paths:
         \ `dry_run` (default true) only reports what would change. A real run revokes\
         \ each relinked user's sessions, notifies them and is audited (identity.link.created\
         \ per user, identity.link.bulk_relinked once); signed-in admins need fresh\
-        \ MFA."
+        \ MFA. An access token must come from a sign-in within the last 10 minutes\
+        \ (401 insufficient_user_authentication otherwise), except for a request that\
+        \ sends `\"dry_run\": true`."
       operationId: adminIdentitiesLegacySamlRelink
       parameters:
       - explode: false
@@ -3602,7 +3720,12 @@ paths:
     delete:
       description: "Revokes a single authenticator (e.g. a lost phone). Trusted devices\
         \ are revoked and the user is notified. Does not bypass the tenant MFA requirement:\
-        \ the user is prompted to enroll again at next sign-in."
+        \ the user is prompted to enroll again at next sign-in. A signed-in administrator\
+        \ must have signed in or passed MFA within the last 10 minutes: a Bearer token\
+        \ needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`),\
+        \ and an administrator who holds a second factor sends `X-MFA-Challenge` with\
+        \ an approved step_up challenge (otherwise 403 `step_up_required`). Organization\
+        \ API keys are not subject to this check."
       operationId: deleteUserAuthenticator
       parameters:
       - explode: false
@@ -3624,7 +3747,9 @@ paths:
         name: authenticatorId
         required: true
         schema:
-          pattern: "[a-z_]+:\\d+"
+          pattern: "[a-z_]+:(?:[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\\
+            d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\\
+            d{2}|21474836[0-3]\\d|214748364[0-7])"
           type: string
         style: simple
       responses:
@@ -3634,6 +3759,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/DeleteUserAuthenticatorResponse"
           description: Removed
+        "401":
+          description: "insufficient_user_authentication: the access token comes from\
+            \ a sign-in older than 10 minutes"
+        "403":
+          description: "Actor does not outrank the user, or step_up_required"
         "404":
           description: User or authenticator not found
       summary: Remove one of a user's authenticators
@@ -3739,7 +3869,9 @@ paths:
   /orgs/{orgId}/api/v1/admin/reports/mfa-coverage:
     get:
       description: "Share of users with MFA, by factor type and strongest tier, plus\
-        \ users inside or past the enrollment grace period (POL-002)."
+        \ users inside or past the enrollment grace period (POL-002). Needs `users.view`\
+        \ and `settings.view`, as the report on the portal's authentication settings\
+        \ page does."
       operationId: getMfaCoverageReport
       parameters:
       - explode: false
@@ -3799,8 +3931,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminOrganizationsCreateResponse"
           description: Organization created
+        "400":
+          description: "name missing, empty or over 100 characters; a slug that does\
+            \ not fit the rule; displayName over 255 characters; logoUrl not an absolute\
+            \ https URL"
+        "403":
+          description: "plan_limit_reached: the plan allows no further customer organization"
         "409":
-          description: Organization already exists or data invalid
+          description: The slug is taken
       summary: Create an organization
       tags:
       - "Admin: Organizations"
@@ -3890,10 +4028,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminOrganizationsGetResponse"
           description: Updated organization
+        "400":
+          description: "A field that does not fit (see create), or an empty `slug`\
+            \ (leave the field out to keep the slug)"
         "404":
           description: Organization not found
         "409":
-          description: Data invalid or conflicts with an existing record
+          description: The slug is taken
       summary: Update an organization
       tags:
       - "Admin: Organizations"
@@ -3922,10 +4063,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminOrganizationsGetResponse"
           description: Updated organization
+        "400":
+          description: "A field that does not fit (see create), or an empty `slug`\
+            \ (leave the field out to keep the slug)"
         "404":
           description: Organization not found
         "409":
-          description: Data invalid or conflicts with an existing record
+          description: The slug is taken
       summary: Update an organization
       tags:
       - "Admin: Organizations"
@@ -4166,10 +4310,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminOrgRolesCreateResponse"
           description: Role created
+        "400":
+          description: "Missing name or slug, a slug that is not 2 to 40 lowercase\
+            \ letters, digits, hyphens or underscores, a name longer than 100 characters\
+            \ or a description longer than 1,000"
         "404":
           description: Organization not found
         "409":
-          description: A role with this name or slug already exists
+          description: A role with this slug already exists in this organization
       summary: Create an organization role
       tags:
       - "Admin: Organizations"
@@ -4197,6 +4345,9 @@ paths:
         name: roleId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -4236,6 +4387,9 @@ paths:
         name: roleId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -4275,6 +4429,9 @@ paths:
         name: roleId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -4348,9 +4505,13 @@ paths:
                 $ref: "#/components/schemas/AdminOrgInvitationsCreateResponse"
           description: Invitation sent
         "400":
-          description: Invalid role for this organization
+          description: "A roleId that names no role of this organization, an email\
+            \ that is not an email address, or a message longer than 500 characters"
         "404":
           description: Organization not found
+        "429":
+          description: "Too many invitations from this organization, or to this address,\
+            \ in the last hour"
       summary: Invite a user to an organization
       tags:
       - "Admin: Organizations"
@@ -4378,6 +4539,9 @@ paths:
         name: invId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -4416,6 +4580,9 @@ paths:
         name: invId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -4649,6 +4816,9 @@ paths:
         name: scopeId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -4685,6 +4855,10 @@ paths:
       - "Admin: Roles"
       x-symfony-route: api_admin_roles_list
     post:
+      description: "Optional `permissions` is a list of permission slugs. Giving it\
+        \ needs `roles.assign-permissions` as well as `roles.create`, and every permission\
+        \ must be one that the caller holds; otherwise the answer is 403 and no role\
+        \ is created. An unknown slug is 400."
       operationId: adminRolesCreate
       parameters:
       - explode: false
@@ -4848,6 +5022,14 @@ paths:
       - "Admin: Roles"
       x-symfony-route: api_admin_roles_get_permissions
     post:
+      description: "Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId`\
+        \ or a list `permissionIds`. Every id is judged before anything changes: an\
+        \ unknown id is 400 (`Unknown permission: <id>`), and a permission that the\
+        \ caller does not hold is 403. Either refusal adds nothing. A permission that\
+        \ the role already holds is left as it is. When the role starts to open the\
+        \ admin portal, each active holder that is not an administrator yet takes\
+        \ an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`,\
+        \ and `requested` says how many seats it needs."
       operationId: adminRolesAddPermissions
       parameters:
       - explode: false
@@ -4871,11 +5053,30 @@ paths:
               schema:
                 $ref: "#/components/schemas/MessageResponse"
           description: Added; message reports how many permissions were added
+        "400":
+          description: "No permissionId / permissionIds, an id that is not a whole\
+            \ number, an unknown id, or a permission reserved for the platform"
+        "403":
+          description: "A permission that the caller does not hold, a system role,\
+            \ or too few admin seats for the holders that the role would make administrators\
+            \ (`plan_limit_reached`)"
+        "404":
+          description: Role not found
       summary: Add permission(s) to a role
       tags:
       - "Admin: Roles"
       x-symfony-route: api_admin_roles_add_permissions
     put:
+      description: "Needs `roles.assign-permissions` and `roles.edit`. `permissions`\
+        \ is the full list of permission slugs that the role should grant. The whole\
+        \ list is judged before anything changes: an unknown slug is 400 (`Unknown\
+        \ permission: <slug>`), and a permission that the role does not hold yet must\
+        \ be one that the caller holds, otherwise 403. Either refusal changes nothing.\
+        \ Permissions on the role that the caller does not hold are kept, whether\
+        \ or not the list names them. When the role starts to open the admin portal,\
+        \ each active holder that is not an administrator yet takes an admin seat;\
+        \ too few free seats refuse the whole change with 403 `plan_limit_reached`,\
+        \ and `requested` says how many seats it needs."
       operationId: adminRolesUpdatePermissions
       parameters:
       - explode: false
@@ -4899,12 +5100,22 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminRolesCreateResponse"
           description: Updated role
+        "400":
+          description: "permissions is missing or not a list, names an unknown slug,\
+            \ or names a permission reserved for the platform"
+        "403":
+          description: "A new permission that the caller does not hold, a system role,\
+            \ or too few admin seats for the holders that the role would make administrators\
+            \ (`plan_limit_reached`)"
+        "404":
+          description: Role not found
       summary: Update role permissions (replaces all)
       tags:
       - "Admin: Roles"
       x-symfony-route: api_admin_roles_update_permissions
   /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId}:
     delete:
+      description: Needs `roles.assign-permissions` and `roles.edit`.
       operationId: adminRolesRemovePermission
       parameters:
       - explode: false
@@ -4926,6 +5137,9 @@ paths:
         name: permissionId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -5231,6 +5445,9 @@ paths:
         name: sessionId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -5288,6 +5505,9 @@ paths:
         name: tokenId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -5543,6 +5763,10 @@ paths:
       x-symfony-route: api_admin_sessions_count
   /orgs/{orgId}/api/v1/admin/settings:
     get:
+      description: "Needs `settings.view`. The `branding` part is returned only to\
+        \ a caller who also holds `branding.view` (for an API key, its creator), as\
+        \ for GET /settings/branding and the portal's branding page; without it the\
+        \ key is left out."
       operationId: adminSettingsAll
       parameters:
       - explode: false
@@ -5586,6 +5810,13 @@ paths:
       - "Admin: Settings"
       x-symfony-route: api_admin_settings_general_get
     patch:
+      description: "Changes the name of the organization and the default language\
+        \ of the hosted pages. name, tenantName, display_name and displayName are\
+        \ four spellings of the one name: send one of them, or the same text in each.\
+        \ timezone is not a setting (dates are shown in UTC) and is refused with 400.\
+        \ Other keys are ignored. PUT and PATCH behave the same. The caller needs\
+        \ settings.manage, as for PATCH /admin/organization, which changes the same\
+        \ name; changing locale also needs branding.edit."
       operationId: patchAdminSettingsGeneralUpdate
       parameters:
       - explode: false
@@ -5595,6 +5826,11 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminSettingsGeneralUpdateRequest"
       responses:
         "200":
           content:
@@ -5602,11 +5838,25 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminSettingsGeneralUpdateResponse"
           description: Updated general settings
+        "400":
+          description: "A value is not valid (empty or too long name, unknown language,\
+            \ different values for name and one of its aliases) or is not a setting\
+            \ (timezone). Nothing is stored."
+        "403":
+          description: "The caller does not hold settings.manage, or locale would\
+            \ change and the caller does not hold branding.edit. Nothing is stored."
       summary: Update general settings
       tags:
       - "Admin: Settings"
       x-symfony-route: api_admin_settings_general_update
     put:
+      description: "Changes the name of the organization and the default language\
+        \ of the hosted pages. name, tenantName, display_name and displayName are\
+        \ four spellings of the one name: send one of them, or the same text in each.\
+        \ timezone is not a setting (dates are shown in UTC) and is refused with 400.\
+        \ Other keys are ignored. PUT and PATCH behave the same. The caller needs\
+        \ settings.manage, as for PATCH /admin/organization, which changes the same\
+        \ name; changing locale also needs branding.edit."
       operationId: putAdminSettingsGeneralUpdate
       parameters:
       - explode: false
@@ -5616,6 +5866,11 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminSettingsGeneralUpdateRequest"
       responses:
         "200":
           content:
@@ -5623,6 +5878,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminSettingsGeneralUpdateResponse"
           description: Updated general settings
+        "400":
+          description: "A value is not valid (empty or too long name, unknown language,\
+            \ different values for name and one of its aliases) or is not a setting\
+            \ (timezone). Nothing is stored."
+        "403":
+          description: "The caller does not hold settings.manage, or locale would\
+            \ change and the caller does not hold branding.edit. Nothing is stored."
       summary: Update general settings
       tags:
       - "Admin: Settings"
@@ -5666,6 +5928,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminSettingsAuthenticationUpdateResponse"
           description: Updated authentication settings
+        "403":
+          description: "The caller does not hold settings.manage; or cimd_allowed_scopes\
+            \ gains an admin scope and the caller is not a full administrator (settings.manage\
+            \ and users.delete), or gains authz:check and the caller does not hold\
+            \ policies.view; or the change repoints a social provider that accounts\
+            \ the caller does not outrank are bound to. Nothing is stored."
       summary: Update authentication settings (alias for settings/auth)
       tags:
       - "Admin: Settings"
@@ -5687,6 +5955,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminSettingsAuthenticationUpdateResponse"
           description: Updated authentication settings
+        "403":
+          description: "The caller does not hold settings.manage; or cimd_allowed_scopes\
+            \ gains an admin scope and the caller is not a full administrator (settings.manage\
+            \ and users.delete), or gains authz:check and the caller does not hold\
+            \ policies.view; or the change repoints a social provider that accounts\
+            \ the caller does not outrank are bound to. Nothing is stored."
       summary: Update authentication settings (alias for settings/auth)
       tags:
       - "Admin: Settings"
@@ -5757,6 +6031,9 @@ paths:
       x-symfony-route: api_admin_settings_security_update
   /orgs/{orgId}/api/v1/admin/settings/email:
     get:
+      description: "Shows who sends the organization's mail: its own mail provider\
+        \ (set up in the portal) with the From address, From name and Reply-To stored\
+        \ there, or LumoAuth with LumoAuth's sender."
       operationId: adminSettingsEmailGet
       parameters:
       - explode: false
@@ -5778,6 +6055,13 @@ paths:
       - "Admin: Settings"
       x-symfony-route: api_admin_settings_email_get
     patch:
+      description: "Changes the sender of the mail that the organization's own mail\
+        \ provider sends: fromEmail, fromName and replyToEmail. The provider itself\
+        \ (credentials, host, on/off) is set up in the portal. Without a provider\
+        \ the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused\
+        \ with 400. PATCH changes the fields sent; PUT replaces the three fields as\
+        \ a set (fromEmail is then required). The caller needs settings.manage and\
+        \ users.delete; an access token must come from a sign-in of the last 10 minutes."
       operationId: patchAdminSettingsEmailUpdate
       parameters:
       - explode: false
@@ -5787,6 +6071,11 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminSettingsEmailUpdateRequest"
       responses:
         "200":
           content:
@@ -5794,11 +6083,24 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminSettingsEmailUpdateResponse"
           description: Updated email settings
+        "400":
+          description: "A value is not valid, a field is not supported, or the organization\
+            \ has no mail provider of its own (details.rejected_keys names the fields).\
+            \ Nothing is stored."
+        "403":
+          description: The caller does not hold settings.manage and users.delete.
       summary: Update email settings
       tags:
       - "Admin: Settings"
       x-symfony-route: api_admin_settings_email_update
     put:
+      description: "Changes the sender of the mail that the organization's own mail\
+        \ provider sends: fromEmail, fromName and replyToEmail. The provider itself\
+        \ (credentials, host, on/off) is set up in the portal. Without a provider\
+        \ the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused\
+        \ with 400. PATCH changes the fields sent; PUT replaces the three fields as\
+        \ a set (fromEmail is then required). The caller needs settings.manage and\
+        \ users.delete; an access token must come from a sign-in of the last 10 minutes."
       operationId: putAdminSettingsEmailUpdate
       parameters:
       - explode: false
@@ -5808,6 +6110,11 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminSettingsEmailUpdateRequest"
       responses:
         "200":
           content:
@@ -5815,6 +6122,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminSettingsEmailUpdateResponse"
           description: Updated email settings
+        "400":
+          description: "A value is not valid, a field is not supported, or the organization\
+            \ has no mail provider of its own (details.rejected_keys names the fields).\
+            \ Nothing is stored."
+        "403":
+          description: The caller does not hold settings.manage and users.delete.
       summary: Update email settings
       tags:
       - "Admin: Settings"
@@ -5858,6 +6171,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminTenantUpdateResponse"
           description: Updated organization profile
+        "403":
+          description: "The caller does not hold settings.manage, or settings.audit_log_retention_days\
+            \ or settings.audit_log_auto_delete would change and the caller does not\
+            \ hold gdpr.manage. Nothing is stored."
       summary: Update organization (tenant) name and settings
       tags:
       - "Admin: Settings"
@@ -5879,6 +6196,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminTenantUpdateResponse"
           description: Updated organization profile
+        "403":
+          description: "The caller does not hold settings.manage, or settings.audit_log_retention_days\
+            \ or settings.audit_log_auto_delete would change and the caller does not\
+            \ hold gdpr.manage. Nothing is stored."
       summary: Update organization (tenant) name and settings
       tags:
       - "Admin: Settings"
@@ -5922,6 +6243,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminTenantUpdateResponse"
           description: Updated organization profile
+        "403":
+          description: "The caller does not hold settings.manage, or settings.audit_log_retention_days\
+            \ or settings.audit_log_auto_delete would change and the caller does not\
+            \ hold gdpr.manage. Nothing is stored."
       summary: Update organization (tenant) name and settings
       tags:
       - "Admin: Settings"
@@ -5943,6 +6268,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminTenantUpdateResponse"
           description: Updated organization profile
+        "403":
+          description: "The caller does not hold settings.manage, or settings.audit_log_retention_days\
+            \ or settings.audit_log_auto_delete would change and the caller does not\
+            \ hold gdpr.manage. Nothing is stored."
       summary: Update organization (tenant) name and settings
       tags:
       - "Admin: Settings"
@@ -5986,6 +6315,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminSettingsAuthenticationUpdateResponse"
           description: Updated authentication settings
+        "403":
+          description: "The caller does not hold settings.manage; or cimd_allowed_scopes\
+            \ gains an admin scope and the caller is not a full administrator (settings.manage\
+            \ and users.delete), or gains authz:check and the caller does not hold\
+            \ policies.view; or the change repoints a social provider that accounts\
+            \ the caller does not outrank are bound to. Nothing is stored."
       summary: Update authentication settings
       tags:
       - "Admin: Settings"
@@ -6007,6 +6342,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminSettingsAuthenticationUpdateResponse"
           description: Updated authentication settings
+        "403":
+          description: "The caller does not hold settings.manage; or cimd_allowed_scopes\
+            \ gains an admin scope and the caller is not a full administrator (settings.manage\
+            \ and users.delete), or gains authz:check and the caller does not hold\
+            \ policies.view; or the change repoints a social provider that accounts\
+            \ the caller does not outrank are bound to. Nothing is stored."
       summary: Update authentication settings
       tags:
       - "Admin: Settings"
@@ -6034,6 +6375,15 @@ paths:
       - "Admin: Settings"
       x-symfony-route: api_admin_settings_branding_get
     patch:
+      description: "Changes the login page settings that are live on the hosted pages.\
+        \ Values go through the same validation as the portal form; keys that the\
+        \ validation does not know are not stored, and the keys whose value it refused\
+        \ are listed in rejected. A change is kept as a published version (restorable\
+        \ in the portal) and recorded in the audit log as branding.login_page_updated.\
+        \ Setting custom_css, custom_html or show_powered_by: false needs a plan that\
+        \ includes it; sending back a stored value, or clearing it, is never refused.\
+        \ A draft that is being edited in the portal is not changed. PUT and PATCH\
+        \ behave the same: keys that are not sent keep their value."
       operationId: patchAdminSettingsBrandingUpdate
       parameters:
       - explode: false
@@ -6050,11 +6400,24 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminSettingsBrandingUpdateResponse"
           description: Updated branding settings
+        "403":
+          description: "A sign-in policy key would change without settings.manage,\
+            \ or custom_css, custom_html or show_powered_by: false would be set on\
+            \ a plan that does not include it."
       summary: Update branding/login page settings
       tags:
       - "Admin: Settings"
       x-symfony-route: api_admin_settings_branding_update
     put:
+      description: "Changes the login page settings that are live on the hosted pages.\
+        \ Values go through the same validation as the portal form; keys that the\
+        \ validation does not know are not stored, and the keys whose value it refused\
+        \ are listed in rejected. A change is kept as a published version (restorable\
+        \ in the portal) and recorded in the audit log as branding.login_page_updated.\
+        \ Setting custom_css, custom_html or show_powered_by: false needs a plan that\
+        \ includes it; sending back a stored value, or clearing it, is never refused.\
+        \ A draft that is being edited in the portal is not changed. PUT and PATCH\
+        \ behave the same: keys that are not sent keep their value."
       operationId: putAdminSettingsBrandingUpdate
       parameters:
       - explode: false
@@ -6071,6 +6434,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/PutAdminSettingsBrandingUpdateResponse"
           description: Updated branding settings
+        "403":
+          description: "A sign-in policy key would change without settings.manage,\
+            \ or custom_css, custom_html or show_powered_by: false would be set on\
+            \ a plan that does not include it."
       summary: Update branding/login page settings
       tags:
       - "Admin: Settings"
@@ -6555,6 +6922,8 @@ paths:
       - Ssf
       x-symfony-route: ssf_stream_config_delete
     get:
+      description: "Needs `webhooks.view` and `agents.view`, as the Security signals\
+        \ page in the portal does."
       operationId: getStreamConfig
       parameters:
       - explode: true
@@ -6609,6 +6978,7 @@ paths:
       x-symfony-route: ssf_stream_config
   /orgs/{orgId}/api/v1/ssf/verify:
     post:
+      description: "Needs `settings.manage`, as the portal does."
       operationId: verifyStream
       parameters:
       - explode: false
@@ -6635,6 +7005,121 @@ paths:
     get:
       operationId: listUsers
       parameters:
+      - description: Page number.
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: Users per page (1 to 100).
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Users whose email address, name or username contains this text\
+          \ (case-sensitive; the first 100 characters are used)."
+        explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Only active (`true`) or inactive (`false`) users.
+        explode: true
+        in: query
+        name: active
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Only blocked (`true`) or not blocked (`false`) users.
+        explode: true
+        in: query
+        name: blocked
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "`true` lists only the users that SCIM deleted (soft-deleted).\
+          \ Without it, or with `false`, the list leaves them out."
+        explode: true
+        in: query
+        name: deleted
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - description: Only users whose email address is verified (`true`) or not (`false`).
+        explode: true
+        in: query
+        name: emailVerified
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Only users with (`true`) or without (`false`) multi-factor authentication.
+        explode: true
+        in: query
+        name: mfaEnabled
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Only users who hold the role with this slug.
+        explode: true
+        in: query
+        name: role
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Only members of the group with this slug.
+        explode: true
+        in: query
+        name: group
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Sort field. Without it the list is sorted by createdAt, newest\
+          \ first. Another value sorts by createdAt."
+        explode: true
+        in: query
+        name: sortBy
+        required: false
+        schema:
+          enum:
+          - email
+          - name
+          - username
+          - createdAt
+          - lastLoginAt
+          type: string
+        style: form
+      - description: Sort direction. Used only together with sortBy.
+        explode: true
+        in: query
+        name: sortDir
+        required: false
+        schema:
+          default: DESC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
       - explode: false
         in: path
         name: orgId
@@ -6845,6 +7330,47 @@ paths:
       tags:
       - "Admin: Users"
       x-symfony-route: api_admin_users_unblock
+  /orgs/{orgId}/api/v1/admin/users/{userId}/restore:
+    post:
+      description: "Restores a user that inbound SCIM soft-deleted (list them with\
+        \ GET /users?deleted=true). The account keeps the roles, groups and permissions\
+        \ that it still holds, and its active and blocked state. Its sessions and\
+        \ tokens stay revoked: the user signs in again. An erased user cannot be restored."
+      operationId: adminUsersRestore
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminUsersRestoreResponse"
+          description: User restored
+        "403":
+          description: "The user holds privileges that the caller lacks, or the plan\
+            \ has no free administrator seat"
+        "404":
+          description: No such user in this organization
+        "409":
+          description: "The user is not deleted (`user_not_deleted`), was erased (`user_erased`),\
+            \ or its address is used by another account (`address_in_use`)"
+      summary: Restore a deleted user
+      tags:
+      - "Admin: Users"
+      x-symfony-route: api_admin_users_restore
   /orgs/{orgId}/api/v1/admin/users/{userId}/mfa/reset:
     post:
       deprecated: true
@@ -6982,6 +7508,9 @@ paths:
         name: roleId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -7103,6 +7632,9 @@ paths:
         name: groupId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -7146,6 +7678,11 @@ paths:
       - "Admin: Users"
       x-symfony-route: api_admin_users_get_permissions
     post:
+      description: "Grants one permission to the user directly. The caller must hold\
+        \ the permission (403 otherwise). A permission that opens the admin portal\
+        \ makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached`\
+        \ (`limit`: `admin_seats`) when the plan has none free. A user or permission\
+        \ outside this organization is 404."
       operationId: addUserPermission
       parameters:
       - explode: false
@@ -7196,6 +7733,9 @@ paths:
         name: permissionId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -7298,6 +7838,13 @@ paths:
       x-symfony-route: api_admin_users_password_reset
   /orgs/{orgId}/api/v1/admin/users/{userId}/password:
     post:
+      description: "Needs `users.edit`, and the caller must hold every permission\
+        \ of the user. A signed-in administrator must have signed in or passed MFA\
+        \ within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise\
+        \ 401 `insufficient_user_authentication`), and an administrator who holds\
+        \ a second factor sends `X-MFA-Challenge` with an approved step_up challenge\
+        \ (otherwise 403 `step_up_required`). Organization API keys are not subject\
+        \ to this check."
       operationId: setUserPasswordPost
       parameters:
       - explode: false
@@ -7321,11 +7868,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/SetUserPasswordPostResponse"
           description: Password updated
+        "401":
+          description: "insufficient_user_authentication: the access token comes from\
+            \ a sign-in older than 10 minutes"
+        "403":
+          description: "Actor does not outrank the user, or step_up_required"
       summary: Set a user's password
       tags:
       - "Admin: Users"
       x-symfony-route: api_admin_users_set_password
     put:
+      description: "Needs `users.edit`, and the caller must hold every permission\
+        \ of the user. A signed-in administrator must have signed in or passed MFA\
+        \ within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise\
+        \ 401 `insufficient_user_authentication`), and an administrator who holds\
+        \ a second factor sends `X-MFA-Challenge` with an approved step_up challenge\
+        \ (otherwise 403 `step_up_required`). Organization API keys are not subject\
+        \ to this check."
       operationId: setUserPassword
       parameters:
       - explode: false
@@ -7349,6 +7908,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/SetUserPasswordPostResponse"
           description: Password updated
+        "401":
+          description: "insufficient_user_authentication: the access token comes from\
+            \ a sign-in older than 10 minutes"
+        "403":
+          description: "Actor does not outrank the user, or step_up_required"
       summary: Set a user's password
       tags:
       - "Admin: Users"
@@ -7441,6 +8005,9 @@ paths:
         name: webhookId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -7471,6 +8038,9 @@ paths:
         name: webhookId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -7501,6 +8071,9 @@ paths:
         name: webhookId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -7537,6 +8110,9 @@ paths:
         name: webhookId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -7568,6 +8144,9 @@ paths:
         name: webhookId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -7599,6 +8178,9 @@ paths:
         name: webhookId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -7635,6 +8217,9 @@ paths:
         name: webhookId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -7672,6 +8257,9 @@ paths:
         name: webhookId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -7706,6 +8294,9 @@ paths:
         name: webhookId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -7739,6 +8330,9 @@ paths:
         name: webhookId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       - explode: false
@@ -7780,6 +8374,9 @@ paths:
         name: webhookId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       - explode: false
@@ -7847,6 +8444,9 @@ paths:
         name: webhookId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -7883,6 +8483,9 @@ paths:
         name: webhookId
         required: true
         schema:
+          pattern: "[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\\
+            d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\\
+            d|214748364[0-7]"
           type: string
         style: simple
       responses:
@@ -8425,7 +9028,7 @@ paths:
         POST /api/v1/authz/check
         Body: {
           "permission": "document.edit",
-          "context": {"document_id": 123, "owner_id": 456},
+          "context": {"resource_id": "doc-123"},        // read: resource_id + defined environment attribute slugs
           "subject": {"type": "user", "id": "<uuid>"}   // optional — defaults to the caller
         }
 
@@ -8451,7 +9054,7 @@ paths:
         POST /api/v1/authz/check-bulk
         Body: {
           "permissions": ["document.edit", "document.delete"],
-          "context": {"document_id": 123},
+          "context": {"resource_id": "doc-123"},
           "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
         }
       operationId: checkPermissionsBulk
@@ -8472,7 +9075,7 @@ paths:
         POST /api/v1/authz/check-any
         Body: {
           "permissions": ["document.edit", "document.view"],
-          "context": {"document_id": 123},
+          "context": {"resource_id": "doc-123"},
           "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
         }
       operationId: checkAnyPermission
@@ -8493,7 +9096,7 @@ paths:
         POST /api/v1/authz/check-all
         Body: {
           "permissions": ["document.edit", "document.publish"],
-          "context": {"document_id": 123},
+          "context": {"resource_id": "doc-123"},
           "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
         }
       operationId: checkAllPermissions
@@ -9024,11 +9627,10 @@ paths:
             \ DPoP-bound tokens. Any additional admin-supplied metadata fields are\
             \ merged in (they can never override resource, authorization_servers,\
             \ bearer_methods_supported or scopes_supported)."
-        "400":
-          description: not_applicable — the MCP server does not require authorization.
         "404":
-          description: "not_found — unknown organization, or unknown / inactive MCP\
-            \ server."
+          description: "not_found — unknown organization, unknown / inactive MCP server,\
+            \ or an MCP server that checks no token (Public or stdio): such a server\
+            \ has no protected resource metadata."
       security: []
       summary: MCP server protected resource metadata (RFC 9728)
       tags:
@@ -9093,7 +9695,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetServerChallengeResponse"
-          description: The access token is valid for this MCP server.
+          description: "The access token is valid for this MCP server, or the server\
+            \ checks no token."
         "401":
           description: "unauthorized / invalid_token with the MCP WWW-Authenticate\
             \ challenge (resource_metadata, and scope when the server includes it)."
@@ -9149,7 +9752,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetServerChallengeResponse"
-          description: The access token is valid for this MCP server.
+          description: "The access token is valid for this MCP server, or the server\
+            \ checks no token."
         "401":
           description: "unauthorized / invalid_token with the MCP WWW-Authenticate\
             \ challenge (resource_metadata, and scope when the server includes it)."
@@ -9251,7 +9855,7 @@ paths:
                 $ref: "#/components/schemas/ListServersResponse"
           description: List of active MCP servers for the tenant.
         "403":
-          description: Caller lacks the settings.manage permission.
+          description: Caller lacks the agents.view permission.
         "404":
           description: Tenant not found.
       summary: "REST API: List MCP servers for a tenant."
@@ -9285,7 +9889,7 @@ paths:
                 $ref: "#/components/schemas/GetServerResponse"
           description: A single MCP server with discovery metadata.
         "403":
-          description: Caller lacks the settings.manage permission.
+          description: Caller lacks the agents.view permission.
         "404":
           description: Tenant or MCP server not found.
       summary: "REST API: Get a specific MCP server."
@@ -9313,9 +9917,10 @@ paths:
                 $ref: "#/components/schemas/GetMeResponse"
           description: The authenticated principal
         "401":
-          description: Unauthorized
+          description: "No credential, an invalid credential, or a credential of another\
+            \ organization"
         "404":
-          description: Tenant not found
+          description: Organization not found
       summary: Who am I
       tags:
       - Identity
@@ -9921,7 +10526,8 @@ paths:
           description: "HTML error page for malformed requests (unknown client, unregistered\
             \ redirect_uri, invalid request object, …)."
         "429":
-          description: too_many_requests (JSON).
+          description: too_many_requests (JSON); Retry-After names the seconds to
+            wait.
       security: []
       summary: OAuth 2.1 / OIDC authorization endpoint
       tags:
@@ -9977,7 +10583,8 @@ paths:
           description: "HTML error page for malformed requests (unknown client, unregistered\
             \ redirect_uri, invalid request object, …)."
         "429":
-          description: too_many_requests (JSON).
+          description: too_many_requests (JSON); Retry-After names the seconds to
+            wait.
       security: []
       summary: OAuth 2.1 / OIDC authorization endpoint (form submission)
       tags:
@@ -10134,8 +10741,9 @@ paths:
           description: unauthorized_client (agent_id named but not authenticated by
             that agent) or access_denied.
         "429":
-          description: "too_many_requests, or slow_down when the target user already\
-            \ has too many pending requests."
+          description: "too_many_requests (rate limit exceeded; Retry-After names\
+            \ the seconds to wait), or slow_down when the target user already has\
+            \ too many pending requests."
       security:
       - ClientAuth: []
       - {}
@@ -10171,7 +10779,8 @@ paths:
         "401":
           description: invalid_client — a confidential client failed to authenticate.
         "429":
-          description: too_many_requests — rate limit exceeded.
+          description: too_many_requests — rate limit exceeded; Retry-After names
+            the seconds to wait.
       security:
       - ClientAuth: []
       - {}
@@ -10215,7 +10824,7 @@ paths:
             text/html:
               schema:
                 type: string
-          description: HTML error page — too many attempts.
+          description: HTML error page — too many attempts (Retry-After header).
       security: []
       summary: Device verification page (RFC 8628 §3.3)
       tags:
@@ -10255,12 +10864,59 @@ paths:
             text/html:
               schema:
                 type: string
-          description: HTML error page — too many attempts.
+          description: HTML error page — too many attempts (Retry-After header).
       security: []
       summary: Submit device verification
       tags:
       - OAuth
       x-symfony-route: oauth_device_verify
+  /orgs/{orgId}/api/v1/oauth/check-email:
+    post:
+      description: "For applications that render their own sign-in form. Returns the\
+        \ sign-in methods that the organization offers, so that the form can show\
+        \ the next step after an address was typed. The answer does not depend on\
+        \ the address: `exists` is always `true`, and a known address and a new one\
+        \ get the same answer. Takes no credential and signs nobody in. A browser\
+        \ request must come from one of the allowed origins of the application named\
+        \ by `client_id`."
+      operationId: checkEmailFirst
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckEmailFirstRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CheckEmailFirstResponse"
+          description: The organization's sign-in methods. The same for every address.
+        "400":
+          description: "`{\"error\": …, \"message\": …}` with error `invalid_request`\
+            \ or `invalid_client`."
+        "403":
+          description: "`{\"error\":\"origin_not_allowed\"}`: the page that made the\
+            \ request is not one of the application's allowed origins."
+        "404":
+          description: "`{\"error\":\"not_found\"}` for an unknown organization."
+        "429":
+          description: "`{\"error\":\"rate_limited\"}`; Retry-After names the seconds\
+            \ to wait."
+      security: []
+      summary: Sign-in methods for an email-first form
+      tags:
+      - OAuth
+      x-symfony-route: api_auth_check_email
   /orgs/{orgId}/api/v1/oauth/introspect:
     post:
       description: "Resource servers query the active state and meta-information of\
@@ -10291,7 +10947,8 @@ paths:
         "401":
           description: invalid_client — client authentication failed.
         "429":
-          description: Rate limit exceeded.
+          description: too_many_requests — rate limit exceeded; Retry-After names
+            the seconds to wait.
       security:
       - ClientAuth: []
       - {}
@@ -10375,7 +11032,8 @@ paths:
         "401":
           description: invalid_client — client authentication failed.
         "429":
-          description: too_many_requests — rate limit exceeded.
+          description: too_many_requests — rate limit exceeded; Retry-After names
+            the seconds to wait.
       security:
       - ClientAuth: []
       - {}
@@ -10411,7 +11069,8 @@ paths:
         "401":
           description: invalid_client — client authentication failed.
         "429":
-          description: too_many_requests — rate limit exceeded.
+          description: too_many_requests — rate limit exceeded; Retry-After names
+            the seconds to wait.
       security:
       - ClientAuth: []
       - {}
@@ -10467,7 +11126,8 @@ paths:
             tokens or active agents are used on a plan without overage; error_description
             says which.
         "429":
-          description: too_many_requests — rate limit exceeded.
+          description: too_many_requests — rate limit exceeded; Retry-After names
+            the seconds to wait.
       security:
       - ClientAuth: []
       - {}
@@ -10501,14 +11161,15 @@ paths:
             \ the roles claim, plus tenant — null-valued claims are omitted; an agent\
             \ token (no openid scope needed: an agent is not an End-User and reads\
             \ only its own record) yields sub=agent_<id>, name, agent_id, workload_identity,\
-            \ capabilities, budget_policy, tenant, identity_type=agent; a client token\
-            \ yields sub=client_<id>, client_id, name, tenant, identity_type=client.\
-            \ Sent with Cache-Control: no-store."
+            \ capabilities, budget_policy, tenant, identity_type=agent. A token from\
+            \ the client credentials grant of an OAuth client names neither and is\
+            \ refused with 401 invalid_token, as a JWT and as an opaque token. Sent\
+            \ with Cache-Control: no-store."
         "400":
           description: invalid_request — Authorization header missing or malformed.
         "401":
-          description: "invalid_token (invalid, expired, or wrong DPoP binding) or\
-            \ invalid_dpop_proof."
+          description: "invalid_token (invalid, expired, wrong DPoP binding, or a\
+            \ client credentials token, which names no user) or invalid_dpop_proof."
         "403":
           description: insufficient_scope — the openid scope is required.
       security:
@@ -10540,14 +11201,15 @@ paths:
             \ the roles claim, plus tenant — null-valued claims are omitted; an agent\
             \ token (no openid scope needed: an agent is not an End-User and reads\
             \ only its own record) yields sub=agent_<id>, name, agent_id, workload_identity,\
-            \ capabilities, budget_policy, tenant, identity_type=agent; a client token\
-            \ yields sub=client_<id>, client_id, name, tenant, identity_type=client.\
-            \ Sent with Cache-Control: no-store."
+            \ capabilities, budget_policy, tenant, identity_type=agent. A token from\
+            \ the client credentials grant of an OAuth client names neither and is\
+            \ refused with 401 invalid_token, as a JWT and as an opaque token. Sent\
+            \ with Cache-Control: no-store."
         "400":
           description: invalid_request — Authorization header missing or malformed.
         "401":
-          description: "invalid_token (invalid, expired, or wrong DPoP binding) or\
-            \ invalid_dpop_proof."
+          description: "invalid_token (invalid, expired, wrong DPoP binding, or a\
+            \ client credentials token, which names no user) or invalid_dpop_proof."
         "403":
           description: insufficient_scope — the openid scope is required.
       security:
@@ -10561,7 +11223,12 @@ paths:
       description: "Registers an OAuth client from a JSON metadata document. Authenticated\
         \ with an initial access token (Authorization: Bearer) or an API key holding\
         \ admin:clients:register; open registration applies when the organization\
-        \ allows it."
+        \ allows it. Refused with invalid_client_metadata: grant_types other than\
+        \ authorization_code and refresh_token, response_types other than code and\
+        \ none, subject_type other than public, sector_identifier_uri, request_uris,\
+        \ userinfo_signed_response_alg, an id_token_signed_response_alg other than\
+        \ the organization's signing algorithm, and every encryption member (id_token_encrypted_response_*,\
+        \ userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*)."
       operationId: registerClient
       parameters:
       - explode: false
@@ -10593,7 +11260,8 @@ paths:
           description: "access_denied — dynamic registration disabled for this organization,\
             \ or the API key is not authorized for it."
         "429":
-          description: too_many_requests — rate limit exceeded.
+          description: too_many_requests — rate limit exceeded; Retry-After names
+            the seconds to wait.
       security:
       - BearerAuth: []
       - ApiKeyAuth: []
@@ -10667,7 +11335,8 @@ paths:
           description: "OpenID Provider metadata. Conditional members: client_id_metadata_document_supported\
             \ (CIMD on, the default), authorization_grant_profiles_supported and the\
             \ jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri\
-            \ and a tenant acr_values_supported override (organization settings)."
+            \ (the Privacy policy URL and Terms of service URL of the login page settings,\
+            \ when set)."
         "404":
           description: invalid_tenant — unknown or inactive organization.
       security: []
@@ -10700,7 +11369,8 @@ paths:
           description: "Authorization server metadata. Conditional members: client_id_metadata_document_supported\
             \ (CIMD on, the default), authorization_grant_profiles_supported and the\
             \ jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri\
-            \ (organization settings)."
+            \ (the Privacy policy URL and Terms of service URL of the login page settings,\
+            \ when set)."
         "404":
           description: invalid_tenant — unknown or inactive organization.
       security: []
@@ -11812,7 +12482,9 @@ components:
         picture: picture
         loginCount: 0
         emailVerified: true
+        deletedAt: 2000-01-23T04:56:07.000+00:00
         phoneNumber: phoneNumber
+        deleted: true
         lastLoginAt: 2000-01-23T04:56:07.000+00:00
         blockedAt: 2000-01-23T04:56:07.000+00:00
         name: name
@@ -11851,6 +12523,15 @@ components:
           type: boolean
         blocked:
           type: boolean
+        deleted:
+          description: "Soft-deleted by inbound SCIM. Left out of the list unless\
+            \ deleted=true is asked; POST /users/{userId}/restore brings the user\
+            \ back."
+          type: boolean
+        deletedAt:
+          format: date-time
+          nullable: true
+          type: string
         mfaEnabled:
           type: boolean
         isAdmin:
@@ -12088,7 +12769,6 @@ components:
       example:
         isSystem: true
         createdAt: 2000-01-23T04:56:07.000+00:00
-        isDefault: true
         name: name
         description: description
         id: 0
@@ -12098,10 +12778,9 @@ components:
         name:
           type: string
         description:
+          description: Shown to users on the consent page next to the scope name.
           nullable: true
           type: string
-        isDefault:
-          type: boolean
         isSystem:
           type: boolean
         createdAt:
@@ -12569,7 +13248,10 @@ components:
           type: array
         customClaims:
           additionalProperties: true
-          description: Detailed responses only
+          deprecated: true
+          description: "Deprecated. Always null. The field is accepted on create and\
+            \ update and ignored: no sign-in sends extra claims to a provider. Ask\
+            \ for more profile data with requestedScopes."
           nullable: true
           type: object
         claimMapping:
@@ -12996,16 +13678,17 @@ components:
       type: object
     AbacAttributeDefinition:
       example:
-        isSystem: true
         isRequired: true
-        createdAt: 2000-01-23T04:56:07.000+00:00
         validationRules:
           key: ""
-        attributeType: user
         defaultValue: ""
         dataType: dataType
-        name: name
+        builtIn: true
         description: description
+        isSystem: true
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        attributeType: user
+        name: name
         id: 0
         slug: slug
         updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -13036,6 +13719,10 @@ components:
           type: boolean
         isSystem:
           type: boolean
+        builtIn:
+          description: "True for a definition that LumoAuth provides to every organization.\
+            \ It can be read, but not changed or deleted (403)."
+          type: boolean
         createdAt:
           format: date-time
           type: string
@@ -13046,6 +13733,7 @@ components:
       type: object
     AbacPolicy:
       example:
+        builtIn: true
         description: description
         priority: 6
         isActive: true
@@ -13073,6 +13761,10 @@ components:
         resourceType:
           type: string
         action:
+          description: "One action, several separated by commas (read, write), or\
+            \ * for every action. The policy decides a request for each action that\
+            \ it names; spaces around the commas are ignored and actions compare case-sensitively."
+          maxLength: 100
           type: string
         effect:
           enum:
@@ -13087,6 +13779,10 @@ components:
         isActive:
           type: boolean
         isSystem:
+          type: boolean
+        builtIn:
+          description: "True for a policy that LumoAuth provides to every organization.\
+            \ It can be read, but not changed, switched or deleted (403)."
           type: boolean
         createdAt:
           format: date-time
@@ -13126,6 +13822,53 @@ components:
           nullable: true
           type: string
       type: object
+    EmailSenderSettings:
+      description: "Who sends the organization's mail. The values are those of the\
+        \ organization's own mail provider (set up in the portal). Without a provider,\
+        \ or while it is switched off, mail is sent by LumoAuth with LumoAuth's sender."
+      example:
+        sender: platform
+        provider: provider
+        fromName: fromName
+        enabled: true
+        replyToEmail: replyToEmail
+        fromEmail: fromEmail
+      properties:
+        sender:
+          description: "Who sends the mail now: `provider` while the organization's\
+            \ own mail provider is switched on, else `platform`."
+          enum:
+          - platform
+          - provider
+          readOnly: true
+          type: string
+        provider:
+          description: "The mail provider that is set up (ses, sendgrid, mailgun,\
+            \ resend, postmark, smtp), or null."
+          nullable: true
+          readOnly: true
+          type: string
+        enabled:
+          description: Whether the mail provider is switched on.
+          readOnly: true
+          type: boolean
+        fromEmail:
+          description: From address of mail that the provider sends. It must be a
+            sender that is verified at the provider.
+          format: email
+          nullable: true
+          type: string
+        fromName:
+          description: From name of mail that the provider sends.
+          maxLength: 255
+          nullable: true
+          type: string
+        replyToEmail:
+          description: Reply-To address of mail that the provider sends.
+          format: email
+          nullable: true
+          type: string
+      type: object
     TenantProfile:
       description: The organization (tenant) record as returned by the settings endpoints.
       example:
@@ -13161,6 +13904,7 @@ components:
         refresh_token: refresh_token
         code: code
         request_type: auth
+        scope: scope
         resource_token: resource_token
         redirect_uri: redirect_uri
         auth_token: auth_token
@@ -13183,6 +13927,12 @@ components:
           type: string
         refresh_token:
           description: Refresh token to redeem (request_type=refresh).
+          type: string
+        scope:
+          description: "request_type=refresh only: optional space-delimited scopes\
+            \ that narrow the refreshed token. Must be a subset of the refresh grant\
+            \ and of the resource token scope (invalid_scope otherwise). Ignored for\
+            \ request_type=auth, where the resource token names the scope."
           type: string
       type: object
     IssueAgentTokenResponse:
@@ -13813,29 +14563,31 @@ components:
           hasPreviousPage: true
           page: 1
         data:
-        - isSystem: true
-          isRequired: true
-          createdAt: 2000-01-23T04:56:07.000+00:00
+        - isRequired: true
           validationRules:
             key: ""
-          attributeType: user
           defaultValue: ""
           dataType: dataType
-          name: name
+          builtIn: true
           description: description
+          isSystem: true
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          attributeType: user
+          name: name
           id: 0
           slug: slug
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - isSystem: true
-          isRequired: true
-          createdAt: 2000-01-23T04:56:07.000+00:00
+        - isRequired: true
           validationRules:
             key: ""
-          attributeType: user
           defaultValue: ""
           dataType: dataType
-          name: name
+          builtIn: true
           description: description
+          isSystem: true
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          attributeType: user
+          name: name
           id: 0
           slug: slug
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -13857,29 +14609,31 @@ components:
           hasPreviousPage: true
           page: 1
         data:
-        - isSystem: true
-          isRequired: true
-          createdAt: 2000-01-23T04:56:07.000+00:00
+        - isRequired: true
           validationRules:
             key: ""
-          attributeType: user
           defaultValue: ""
           dataType: dataType
-          name: name
+          builtIn: true
           description: description
+          isSystem: true
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          attributeType: user
+          name: name
           id: 0
           slug: slug
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - isSystem: true
-          isRequired: true
-          createdAt: 2000-01-23T04:56:07.000+00:00
+        - isRequired: true
           validationRules:
             key: ""
-          attributeType: user
           defaultValue: ""
           dataType: dataType
-          name: name
+          builtIn: true
           description: description
+          isSystem: true
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          attributeType: user
+          name: name
           id: 0
           slug: slug
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -13907,16 +14661,17 @@ components:
     AbacAttributesCreateResponse:
       example:
         data:
-          isSystem: true
           isRequired: true
-          createdAt: 2000-01-23T04:56:07.000+00:00
           validationRules:
             key: ""
-          attributeType: user
           defaultValue: ""
           dataType: dataType
-          name: name
+          builtIn: true
           description: description
+          isSystem: true
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          attributeType: user
+          name: name
           id: 0
           slug: slug
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -13931,16 +14686,17 @@ components:
     AbacAttributesGetResponse:
       example:
         data:
-          isSystem: true
           isRequired: true
-          createdAt: 2000-01-23T04:56:07.000+00:00
           validationRules:
             key: ""
-          attributeType: user
           defaultValue: ""
           dataType: dataType
-          name: name
+          builtIn: true
           description: description
+          isSystem: true
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          attributeType: user
+          name: name
           id: 0
           slug: slug
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -13951,16 +14707,17 @@ components:
     PutAbacAttributesUpdateResponse:
       example:
         data:
-          isSystem: true
           isRequired: true
-          createdAt: 2000-01-23T04:56:07.000+00:00
           validationRules:
             key: ""
-          attributeType: user
           defaultValue: ""
           dataType: dataType
-          name: name
+          builtIn: true
           description: description
+          isSystem: true
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          attributeType: user
+          name: name
           id: 0
           slug: slug
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -13982,7 +14739,8 @@ components:
           hasPreviousPage: true
           page: 1
         data:
-        - description: description
+        - builtIn: true
+          description: description
           priority: 6
           isActive: true
           isSystem: true
@@ -13996,7 +14754,8 @@ components:
           slug: slug
           resourceType: resourceType
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - description: description
+        - builtIn: true
+          description: description
           priority: 6
           isActive: true
           isSystem: true
@@ -14034,6 +14793,7 @@ components:
     AbacPoliciesCreateResponse:
       example:
         data:
+          builtIn: true
           description: description
           priority: 6
           isActive: true
@@ -14059,6 +14819,7 @@ components:
     AbacPoliciesGetResponse:
       example:
         data:
+          builtIn: true
           description: description
           priority: 6
           isActive: true
@@ -14080,6 +14841,7 @@ components:
     PutAbacPoliciesUpdateResponse:
       example:
         data:
+          builtIn: true
           description: description
           priority: 6
           isActive: true
@@ -14105,6 +14867,7 @@ components:
     AbacPoliciesToggleResponse:
       example:
         data:
+          builtIn: true
           description: description
           priority: 6
           isActive: true
@@ -15353,6 +16116,7 @@ components:
           totalPages: 5
           hasPreviousPage: true
           page: 1
+        resourceType: groups
       properties:
         data:
           items:
@@ -15362,6 +16126,9 @@ components:
           $ref: "#/components/schemas/PaginationMeta"
         pagination:
           $ref: "#/components/schemas/PaginationMeta"
+        resourceType:
+          example: groups
+          type: string
       type: object
     AdminGroupsCreateResponse:
       example:
@@ -15819,19 +16586,6 @@ components:
         data:
           $ref: "#/components/schemas/AdminIdentitiesLegacySamlRelinkResponseData"
       type: object
-    AdminMcpServersListResponseMeta:
-      example:
-        total: 5
-        limit: 7
-        page: 2
-      properties:
-        total:
-          type: integer
-        page:
-          type: integer
-        limit:
-          type: integer
-      type: object
     AdminMcpServersListResponse:
       example:
         pagination:
@@ -15939,18 +16693,25 @@ components:
           - allowed_client_ids
           status: status
         meta:
-          total: 5
-          limit: 7
-          page: 2
+          total: 6
+          hasNextPage: true
+          limit: 5
+          totalPages: 5
+          hasPreviousPage: true
+          page: 1
+        resourceType: mcp_servers
       properties:
         data:
           items:
             $ref: "#/components/schemas/McpServer"
           type: array
         meta:
-          $ref: "#/components/schemas/AdminMcpServersListResponseMeta"
+          $ref: "#/components/schemas/PaginationMeta"
         pagination:
           $ref: "#/components/schemas/PaginationMeta"
+        resourceType:
+          example: mcp_servers
+          type: string
       type: object
     AdminMcpServersCreateResponse:
       example:
@@ -16715,13 +17476,11 @@ components:
         data:
         - isSystem: true
           createdAt: 2000-01-23T04:56:07.000+00:00
-          isDefault: true
           name: name
           description: description
           id: 0
         - isSystem: true
           createdAt: 2000-01-23T04:56:07.000+00:00
-          isDefault: true
           name: name
           description: description
           id: 0
@@ -16742,7 +17501,6 @@ components:
         data:
           isSystem: true
           createdAt: 2000-01-23T04:56:07.000+00:00
-          isDefault: true
           name: name
           description: description
           id: 0
@@ -17278,14 +18036,20 @@ components:
       type: object
     AdminSettingsAllResponseDataGeneral:
       additionalProperties: true
-      description: "Organization name plus the raw settings dictionary: any stored\
-        \ key (display_name, timezone, locale, security, email, audit_log_retention_days,\
-        \ audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking\
-        \ keys are redacted."
+      description: "The organization name (name; displayName is the same value), locale\
+        \ (the default language of the hosted pages), then the stored settings dictionary:\
+        \ any stored key (security, audit_log_retention_days, audit_log_auto_delete,\
+        \ agent_governance, ...) is returned as-is; secret-looking keys are redacted."
       example:
+        displayName: displayName
         name: name
+        locale: locale
       properties:
         name:
+          type: string
+        displayName:
+          type: string
+        locale:
           type: string
       type: object
     AdminSettingsAllResponseDataSecurity:
@@ -17302,7 +18066,9 @@ components:
     AdminSettingsAllResponseData:
       example:
         general:
+          displayName: displayName
           name: name
+          locale: locale
         security:
           dpop_require_nonce: true
         branding:
@@ -17343,7 +18109,12 @@ components:
           split_panel_subtitle: split_panel_subtitle
           form_card_style: card
         email:
-          key: ""
+          sender: platform
+          provider: provider
+          fromName: fromName
+          enabled: true
+          replyToEmail: replyToEmail
+          fromEmail: fromEmail
         authentication:
           cimd_enabled: true
           passkeys:
@@ -17425,16 +18196,15 @@ components:
         security:
           $ref: "#/components/schemas/AdminSettingsAllResponseDataSecurity"
         email:
-          additionalProperties: true
-          description: "Free-form email settings dictionary, stored as sent (keys\
-            \ merge on update); secret-looking keys are redacted."
-          type: object
+          $ref: "#/components/schemas/EmailSenderSettings"
       type: object
     AdminSettingsAllResponse:
       example:
         data:
           general:
+            displayName: displayName
             name: name
+            locale: locale
           security:
             dpop_require_nonce: true
           branding:
@@ -17475,7 +18245,12 @@ components:
             split_panel_subtitle: split_panel_subtitle
             form_card_style: card
           email:
-            key: ""
+            sender: platform
+            provider: provider
+            fromName: fromName
+            enabled: true
+            replyToEmail: replyToEmail
+            fromEmail: fromEmail
           authentication:
             cimd_enabled: true
             passkeys:
@@ -17553,53 +18328,69 @@ components:
       type: object
     AdminSettingsGeneralGetResponseData:
       additionalProperties: true
-      description: "Defaults (displayName, timezone, locale) are filled in, then the\
-        \ raw settings dictionary is merged over them: any stored key (display_name,\
-        \ security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance,\
-        \ ...) is returned as-is; secret-looking keys are redacted."
+      description: "name, displayName (the same value) and locale, then the stored\
+        \ settings dictionary: any stored key (security, audit_log_retention_days,\
+        \ audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking\
+        \ keys are redacted."
       example:
         displayName: displayName
-        timezone: timezone
         name: name
-        locale: locale
+        locale: en
       properties:
         name:
+          description: "Name of the organization, shown on the hosted pages and in\
+            \ mail."
           type: string
         displayName:
-          type: string
-        timezone:
+          description: The same value as name.
           type: string
         locale:
+          description: Default language of the hosted pages (the Default language
+            of the login page settings).
+          example: en
           type: string
       type: object
     AdminSettingsGeneralGetResponse:
       example:
         data:
           displayName: displayName
-          timezone: timezone
           name: name
-          locale: locale
+          locale: en
       properties:
         data:
           $ref: "#/components/schemas/AdminSettingsGeneralGetResponseData"
       type: object
+    PutAdminSettingsGeneralUpdateRequest:
+      example:
+        name: name
+        locale: en
+      properties:
+        name:
+          description: "Name of the organization: one line, 1 to 255 characters. Aliases:\
+            \ tenantName, display_name, displayName."
+          maxLength: 255
+          type: string
+        locale:
+          description: "Default language of the hosted pages: en, es, fr, de, pt_BR\
+            \ (pt-BR is accepted too), it, nl, ja or ar. A change also needs the branding.edit\
+            \ permission."
+          example: en
+          type: string
+      type: object
     PutAdminSettingsGeneralUpdateResponseData:
       additionalProperties: true
-      description: "Organization name plus the raw settings dictionary: any stored\
-        \ key (display_name, timezone, locale, security, email, audit_log_retention_days,\
+      description: "name, displayName (the same value) and locale, then the stored\
+        \ settings dictionary: any stored key (security, audit_log_retention_days,\
         \ audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking\
         \ keys are redacted."
       example:
         displayName: displayName
-        timezone: timezone
         name: name
         locale: locale
       properties:
         name:
           type: string
         displayName:
-          type: string
-        timezone:
           type: string
         locale:
           type: string
@@ -17608,7 +18399,6 @@ components:
       example:
         data:
           displayName: displayName
-          timezone: timezone
           name: name
           locale: locale
         message: message
@@ -17797,25 +18587,53 @@ components:
     AdminSettingsEmailGetResponse:
       example:
         data:
-          key: ""
+          sender: platform
+          provider: provider
+          fromName: fromName
+          enabled: true
+          replyToEmail: replyToEmail
+          fromEmail: fromEmail
       properties:
         data:
-          additionalProperties: true
-          description: "Free-form email settings dictionary, stored as sent (keys\
-            \ merge on update); secret-looking keys are redacted."
-          type: object
+          $ref: "#/components/schemas/EmailSenderSettings"
+      type: object
+    PutAdminSettingsEmailUpdateRequest:
+      example:
+        fromName: fromName
+        replyToEmail: replyToEmail
+        fromEmail: fromEmail
+      properties:
+        fromEmail:
+          description: From address. It must be a sender that is verified at the mail
+            provider.
+          format: email
+          maxLength: 255
+          type: string
+        fromName:
+          description: "From name: one line. null or an empty string clears it."
+          maxLength: 255
+          nullable: true
+          type: string
+        replyToEmail:
+          description: Reply-To address. null or an empty string clears it.
+          format: email
+          maxLength: 255
+          nullable: true
+          type: string
       type: object
     PutAdminSettingsEmailUpdateResponse:
       example:
         data:
-          key: ""
+          sender: platform
+          provider: provider
+          fromName: fromName
+          enabled: true
+          replyToEmail: replyToEmail
+          fromEmail: fromEmail
         message: message
       properties:
         data:
-          additionalProperties: true
-          description: "Free-form email settings dictionary, stored as sent (keys\
-            \ merge on update); secret-looking keys are redacted."
-          type: object
+          $ref: "#/components/schemas/EmailSenderSettings"
         message:
           type: string
       type: object
@@ -17934,10 +18752,18 @@ components:
           custom_html: custom_html
           split_panel_subtitle: split_panel_subtitle
           form_card_style: card
+        rejected:
+        - rejected
+        - rejected
         message: message
       properties:
         data:
           $ref: "#/components/schemas/BrandingSettings"
+        rejected:
+          description: Keys whose value was refused by validation and not saved.
+          items:
+            type: string
+          type: array
         message:
           type: string
       type: object
@@ -18095,6 +18921,8 @@ components:
         eventsLast7Days: 7
       properties:
         eventsLast7Days:
+          description: "Audit events of the last 7 days, or of the audit retention\
+            \ period of the plan when that is shorter."
           type: integer
       type: object
     AdminAnalyticsDashboardResponseData:
@@ -18604,7 +19432,9 @@ components:
           picture: picture
           loginCount: 0
           emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
           phoneNumber: phoneNumber
+          deleted: true
           lastLoginAt: 2000-01-23T04:56:07.000+00:00
           blockedAt: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -18642,7 +19472,9 @@ components:
           picture: picture
           loginCount: 0
           emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
           phoneNumber: phoneNumber
+          deleted: true
           lastLoginAt: 2000-01-23T04:56:07.000+00:00
           blockedAt: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -18655,6 +19487,7 @@ components:
           totalPages: 5
           hasPreviousPage: true
           page: 1
+        resourceType: users
       properties:
         data:
           items:
@@ -18664,6 +19497,9 @@ components:
           $ref: "#/components/schemas/PaginationMeta"
         pagination:
           $ref: "#/components/schemas/PaginationMeta"
+        resourceType:
+          example: users
+          type: string
       type: object
     CreateUserResponse:
       example:
@@ -18700,7 +19536,9 @@ components:
           picture: picture
           loginCount: 0
           emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
           phoneNumber: phoneNumber
+          deleted: true
           lastLoginAt: 2000-01-23T04:56:07.000+00:00
           blockedAt: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -18749,7 +19587,9 @@ components:
           picture: picture
           loginCount: 0
           emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
           phoneNumber: phoneNumber
+          deleted: true
           lastLoginAt: 2000-01-23T04:56:07.000+00:00
           blockedAt: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -18794,7 +19634,9 @@ components:
           picture: picture
           loginCount: 0
           emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
           phoneNumber: phoneNumber
+          deleted: true
           lastLoginAt: 2000-01-23T04:56:07.000+00:00
           blockedAt: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -18851,7 +19693,9 @@ components:
           picture: picture
           loginCount: 0
           emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
           phoneNumber: phoneNumber
+          deleted: true
           lastLoginAt: 2000-01-23T04:56:07.000+00:00
           blockedAt: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -18900,7 +19744,9 @@ components:
           picture: picture
           loginCount: 0
           emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
           phoneNumber: phoneNumber
+          deleted: true
           lastLoginAt: 2000-01-23T04:56:07.000+00:00
           blockedAt: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -18912,6 +19758,57 @@ components:
           $ref: "#/components/schemas/User"
         message:
           example: User unblocked successfully
+          type: string
+      type: object
+    AdminUsersRestoreResponse:
+      example:
+        data:
+          zoneinfo: zoneinfo
+          roles:
+          - name: name
+            id: id
+            slug: slug
+          - name: name
+            id: id
+            slug: slug
+          isActive: true
+          locale: locale
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          blocked: true
+          jitProvisionedBy: jitProvisionedBy
+          familyName: familyName
+          mfaEnabled: true
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          socialProvider: socialProvider
+          email: email
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          isJitProvisioned: true
+          givenName: givenName
+          groups:
+          - name: name
+            id: id
+            slug: slug
+          - name: name
+            id: id
+            slug: slug
+          isAdmin: true
+          picture: picture
+          loginCount: 0
+          emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
+          phoneNumber: phoneNumber
+          deleted: true
+          lastLoginAt: 2000-01-23T04:56:07.000+00:00
+          blockedAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          phoneNumberVerified: true
+          username: username
+        message: User restored successfully
+      properties:
+        data:
+          $ref: "#/components/schemas/User"
+        message:
+          example: User restored successfully
           type: string
       type: object
     AddUserRoleResponse:
@@ -18949,7 +19846,9 @@ components:
           picture: picture
           loginCount: 0
           emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
           phoneNumber: phoneNumber
+          deleted: true
           lastLoginAt: 2000-01-23T04:56:07.000+00:00
           blockedAt: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -18998,7 +19897,9 @@ components:
           picture: picture
           loginCount: 0
           emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
           phoneNumber: phoneNumber
+          deleted: true
           lastLoginAt: 2000-01-23T04:56:07.000+00:00
           blockedAt: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -19047,7 +19948,9 @@ components:
           picture: picture
           loginCount: 0
           emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
           phoneNumber: phoneNumber
+          deleted: true
           lastLoginAt: 2000-01-23T04:56:07.000+00:00
           blockedAt: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -19096,7 +19999,9 @@ components:
           picture: picture
           loginCount: 0
           emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
           phoneNumber: phoneNumber
+          deleted: true
           lastLoginAt: 2000-01-23T04:56:07.000+00:00
           blockedAt: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -19145,7 +20050,9 @@ components:
           picture: picture
           loginCount: 0
           emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
           phoneNumber: phoneNumber
+          deleted: true
           lastLoginAt: 2000-01-23T04:56:07.000+00:00
           blockedAt: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -19194,7 +20101,9 @@ components:
           picture: picture
           loginCount: 0
           emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
           phoneNumber: phoneNumber
+          deleted: true
           lastLoginAt: 2000-01-23T04:56:07.000+00:00
           blockedAt: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -19267,7 +20176,9 @@ components:
           picture: picture
           loginCount: 0
           emailVerified: true
+          deletedAt: 2000-01-23T04:56:07.000+00:00
           phoneNumber: phoneNumber
+          deleted: true
           lastLoginAt: 2000-01-23T04:56:07.000+00:00
           blockedAt: 2000-01-23T04:56:07.000+00:00
           name: name
@@ -19839,6 +20750,7 @@ components:
         allowed: true
         context: "{}"
         action: document.read
+        decided_by: capability
       properties:
         allowed:
           example: true
@@ -19849,6 +20761,13 @@ components:
         context:
           type: object
         reason:
+          type: string
+        decided_by:
+          description: Which check produced the answer. Always pdp for a user caller.
+          enum:
+          - capability
+          - pdp
+          - deny_override
           type: string
         audit_id:
           type: string
@@ -21159,8 +22078,12 @@ components:
         status: authenticated
       properties:
         status:
+          description: "`no_authorization_required` for an MCP server that checks\
+            \ no token (Public or stdio): there is nothing to challenge, with or without\
+            \ a token."
           enum:
           - authenticated
+          - no_authorization_required
           type: string
         server:
           description: MCP server display name.
@@ -21360,9 +22283,13 @@ components:
         - capabilities
         - capabilities
         subject_type: user
+        scope_narrowed: true
         roles:
         - roles
         - roles
+        scope:
+        - scope
+        - scope
         name: name
         mfa_enabled: true
         id: id
@@ -21399,6 +22326,17 @@ components:
             type: string
           nullable: true
           type: array
+        scope:
+          description: "Agents only: the scope of the presented token."
+          items:
+            type: string
+          nullable: true
+          type: array
+        scope_narrowed:
+          description: "Agents only: true when the token scope leaves out one of the\
+            \ agent's capabilities."
+          nullable: true
+          type: boolean
         tenant:
           $ref: "#/components/schemas/GroupRef"
       type: object
@@ -21864,18 +22802,61 @@ components:
       - verification_uri
       - verification_uri_complete
       type: object
+    CheckEmailFirstRequest:
+      example:
+        email: email
+        client_id: client_id
+      properties:
+        email:
+          description: The address that was typed.
+          format: email
+          type: string
+        client_id:
+          description: Client ID of an active application of the organization.
+          type: string
+      required:
+      - client_id
+      - email
+      type: object
+    CheckEmailFirstResponse:
+      example:
+        password_enabled: true
+        exists: true
+        passkey_enabled: true
+        magic_link_enabled: true
+      properties:
+        exists:
+          description: Always `true`. The answer never says whether the address has
+            an account.
+          type: boolean
+        magic_link_enabled:
+          description: The organization offers sign-in links.
+          type: boolean
+        passkey_enabled:
+          description: The organization offers passkey sign-in.
+          type: boolean
+        password_enabled:
+          description: The organization accepts passwords at sign-in.
+          type: boolean
+      required:
+      - exists
+      - magic_link_enabled
+      - passkey_enabled
+      - password_enabled
+      type: object
     IntrospectResponse:
       example:
         sub: sub
-        aud: IntrospectResponse_aud
-        nbf: 1
-        scope: openid profile
         iss: iss
         active: true
         token_type: Bearer
+        client_id: client_id
+        aud: IntrospectResponse_aud
+        nbf: 1
+        act: "{}"
+        scope: openid profile
         exp: 0
         iat: 6
-        client_id: client_id
         jti: jti
         username: username
       properties:
@@ -21915,6 +22896,11 @@ components:
         jti:
           description: JWT id (JWT tokens only).
           type: string
+        act:
+          description: "RFC 8693 actor of a delegated access token (token exchange,\
+            \ or a redeemed identity assertion), with earlier actors nested under\
+            \ `act`. JWT and opaque tokens."
+          type: object
       required:
       - active
       type: object
@@ -22053,7 +23039,6 @@ components:
         locale: locale
         budget_policy:
           key: ""
-        client_id: client_id
         updated_at: 0
         workload_identity: workload_identity
         nickname: nickname
@@ -22077,21 +23062,18 @@ components:
         family_name: family_name
       properties:
         sub:
-          description: User id; agent_<agent_id> for agents; client_<client_id> for
-            clients.
+          description: User id; agent_<agent_id> for agents.
           type: string
         identity_type:
-          description: Only for non-user principals.
+          description: Only for agents.
           enum:
           - agent
-          - client
-          - unknown
           type: string
         tenant:
           description: Organization slug.
           type: string
         name:
-          description: profile scope (users); agent / client display name.
+          description: profile scope (users); agent display name.
           type: string
         given_name:
           description: profile scope.
@@ -22177,9 +23159,6 @@ components:
             \ cost_this_month_usd), and exhausted: true when a limit is reached and\
             \ the next metered call would get 429."
           type: object
-        client_id:
-          description: Clients only.
-          type: string
       required:
       - sub
       type: object
@@ -22203,11 +23182,7 @@ components:
         registration_access_token: registration_access_token
         client_id: client_id
         token_endpoint_auth_method: token_endpoint_auth_method
-        userinfo_signed_response_alg: userinfo_signed_response_alg
         scope: scope
-        request_uris:
-        - request_uris
-        - request_uris
         client_secret: client_secret
         client_id_issued_at: 6
         backchannel_logout_uri: backchannel_logout_uri
@@ -22221,11 +23196,9 @@ components:
         grant_types:
         - grant_types
         - grant_types
-        subject_type: subject_type
         redirect_uris:
         - redirect_uris
         - redirect_uris
-        sector_identifier_uri: sector_identifier_uri
         frontchannel_logout_uri: frontchannel_logout_uri
         frontchannel_logout_session_required: true
         client_secret_expires_at: 0
@@ -22292,11 +23265,6 @@ components:
           type: string
         tos_uri:
           type: string
-        sector_identifier_uri:
-          type: string
-        subject_type:
-          description: Only when not "public".
-          type: string
         jwks_uri:
           type: string
         jwks:
@@ -22308,17 +23276,11 @@ components:
           type: array
         initiate_login_uri:
           type: string
-        request_uris:
-          items:
-            type: string
-          type: array
         scope:
           description: Space-separated registered scopes.
           type: string
         id_token_signed_response_alg:
           description: Only when not RS256.
-          type: string
-        userinfo_signed_response_alg:
           type: string
         request_object_signing_alg:
           type: string
@@ -22377,11 +23339,7 @@ components:
         registration_client_uri: https://openapi-generator.tech
         client_id: client_id
         token_endpoint_auth_method: token_endpoint_auth_method
-        userinfo_signed_response_alg: userinfo_signed_response_alg
         scope: scope
-        request_uris:
-        - request_uris
-        - request_uris
         client_id_issued_at: 6
         backchannel_logout_uri: backchannel_logout_uri
         backchannel_logout_session_required: true
@@ -22394,11 +23352,9 @@ components:
         grant_types:
         - grant_types
         - grant_types
-        subject_type: subject_type
         redirect_uris:
         - redirect_uris
         - redirect_uris
-        sector_identifier_uri: sector_identifier_uri
         frontchannel_logout_uri: frontchannel_logout_uri
         frontchannel_logout_session_required: true
         client_secret_expires_at: 0
@@ -22458,11 +23414,6 @@ components:
           type: string
         tos_uri:
           type: string
-        sector_identifier_uri:
-          type: string
-        subject_type:
-          description: Only when not "public".
-          type: string
         jwks_uri:
           type: string
         jwks:
@@ -22474,17 +23425,11 @@ components:
           type: array
         initiate_login_uri:
           type: string
-        request_uris:
-          items:
-            type: string
-          type: array
         scope:
           description: Space-separated registered scopes.
           type: string
         id_token_signed_response_alg:
           description: Only when not RS256.
-          type: string
-        userinfo_signed_response_alg:
           type: string
         request_object_signing_alg:
           type: string
@@ -22743,8 +23688,8 @@ components:
             type: string
           type: array
         acr_values_supported:
-          description: "The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd\
-            \ (any signed-in session), unless overridden in organization settings."
+          description: The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd
+            (any signed-in session). The list is the same for every organization.
           items:
             type: string
           type: array
@@ -22838,11 +23783,13 @@ components:
             type: string
           type: array
         op_policy_uri:
-          description: Only when configured.
+          description: The Privacy policy URL of the organization's login page settings.
+            Only when it is set.
           format: uri
           type: string
         op_tos_uri:
-          description: Only when configured.
+          description: The Terms of service URL of the organization's login page settings.
+            Only when it is set.
           format: uri
           type: string
       required:
@@ -22906,6 +23853,7 @@ components:
         - ja
         - ar
         revocation_endpoint: https://openapi-generator.tech
+        resource_indicators_supported: true
         authorization_grant_profiles_supported:
         - urn:ietf:params:oauth:grant-profile:id-jag
         backchannel_authentication_endpoint: https://openapi-generator.tech
@@ -23059,6 +24007,9 @@ components:
         backchannel_user_code_parameter_supported:
           example: false
           type: boolean
+        resource_indicators_supported:
+          example: true
+          type: boolean
         entity_profiles_supported:
           example:
           - user
@@ -23079,11 +24030,13 @@ components:
             type: string
           type: array
         op_policy_uri:
-          description: Only when configured.
+          description: The Privacy policy URL of the organization's login page settings.
+            Only when it is set.
           format: uri
           type: string
         op_tos_uri:
-          description: Only when configured.
+          description: The Terms of service URL of the organization's login page settings.
+            Only when it is set.
           format: uri
           type: string
       required:

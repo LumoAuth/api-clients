@@ -25,14 +25,13 @@ from typing_extensions import Self
 
 class PutAdminSettingsGeneralUpdateResponseData(BaseModel):
     """
-    Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+    name, displayName (the same value) and locale, then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
     """ # noqa: E501
     name: Optional[StrictStr] = None
     display_name: Optional[StrictStr] = Field(default=None, alias="displayName")
-    timezone: Optional[StrictStr] = None
     locale: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name", "displayName", "timezone", "locale"]
+    __properties: ClassVar[List[str]] = ["name", "displayName", "locale"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -94,7 +93,6 @@ class PutAdminSettingsGeneralUpdateResponseData(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "displayName": obj.get("displayName"),
-            "timezone": obj.get("timezone"),
             "locale": obj.get("locale")
         })
         # store additional fields in additional_properties

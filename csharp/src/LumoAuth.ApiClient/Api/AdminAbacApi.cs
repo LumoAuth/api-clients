@@ -167,8 +167,9 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="action">Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)</param>
         /// <returns>AbacPoliciesListResponse</returns>
-        AbacPoliciesListResponse AbacPoliciesList(string orgId);
+        AbacPoliciesListResponse AbacPoliciesList(string orgId, string? action = default);
 
         /// <summary>
         /// List ABAC policies
@@ -178,8 +179,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="action">Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)</param>
         /// <returns>ApiResponse of AbacPoliciesListResponse</returns>
-        ApiResponse<AbacPoliciesListResponse> AbacPoliciesListWithHttpInfo(string orgId);
+        ApiResponse<AbacPoliciesListResponse> AbacPoliciesListWithHttpInfo(string orgId, string? action = default);
         /// <summary>
         /// Toggle a policy between active and inactive
         /// </summary>
@@ -466,9 +468,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="action">Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AbacPoliciesListResponse</returns>
-        System.Threading.Tasks.Task<AbacPoliciesListResponse> AbacPoliciesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AbacPoliciesListResponse> AbacPoliciesListAsync(string orgId, string? action = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List ABAC policies
@@ -478,9 +481,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="action">Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AbacPoliciesListResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AbacPoliciesListResponse>> AbacPoliciesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AbacPoliciesListResponse>> AbacPoliciesListWithHttpInfoAsync(string orgId, string? action = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Toggle a policy between active and inactive
         /// </summary>
@@ -1839,10 +1843,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="action">Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)</param>
         /// <returns>AbacPoliciesListResponse</returns>
-        public AbacPoliciesListResponse AbacPoliciesList(string orgId)
+        public AbacPoliciesListResponse AbacPoliciesList(string orgId, string? action = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesListResponse> localVarResponse = AbacPoliciesListWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesListResponse> localVarResponse = AbacPoliciesListWithHttpInfo(orgId, action);
             return localVarResponse.Data;
         }
 
@@ -1851,8 +1856,9 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="action">Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)</param>
         /// <returns>ApiResponse of AbacPoliciesListResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesListResponse> AbacPoliciesListWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesListResponse> AbacPoliciesListWithHttpInfo(string orgId, string? action = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1875,6 +1881,10 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            if (action != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "action", action));
+            }
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1905,11 +1915,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="action">Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AbacPoliciesListResponse</returns>
-        public async System.Threading.Tasks.Task<AbacPoliciesListResponse> AbacPoliciesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AbacPoliciesListResponse> AbacPoliciesListAsync(string orgId, string? action = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesListResponse> localVarResponse = await AbacPoliciesListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesListResponse> localVarResponse = await AbacPoliciesListWithHttpInfoAsync(orgId, action, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1918,9 +1929,10 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="action">Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AbacPoliciesListResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesListResponse>> AbacPoliciesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesListResponse>> AbacPoliciesListWithHttpInfoAsync(string orgId, string? action = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1945,6 +1957,10 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            if (action != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "action", action));
+            }
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

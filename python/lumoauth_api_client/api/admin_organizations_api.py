@@ -17,7 +17,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import Field, StrictStr, field_validator
+from typing_extensions import Annotated
 from lumoauth_api_client.models.admin_org_invitations_create_response import AdminOrgInvitationsCreateResponse
 from lumoauth_api_client.models.admin_org_invitations_list_response import AdminOrgInvitationsListResponse
 from lumoauth_api_client.models.admin_org_members_add_response import AdminOrgMembersAddResponse
@@ -108,6 +109,7 @@ class AdminOrganizationsApi:
             '201': "AdminOrgInvitationsCreateResponse",
             '400': None,
             '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -180,6 +182,7 @@ class AdminOrganizationsApi:
             '201': "AdminOrgInvitationsCreateResponse",
             '400': None,
             '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -252,6 +255,7 @@ class AdminOrganizationsApi:
             '201': "AdminOrgInvitationsCreateResponse",
             '400': None,
             '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -610,7 +614,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        inv_id: StrictStr,
+        inv_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -686,7 +690,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        inv_id: StrictStr,
+        inv_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -762,7 +766,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        inv_id: StrictStr,
+        inv_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -905,7 +909,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        inv_id: StrictStr,
+        inv_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -980,7 +984,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        inv_id: StrictStr,
+        inv_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1055,7 +1059,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        inv_id: StrictStr,
+        inv_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2102,6 +2106,7 @@ class AdminOrganizationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "AdminOrgRolesCreateResponse",
+            '400': None,
             '404': None,
             '409': None,
         }
@@ -2174,6 +2179,7 @@ class AdminOrganizationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "AdminOrgRolesCreateResponse",
+            '400': None,
             '404': None,
             '409': None,
         }
@@ -2246,6 +2252,7 @@ class AdminOrganizationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "AdminOrgRolesCreateResponse",
+            '400': None,
             '404': None,
             '409': None,
         }
@@ -2329,7 +2336,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2405,7 +2412,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2481,7 +2488,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2950,6 +2957,8 @@ class AdminOrganizationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "AdminOrganizationsCreateResponse",
+            '400': None,
+            '403': None,
             '409': None,
         }
         response_data = self.api_client.call_api(
@@ -3017,6 +3026,8 @@ class AdminOrganizationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "AdminOrganizationsCreateResponse",
+            '400': None,
+            '403': None,
             '409': None,
         }
         response_data = self.api_client.call_api(
@@ -3084,6 +3095,8 @@ class AdminOrganizationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "AdminOrganizationsCreateResponse",
+            '400': None,
+            '403': None,
             '409': None,
         }
         response_data = self.api_client.call_api(
@@ -4271,7 +4284,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4347,7 +4360,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4423,7 +4436,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4619,6 +4632,7 @@ class AdminOrganizationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AdminOrganizationsGetResponse",
+            '400': None,
             '404': None,
             '409': None,
         }
@@ -4691,6 +4705,7 @@ class AdminOrganizationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AdminOrganizationsGetResponse",
+            '400': None,
             '404': None,
             '409': None,
         }
@@ -4763,6 +4778,7 @@ class AdminOrganizationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AdminOrganizationsGetResponse",
+            '400': None,
             '404': None,
             '409': None,
         }
@@ -5141,7 +5157,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5217,7 +5233,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5293,7 +5309,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5489,6 +5505,7 @@ class AdminOrganizationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AdminOrganizationsGetResponse",
+            '400': None,
             '404': None,
             '409': None,
         }
@@ -5561,6 +5578,7 @@ class AdminOrganizationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AdminOrganizationsGetResponse",
+            '400': None,
             '404': None,
             '409': None,
         }
@@ -5633,6 +5651,7 @@ class AdminOrganizationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AdminOrganizationsGetResponse",
+            '400': None,
             '404': None,
             '409': None,
         }

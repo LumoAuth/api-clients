@@ -63,7 +63,8 @@ class IssueAgentTokenRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'redirectUri' => 'string',
         'code' => 'string',
         'authToken' => 'string',
-        'refreshToken' => 'string'
+        'refreshToken' => 'string',
+        'scope' => 'string'
     ];
 
     /**
@@ -79,7 +80,8 @@ class IssueAgentTokenRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'redirectUri' => null,
         'code' => null,
         'authToken' => null,
-        'refreshToken' => null
+        'refreshToken' => null,
+        'scope' => null
     ];
 
     /**
@@ -93,7 +95,8 @@ class IssueAgentTokenRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'redirectUri' => false,
         'code' => false,
         'authToken' => false,
-        'refreshToken' => false
+        'refreshToken' => false,
+        'scope' => false
     ];
 
     /**
@@ -187,7 +190,8 @@ class IssueAgentTokenRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'redirectUri' => 'redirect_uri',
         'code' => 'code',
         'authToken' => 'auth_token',
-        'refreshToken' => 'refresh_token'
+        'refreshToken' => 'refresh_token',
+        'scope' => 'scope'
     ];
 
     /**
@@ -201,7 +205,8 @@ class IssueAgentTokenRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'redirectUri' => 'setRedirectUri',
         'code' => 'setCode',
         'authToken' => 'setAuthToken',
-        'refreshToken' => 'setRefreshToken'
+        'refreshToken' => 'setRefreshToken',
+        'scope' => 'setScope'
     ];
 
     /**
@@ -215,7 +220,8 @@ class IssueAgentTokenRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'redirectUri' => 'getRedirectUri',
         'code' => 'getCode',
         'authToken' => 'getAuthToken',
-        'refreshToken' => 'getRefreshToken'
+        'refreshToken' => 'getRefreshToken',
+        'scope' => 'getScope'
     ];
 
     /**
@@ -281,6 +287,7 @@ class IssueAgentTokenRequest implements ModelInterface, ArrayAccess, \JsonSerial
         $this->setIfExists('code', $data ?? [], null);
         $this->setIfExists('authToken', $data ?? [], null);
         $this->setIfExists('refreshToken', $data ?? [], null);
+        $this->setIfExists('scope', $data ?? [], null);
     }
 
     /**
@@ -483,6 +490,33 @@ class IssueAgentTokenRequest implements ModelInterface, ArrayAccess, \JsonSerial
             throw new \InvalidArgumentException('non-nullable refreshToken cannot be null');
         }
         $this->container['refreshToken'] = $refreshToken;
+
+        return $this;
+    }
+
+    /**
+     * Gets scope
+     *
+     * @return string|null
+     */
+    public function getScope()
+    {
+        return $this->container['scope'];
+    }
+
+    /**
+     * Sets scope
+     *
+     * @param string|null $scope request_type=refresh only: optional space-delimited scopes that narrow the refreshed token. Must be a subset of the refresh grant and of the resource token scope (invalid_scope otherwise). Ignored for request_type=auth, where the resource token names the scope.
+     *
+     * @return self
+     */
+    public function setScope($scope)
+    {
+        if (is_null($scope)) {
+            throw new \InvalidArgumentException('non-nullable scope cannot be null');
+        }
+        $this->container['scope'] = $scope;
 
         return $this;
     }

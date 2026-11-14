@@ -66,15 +66,16 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="slug">slug.</param>
         /// <param name="description">description.</param>
         /// <param name="resourceType">resourceType.</param>
-        /// <param name="action">action.</param>
+        /// <param name="action">One action, several separated by commas (read, write), or * for every action. The policy decides a request for each action that it names; spaces around the commas are ignored and actions compare case-sensitively..</param>
         /// <param name="effect">effect.</param>
         /// <param name="priority">priority.</param>
         /// <param name="conditions">conditions.</param>
         /// <param name="isActive">isActive.</param>
         /// <param name="isSystem">isSystem.</param>
+        /// <param name="builtIn">True for a policy that LumoAuth provides to every organization. It can be read, but not changed, switched or deleted (403)..</param>
         /// <param name="createdAt">createdAt.</param>
         /// <param name="updatedAt">updatedAt.</param>
-        public AbacPolicy(int id = default, string name = default, string slug = default, string description = default, string resourceType = default, string action = default, EffectEnum? effect = default, int priority = default, Dictionary<string, Object> conditions = default, bool isActive = default, bool isSystem = default, DateTime createdAt = default, DateTime? updatedAt = default)
+        public AbacPolicy(int id = default, string name = default, string slug = default, string description = default, string resourceType = default, string action = default, EffectEnum? effect = default, int priority = default, Dictionary<string, Object> conditions = default, bool isActive = default, bool isSystem = default, bool builtIn = default, DateTime createdAt = default, DateTime? updatedAt = default)
         {
             this.Id = id;
             this.Name = name;
@@ -87,6 +88,7 @@ namespace LumoAuth.ApiClient.Model
             this.Conditions = conditions;
             this.IsActive = isActive;
             this.IsSystem = isSystem;
+            this.BuiltIn = builtIn;
             this.CreatedAt = createdAt;
             this.UpdatedAt = updatedAt;
         }
@@ -122,8 +124,9 @@ namespace LumoAuth.ApiClient.Model
         public string ResourceType { get; set; }
 
         /// <summary>
-        /// Gets or Sets Action
+        /// One action, several separated by commas (read, write), or * for every action. The policy decides a request for each action that it names; spaces around the commas are ignored and actions compare case-sensitively.
         /// </summary>
+        /// <value>One action, several separated by commas (read, write), or * for every action. The policy decides a request for each action that it names; spaces around the commas are ignored and actions compare case-sensitively.</value>
         [DataMember(Name = "action", EmitDefaultValue = false)]
         public string Action { get; set; }
 
@@ -150,6 +153,13 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         [DataMember(Name = "isSystem", EmitDefaultValue = true)]
         public bool IsSystem { get; set; }
+
+        /// <summary>
+        /// True for a policy that LumoAuth provides to every organization. It can be read, but not changed, switched or deleted (403).
+        /// </summary>
+        /// <value>True for a policy that LumoAuth provides to every organization. It can be read, but not changed, switched or deleted (403).</value>
+        [DataMember(Name = "builtIn", EmitDefaultValue = true)]
+        public bool BuiltIn { get; set; }
 
         /// <summary>
         /// Gets or Sets CreatedAt
@@ -182,6 +192,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Conditions: ").Append(Conditions).Append("\n");
             sb.Append("  IsActive: ").Append(IsActive).Append("\n");
             sb.Append("  IsSystem: ").Append(IsSystem).Append("\n");
+            sb.Append("  BuiltIn: ").Append(BuiltIn).Append("\n");
             sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
             sb.Append("  UpdatedAt: ").Append(UpdatedAt).Append("\n");
             sb.Append("}\n");
@@ -204,6 +215,12 @@ namespace LumoAuth.ApiClient.Model
         /// <returns>Validation Result</returns>
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // Action (string) maxLength
+            if (this.Action != null && this.Action.Length > 100)
+            {
+                yield return new ValidationResult("Invalid value for Action, length must be less than 100.", new [] { "Action" });
+            }
+
             yield break;
         }
     }

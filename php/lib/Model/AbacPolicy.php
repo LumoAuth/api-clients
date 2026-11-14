@@ -69,6 +69,7 @@ class AbacPolicy implements ModelInterface, ArrayAccess, \JsonSerializable
         'conditions' => 'array<string,mixed>',
         'isActive' => 'bool',
         'isSystem' => 'bool',
+        'builtIn' => 'bool',
         'createdAt' => '\DateTime',
         'updatedAt' => '\DateTime'
     ];
@@ -92,6 +93,7 @@ class AbacPolicy implements ModelInterface, ArrayAccess, \JsonSerializable
         'conditions' => null,
         'isActive' => null,
         'isSystem' => null,
+        'builtIn' => null,
         'createdAt' => 'date-time',
         'updatedAt' => 'date-time'
     ];
@@ -113,6 +115,7 @@ class AbacPolicy implements ModelInterface, ArrayAccess, \JsonSerializable
         'conditions' => false,
         'isActive' => false,
         'isSystem' => false,
+        'builtIn' => false,
         'createdAt' => false,
         'updatedAt' => true
     ];
@@ -214,6 +217,7 @@ class AbacPolicy implements ModelInterface, ArrayAccess, \JsonSerializable
         'conditions' => 'conditions',
         'isActive' => 'isActive',
         'isSystem' => 'isSystem',
+        'builtIn' => 'builtIn',
         'createdAt' => 'createdAt',
         'updatedAt' => 'updatedAt'
     ];
@@ -235,6 +239,7 @@ class AbacPolicy implements ModelInterface, ArrayAccess, \JsonSerializable
         'conditions' => 'setConditions',
         'isActive' => 'setIsActive',
         'isSystem' => 'setIsSystem',
+        'builtIn' => 'setBuiltIn',
         'createdAt' => 'setCreatedAt',
         'updatedAt' => 'setUpdatedAt'
     ];
@@ -256,6 +261,7 @@ class AbacPolicy implements ModelInterface, ArrayAccess, \JsonSerializable
         'conditions' => 'getConditions',
         'isActive' => 'getIsActive',
         'isSystem' => 'getIsSystem',
+        'builtIn' => 'getBuiltIn',
         'createdAt' => 'getCreatedAt',
         'updatedAt' => 'getUpdatedAt'
     ];
@@ -343,6 +349,7 @@ class AbacPolicy implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('conditions', $data ?? [], null);
         $this->setIfExists('isActive', $data ?? [], null);
         $this->setIfExists('isSystem', $data ?? [], null);
+        $this->setIfExists('builtIn', $data ?? [], null);
         $this->setIfExists('createdAt', $data ?? [], null);
         $this->setIfExists('updatedAt', $data ?? [], null);
     }
@@ -373,6 +380,10 @@ class AbacPolicy implements ModelInterface, ArrayAccess, \JsonSerializable
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        if (!is_null($this->container['action']) && (mb_strlen($this->container['action']) > 100)) {
+            $invalidProperties[] = "invalid value for 'action', the character length must be smaller than or equal to 100.";
+        }
 
         $allowedValues = $this->getEffectAllowableValues();
         if (!is_null($this->container['effect']) && !in_array($this->container['effect'], $allowedValues, true)) {
@@ -553,7 +564,7 @@ class AbacPolicy implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets action
      *
-     * @param string|null $action action
+     * @param string|null $action One action, several separated by commas (read, write), or * for every action. The policy decides a request for each action that it names; spaces around the commas are ignored and actions compare case-sensitively.
      *
      * @return self
      */
@@ -562,6 +573,10 @@ class AbacPolicy implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($action)) {
             throw new \InvalidArgumentException('non-nullable action cannot be null');
         }
+        if ((mb_strlen($action) > 100)) {
+            throw new \InvalidArgumentException('invalid length for $action when calling AbacPolicy., must be smaller than or equal to 100.');
+        }
+
         $this->container['action'] = $action;
 
         return $this;
@@ -708,6 +723,33 @@ class AbacPolicy implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable isSystem cannot be null');
         }
         $this->container['isSystem'] = $isSystem;
+
+        return $this;
+    }
+
+    /**
+     * Gets builtIn
+     *
+     * @return bool|null
+     */
+    public function getBuiltIn()
+    {
+        return $this->container['builtIn'];
+    }
+
+    /**
+     * Sets builtIn
+     *
+     * @param bool|null $builtIn True for a policy that LumoAuth provides to every organization. It can be read, but not changed, switched or deleted (403).
+     *
+     * @return self
+     */
+    public function setBuiltIn($builtIn)
+    {
+        if (is_null($builtIn)) {
+            throw new \InvalidArgumentException('non-nullable builtIn cannot be null');
+        }
+        $this->container['builtIn'] = $builtIn;
 
         return $this;
     }

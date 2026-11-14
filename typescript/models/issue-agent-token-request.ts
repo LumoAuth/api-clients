@@ -56,5 +56,11 @@ export interface IssueAgentTokenRequest {
      * @memberof IssueAgentTokenRequest
      */
     'refresh_token'?: string;
+    /**
+     * request_type=refresh only: optional space-delimited scopes that narrow the refreshed token. Must be a subset of the refresh grant and of the resource token scope (invalid_scope otherwise). Ignored for request_type=auth, where the resource token names the scope.
+     * @type {string}
+     * @memberof IssueAgentTokenRequest
+     */
+    'scope'?: string;
 }
 

@@ -86,6 +86,7 @@ open class AdminEmailAPI {
     /**
      Get an email template (custom or built-in default)
      - GET /orgs/{orgId}/api/v1/admin/email-templates/{type}
+     - Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -140,6 +141,7 @@ open class AdminEmailAPI {
     /**
      List every email template type with its current (custom or built-in) template
      - GET /orgs/{orgId}/api/v1/admin/email-templates
+     - Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -284,6 +286,7 @@ open class AdminEmailAPI {
     /**
      List the placeholders available to an email template type
      - GET /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables
+     - Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
