@@ -14,13 +14,11 @@ require 'date'
 require 'time'
 
 module LumoAuthApiClient
-  # Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+  # name, displayName (the same value) and locale, then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
   class PutAdminSettingsGeneralUpdateResponseData
     attr_accessor :name
 
     attr_accessor :display_name
-
-    attr_accessor :timezone
 
     attr_accessor :locale
 
@@ -29,7 +27,6 @@ module LumoAuthApiClient
       {
         :'name' => :'name',
         :'display_name' => :'displayName',
-        :'timezone' => :'timezone',
         :'locale' => :'locale'
       }
     end
@@ -49,7 +46,6 @@ module LumoAuthApiClient
       {
         :'name' => :'String',
         :'display_name' => :'String',
-        :'timezone' => :'String',
         :'locale' => :'String'
       }
     end
@@ -84,10 +80,6 @@ module LumoAuthApiClient
         self.display_name = attributes[:'display_name']
       end
 
-      if attributes.key?(:'timezone')
-        self.timezone = attributes[:'timezone']
-      end
-
       if attributes.key?(:'locale')
         self.locale = attributes[:'locale']
       end
@@ -115,7 +107,6 @@ module LumoAuthApiClient
       self.class == o.class &&
           name == o.name &&
           display_name == o.display_name &&
-          timezone == o.timezone &&
           locale == o.locale
     end
 
@@ -128,7 +119,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, display_name, timezone, locale].hash
+      [name, display_name, locale].hash
     end
 
     # Builds the object from hash

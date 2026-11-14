@@ -41,7 +41,7 @@ public class AdminMfaApiTest {
     /**
      * Remove one of a user&#39;s authenticators
      *
-     * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in.
+     * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      *
      * @throws ApiException if the Api call fails
      */
@@ -57,7 +57,7 @@ public class AdminMfaApiTest {
     /**
      * MFA enrollment coverage
      *
-     * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002).
+     * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002). Needs &#x60;users.view&#x60; and &#x60;settings.view&#x60;, as the report on the portal&#39;s authentication settings page does.
      *
      * @throws ApiException if the Api call fails
      */

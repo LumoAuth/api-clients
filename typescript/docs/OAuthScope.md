@@ -7,8 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **number** |  | [optional] [default to undefined]
 **name** | **string** |  | [optional] [default to undefined]
-**description** | **string** |  | [optional] [default to undefined]
-**isDefault** | **boolean** |  | [optional] [default to undefined]
+**description** | **string** | Shown to users on the consent page next to the scope name. | [optional] [default to undefined]
 **isSystem** | **boolean** |  | [optional] [default to undefined]
 **createdAt** | **string** |  | [optional] [default to undefined]
 
@@ -21,7 +20,6 @@ const instance: OAuthScope = {
     id,
     name,
     description,
-    isDefault,
     isSystem,
     createdAt,
 };

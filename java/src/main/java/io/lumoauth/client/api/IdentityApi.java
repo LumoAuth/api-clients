@@ -83,8 +83,8 @@ public class IdentityApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The authenticated principal </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> No credential, an invalid credential, or a credential of another organization </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getMeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -154,8 +154,8 @@ public class IdentityApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The authenticated principal </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> No credential, an invalid credential, or a credential of another organization </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
      </table>
      */
     public GetMeResponse getMe(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -174,8 +174,8 @@ public class IdentityApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The authenticated principal </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> No credential, an invalid credential, or a credential of another organization </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<GetMeResponse> getMeWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -196,8 +196,8 @@ public class IdentityApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The authenticated principal </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> No credential, an invalid credential, or a credential of another organization </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getMeAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<GetMeResponse> _callback) throws ApiException {

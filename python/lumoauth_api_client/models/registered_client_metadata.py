@@ -42,16 +42,12 @@ class RegisteredClientMetadata(BaseModel):
     logo_uri: Optional[StrictStr] = None
     policy_uri: Optional[StrictStr] = None
     tos_uri: Optional[StrictStr] = None
-    sector_identifier_uri: Optional[StrictStr] = None
-    subject_type: Optional[StrictStr] = Field(default=None, description="Only when not \"public\".")
     jwks_uri: Optional[StrictStr] = None
     jwks: Optional[Dict[str, Any]] = None
     post_logout_redirect_uris: Optional[List[StrictStr]] = None
     initiate_login_uri: Optional[StrictStr] = None
-    request_uris: Optional[List[StrictStr]] = None
     scope: Optional[StrictStr] = Field(default=None, description="Space-separated registered scopes.")
     id_token_signed_response_alg: Optional[StrictStr] = Field(default=None, description="Only when not RS256.")
-    userinfo_signed_response_alg: Optional[StrictStr] = None
     request_object_signing_alg: Optional[StrictStr] = None
     token_endpoint_auth_signing_alg: Optional[StrictStr] = None
     default_max_age: Optional[StrictInt] = None
@@ -62,7 +58,7 @@ class RegisteredClientMetadata(BaseModel):
     backchannel_logout_uri: Optional[StrictStr] = None
     backchannel_logout_session_required: Optional[StrictBool] = Field(default=None, description="Only when true.")
     audience_uris: Optional[List[StrictStr]] = Field(default=None, description="RFC 8707 resource indicators the client may request.")
-    __properties: ClassVar[List[str]] = ["client_id", "client_secret_expires_at", "client_id_issued_at", "registration_client_uri", "client_name", "redirect_uris", "response_types", "grant_types", "application_type", "token_endpoint_auth_method", "contacts", "client_uri", "logo_uri", "policy_uri", "tos_uri", "sector_identifier_uri", "subject_type", "jwks_uri", "jwks", "post_logout_redirect_uris", "initiate_login_uri", "request_uris", "scope", "id_token_signed_response_alg", "userinfo_signed_response_alg", "request_object_signing_alg", "token_endpoint_auth_signing_alg", "default_max_age", "require_auth_time", "default_acr_values", "frontchannel_logout_uri", "frontchannel_logout_session_required", "backchannel_logout_uri", "backchannel_logout_session_required", "audience_uris"]
+    __properties: ClassVar[List[str]] = ["client_id", "client_secret_expires_at", "client_id_issued_at", "registration_client_uri", "client_name", "redirect_uris", "response_types", "grant_types", "application_type", "token_endpoint_auth_method", "contacts", "client_uri", "logo_uri", "policy_uri", "tos_uri", "jwks_uri", "jwks", "post_logout_redirect_uris", "initiate_login_uri", "scope", "id_token_signed_response_alg", "request_object_signing_alg", "token_endpoint_auth_signing_alg", "default_max_age", "require_auth_time", "default_acr_values", "frontchannel_logout_uri", "frontchannel_logout_session_required", "backchannel_logout_uri", "backchannel_logout_session_required", "audience_uris"]
 
     @field_validator('application_type')
     def application_type_validate_enum(cls, value):
@@ -142,16 +138,12 @@ class RegisteredClientMetadata(BaseModel):
             "logo_uri": obj.get("logo_uri"),
             "policy_uri": obj.get("policy_uri"),
             "tos_uri": obj.get("tos_uri"),
-            "sector_identifier_uri": obj.get("sector_identifier_uri"),
-            "subject_type": obj.get("subject_type"),
             "jwks_uri": obj.get("jwks_uri"),
             "jwks": obj.get("jwks"),
             "post_logout_redirect_uris": obj.get("post_logout_redirect_uris"),
             "initiate_login_uri": obj.get("initiate_login_uri"),
-            "request_uris": obj.get("request_uris"),
             "scope": obj.get("scope"),
             "id_token_signed_response_alg": obj.get("id_token_signed_response_alg"),
-            "userinfo_signed_response_alg": obj.get("userinfo_signed_response_alg"),
             "request_object_signing_alg": obj.get("request_object_signing_alg"),
             "token_endpoint_auth_signing_alg": obj.get("token_endpoint_auth_signing_alg"),
             "default_max_age": obj.get("default_max_age"),

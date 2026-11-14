@@ -6,8 +6,7 @@
 | ---- | ---- | ----------- | ----- |
 | **id** | **Integer** |  | [optional] |
 | **name** | **String** |  | [optional] |
-| **description** | **String** |  | [optional] |
-| **is_default** | **Boolean** |  | [optional] |
+| **description** | **String** | Shown to users on the consent page next to the scope name. | [optional] |
 | **is_system** | **Boolean** |  | [optional] |
 | **created_at** | **Time** |  | [optional] |
 
@@ -20,7 +19,6 @@ instance = LumoAuthApiClient::OAuthScope.new(
   id: null,
   name: null,
   description: null,
-  is_default: null,
   is_system: null,
   created_at: null
 )

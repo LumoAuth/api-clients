@@ -127,18 +127,6 @@ export interface RegisterClientResponse {
      * @type {string}
      * @memberof RegisterClientResponse
      */
-    'sector_identifier_uri'?: string;
-    /**
-     * Only when not \"public\".
-     * @type {string}
-     * @memberof RegisterClientResponse
-     */
-    'subject_type'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RegisterClientResponse
-     */
     'jwks_uri'?: string;
     /**
      * 
@@ -159,12 +147,6 @@ export interface RegisterClientResponse {
      */
     'initiate_login_uri'?: string;
     /**
-     * 
-     * @type {Array<string>}
-     * @memberof RegisterClientResponse
-     */
-    'request_uris'?: Array<string>;
-    /**
      * Space-separated registered scopes.
      * @type {string}
      * @memberof RegisterClientResponse
@@ -176,12 +158,6 @@ export interface RegisterClientResponse {
      * @memberof RegisterClientResponse
      */
     'id_token_signed_response_alg'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RegisterClientResponse
-     */
-    'userinfo_signed_response_alg'?: string;
     /**
      * 
      * @type {string}

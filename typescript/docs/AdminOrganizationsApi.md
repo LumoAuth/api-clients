@@ -75,8 +75,9 @@ const { status, data } = await apiInstance.adminOrgInvitationsCreate(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**201** | Invitation sent |  -  |
-|**400** | Invalid role for this organization |  -  |
+|**400** | A roleId that names no role of this organization, an email that is not an email address, or a message longer than 500 characters |  -  |
 |**404** | Organization not found |  -  |
+|**429** | Too many invitations from this organization, or to this address, in the last hour |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -466,8 +467,9 @@ const { status, data } = await apiInstance.adminOrgRolesCreate(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**201** | Role created |  -  |
+|**400** | Missing name or slug, a slug that is not 2 to 40 lowercase letters, digits, hyphens or underscores, a name longer than 100 characters or a description longer than 1,000 |  -  |
 |**404** | Organization not found |  -  |
-|**409** | A role with this name or slug already exists |  -  |
+|**409** | A role with this slug already exists in this organization |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -630,7 +632,9 @@ const { status, data } = await apiInstance.adminOrganizationsCreate(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**201** | Organization created |  -  |
-|**409** | Organization already exists or data invalid |  -  |
+|**400** | name missing, empty or over 100 characters; a slug that does not fit the rule; displayName over 255 characters; logoUrl not an absolute https URL |  -  |
+|**403** | plan_limit_reached: the plan allows no further customer organization |  -  |
+|**409** | The slug is taken |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -958,8 +962,9 @@ const { status, data } = await apiInstance.patchAdminOrganizationsUpdate(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Updated organization |  -  |
+|**400** | A field that does not fit (see create), or an empty &#x60;slug&#x60; (leave the field out to keep the slug) |  -  |
 |**404** | Organization not found |  -  |
-|**409** | Data invalid or conflicts with an existing record |  -  |
+|**409** | The slug is taken |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1129,8 +1134,9 @@ const { status, data } = await apiInstance.putAdminOrganizationsUpdate(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Updated organization |  -  |
+|**400** | A field that does not fit (see create), or an empty &#x60;slug&#x60; (leave the field out to keep the slug) |  -  |
 |**404** | Organization not found |  -  |
-|**409** | Data invalid or conflicts with an existing record |  -  |
+|**409** | The slug is taken |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

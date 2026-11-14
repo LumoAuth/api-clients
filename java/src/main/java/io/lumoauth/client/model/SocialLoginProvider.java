@@ -54,7 +54,7 @@ import io.lumoauth.client.JSON;
 /**
  * SocialLoginProvider
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T02:59:28.940404665Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class SocialLoginProvider {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -107,6 +107,7 @@ public class SocialLoginProvider {
   private List<String> requestedScopes;
 
   public static final String SERIALIZED_NAME_CUSTOM_CLAIMS = "customClaims";
+  @Deprecated
   @SerializedName(SERIALIZED_NAME_CUSTOM_CLAIMS)
   @javax.annotation.Nullable
   private Map<String, Object> customClaims;
@@ -342,6 +343,7 @@ public class SocialLoginProvider {
   }
 
 
+  @Deprecated
   public SocialLoginProvider customClaims(@javax.annotation.Nullable Map<String, Object> customClaims) {
     this.customClaims = customClaims;
     return this;
@@ -356,14 +358,17 @@ public class SocialLoginProvider {
   }
 
   /**
-   * Detailed responses only
+   * Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes.
    * @return customClaims
+   * @deprecated
    */
+  @Deprecated
   @javax.annotation.Nullable
   public Map<String, Object> getCustomClaims() {
     return customClaims;
   }
 
+  @Deprecated
   public void setCustomClaims(@javax.annotation.Nullable Map<String, Object> customClaims) {
     this.customClaims = customClaims;
   }

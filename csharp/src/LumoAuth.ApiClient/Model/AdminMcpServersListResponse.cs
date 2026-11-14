@@ -39,11 +39,13 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="data">data.</param>
         /// <param name="meta">meta.</param>
         /// <param name="pagination">pagination.</param>
-        public AdminMcpServersListResponse(List<McpServer> data = default, AdminMcpServersListResponseMeta meta = default, PaginationMeta pagination = default)
+        /// <param name="resourceType">resourceType.</param>
+        public AdminMcpServersListResponse(List<McpServer> data = default, PaginationMeta meta = default, PaginationMeta pagination = default, string resourceType = default)
         {
             this.Data = data;
             this.Meta = meta;
             this.Pagination = pagination;
+            this.ResourceType = resourceType;
         }
 
         /// <summary>
@@ -56,13 +58,22 @@ namespace LumoAuth.ApiClient.Model
         /// Gets or Sets Meta
         /// </summary>
         [DataMember(Name = "meta", EmitDefaultValue = false)]
-        public AdminMcpServersListResponseMeta Meta { get; set; }
+        public PaginationMeta Meta { get; set; }
 
         /// <summary>
         /// Gets or Sets Pagination
         /// </summary>
         [DataMember(Name = "pagination", EmitDefaultValue = false)]
         public PaginationMeta Pagination { get; set; }
+
+        /// <summary>
+        /// Gets or Sets ResourceType
+        /// </summary>
+        /*
+        <example>mcp_servers</example>
+        */
+        [DataMember(Name = "resourceType", EmitDefaultValue = false)]
+        public string ResourceType { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -75,6 +86,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Data: ").Append(Data).Append("\n");
             sb.Append("  Meta: ").Append(Meta).Append("\n");
             sb.Append("  Pagination: ").Append(Pagination).Append("\n");
+            sb.Append("  ResourceType: ").Append(ResourceType).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

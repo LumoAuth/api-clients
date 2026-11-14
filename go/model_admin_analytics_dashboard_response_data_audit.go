@@ -20,6 +20,7 @@ var _ MappedNullable = &AdminAnalyticsDashboardResponseDataAudit{}
 
 // AdminAnalyticsDashboardResponseDataAudit struct for AdminAnalyticsDashboardResponseDataAudit
 type AdminAnalyticsDashboardResponseDataAudit struct {
+	// Audit events of the last 7 days, or of the audit retention period of the plan when that is shorter.
 	EventsLast7Days *int32 `json:"eventsLast7Days,omitempty"`
 }
 

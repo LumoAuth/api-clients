@@ -115,6 +115,8 @@ Void (empty response body)
 
 Read SSF stream configuration(s)
 
+Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
+
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
@@ -164,6 +166,8 @@ Name | Type | Description  | Notes
 ```
 
 Request a stream verification event
+
+Needs `settings.manage`, as the portal does.
 
 ### Example
 ```swift

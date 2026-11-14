@@ -6,7 +6,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | Pointer to **string** |  | [optional] 
 **DisplayName** | Pointer to **string** |  | [optional] 
-**Timezone** | Pointer to **string** |  | [optional] 
 **Locale** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -77,31 +76,6 @@ SetDisplayName sets DisplayName field to given value.
 `func (o *PutAdminSettingsGeneralUpdateResponseData) HasDisplayName() bool`
 
 HasDisplayName returns a boolean if a field has been set.
-
-### GetTimezone
-
-`func (o *PutAdminSettingsGeneralUpdateResponseData) GetTimezone() string`
-
-GetTimezone returns the Timezone field if non-nil, zero value otherwise.
-
-### GetTimezoneOk
-
-`func (o *PutAdminSettingsGeneralUpdateResponseData) GetTimezoneOk() (*string, bool)`
-
-GetTimezoneOk returns a tuple with the Timezone field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTimezone
-
-`func (o *PutAdminSettingsGeneralUpdateResponseData) SetTimezone(v string)`
-
-SetTimezone sets Timezone field to given value.
-
-### HasTimezone
-
-`func (o *PutAdminSettingsGeneralUpdateResponseData) HasTimezone() bool`
-
-HasTimezone returns a boolean if a field has been set.
 
 ### GetLocale
 

@@ -16,6 +16,8 @@
 | **phone_number_verified** | **Boolean** |  | [optional] |
 | **is_active** | **Boolean** |  |  |
 | **blocked** | **Boolean** |  |  |
+| **deleted** | **Boolean** | Soft-deleted by inbound SCIM. Left out of the list unless deleted&#x3D;true is asked; POST /users/{userId}/restore brings the user back. | [optional] |
+| **deleted_at** | **Time** |  | [optional] |
 | **mfa_enabled** | **Boolean** |  |  |
 | **is_admin** | **Boolean** |  |  |
 | **created_at** | **Time** |  |  |
@@ -49,6 +51,8 @@ instance = LumoAuthApiClient::User.new(
   phone_number_verified: null,
   is_active: null,
   blocked: null,
+  deleted: null,
+  deleted_at: null,
   mfa_enabled: null,
   is_admin: null,
   created_at: null,

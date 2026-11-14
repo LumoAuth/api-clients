@@ -46,9 +46,9 @@ import java.util.Set;
 import io.lumoauth.client.JSON;
 
 /**
- * Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+ * name, displayName (the same value) and locale, then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T02:59:28.940404665Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class PutAdminSettingsGeneralUpdateResponseData {
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
@@ -59,11 +59,6 @@ public class PutAdminSettingsGeneralUpdateResponseData {
   @SerializedName(SERIALIZED_NAME_DISPLAY_NAME)
   @javax.annotation.Nullable
   private String displayName;
-
-  public static final String SERIALIZED_NAME_TIMEZONE = "timezone";
-  @SerializedName(SERIALIZED_NAME_TIMEZONE)
-  @javax.annotation.Nullable
-  private String timezone;
 
   public static final String SERIALIZED_NAME_LOCALE = "locale";
   @SerializedName(SERIALIZED_NAME_LOCALE)
@@ -108,25 +103,6 @@ public class PutAdminSettingsGeneralUpdateResponseData {
 
   public void setDisplayName(@javax.annotation.Nullable String displayName) {
     this.displayName = displayName;
-  }
-
-
-  public PutAdminSettingsGeneralUpdateResponseData timezone(@javax.annotation.Nullable String timezone) {
-    this.timezone = timezone;
-    return this;
-  }
-
-  /**
-   * Get timezone
-   * @return timezone
-   */
-  @javax.annotation.Nullable
-  public String getTimezone() {
-    return timezone;
-  }
-
-  public void setTimezone(@javax.annotation.Nullable String timezone) {
-    this.timezone = timezone;
   }
 
 
@@ -205,14 +181,13 @@ public class PutAdminSettingsGeneralUpdateResponseData {
     PutAdminSettingsGeneralUpdateResponseData putAdminSettingsGeneralUpdateResponseData = (PutAdminSettingsGeneralUpdateResponseData) o;
     return Objects.equals(this.name, putAdminSettingsGeneralUpdateResponseData.name) &&
         Objects.equals(this.displayName, putAdminSettingsGeneralUpdateResponseData.displayName) &&
-        Objects.equals(this.timezone, putAdminSettingsGeneralUpdateResponseData.timezone) &&
         Objects.equals(this.locale, putAdminSettingsGeneralUpdateResponseData.locale)&&
         Objects.equals(this.additionalProperties, putAdminSettingsGeneralUpdateResponseData.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, displayName, timezone, locale, additionalProperties);
+    return Objects.hash(name, displayName, locale, additionalProperties);
   }
 
   @Override
@@ -221,7 +196,6 @@ public class PutAdminSettingsGeneralUpdateResponseData {
     sb.append("class PutAdminSettingsGeneralUpdateResponseData {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
-    sb.append("    timezone: ").append(toIndentedString(timezone)).append("\n");
     sb.append("    locale: ").append(toIndentedString(locale)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
@@ -245,7 +219,7 @@ public class PutAdminSettingsGeneralUpdateResponseData {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("name", "displayName", "timezone", "locale"));
+    openapiFields = new HashSet<String>(Arrays.asList("name", "displayName", "locale"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -269,9 +243,6 @@ public class PutAdminSettingsGeneralUpdateResponseData {
       }
       if ((jsonObj.get("displayName") != null && !jsonObj.get("displayName").isJsonNull()) && !jsonObj.get("displayName").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `displayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("displayName").toString()));
-      }
-      if ((jsonObj.get("timezone") != null && !jsonObj.get("timezone").isJsonNull()) && !jsonObj.get("timezone").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `timezone` to be a primitive type in the JSON string but got `%s`", jsonObj.get("timezone").toString()));
       }
       if ((jsonObj.get("locale") != null && !jsonObj.get("locale").isJsonNull()) && !jsonObj.get("locale").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `locale` to be a primitive type in the JSON string but got `%s`", jsonObj.get("locale").toString()));

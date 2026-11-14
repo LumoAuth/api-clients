@@ -51,7 +51,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="clientId">Detailed responses only.</param>
         /// <param name="callbackUrl">Detailed responses only.</param>
         /// <param name="requestedScopes">Detailed responses only.</param>
-        /// <param name="customClaims">Detailed responses only.</param>
+        /// <param name="customClaims">Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes..</param>
         /// <param name="claimMapping">Detailed responses only.</param>
         /// <param name="providerConfig">Detailed responses only; secrets redacted.</param>
         /// <param name="authorizationUrl">Detailed responses only.</param>
@@ -153,10 +153,11 @@ namespace LumoAuth.ApiClient.Model
         public List<string> RequestedScopes { get; set; }
 
         /// <summary>
-        /// Detailed responses only
+        /// Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes.
         /// </summary>
-        /// <value>Detailed responses only</value>
+        /// <value>Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes.</value>
         [DataMember(Name = "customClaims", EmitDefaultValue = true)]
+        [Obsolete]
         public Dictionary<string, Object> CustomClaims { get; set; }
 
         /// <summary>

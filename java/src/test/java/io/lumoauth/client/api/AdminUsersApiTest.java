@@ -25,6 +25,7 @@ import io.lumoauth.client.model.AdminIdentitiesLegacySamlReportResponse;
 import io.lumoauth.client.model.AdminIdentitiesLinkRequest;
 import io.lumoauth.client.model.AdminIdentitiesListResponse;
 import io.lumoauth.client.model.AdminRolesGetPermissionsResponse;
+import io.lumoauth.client.model.AdminUsersRestoreResponse;
 import io.lumoauth.client.model.BlockUserResponse;
 import io.lumoauth.client.model.CreateUserResponse;
 import io.lumoauth.client.model.DeleteUserResponse;
@@ -73,6 +74,8 @@ public class AdminUsersApiTest {
     /**
      * Assign a permission to a user
      *
+     * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. A user or permission outside this organization is 404.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -99,7 +102,7 @@ public class AdminUsersApiTest {
     /**
      * Relink legacy SAML users to an IdP
      *
-     * Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+     * Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends &#x60;\&quot;dry_run\&quot;: true&#x60;.
      *
      * @throws ApiException if the Api call fails
      */
@@ -170,6 +173,21 @@ public class AdminUsersApiTest {
         String orgId = null;
         String userId = null;
         AdminAgentsGetResponse response = api.adminIdentitiesUnlink(type, orgId, userId);
+        // TODO: test validations
+    }
+
+    /**
+     * Restore a deleted user
+     *
+     * Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted&#x3D;true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminUsersRestoreTest() throws ApiException {
+        String orgId = null;
+        String userId = null;
+        AdminUsersRestoreResponse response = api.adminUsersRestore(orgId, userId);
         // TODO: test validations
     }
 
@@ -271,7 +289,19 @@ public class AdminUsersApiTest {
     @Test
     public void listUsersTest() throws ApiException {
         String orgId = null;
-        ListUsersResponse response = api.listUsers(orgId);
+        Integer page = null;
+        Integer limit = null;
+        String search = null;
+        Boolean active = null;
+        Boolean blocked = null;
+        Boolean deleted = null;
+        Boolean emailVerified = null;
+        Boolean mfaEnabled = null;
+        String role = null;
+        String group = null;
+        String sortBy = null;
+        String sortDir = null;
+        ListUsersResponse response = api.listUsers(orgId, page, limit, search, active, blocked, deleted, emailVerified, mfaEnabled, role, group, sortBy, sortDir);
         // TODO: test validations
     }
 
@@ -374,6 +404,8 @@ public class AdminUsersApiTest {
     /**
      * Set a user&#39;s password
      *
+     * Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -386,6 +418,8 @@ public class AdminUsersApiTest {
 
     /**
      * Set a user&#39;s password
+     *
+     * Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      *
      * @throws ApiException if the Api call fails
      */

@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **action** | **string** |  | [optional]
 **context** | **object** |  | [optional]
 **reason** | **string** |  | [optional]
+**decidedBy** | **string** | Which check produced the answer. Always pdp for a user caller. | [optional]
 **auditId** | **string** |  | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

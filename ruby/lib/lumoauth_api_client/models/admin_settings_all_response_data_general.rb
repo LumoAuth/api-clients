@@ -14,14 +14,20 @@ require 'date'
 require 'time'
 
 module LumoAuthApiClient
-  # Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+  # The organization name (name; displayName is the same value), locale (the default language of the hosted pages), then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
   class AdminSettingsAllResponseDataGeneral
     attr_accessor :name
+
+    attr_accessor :display_name
+
+    attr_accessor :locale
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'name' => :'name'
+        :'name' => :'name',
+        :'display_name' => :'displayName',
+        :'locale' => :'locale'
       }
     end
 
@@ -38,7 +44,9 @@ module LumoAuthApiClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'name' => :'String'
+        :'name' => :'String',
+        :'display_name' => :'String',
+        :'locale' => :'String'
       }
     end
 
@@ -67,6 +75,14 @@ module LumoAuthApiClient
       if attributes.key?(:'name')
         self.name = attributes[:'name']
       end
+
+      if attributes.key?(:'display_name')
+        self.display_name = attributes[:'display_name']
+      end
+
+      if attributes.key?(:'locale')
+        self.locale = attributes[:'locale']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -89,7 +105,9 @@ module LumoAuthApiClient
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          name == o.name
+          name == o.name &&
+          display_name == o.display_name &&
+          locale == o.locale
     end
 
     # @see the `==` method
@@ -101,7 +119,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name].hash
+      [name, display_name, locale].hash
     end
 
     # Builds the object from hash

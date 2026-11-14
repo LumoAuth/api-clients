@@ -21,6 +21,7 @@ use super::{Error, configuration, ContentType};
 pub enum AdminOrgInvitationsCreateError {
     Status400(),
     Status404(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -79,6 +80,7 @@ pub enum AdminOrgMembersRemoveError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminOrgRolesCreateError {
+    Status400(),
     Status404(),
     Status409(),
     UnknownValue(serde_json::Value),
@@ -105,6 +107,8 @@ pub enum AdminOrgRolesListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminOrganizationsCreateError {
+    Status400(),
+    Status403(),
     Status409(),
     UnknownValue(serde_json::Value),
 }
@@ -154,6 +158,7 @@ pub enum PatchAdminOrgRolesUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminOrganizationsUpdateError {
+    Status400(),
     Status404(),
     Status409(),
     UnknownValue(serde_json::Value),
@@ -181,6 +186,7 @@ pub enum PutAdminOrgRolesUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminOrganizationsUpdateError {
+    Status400(),
     Status404(),
     Status409(),
     UnknownValue(serde_json::Value),

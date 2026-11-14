@@ -69,7 +69,8 @@ class IntrospectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         'nbf' => 'int',
         'iss' => 'string',
         'aud' => '\LumoAuth\ApiClient\Model\IntrospectResponseAud',
-        'jti' => 'string'
+        'jti' => 'string',
+        'act' => 'object'
     ];
 
     /**
@@ -91,7 +92,8 @@ class IntrospectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         'nbf' => null,
         'iss' => null,
         'aud' => null,
-        'jti' => null
+        'jti' => null,
+        'act' => null
     ];
 
     /**
@@ -111,7 +113,8 @@ class IntrospectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         'nbf' => false,
         'iss' => false,
         'aud' => false,
-        'jti' => false
+        'jti' => false,
+        'act' => false
     ];
 
     /**
@@ -211,7 +214,8 @@ class IntrospectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         'nbf' => 'nbf',
         'iss' => 'iss',
         'aud' => 'aud',
-        'jti' => 'jti'
+        'jti' => 'jti',
+        'act' => 'act'
     ];
 
     /**
@@ -231,7 +235,8 @@ class IntrospectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         'nbf' => 'setNbf',
         'iss' => 'setIss',
         'aud' => 'setAud',
-        'jti' => 'setJti'
+        'jti' => 'setJti',
+        'act' => 'setAct'
     ];
 
     /**
@@ -251,7 +256,8 @@ class IntrospectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         'nbf' => 'getNbf',
         'iss' => 'getIss',
         'aud' => 'getAud',
-        'jti' => 'getJti'
+        'jti' => 'getJti',
+        'act' => 'getAct'
     ];
 
     /**
@@ -323,6 +329,7 @@ class IntrospectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
         $this->setIfExists('iss', $data ?? [], null);
         $this->setIfExists('aud', $data ?? [], null);
         $this->setIfExists('jti', $data ?? [], null);
+        $this->setIfExists('act', $data ?? [], null);
     }
 
     /**
@@ -697,6 +704,33 @@ class IntrospectResponse implements ModelInterface, ArrayAccess, \JsonSerializab
             throw new \InvalidArgumentException('non-nullable jti cannot be null');
         }
         $this->container['jti'] = $jti;
+
+        return $this;
+    }
+
+    /**
+     * Gets act
+     *
+     * @return object|null
+     */
+    public function getAct()
+    {
+        return $this->container['act'];
+    }
+
+    /**
+     * Sets act
+     *
+     * @param object|null $act RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under `act`. JWT and opaque tokens.
+     *
+     * @return self
+     */
+    public function setAct($act)
+    {
+        if (is_null($act)) {
+            throw new \InvalidArgumentException('non-nullable act cannot be null');
+        }
+        $this->container['act'] = $act;
 
         return $this;
     }

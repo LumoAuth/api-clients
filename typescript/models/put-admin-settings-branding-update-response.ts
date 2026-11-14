@@ -30,6 +30,12 @@ export interface PutAdminSettingsBrandingUpdateResponse {
      */
     'data'?: BrandingSettings;
     /**
+     * Keys whose value was refused by validation and not saved.
+     * @type {Array<string>}
+     * @memberof PutAdminSettingsBrandingUpdateResponse
+     */
+    'rejected'?: Array<string>;
+    /**
      * 
      * @type {string}
      * @memberof PutAdminSettingsBrandingUpdateResponse

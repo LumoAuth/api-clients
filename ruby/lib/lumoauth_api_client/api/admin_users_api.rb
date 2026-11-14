@@ -87,6 +87,7 @@ module LumoAuthApiClient
     end
 
     # Assign a permission to a user
+    # Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. A user or permission outside this organization is 404.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
@@ -97,6 +98,7 @@ module LumoAuthApiClient
     end
 
     # Assign a permission to a user
+    # Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. A user or permission outside this organization is 404.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
@@ -221,7 +223,7 @@ module LumoAuthApiClient
     end
 
     # Relink legacy SAML users to an IdP
-    # Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+    # Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
     # @param org_id [String] 
     # @param admin_identities_legacy_saml_relink_request [AdminIdentitiesLegacySamlRelinkRequest] 
     # @param [Hash] opts the optional parameters
@@ -232,7 +234,7 @@ module LumoAuthApiClient
     end
 
     # Relink legacy SAML users to an IdP
-    # Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+    # Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends &#x60;\&quot;dry_run\&quot;: true&#x60;.
     # @param org_id [String] 
     # @param admin_identities_legacy_saml_relink_request [AdminIdentitiesLegacySamlRelinkRequest] 
     # @param [Hash] opts the optional parameters
@@ -585,6 +587,75 @@ module LumoAuthApiClient
       data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AdminUsersApi#admin_identities_unlink\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Restore a deleted user
+    # Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+    # @param org_id [String] 
+    # @param user_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [AdminUsersRestoreResponse]
+    def admin_users_restore(org_id, user_id, opts = {})
+      data, _status_code, _headers = admin_users_restore_with_http_info(org_id, user_id, opts)
+      data
+    end
+
+    # Restore a deleted user
+    # Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted&#x3D;true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+    # @param org_id [String] 
+    # @param user_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(AdminUsersRestoreResponse, Integer, Hash)>] AdminUsersRestoreResponse data, response status code and response headers
+    def admin_users_restore_with_http_info(org_id, user_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AdminUsersApi.admin_users_restore ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminUsersApi.admin_users_restore"
+      end
+      # verify the required parameter 'user_id' is set
+      if @api_client.config.client_side_validation && user_id.nil?
+        fail ArgumentError, "Missing the required parameter 'user_id' when calling AdminUsersApi.admin_users_restore"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/admin/users/{userId}/restore'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'AdminUsersRestoreResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AdminUsersApi.admin_users_restore",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AdminUsersApi#admin_users_restore\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -1055,6 +1126,18 @@ module LumoAuthApiClient
     # List users
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :page Page number. (default to 1)
+    # @option opts [Integer] :limit Users per page (1 to 100). (default to 25)
+    # @option opts [String] :search Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).
+    # @option opts [Boolean] :active Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users.
+    # @option opts [Boolean] :blocked Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users.
+    # @option opts [Boolean] :deleted &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (default to false)
+    # @option opts [Boolean] :email_verified Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;).
+    # @option opts [Boolean] :mfa_enabled Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication.
+    # @option opts [String] :role Only users who hold the role with this slug.
+    # @option opts [String] :group Only members of the group with this slug.
+    # @option opts [String] :sort_by Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.
+    # @option opts [String] :sort_dir Sort direction. Used only together with sortBy. (default to 'DESC')
     # @return [ListUsersResponse]
     def list_users(org_id, opts = {})
       data, _status_code, _headers = list_users_with_http_info(org_id, opts)
@@ -1064,6 +1147,18 @@ module LumoAuthApiClient
     # List users
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :page Page number. (default to 1)
+    # @option opts [Integer] :limit Users per page (1 to 100). (default to 25)
+    # @option opts [String] :search Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).
+    # @option opts [Boolean] :active Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users.
+    # @option opts [Boolean] :blocked Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users.
+    # @option opts [Boolean] :deleted &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (default to false)
+    # @option opts [Boolean] :email_verified Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;).
+    # @option opts [Boolean] :mfa_enabled Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication.
+    # @option opts [String] :role Only users who hold the role with this slug.
+    # @option opts [String] :group Only members of the group with this slug.
+    # @option opts [String] :sort_by Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.
+    # @option opts [String] :sort_dir Sort direction. Used only together with sortBy. (default to 'DESC')
     # @return [Array<(ListUsersResponse, Integer, Hash)>] ListUsersResponse data, response status code and response headers
     def list_users_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
@@ -1073,11 +1168,43 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminUsersApi.list_users"
       end
+      if @api_client.config.client_side_validation && !opts[:'page'].nil? && opts[:'page'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"page"]" when calling AdminUsersApi.list_users, must be greater than or equal to 1.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 100
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling AdminUsersApi.list_users, must be smaller than or equal to 100.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling AdminUsersApi.list_users, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["email", "name", "username", "createdAt", "lastLoginAt"]
+      if @api_client.config.client_side_validation && opts[:'sort_by'] && !allowable_values.include?(opts[:'sort_by'])
+        fail ArgumentError, "invalid value for \"sort_by\", must be one of #{allowable_values}"
+      end
+      allowable_values = ["ASC", "DESC"]
+      if @api_client.config.client_side_validation && opts[:'sort_dir'] && !allowable_values.include?(opts[:'sort_dir'])
+        fail ArgumentError, "invalid value for \"sort_dir\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/users'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'page'] = opts[:'page'] if !opts[:'page'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
+      query_params[:'active'] = opts[:'active'] if !opts[:'active'].nil?
+      query_params[:'blocked'] = opts[:'blocked'] if !opts[:'blocked'].nil?
+      query_params[:'deleted'] = opts[:'deleted'] if !opts[:'deleted'].nil?
+      query_params[:'emailVerified'] = opts[:'email_verified'] if !opts[:'email_verified'].nil?
+      query_params[:'mfaEnabled'] = opts[:'mfa_enabled'] if !opts[:'mfa_enabled'].nil?
+      query_params[:'role'] = opts[:'role'] if !opts[:'role'].nil?
+      query_params[:'group'] = opts[:'group'] if !opts[:'group'].nil?
+      query_params[:'sortBy'] = opts[:'sort_by'] if !opts[:'sort_by'].nil?
+      query_params[:'sortDir'] = opts[:'sort_dir'] if !opts[:'sort_dir'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -1280,6 +1407,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && group_id.nil?
         fail ArgumentError, "Missing the required parameter 'group_id' when calling AdminUsersApi.remove_user_group"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && group_id !~ pattern
+        fail ArgumentError, "invalid value for 'group_id' when calling AdminUsersApi.remove_user_group, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/users/{userId}/groups/{groupId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s)).sub('{' + 'groupId' + '}', CGI.escape(group_id.to_s))
 
@@ -1353,6 +1485,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && permission_id.nil?
         fail ArgumentError, "Missing the required parameter 'permission_id' when calling AdminUsersApi.remove_user_permission"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && permission_id !~ pattern
+        fail ArgumentError, "invalid value for 'permission_id' when calling AdminUsersApi.remove_user_permission, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/users/{userId}/permissions/{permissionId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s)).sub('{' + 'permissionId' + '}', CGI.escape(permission_id.to_s))
 
@@ -1426,6 +1563,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && role_id.nil?
         fail ArgumentError, "Missing the required parameter 'role_id' when calling AdminUsersApi.remove_user_role"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && role_id !~ pattern
+        fail ArgumentError, "invalid value for 'role_id' when calling AdminUsersApi.remove_user_role, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/users/{userId}/roles/{roleId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s)).sub('{' + 'roleId' + '}', CGI.escape(role_id.to_s))
 
@@ -1601,6 +1743,7 @@ module LumoAuthApiClient
     end
 
     # Set a user's password
+    # Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
@@ -1611,6 +1754,7 @@ module LumoAuthApiClient
     end
 
     # Set a user&#39;s password
+    # Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
@@ -1668,6 +1812,7 @@ module LumoAuthApiClient
     end
 
     # Set a user's password
+    # Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
@@ -1678,6 +1823,7 @@ module LumoAuthApiClient
     end
 
     # Set a user&#39;s password
+    # Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters

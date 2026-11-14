@@ -31,6 +31,8 @@ type AbacAttributeDefinition struct {
 	DefaultValue interface{} `json:"defaultValue,omitempty"`
 	IsRequired *bool `json:"isRequired,omitempty"`
 	IsSystem *bool `json:"isSystem,omitempty"`
+	// True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403).
+	BuiltIn *bool `json:"builtIn,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	UpdatedAt NullableTime `json:"updatedAt,omitempty"`
 }
@@ -384,6 +386,38 @@ func (o *AbacAttributeDefinition) SetIsSystem(v bool) {
 	o.IsSystem = &v
 }
 
+// GetBuiltIn returns the BuiltIn field value if set, zero value otherwise.
+func (o *AbacAttributeDefinition) GetBuiltIn() bool {
+	if o == nil || IsNil(o.BuiltIn) {
+		var ret bool
+		return ret
+	}
+	return *o.BuiltIn
+}
+
+// GetBuiltInOk returns a tuple with the BuiltIn field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AbacAttributeDefinition) GetBuiltInOk() (*bool, bool) {
+	if o == nil || IsNil(o.BuiltIn) {
+		return nil, false
+	}
+	return o.BuiltIn, true
+}
+
+// HasBuiltIn returns a boolean if a field has been set.
+func (o *AbacAttributeDefinition) HasBuiltIn() bool {
+	if o != nil && !IsNil(o.BuiltIn) {
+		return true
+	}
+
+	return false
+}
+
+// SetBuiltIn gets a reference to the given bool and assigns it to the BuiltIn field.
+func (o *AbacAttributeDefinition) SetBuiltIn(v bool) {
+	o.BuiltIn = &v
+}
+
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *AbacAttributeDefinition) GetCreatedAt() time.Time {
 	if o == nil || IsNil(o.CreatedAt) {
@@ -497,6 +531,9 @@ func (o AbacAttributeDefinition) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IsSystem) {
 		toSerialize["isSystem"] = o.IsSystem
+	}
+	if !IsNil(o.BuiltIn) {
+		toSerialize["builtIn"] = o.BuiltIn
 	}
 	if !IsNil(o.CreatedAt) {
 		toSerialize["createdAt"] = o.CreatedAt

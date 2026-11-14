@@ -33,17 +33,11 @@ export interface OAuthScope {
      */
     'name'?: string;
     /**
-     * 
+     * Shown to users on the consent page next to the scope name.
      * @type {string}
      * @memberof OAuthScope
      */
     'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof OAuthScope
-     */
-    'isDefault'?: boolean;
     /**
      * 
      * @type {boolean}

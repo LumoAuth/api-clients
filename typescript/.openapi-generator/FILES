@@ -130,7 +130,6 @@ docs/AdminMcpApi.md
 docs/AdminMcpServersCreateResponse.md
 docs/AdminMcpServersGetResponse.md
 docs/AdminMcpServersListResponse.md
-docs/AdminMcpServersListResponseMeta.md
 docs/AdminMfaApi.md
 docs/AdminOAuthClientsApi.md
 docs/AdminOrgInvitationsCreateResponse.md
@@ -201,6 +200,7 @@ docs/AdminUserSessionsRevokePostResponse.md
 docs/AdminUserTokensRevokeAllResponse.md
 docs/AdminUserTokensRevokePostResponse.md
 docs/AdminUsersApi.md
+docs/AdminUsersRestoreResponse.md
 docs/AdminWebhooksApi.md
 docs/AdminWebhooksCreateResponse.md
 docs/AdminWebhooksCreateResponseData.md
@@ -250,6 +250,8 @@ docs/CheckAbacBulkResponseResultsItem.md
 docs/CheckAbacResponse.md
 docs/CheckAbacResponseMatchedPoliciesItem.md
 docs/CheckAnyPermissionResponse.md
+docs/CheckEmailFirstRequest.md
+docs/CheckEmailFirstResponse.md
 docs/CheckPermissionResponse.md
 docs/CheckPermissionsBulkResponse.md
 docs/CheckRelationResponse.md
@@ -273,6 +275,7 @@ docs/DenyRequestRequest.md
 docs/DenyRequestResponse.md
 docs/DeviceAuthorizationResponse.md
 docs/EmailEnrollmentStarted.md
+docs/EmailSenderSettings.md
 docs/EmailTemplate.md
 docs/EnrollAuthenticator201Response.md
 docs/EnrollAuthenticatorRequest.md
@@ -399,7 +402,9 @@ docs/PutAdminClientsUpdateBrandingResponse.md
 docs/PutAdminOrgMembersUpdateResponse.md
 docs/PutAdminSettingsAuthenticationUpdateResponse.md
 docs/PutAdminSettingsBrandingUpdateResponse.md
+docs/PutAdminSettingsEmailUpdateRequest.md
 docs/PutAdminSettingsEmailUpdateResponse.md
+docs/PutAdminSettingsGeneralUpdateRequest.md
 docs/PutAdminSettingsGeneralUpdateResponse.md
 docs/PutAdminSettingsGeneralUpdateResponseData.md
 docs/PutAdminSettingsScimUpdateResponse.md
@@ -562,7 +567,6 @@ models/admin-identities-list-response-data.ts
 models/admin-identities-list-response.ts
 models/admin-mcp-servers-create-response.ts
 models/admin-mcp-servers-get-response.ts
-models/admin-mcp-servers-list-response-meta.ts
 models/admin-mcp-servers-list-response.ts
 models/admin-org-invitations-create-response.ts
 models/admin-org-invitations-list-response.ts
@@ -625,6 +629,7 @@ models/admin-user-sessions-revoke-all-response.ts
 models/admin-user-sessions-revoke-post-response.ts
 models/admin-user-tokens-revoke-all-response.ts
 models/admin-user-tokens-revoke-post-response.ts
+models/admin-users-restore-response.ts
 models/admin-webhooks-create-response-data.ts
 models/admin-webhooks-create-response.ts
 models/admin-webhooks-deliveries-list-response-meta.ts
@@ -671,6 +676,8 @@ models/check-abac-bulk-response.ts
 models/check-abac-response-matched-policies-item.ts
 models/check-abac-response.ts
 models/check-any-permission-response.ts
+models/check-email-first-request.ts
+models/check-email-first-response.ts
 models/check-permission-response.ts
 models/check-permissions-bulk-response.ts
 models/check-relation-response.ts
@@ -694,6 +701,7 @@ models/deny-request-request.ts
 models/deny-request-response.ts
 models/device-authorization-response.ts
 models/email-enrollment-started.ts
+models/email-sender-settings.ts
 models/email-template.ts
 models/enroll-authenticator-request.ts
 models/enroll-authenticator201-response.ts
@@ -815,7 +823,9 @@ models/put-admin-clients-update-branding-response.ts
 models/put-admin-org-members-update-response.ts
 models/put-admin-settings-authentication-update-response.ts
 models/put-admin-settings-branding-update-response.ts
+models/put-admin-settings-email-update-request.ts
 models/put-admin-settings-email-update-response.ts
+models/put-admin-settings-general-update-request.ts
 models/put-admin-settings-general-update-response-data.ts
 models/put-admin-settings-general-update-response.ts
 models/put-admin-settings-scim-update-response.ts

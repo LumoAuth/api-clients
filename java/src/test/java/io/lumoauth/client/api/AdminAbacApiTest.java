@@ -136,7 +136,8 @@ public class AdminAbacApiTest {
     @Test
     public void abacPoliciesListTest() throws ApiException {
         String orgId = null;
-        AbacPoliciesListResponse response = api.abacPoliciesList(orgId);
+        String action = null;
+        AbacPoliciesListResponse response = api.abacPoliciesList(orgId, action);
         // TODO: test validations
     }
 

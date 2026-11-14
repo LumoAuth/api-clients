@@ -129,7 +129,6 @@ Sources/LumoAuthAPIClient/Models/AdminIdentitiesListResponseDataBindingsItem.swi
 Sources/LumoAuthAPIClient/Models/AdminMcpServersCreateResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminMcpServersGetResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminMcpServersListResponse.swift
-Sources/LumoAuthAPIClient/Models/AdminMcpServersListResponseMeta.swift
 Sources/LumoAuthAPIClient/Models/AdminOrgInvitationsCreateResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminOrgInvitationsListResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminOrgMembersAddResponse.swift
@@ -191,6 +190,7 @@ Sources/LumoAuthAPIClient/Models/AdminUserSessionsRevokeAllResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminUserSessionsRevokePostResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminUserTokensRevokeAllResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminUserTokensRevokePostResponse.swift
+Sources/LumoAuthAPIClient/Models/AdminUsersRestoreResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminWebhooksCreateResponse.swift
 Sources/LumoAuthAPIClient/Models/AdminWebhooksCreateResponseData.swift
 Sources/LumoAuthAPIClient/Models/AdminWebhooksDeliveriesListResponse.swift
@@ -237,6 +237,8 @@ Sources/LumoAuthAPIClient/Models/CheckAbacBulkResponseResultsItem.swift
 Sources/LumoAuthAPIClient/Models/CheckAbacResponse.swift
 Sources/LumoAuthAPIClient/Models/CheckAbacResponseMatchedPoliciesItem.swift
 Sources/LumoAuthAPIClient/Models/CheckAnyPermissionResponse.swift
+Sources/LumoAuthAPIClient/Models/CheckEmailFirstRequest.swift
+Sources/LumoAuthAPIClient/Models/CheckEmailFirstResponse.swift
 Sources/LumoAuthAPIClient/Models/CheckPermissionResponse.swift
 Sources/LumoAuthAPIClient/Models/CheckPermissionsBulkResponse.swift
 Sources/LumoAuthAPIClient/Models/CheckRelationResponse.swift
@@ -260,6 +262,7 @@ Sources/LumoAuthAPIClient/Models/DenyRequestRequest.swift
 Sources/LumoAuthAPIClient/Models/DenyRequestResponse.swift
 Sources/LumoAuthAPIClient/Models/DeviceAuthorizationResponse.swift
 Sources/LumoAuthAPIClient/Models/EmailEnrollmentStarted.swift
+Sources/LumoAuthAPIClient/Models/EmailSenderSettings.swift
 Sources/LumoAuthAPIClient/Models/EmailTemplate.swift
 Sources/LumoAuthAPIClient/Models/EnrollAuthenticator201Response.swift
 Sources/LumoAuthAPIClient/Models/EnrollAuthenticatorRequest.swift
@@ -380,7 +383,9 @@ Sources/LumoAuthAPIClient/Models/PutAdminClientsUpdateBrandingResponse.swift
 Sources/LumoAuthAPIClient/Models/PutAdminOrgMembersUpdateResponse.swift
 Sources/LumoAuthAPIClient/Models/PutAdminSettingsAuthenticationUpdateResponse.swift
 Sources/LumoAuthAPIClient/Models/PutAdminSettingsBrandingUpdateResponse.swift
+Sources/LumoAuthAPIClient/Models/PutAdminSettingsEmailUpdateRequest.swift
 Sources/LumoAuthAPIClient/Models/PutAdminSettingsEmailUpdateResponse.swift
+Sources/LumoAuthAPIClient/Models/PutAdminSettingsGeneralUpdateRequest.swift
 Sources/LumoAuthAPIClient/Models/PutAdminSettingsGeneralUpdateResponse.swift
 Sources/LumoAuthAPIClient/Models/PutAdminSettingsGeneralUpdateResponseData.swift
 Sources/LumoAuthAPIClient/Models/PutAdminSettingsScimUpdateResponse.swift
@@ -552,7 +557,6 @@ docs/AdminMcpAPI.md
 docs/AdminMcpServersCreateResponse.md
 docs/AdminMcpServersGetResponse.md
 docs/AdminMcpServersListResponse.md
-docs/AdminMcpServersListResponseMeta.md
 docs/AdminMfaAPI.md
 docs/AdminOAuthClientsAPI.md
 docs/AdminOrgInvitationsCreateResponse.md
@@ -623,6 +627,7 @@ docs/AdminUserSessionsRevokePostResponse.md
 docs/AdminUserTokensRevokeAllResponse.md
 docs/AdminUserTokensRevokePostResponse.md
 docs/AdminUsersAPI.md
+docs/AdminUsersRestoreResponse.md
 docs/AdminWebhooksAPI.md
 docs/AdminWebhooksCreateResponse.md
 docs/AdminWebhooksCreateResponseData.md
@@ -672,6 +677,8 @@ docs/CheckAbacBulkResponseResultsItem.md
 docs/CheckAbacResponse.md
 docs/CheckAbacResponseMatchedPoliciesItem.md
 docs/CheckAnyPermissionResponse.md
+docs/CheckEmailFirstRequest.md
+docs/CheckEmailFirstResponse.md
 docs/CheckPermissionResponse.md
 docs/CheckPermissionsBulkResponse.md
 docs/CheckRelationResponse.md
@@ -695,6 +702,7 @@ docs/DenyRequestRequest.md
 docs/DenyRequestResponse.md
 docs/DeviceAuthorizationResponse.md
 docs/EmailEnrollmentStarted.md
+docs/EmailSenderSettings.md
 docs/EmailTemplate.md
 docs/EnrollAuthenticator201Response.md
 docs/EnrollAuthenticatorRequest.md
@@ -821,7 +829,9 @@ docs/PutAdminClientsUpdateBrandingResponse.md
 docs/PutAdminOrgMembersUpdateResponse.md
 docs/PutAdminSettingsAuthenticationUpdateResponse.md
 docs/PutAdminSettingsBrandingUpdateResponse.md
+docs/PutAdminSettingsEmailUpdateRequest.md
 docs/PutAdminSettingsEmailUpdateResponse.md
+docs/PutAdminSettingsGeneralUpdateRequest.md
 docs/PutAdminSettingsGeneralUpdateResponse.md
 docs/PutAdminSettingsGeneralUpdateResponseData.md
 docs/PutAdminSettingsScimUpdateResponse.md

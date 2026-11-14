@@ -19,10 +19,9 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.lumoauth.client.model.EmailSenderSettings;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,12 +49,12 @@ import io.lumoauth.client.JSON;
 /**
  * PutAdminSettingsEmailUpdateResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T02:59:28.940404665Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class PutAdminSettingsEmailUpdateResponse {
   public static final String SERIALIZED_NAME_DATA = "data";
   @SerializedName(SERIALIZED_NAME_DATA)
   @javax.annotation.Nullable
-  private Map<String, Object> data = new HashMap<>();
+  private EmailSenderSettings data;
 
   public static final String SERIALIZED_NAME_MESSAGE = "message";
   @SerializedName(SERIALIZED_NAME_MESSAGE)
@@ -65,29 +64,21 @@ public class PutAdminSettingsEmailUpdateResponse {
   public PutAdminSettingsEmailUpdateResponse() {
   }
 
-  public PutAdminSettingsEmailUpdateResponse data(@javax.annotation.Nullable Map<String, Object> data) {
+  public PutAdminSettingsEmailUpdateResponse data(@javax.annotation.Nullable EmailSenderSettings data) {
     this.data = data;
     return this;
   }
 
-  public PutAdminSettingsEmailUpdateResponse putDataItem(String key, Object dataItem) {
-    if (this.data == null) {
-      this.data = new HashMap<>();
-    }
-    this.data.put(key, dataItem);
-    return this;
-  }
-
   /**
-   * Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
+   * Get data
    * @return data
    */
   @javax.annotation.Nullable
-  public Map<String, Object> getData() {
+  public EmailSenderSettings getData() {
     return data;
   }
 
-  public void setData(@javax.annotation.Nullable Map<String, Object> data) {
+  public void setData(@javax.annotation.Nullable EmailSenderSettings data) {
     this.data = data;
   }
 
@@ -184,6 +175,10 @@ public class PutAdminSettingsEmailUpdateResponse {
         }
       }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
+      // validate the optional field `data`
+      if (jsonObj.get("data") != null && !jsonObj.get("data").isJsonNull()) {
+        EmailSenderSettings.validateJsonElement(jsonObj.get("data"));
+      }
       if ((jsonObj.get("message") != null && !jsonObj.get("message").isJsonNull()) && !jsonObj.get("message").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `message` to be a primitive type in the JSON string but got `%s`", jsonObj.get("message").toString()));
       }

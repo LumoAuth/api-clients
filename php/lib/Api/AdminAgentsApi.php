@@ -3175,15 +3175,17 @@ class AdminAgentsApi
      * List all agents in the tenant
      *
      * @param  string $orgId orgId (required)
+     * @param  string|null $sortBy Sort field. Default: name. Another value is ignored. (optional)
+     * @param  string|null $sortDir Sort direction, used with sortBy. (optional, default to 'ASC')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsList'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminAgentsListResponse
      */
-    public function adminAgentsList($orgId, string $contentType = self::contentTypes['adminAgentsList'][0])
+    public function adminAgentsList($orgId, $sortBy = null, $sortDir = 'ASC', string $contentType = self::contentTypes['adminAgentsList'][0])
     {
-        list($response) = $this->adminAgentsListWithHttpInfo($orgId, $contentType);
+        list($response) = $this->adminAgentsListWithHttpInfo($orgId, $sortBy, $sortDir, $contentType);
         return $response;
     }
 
@@ -3193,15 +3195,17 @@ class AdminAgentsApi
      * List all agents in the tenant
      *
      * @param  string $orgId (required)
+     * @param  string|null $sortBy Sort field. Default: name. Another value is ignored. (optional)
+     * @param  string|null $sortDir Sort direction, used with sortBy. (optional, default to 'ASC')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsList'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminAgentsListResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminAgentsListWithHttpInfo($orgId, string $contentType = self::contentTypes['adminAgentsList'][0])
+    public function adminAgentsListWithHttpInfo($orgId, $sortBy = null, $sortDir = 'ASC', string $contentType = self::contentTypes['adminAgentsList'][0])
     {
-        $request = $this->adminAgentsListRequest($orgId, $contentType);
+        $request = $this->adminAgentsListRequest($orgId, $sortBy, $sortDir, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3278,14 +3282,16 @@ class AdminAgentsApi
      * List all agents in the tenant
      *
      * @param  string $orgId (required)
+     * @param  string|null $sortBy Sort field. Default: name. Another value is ignored. (optional)
+     * @param  string|null $sortDir Sort direction, used with sortBy. (optional, default to 'ASC')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminAgentsListAsync($orgId, string $contentType = self::contentTypes['adminAgentsList'][0])
+    public function adminAgentsListAsync($orgId, $sortBy = null, $sortDir = 'ASC', string $contentType = self::contentTypes['adminAgentsList'][0])
     {
-        return $this->adminAgentsListAsyncWithHttpInfo($orgId, $contentType)
+        return $this->adminAgentsListAsyncWithHttpInfo($orgId, $sortBy, $sortDir, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3299,15 +3305,17 @@ class AdminAgentsApi
      * List all agents in the tenant
      *
      * @param  string $orgId (required)
+     * @param  string|null $sortBy Sort field. Default: name. Another value is ignored. (optional)
+     * @param  string|null $sortDir Sort direction, used with sortBy. (optional, default to 'ASC')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminAgentsListAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['adminAgentsList'][0])
+    public function adminAgentsListAsyncWithHttpInfo($orgId, $sortBy = null, $sortDir = 'ASC', string $contentType = self::contentTypes['adminAgentsList'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminAgentsListResponse';
-        $request = $this->adminAgentsListRequest($orgId, $contentType);
+        $request = $this->adminAgentsListRequest($orgId, $sortBy, $sortDir, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3349,12 +3357,14 @@ class AdminAgentsApi
      * Create request for operation 'adminAgentsList'
      *
      * @param  string $orgId (required)
+     * @param  string|null $sortBy Sort field. Default: name. Another value is ignored. (optional)
+     * @param  string|null $sortDir Sort direction, used with sortBy. (optional, default to 'ASC')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAgentsList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminAgentsListRequest($orgId, string $contentType = self::contentTypes['adminAgentsList'][0])
+    public function adminAgentsListRequest($orgId, $sortBy = null, $sortDir = 'ASC', string $contentType = self::contentTypes['adminAgentsList'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -3365,6 +3375,8 @@ class AdminAgentsApi
         }
 
 
+
+
         $resourcePath = '/orgs/{orgId}/api/v1/admin/agents';
         $formParams = [];
         $queryParams = [];
@@ -3372,6 +3384,24 @@ class AdminAgentsApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $sortBy,
+            'sortBy', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $sortDir,
+            'sortDir', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
         // path params

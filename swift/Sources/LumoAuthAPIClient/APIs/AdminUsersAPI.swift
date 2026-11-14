@@ -76,6 +76,7 @@ open class AdminUsersAPI {
     /**
      Assign a permission to a user
      - POST /orgs/{orgId}/api/v1/admin/users/{userId}/permissions
+     - Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. A user or permission outside this organization is 404.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -174,7 +175,7 @@ open class AdminUsersAPI {
     /**
      Relink legacy SAML users to an IdP
      - POST /orgs/{orgId}/api/v1/admin/identities/legacy-saml
-     - Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+     - Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -421,6 +422,56 @@ open class AdminUsersAPI {
         let localVariableRequestBuilder: RequestBuilder<AdminAgentsGetResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Restore a deleted user
+     
+     - parameter orgId: (path)  
+     - parameter userId: (path)  
+     - returns: AdminUsersRestoreResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func adminUsersRestore(orgId: String, userId: String) async throws -> AdminUsersRestoreResponse {
+        return try await adminUsersRestoreWithRequestBuilder(orgId: orgId, userId: userId).execute().body
+    }
+
+    /**
+     Restore a deleted user
+     - POST /orgs/{orgId}/api/v1/admin/users/{userId}/restore
+     - Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter userId: (path)  
+     - returns: RequestBuilder<AdminUsersRestoreResponse> 
+     */
+    open class func adminUsersRestoreWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<AdminUsersRestoreResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}/restore"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let userIdPreEscape = "\(APIHelper.mapValueToPathItem(userId))"
+        let userIdPostEscape = userIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{userId}", with: userIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AdminUsersRestoreResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -762,14 +813,45 @@ open class AdminUsersAPI {
     }
 
     /**
+     * enum for parameter sortBy
+     */
+    public enum SortBy_listUsers: String, CaseIterable {
+        case email = "email"
+        case name = "name"
+        case username = "username"
+        case createdat = "createdAt"
+        case lastloginat = "lastLoginAt"
+    }
+
+    /**
+     * enum for parameter sortDir
+     */
+    public enum SortDir_listUsers: String, CaseIterable {
+        case asc = "ASC"
+        case desc = "DESC"
+    }
+
+    /**
      List users
      
      - parameter orgId: (path)  
+     - parameter page: (query) Page number. (optional, default to 1)
+     - parameter limit: (query) Users per page (1 to 100). (optional, default to 25)
+     - parameter search: (query) Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)
+     - parameter active: (query) Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)
+     - parameter blocked: (query) Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)
+     - parameter deleted: (query) &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)
+     - parameter emailVerified: (query) Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)
+     - parameter mfaEnabled: (query) Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)
+     - parameter role: (query) Only users who hold the role with this slug. (optional)
+     - parameter group: (query) Only members of the group with this slug. (optional)
+     - parameter sortBy: (query) Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)
+     - parameter sortDir: (query) Sort direction. Used only together with sortBy. (optional, default to .desc)
      - returns: ListUsersResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func listUsers(orgId: String) async throws -> ListUsersResponse {
-        return try await listUsersWithRequestBuilder(orgId: orgId).execute().body
+    open class func listUsers(orgId: String, page: Int? = nil, limit: Int? = nil, search: String? = nil, active: Bool? = nil, blocked: Bool? = nil, deleted: Bool? = nil, emailVerified: Bool? = nil, mfaEnabled: Bool? = nil, role: String? = nil, group: String? = nil, sortBy: SortBy_listUsers? = nil, sortDir: SortDir_listUsers? = nil) async throws -> ListUsersResponse {
+        return try await listUsersWithRequestBuilder(orgId: orgId, page: page, limit: limit, search: search, active: active, blocked: blocked, deleted: deleted, emailVerified: emailVerified, mfaEnabled: mfaEnabled, role: role, group: group, sortBy: sortBy, sortDir: sortDir).execute().body
     }
 
     /**
@@ -782,9 +864,21 @@ open class AdminUsersAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter page: (query) Page number. (optional, default to 1)
+     - parameter limit: (query) Users per page (1 to 100). (optional, default to 25)
+     - parameter search: (query) Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)
+     - parameter active: (query) Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)
+     - parameter blocked: (query) Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)
+     - parameter deleted: (query) &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)
+     - parameter emailVerified: (query) Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)
+     - parameter mfaEnabled: (query) Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)
+     - parameter role: (query) Only users who hold the role with this slug. (optional)
+     - parameter group: (query) Only members of the group with this slug. (optional)
+     - parameter sortBy: (query) Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)
+     - parameter sortDir: (query) Sort direction. Used only together with sortBy. (optional, default to .desc)
      - returns: RequestBuilder<ListUsersResponse> 
      */
-    open class func listUsersWithRequestBuilder(orgId: String) -> RequestBuilder<ListUsersResponse> {
+    open class func listUsersWithRequestBuilder(orgId: String, page: Int? = nil, limit: Int? = nil, search: String? = nil, active: Bool? = nil, blocked: Bool? = nil, deleted: Bool? = nil, emailVerified: Bool? = nil, mfaEnabled: Bool? = nil, role: String? = nil, group: String? = nil, sortBy: SortBy_listUsers? = nil, sortDir: SortDir_listUsers? = nil) -> RequestBuilder<ListUsersResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -792,7 +886,21 @@ open class AdminUsersAPI {
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "page": (wrappedValue: page?.encodeToJSON(), isExplode: true),
+            "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
+            "search": (wrappedValue: search?.encodeToJSON(), isExplode: true),
+            "active": (wrappedValue: active?.encodeToJSON(), isExplode: true),
+            "blocked": (wrappedValue: blocked?.encodeToJSON(), isExplode: true),
+            "deleted": (wrappedValue: deleted?.encodeToJSON(), isExplode: true),
+            "emailVerified": (wrappedValue: emailVerified?.encodeToJSON(), isExplode: true),
+            "mfaEnabled": (wrappedValue: mfaEnabled?.encodeToJSON(), isExplode: true),
+            "role": (wrappedValue: role?.encodeToJSON(), isExplode: true),
+            "group": (wrappedValue: group?.encodeToJSON(), isExplode: true),
+            "sortBy": (wrappedValue: sortBy?.encodeToJSON(), isExplode: true),
+            "sortDir": (wrappedValue: sortDir?.encodeToJSON(), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
             :
@@ -1181,6 +1289,7 @@ open class AdminUsersAPI {
     /**
      Set a user's password
      - PUT /orgs/{orgId}/api/v1/admin/users/{userId}/password
+     - Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -1230,6 +1339,7 @@ open class AdminUsersAPI {
     /**
      Set a user's password
      - POST /orgs/{orgId}/api/v1/admin/users/{userId}/password
+     - Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth

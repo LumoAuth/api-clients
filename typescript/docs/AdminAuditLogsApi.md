@@ -66,6 +66,7 @@ const { status, data } = await apiInstance.adminAuditLogsActions(
 # **adminAuditLogsExport**
 > string adminAuditLogsExport()
 
+Needs `audit.export` and `audit.view`, as the export on the portal\'s audit log page does.
 
 ### Example
 
@@ -320,6 +321,7 @@ const { status, data } = await apiInstance.adminAuditLogsStats(
 # **patchAdminAuditLogsRetentionUpdate**
 > AdminAuditLogsRetentionResponse patchAdminAuditLogsRetentionUpdate()
 
+Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 
 ### Example
 
@@ -370,6 +372,7 @@ const { status, data } = await apiInstance.patchAdminAuditLogsRetentionUpdate(
 # **putAdminAuditLogsRetentionUpdate**
 > AdminAuditLogsRetentionResponse putAdminAuditLogsRetentionUpdate()
 
+Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 
 ### Example
 

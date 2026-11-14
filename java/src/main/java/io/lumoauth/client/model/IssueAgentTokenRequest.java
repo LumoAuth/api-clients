@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * IssueAgentTokenRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T02:59:28.940404665Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class IssueAgentTokenRequest {
   public static final String SERIALIZED_NAME_REQUEST_TYPE = "request_type";
   @SerializedName(SERIALIZED_NAME_REQUEST_TYPE)
@@ -79,6 +79,11 @@ public class IssueAgentTokenRequest {
   @SerializedName(SERIALIZED_NAME_REFRESH_TOKEN)
   @javax.annotation.Nullable
   private String refreshToken;
+
+  public static final String SERIALIZED_NAME_SCOPE = "scope";
+  @SerializedName(SERIALIZED_NAME_SCOPE)
+  @javax.annotation.Nullable
+  private String scope;
 
   public IssueAgentTokenRequest() {
   }
@@ -197,6 +202,25 @@ public class IssueAgentTokenRequest {
   }
 
 
+  public IssueAgentTokenRequest scope(@javax.annotation.Nullable String scope) {
+    this.scope = scope;
+    return this;
+  }
+
+  /**
+   * request_type&#x3D;refresh only: optional space-delimited scopes that narrow the refreshed token. Must be a subset of the refresh grant and of the resource token scope (invalid_scope otherwise). Ignored for request_type&#x3D;auth, where the resource token names the scope.
+   * @return scope
+   */
+  @javax.annotation.Nullable
+  public String getScope() {
+    return scope;
+  }
+
+  public void setScope(@javax.annotation.Nullable String scope) {
+    this.scope = scope;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -212,12 +236,13 @@ public class IssueAgentTokenRequest {
         Objects.equals(this.redirectUri, issueAgentTokenRequest.redirectUri) &&
         Objects.equals(this.code, issueAgentTokenRequest.code) &&
         Objects.equals(this.authToken, issueAgentTokenRequest.authToken) &&
-        Objects.equals(this.refreshToken, issueAgentTokenRequest.refreshToken);
+        Objects.equals(this.refreshToken, issueAgentTokenRequest.refreshToken) &&
+        Objects.equals(this.scope, issueAgentTokenRequest.scope);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(requestType, resourceToken, redirectUri, code, authToken, refreshToken);
+    return Objects.hash(requestType, resourceToken, redirectUri, code, authToken, refreshToken, scope);
   }
 
   @Override
@@ -230,6 +255,7 @@ public class IssueAgentTokenRequest {
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    authToken: ").append(toIndentedString(authToken)).append("\n");
     sb.append("    refreshToken: ").append(toIndentedString(refreshToken)).append("\n");
+    sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -251,7 +277,7 @@ public class IssueAgentTokenRequest {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("request_type", "resource_token", "redirect_uri", "code", "auth_token", "refresh_token"));
+    openapiFields = new HashSet<String>(Arrays.asList("request_type", "resource_token", "redirect_uri", "code", "auth_token", "refresh_token", "scope"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -295,6 +321,9 @@ public class IssueAgentTokenRequest {
       }
       if ((jsonObj.get("refresh_token") != null && !jsonObj.get("refresh_token").isJsonNull()) && !jsonObj.get("refresh_token").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `refresh_token` to be a primitive type in the JSON string but got `%s`", jsonObj.get("refresh_token").toString()));
+      }
+      if ((jsonObj.get("scope") != null && !jsonObj.get("scope").isJsonNull()) && !jsonObj.get("scope").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `scope` to be a primitive type in the JSON string but got `%s`", jsonObj.get("scope").toString()));
       }
   }
 

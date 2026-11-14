@@ -36,11 +36,12 @@
 | **backchannel_authentication_endpoint** | **String** |  | [optional] |
 | **backchannel_token_delivery_modes_supported** | **Array&lt;String&gt;** |  | [optional] |
 | **backchannel_user_code_parameter_supported** | **Boolean** |  | [optional] |
+| **resource_indicators_supported** | **Boolean** |  | [optional] |
 | **entity_profiles_supported** | **Array&lt;String&gt;** |  | [optional] |
 | **client_id_metadata_document_supported** | **Boolean** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] |
 | **authorization_grant_profiles_supported** | **Array&lt;String&gt;** | Only when the organization accepts ID-JAGs. | [optional] |
-| **op_policy_uri** | **String** | Only when configured. | [optional] |
-| **op_tos_uri** | **String** | Only when configured. | [optional] |
+| **op_policy_uri** | **String** | The Privacy policy URL of the organization&#39;s login page settings. Only when it is set. | [optional] |
+| **op_tos_uri** | **String** | The Terms of service URL of the organization&#39;s login page settings. Only when it is set. | [optional] |
 
 ## Example
 
@@ -80,6 +81,7 @@ instance = LumoAuthApiClient::AuthorizationServerMetadata.new(
   backchannel_authentication_endpoint: null,
   backchannel_token_delivery_modes_supported: [&quot;poll&quot;],
   backchannel_user_code_parameter_supported: false,
+  resource_indicators_supported: true,
   entity_profiles_supported: [&quot;user&quot;,&quot;ai_agent&quot;,&quot;workload&quot;],
   client_id_metadata_document_supported: null,
   authorization_grant_profiles_supported: [&quot;urn:ietf:params:oauth:grant-profile:id-jag&quot;],

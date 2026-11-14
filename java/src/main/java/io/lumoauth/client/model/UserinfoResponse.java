@@ -54,7 +54,7 @@ import io.lumoauth.client.JSON;
 /**
  * UserinfoResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T02:59:28.940404665Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class UserinfoResponse {
   public static final String SERIALIZED_NAME_SUB = "sub";
   @SerializedName(SERIALIZED_NAME_SUB)
@@ -62,15 +62,11 @@ public class UserinfoResponse {
   private String sub;
 
   /**
-   * Only for non-user principals.
+   * Only for agents.
    */
   @JsonAdapter(IdentityTypeEnum.Adapter.class)
   public enum IdentityTypeEnum {
-    AGENT("agent"),
-    
-    CLIENT("client"),
-    
-    UNKNOWN("unknown");
+    AGENT("agent");
 
     private String value;
 
@@ -245,11 +241,6 @@ public class UserinfoResponse {
   @javax.annotation.Nullable
   private Map<String, Object> budgetPolicy = new HashMap<>();
 
-  public static final String SERIALIZED_NAME_CLIENT_ID = "client_id";
-  @SerializedName(SERIALIZED_NAME_CLIENT_ID)
-  @javax.annotation.Nullable
-  private String clientId;
-
   public UserinfoResponse() {
   }
 
@@ -259,7 +250,7 @@ public class UserinfoResponse {
   }
 
   /**
-   * User id; agent_&lt;agent_id&gt; for agents; client_&lt;client_id&gt; for clients.
+   * User id; agent_&lt;agent_id&gt; for agents.
    * @return sub
    */
   @javax.annotation.Nonnull
@@ -278,7 +269,7 @@ public class UserinfoResponse {
   }
 
   /**
-   * Only for non-user principals.
+   * Only for agents.
    * @return identityType
    */
   @javax.annotation.Nullable
@@ -316,7 +307,7 @@ public class UserinfoResponse {
   }
 
   /**
-   * profile scope (users); agent / client display name.
+   * profile scope (users); agent display name.
    * @return name
    */
   @javax.annotation.Nullable
@@ -798,25 +789,6 @@ public class UserinfoResponse {
   }
 
 
-  public UserinfoResponse clientId(@javax.annotation.Nullable String clientId) {
-    this.clientId = clientId;
-    return this;
-  }
-
-  /**
-   * Clients only.
-   * @return clientId
-   */
-  @javax.annotation.Nullable
-  public String getClientId() {
-    return clientId;
-  }
-
-  public void setClientId(@javax.annotation.Nullable String clientId) {
-    this.clientId = clientId;
-  }
-
-
 
   @Override
   public boolean equals(Object o) {
@@ -853,8 +825,7 @@ public class UserinfoResponse {
         Objects.equals(this.agentId, userinfoResponse.agentId) &&
         Objects.equals(this.workloadIdentity, userinfoResponse.workloadIdentity) &&
         Objects.equals(this.capabilities, userinfoResponse.capabilities) &&
-        Objects.equals(this.budgetPolicy, userinfoResponse.budgetPolicy) &&
-        Objects.equals(this.clientId, userinfoResponse.clientId);
+        Objects.equals(this.budgetPolicy, userinfoResponse.budgetPolicy);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -863,7 +834,7 @@ public class UserinfoResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(sub, identityType, tenant, name, givenName, familyName, middleName, nickname, preferredUsername, profile, picture, website, gender, birthdate, zoneinfo, locale, updatedAt, email, emailVerified, phoneNumber, phoneNumberVerified, address, roles, agentId, workloadIdentity, capabilities, budgetPolicy, clientId);
+    return Objects.hash(sub, identityType, tenant, name, givenName, familyName, middleName, nickname, preferredUsername, profile, picture, website, gender, birthdate, zoneinfo, locale, updatedAt, email, emailVerified, phoneNumber, phoneNumberVerified, address, roles, agentId, workloadIdentity, capabilities, budgetPolicy);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -904,7 +875,6 @@ public class UserinfoResponse {
     sb.append("    workloadIdentity: ").append(toIndentedString(workloadIdentity)).append("\n");
     sb.append("    capabilities: ").append(toIndentedString(capabilities)).append("\n");
     sb.append("    budgetPolicy: ").append(toIndentedString(budgetPolicy)).append("\n");
-    sb.append("    clientId: ").append(toIndentedString(clientId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -926,7 +896,7 @@ public class UserinfoResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("sub", "identity_type", "tenant", "name", "given_name", "family_name", "middle_name", "nickname", "preferred_username", "profile", "picture", "website", "gender", "birthdate", "zoneinfo", "locale", "updated_at", "email", "email_verified", "phone_number", "phone_number_verified", "address", "roles", "agent_id", "workload_identity", "capabilities", "budget_policy", "client_id"));
+    openapiFields = new HashSet<String>(Arrays.asList("sub", "identity_type", "tenant", "name", "given_name", "family_name", "middle_name", "nickname", "preferred_username", "profile", "picture", "website", "gender", "birthdate", "zoneinfo", "locale", "updated_at", "email", "email_verified", "phone_number", "phone_number_verified", "address", "roles", "agent_id", "workload_identity", "capabilities", "budget_policy"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("sub"));
@@ -1028,9 +998,6 @@ public class UserinfoResponse {
       // ensure the optional json data is an array if present
       if (jsonObj.get("capabilities") != null && !jsonObj.get("capabilities").isJsonNull() && !jsonObj.get("capabilities").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `capabilities` to be an array in the JSON string but got `%s`", jsonObj.get("capabilities").toString()));
-      }
-      if ((jsonObj.get("client_id") != null && !jsonObj.get("client_id").isJsonNull()) && !jsonObj.get("client_id").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `client_id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("client_id").toString()));
       }
   }
 

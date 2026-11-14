@@ -322,7 +322,7 @@ public class AdminEmailApi {
 
     /**
      * Get an email template (custom or built-in default)
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
      * @param orgId  (required)
      * @param type  (required)
      * @param locale Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
@@ -344,7 +344,7 @@ public class AdminEmailApi {
 
     /**
      * Get an email template (custom or built-in default)
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
      * @param orgId  (required)
      * @param type  (required)
      * @param locale Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
@@ -367,7 +367,7 @@ public class AdminEmailApi {
 
     /**
      * Get an email template (custom or built-in default) (asynchronously)
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
      * @param orgId  (required)
      * @param type  (required)
      * @param locale Language variant (BCP 47, e.g. fr or pt-BR); omit for the variant used in every language (optional)
@@ -461,7 +461,7 @@ public class AdminEmailApi {
 
     /**
      * List every email template type with its current (custom or built-in) template
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
      * @param orgId  (required)
      * @return AdminEmailTemplatesListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -479,7 +479,7 @@ public class AdminEmailApi {
 
     /**
      * List every email template type with its current (custom or built-in) template
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminEmailTemplatesListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -498,7 +498,7 @@ public class AdminEmailApi {
 
     /**
      * List every email template type with its current (custom or built-in) template (asynchronously)
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -882,7 +882,7 @@ public class AdminEmailApi {
 
     /**
      * List the placeholders available to an email template type
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
      * @param orgId  (required)
      * @param type  (required)
      * @return AdminEmailTemplatesVariablesResponse
@@ -902,7 +902,7 @@ public class AdminEmailApi {
 
     /**
      * List the placeholders available to an email template type
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
      * @param orgId  (required)
      * @param type  (required)
      * @return ApiResponse&lt;AdminEmailTemplatesVariablesResponse&gt;
@@ -923,7 +923,7 @@ public class AdminEmailApi {
 
     /**
      * List the placeholders available to an email template type (asynchronously)
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
      * @param orgId  (required)
      * @param type  (required)
      * @param _callback The callback to be executed when the API call finishes

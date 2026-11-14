@@ -70,7 +70,7 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD on, the default), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings). |  -  |
+| **200** | Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD on, the default), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (the Privacy policy URL and Terms of service URL of the login page settings, when set). |  -  |
 | **404** | invalid_tenant — unknown or inactive organization. |  -  |
 
 <a id="getJwks"></a>
@@ -196,7 +196,7 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD on, the default), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings). |  -  |
+| **200** | OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD on, the default), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (the Privacy policy URL and Terms of service URL of the login page settings, when set). |  -  |
 | **404** | invalid_tenant — unknown or inactive organization. |  -  |
 
 <a id="getSsfConfiguration"></a>

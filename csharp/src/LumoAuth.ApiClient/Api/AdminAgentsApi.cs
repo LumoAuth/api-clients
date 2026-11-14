@@ -237,8 +237,10 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="sortBy">Sort field. Default: name. Another value is ignored. (optional)</param>
+        /// <param name="sortDir">Sort direction, used with sortBy. (optional, default to ASC)</param>
         /// <returns>AdminAgentsListResponse</returns>
-        AdminAgentsListResponse AdminAgentsList(string orgId);
+        AdminAgentsListResponse AdminAgentsList(string orgId, string? sortBy = default, string? sortDir = default);
 
         /// <summary>
         /// List all agents in the tenant
@@ -248,8 +250,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="sortBy">Sort field. Default: name. Another value is ignored. (optional)</param>
+        /// <param name="sortDir">Sort direction, used with sortBy. (optional, default to ASC)</param>
         /// <returns>ApiResponse of AdminAgentsListResponse</returns>
-        ApiResponse<AdminAgentsListResponse> AdminAgentsListWithHttpInfo(string orgId);
+        ApiResponse<AdminAgentsListResponse> AdminAgentsListWithHttpInfo(string orgId, string? sortBy = default, string? sortDir = default);
         /// <summary>
         /// Report model tokens and cost for an agent
         /// </summary>
@@ -654,9 +658,11 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="sortBy">Sort field. Default: name. Another value is ignored. (optional)</param>
+        /// <param name="sortDir">Sort direction, used with sortBy. (optional, default to ASC)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminAgentsListResponse</returns>
-        System.Threading.Tasks.Task<AdminAgentsListResponse> AdminAgentsListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminAgentsListResponse> AdminAgentsListAsync(string orgId, string? sortBy = default, string? sortDir = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all agents in the tenant
@@ -666,9 +672,11 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="sortBy">Sort field. Default: name. Another value is ignored. (optional)</param>
+        /// <param name="sortDir">Sort direction, used with sortBy. (optional, default to ASC)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminAgentsListResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminAgentsListResponse>> AdminAgentsListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminAgentsListResponse>> AdminAgentsListWithHttpInfoAsync(string orgId, string? sortBy = default, string? sortDir = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Report model tokens and cost for an agent
         /// </summary>
@@ -2575,10 +2583,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="sortBy">Sort field. Default: name. Another value is ignored. (optional)</param>
+        /// <param name="sortDir">Sort direction, used with sortBy. (optional, default to ASC)</param>
         /// <returns>AdminAgentsListResponse</returns>
-        public AdminAgentsListResponse AdminAgentsList(string orgId)
+        public AdminAgentsListResponse AdminAgentsList(string orgId, string? sortBy = default, string? sortDir = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsListResponse> localVarResponse = AdminAgentsListWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsListResponse> localVarResponse = AdminAgentsListWithHttpInfo(orgId, sortBy, sortDir);
             return localVarResponse.Data;
         }
 
@@ -2587,8 +2597,10 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="sortBy">Sort field. Default: name. Another value is ignored. (optional)</param>
+        /// <param name="sortDir">Sort direction, used with sortBy. (optional, default to ASC)</param>
         /// <returns>ApiResponse of AdminAgentsListResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsListResponse> AdminAgentsListWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsListResponse> AdminAgentsListWithHttpInfo(string orgId, string? sortBy = default, string? sortDir = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2611,6 +2623,14 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            if (sortBy != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "sortBy", sortBy));
+            }
+            if (sortDir != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "sortDir", sortDir));
+            }
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2641,11 +2661,13 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="sortBy">Sort field. Default: name. Another value is ignored. (optional)</param>
+        /// <param name="sortDir">Sort direction, used with sortBy. (optional, default to ASC)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminAgentsListResponse</returns>
-        public async System.Threading.Tasks.Task<AdminAgentsListResponse> AdminAgentsListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminAgentsListResponse> AdminAgentsListAsync(string orgId, string? sortBy = default, string? sortDir = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsListResponse> localVarResponse = await AdminAgentsListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsListResponse> localVarResponse = await AdminAgentsListWithHttpInfoAsync(orgId, sortBy, sortDir, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2654,9 +2676,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="sortBy">Sort field. Default: name. Another value is ignored. (optional)</param>
+        /// <param name="sortDir">Sort direction, used with sortBy. (optional, default to ASC)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminAgentsListResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsListResponse>> AdminAgentsListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsListResponse>> AdminAgentsListWithHttpInfoAsync(string orgId, string? sortBy = default, string? sortDir = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2681,6 +2705,14 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            if (sortBy != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "sortBy", sortBy));
+            }
+            if (sortDir != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "sortDir", sortDir));
+            }
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

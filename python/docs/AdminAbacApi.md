@@ -185,7 +185,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Deleted |  -  |
-**403** | System attribute definitions cannot be deleted |  -  |
+**403** | System and built-in attribute definitions cannot be deleted |  -  |
 **404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -439,7 +439,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Created |  -  |
-**400** | Invalid effect, priority (a whole number from 0 to 1000) or policy conditions |  -  |
+**400** | Invalid effect, priority (a whole number from 0 to 1000), resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions. &#x60;action&#x60; is one action, several separated by commas (&#x60;read, write&#x60;), or &#x60;*&#x60;. |  -  |
 **409** | A policy with this slug already exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -526,7 +526,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Deleted |  -  |
-**403** | System policies cannot be deleted |  -  |
+**403** | System and built-in policies cannot be deleted |  -  |
 **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -618,7 +618,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abac_policies_list**
-> AbacPoliciesListResponse abac_policies_list(org_id)
+> AbacPoliciesListResponse abac_policies_list(org_id, action=action)
 
 List ABAC policies
 
@@ -660,10 +660,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminAbacApi(api_client)
     org_id = 'org_id_example' # str | 
+    action = 'action_example' # str | Only policies that name this action, alone or in a comma-separated list. `*` lists the policies that name `*`. (optional)
 
     try:
         # List ABAC policies
-        api_response = api_instance.abac_policies_list(org_id)
+        api_response = api_instance.abac_policies_list(org_id, action=action)
         print("The response of AdminAbacApi->abac_policies_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -678,6 +679,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **action** | **str**| Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. | [optional] 
 
 ### Return type
 
@@ -782,7 +784,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Toggled policy |  -  |
-**403** | System policies cannot be modified |  -  |
+**403** | System and built-in policies cannot be modified |  -  |
 **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -869,7 +871,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated |  -  |
-**403** | System attribute definitions cannot be modified |  -  |
+**403** | System and built-in attribute definitions cannot be modified |  -  |
 **404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -956,7 +958,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated |  -  |
-**403** | System policies cannot be modified |  -  |
+**400** | Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions |  -  |
+**403** | System and built-in policies cannot be modified |  -  |
 **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1043,7 +1046,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated |  -  |
-**403** | System attribute definitions cannot be modified |  -  |
+**403** | System and built-in attribute definitions cannot be modified |  -  |
 **404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1130,7 +1133,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated |  -  |
-**403** | System policies cannot be modified |  -  |
+**400** | Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions |  -  |
+**403** | System and built-in policies cannot be modified |  -  |
 **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

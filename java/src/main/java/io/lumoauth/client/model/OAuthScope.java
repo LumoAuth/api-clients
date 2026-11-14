@@ -50,7 +50,7 @@ import io.lumoauth.client.JSON;
 /**
  * OAuthScope
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T02:59:28.940404665Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class OAuthScope {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -66,11 +66,6 @@ public class OAuthScope {
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
   @javax.annotation.Nullable
   private String description;
-
-  public static final String SERIALIZED_NAME_IS_DEFAULT = "isDefault";
-  @SerializedName(SERIALIZED_NAME_IS_DEFAULT)
-  @javax.annotation.Nullable
-  private Boolean isDefault;
 
   public static final String SERIALIZED_NAME_IS_SYSTEM = "isSystem";
   @SerializedName(SERIALIZED_NAME_IS_SYSTEM)
@@ -129,7 +124,7 @@ public class OAuthScope {
   }
 
   /**
-   * Get description
+   * Shown to users on the consent page next to the scope name.
    * @return description
    */
   @javax.annotation.Nullable
@@ -139,25 +134,6 @@ public class OAuthScope {
 
   public void setDescription(@javax.annotation.Nullable String description) {
     this.description = description;
-  }
-
-
-  public OAuthScope isDefault(@javax.annotation.Nullable Boolean isDefault) {
-    this.isDefault = isDefault;
-    return this;
-  }
-
-  /**
-   * Get isDefault
-   * @return isDefault
-   */
-  @javax.annotation.Nullable
-  public Boolean getIsDefault() {
-    return isDefault;
-  }
-
-  public void setIsDefault(@javax.annotation.Nullable Boolean isDefault) {
-    this.isDefault = isDefault;
   }
 
 
@@ -212,7 +188,6 @@ public class OAuthScope {
     return Objects.equals(this.id, oauthScope.id) &&
         Objects.equals(this.name, oauthScope.name) &&
         Objects.equals(this.description, oauthScope.description) &&
-        Objects.equals(this.isDefault, oauthScope.isDefault) &&
         Objects.equals(this.isSystem, oauthScope.isSystem) &&
         Objects.equals(this.createdAt, oauthScope.createdAt);
   }
@@ -223,7 +198,7 @@ public class OAuthScope {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, description, isDefault, isSystem, createdAt);
+    return Objects.hash(id, name, description, isSystem, createdAt);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -240,7 +215,6 @@ public class OAuthScope {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    isDefault: ").append(toIndentedString(isDefault)).append("\n");
     sb.append("    isSystem: ").append(toIndentedString(isSystem)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("}");
@@ -264,7 +238,7 @@ public class OAuthScope {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("id", "name", "description", "isDefault", "isSystem", "createdAt"));
+    openapiFields = new HashSet<String>(Arrays.asList("id", "name", "description", "isSystem", "createdAt"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);

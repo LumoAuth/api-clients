@@ -48,14 +48,16 @@ import io.lumoauth.client.JSON;
 /**
  * GetServerChallengeResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T02:59:28.940404665Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class GetServerChallengeResponse {
   /**
-   * Gets or Sets status
+   * &#x60;no_authorization_required&#x60; for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token.
    */
   @JsonAdapter(StatusEnum.Adapter.class)
   public enum StatusEnum {
-    AUTHENTICATED("authenticated");
+    AUTHENTICATED("authenticated"),
+    
+    NO_AUTHORIZATION_REQUIRED("no_authorization_required");
 
     private String value;
 
@@ -124,7 +126,7 @@ public class GetServerChallengeResponse {
   }
 
   /**
-   * Get status
+   * &#x60;no_authorization_required&#x60; for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token.
    * @return status
    */
   @javax.annotation.Nonnull

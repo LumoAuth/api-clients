@@ -23,10 +23,9 @@ import io.lumoauth.client.model.AdminSettingsAllResponseDataGeneral;
 import io.lumoauth.client.model.AdminSettingsAllResponseDataSecurity;
 import io.lumoauth.client.model.AuthenticationSettings;
 import io.lumoauth.client.model.BrandingSettings;
+import io.lumoauth.client.model.EmailSenderSettings;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -54,7 +53,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminSettingsAllResponseData
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T02:59:28.940404665Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminSettingsAllResponseData {
   public static final String SERIALIZED_NAME_GENERAL = "general";
   @SerializedName(SERIALIZED_NAME_GENERAL)
@@ -79,7 +78,7 @@ public class AdminSettingsAllResponseData {
   public static final String SERIALIZED_NAME_EMAIL = "email";
   @SerializedName(SERIALIZED_NAME_EMAIL)
   @javax.annotation.Nullable
-  private Map<String, Object> email = new HashMap<>();
+  private EmailSenderSettings email;
 
   public AdminSettingsAllResponseData() {
   }
@@ -160,29 +159,21 @@ public class AdminSettingsAllResponseData {
   }
 
 
-  public AdminSettingsAllResponseData email(@javax.annotation.Nullable Map<String, Object> email) {
+  public AdminSettingsAllResponseData email(@javax.annotation.Nullable EmailSenderSettings email) {
     this.email = email;
     return this;
   }
 
-  public AdminSettingsAllResponseData putEmailItem(String key, Object emailItem) {
-    if (this.email == null) {
-      this.email = new HashMap<>();
-    }
-    this.email.put(key, emailItem);
-    return this;
-  }
-
   /**
-   * Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
+   * Get email
    * @return email
    */
   @javax.annotation.Nullable
-  public Map<String, Object> getEmail() {
+  public EmailSenderSettings getEmail() {
     return email;
   }
 
-  public void setEmail(@javax.annotation.Nullable Map<String, Object> email) {
+  public void setEmail(@javax.annotation.Nullable EmailSenderSettings email) {
     this.email = email;
   }
 
@@ -269,6 +260,10 @@ public class AdminSettingsAllResponseData {
       // validate the optional field `branding`
       if (jsonObj.get("branding") != null && !jsonObj.get("branding").isJsonNull()) {
         BrandingSettings.validateJsonElement(jsonObj.get("branding"));
+      }
+      // validate the optional field `email`
+      if (jsonObj.get("email") != null && !jsonObj.get("email").isJsonNull()) {
+        EmailSenderSettings.validateJsonElement(jsonObj.get("email"));
       }
   }
 

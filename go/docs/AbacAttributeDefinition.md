@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **DefaultValue** | Pointer to **interface{}** |  | [optional] 
 **IsRequired** | Pointer to **bool** |  | [optional] 
 **IsSystem** | Pointer to **bool** |  | [optional] 
+**BuiltIn** | Pointer to **bool** | True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403). | [optional] 
 **CreatedAt** | Pointer to **time.Time** |  | [optional] 
 **UpdatedAt** | Pointer to **NullableTime** |  | [optional] 
 
@@ -315,6 +316,31 @@ SetIsSystem sets IsSystem field to given value.
 `func (o *AbacAttributeDefinition) HasIsSystem() bool`
 
 HasIsSystem returns a boolean if a field has been set.
+
+### GetBuiltIn
+
+`func (o *AbacAttributeDefinition) GetBuiltIn() bool`
+
+GetBuiltIn returns the BuiltIn field if non-nil, zero value otherwise.
+
+### GetBuiltInOk
+
+`func (o *AbacAttributeDefinition) GetBuiltInOk() (*bool, bool)`
+
+GetBuiltInOk returns a tuple with the BuiltIn field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBuiltIn
+
+`func (o *AbacAttributeDefinition) SetBuiltIn(v bool)`
+
+SetBuiltIn sets BuiltIn field to given value.
+
+### HasBuiltIn
+
+`func (o *AbacAttributeDefinition) HasBuiltIn() bool`
+
+HasBuiltIn returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

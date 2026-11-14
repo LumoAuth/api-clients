@@ -6,8 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **int32** |  | [optional] 
 **Name** | Pointer to **string** |  | [optional] 
-**Description** | Pointer to **NullableString** |  | [optional] 
-**IsDefault** | Pointer to **bool** |  | [optional] 
+**Description** | Pointer to **NullableString** | Shown to users on the consent page next to the scope name. | [optional] 
 **IsSystem** | Pointer to **bool** |  | [optional] 
 **CreatedAt** | Pointer to **time.Time** |  | [optional] 
 
@@ -115,31 +114,6 @@ HasDescription returns a boolean if a field has been set.
 `func (o *OAuthScope) UnsetDescription()`
 
 UnsetDescription ensures that no value is present for Description, not even an explicit nil
-### GetIsDefault
-
-`func (o *OAuthScope) GetIsDefault() bool`
-
-GetIsDefault returns the IsDefault field if non-nil, zero value otherwise.
-
-### GetIsDefaultOk
-
-`func (o *OAuthScope) GetIsDefaultOk() (*bool, bool)`
-
-GetIsDefaultOk returns a tuple with the IsDefault field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIsDefault
-
-`func (o *OAuthScope) SetIsDefault(v bool)`
-
-SetIsDefault sets IsDefault field to given value.
-
-### HasIsDefault
-
-`func (o *OAuthScope) HasIsDefault() bool`
-
-HasIsDefault returns a boolean if a field has been set.
-
 ### GetIsSystem
 
 `func (o *OAuthScope) GetIsSystem() bool`

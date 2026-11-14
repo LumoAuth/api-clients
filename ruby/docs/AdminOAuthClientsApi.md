@@ -103,7 +103,7 @@ end
 
 Get an OAuth client's login and consent page branding
 
-Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+Needs `branding.view` and `clients.view`. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
 
 ### Examples
 
@@ -693,6 +693,8 @@ end
 
 Change keys of an OAuth client's login and/or consent page branding
 
+Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
+
 ### Examples
 
 ```ruby
@@ -844,6 +846,8 @@ end
 > <PutAdminClientsUpdateBrandingResponse> put_admin_clients_update_branding(org_id, client_id, opts)
 
 Replace an OAuth client's login and/or consent page branding
+
+Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
 
 ### Examples
 

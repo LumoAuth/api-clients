@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **data** | [**BrandingSettings**](BrandingSettings.md) |  | [optional] 
+**rejected** | **List[str]** | Keys whose value was refused by validation and not saved. | [optional] 
 **message** | **str** |  | [optional] 
 
 ## Example

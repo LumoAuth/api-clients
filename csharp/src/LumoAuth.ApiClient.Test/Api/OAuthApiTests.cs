@@ -79,6 +79,19 @@ namespace LumoAuth.ApiClient.Test.Api
         }
 
         /// <summary>
+        /// Test CheckEmailFirst
+        /// </summary>
+        [Fact]
+        public void CheckEmailFirstTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //CheckEmailFirstRequest checkEmailFirstRequest = null;
+            //var response = instance.CheckEmailFirst(orgId, checkEmailFirstRequest);
+            //Assert.IsType<CheckEmailFirstResponse>(response);
+        }
+
+        /// <summary>
         /// Test DeviceAuthorization
         /// </summary>
         [Fact]

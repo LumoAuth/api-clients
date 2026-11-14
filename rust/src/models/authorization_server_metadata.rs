@@ -79,6 +79,8 @@ pub struct AuthorizationServerMetadata {
     pub backchannel_token_delivery_modes_supported: Option<Vec<String>>,
     #[serde(rename = "backchannel_user_code_parameter_supported", skip_serializing_if = "Option::is_none")]
     pub backchannel_user_code_parameter_supported: Option<bool>,
+    #[serde(rename = "resource_indicators_supported", skip_serializing_if = "Option::is_none")]
+    pub resource_indicators_supported: Option<bool>,
     #[serde(rename = "entity_profiles_supported", skip_serializing_if = "Option::is_none")]
     pub entity_profiles_supported: Option<Vec<String>>,
     /// Present (true) unless the organization switched Client ID Metadata Documents off.
@@ -87,10 +89,10 @@ pub struct AuthorizationServerMetadata {
     /// Only when the organization accepts ID-JAGs.
     #[serde(rename = "authorization_grant_profiles_supported", skip_serializing_if = "Option::is_none")]
     pub authorization_grant_profiles_supported: Option<Vec<String>>,
-    /// Only when configured.
+    /// The Privacy policy URL of the organization's login page settings. Only when it is set.
     #[serde(rename = "op_policy_uri", skip_serializing_if = "Option::is_none")]
     pub op_policy_uri: Option<String>,
-    /// Only when configured.
+    /// The Terms of service URL of the organization's login page settings. Only when it is set.
     #[serde(rename = "op_tos_uri", skip_serializing_if = "Option::is_none")]
     pub op_tos_uri: Option<String>,
 }
@@ -130,6 +132,7 @@ impl AuthorizationServerMetadata {
             backchannel_authentication_endpoint: None,
             backchannel_token_delivery_modes_supported: None,
             backchannel_user_code_parameter_supported: None,
+            resource_indicators_supported: None,
             entity_profiles_supported: None,
             client_id_metadata_document_supported: None,
             authorization_grant_profiles_supported: None,

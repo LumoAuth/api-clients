@@ -44,5 +44,11 @@ export interface AdminGroupsListResponse {
      * @memberof AdminGroupsListResponse
      */
     'pagination'?: PaginationMeta;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminGroupsListResponse
+     */
+    'resourceType'?: string;
 }
 

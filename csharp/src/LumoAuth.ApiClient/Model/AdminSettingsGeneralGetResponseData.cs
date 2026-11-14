@@ -28,7 +28,7 @@ using OpenAPIDateConverter = LumoAuth.ApiClient.Client.OpenAPIDateConverter;
 namespace LumoAuth.ApiClient.Model
 {
     /// <summary>
-    /// Defaults (displayName, timezone, locale) are filled in, then the raw settings dictionary is merged over them: any stored key (display_name, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+    /// name, displayName (the same value) and locale, then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
     /// </summary>
     [DataContract(Name = "AdminSettingsGeneralGetResponseData")]
     public partial class AdminSettingsGeneralGetResponseData : IValidatableObject
@@ -36,40 +36,38 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="AdminSettingsGeneralGetResponseData" /> class.
         /// </summary>
-        /// <param name="name">name.</param>
-        /// <param name="displayName">displayName.</param>
-        /// <param name="timezone">timezone.</param>
-        /// <param name="locale">locale.</param>
-        public AdminSettingsGeneralGetResponseData(string name = default, string displayName = default, string timezone = default, string locale = default)
+        /// <param name="name">Name of the organization, shown on the hosted pages and in mail..</param>
+        /// <param name="displayName">The same value as name..</param>
+        /// <param name="locale">Default language of the hosted pages (the Default language of the login page settings)..</param>
+        public AdminSettingsGeneralGetResponseData(string name = default, string displayName = default, string locale = default)
         {
             this.Name = name;
             this.DisplayName = displayName;
-            this.Timezone = timezone;
             this.Locale = locale;
             this.AdditionalProperties = new Dictionary<string, object>();
         }
 
         /// <summary>
-        /// Gets or Sets Name
+        /// Name of the organization, shown on the hosted pages and in mail.
         /// </summary>
+        /// <value>Name of the organization, shown on the hosted pages and in mail.</value>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or Sets DisplayName
+        /// The same value as name.
         /// </summary>
+        /// <value>The same value as name.</value>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or Sets Timezone
+        /// Default language of the hosted pages (the Default language of the login page settings).
         /// </summary>
-        [DataMember(Name = "timezone", EmitDefaultValue = false)]
-        public string Timezone { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Locale
-        /// </summary>
+        /// <value>Default language of the hosted pages (the Default language of the login page settings).</value>
+        /*
+        <example>en</example>
+        */
         [DataMember(Name = "locale", EmitDefaultValue = false)]
         public string Locale { get; set; }
 
@@ -89,7 +87,6 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("class AdminSettingsGeneralGetResponseData {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  DisplayName: ").Append(DisplayName).Append("\n");
-            sb.Append("  Timezone: ").Append(Timezone).Append("\n");
             sb.Append("  Locale: ").Append(Locale).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");

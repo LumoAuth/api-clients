@@ -50,7 +50,7 @@ import io.lumoauth.client.JSON;
 /**
  * IntrospectResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T02:59:28.940404665Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class IntrospectResponse {
   public static final String SERIALIZED_NAME_ACTIVE = "active";
   @SerializedName(SERIALIZED_NAME_ACTIVE)
@@ -111,6 +111,11 @@ public class IntrospectResponse {
   @SerializedName(SERIALIZED_NAME_JTI)
   @javax.annotation.Nullable
   private String jti;
+
+  public static final String SERIALIZED_NAME_ACT = "act";
+  @SerializedName(SERIALIZED_NAME_ACT)
+  @javax.annotation.Nullable
+  private Object act;
 
   public IntrospectResponse() {
   }
@@ -343,6 +348,25 @@ public class IntrospectResponse {
   }
 
 
+  public IntrospectResponse act(@javax.annotation.Nullable Object act) {
+    this.act = act;
+    return this;
+  }
+
+  /**
+   * RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under &#x60;act&#x60;. JWT and opaque tokens.
+   * @return act
+   */
+  @javax.annotation.Nullable
+  public Object getAct() {
+    return act;
+  }
+
+  public void setAct(@javax.annotation.Nullable Object act) {
+    this.act = act;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -364,7 +388,8 @@ public class IntrospectResponse {
         Objects.equals(this.nbf, introspectResponse.nbf) &&
         Objects.equals(this.iss, introspectResponse.iss) &&
         Objects.equals(this.aud, introspectResponse.aud) &&
-        Objects.equals(this.jti, introspectResponse.jti);
+        Objects.equals(this.jti, introspectResponse.jti) &&
+        Objects.equals(this.act, introspectResponse.act);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -373,7 +398,7 @@ public class IntrospectResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(active, tokenType, scope, clientId, sub, username, exp, iat, nbf, iss, aud, jti);
+    return Objects.hash(active, tokenType, scope, clientId, sub, username, exp, iat, nbf, iss, aud, jti, act);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -399,6 +424,7 @@ public class IntrospectResponse {
     sb.append("    iss: ").append(toIndentedString(iss)).append("\n");
     sb.append("    aud: ").append(toIndentedString(aud)).append("\n");
     sb.append("    jti: ").append(toIndentedString(jti)).append("\n");
+    sb.append("    act: ").append(toIndentedString(act)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -420,7 +446,7 @@ public class IntrospectResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("active", "token_type", "scope", "client_id", "sub", "username", "exp", "iat", "nbf", "iss", "aud", "jti"));
+    openapiFields = new HashSet<String>(Arrays.asList("active", "token_type", "scope", "client_id", "sub", "username", "exp", "iat", "nbf", "iss", "aud", "jti", "act"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("active"));
