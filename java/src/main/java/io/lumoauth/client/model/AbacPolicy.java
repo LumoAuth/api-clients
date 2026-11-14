@@ -52,7 +52,7 @@ import io.lumoauth.client.JSON;
 /**
  * AbacPolicy
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T04:22:27.215396570Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AbacPolicy {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -160,6 +160,11 @@ public class AbacPolicy {
   @SerializedName(SERIALIZED_NAME_IS_SYSTEM)
   @javax.annotation.Nullable
   private Boolean isSystem;
+
+  public static final String SERIALIZED_NAME_BUILT_IN = "builtIn";
+  @SerializedName(SERIALIZED_NAME_BUILT_IN)
+  @javax.annotation.Nullable
+  private Boolean builtIn;
 
   public static final String SERIALIZED_NAME_CREATED_AT = "createdAt";
   @SerializedName(SERIALIZED_NAME_CREATED_AT)
@@ -275,7 +280,7 @@ public class AbacPolicy {
   }
 
   /**
-   * Get action
+   * One action, several separated by commas (read, write), or * for every action. The policy decides a request for each action that it names; spaces around the commas are ignored and actions compare case-sensitively.
    * @return action
    */
   @javax.annotation.Nullable
@@ -391,6 +396,25 @@ public class AbacPolicy {
   }
 
 
+  public AbacPolicy builtIn(@javax.annotation.Nullable Boolean builtIn) {
+    this.builtIn = builtIn;
+    return this;
+  }
+
+  /**
+   * True for a policy that LumoAuth provides to every organization. It can be read, but not changed, switched or deleted (403).
+   * @return builtIn
+   */
+  @javax.annotation.Nullable
+  public Boolean getBuiltIn() {
+    return builtIn;
+  }
+
+  public void setBuiltIn(@javax.annotation.Nullable Boolean builtIn) {
+    this.builtIn = builtIn;
+  }
+
+
   public AbacPolicy createdAt(@javax.annotation.Nullable OffsetDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
@@ -450,6 +474,7 @@ public class AbacPolicy {
         Objects.equals(this.conditions, abacPolicy.conditions) &&
         Objects.equals(this.isActive, abacPolicy.isActive) &&
         Objects.equals(this.isSystem, abacPolicy.isSystem) &&
+        Objects.equals(this.builtIn, abacPolicy.builtIn) &&
         Objects.equals(this.createdAt, abacPolicy.createdAt) &&
         Objects.equals(this.updatedAt, abacPolicy.updatedAt);
   }
@@ -460,7 +485,7 @@ public class AbacPolicy {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, slug, description, resourceType, action, effect, priority, conditions, isActive, isSystem, createdAt, updatedAt);
+    return Objects.hash(id, name, slug, description, resourceType, action, effect, priority, conditions, isActive, isSystem, builtIn, createdAt, updatedAt);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -485,6 +510,7 @@ public class AbacPolicy {
     sb.append("    conditions: ").append(toIndentedString(conditions)).append("\n");
     sb.append("    isActive: ").append(toIndentedString(isActive)).append("\n");
     sb.append("    isSystem: ").append(toIndentedString(isSystem)).append("\n");
+    sb.append("    builtIn: ").append(toIndentedString(builtIn)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("}");
@@ -508,7 +534,7 @@ public class AbacPolicy {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("id", "name", "slug", "description", "resourceType", "action", "effect", "priority", "conditions", "isActive", "isSystem", "createdAt", "updatedAt"));
+    openapiFields = new HashSet<String>(Arrays.asList("id", "name", "slug", "description", "resourceType", "action", "effect", "priority", "conditions", "isActive", "isSystem", "builtIn", "createdAt", "updatedAt"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);

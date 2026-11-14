@@ -5,8 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **Int** |  | [optional] 
 **name** | **String** |  | [optional] 
-**description** | **String** |  | [optional] 
-**isDefault** | **Bool** |  | [optional] 
+**description** | **String** | Shown to users on the consent page next to the scope name. | [optional] 
 **isSystem** | **Bool** |  | [optional] 
 **createdAt** | **Date** |  | [optional] 
 

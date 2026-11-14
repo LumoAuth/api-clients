@@ -84,9 +84,10 @@ export interface SocialLoginProvider {
      */
     'requestedScopes'?: Array<string> | null;
     /**
-     * Detailed responses only
+     * Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes.
      * @type {{ [key: string]: any; }}
      * @memberof SocialLoginProvider
+     * @deprecated
      */
     'customClaims'?: { [key: string]: any; } | null;
     /**

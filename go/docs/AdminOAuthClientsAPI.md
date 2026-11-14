@@ -664,6 +664,8 @@ Name | Type | Description  | Notes
 
 Change keys of an OAuth client's login and/or consent page branding
 
+
+
 ### Example
 
 ```go
@@ -807,6 +809,8 @@ Name | Type | Description  | Notes
 > PutAdminClientsUpdateBrandingResponse PutAdminClientsUpdateBranding(ctx, orgId, clientId).PutAdminClientsUpdateBrandingRequest(putAdminClientsUpdateBrandingRequest).Execute()
 
 Replace an OAuth client's login and/or consent page branding
+
+
 
 ### Example
 

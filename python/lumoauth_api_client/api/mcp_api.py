@@ -103,7 +103,6 @@ class McpApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProtectedResourceMetadata",
-            '400': None,
             '404': None,
         }
         response_data = self.api_client.call_api(
@@ -176,7 +175,6 @@ class McpApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProtectedResourceMetadata",
-            '400': None,
             '404': None,
         }
         response_data = self.api_client.call_api(
@@ -249,7 +247,6 @@ class McpApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProtectedResourceMetadata",
-            '400': None,
             '404': None,
         }
         response_data = self.api_client.call_api(

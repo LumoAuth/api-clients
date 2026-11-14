@@ -42,7 +42,8 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="code">Authorization code to exchange (request_type&#x3D;code)..</param>
         /// <param name="authToken">Upstream auth token to exchange (request_type&#x3D;exchange)..</param>
         /// <param name="refreshToken">Refresh token to redeem (request_type&#x3D;refresh)..</param>
-        public IssueAgentTokenRequest(string requestType = default, string resourceToken = default, string redirectUri = default, string code = default, string authToken = default, string refreshToken = default)
+        /// <param name="scope">request_type&#x3D;refresh only: optional space-delimited scopes that narrow the refreshed token. Must be a subset of the refresh grant and of the resource token scope (invalid_scope otherwise). Ignored for request_type&#x3D;auth, where the resource token names the scope..</param>
+        public IssueAgentTokenRequest(string requestType = default, string resourceToken = default, string redirectUri = default, string code = default, string authToken = default, string refreshToken = default, string scope = default)
         {
             this.RequestType = requestType;
             this.ResourceToken = resourceToken;
@@ -50,6 +51,7 @@ namespace LumoAuth.ApiClient.Model
             this.Code = code;
             this.AuthToken = authToken;
             this.RefreshToken = refreshToken;
+            this.Scope = scope;
         }
 
         /// <summary>
@@ -98,6 +100,13 @@ namespace LumoAuth.ApiClient.Model
         public string RefreshToken { get; set; }
 
         /// <summary>
+        /// request_type&#x3D;refresh only: optional space-delimited scopes that narrow the refreshed token. Must be a subset of the refresh grant and of the resource token scope (invalid_scope otherwise). Ignored for request_type&#x3D;auth, where the resource token names the scope.
+        /// </summary>
+        /// <value>request_type&#x3D;refresh only: optional space-delimited scopes that narrow the refreshed token. Must be a subset of the refresh grant and of the resource token scope (invalid_scope otherwise). Ignored for request_type&#x3D;auth, where the resource token names the scope.</value>
+        [DataMember(Name = "scope", EmitDefaultValue = false)]
+        public string Scope { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -111,6 +120,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Code: ").Append(Code).Append("\n");
             sb.Append("  AuthToken: ").Append(AuthToken).Append("\n");
             sb.Append("  RefreshToken: ").Append(RefreshToken).Append("\n");
+            sb.Append("  Scope: ").Append(Scope).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

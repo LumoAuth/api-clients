@@ -17,7 +17,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import Field, StrictStr, field_validator
+from typing_extensions import Annotated
 from lumoauth_api_client.models.admin_permissions_create_response import AdminPermissionsCreateResponse
 from lumoauth_api_client.models.admin_permissions_get_response import AdminPermissionsGetResponse
 from lumoauth_api_client.models.admin_permissions_list_response import AdminPermissionsListResponse
@@ -1921,7 +1922,7 @@ class AdminPermissionsApi:
     def admin_scopes_delete(
         self,
         org_id: StrictStr,
-        scope_id: StrictStr,
+        scope_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1991,7 +1992,7 @@ class AdminPermissionsApi:
     def admin_scopes_delete_with_http_info(
         self,
         org_id: StrictStr,
-        scope_id: StrictStr,
+        scope_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2061,7 +2062,7 @@ class AdminPermissionsApi:
     def admin_scopes_delete_without_preload_content(
         self,
         org_id: StrictStr,
-        scope_id: StrictStr,
+        scope_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],

@@ -60,6 +60,8 @@ public class SsfApiTest {
     /**
      * Read SSF stream configuration(s)
      *
+     * Needs &#x60;webhooks.view&#x60; and &#x60;agents.view&#x60;, as the Security signals page in the portal does.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -72,6 +74,8 @@ public class SsfApiTest {
 
     /**
      * Request a stream verification event
+     *
+     * Needs &#x60;settings.manage&#x60;, as the portal does.
      *
      * @throws ApiException if the Api call fails
      */

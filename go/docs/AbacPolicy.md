@@ -9,12 +9,13 @@ Name | Type | Description | Notes
 **Slug** | Pointer to **string** |  | [optional] 
 **Description** | Pointer to **NullableString** |  | [optional] 
 **ResourceType** | Pointer to **string** |  | [optional] 
-**Action** | Pointer to **string** |  | [optional] 
+**Action** | Pointer to **string** | One action, several separated by commas (read, write), or * for every action. The policy decides a request for each action that it names; spaces around the commas are ignored and actions compare case-sensitively. | [optional] 
 **Effect** | Pointer to **string** |  | [optional] 
 **Priority** | Pointer to **int32** |  | [optional] 
 **Conditions** | Pointer to **map[string]interface{}** |  | [optional] 
 **IsActive** | Pointer to **bool** |  | [optional] 
 **IsSystem** | Pointer to **bool** |  | [optional] 
+**BuiltIn** | Pointer to **bool** | True for a policy that LumoAuth provides to every organization. It can be read, but not changed, switched or deleted (403). | [optional] 
 **CreatedAt** | Pointer to **time.Time** |  | [optional] 
 **UpdatedAt** | Pointer to **NullableTime** |  | [optional] 
 
@@ -321,6 +322,31 @@ SetIsSystem sets IsSystem field to given value.
 `func (o *AbacPolicy) HasIsSystem() bool`
 
 HasIsSystem returns a boolean if a field has been set.
+
+### GetBuiltIn
+
+`func (o *AbacPolicy) GetBuiltIn() bool`
+
+GetBuiltIn returns the BuiltIn field if non-nil, zero value otherwise.
+
+### GetBuiltInOk
+
+`func (o *AbacPolicy) GetBuiltInOk() (*bool, bool)`
+
+GetBuiltInOk returns a tuple with the BuiltIn field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBuiltIn
+
+`func (o *AbacPolicy) SetBuiltIn(v bool)`
+
+SetBuiltIn sets BuiltIn field to given value.
+
+### HasBuiltIn
+
+`func (o *AbacPolicy) HasBuiltIn() bool`
+
+HasBuiltIn returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

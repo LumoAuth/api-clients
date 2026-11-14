@@ -59,6 +59,7 @@ class PutAdminSettingsBrandingUpdateResponse implements ModelInterface, ArrayAcc
       */
     protected static $openAPITypes = [
         'data' => '\LumoAuth\ApiClient\Model\BrandingSettings',
+        'rejected' => 'string[]',
         'message' => 'string'
     ];
 
@@ -71,6 +72,7 @@ class PutAdminSettingsBrandingUpdateResponse implements ModelInterface, ArrayAcc
       */
     protected static $openAPIFormats = [
         'data' => null,
+        'rejected' => null,
         'message' => null
     ];
 
@@ -81,6 +83,7 @@ class PutAdminSettingsBrandingUpdateResponse implements ModelInterface, ArrayAcc
       */
     protected static array $openAPINullables = [
         'data' => false,
+        'rejected' => false,
         'message' => false
     ];
 
@@ -171,6 +174,7 @@ class PutAdminSettingsBrandingUpdateResponse implements ModelInterface, ArrayAcc
      */
     protected static $attributeMap = [
         'data' => 'data',
+        'rejected' => 'rejected',
         'message' => 'message'
     ];
 
@@ -181,6 +185,7 @@ class PutAdminSettingsBrandingUpdateResponse implements ModelInterface, ArrayAcc
      */
     protected static $setters = [
         'data' => 'setData',
+        'rejected' => 'setRejected',
         'message' => 'setMessage'
     ];
 
@@ -191,6 +196,7 @@ class PutAdminSettingsBrandingUpdateResponse implements ModelInterface, ArrayAcc
      */
     protected static $getters = [
         'data' => 'getData',
+        'rejected' => 'getRejected',
         'message' => 'getMessage'
     ];
 
@@ -252,6 +258,7 @@ class PutAdminSettingsBrandingUpdateResponse implements ModelInterface, ArrayAcc
     public function __construct(?array $data = null)
     {
         $this->setIfExists('data', $data ?? [], null);
+        $this->setIfExists('rejected', $data ?? [], null);
         $this->setIfExists('message', $data ?? [], null);
     }
 
@@ -320,6 +327,33 @@ class PutAdminSettingsBrandingUpdateResponse implements ModelInterface, ArrayAcc
             throw new \InvalidArgumentException('non-nullable data cannot be null');
         }
         $this->container['data'] = $data;
+
+        return $this;
+    }
+
+    /**
+     * Gets rejected
+     *
+     * @return string[]|null
+     */
+    public function getRejected()
+    {
+        return $this->container['rejected'];
+    }
+
+    /**
+     * Sets rejected
+     *
+     * @param string[]|null $rejected Keys whose value was refused by validation and not saved.
+     *
+     * @return self
+     */
+    public function setRejected($rejected)
+    {
+        if (is_null($rejected)) {
+            throw new \InvalidArgumentException('non-nullable rejected cannot be null');
+        }
+        $this->container['rejected'] = $rejected;
 
         return $this;
     }

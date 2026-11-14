@@ -24,14 +24,17 @@ public struct IssueAgentTokenRequest: Codable, JSONEncodable, Hashable {
     public var authToken: String?
     /** Refresh token to redeem (request_type=refresh). */
     public var refreshToken: String?
+    /** request_type=refresh only: optional space-delimited scopes that narrow the refreshed token. Must be a subset of the refresh grant and of the resource token scope (invalid_scope otherwise). Ignored for request_type=auth, where the resource token names the scope. */
+    public var scope: String?
 
-    public init(requestType: String? = nil, resourceToken: String? = nil, redirectUri: String? = nil, code: String? = nil, authToken: String? = nil, refreshToken: String? = nil) {
+    public init(requestType: String? = nil, resourceToken: String? = nil, redirectUri: String? = nil, code: String? = nil, authToken: String? = nil, refreshToken: String? = nil, scope: String? = nil) {
         self.requestType = requestType
         self.resourceToken = resourceToken
         self.redirectUri = redirectUri
         self.code = code
         self.authToken = authToken
         self.refreshToken = refreshToken
+        self.scope = scope
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -41,6 +44,7 @@ public struct IssueAgentTokenRequest: Codable, JSONEncodable, Hashable {
         case code
         case authToken = "auth_token"
         case refreshToken = "refresh_token"
+        case scope
     }
 
     // Encodable protocol methods
@@ -53,6 +57,7 @@ public struct IssueAgentTokenRequest: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(code, forKey: .code)
         try container.encodeIfPresent(authToken, forKey: .authToken)
         try container.encodeIfPresent(refreshToken, forKey: .refreshToken)
+        try container.encodeIfPresent(scope, forKey: .scope)
     }
 }
 

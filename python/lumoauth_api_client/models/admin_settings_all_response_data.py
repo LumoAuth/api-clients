@@ -18,12 +18,13 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
 from lumoauth_api_client.models.admin_settings_all_response_data_general import AdminSettingsAllResponseDataGeneral
 from lumoauth_api_client.models.admin_settings_all_response_data_security import AdminSettingsAllResponseDataSecurity
 from lumoauth_api_client.models.authentication_settings import AuthenticationSettings
 from lumoauth_api_client.models.branding_settings import BrandingSettings
+from lumoauth_api_client.models.email_sender_settings import EmailSenderSettings
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -35,7 +36,7 @@ class AdminSettingsAllResponseData(BaseModel):
     authentication: Optional[AuthenticationSettings] = None
     branding: Optional[BrandingSettings] = None
     security: Optional[AdminSettingsAllResponseDataSecurity] = None
-    email: Optional[Dict[str, Any]] = Field(default=None, description="Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.")
+    email: Optional[EmailSenderSettings] = None
     __properties: ClassVar[List[str]] = ["general", "authentication", "branding", "security", "email"]
 
     model_config = ConfigDict(
@@ -89,6 +90,9 @@ class AdminSettingsAllResponseData(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of security
         if self.security:
             _dict['security'] = self.security.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of email
+        if self.email:
+            _dict['email'] = self.email.to_dict()
         return _dict
 
     @classmethod
@@ -105,7 +109,7 @@ class AdminSettingsAllResponseData(BaseModel):
             "authentication": AuthenticationSettings.from_dict(obj["authentication"]) if obj.get("authentication") is not None else None,
             "branding": BrandingSettings.from_dict(obj["branding"]) if obj.get("branding") is not None else None,
             "security": AdminSettingsAllResponseDataSecurity.from_dict(obj["security"]) if obj.get("security") is not None else None,
-            "email": obj.get("email")
+            "email": EmailSenderSettings.from_dict(obj["email"]) if obj.get("email") is not None else None
         })
         return _obj
 

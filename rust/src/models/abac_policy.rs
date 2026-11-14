@@ -23,6 +23,7 @@ pub struct AbacPolicy {
     pub description: Option<Option<String>>,
     #[serde(rename = "resourceType", skip_serializing_if = "Option::is_none")]
     pub resource_type: Option<String>,
+    /// One action, several separated by commas (read, write), or * for every action. The policy decides a request for each action that it names; spaces around the commas are ignored and actions compare case-sensitively.
     #[serde(rename = "action", skip_serializing_if = "Option::is_none")]
     pub action: Option<String>,
     #[serde(rename = "effect", skip_serializing_if = "Option::is_none")]
@@ -35,6 +36,9 @@ pub struct AbacPolicy {
     pub is_active: Option<bool>,
     #[serde(rename = "isSystem", skip_serializing_if = "Option::is_none")]
     pub is_system: Option<bool>,
+    /// True for a policy that LumoAuth provides to every organization. It can be read, but not changed, switched or deleted (403).
+    #[serde(rename = "builtIn", skip_serializing_if = "Option::is_none")]
+    pub built_in: Option<bool>,
     #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,
     #[serde(rename = "updatedAt", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
@@ -55,6 +59,7 @@ impl AbacPolicy {
             conditions: None,
             is_active: None,
             is_system: None,
+            built_in: None,
             created_at: None,
             updated_at: None,
         }

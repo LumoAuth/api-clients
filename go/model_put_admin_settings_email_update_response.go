@@ -20,8 +20,7 @@ var _ MappedNullable = &PutAdminSettingsEmailUpdateResponse{}
 
 // PutAdminSettingsEmailUpdateResponse struct for PutAdminSettingsEmailUpdateResponse
 type PutAdminSettingsEmailUpdateResponse struct {
-	// Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
-	Data map[string]interface{} `json:"data,omitempty"`
+	Data *EmailSenderSettings `json:"data,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
@@ -43,19 +42,19 @@ func NewPutAdminSettingsEmailUpdateResponseWithDefaults() *PutAdminSettingsEmail
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *PutAdminSettingsEmailUpdateResponse) GetData() map[string]interface{} {
+func (o *PutAdminSettingsEmailUpdateResponse) GetData() EmailSenderSettings {
 	if o == nil || IsNil(o.Data) {
-		var ret map[string]interface{}
+		var ret EmailSenderSettings
 		return ret
 	}
-	return o.Data
+	return *o.Data
 }
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PutAdminSettingsEmailUpdateResponse) GetDataOk() (map[string]interface{}, bool) {
+func (o *PutAdminSettingsEmailUpdateResponse) GetDataOk() (*EmailSenderSettings, bool) {
 	if o == nil || IsNil(o.Data) {
-		return map[string]interface{}{}, false
+		return nil, false
 	}
 	return o.Data, true
 }
@@ -69,9 +68,9 @@ func (o *PutAdminSettingsEmailUpdateResponse) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given map[string]interface{} and assigns it to the Data field.
-func (o *PutAdminSettingsEmailUpdateResponse) SetData(v map[string]interface{}) {
-	o.Data = v
+// SetData gets a reference to the given EmailSenderSettings and assigns it to the Data field.
+func (o *PutAdminSettingsEmailUpdateResponse) SetData(v EmailSenderSettings) {
+	o.Data = &v
 }
 
 // GetMessage returns the Message field value if set, zero value otherwise.

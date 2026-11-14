@@ -122,6 +122,14 @@ public class AbacAttributeDefinitionTest {
     }
 
     /**
+     * Test the property 'builtIn'
+     */
+    @Test
+    public void builtInTest() {
+        // TODO: test builtIn
+    }
+
+    /**
      * Test the property 'createdAt'
      */
     @Test

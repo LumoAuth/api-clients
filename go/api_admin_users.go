@@ -40,6 +40,8 @@ type AdminUsersAPI interface {
 	/*
 	AddUserPermission Assign a permission to a user
 
+	Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@param userId
@@ -68,7 +70,7 @@ type AdminUsersAPI interface {
 	/*
 	AdminIdentitiesLegacySamlRelink Relink legacy SAML users to an IdP
 
-	Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+	Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `"dry_run": true`.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -143,6 +145,22 @@ type AdminUsersAPI interface {
 	// AdminIdentitiesUnlinkExecute executes the request
 	//  @return AdminAgentsGetResponse
 	AdminIdentitiesUnlinkExecute(r ApiAdminIdentitiesUnlinkRequest) (*AdminAgentsGetResponse, *http.Response, error)
+
+	/*
+	AdminUsersRestore Restore a deleted user
+
+	Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@param userId
+	@return ApiAdminUsersRestoreRequest
+	*/
+	AdminUsersRestore(ctx context.Context, orgId string, userId string) ApiAdminUsersRestoreRequest
+
+	// AdminUsersRestoreExecute executes the request
+	//  @return AdminUsersRestoreResponse
+	AdminUsersRestoreExecute(r ApiAdminUsersRestoreRequest) (*AdminUsersRestoreResponse, *http.Response, error)
 
 	/*
 	BlockUser Block a user
@@ -362,6 +380,8 @@ type AdminUsersAPI interface {
 	/*
 	SetUserPassword Set a user's password
 
+	Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@param userId
@@ -375,6 +395,8 @@ type AdminUsersAPI interface {
 
 	/*
 	SetUserPasswordPost Set a user's password
+
+	Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -593,6 +615,8 @@ func (r ApiAddUserPermissionRequest) Execute() (*AddUserPermissionResponse, *htt
 
 /*
 AddUserPermission Assign a permission to a user
+
+Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -837,7 +861,7 @@ func (r ApiAdminIdentitiesLegacySamlRelinkRequest) Execute() (*AdminIdentitiesLe
 /*
 AdminIdentitiesLegacySamlRelink Relink legacy SAML users to an IdP
 
-Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `"dry_run": true`.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1375,6 +1399,127 @@ func (a *AdminUsersAPIService) AdminIdentitiesUnlinkExecute(r ApiAdminIdentities
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type}"
 	localVarPath = strings.Replace(localVarPath, "{"+"type"+"}", url.PathEscape(parameterValueToString(r.type_, "type_")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"userId"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiAdminUsersRestoreRequest struct {
+	ctx context.Context
+	ApiService AdminUsersAPI
+	orgId string
+	userId string
+}
+
+func (r ApiAdminUsersRestoreRequest) Execute() (*AdminUsersRestoreResponse, *http.Response, error) {
+	return r.ApiService.AdminUsersRestoreExecute(r)
+}
+
+/*
+AdminUsersRestore Restore a deleted user
+
+Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @param userId
+ @return ApiAdminUsersRestoreRequest
+*/
+func (a *AdminUsersAPIService) AdminUsersRestore(ctx context.Context, orgId string, userId string) ApiAdminUsersRestoreRequest {
+	return ApiAdminUsersRestoreRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+		userId: userId,
+	}
+}
+
+// Execute executes the request
+//  @return AdminUsersRestoreResponse
+func (a *AdminUsersAPIService) AdminUsersRestoreExecute(r ApiAdminUsersRestoreRequest) (*AdminUsersRestoreResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AdminUsersRestoreResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminUsersAPIService.AdminUsersRestore")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/users/{userId}/restore"
 	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"userId"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
 
@@ -2283,6 +2428,90 @@ type ApiListUsersRequest struct {
 	ctx context.Context
 	ApiService AdminUsersAPI
 	orgId string
+	page *int32
+	limit *int32
+	search *string
+	active *bool
+	blocked *bool
+	deleted *bool
+	emailVerified *bool
+	mfaEnabled *bool
+	role *string
+	group *string
+	sortBy *string
+	sortDir *string
+}
+
+// Page number.
+func (r ApiListUsersRequest) Page(page int32) ApiListUsersRequest {
+	r.page = &page
+	return r
+}
+
+// Users per page (1 to 100).
+func (r ApiListUsersRequest) Limit(limit int32) ApiListUsersRequest {
+	r.limit = &limit
+	return r
+}
+
+// Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).
+func (r ApiListUsersRequest) Search(search string) ApiListUsersRequest {
+	r.search = &search
+	return r
+}
+
+// Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users.
+func (r ApiListUsersRequest) Active(active bool) ApiListUsersRequest {
+	r.active = &active
+	return r
+}
+
+// Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users.
+func (r ApiListUsersRequest) Blocked(blocked bool) ApiListUsersRequest {
+	r.blocked = &blocked
+	return r
+}
+
+// &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out.
+func (r ApiListUsersRequest) Deleted(deleted bool) ApiListUsersRequest {
+	r.deleted = &deleted
+	return r
+}
+
+// Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;).
+func (r ApiListUsersRequest) EmailVerified(emailVerified bool) ApiListUsersRequest {
+	r.emailVerified = &emailVerified
+	return r
+}
+
+// Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication.
+func (r ApiListUsersRequest) MfaEnabled(mfaEnabled bool) ApiListUsersRequest {
+	r.mfaEnabled = &mfaEnabled
+	return r
+}
+
+// Only users who hold the role with this slug.
+func (r ApiListUsersRequest) Role(role string) ApiListUsersRequest {
+	r.role = &role
+	return r
+}
+
+// Only members of the group with this slug.
+func (r ApiListUsersRequest) Group(group string) ApiListUsersRequest {
+	r.group = &group
+	return r
+}
+
+// Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.
+func (r ApiListUsersRequest) SortBy(sortBy string) ApiListUsersRequest {
+	r.sortBy = &sortBy
+	return r
+}
+
+// Sort direction. Used only together with sortBy.
+func (r ApiListUsersRequest) SortDir(sortDir string) ApiListUsersRequest {
+	r.sortDir = &sortDir
+	return r
 }
 
 func (r ApiListUsersRequest) Execute() (*ListUsersResponse, *http.Response, error) {
@@ -2326,6 +2555,54 @@ func (a *AdminUsersAPIService) ListUsersExecute(r ApiListUsersRequest) (*ListUse
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	} else {
+		var defaultValue int32 = 1
+		r.page = &defaultValue
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 25
+		r.limit = &defaultValue
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	if r.active != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "active", r.active, "form", "")
+	}
+	if r.blocked != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "blocked", r.blocked, "form", "")
+	}
+	if r.deleted != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted", r.deleted, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.deleted = &defaultValue
+	}
+	if r.emailVerified != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "emailVerified", r.emailVerified, "form", "")
+	}
+	if r.mfaEnabled != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "mfaEnabled", r.mfaEnabled, "form", "")
+	}
+	if r.role != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "role", r.role, "form", "")
+	}
+	if r.group != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group", r.group, "form", "")
+	}
+	if r.sortBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sortBy", r.sortBy, "form", "")
+	}
+	if r.sortDir != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sortDir", r.sortDir, "form", "")
+	} else {
+		var defaultValue string = "DESC"
+		r.sortDir = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -3247,6 +3524,8 @@ func (r ApiSetUserPasswordRequest) Execute() (*SetUserPasswordPostResponse, *htt
 /*
 SetUserPassword Set a user's password
 
+Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
  @param userId
@@ -3365,6 +3644,8 @@ func (r ApiSetUserPasswordPostRequest) Execute() (*SetUserPasswordPostResponse, 
 
 /*
 SetUserPasswordPost Set a user's password
+
+Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId

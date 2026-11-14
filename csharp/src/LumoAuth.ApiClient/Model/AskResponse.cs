@@ -34,19 +34,54 @@ namespace LumoAuth.ApiClient.Model
     public partial class AskResponse : IValidatableObject
     {
         /// <summary>
+        /// Which check produced the answer. Always pdp for a user caller.
+        /// </summary>
+        /// <value>Which check produced the answer. Always pdp for a user caller.</value>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum DecidedByEnum
+        {
+            /// <summary>
+            /// Enum Capability for value: capability
+            /// </summary>
+            [EnumMember(Value = "capability")]
+            Capability = 1,
+
+            /// <summary>
+            /// Enum Pdp for value: pdp
+            /// </summary>
+            [EnumMember(Value = "pdp")]
+            Pdp = 2,
+
+            /// <summary>
+            /// Enum DenyOverride for value: deny_override
+            /// </summary>
+            [EnumMember(Value = "deny_override")]
+            DenyOverride = 3
+        }
+
+
+        /// <summary>
+        /// Which check produced the answer. Always pdp for a user caller.
+        /// </summary>
+        /// <value>Which check produced the answer. Always pdp for a user caller.</value>
+        [DataMember(Name = "decided_by", EmitDefaultValue = false)]
+        public DecidedByEnum? DecidedBy { get; set; }
+        /// <summary>
         /// Initializes a new instance of the <see cref="AskResponse" /> class.
         /// </summary>
         /// <param name="allowed">allowed.</param>
         /// <param name="action">action.</param>
         /// <param name="context">context.</param>
         /// <param name="reason">reason.</param>
+        /// <param name="decidedBy">Which check produced the answer. Always pdp for a user caller..</param>
         /// <param name="auditId">auditId.</param>
-        public AskResponse(bool allowed = default, string action = default, Object context = default, string reason = default, string auditId = default)
+        public AskResponse(bool allowed = default, string action = default, Object context = default, string reason = default, DecidedByEnum? decidedBy = default, string auditId = default)
         {
             this.Allowed = allowed;
             this.Action = action;
             this.Context = context;
             this.Reason = reason;
+            this.DecidedBy = decidedBy;
             this.AuditId = auditId;
         }
 
@@ -98,6 +133,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Action: ").Append(Action).Append("\n");
             sb.Append("  Context: ").Append(Context).Append("\n");
             sb.Append("  Reason: ").Append(Reason).Append("\n");
+            sb.Append("  DecidedBy: ").Append(DecidedBy).Append("\n");
             sb.Append("  AuditId: ").Append(AuditId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();

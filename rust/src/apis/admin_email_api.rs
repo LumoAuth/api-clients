@@ -120,6 +120,7 @@ pub async fn admin_email_templates_delete(configuration: &configuration::Configu
     }
 }
 
+/// Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 pub async fn admin_email_templates_get(configuration: &configuration::Configuration, org_id: &str, r#type: &str, locale: Option<&str>, client_id: Option<&str>) -> Result<models::EmailTemplate, Error<AdminEmailTemplatesGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -176,6 +177,7 @@ pub async fn admin_email_templates_get(configuration: &configuration::Configurat
     }
 }
 
+/// Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 pub async fn admin_email_templates_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminEmailTemplatesListResponse, Error<AdminEmailTemplatesListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -320,6 +322,7 @@ pub async fn admin_email_templates_upsert(configuration: &configuration::Configu
     }
 }
 
+/// Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 pub async fn admin_email_templates_variables(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<models::AdminEmailTemplatesVariablesResponse, Error<AdminEmailTemplatesVariablesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;

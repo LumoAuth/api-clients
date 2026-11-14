@@ -51,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * OpenIdConfiguration
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T04:22:27.215396570Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class OpenIdConfiguration {
   public static final String SERIALIZED_NAME_ISSUER = "issuer";
   @SerializedName(SERIALIZED_NAME_ISSUER)
@@ -936,7 +936,7 @@ public class OpenIdConfiguration {
   }
 
   /**
-   * The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
+   * The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session). The list is the same for every organization.
    * @return acrValuesSupported
    */
   @javax.annotation.Nullable
@@ -1448,7 +1448,7 @@ public class OpenIdConfiguration {
   }
 
   /**
-   * Only when configured.
+   * The Privacy policy URL of the organization&#39;s login page settings. Only when it is set.
    * @return opPolicyUri
    */
   @javax.annotation.Nullable
@@ -1467,7 +1467,7 @@ public class OpenIdConfiguration {
   }
 
   /**
-   * Only when configured.
+   * The Terms of service URL of the organization&#39;s login page settings. Only when it is set.
    * @return opTosUri
    */
   @javax.annotation.Nullable

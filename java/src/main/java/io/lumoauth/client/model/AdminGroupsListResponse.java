@@ -52,7 +52,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminGroupsListResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T04:22:27.215396570Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminGroupsListResponse {
   public static final String SERIALIZED_NAME_DATA = "data";
   @SerializedName(SERIALIZED_NAME_DATA)
@@ -68,6 +68,11 @@ public class AdminGroupsListResponse {
   @SerializedName(SERIALIZED_NAME_PAGINATION)
   @javax.annotation.Nullable
   private PaginationMeta pagination;
+
+  public static final String SERIALIZED_NAME_RESOURCE_TYPE = "resourceType";
+  @SerializedName(SERIALIZED_NAME_RESOURCE_TYPE)
+  @javax.annotation.Nullable
+  private String resourceType;
 
   public AdminGroupsListResponse() {
   }
@@ -137,6 +142,25 @@ public class AdminGroupsListResponse {
   }
 
 
+  public AdminGroupsListResponse resourceType(@javax.annotation.Nullable String resourceType) {
+    this.resourceType = resourceType;
+    return this;
+  }
+
+  /**
+   * Get resourceType
+   * @return resourceType
+   */
+  @javax.annotation.Nullable
+  public String getResourceType() {
+    return resourceType;
+  }
+
+  public void setResourceType(@javax.annotation.Nullable String resourceType) {
+    this.resourceType = resourceType;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -149,12 +173,13 @@ public class AdminGroupsListResponse {
     AdminGroupsListResponse adminGroupsListResponse = (AdminGroupsListResponse) o;
     return Objects.equals(this.data, adminGroupsListResponse.data) &&
         Objects.equals(this.meta, adminGroupsListResponse.meta) &&
-        Objects.equals(this.pagination, adminGroupsListResponse.pagination);
+        Objects.equals(this.pagination, adminGroupsListResponse.pagination) &&
+        Objects.equals(this.resourceType, adminGroupsListResponse.resourceType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, meta, pagination);
+    return Objects.hash(data, meta, pagination, resourceType);
   }
 
   @Override
@@ -164,6 +189,7 @@ public class AdminGroupsListResponse {
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("    meta: ").append(toIndentedString(meta)).append("\n");
     sb.append("    pagination: ").append(toIndentedString(pagination)).append("\n");
+    sb.append("    resourceType: ").append(toIndentedString(resourceType)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -185,7 +211,7 @@ public class AdminGroupsListResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("data", "meta", "pagination"));
+    openapiFields = new HashSet<String>(Arrays.asList("data", "meta", "pagination", "resourceType"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -233,6 +259,9 @@ public class AdminGroupsListResponse {
       // validate the optional field `pagination`
       if (jsonObj.get("pagination") != null && !jsonObj.get("pagination").isJsonNull()) {
         PaginationMeta.validateJsonElement(jsonObj.get("pagination"));
+      }
+      if ((jsonObj.get("resourceType") != null && !jsonObj.get("resourceType").isJsonNull()) && !jsonObj.get("resourceType").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `resourceType` to be a primitive type in the JSON string but got `%s`", jsonObj.get("resourceType").toString()));
       }
   }
 

@@ -14,16 +14,15 @@ public struct OAuthScope: Codable, JSONEncodable, Hashable {
 
     public var id: Int?
     public var name: String?
+    /** Shown to users on the consent page next to the scope name. */
     public var description: String?
-    public var isDefault: Bool?
     public var isSystem: Bool?
     public var createdAt: Date?
 
-    public init(id: Int? = nil, name: String? = nil, description: String? = nil, isDefault: Bool? = nil, isSystem: Bool? = nil, createdAt: Date? = nil) {
+    public init(id: Int? = nil, name: String? = nil, description: String? = nil, isSystem: Bool? = nil, createdAt: Date? = nil) {
         self.id = id
         self.name = name
         self.description = description
-        self.isDefault = isDefault
         self.isSystem = isSystem
         self.createdAt = createdAt
     }
@@ -32,7 +31,6 @@ public struct OAuthScope: Codable, JSONEncodable, Hashable {
         case id
         case name
         case description
-        case isDefault
         case isSystem
         case createdAt
     }
@@ -44,7 +42,6 @@ public struct OAuthScope: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(id, forKey: .id)
         try container.encodeIfPresent(name, forKey: .name)
         try container.encodeIfPresent(description, forKey: .description)
-        try container.encodeIfPresent(isDefault, forKey: .isDefault)
         try container.encodeIfPresent(isSystem, forKey: .isSystem)
         try container.encodeIfPresent(createdAt, forKey: .createdAt)
     }

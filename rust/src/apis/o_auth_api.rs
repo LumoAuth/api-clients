@@ -35,6 +35,17 @@ pub enum BackchannelAuthorizeError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`check_email_first`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CheckEmailFirstError {
+    Status400(),
+    Status403(),
+    Status404(),
+    Status429(),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`device_authorization`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -264,6 +275,45 @@ pub async fn backchannel_authorize(configuration: &configuration::Configuration,
     } else {
         let content = resp.text().await?;
         let entity: Option<BackchannelAuthorizeError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: `exists` is always `true`, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by `client_id`.
+pub async fn check_email_first(configuration: &configuration::Configuration, org_id: &str, check_email_first_request: models::CheckEmailFirstRequest) -> Result<models::CheckEmailFirstResponse, Error<CheckEmailFirstError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_check_email_first_request = check_email_first_request;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/oauth/check-email", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    req_builder = req_builder.json(&p_check_email_first_request);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CheckEmailFirstResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CheckEmailFirstResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<CheckEmailFirstError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
@@ -511,7 +561,7 @@ pub async fn par(configuration: &configuration::Configuration, org_id: &str) -> 
     }
 }
 
-/// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+/// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization's signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
 pub async fn register_client(configuration: &configuration::Configuration, org_id: &str) -> Result<models::RegisterClientResponse, Error<RegisterClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;

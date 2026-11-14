@@ -81,6 +81,7 @@ module LumoAuthApiClient
     end
 
     # Export audit logs as CSV (default) or JSON
+    # Needs `audit.export` and `audit.view`, as the export on the portal's audit log page does.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [String]
@@ -90,6 +91,7 @@ module LumoAuthApiClient
     end
 
     # Export audit logs as CSV (default) or JSON
+    # Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
@@ -168,7 +170,7 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && log_id.nil?
         fail ArgumentError, "Missing the required parameter 'log_id' when calling AdminAuditLogsApi.admin_audit_logs_get"
       end
-      pattern = Regexp.new(/\d+/)
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
       if @api_client.config.client_side_validation && log_id !~ pattern
         fail ArgumentError, "invalid value for 'log_id' when calling AdminAuditLogsApi.admin_audit_logs_get, must conform to the pattern #{pattern}."
       end
@@ -397,6 +399,7 @@ module LumoAuthApiClient
     end
 
     # Update audit log retention settings
+    # Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminAuditLogsRetentionResponse]
@@ -406,6 +409,7 @@ module LumoAuthApiClient
     end
 
     # Update audit log retention settings
+    # Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminAuditLogsRetentionResponse, Integer, Hash)>] AdminAuditLogsRetentionResponse data, response status code and response headers
@@ -458,6 +462,7 @@ module LumoAuthApiClient
     end
 
     # Update audit log retention settings
+    # Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminAuditLogsRetentionResponse]
@@ -467,6 +472,7 @@ module LumoAuthApiClient
     end
 
     # Update audit log retention settings
+    # Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminAuditLogsRetentionResponse, Integer, Hash)>] AdminAuditLogsRetentionResponse data, response status code and response headers

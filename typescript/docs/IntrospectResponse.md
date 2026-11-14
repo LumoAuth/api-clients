@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **iss** | **string** | Issuer identifier of this organization. | [optional] [default to undefined]
 **aud** | [**IntrospectResponseAud**](IntrospectResponseAud.md) |  | [optional] [default to undefined]
 **jti** | **string** | JWT id (JWT tokens only). | [optional] [default to undefined]
+**act** | **object** | RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under &#x60;act&#x60;. JWT and opaque tokens. | [optional] [default to undefined]
 
 ## Example
 
@@ -36,6 +37,7 @@ const instance: IntrospectResponse = {
     iss,
     aud,
     jti,
+    act,
 };
 ```
 

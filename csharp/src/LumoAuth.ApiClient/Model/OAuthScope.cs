@@ -38,16 +38,14 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         /// <param name="id">id.</param>
         /// <param name="name">name.</param>
-        /// <param name="description">description.</param>
-        /// <param name="isDefault">isDefault.</param>
+        /// <param name="description">Shown to users on the consent page next to the scope name..</param>
         /// <param name="isSystem">isSystem.</param>
         /// <param name="createdAt">createdAt.</param>
-        public OAuthScope(int id = default, string name = default, string description = default, bool isDefault = default, bool isSystem = default, DateTime createdAt = default)
+        public OAuthScope(int id = default, string name = default, string description = default, bool isSystem = default, DateTime createdAt = default)
         {
             this.Id = id;
             this.Name = name;
             this.Description = description;
-            this.IsDefault = isDefault;
             this.IsSystem = isSystem;
             this.CreatedAt = createdAt;
         }
@@ -65,16 +63,11 @@ namespace LumoAuth.ApiClient.Model
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or Sets Description
+        /// Shown to users on the consent page next to the scope name.
         /// </summary>
+        /// <value>Shown to users on the consent page next to the scope name.</value>
         [DataMember(Name = "description", EmitDefaultValue = true)]
         public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or Sets IsDefault
-        /// </summary>
-        [DataMember(Name = "isDefault", EmitDefaultValue = true)]
-        public bool IsDefault { get; set; }
 
         /// <summary>
         /// Gets or Sets IsSystem
@@ -99,7 +92,6 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
-            sb.Append("  IsDefault: ").Append(IsDefault).Append("\n");
             sb.Append("  IsSystem: ").Append(IsSystem).Append("\n");
             sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
             sb.Append("}\n");

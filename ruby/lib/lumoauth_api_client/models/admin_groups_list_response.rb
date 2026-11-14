@@ -21,12 +21,15 @@ module LumoAuthApiClient
 
     attr_accessor :pagination
 
+    attr_accessor :resource_type
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'data' => :'data',
         :'meta' => :'meta',
-        :'pagination' => :'pagination'
+        :'pagination' => :'pagination',
+        :'resource_type' => :'resourceType'
       }
     end
 
@@ -45,7 +48,8 @@ module LumoAuthApiClient
       {
         :'data' => :'Array<Group>',
         :'meta' => :'PaginationMeta',
-        :'pagination' => :'PaginationMeta'
+        :'pagination' => :'PaginationMeta',
+        :'resource_type' => :'String'
       }
     end
 
@@ -84,6 +88,10 @@ module LumoAuthApiClient
       if attributes.key?(:'pagination')
         self.pagination = attributes[:'pagination']
       end
+
+      if attributes.key?(:'resource_type')
+        self.resource_type = attributes[:'resource_type']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -108,7 +116,8 @@ module LumoAuthApiClient
       self.class == o.class &&
           data == o.data &&
           meta == o.meta &&
-          pagination == o.pagination
+          pagination == o.pagination &&
+          resource_type == o.resource_type
     end
 
     # @see the `==` method
@@ -120,7 +129,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [data, meta, pagination].hash
+      [data, meta, pagination, resource_type].hash
     end
 
     # Builds the object from hash

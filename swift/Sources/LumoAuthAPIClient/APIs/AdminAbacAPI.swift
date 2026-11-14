@@ -344,11 +344,12 @@ open class AdminAbacAPI {
      List ABAC policies
      
      - parameter orgId: (path)  
+     - parameter action: (query) Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)
      - returns: AbacPoliciesListResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func abacPoliciesList(orgId: String) async throws -> AbacPoliciesListResponse {
-        return try await abacPoliciesListWithRequestBuilder(orgId: orgId).execute().body
+    open class func abacPoliciesList(orgId: String, action: String? = nil) async throws -> AbacPoliciesListResponse {
+        return try await abacPoliciesListWithRequestBuilder(orgId: orgId, action: action).execute().body
     }
 
     /**
@@ -361,9 +362,10 @@ open class AdminAbacAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter action: (query) Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)
      - returns: RequestBuilder<AbacPoliciesListResponse> 
      */
-    open class func abacPoliciesListWithRequestBuilder(orgId: String) -> RequestBuilder<AbacPoliciesListResponse> {
+    open class func abacPoliciesListWithRequestBuilder(orgId: String, action: String? = nil) -> RequestBuilder<AbacPoliciesListResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/abac/policies"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -371,7 +373,10 @@ open class AdminAbacAPI {
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "action": (wrappedValue: action?.encodeToJSON(), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
             :

@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **DefaultValue** | **Object** |  | [optional] 
 **IsRequired** | **bool** |  | [optional] 
 **IsSystem** | **bool** |  | [optional] 
+**BuiltIn** | **bool** | True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403). | [optional] 
 **CreatedAt** | **DateTime** |  | [optional] 
 **UpdatedAt** | **DateTime?** |  | [optional] 
 

@@ -344,6 +344,15 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'ResourceIndicatorsSupported'
+        /// </summary>
+        [Fact]
+        public void ResourceIndicatorsSupportedTest()
+        {
+            // TODO unit test for the property 'ResourceIndicatorsSupported'
+        }
+
+        /// <summary>
         /// Test the property 'EntityProfilesSupported'
         /// </summary>
         [Fact]

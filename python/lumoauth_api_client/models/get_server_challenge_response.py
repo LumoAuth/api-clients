@@ -27,7 +27,7 @@ class GetServerChallengeResponse(BaseModel):
     """
     GetServerChallengeResponse
     """ # noqa: E501
-    status: StrictStr
+    status: StrictStr = Field(description="`no_authorization_required` for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token.")
     server: StrictStr = Field(description="MCP server display name.")
     server_id: StrictStr
     __properties: ClassVar[List[str]] = ["status", "server", "server_id"]
@@ -35,8 +35,8 @@ class GetServerChallengeResponse(BaseModel):
     @field_validator('status')
     def status_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['authenticated']):
-            raise ValueError("must be one of enum values ('authenticated')")
+        if value not in set(['authenticated', 'no_authorization_required']):
+            raise ValueError("must be one of enum values ('authenticated', 'no_authorization_required')")
         return value
 
     model_config = ConfigDict(

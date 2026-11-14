@@ -141,6 +141,22 @@ public class UserTest {
     }
 
     /**
+     * Test the property 'deleted'
+     */
+    @Test
+    public void deletedTest() {
+        // TODO: test deleted
+    }
+
+    /**
+     * Test the property 'deletedAt'
+     */
+    @Test
+    public void deletedAtTest() {
+        // TODO: test deletedAt
+    }
+
+    /**
      * Test the property 'mfaEnabled'
      */
     @Test

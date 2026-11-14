@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **action** | **str** |  | [optional] 
 **context** | **object** |  | [optional] 
 **reason** | **str** |  | [optional] 
+**decided_by** | **str** | Which check produced the answer. Always pdp for a user caller. | [optional] 
 **audit_id** | **str** |  | [optional] 
 
 ## Example

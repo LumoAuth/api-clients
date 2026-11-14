@@ -102,6 +102,7 @@ pub enum PatchAbacAttributesUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAbacPoliciesUpdateError {
+    Status400(),
     Status403(),
     Status404(),
     UnknownValue(serde_json::Value),
@@ -120,6 +121,7 @@ pub enum PutAbacAttributesUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAbacPoliciesUpdateError {
+    Status400(),
     Status403(),
     Status404(),
     UnknownValue(serde_json::Value),
@@ -459,13 +461,17 @@ pub async fn abac_policies_get(configuration: &configuration::Configuration, org
     }
 }
 
-pub async fn abac_policies_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AbacPoliciesListResponse, Error<AbacPoliciesListError>> {
+pub async fn abac_policies_list(configuration: &configuration::Configuration, org_id: &str, action: Option<&str>) -> Result<models::AbacPoliciesListResponse, Error<AbacPoliciesListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_action = action;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/abac/policies", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_action {
+        req_builder = req_builder.query(&[("action", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }

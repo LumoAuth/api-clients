@@ -97,6 +97,8 @@ Name | Type | Description  | Notes
 
 Add a single role to a group
 
+
+
 ### Example
 
 ```go
@@ -167,6 +169,8 @@ Name | Type | Description  | Notes
 > AdminGroupsCreateResponse AdminGroupsCreate(ctx, orgId).Execute()
 
 Create a new group
+
+
 
 ### Example
 
@@ -735,6 +739,8 @@ Name | Type | Description  | Notes
 > AdminGroupsCreateResponse AdminGroupsUpdateRoles(ctx, orgId, groupId).Execute()
 
 Update group roles (replaces all existing roles)
+
+
 
 ### Example
 

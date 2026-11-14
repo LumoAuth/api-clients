@@ -21,7 +21,9 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.lumoauth.client.model.BrandingSettings;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,12 +51,17 @@ import io.lumoauth.client.JSON;
 /**
  * PutAdminSettingsBrandingUpdateResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T04:22:27.215396570Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class PutAdminSettingsBrandingUpdateResponse {
   public static final String SERIALIZED_NAME_DATA = "data";
   @SerializedName(SERIALIZED_NAME_DATA)
   @javax.annotation.Nullable
   private BrandingSettings data;
+
+  public static final String SERIALIZED_NAME_REJECTED = "rejected";
+  @SerializedName(SERIALIZED_NAME_REJECTED)
+  @javax.annotation.Nullable
+  private List<String> rejected = new ArrayList<>();
 
   public static final String SERIALIZED_NAME_MESSAGE = "message";
   @SerializedName(SERIALIZED_NAME_MESSAGE)
@@ -80,6 +87,33 @@ public class PutAdminSettingsBrandingUpdateResponse {
 
   public void setData(@javax.annotation.Nullable BrandingSettings data) {
     this.data = data;
+  }
+
+
+  public PutAdminSettingsBrandingUpdateResponse rejected(@javax.annotation.Nullable List<String> rejected) {
+    this.rejected = rejected;
+    return this;
+  }
+
+  public PutAdminSettingsBrandingUpdateResponse addRejectedItem(String rejectedItem) {
+    if (this.rejected == null) {
+      this.rejected = new ArrayList<>();
+    }
+    this.rejected.add(rejectedItem);
+    return this;
+  }
+
+  /**
+   * Keys whose value was refused by validation and not saved.
+   * @return rejected
+   */
+  @javax.annotation.Nullable
+  public List<String> getRejected() {
+    return rejected;
+  }
+
+  public void setRejected(@javax.annotation.Nullable List<String> rejected) {
+    this.rejected = rejected;
   }
 
 
@@ -113,12 +147,13 @@ public class PutAdminSettingsBrandingUpdateResponse {
     }
     PutAdminSettingsBrandingUpdateResponse putAdminSettingsBrandingUpdateResponse = (PutAdminSettingsBrandingUpdateResponse) o;
     return Objects.equals(this.data, putAdminSettingsBrandingUpdateResponse.data) &&
+        Objects.equals(this.rejected, putAdminSettingsBrandingUpdateResponse.rejected) &&
         Objects.equals(this.message, putAdminSettingsBrandingUpdateResponse.message);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, message);
+    return Objects.hash(data, rejected, message);
   }
 
   @Override
@@ -126,6 +161,7 @@ public class PutAdminSettingsBrandingUpdateResponse {
     StringBuilder sb = new StringBuilder();
     sb.append("class PutAdminSettingsBrandingUpdateResponse {\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
+    sb.append("    rejected: ").append(toIndentedString(rejected)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -148,7 +184,7 @@ public class PutAdminSettingsBrandingUpdateResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("data", "message"));
+    openapiFields = new HashSet<String>(Arrays.asList("data", "rejected", "message"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -178,6 +214,10 @@ public class PutAdminSettingsBrandingUpdateResponse {
       // validate the optional field `data`
       if (jsonObj.get("data") != null && !jsonObj.get("data").isJsonNull()) {
         BrandingSettings.validateJsonElement(jsonObj.get("data"));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("rejected") != null && !jsonObj.get("rejected").isJsonNull() && !jsonObj.get("rejected").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `rejected` to be an array in the JSON string but got `%s`", jsonObj.get("rejected").toString()));
       }
       if ((jsonObj.get("message") != null && !jsonObj.get("message").isJsonNull()) && !jsonObj.get("message").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `message` to be a primitive type in the JSON string but got `%s`", jsonObj.get("message").toString()));

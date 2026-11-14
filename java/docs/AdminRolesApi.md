@@ -25,6 +25,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Add permission(s) to a role
 
+Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+
 ### Example
 ```java
 // Import classes:
@@ -91,6 +93,9 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Added; message reports how many permissions were added |  -  |
+| **400** | No permissionId / permissionIds, an id that is not a whole number, an unknown id, or a permission reserved for the platform |  -  |
+| **403** | A permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
+| **404** | Role not found |  -  |
 
 <a id="adminRolesAddUser"></a>
 # **adminRolesAddUser**
@@ -170,6 +175,8 @@ public class Example {
 > AdminRolesCreateResponse adminRolesCreate(orgId)
 
 Create a new role
+
+Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
 ### Example
 ```java
@@ -605,6 +612,8 @@ public class Example {
 
 Remove a permission from a role
 
+Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;.
+
 ### Example
 ```java
 // Import classes:
@@ -755,6 +764,8 @@ public class Example {
 
 Update role permissions (replaces all)
 
+Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+
 ### Example
 ```java
 // Import classes:
@@ -821,6 +832,9 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated role |  -  |
+| **400** | permissions is missing or not a list, names an unknown slug, or names a permission reserved for the platform |  -  |
+| **403** | A new permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
+| **404** | Role not found |  -  |
 
 <a id="patchAdminRolesUpdate"></a>
 # **patchAdminRolesUpdate**

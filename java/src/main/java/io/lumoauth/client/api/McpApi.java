@@ -90,8 +90,7 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Protected resource metadata. scopes_supported only when the server declares scopes; the dpop_* members only when the server requires DPoP-bound tokens. Any additional admin-supplied metadata fields are merged in (they can never override resource, authorization_servers, bearer_methods_supported or scopes_supported). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> not_applicable — the MCP server does not require authorization. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, unknown / inactive MCP server, or an MCP server that checks no token (Public or stdio): such a server has no protected resource metadata. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getProtectedResourceMetadataCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback _callback) throws ApiException {
@@ -168,8 +167,7 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Protected resource metadata. scopes_supported only when the server declares scopes; the dpop_* members only when the server requires DPoP-bound tokens. Any additional admin-supplied metadata fields are merged in (they can never override resource, authorization_servers, bearer_methods_supported or scopes_supported). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> not_applicable — the MCP server does not require authorization. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, unknown / inactive MCP server, or an MCP server that checks no token (Public or stdio): such a server has no protected resource metadata. </td><td>  -  </td></tr>
      </table>
      */
     public ProtectedResourceMetadata getProtectedResourceMetadata(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
@@ -189,8 +187,7 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Protected resource metadata. scopes_supported only when the server declares scopes; the dpop_* members only when the server requires DPoP-bound tokens. Any additional admin-supplied metadata fields are merged in (they can never override resource, authorization_servers, bearer_methods_supported or scopes_supported). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> not_applicable — the MCP server does not require authorization. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, unknown / inactive MCP server, or an MCP server that checks no token (Public or stdio): such a server has no protected resource metadata. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<ProtectedResourceMetadata> getProtectedResourceMetadataWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
@@ -212,8 +209,7 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Protected resource metadata. scopes_supported only when the server declares scopes; the dpop_* members only when the server requires DPoP-bound tokens. Any additional admin-supplied metadata fields are merged in (they can never override resource, authorization_servers, bearer_methods_supported or scopes_supported). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> not_applicable — the MCP server does not require authorization. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, unknown / inactive MCP server, or an MCP server that checks no token (Public or stdio): such a server has no protected resource metadata. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getProtectedResourceMetadataAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback<ProtectedResourceMetadata> _callback) throws ApiException {
@@ -366,7 +362,7 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A single MCP server with discovery metadata. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller lacks the settings.manage permission. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or MCP server not found. </td><td>  -  </td></tr>
      </table>
      */
@@ -444,7 +440,7 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A single MCP server with discovery metadata. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller lacks the settings.manage permission. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or MCP server not found. </td><td>  -  </td></tr>
      </table>
      */
@@ -465,7 +461,7 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A single MCP server with discovery metadata. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller lacks the settings.manage permission. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or MCP server not found. </td><td>  -  </td></tr>
      </table>
      */
@@ -488,7 +484,7 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A single MCP server with discovery metadata. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller lacks the settings.manage permission. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or MCP server not found. </td><td>  -  </td></tr>
      </table>
      */
@@ -510,7 +506,7 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
@@ -590,7 +586,7 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
@@ -613,7 +609,7 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
@@ -638,7 +634,7 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
@@ -663,7 +659,7 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> List of active MCP servers for the tenant. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller lacks the settings.manage permission. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
      </table>
      */
@@ -734,7 +730,7 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> List of active MCP servers for the tenant. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller lacks the settings.manage permission. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
      </table>
      */
@@ -754,7 +750,7 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> List of active MCP servers for the tenant. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller lacks the settings.manage permission. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
      </table>
      */
@@ -776,7 +772,7 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> List of active MCP servers for the tenant. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller lacks the settings.manage permission. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
      </table>
      */
@@ -965,7 +961,7 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
@@ -1045,7 +1041,7 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
@@ -1068,7 +1064,7 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
@@ -1093,7 +1089,7 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>

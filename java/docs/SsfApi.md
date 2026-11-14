@@ -162,6 +162,8 @@ null (empty response body)
 
 Read SSF stream configuration(s)
 
+Needs &#x60;webhooks.view&#x60; and &#x60;agents.view&#x60;, as the Security signals page in the portal does.
+
 ### Example
 ```java
 // Import classes:
@@ -235,6 +237,8 @@ public class Example {
 > verifyStream(orgId)
 
 Request a stream verification event
+
+Needs &#x60;settings.manage&#x60;, as the portal does.
 
 ### Example
 ```java

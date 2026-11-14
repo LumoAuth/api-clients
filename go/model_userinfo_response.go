@@ -22,13 +22,13 @@ var _ MappedNullable = &UserinfoResponse{}
 
 // UserinfoResponse struct for UserinfoResponse
 type UserinfoResponse struct {
-	// User id; agent_<agent_id> for agents; client_<client_id> for clients.
+	// User id; agent_<agent_id> for agents.
 	Sub string `json:"sub"`
-	// Only for non-user principals.
+	// Only for agents.
 	IdentityType *string `json:"identity_type,omitempty"`
 	// Organization slug.
 	Tenant *string `json:"tenant,omitempty"`
-	// profile scope (users); agent / client display name.
+	// profile scope (users); agent display name.
 	Name *string `json:"name,omitempty"`
 	// profile scope.
 	GivenName *string `json:"given_name,omitempty"`
@@ -76,8 +76,6 @@ type UserinfoResponse struct {
 	Capabilities []string `json:"capabilities,omitempty"`
 	// Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429.
 	BudgetPolicy map[string]interface{} `json:"budget_policy,omitempty"`
-	// Clients only.
-	ClientId *string `json:"client_id,omitempty"`
 }
 
 type _UserinfoResponse UserinfoResponse
@@ -967,38 +965,6 @@ func (o *UserinfoResponse) SetBudgetPolicy(v map[string]interface{}) {
 	o.BudgetPolicy = v
 }
 
-// GetClientId returns the ClientId field value if set, zero value otherwise.
-func (o *UserinfoResponse) GetClientId() string {
-	if o == nil || IsNil(o.ClientId) {
-		var ret string
-		return ret
-	}
-	return *o.ClientId
-}
-
-// GetClientIdOk returns a tuple with the ClientId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UserinfoResponse) GetClientIdOk() (*string, bool) {
-	if o == nil || IsNil(o.ClientId) {
-		return nil, false
-	}
-	return o.ClientId, true
-}
-
-// HasClientId returns a boolean if a field has been set.
-func (o *UserinfoResponse) HasClientId() bool {
-	if o != nil && !IsNil(o.ClientId) {
-		return true
-	}
-
-	return false
-}
-
-// SetClientId gets a reference to the given string and assigns it to the ClientId field.
-func (o *UserinfoResponse) SetClientId(v string) {
-	o.ClientId = &v
-}
-
 func (o UserinfoResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1087,9 +1053,6 @@ func (o UserinfoResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.BudgetPolicy) {
 		toSerialize["budget_policy"] = o.BudgetPolicy
-	}
-	if !IsNil(o.ClientId) {
-		toSerialize["client_id"] = o.ClientId
 	}
 	return toSerialize, nil
 }

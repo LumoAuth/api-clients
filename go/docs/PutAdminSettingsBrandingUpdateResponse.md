@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Data** | Pointer to [**BrandingSettings**](BrandingSettings.md) |  | [optional] 
+**Rejected** | Pointer to **[]string** | Keys whose value was refused by validation and not saved. | [optional] 
 **Message** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -50,6 +51,31 @@ SetData sets Data field to given value.
 `func (o *PutAdminSettingsBrandingUpdateResponse) HasData() bool`
 
 HasData returns a boolean if a field has been set.
+
+### GetRejected
+
+`func (o *PutAdminSettingsBrandingUpdateResponse) GetRejected() []string`
+
+GetRejected returns the Rejected field if non-nil, zero value otherwise.
+
+### GetRejectedOk
+
+`func (o *PutAdminSettingsBrandingUpdateResponse) GetRejectedOk() (*[]string, bool)`
+
+GetRejectedOk returns a tuple with the Rejected field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRejected
+
+`func (o *PutAdminSettingsBrandingUpdateResponse) SetRejected(v []string)`
+
+SetRejected sets Rejected field to given value.
+
+### HasRejected
+
+`func (o *PutAdminSettingsBrandingUpdateResponse) HasRejected() bool`
+
+HasRejected returns a boolean if a field has been set.
 
 ### GetMessage
 

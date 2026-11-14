@@ -40,7 +40,7 @@ import type { MessageResponse } from '../models';
 export const AdminRolesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
          * @summary Add permission(s) to a role
          * @param {string} orgId 
          * @param {string} roleId 
@@ -130,7 +130,7 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
          * @summary Create a new role
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -392,7 +392,7 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Needs `roles.assign-permissions` and `roles.edit`.
          * @summary Remove a permission from a role
          * @param {string} orgId 
          * @param {string} roleId 
@@ -490,7 +490,7 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
          * @summary Update role permissions (replaces all)
          * @param {string} orgId 
          * @param {string} roleId 
@@ -635,7 +635,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AdminRolesApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
          * @summary Add permission(s) to a role
          * @param {string} orgId 
          * @param {string} roleId 
@@ -663,7 +663,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
          * @summary Create a new role
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -745,7 +745,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `roles.assign-permissions` and `roles.edit`.
          * @summary Remove a permission from a role
          * @param {string} orgId 
          * @param {string} roleId 
@@ -775,7 +775,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
          * @summary Update role permissions (replaces all)
          * @param {string} orgId 
          * @param {string} roleId 
@@ -827,7 +827,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
     const localVarFp = AdminRolesApiFp(configuration)
     return {
         /**
-         * 
+         * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
          * @summary Add permission(s) to a role
          * @param {AdminRolesApiAdminRolesAddPermissionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -847,7 +847,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
             return localVarFp.adminRolesAddUser(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
          * @summary Create a new role
          * @param {AdminRolesApiAdminRolesCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -907,7 +907,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
             return localVarFp.adminRolesList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `roles.assign-permissions` and `roles.edit`.
          * @summary Remove a permission from a role
          * @param {AdminRolesApiAdminRolesRemovePermissionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -927,7 +927,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
             return localVarFp.adminRolesRemoveUser(requestParameters.orgId, requestParameters.roleId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
          * @summary Update role permissions (replaces all)
          * @param {AdminRolesApiAdminRolesUpdatePermissionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -966,7 +966,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
  */
 export interface AdminRolesApiInterface {
     /**
-     * 
+     * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
      * @summary Add permission(s) to a role
      * @param {AdminRolesApiAdminRolesAddPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -986,7 +986,7 @@ export interface AdminRolesApiInterface {
     adminRolesAddUser(requestParameters: AdminRolesApiAdminRolesAddUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
-     * 
+     * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
      * @summary Create a new role
      * @param {AdminRolesApiAdminRolesCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1046,7 +1046,7 @@ export interface AdminRolesApiInterface {
     adminRolesList(requestParameters: AdminRolesApiAdminRolesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesListResponse>;
 
     /**
-     * 
+     * Needs `roles.assign-permissions` and `roles.edit`.
      * @summary Remove a permission from a role
      * @param {AdminRolesApiAdminRolesRemovePermissionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1066,7 +1066,7 @@ export interface AdminRolesApiInterface {
     adminRolesRemoveUser(requestParameters: AdminRolesApiAdminRolesRemoveUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
-     * 
+     * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
      * @summary Update role permissions (replaces all)
      * @param {AdminRolesApiAdminRolesUpdatePermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1378,7 +1378,7 @@ export interface AdminRolesApiPutAdminRolesUpdateRequest {
  */
 export class AdminRolesApi extends BaseAPI implements AdminRolesApiInterface {
     /**
-     * 
+     * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
      * @summary Add permission(s) to a role
      * @param {AdminRolesApiAdminRolesAddPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1402,7 +1402,7 @@ export class AdminRolesApi extends BaseAPI implements AdminRolesApiInterface {
     }
 
     /**
-     * 
+     * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
      * @summary Create a new role
      * @param {AdminRolesApiAdminRolesCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1474,7 +1474,7 @@ export class AdminRolesApi extends BaseAPI implements AdminRolesApiInterface {
     }
 
     /**
-     * 
+     * Needs `roles.assign-permissions` and `roles.edit`.
      * @summary Remove a permission from a role
      * @param {AdminRolesApiAdminRolesRemovePermissionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1498,7 +1498,7 @@ export class AdminRolesApi extends BaseAPI implements AdminRolesApiInterface {
     }
 
     /**
-     * 
+     * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
      * @summary Update role permissions (replaces all)
      * @param {AdminRolesApiAdminRolesUpdatePermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

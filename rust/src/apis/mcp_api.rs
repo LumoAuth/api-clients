@@ -19,7 +19,6 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetProtectedResourceMetadataError {
-    Status400(),
     Status404(),
     UnknownValue(serde_json::Value),
 }

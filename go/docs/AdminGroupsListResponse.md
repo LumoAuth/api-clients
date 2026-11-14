@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Data** | Pointer to [**[]Group**](Group.md) |  | [optional] 
 **Meta** | Pointer to [**PaginationMeta**](PaginationMeta.md) |  | [optional] 
 **Pagination** | Pointer to [**PaginationMeta**](PaginationMeta.md) |  | [optional] 
+**ResourceType** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -101,6 +102,31 @@ SetPagination sets Pagination field to given value.
 `func (o *AdminGroupsListResponse) HasPagination() bool`
 
 HasPagination returns a boolean if a field has been set.
+
+### GetResourceType
+
+`func (o *AdminGroupsListResponse) GetResourceType() string`
+
+GetResourceType returns the ResourceType field if non-nil, zero value otherwise.
+
+### GetResourceTypeOk
+
+`func (o *AdminGroupsListResponse) GetResourceTypeOk() (*string, bool)`
+
+GetResourceTypeOk returns a tuple with the ResourceType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResourceType
+
+`func (o *AdminGroupsListResponse) SetResourceType(v string)`
+
+SetResourceType sets ResourceType field to given value.
+
+### HasResourceType
+
+`func (o *AdminGroupsListResponse) HasResourceType() bool`
+
+HasResourceType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

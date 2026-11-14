@@ -535,10 +535,12 @@ export const AdminAgentsApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary List all agents in the tenant
          * @param {string} orgId 
+         * @param {AdminAgentsListSortBy} [sortBy] Sort field. Default: name. Another value is ignored.
+         * @param {AdminAgentsListSortDir} [sortDir] Sort direction, used with sortBy.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAgentsList: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminAgentsList: async (orgId: string, sortBy?: AdminAgentsListSortBy, sortDir?: AdminAgentsListSortDir, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminAgentsList', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/agents`
@@ -560,6 +562,14 @@ export const AdminAgentsApiAxiosParamCreator = function (configuration?: Configu
             // authentication BearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (sortBy !== undefined) {
+                localVarQueryParameter['sortBy'] = sortBy;
+            }
+
+            if (sortDir !== undefined) {
+                localVarQueryParameter['sortDir'] = sortDir;
+            }
 
 
     
@@ -1026,11 +1036,13 @@ export const AdminAgentsApiFp = function(configuration?: Configuration) {
          * 
          * @summary List all agents in the tenant
          * @param {string} orgId 
+         * @param {AdminAgentsListSortBy} [sortBy] Sort field. Default: name. Another value is ignored.
+         * @param {AdminAgentsListSortDir} [sortDir] Sort direction, used with sortBy.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAgentsList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAgentsListResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAgentsList(orgId, options);
+        async adminAgentsList(orgId: string, sortBy?: AdminAgentsListSortBy, sortDir?: AdminAgentsListSortDir, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAgentsListResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAgentsList(orgId, sortBy, sortDir, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAgentsApi.adminAgentsList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1242,7 +1254,7 @@ export const AdminAgentsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         adminAgentsList(requestParameters: AdminAgentsApiAdminAgentsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsListResponse> {
-            return localVarFp.adminAgentsList(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminAgentsList(requestParameters.orgId, requestParameters.sortBy, requestParameters.sortDir, options).then((request) => request(axios, basePath));
         },
         /**
          * For a trusted component of your organization, such as an AI gateway\'s spend callback or an orchestrator, that sees the agent\'s model calls. Adds the tokens and cost to the agent\'s budget windows (current UTC hour, day and month), exactly like POST /agents/me/usage from the agent itself. The report adds no API call and is accepted even when the budget is spent.
@@ -1721,6 +1733,20 @@ export interface AdminAgentsApiAdminAgentsListRequest {
      * @memberof AdminAgentsApiAdminAgentsList
      */
     readonly orgId: string
+
+    /**
+     * Sort field. Default: name. Another value is ignored.
+     * @type {'name' | 'agentId' | 'status' | 'createdAt' | 'lastUsedAt'}
+     * @memberof AdminAgentsApiAdminAgentsList
+     */
+    readonly sortBy?: AdminAgentsListSortBy
+
+    /**
+     * Sort direction, used with sortBy.
+     * @type {'ASC' | 'DESC'}
+     * @memberof AdminAgentsApiAdminAgentsList
+     */
+    readonly sortDir?: AdminAgentsListSortDir
 }
 
 /**
@@ -2020,7 +2046,7 @@ export class AdminAgentsApi extends BaseAPI implements AdminAgentsApiInterface {
      * @memberof AdminAgentsApi
      */
     public adminAgentsList(requestParameters: AdminAgentsApiAdminAgentsListRequest, options?: RawAxiosRequestConfig) {
-        return AdminAgentsApiFp(this.configuration).adminAgentsList(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminAgentsApiFp(this.configuration).adminAgentsList(requestParameters.orgId, requestParameters.sortBy, requestParameters.sortDir, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2096,3 +2122,22 @@ export class AdminAgentsApi extends BaseAPI implements AdminAgentsApiInterface {
     }
 }
 
+/**
+  * @export
+  * @enum {string}
+  */
+export enum AdminAgentsListSortBy {
+    NAME = 'name',
+    AGENT_ID = 'agentId',
+    STATUS = 'status',
+    CREATED_AT = 'createdAt',
+    LAST_USED_AT = 'lastUsedAt'
+}
+/**
+  * @export
+  * @enum {string}
+  */
+export enum AdminAgentsListSortDir {
+    ASC = 'ASC',
+    DESC = 'DESC'
+}
