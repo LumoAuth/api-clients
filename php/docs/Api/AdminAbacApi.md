@@ -471,7 +471,7 @@ try {
 ## `abacPoliciesList()`
 
 ```php
-abacPoliciesList($orgId): \LumoAuth\ApiClient\Model\AbacPoliciesListResponse
+abacPoliciesList($orgId, $action): \LumoAuth\ApiClient\Model\AbacPoliciesListResponse
 ```
 
 List ABAC policies
@@ -499,9 +499,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminAbacApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$action = 'action_example'; // string | Only policies that name this action, alone or in a comma-separated list. `*` lists the policies that name `*`.
 
 try {
-    $result = $apiInstance->abacPoliciesList($orgId);
+    $result = $apiInstance->abacPoliciesList($orgId, $action);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminAbacApi->abacPoliciesList: ', $e->getMessage(), PHP_EOL;
@@ -513,6 +514,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **action** | **string**| Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. | [optional] |
 
 ### Return type
 

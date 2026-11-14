@@ -39,11 +39,12 @@
 |**backchannelAuthenticationEndpoint** | **URI** |  |  [optional] |
 |**backchannelTokenDeliveryModesSupported** | **List&lt;String&gt;** |  |  [optional] |
 |**backchannelUserCodeParameterSupported** | **Boolean** |  |  [optional] |
+|**resourceIndicatorsSupported** | **Boolean** |  |  [optional] |
 |**entityProfilesSupported** | **List&lt;String&gt;** |  |  [optional] |
 |**clientIdMetadataDocumentSupported** | **Boolean** | Present (true) unless the organization switched Client ID Metadata Documents off. |  [optional] |
 |**authorizationGrantProfilesSupported** | **List&lt;String&gt;** | Only when the organization accepts ID-JAGs. |  [optional] |
-|**opPolicyUri** | **URI** | Only when configured. |  [optional] |
-|**opTosUri** | **URI** | Only when configured. |  [optional] |
+|**opPolicyUri** | **URI** | The Privacy policy URL of the organization&#39;s login page settings. Only when it is set. |  [optional] |
+|**opTosUri** | **URI** | The Terms of service URL of the organization&#39;s login page settings. Only when it is set. |  [optional] |
 
 
 

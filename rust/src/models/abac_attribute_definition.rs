@@ -33,6 +33,9 @@ pub struct AbacAttributeDefinition {
     pub is_required: Option<bool>,
     #[serde(rename = "isSystem", skip_serializing_if = "Option::is_none")]
     pub is_system: Option<bool>,
+    /// True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403).
+    #[serde(rename = "builtIn", skip_serializing_if = "Option::is_none")]
+    pub built_in: Option<bool>,
     #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,
     #[serde(rename = "updatedAt", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
@@ -52,6 +55,7 @@ impl AbacAttributeDefinition {
             default_value: None,
             is_required: None,
             is_system: None,
+            built_in: None,
             created_at: None,
             updated_at: None,
         }

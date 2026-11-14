@@ -39,6 +39,8 @@ type AdminAuditLogsAPI interface {
 	/*
 	AdminAuditLogsExport Export audit logs as CSV (default) or JSON
 
+	Needs `audit.export` and `audit.view`, as the export on the portal's audit log page does.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@return ApiAdminAuditLogsExportRequest
@@ -105,6 +107,8 @@ type AdminAuditLogsAPI interface {
 	/*
 	PatchAdminAuditLogsRetentionUpdate Update audit log retention settings
 
+	Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@return ApiPatchAdminAuditLogsRetentionUpdateRequest
@@ -117,6 +121,8 @@ type AdminAuditLogsAPI interface {
 
 	/*
 	PutAdminAuditLogsRetentionUpdate Update audit log retention settings
+
+	Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -259,6 +265,8 @@ func (r ApiAdminAuditLogsExportRequest) Execute() (string, *http.Response, error
 
 /*
 AdminAuditLogsExport Export audit logs as CSV (default) or JSON
+
+Needs `audit.export` and `audit.view`, as the export on the portal's audit log page does.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -839,6 +847,8 @@ func (r ApiPatchAdminAuditLogsRetentionUpdateRequest) Execute() (*AdminAuditLogs
 /*
 PatchAdminAuditLogsRetentionUpdate Update audit log retention settings
 
+Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
  @return ApiPatchAdminAuditLogsRetentionUpdateRequest
@@ -953,6 +963,8 @@ func (r ApiPutAdminAuditLogsRetentionUpdateRequest) Execute() (*AdminAuditLogsRe
 
 /*
 PutAdminAuditLogsRetentionUpdate Update audit log retention settings
+
+Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId

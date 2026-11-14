@@ -28,10 +28,10 @@ class UserinfoResponse(BaseModel):
     """
     UserinfoResponse
     """ # noqa: E501
-    sub: StrictStr = Field(description="User id; agent_<agent_id> for agents; client_<client_id> for clients.")
-    identity_type: Optional[StrictStr] = Field(default=None, description="Only for non-user principals.")
+    sub: StrictStr = Field(description="User id; agent_<agent_id> for agents.")
+    identity_type: Optional[StrictStr] = Field(default=None, description="Only for agents.")
     tenant: Optional[StrictStr] = Field(default=None, description="Organization slug.")
-    name: Optional[StrictStr] = Field(default=None, description="profile scope (users); agent / client display name.")
+    name: Optional[StrictStr] = Field(default=None, description="profile scope (users); agent display name.")
     given_name: Optional[StrictStr] = Field(default=None, description="profile scope.")
     family_name: Optional[StrictStr] = Field(default=None, description="profile scope.")
     middle_name: Optional[StrictStr] = Field(default=None, description="profile scope.")
@@ -55,8 +55,7 @@ class UserinfoResponse(BaseModel):
     workload_identity: Optional[StrictStr] = Field(default=None, description="Agents only.")
     capabilities: Optional[List[StrictStr]] = Field(default=None, description="Agents only.")
     budget_policy: Optional[Dict[str, Any]] = Field(default=None, description="Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429.")
-    client_id: Optional[StrictStr] = Field(default=None, description="Clients only.")
-    __properties: ClassVar[List[str]] = ["sub", "identity_type", "tenant", "name", "given_name", "family_name", "middle_name", "nickname", "preferred_username", "profile", "picture", "website", "gender", "birthdate", "zoneinfo", "locale", "updated_at", "email", "email_verified", "phone_number", "phone_number_verified", "address", "roles", "agent_id", "workload_identity", "capabilities", "budget_policy", "client_id"]
+    __properties: ClassVar[List[str]] = ["sub", "identity_type", "tenant", "name", "given_name", "family_name", "middle_name", "nickname", "preferred_username", "profile", "picture", "website", "gender", "birthdate", "zoneinfo", "locale", "updated_at", "email", "email_verified", "phone_number", "phone_number_verified", "address", "roles", "agent_id", "workload_identity", "capabilities", "budget_policy"]
 
     @field_validator('identity_type')
     def identity_type_validate_enum(cls, value):
@@ -64,8 +63,8 @@ class UserinfoResponse(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['agent', 'client', 'unknown']):
-            raise ValueError("must be one of enum values ('agent', 'client', 'unknown')")
+        if value not in set(['agent']):
+            raise ValueError("must be one of enum values ('agent')")
         return value
 
     model_config = ConfigDict(
@@ -155,8 +154,7 @@ class UserinfoResponse(BaseModel):
             "agent_id": obj.get("agent_id"),
             "workload_identity": obj.get("workload_identity"),
             "capabilities": obj.get("capabilities"),
-            "budget_policy": obj.get("budget_policy"),
-            "client_id": obj.get("client_id")
+            "budget_policy": obj.get("budget_policy")
         })
         return _obj
 

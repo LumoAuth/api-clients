@@ -21,6 +21,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,15 +34,16 @@ class AbacPolicy(BaseModel):
     slug: Optional[StrictStr] = None
     description: Optional[StrictStr] = None
     resource_type: Optional[StrictStr] = Field(default=None, alias="resourceType")
-    action: Optional[StrictStr] = None
+    action: Optional[Annotated[str, Field(strict=True, max_length=100)]] = Field(default=None, description="One action, several separated by commas (read, write), or * for every action. The policy decides a request for each action that it names; spaces around the commas are ignored and actions compare case-sensitively.")
     effect: Optional[StrictStr] = None
     priority: Optional[StrictInt] = None
     conditions: Optional[Dict[str, Any]] = None
     is_active: Optional[StrictBool] = Field(default=None, alias="isActive")
     is_system: Optional[StrictBool] = Field(default=None, alias="isSystem")
+    built_in: Optional[StrictBool] = Field(default=None, description="True for a policy that LumoAuth provides to every organization. It can be read, but not changed, switched or deleted (403).", alias="builtIn")
     created_at: Optional[datetime] = Field(default=None, alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, alias="updatedAt")
-    __properties: ClassVar[List[str]] = ["id", "name", "slug", "description", "resourceType", "action", "effect", "priority", "conditions", "isActive", "isSystem", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["id", "name", "slug", "description", "resourceType", "action", "effect", "priority", "conditions", "isActive", "isSystem", "builtIn", "createdAt", "updatedAt"]
 
     @field_validator('effect')
     def effect_validate_enum(cls, value):
@@ -125,6 +127,7 @@ class AbacPolicy(BaseModel):
             "conditions": obj.get("conditions"),
             "isActive": obj.get("isActive"),
             "isSystem": obj.get("isSystem"),
+            "builtIn": obj.get("builtIn"),
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt")
         })

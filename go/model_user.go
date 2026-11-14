@@ -35,6 +35,9 @@ type User struct {
 	PhoneNumberVerified *bool `json:"phoneNumberVerified,omitempty"`
 	IsActive bool `json:"isActive"`
 	Blocked bool `json:"blocked"`
+	// Soft-deleted by inbound SCIM. Left out of the list unless deleted=true is asked; POST /users/{userId}/restore brings the user back.
+	Deleted *bool `json:"deleted,omitempty"`
+	DeletedAt NullableTime `json:"deletedAt,omitempty"`
 	MfaEnabled bool `json:"mfaEnabled"`
 	IsAdmin bool `json:"isAdmin"`
 	CreatedAt time.Time `json:"createdAt"`
@@ -490,6 +493,80 @@ func (o *User) GetBlockedOk() (*bool, bool) {
 // SetBlocked sets field value
 func (o *User) SetBlocked(v bool) {
 	o.Blocked = v
+}
+
+// GetDeleted returns the Deleted field value if set, zero value otherwise.
+func (o *User) GetDeleted() bool {
+	if o == nil || IsNil(o.Deleted) {
+		var ret bool
+		return ret
+	}
+	return *o.Deleted
+}
+
+// GetDeletedOk returns a tuple with the Deleted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *User) GetDeletedOk() (*bool, bool) {
+	if o == nil || IsNil(o.Deleted) {
+		return nil, false
+	}
+	return o.Deleted, true
+}
+
+// HasDeleted returns a boolean if a field has been set.
+func (o *User) HasDeleted() bool {
+	if o != nil && !IsNil(o.Deleted) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeleted gets a reference to the given bool and assigns it to the Deleted field.
+func (o *User) SetDeleted(v bool) {
+	o.Deleted = &v
+}
+
+// GetDeletedAt returns the DeletedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *User) GetDeletedAt() time.Time {
+	if o == nil || IsNil(o.DeletedAt.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.DeletedAt.Get()
+}
+
+// GetDeletedAtOk returns a tuple with the DeletedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *User) GetDeletedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DeletedAt.Get(), o.DeletedAt.IsSet()
+}
+
+// HasDeletedAt returns a boolean if a field has been set.
+func (o *User) HasDeletedAt() bool {
+	if o != nil && o.DeletedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDeletedAt gets a reference to the given NullableTime and assigns it to the DeletedAt field.
+func (o *User) SetDeletedAt(v time.Time) {
+	o.DeletedAt.Set(&v)
+}
+// SetDeletedAtNil sets the value for DeletedAt to be an explicit nil
+func (o *User) SetDeletedAtNil() {
+	o.DeletedAt.Set(nil)
+}
+
+// UnsetDeletedAt ensures that no value is present for DeletedAt, not even an explicit nil
+func (o *User) UnsetDeletedAt() {
+	o.DeletedAt.Unset()
 }
 
 // GetMfaEnabled returns the MfaEnabled field value
@@ -1014,6 +1091,12 @@ func (o User) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["isActive"] = o.IsActive
 	toSerialize["blocked"] = o.Blocked
+	if !IsNil(o.Deleted) {
+		toSerialize["deleted"] = o.Deleted
+	}
+	if o.DeletedAt.IsSet() {
+		toSerialize["deletedAt"] = o.DeletedAt.Get()
+	}
 	toSerialize["mfaEnabled"] = o.MfaEnabled
 	toSerialize["isAdmin"] = o.IsAdmin
 	toSerialize["createdAt"] = o.CreatedAt

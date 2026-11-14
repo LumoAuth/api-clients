@@ -44,6 +44,8 @@ import type { AdminIdentitiesListResponse } from '../models';
 // @ts-ignore
 import type { AdminRolesGetPermissionsResponse } from '../models';
 // @ts-ignore
+import type { AdminUsersRestoreResponse } from '../models';
+// @ts-ignore
 import type { BlockUserResponse } from '../models';
 // @ts-ignore
 import type { CreateUserResponse } from '../models';
@@ -127,7 +129,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
          * @summary Assign a permission to a user
          * @param {string} orgId 
          * @param {string} userId 
@@ -217,7 +219,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+         * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
          * @summary Relink legacy SAML users to an IdP
          * @param {string} orgId 
          * @param {AdminIdentitiesLegacySamlRelinkRequest} adminIdentitiesLegacySamlRelinkRequest 
@@ -433,6 +435,51 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
             }
 
             const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+         * @summary Restore a deleted user
+         * @param {string} orgId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminUsersRestore: async (orgId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminUsersRestore', 'orgId', orgId)
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('adminUsersRestore', 'userId', userId)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/users/{userId}/restore`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -769,10 +816,22 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
          * 
          * @summary List users
          * @param {string} orgId 
+         * @param {number} [page] Page number.
+         * @param {number} [limit] Users per page (1 to 100).
+         * @param {string} [search] Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).
+         * @param {boolean} [active] Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users.
+         * @param {boolean} [blocked] Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users.
+         * @param {boolean} [deleted] &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out.
+         * @param {boolean} [emailVerified] Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;).
+         * @param {boolean} [mfaEnabled] Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication.
+         * @param {string} [role] Only users who hold the role with this slug.
+         * @param {string} [group] Only members of the group with this slug.
+         * @param {ListUsersSortBy} [sortBy] Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.
+         * @param {ListUsersSortDir} [sortDir] Sort direction. Used only together with sortBy.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listUsers: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listUsers: async (orgId: string, page?: number, limit?: number, search?: string, active?: boolean, blocked?: boolean, deleted?: boolean, emailVerified?: boolean, mfaEnabled?: boolean, role?: string, group?: string, sortBy?: ListUsersSortBy, sortDir?: ListUsersSortDir, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('listUsers', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/users`
@@ -794,6 +853,54 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
             // authentication BearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (active !== undefined) {
+                localVarQueryParameter['active'] = active;
+            }
+
+            if (blocked !== undefined) {
+                localVarQueryParameter['blocked'] = blocked;
+            }
+
+            if (deleted !== undefined) {
+                localVarQueryParameter['deleted'] = deleted;
+            }
+
+            if (emailVerified !== undefined) {
+                localVarQueryParameter['emailVerified'] = emailVerified;
+            }
+
+            if (mfaEnabled !== undefined) {
+                localVarQueryParameter['mfaEnabled'] = mfaEnabled;
+            }
+
+            if (role !== undefined) {
+                localVarQueryParameter['role'] = role;
+            }
+
+            if (group !== undefined) {
+                localVarQueryParameter['group'] = group;
+            }
+
+            if (sortBy !== undefined) {
+                localVarQueryParameter['sortBy'] = sortBy;
+            }
+
+            if (sortDir !== undefined) {
+                localVarQueryParameter['sortDir'] = sortDir;
+            }
 
 
     
@@ -1135,7 +1242,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
          * @summary Set a user\'s password
          * @param {string} orgId 
          * @param {string} userId 
@@ -1180,7 +1287,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
          * @summary Set a user\'s password
          * @param {string} orgId 
          * @param {string} userId 
@@ -1474,7 +1581,7 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
          * @summary Assign a permission to a user
          * @param {string} orgId 
          * @param {string} userId 
@@ -1502,7 +1609,7 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+         * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
          * @summary Relink legacy SAML users to an IdP
          * @param {string} orgId 
          * @param {AdminIdentitiesLegacySamlRelinkRequest} adminIdentitiesLegacySamlRelinkRequest 
@@ -1571,6 +1678,20 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminIdentitiesUnlink(type, orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.adminIdentitiesUnlink']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+         * @summary Restore a deleted user
+         * @param {string} orgId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminUsersRestore(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminUsersRestoreResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminUsersRestore(orgId, userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.adminUsersRestore']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1674,11 +1795,23 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
          * 
          * @summary List users
          * @param {string} orgId 
+         * @param {number} [page] Page number.
+         * @param {number} [limit] Users per page (1 to 100).
+         * @param {string} [search] Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).
+         * @param {boolean} [active] Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users.
+         * @param {boolean} [blocked] Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users.
+         * @param {boolean} [deleted] &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out.
+         * @param {boolean} [emailVerified] Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;).
+         * @param {boolean} [mfaEnabled] Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication.
+         * @param {string} [role] Only users who hold the role with this slug.
+         * @param {string} [group] Only members of the group with this slug.
+         * @param {ListUsersSortBy} [sortBy] Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.
+         * @param {ListUsersSortDir} [sortDir] Sort direction. Used only together with sortBy.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listUsers(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListUsersResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listUsers(orgId, options);
+        async listUsers(orgId: string, page?: number, limit?: number, search?: string, active?: boolean, blocked?: boolean, deleted?: boolean, emailVerified?: boolean, mfaEnabled?: boolean, role?: string, group?: string, sortBy?: ListUsersSortBy, sortDir?: ListUsersSortDir, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListUsersResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listUsers(orgId, page, limit, search, active, blocked, deleted, emailVerified, mfaEnabled, role, group, sortBy, sortDir, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.listUsers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1786,7 +1919,7 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
          * @summary Set a user\'s password
          * @param {string} orgId 
          * @param {string} userId 
@@ -1800,7 +1933,7 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
          * @summary Set a user\'s password
          * @param {string} orgId 
          * @param {string} userId 
@@ -1904,7 +2037,7 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.addUserGroup(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
          * @summary Assign a permission to a user
          * @param {AdminUsersApiAddUserPermissionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1924,7 +2057,7 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.addUserRole(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+         * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
          * @summary Relink legacy SAML users to an IdP
          * @param {AdminUsersApiAdminIdentitiesLegacySamlRelinkRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1972,6 +2105,16 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
          */
         adminIdentitiesUnlink(requestParameters: AdminUsersApiAdminIdentitiesUnlinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsGetResponse> {
             return localVarFp.adminIdentitiesUnlink(requestParameters.type, requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+         * @summary Restore a deleted user
+         * @param {AdminUsersApiAdminUsersRestoreRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminUsersRestore(requestParameters: AdminUsersApiAdminUsersRestoreRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUsersRestoreResponse> {
+            return localVarFp.adminUsersRestore(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2051,7 +2194,7 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         listUsers(requestParameters: AdminUsersApiListUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListUsersResponse> {
-            return localVarFp.listUsers(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.listUsers(requestParameters.orgId, requestParameters.page, requestParameters.limit, requestParameters.search, requestParameters.active, requestParameters.blocked, requestParameters.deleted, requestParameters.emailVerified, requestParameters.mfaEnabled, requestParameters.role, requestParameters.group, requestParameters.sortBy, requestParameters.sortDir, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2125,7 +2268,7 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.sendUserVerificationEmail(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
          * @summary Set a user\'s password
          * @param {AdminUsersApiSetUserPasswordRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2135,7 +2278,7 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.setUserPassword(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
          * @summary Set a user\'s password
          * @param {AdminUsersApiSetUserPasswordPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2214,7 +2357,7 @@ export interface AdminUsersApiInterface {
     addUserGroup(requestParameters: AdminUsersApiAddUserGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<AddUserGroupResponse>;
 
     /**
-     * 
+     * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
      * @summary Assign a permission to a user
      * @param {AdminUsersApiAddUserPermissionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2234,7 +2377,7 @@ export interface AdminUsersApiInterface {
     addUserRole(requestParameters: AdminUsersApiAddUserRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<AddUserRoleResponse>;
 
     /**
-     * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+     * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
      * @summary Relink legacy SAML users to an IdP
      * @param {AdminUsersApiAdminIdentitiesLegacySamlRelinkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2282,6 +2425,16 @@ export interface AdminUsersApiInterface {
      * @memberof AdminUsersApiInterface
      */
     adminIdentitiesUnlink(requestParameters: AdminUsersApiAdminIdentitiesUnlinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsGetResponse>;
+
+    /**
+     * Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+     * @summary Restore a deleted user
+     * @param {AdminUsersApiAdminUsersRestoreRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUsersApiInterface
+     */
+    adminUsersRestore(requestParameters: AdminUsersApiAdminUsersRestoreRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUsersRestoreResponse>;
 
     /**
      * 
@@ -2435,7 +2588,7 @@ export interface AdminUsersApiInterface {
     sendUserVerificationEmail(requestParameters: AdminUsersApiSendUserVerificationEmailRequest, options?: RawAxiosRequestConfig): AxiosPromise<SendUserVerificationEmailResponse>;
 
     /**
-     * 
+     * Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
      * @summary Set a user\'s password
      * @param {AdminUsersApiSetUserPasswordRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2445,7 +2598,7 @@ export interface AdminUsersApiInterface {
     setUserPassword(requestParameters: AdminUsersApiSetUserPasswordRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetUserPasswordPostResponse>;
 
     /**
-     * 
+     * Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
      * @summary Set a user\'s password
      * @param {AdminUsersApiSetUserPasswordPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2689,6 +2842,27 @@ export interface AdminUsersApiAdminIdentitiesUnlinkRequest {
 }
 
 /**
+ * Request parameters for adminUsersRestore operation in AdminUsersApi.
+ * @export
+ * @interface AdminUsersApiAdminUsersRestoreRequest
+ */
+export interface AdminUsersApiAdminUsersRestoreRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUsersApiAdminUsersRestore
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUsersApiAdminUsersRestore
+     */
+    readonly userId: string
+}
+
+/**
  * Request parameters for blockUser operation in AdminUsersApi.
  * @export
  * @interface AdminUsersApiBlockUserRequest
@@ -2840,6 +3014,90 @@ export interface AdminUsersApiListUsersRequest {
      * @memberof AdminUsersApiListUsers
      */
     readonly orgId: string
+
+    /**
+     * Page number.
+     * @type {number}
+     * @memberof AdminUsersApiListUsers
+     */
+    readonly page?: number
+
+    /**
+     * Users per page (1 to 100).
+     * @type {number}
+     * @memberof AdminUsersApiListUsers
+     */
+    readonly limit?: number
+
+    /**
+     * Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).
+     * @type {string}
+     * @memberof AdminUsersApiListUsers
+     */
+    readonly search?: string
+
+    /**
+     * Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users.
+     * @type {boolean}
+     * @memberof AdminUsersApiListUsers
+     */
+    readonly active?: boolean
+
+    /**
+     * Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users.
+     * @type {boolean}
+     * @memberof AdminUsersApiListUsers
+     */
+    readonly blocked?: boolean
+
+    /**
+     * &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out.
+     * @type {boolean}
+     * @memberof AdminUsersApiListUsers
+     */
+    readonly deleted?: boolean
+
+    /**
+     * Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;).
+     * @type {boolean}
+     * @memberof AdminUsersApiListUsers
+     */
+    readonly emailVerified?: boolean
+
+    /**
+     * Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication.
+     * @type {boolean}
+     * @memberof AdminUsersApiListUsers
+     */
+    readonly mfaEnabled?: boolean
+
+    /**
+     * Only users who hold the role with this slug.
+     * @type {string}
+     * @memberof AdminUsersApiListUsers
+     */
+    readonly role?: string
+
+    /**
+     * Only members of the group with this slug.
+     * @type {string}
+     * @memberof AdminUsersApiListUsers
+     */
+    readonly group?: string
+
+    /**
+     * Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.
+     * @type {'email' | 'name' | 'username' | 'createdAt' | 'lastLoginAt'}
+     * @memberof AdminUsersApiListUsers
+     */
+    readonly sortBy?: ListUsersSortBy
+
+    /**
+     * Sort direction. Used only together with sortBy.
+     * @type {'ASC' | 'DESC'}
+     * @memberof AdminUsersApiListUsers
+     */
+    readonly sortDir?: ListUsersSortDir
 }
 
 /**
@@ -3177,7 +3435,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
     }
 
     /**
-     * 
+     * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
      * @summary Assign a permission to a user
      * @param {AdminUsersApiAddUserPermissionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3201,7 +3459,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
     }
 
     /**
-     * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+     * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
      * @summary Relink legacy SAML users to an IdP
      * @param {AdminUsersApiAdminIdentitiesLegacySamlRelinkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3258,6 +3516,18 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
      */
     public adminIdentitiesUnlink(requestParameters: AdminUsersApiAdminIdentitiesUnlinkRequest, options?: RawAxiosRequestConfig) {
         return AdminUsersApiFp(this.configuration).adminIdentitiesUnlink(requestParameters.type, requestParameters.orgId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+     * @summary Restore a deleted user
+     * @param {AdminUsersApiAdminUsersRestoreRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUsersApi
+     */
+    public adminUsersRestore(requestParameters: AdminUsersApiAdminUsersRestoreRequest, options?: RawAxiosRequestConfig) {
+        return AdminUsersApiFp(this.configuration).adminUsersRestore(requestParameters.orgId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3353,7 +3623,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
      * @memberof AdminUsersApi
      */
     public listUsers(requestParameters: AdminUsersApiListUsersRequest, options?: RawAxiosRequestConfig) {
-        return AdminUsersApiFp(this.configuration).listUsers(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminUsersApiFp(this.configuration).listUsers(requestParameters.orgId, requestParameters.page, requestParameters.limit, requestParameters.search, requestParameters.active, requestParameters.blocked, requestParameters.deleted, requestParameters.emailVerified, requestParameters.mfaEnabled, requestParameters.role, requestParameters.group, requestParameters.sortBy, requestParameters.sortDir, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3442,7 +3712,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
     }
 
     /**
-     * 
+     * Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
      * @summary Set a user\'s password
      * @param {AdminUsersApiSetUserPasswordRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3454,7 +3724,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
     }
 
     /**
-     * 
+     * Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
      * @summary Set a user\'s password
      * @param {AdminUsersApiSetUserPasswordPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3535,4 +3805,23 @@ export enum AdminIdentitiesUnlinkType {
     OIDC = 'oidc',
     LDAP = 'ldap',
     SOCIAL = 'social'
+}
+/**
+  * @export
+  * @enum {string}
+  */
+export enum ListUsersSortBy {
+    EMAIL = 'email',
+    NAME = 'name',
+    USERNAME = 'username',
+    CREATED_AT = 'createdAt',
+    LAST_LOGIN_AT = 'lastLoginAt'
+}
+/**
+  * @export
+  * @enum {string}
+  */
+export enum ListUsersSortDir {
+    ASC = 'ASC',
+    DESC = 'DESC'
 }

@@ -52,7 +52,7 @@ import io.lumoauth.client.JSON;
 /**
  * GetMeResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T07:28:59.263497940Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class GetMeResponse {
   /**
    * Gets or Sets subjectType
@@ -140,6 +140,16 @@ public class GetMeResponse {
   @SerializedName(SERIALIZED_NAME_CAPABILITIES)
   @javax.annotation.Nullable
   private List<String> capabilities;
+
+  public static final String SERIALIZED_NAME_SCOPE = "scope";
+  @SerializedName(SERIALIZED_NAME_SCOPE)
+  @javax.annotation.Nullable
+  private List<String> scope;
+
+  public static final String SERIALIZED_NAME_SCOPE_NARROWED = "scope_narrowed";
+  @SerializedName(SERIALIZED_NAME_SCOPE_NARROWED)
+  @javax.annotation.Nullable
+  private Boolean scopeNarrowed;
 
   public static final String SERIALIZED_NAME_TENANT = "tenant";
   @SerializedName(SERIALIZED_NAME_TENANT)
@@ -298,6 +308,52 @@ public class GetMeResponse {
   }
 
 
+  public GetMeResponse scope(@javax.annotation.Nullable List<String> scope) {
+    this.scope = scope;
+    return this;
+  }
+
+  public GetMeResponse addScopeItem(String scopeItem) {
+    if (this.scope == null) {
+      this.scope = new ArrayList<>();
+    }
+    this.scope.add(scopeItem);
+    return this;
+  }
+
+  /**
+   * Agents only: the scope of the presented token.
+   * @return scope
+   */
+  @javax.annotation.Nullable
+  public List<String> getScope() {
+    return scope;
+  }
+
+  public void setScope(@javax.annotation.Nullable List<String> scope) {
+    this.scope = scope;
+  }
+
+
+  public GetMeResponse scopeNarrowed(@javax.annotation.Nullable Boolean scopeNarrowed) {
+    this.scopeNarrowed = scopeNarrowed;
+    return this;
+  }
+
+  /**
+   * Agents only: true when the token scope leaves out one of the agent&#39;s capabilities.
+   * @return scopeNarrowed
+   */
+  @javax.annotation.Nullable
+  public Boolean getScopeNarrowed() {
+    return scopeNarrowed;
+  }
+
+  public void setScopeNarrowed(@javax.annotation.Nullable Boolean scopeNarrowed) {
+    this.scopeNarrowed = scopeNarrowed;
+  }
+
+
   public GetMeResponse tenant(@javax.annotation.Nullable GroupRef tenant) {
     this.tenant = tenant;
     return this;
@@ -334,6 +390,8 @@ public class GetMeResponse {
         Objects.equals(this.mfaEnabled, getMeResponse.mfaEnabled) &&
         Objects.equals(this.roles, getMeResponse.roles) &&
         Objects.equals(this.capabilities, getMeResponse.capabilities) &&
+        Objects.equals(this.scope, getMeResponse.scope) &&
+        Objects.equals(this.scopeNarrowed, getMeResponse.scopeNarrowed) &&
         Objects.equals(this.tenant, getMeResponse.tenant);
   }
 
@@ -343,7 +401,7 @@ public class GetMeResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(subjectType, id, email, name, mfaEnabled, roles, capabilities, tenant);
+    return Objects.hash(subjectType, id, email, name, mfaEnabled, roles, capabilities, scope, scopeNarrowed, tenant);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -364,6 +422,8 @@ public class GetMeResponse {
     sb.append("    mfaEnabled: ").append(toIndentedString(mfaEnabled)).append("\n");
     sb.append("    roles: ").append(toIndentedString(roles)).append("\n");
     sb.append("    capabilities: ").append(toIndentedString(capabilities)).append("\n");
+    sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
+    sb.append("    scopeNarrowed: ").append(toIndentedString(scopeNarrowed)).append("\n");
     sb.append("    tenant: ").append(toIndentedString(tenant)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -386,7 +446,7 @@ public class GetMeResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("subject_type", "id", "email", "name", "mfa_enabled", "roles", "capabilities", "tenant"));
+    openapiFields = new HashSet<String>(Arrays.asList("subject_type", "id", "email", "name", "mfa_enabled", "roles", "capabilities", "scope", "scope_narrowed", "tenant"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -436,6 +496,10 @@ public class GetMeResponse {
       // ensure the optional json data is an array if present
       if (jsonObj.get("capabilities") != null && !jsonObj.get("capabilities").isJsonNull() && !jsonObj.get("capabilities").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `capabilities` to be an array in the JSON string but got `%s`", jsonObj.get("capabilities").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("scope") != null && !jsonObj.get("scope").isJsonNull() && !jsonObj.get("scope").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `scope` to be an array in the JSON string but got `%s`", jsonObj.get("scope").toString()));
       }
       // validate the optional field `tenant`
       if (jsonObj.get("tenant") != null && !jsonObj.get("tenant").isJsonNull()) {

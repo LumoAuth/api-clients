@@ -81,7 +81,7 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         * 
+         * Needs `audit.export` and `audit.view`, as the export on the portal\'s audit log page does.
          * @summary Export audit logs as CSV (default) or JSON
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -290,7 +290,7 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         * 
+         * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
          * @summary Update audit log retention settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -331,7 +331,7 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         * 
+         * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
          * @summary Update audit log retention settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -395,7 +395,7 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `audit.export` and `audit.view`, as the export on the portal\'s audit log page does.
          * @summary Export audit logs as CSV (default) or JSON
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -461,7 +461,7 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
          * @summary Update audit log retention settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -474,7 +474,7 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
          * @summary Update audit log retention settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -507,7 +507,7 @@ export const AdminAuditLogsApiFactory = function (configuration?: Configuration,
             return localVarFp.adminAuditLogsActions(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `audit.export` and `audit.view`, as the export on the portal\'s audit log page does.
          * @summary Export audit logs as CSV (default) or JSON
          * @param {AdminAuditLogsApiAdminAuditLogsExportRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -557,7 +557,7 @@ export const AdminAuditLogsApiFactory = function (configuration?: Configuration,
             return localVarFp.adminAuditLogsStats(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
          * @summary Update audit log retention settings
          * @param {AdminAuditLogsApiPatchAdminAuditLogsRetentionUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -567,7 +567,7 @@ export const AdminAuditLogsApiFactory = function (configuration?: Configuration,
             return localVarFp.patchAdminAuditLogsRetentionUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
          * @summary Update audit log retention settings
          * @param {AdminAuditLogsApiPutAdminAuditLogsRetentionUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -596,7 +596,7 @@ export interface AdminAuditLogsApiInterface {
     adminAuditLogsActions(requestParameters: AdminAuditLogsApiAdminAuditLogsActionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsActionsResponse>;
 
     /**
-     * 
+     * Needs `audit.export` and `audit.view`, as the export on the portal\'s audit log page does.
      * @summary Export audit logs as CSV (default) or JSON
      * @param {AdminAuditLogsApiAdminAuditLogsExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -646,7 +646,7 @@ export interface AdminAuditLogsApiInterface {
     adminAuditLogsStats(requestParameters: AdminAuditLogsApiAdminAuditLogsStatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsStatsResponse>;
 
     /**
-     * 
+     * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
      * @summary Update audit log retention settings
      * @param {AdminAuditLogsApiPatchAdminAuditLogsRetentionUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -656,7 +656,7 @@ export interface AdminAuditLogsApiInterface {
     patchAdminAuditLogsRetentionUpdate(requestParameters: AdminAuditLogsApiPatchAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsRetentionResponse>;
 
     /**
-     * 
+     * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
      * @summary Update audit log retention settings
      * @param {AdminAuditLogsApiPutAdminAuditLogsRetentionUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -806,7 +806,7 @@ export class AdminAuditLogsApi extends BaseAPI implements AdminAuditLogsApiInter
     }
 
     /**
-     * 
+     * Needs `audit.export` and `audit.view`, as the export on the portal\'s audit log page does.
      * @summary Export audit logs as CSV (default) or JSON
      * @param {AdminAuditLogsApiAdminAuditLogsExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -866,7 +866,7 @@ export class AdminAuditLogsApi extends BaseAPI implements AdminAuditLogsApiInter
     }
 
     /**
-     * 
+     * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
      * @summary Update audit log retention settings
      * @param {AdminAuditLogsApiPatchAdminAuditLogsRetentionUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -878,7 +878,7 @@ export class AdminAuditLogsApi extends BaseAPI implements AdminAuditLogsApiInter
     }
 
     /**
-     * 
+     * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
      * @summary Update audit log retention settings
      * @param {AdminAuditLogsApiPutAdminAuditLogsRetentionUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **Iss** | Pointer to **string** | Issuer identifier of this organization. | [optional] 
 **Aud** | Pointer to [**IntrospectResponseAud**](IntrospectResponseAud.md) |  | [optional] 
 **Jti** | Pointer to **string** | JWT id (JWT tokens only). | [optional] 
+**Act** | Pointer to **map[string]interface{}** | RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under &#x60;act&#x60;. JWT and opaque tokens. | [optional] 
 
 ## Methods
 
@@ -340,6 +341,31 @@ SetJti sets Jti field to given value.
 `func (o *IntrospectResponse) HasJti() bool`
 
 HasJti returns a boolean if a field has been set.
+
+### GetAct
+
+`func (o *IntrospectResponse) GetAct() map[string]interface{}`
+
+GetAct returns the Act field if non-nil, zero value otherwise.
+
+### GetActOk
+
+`func (o *IntrospectResponse) GetActOk() (*map[string]interface{}, bool)`
+
+GetActOk returns a tuple with the Act field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAct
+
+`func (o *IntrospectResponse) SetAct(v map[string]interface{})`
+
+SetAct sets Act field to given value.
+
+### HasAct
+
+`func (o *IntrospectResponse) HasAct() bool`
+
+HasAct returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

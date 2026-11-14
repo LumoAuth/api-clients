@@ -163,7 +163,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Deleted |  -  |
-| **403** | System attribute definitions cannot be deleted |  -  |
+| **403** | System and built-in attribute definitions cannot be deleted |  -  |
 | **404** | Attribute definition not found |  -  |
 
 <a id="abacAttributesGet"></a>
@@ -381,7 +381,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Created |  -  |
-| **400** | Invalid effect, priority (a whole number from 0 to 1000) or policy conditions |  -  |
+| **400** | Invalid effect, priority (a whole number from 0 to 1000), resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions. &#x60;action&#x60; is one action, several separated by commas (&#x60;read, write&#x60;), or &#x60;*&#x60;. |  -  |
 | **409** | A policy with this slug already exists |  -  |
 
 <a id="abacPoliciesDelete"></a>
@@ -456,7 +456,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Deleted |  -  |
-| **403** | System policies cannot be deleted |  -  |
+| **403** | System and built-in policies cannot be deleted |  -  |
 | **404** | Policy not found |  -  |
 
 <a id="abacPoliciesGet"></a>
@@ -535,7 +535,7 @@ public class Example {
 
 <a id="abacPoliciesList"></a>
 # **abacPoliciesList**
-> AbacPoliciesListResponse abacPoliciesList(orgId)
+> AbacPoliciesListResponse abacPoliciesList(orgId, action)
 
 List ABAC policies
 
@@ -566,8 +566,9 @@ public class Example {
 
     AdminAbacApi apiInstance = new AdminAbacApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String action = "action_example"; // String | Only policies that name this action, alone or in a comma-separated list. `*` lists the policies that name `*`.
     try {
-      AbacPoliciesListResponse result = apiInstance.abacPoliciesList(orgId);
+      AbacPoliciesListResponse result = apiInstance.abacPoliciesList(orgId, action);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#abacPoliciesList");
@@ -585,6 +586,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **action** | **String**| Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. | [optional] |
 
 ### Return type
 
@@ -676,7 +678,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Toggled policy |  -  |
-| **403** | System policies cannot be modified |  -  |
+| **403** | System and built-in policies cannot be modified |  -  |
 | **404** | Policy not found |  -  |
 
 <a id="patchAbacAttributesUpdate"></a>
@@ -751,7 +753,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated |  -  |
-| **403** | System attribute definitions cannot be modified |  -  |
+| **403** | System and built-in attribute definitions cannot be modified |  -  |
 | **404** | Attribute definition not found |  -  |
 
 <a id="patchAbacPoliciesUpdate"></a>
@@ -826,7 +828,8 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated |  -  |
-| **403** | System policies cannot be modified |  -  |
+| **400** | Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions |  -  |
+| **403** | System and built-in policies cannot be modified |  -  |
 | **404** | Policy not found |  -  |
 
 <a id="putAbacAttributesUpdate"></a>
@@ -901,7 +904,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated |  -  |
-| **403** | System attribute definitions cannot be modified |  -  |
+| **403** | System and built-in attribute definitions cannot be modified |  -  |
 | **404** | Attribute definition not found |  -  |
 
 <a id="putAbacPoliciesUpdate"></a>
@@ -976,6 +979,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated |  -  |
-| **403** | System policies cannot be modified |  -  |
+| **400** | Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions |  -  |
+| **403** | System and built-in policies cannot be modified |  -  |
 | **404** | Policy not found |  -  |
 

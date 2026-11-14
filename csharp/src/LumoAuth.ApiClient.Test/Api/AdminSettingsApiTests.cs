@@ -268,7 +268,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.PatchAdminSettingsEmailUpdate(orgId);
+            //PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = null;
+            //var response = instance.PatchAdminSettingsEmailUpdate(orgId, putAdminSettingsEmailUpdateRequest);
             //Assert.IsType<PutAdminSettingsEmailUpdateResponse>(response);
         }
 
@@ -280,7 +281,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.PatchAdminSettingsGeneralUpdate(orgId);
+            //PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = null;
+            //var response = instance.PatchAdminSettingsGeneralUpdate(orgId, putAdminSettingsGeneralUpdateRequest);
             //Assert.IsType<PutAdminSettingsGeneralUpdateResponse>(response);
         }
 
@@ -376,7 +378,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.PutAdminSettingsEmailUpdate(orgId);
+            //PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = null;
+            //var response = instance.PutAdminSettingsEmailUpdate(orgId, putAdminSettingsEmailUpdateRequest);
             //Assert.IsType<PutAdminSettingsEmailUpdateResponse>(response);
         }
 
@@ -388,7 +391,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.PutAdminSettingsGeneralUpdate(orgId);
+            //PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = null;
+            //var response = instance.PutAdminSettingsGeneralUpdate(orgId, putAdminSettingsGeneralUpdateRequest);
             //Assert.IsType<PutAdminSettingsGeneralUpdateResponse>(response);
         }
 

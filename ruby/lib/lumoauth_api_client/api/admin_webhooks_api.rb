@@ -109,6 +109,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && webhook_id.nil?
         fail ArgumentError, "Missing the required parameter 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_delete"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && webhook_id !~ pattern
+        fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_delete, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'webhookId' + '}', CGI.escape(webhook_id.to_s))
 
@@ -178,6 +183,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && webhook_id.nil?
         fail ArgumentError, "Missing the required parameter 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_deliveries_list"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && webhook_id !~ pattern
+        fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_deliveries_list, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'webhookId' + '}', CGI.escape(webhook_id.to_s))
 
@@ -249,6 +259,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && webhook_id.nil?
         fail ArgumentError, "Missing the required parameter 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_delivery_replay"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && webhook_id !~ pattern
+        fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_delivery_replay, must conform to the pattern #{pattern}."
+      end
+
       # verify the required parameter 'delivery_id' is set
       if @api_client.config.client_side_validation && delivery_id.nil?
         fail ArgumentError, "Missing the required parameter 'delivery_id' when calling AdminWebhooksApi.admin_webhooks_delivery_replay"
@@ -324,6 +339,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && webhook_id.nil?
         fail ArgumentError, "Missing the required parameter 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_delivery_show"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && webhook_id !~ pattern
+        fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_delivery_show, must conform to the pattern #{pattern}."
+      end
+
       # verify the required parameter 'delivery_id' is set
       if @api_client.config.client_side_validation && delivery_id.nil?
         fail ArgumentError, "Missing the required parameter 'delivery_id' when calling AdminWebhooksApi.admin_webhooks_delivery_show"
@@ -456,6 +476,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && webhook_id.nil?
         fail ArgumentError, "Missing the required parameter 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_get"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && webhook_id !~ pattern
+        fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_get, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'webhookId' + '}', CGI.escape(webhook_id.to_s))
 
@@ -588,6 +613,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && webhook_id.nil?
         fail ArgumentError, "Missing the required parameter 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_rotate_secret"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && webhook_id !~ pattern
+        fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_rotate_secret, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'webhookId' + '}', CGI.escape(webhook_id.to_s))
 
@@ -657,6 +687,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && webhook_id.nil?
         fail ArgumentError, "Missing the required parameter 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_test"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && webhook_id !~ pattern
+        fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_test, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'webhookId' + '}', CGI.escape(webhook_id.to_s))
 
@@ -789,6 +824,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && webhook_id.nil?
         fail ArgumentError, "Missing the required parameter 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_tunnel_stop"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && webhook_id !~ pattern
+        fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_tunnel_stop, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'webhookId' + '}', CGI.escape(webhook_id.to_s))
 
@@ -858,6 +898,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && webhook_id.nil?
         fail ArgumentError, "Missing the required parameter 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_tunnel_stream"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && webhook_id !~ pattern
+        fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_tunnel_stream, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'webhookId' + '}', CGI.escape(webhook_id.to_s))
 
@@ -925,6 +970,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && webhook_id.nil?
         fail ArgumentError, "Missing the required parameter 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_webhooks_disable"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && webhook_id !~ pattern
+        fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_webhooks_disable, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'webhookId' + '}', CGI.escape(webhook_id.to_s))
 
@@ -992,6 +1042,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && webhook_id.nil?
         fail ArgumentError, "Missing the required parameter 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_webhooks_enable"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && webhook_id !~ pattern
+        fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.admin_webhooks_webhooks_enable, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'webhookId' + '}', CGI.escape(webhook_id.to_s))
 
@@ -1059,6 +1114,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && webhook_id.nil?
         fail ArgumentError, "Missing the required parameter 'webhook_id' when calling AdminWebhooksApi.patch_admin_webhooks_update"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && webhook_id !~ pattern
+        fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.patch_admin_webhooks_update, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'webhookId' + '}', CGI.escape(webhook_id.to_s))
 
@@ -1128,6 +1188,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && webhook_id.nil?
         fail ArgumentError, "Missing the required parameter 'webhook_id' when calling AdminWebhooksApi.put_admin_webhooks_update"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && webhook_id !~ pattern
+        fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.put_admin_webhooks_update, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'webhookId' + '}', CGI.escape(webhook_id.to_s))
 

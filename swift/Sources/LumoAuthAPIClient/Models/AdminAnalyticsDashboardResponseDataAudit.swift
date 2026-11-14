@@ -12,6 +12,7 @@ import AnyCodable
 
 public struct AdminAnalyticsDashboardResponseDataAudit: Codable, JSONEncodable, Hashable {
 
+    /** Audit events of the last 7 days, or of the audit retention period of the plan when that is shorter. */
     public var eventsLast7Days: Int?
 
     public init(eventsLast7Days: Int? = nil) {

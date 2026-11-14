@@ -136,6 +136,7 @@ pub async fn delete_stream_config(configuration: &configuration::Configuration, 
     }
 }
 
+/// Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
 pub async fn get_stream_config(configuration: &configuration::Configuration, org_id: &str, stream_id: Option<&str>) -> Result<models::GetStreamConfig200Response, Error<GetStreamConfigError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -187,6 +188,7 @@ pub async fn get_stream_config(configuration: &configuration::Configuration, org
     }
 }
 
+/// Needs `settings.manage`, as the portal does.
 pub async fn verify_stream(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<VerifyStreamError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;

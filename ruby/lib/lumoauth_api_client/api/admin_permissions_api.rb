@@ -497,6 +497,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && scope_id.nil?
         fail ArgumentError, "Missing the required parameter 'scope_id' when calling AdminPermissionsApi.admin_scopes_delete"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && scope_id !~ pattern
+        fail ArgumentError, "invalid value for 'scope_id' when calling AdminPermissionsApi.admin_scopes_delete, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/scopes/{scopeId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'scopeId' + '}', CGI.escape(scope_id.to_s))
 

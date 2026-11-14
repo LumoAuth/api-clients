@@ -50,6 +50,20 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test OAuthAPIService CheckEmailFirst", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+
+		resp, httpRes, err := apiClient.OAuthAPI.CheckEmailFirst(context.Background(), orgId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test OAuthAPIService DeviceAuthorization", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

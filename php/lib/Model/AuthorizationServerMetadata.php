@@ -90,6 +90,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'backchannelAuthenticationEndpoint' => 'string',
         'backchannelTokenDeliveryModesSupported' => 'string[]',
         'backchannelUserCodeParameterSupported' => 'bool',
+        'resourceIndicatorsSupported' => 'bool',
         'entityProfilesSupported' => 'string[]',
         'clientIdMetadataDocumentSupported' => 'bool',
         'authorizationGrantProfilesSupported' => 'string[]',
@@ -137,6 +138,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'backchannelAuthenticationEndpoint' => 'uri',
         'backchannelTokenDeliveryModesSupported' => null,
         'backchannelUserCodeParameterSupported' => null,
+        'resourceIndicatorsSupported' => null,
         'entityProfilesSupported' => null,
         'clientIdMetadataDocumentSupported' => null,
         'authorizationGrantProfilesSupported' => null,
@@ -182,6 +184,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'backchannelAuthenticationEndpoint' => false,
         'backchannelTokenDeliveryModesSupported' => false,
         'backchannelUserCodeParameterSupported' => false,
+        'resourceIndicatorsSupported' => false,
         'entityProfilesSupported' => false,
         'clientIdMetadataDocumentSupported' => false,
         'authorizationGrantProfilesSupported' => false,
@@ -307,6 +310,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'backchannelAuthenticationEndpoint' => 'backchannel_authentication_endpoint',
         'backchannelTokenDeliveryModesSupported' => 'backchannel_token_delivery_modes_supported',
         'backchannelUserCodeParameterSupported' => 'backchannel_user_code_parameter_supported',
+        'resourceIndicatorsSupported' => 'resource_indicators_supported',
         'entityProfilesSupported' => 'entity_profiles_supported',
         'clientIdMetadataDocumentSupported' => 'client_id_metadata_document_supported',
         'authorizationGrantProfilesSupported' => 'authorization_grant_profiles_supported',
@@ -352,6 +356,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'backchannelAuthenticationEndpoint' => 'setBackchannelAuthenticationEndpoint',
         'backchannelTokenDeliveryModesSupported' => 'setBackchannelTokenDeliveryModesSupported',
         'backchannelUserCodeParameterSupported' => 'setBackchannelUserCodeParameterSupported',
+        'resourceIndicatorsSupported' => 'setResourceIndicatorsSupported',
         'entityProfilesSupported' => 'setEntityProfilesSupported',
         'clientIdMetadataDocumentSupported' => 'setClientIdMetadataDocumentSupported',
         'authorizationGrantProfilesSupported' => 'setAuthorizationGrantProfilesSupported',
@@ -397,6 +402,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'backchannelAuthenticationEndpoint' => 'getBackchannelAuthenticationEndpoint',
         'backchannelTokenDeliveryModesSupported' => 'getBackchannelTokenDeliveryModesSupported',
         'backchannelUserCodeParameterSupported' => 'getBackchannelUserCodeParameterSupported',
+        'resourceIndicatorsSupported' => 'getResourceIndicatorsSupported',
         'entityProfilesSupported' => 'getEntityProfilesSupported',
         'clientIdMetadataDocumentSupported' => 'getClientIdMetadataDocumentSupported',
         'authorizationGrantProfilesSupported' => 'getAuthorizationGrantProfilesSupported',
@@ -493,6 +499,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         $this->setIfExists('backchannelAuthenticationEndpoint', $data ?? [], null);
         $this->setIfExists('backchannelTokenDeliveryModesSupported', $data ?? [], null);
         $this->setIfExists('backchannelUserCodeParameterSupported', $data ?? [], null);
+        $this->setIfExists('resourceIndicatorsSupported', $data ?? [], null);
         $this->setIfExists('entityProfilesSupported', $data ?? [], null);
         $this->setIfExists('clientIdMetadataDocumentSupported', $data ?? [], null);
         $this->setIfExists('authorizationGrantProfilesSupported', $data ?? [], null);
@@ -1422,6 +1429,33 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
     }
 
     /**
+     * Gets resourceIndicatorsSupported
+     *
+     * @return bool|null
+     */
+    public function getResourceIndicatorsSupported()
+    {
+        return $this->container['resourceIndicatorsSupported'];
+    }
+
+    /**
+     * Sets resourceIndicatorsSupported
+     *
+     * @param bool|null $resourceIndicatorsSupported resourceIndicatorsSupported
+     *
+     * @return self
+     */
+    public function setResourceIndicatorsSupported($resourceIndicatorsSupported)
+    {
+        if (is_null($resourceIndicatorsSupported)) {
+            throw new \InvalidArgumentException('non-nullable resourceIndicatorsSupported cannot be null');
+        }
+        $this->container['resourceIndicatorsSupported'] = $resourceIndicatorsSupported;
+
+        return $this;
+    }
+
+    /**
      * Gets entityProfilesSupported
      *
      * @return string[]|null
@@ -1515,7 +1549,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Sets opPolicyUri
      *
-     * @param string|null $opPolicyUri Only when configured.
+     * @param string|null $opPolicyUri The Privacy policy URL of the organization's login page settings. Only when it is set.
      *
      * @return self
      */
@@ -1542,7 +1576,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Sets opTosUri
      *
-     * @param string|null $opTosUri Only when configured.
+     * @param string|null $opTosUri The Terms of service URL of the organization's login page settings. Only when it is set.
      *
      * @return self
      */

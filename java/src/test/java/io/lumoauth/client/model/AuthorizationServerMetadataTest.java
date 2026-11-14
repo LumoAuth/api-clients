@@ -297,6 +297,14 @@ public class AuthorizationServerMetadataTest {
     }
 
     /**
+     * Test the property 'resourceIndicatorsSupported'
+     */
+    @Test
+    public void resourceIndicatorsSupportedTest() {
+        // TODO: test resourceIndicatorsSupported
+    }
+
+    /**
      * Test the property 'entityProfilesSupported'
      */
     @Test

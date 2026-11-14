@@ -14,6 +14,8 @@
 |**mfaEnabled** | **Boolean** |  |  [optional] |
 |**roles** | **List&lt;String&gt;** |  |  [optional] |
 |**capabilities** | **List&lt;String&gt;** |  |  [optional] |
+|**scope** | **List&lt;String&gt;** | Agents only: the scope of the presented token. |  [optional] |
+|**scopeNarrowed** | **Boolean** | Agents only: true when the token scope leaves out one of the agent&#39;s capabilities. |  [optional] |
 |**tenant** | [**GroupRef**](GroupRef.md) |  |  [optional] |
 
 

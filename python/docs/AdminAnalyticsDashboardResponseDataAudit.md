@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**events_last7_days** | **int** |  | [optional] 
+**events_last7_days** | **int** | Audit events of the last 7 days, or of the audit retention period of the plan when that is shorter. | [optional] 
 
 ## Example
 

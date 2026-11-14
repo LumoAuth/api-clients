@@ -31,7 +31,7 @@ Name | Type | Description | Notes
 **request_object_signing_alg_values_supported** | **List[str]** |  | [optional] 
 **ui_locales_supported** | **List[str]** |  | [optional] 
 **prompt_values_supported** | **List[str]** |  | [optional] 
-**acr_values_supported** | **List[str]** | The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings. | [optional] 
+**acr_values_supported** | **List[str]** | The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session). The list is the same for every organization. | [optional] 
 **code_challenge_methods_supported** | **List[str]** |  | [optional] 
 **authorization_response_iss_parameter_supported** | **bool** |  | [optional] 
 **pushed_authorization_request_endpoint** | **str** |  | [optional] 
@@ -55,8 +55,8 @@ Name | Type | Description | Notes
 **entity_profiles_supported** | **List[str]** |  | [optional] 
 **client_id_metadata_document_supported** | **bool** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] 
 **authorization_grant_profiles_supported** | **List[str]** | Only when the organization accepts ID-JAGs. | [optional] 
-**op_policy_uri** | **str** | Only when configured. | [optional] 
-**op_tos_uri** | **str** | Only when configured. | [optional] 
+**op_policy_uri** | **str** | The Privacy policy URL of the organization&#39;s login page settings. Only when it is set. | [optional] 
+**op_tos_uri** | **str** | The Terms of service URL of the organization&#39;s login page settings. Only when it is set. | [optional] 
 
 ## Example
 

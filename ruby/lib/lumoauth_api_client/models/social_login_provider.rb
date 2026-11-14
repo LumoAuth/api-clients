@@ -38,7 +38,7 @@ module LumoAuthApiClient
     # Detailed responses only
     attr_accessor :requested_scopes
 
-    # Detailed responses only
+    # Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes.
     attr_accessor :custom_claims
 
     # Detailed responses only

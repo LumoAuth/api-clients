@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**admin_identities_link**](AdminUsersApi.md#admin_identities_link) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user
 [**admin_identities_list**](AdminUsersApi.md#admin_identities_list) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links
 [**admin_identities_unlink**](AdminUsersApi.md#admin_identities_unlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity
+[**admin_users_restore**](AdminUsersApi.md#admin_users_restore) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/restore | Restore a deleted user
 [**block_user**](AdminUsersApi.md#block_user) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user
 [**create_user**](AdminUsersApi.md#create_user) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user
 [**delete_user**](AdminUsersApi.md#delete_user) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user
@@ -125,6 +126,8 @@ Name | Type | Description  | Notes
 > AddUserPermissionResponse add_user_permission(org_id, user_id)
 
 Assign a permission to a user
+
+Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
 ### Example
 
@@ -296,7 +299,7 @@ Name | Type | Description  | Notes
 
 Relink legacy SAML users to an IdP
 
-Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `"dry_run": true`.
 
 ### Example
 
@@ -744,6 +747,96 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **admin_users_restore**
+> AdminUsersRestoreResponse admin_users_restore(org_id, user_id)
+
+Restore a deleted user
+
+Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
+
+```python
+import lumoauth_api_client
+from lumoauth_api_client.models.admin_users_restore_response import AdminUsersRestoreResponse
+from lumoauth_api_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.lumoauth.dev
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lumoauth_api_client.Configuration(
+    host = "https://app.lumoauth.dev"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = lumoauth_api_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with lumoauth_api_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lumoauth_api_client.AdminUsersApi(api_client)
+    org_id = 'org_id_example' # str | 
+    user_id = 'user_id_example' # str | 
+
+    try:
+        # Restore a deleted user
+        api_response = api_instance.admin_users_restore(org_id, user_id)
+        print("The response of AdminUsersApi->admin_users_restore:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminUsersApi->admin_users_restore: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**|  | 
+ **user_id** | **str**|  | 
+
+### Return type
+
+[**AdminUsersRestoreResponse**](AdminUsersRestoreResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | User restored |  -  |
+**403** | The user holds privileges that the caller lacks, or the plan has no free administrator seat |  -  |
+**404** | No such user in this organization |  -  |
+**409** | The user is not deleted (&#x60;user_not_deleted&#x60;), was erased (&#x60;user_erased&#x60;), or its address is used by another account (&#x60;address_in_use&#x60;) |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **block_user**
 > BlockUserResponse block_user(org_id, user_id)
 
@@ -909,6 +1002,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | User created |  -  |
+**403** | Missing permission, or a plan limit (&#x60;plan_limit_reached&#x60;): no admin seat free for a user created with admin access (&#x60;limit&#x60;: &#x60;admin_seats&#x60;), or every monthly-active-user place of a plan with a hard cap used this month (&#x60;limit&#x60;: &#x60;mau&#x60;, with &#x60;resets_on&#x60;). Nothing is created |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1338,7 +1432,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_users**
-> ListUsersResponse list_users(org_id)
+> ListUsersResponse list_users(org_id, page=page, limit=limit, search=search, active=active, blocked=blocked, deleted=deleted, email_verified=email_verified, mfa_enabled=mfa_enabled, role=role, group=group, sort_by=sort_by, sort_dir=sort_dir)
 
 List users
 
@@ -1380,10 +1474,22 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminUsersApi(api_client)
     org_id = 'org_id_example' # str | 
+    page = 1 # int | Page number. (optional) (default to 1)
+    limit = 25 # int | Users per page (1 to 100). (optional) (default to 25)
+    search = 'search_example' # str | Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)
+    active = True # bool | Only active (`true`) or inactive (`false`) users. (optional)
+    blocked = True # bool | Only blocked (`true`) or not blocked (`false`) users. (optional)
+    deleted = False # bool | `true` lists only the users that SCIM deleted (soft-deleted). Without it, or with `false`, the list leaves them out. (optional) (default to False)
+    email_verified = True # bool | Only users whose email address is verified (`true`) or not (`false`). (optional)
+    mfa_enabled = True # bool | Only users with (`true`) or without (`false`) multi-factor authentication. (optional)
+    role = 'role_example' # str | Only users who hold the role with this slug. (optional)
+    group = 'group_example' # str | Only members of the group with this slug. (optional)
+    sort_by = 'sort_by_example' # str | Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)
+    sort_dir = DESC # str | Sort direction. Used only together with sortBy. (optional) (default to DESC)
 
     try:
         # List users
-        api_response = api_instance.list_users(org_id)
+        api_response = api_instance.list_users(org_id, page=page, limit=limit, search=search, active=active, blocked=blocked, deleted=deleted, email_verified=email_verified, mfa_enabled=mfa_enabled, role=role, group=group, sort_by=sort_by, sort_dir=sort_dir)
         print("The response of AdminUsersApi->list_users:\n")
         pprint(api_response)
     except Exception as e:
@@ -1398,6 +1504,18 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **page** | **int**| Page number. | [optional] [default to 1]
+ **limit** | **int**| Users per page (1 to 100). | [optional] [default to 25]
+ **search** | **str**| Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). | [optional] 
+ **active** | **bool**| Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. | [optional] 
+ **blocked** | **bool**| Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. | [optional] 
+ **deleted** | **bool**| &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. | [optional] [default to False]
+ **email_verified** | **bool**| Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). | [optional] 
+ **mfa_enabled** | **bool**| Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. | [optional] 
+ **role** | **str**| Only users who hold the role with this slug. | [optional] 
+ **group** | **str**| Only members of the group with this slug. | [optional] 
+ **sort_by** | **str**| Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. | [optional] 
+ **sort_dir** | **str**| Sort direction. Used only together with sortBy. | [optional] [default to DESC]
 
 ### Return type
 
@@ -2025,6 +2143,8 @@ Name | Type | Description  | Notes
 
 Set a user's password
 
+Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
+
 ### Example
 
 * Api Key Authentication (ApiKeyAuth):
@@ -2102,6 +2222,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Password updated |  -  |
+**401** | insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes |  -  |
+**403** | Actor does not outrank the user, or step_up_required |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2109,6 +2231,8 @@ Name | Type | Description  | Notes
 > SetUserPasswordPostResponse set_user_password_post(org_id, user_id)
 
 Set a user's password
+
+Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
 ### Example
 
@@ -2187,6 +2311,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Password updated |  -  |
+**401** | insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes |  -  |
+**403** | Actor does not outrank the user, or step_up_required |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

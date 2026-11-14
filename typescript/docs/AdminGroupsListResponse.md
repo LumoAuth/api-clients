@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **data** | [**Array&lt;Group&gt;**](Group.md) |  | [optional] [default to undefined]
 **meta** | [**PaginationMeta**](PaginationMeta.md) |  | [optional] [default to undefined]
 **pagination** | [**PaginationMeta**](PaginationMeta.md) |  | [optional] [default to undefined]
+**resourceType** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -18,6 +19,7 @@ const instance: AdminGroupsListResponse = {
     data,
     meta,
     pagination,
+    resourceType,
 };
 ```
 

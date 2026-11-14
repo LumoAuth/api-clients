@@ -177,7 +177,7 @@ export interface OpenIdConfiguration {
      */
     'prompt_values_supported'?: Array<string>;
     /**
-     * The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
+     * The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session). The list is the same for every organization.
      * @type {Array<string>}
      * @memberof OpenIdConfiguration
      */
@@ -321,13 +321,13 @@ export interface OpenIdConfiguration {
      */
     'authorization_grant_profiles_supported'?: Array<string>;
     /**
-     * Only when configured.
+     * The Privacy policy URL of the organization\'s login page settings. Only when it is set.
      * @type {string}
      * @memberof OpenIdConfiguration
      */
     'op_policy_uri'?: string;
     /**
-     * Only when configured.
+     * The Terms of service URL of the organization\'s login page settings. Only when it is set.
      * @type {string}
      * @memberof OpenIdConfiguration
      */

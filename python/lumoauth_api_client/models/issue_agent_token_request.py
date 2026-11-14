@@ -33,7 +33,8 @@ class IssueAgentTokenRequest(BaseModel):
     code: Optional[StrictStr] = Field(default=None, description="Authorization code to exchange (request_type=code).")
     auth_token: Optional[StrictStr] = Field(default=None, description="Upstream auth token to exchange (request_type=exchange).")
     refresh_token: Optional[StrictStr] = Field(default=None, description="Refresh token to redeem (request_type=refresh).")
-    __properties: ClassVar[List[str]] = ["request_type", "resource_token", "redirect_uri", "code", "auth_token", "refresh_token"]
+    scope: Optional[StrictStr] = Field(default=None, description="request_type=refresh only: optional space-delimited scopes that narrow the refreshed token. Must be a subset of the refresh grant and of the resource token scope (invalid_scope otherwise). Ignored for request_type=auth, where the resource token names the scope.")
+    __properties: ClassVar[List[str]] = ["request_type", "resource_token", "redirect_uri", "code", "auth_token", "refresh_token", "scope"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,7 +92,8 @@ class IssueAgentTokenRequest(BaseModel):
             "redirect_uri": obj.get("redirect_uri"),
             "code": obj.get("code"),
             "auth_token": obj.get("auth_token"),
-            "refresh_token": obj.get("refresh_token")
+            "refresh_token": obj.get("refresh_token"),
+            "scope": obj.get("scope")
         })
         return _obj
 

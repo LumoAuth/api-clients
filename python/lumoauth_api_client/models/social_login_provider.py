@@ -38,7 +38,7 @@ class SocialLoginProvider(BaseModel):
     client_id: Optional[StrictStr] = Field(default=None, description="Detailed responses only", alias="clientId")
     callback_url: Optional[StrictStr] = Field(default=None, description="Detailed responses only", alias="callbackUrl")
     requested_scopes: Optional[List[StrictStr]] = Field(default=None, description="Detailed responses only", alias="requestedScopes")
-    custom_claims: Optional[Dict[str, Any]] = Field(default=None, description="Detailed responses only", alias="customClaims")
+    custom_claims: Optional[Dict[str, Any]] = Field(default=None, description="Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes.", alias="customClaims")
     claim_mapping: Optional[Dict[str, Any]] = Field(default=None, description="Detailed responses only", alias="claimMapping")
     provider_config: Optional[Dict[str, Any]] = Field(default=None, description="Detailed responses only; secrets redacted", alias="providerConfig")
     authorization_url: Optional[StrictStr] = Field(default=None, description="Detailed responses only", alias="authorizationUrl")

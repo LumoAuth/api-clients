@@ -55,7 +55,7 @@ import io.lumoauth.client.JSON;
 /**
  * User
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T07:28:59.263497940Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class User {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -116,6 +116,16 @@ public class User {
   @SerializedName(SERIALIZED_NAME_BLOCKED)
   @javax.annotation.Nonnull
   private Boolean blocked;
+
+  public static final String SERIALIZED_NAME_DELETED = "deleted";
+  @SerializedName(SERIALIZED_NAME_DELETED)
+  @javax.annotation.Nullable
+  private Boolean deleted;
+
+  public static final String SERIALIZED_NAME_DELETED_AT = "deletedAt";
+  @SerializedName(SERIALIZED_NAME_DELETED_AT)
+  @javax.annotation.Nullable
+  private OffsetDateTime deletedAt;
 
   public static final String SERIALIZED_NAME_MFA_ENABLED = "mfaEnabled";
   @SerializedName(SERIALIZED_NAME_MFA_ENABLED)
@@ -415,6 +425,44 @@ public class User {
 
   public void setBlocked(@javax.annotation.Nonnull Boolean blocked) {
     this.blocked = blocked;
+  }
+
+
+  public User deleted(@javax.annotation.Nullable Boolean deleted) {
+    this.deleted = deleted;
+    return this;
+  }
+
+  /**
+   * Soft-deleted by inbound SCIM. Left out of the list unless deleted&#x3D;true is asked; POST /users/{userId}/restore brings the user back.
+   * @return deleted
+   */
+  @javax.annotation.Nullable
+  public Boolean getDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(@javax.annotation.Nullable Boolean deleted) {
+    this.deleted = deleted;
+  }
+
+
+  public User deletedAt(@javax.annotation.Nullable OffsetDateTime deletedAt) {
+    this.deletedAt = deletedAt;
+    return this;
+  }
+
+  /**
+   * Get deletedAt
+   * @return deletedAt
+   */
+  @javax.annotation.Nullable
+  public OffsetDateTime getDeletedAt() {
+    return deletedAt;
+  }
+
+  public void setDeletedAt(@javax.annotation.Nullable OffsetDateTime deletedAt) {
+    this.deletedAt = deletedAt;
   }
 
 
@@ -722,6 +770,8 @@ public class User {
         Objects.equals(this.phoneNumberVerified, user.phoneNumberVerified) &&
         Objects.equals(this.isActive, user.isActive) &&
         Objects.equals(this.blocked, user.blocked) &&
+        Objects.equals(this.deleted, user.deleted) &&
+        Objects.equals(this.deletedAt, user.deletedAt) &&
         Objects.equals(this.mfaEnabled, user.mfaEnabled) &&
         Objects.equals(this.isAdmin, user.isAdmin) &&
         Objects.equals(this.createdAt, user.createdAt) &&
@@ -744,7 +794,7 @@ public class User {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, email, username, name, givenName, familyName, picture, emailVerified, phoneNumber, phoneNumberVerified, isActive, blocked, mfaEnabled, isAdmin, createdAt, lastLoginAt, loginCount, roles, groups, locale, zoneinfo, updatedAt, blockedAt, isJitProvisioned, jitProvisionedBy, socialProvider);
+    return Objects.hash(id, email, username, name, givenName, familyName, picture, emailVerified, phoneNumber, phoneNumberVerified, isActive, blocked, deleted, deletedAt, mfaEnabled, isAdmin, createdAt, lastLoginAt, loginCount, roles, groups, locale, zoneinfo, updatedAt, blockedAt, isJitProvisioned, jitProvisionedBy, socialProvider);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -770,6 +820,8 @@ public class User {
     sb.append("    phoneNumberVerified: ").append(toIndentedString(phoneNumberVerified)).append("\n");
     sb.append("    isActive: ").append(toIndentedString(isActive)).append("\n");
     sb.append("    blocked: ").append(toIndentedString(blocked)).append("\n");
+    sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
+    sb.append("    deletedAt: ").append(toIndentedString(deletedAt)).append("\n");
     sb.append("    mfaEnabled: ").append(toIndentedString(mfaEnabled)).append("\n");
     sb.append("    isAdmin: ").append(toIndentedString(isAdmin)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
@@ -805,7 +857,7 @@ public class User {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("id", "email", "username", "name", "givenName", "familyName", "picture", "emailVerified", "phoneNumber", "phoneNumberVerified", "isActive", "blocked", "mfaEnabled", "isAdmin", "createdAt", "lastLoginAt", "loginCount", "roles", "groups", "locale", "zoneinfo", "updatedAt", "blockedAt", "isJitProvisioned", "jitProvisionedBy", "socialProvider"));
+    openapiFields = new HashSet<String>(Arrays.asList("id", "email", "username", "name", "givenName", "familyName", "picture", "emailVerified", "phoneNumber", "phoneNumberVerified", "isActive", "blocked", "deleted", "deletedAt", "mfaEnabled", "isAdmin", "createdAt", "lastLoginAt", "loginCount", "roles", "groups", "locale", "zoneinfo", "updatedAt", "blockedAt", "isJitProvisioned", "jitProvisionedBy", "socialProvider"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("id", "email", "emailVerified", "isActive", "blocked", "mfaEnabled", "isAdmin", "createdAt", "loginCount"));

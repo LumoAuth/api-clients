@@ -12,6 +12,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**adminIdentitiesLink**](AdminUsersApi.md#adminIdentitiesLink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user |
 | [**adminIdentitiesList**](AdminUsersApi.md#adminIdentitiesList) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links |
 | [**adminIdentitiesUnlink**](AdminUsersApi.md#adminIdentitiesUnlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity |
+| [**adminUsersRestore**](AdminUsersApi.md#adminUsersRestore) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/restore | Restore a deleted user |
 | [**blockUser**](AdminUsersApi.md#blockUser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user |
 | [**createUser**](AdminUsersApi.md#createUser) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user |
 | [**deleteUser**](AdminUsersApi.md#deleteUser) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user |
@@ -114,6 +115,8 @@ public class Example {
 > AddUserPermissionResponse addUserPermission(orgId, userId)
 
 Assign a permission to a user
+
+Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
 
 ### Example
 ```java
@@ -261,7 +264,7 @@ public class Example {
 
 Relink legacy SAML users to an IdP
 
-Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends &#x60;\&quot;dry_run\&quot;: true&#x60;.
 
 ### Example
 ```java
@@ -646,6 +649,84 @@ public class Example {
 | **404** | User not found, or no link of that type |  -  |
 | **422** | Unknown type |  -  |
 
+<a id="adminUsersRestore"></a>
+# **adminUsersRestore**
+> AdminUsersRestoreResponse adminUsersRestore(orgId, userId)
+
+Restore a deleted user
+
+Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted&#x3D;true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+
+### Example
+```java
+// Import classes:
+import io.lumoauth.client.ApiClient;
+import io.lumoauth.client.ApiException;
+import io.lumoauth.client.Configuration;
+import io.lumoauth.client.auth.*;
+import io.lumoauth.client.models.*;
+import io.lumoauth.client.api.AdminUsersApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://app.lumoauth.dev");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    AdminUsersApi apiInstance = new AdminUsersApi(defaultClient);
+    String orgId = "orgId_example"; // String | 
+    String userId = "userId_example"; // String | 
+    try {
+      AdminUsersRestoreResponse result = apiInstance.adminUsersRestore(orgId, userId);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling AdminUsersApi#adminUsersRestore");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | **String**|  | |
+| **userId** | **String**|  | |
+
+### Return type
+
+[**AdminUsersRestoreResponse**](AdminUsersRestoreResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | User restored |  -  |
+| **403** | The user holds privileges that the caller lacks, or the plan has no free administrator seat |  -  |
+| **404** | No such user in this organization |  -  |
+| **409** | The user is not deleted (&#x60;user_not_deleted&#x60;), was erased (&#x60;user_erased&#x60;), or its address is used by another account (&#x60;address_in_use&#x60;) |  -  |
+
 <a id="blockUser"></a>
 # **blockUser**
 > BlockUserResponse blockUser(orgId, userId)
@@ -789,6 +870,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | User created |  -  |
+| **403** | Missing permission, or a plan limit (&#x60;plan_limit_reached&#x60;): no admin seat free for a user created with admin access (&#x60;limit&#x60;: &#x60;admin_seats&#x60;), or every monthly-active-user place of a plan with a hard cap used this month (&#x60;limit&#x60;: &#x60;mau&#x60;, with &#x60;resets_on&#x60;). Nothing is created |  -  |
 
 <a id="deleteUser"></a>
 # **deleteUser**
@@ -1157,7 +1239,7 @@ public class Example {
 
 <a id="listUsers"></a>
 # **listUsers**
-> ListUsersResponse listUsers(orgId)
+> ListUsersResponse listUsers(orgId, page, limit, search, active, blocked, deleted, emailVerified, mfaEnabled, role, group, sortBy, sortDir)
 
 List users
 
@@ -1188,8 +1270,20 @@ public class Example {
 
     AdminUsersApi apiInstance = new AdminUsersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    Integer page = 1; // Integer | Page number.
+    Integer limit = 25; // Integer | Users per page (1 to 100).
+    String search = "search_example"; // String | Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).
+    Boolean active = true; // Boolean | Only active (`true`) or inactive (`false`) users.
+    Boolean blocked = true; // Boolean | Only blocked (`true`) or not blocked (`false`) users.
+    Boolean deleted = false; // Boolean | `true` lists only the users that SCIM deleted (soft-deleted). Without it, or with `false`, the list leaves them out.
+    Boolean emailVerified = true; // Boolean | Only users whose email address is verified (`true`) or not (`false`).
+    Boolean mfaEnabled = true; // Boolean | Only users with (`true`) or without (`false`) multi-factor authentication.
+    String role = "role_example"; // String | Only users who hold the role with this slug.
+    String group = "group_example"; // String | Only members of the group with this slug.
+    String sortBy = "email"; // String | Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.
+    String sortDir = "ASC"; // String | Sort direction. Used only together with sortBy.
     try {
-      ListUsersResponse result = apiInstance.listUsers(orgId);
+      ListUsersResponse result = apiInstance.listUsers(orgId, page, limit, search, active, blocked, deleted, emailVerified, mfaEnabled, role, group, sortBy, sortDir);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminUsersApi#listUsers");
@@ -1207,6 +1301,18 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **page** | **Integer**| Page number. | [optional] [default to 1] |
+| **limit** | **Integer**| Users per page (1 to 100). | [optional] [default to 25] |
+| **search** | **String**| Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). | [optional] |
+| **active** | **Boolean**| Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. | [optional] |
+| **blocked** | **Boolean**| Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. | [optional] |
+| **deleted** | **Boolean**| &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. | [optional] [default to false] |
+| **emailVerified** | **Boolean**| Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). | [optional] |
+| **mfaEnabled** | **Boolean**| Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. | [optional] |
+| **role** | **String**| Only users who hold the role with this slug. | [optional] |
+| **group** | **String**| Only members of the group with this slug. | [optional] |
+| **sortBy** | **String**| Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. | [optional] [enum: email, name, username, createdAt, lastLoginAt] |
+| **sortDir** | **String**| Sort direction. Used only together with sortBy. | [optional] [default to DESC] [enum: ASC, DESC] |
 
 ### Return type
 
@@ -1750,6 +1856,8 @@ public class Example {
 
 Set a user&#39;s password
 
+Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
+
 ### Example
 ```java
 // Import classes:
@@ -1816,12 +1924,16 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Password updated |  -  |
+| **401** | insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes |  -  |
+| **403** | Actor does not outrank the user, or step_up_required |  -  |
 
 <a id="setUserPasswordPost"></a>
 # **setUserPasswordPost**
 > SetUserPasswordPostResponse setUserPasswordPost(orgId, userId)
 
 Set a user&#39;s password
+
+Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
 
 ### Example
 ```java
@@ -1889,6 +2001,8 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Password updated |  -  |
+| **401** | insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes |  -  |
+| **403** | Actor does not outrank the user, or step_up_required |  -  |
 
 <a id="triggerUserPasswordReset"></a>
 # **triggerUserPasswordReset**

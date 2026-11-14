@@ -680,13 +680,21 @@ pub async fn admin_agents_get_scopes(configuration: &configuration::Configuratio
     }
 }
 
-pub async fn admin_agents_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminAgentsListResponse, Error<AdminAgentsListError>> {
+pub async fn admin_agents_list(configuration: &configuration::Configuration, org_id: &str, sort_by: Option<&str>, sort_dir: Option<&str>) -> Result<models::AdminAgentsListResponse, Error<AdminAgentsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_sort_by = sort_by;
+    let p_sort_dir = sort_dir;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/agents", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_sort_by {
+        req_builder = req_builder.query(&[("sortBy", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort_dir {
+        req_builder = req_builder.query(&[("sortDir", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }

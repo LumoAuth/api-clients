@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **iss** | Option<**String**> | Issuer identifier of this organization. | [optional]
 **aud** | Option<[**models::IntrospectResponseAud**](IntrospectResponse_aud.md)> |  | [optional]
 **jti** | Option<**String**> | JWT id (JWT tokens only). | [optional]
+**act** | Option<[**serde_json::Value**](.md)> | RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under `act`. JWT and opaque tokens. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
