@@ -25,14 +25,13 @@ from typing_extensions import Self
 
 class AdminSettingsGeneralGetResponseData(BaseModel):
     """
-    Defaults (displayName, timezone, locale) are filled in, then the raw settings dictionary is merged over them: any stored key (display_name, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+    name, displayName (the same value) and locale, then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
     """ # noqa: E501
-    name: Optional[StrictStr] = None
-    display_name: Optional[StrictStr] = Field(default=None, alias="displayName")
-    timezone: Optional[StrictStr] = None
-    locale: Optional[StrictStr] = None
+    name: Optional[StrictStr] = Field(default=None, description="Name of the organization, shown on the hosted pages and in mail.")
+    display_name: Optional[StrictStr] = Field(default=None, description="The same value as name.", alias="displayName")
+    locale: Optional[StrictStr] = Field(default=None, description="Default language of the hosted pages (the Default language of the login page settings).")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name", "displayName", "timezone", "locale"]
+    __properties: ClassVar[List[str]] = ["name", "displayName", "locale"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -94,7 +93,6 @@ class AdminSettingsGeneralGetResponseData(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "displayName": obj.get("displayName"),
-            "timezone": obj.get("timezone"),
             "locale": obj.get("locale")
         })
         # store additional fields in additional_properties

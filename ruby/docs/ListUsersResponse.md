@@ -7,6 +7,7 @@
 | **data** | [**Array&lt;User&gt;**](User.md) |  | [optional] |
 | **meta** | [**PaginationMeta**](PaginationMeta.md) |  | [optional] |
 | **pagination** | [**PaginationMeta**](PaginationMeta.md) |  | [optional] |
+| **resource_type** | **String** |  | [optional] |
 
 ## Example
 
@@ -16,7 +17,8 @@ require 'lumoauth_api_client'
 instance = LumoAuthApiClient::ListUsersResponse.new(
   data: null,
   meta: null,
-  pagination: null
+  pagination: null,
+  resource_type: users
 )
 ```
 

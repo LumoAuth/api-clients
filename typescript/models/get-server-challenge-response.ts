@@ -21,7 +21,7 @@
  */
 export interface GetServerChallengeResponse {
     /**
-     * 
+     * `no_authorization_required` for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token.
      * @type {string}
      * @memberof GetServerChallengeResponse
      */
@@ -45,7 +45,8 @@ export interface GetServerChallengeResponse {
     * @enum {string}
     */
 export enum GetServerChallengeResponseStatus {
-    AUTHENTICATED = 'authenticated'
+    AUTHENTICATED = 'authenticated',
+    NO_AUTHORIZATION_REQUIRED = 'no_authorization_required'
 }
 
 

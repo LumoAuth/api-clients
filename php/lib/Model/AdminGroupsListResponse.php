@@ -60,7 +60,8 @@ class AdminGroupsListResponse implements ModelInterface, ArrayAccess, \JsonSeria
     protected static $openAPITypes = [
         'data' => '\LumoAuth\ApiClient\Model\Group[]',
         'meta' => '\LumoAuth\ApiClient\Model\PaginationMeta',
-        'pagination' => '\LumoAuth\ApiClient\Model\PaginationMeta'
+        'pagination' => '\LumoAuth\ApiClient\Model\PaginationMeta',
+        'resourceType' => 'string'
     ];
 
     /**
@@ -73,7 +74,8 @@ class AdminGroupsListResponse implements ModelInterface, ArrayAccess, \JsonSeria
     protected static $openAPIFormats = [
         'data' => null,
         'meta' => null,
-        'pagination' => null
+        'pagination' => null,
+        'resourceType' => null
     ];
 
     /**
@@ -84,7 +86,8 @@ class AdminGroupsListResponse implements ModelInterface, ArrayAccess, \JsonSeria
     protected static array $openAPINullables = [
         'data' => false,
         'meta' => false,
-        'pagination' => false
+        'pagination' => false,
+        'resourceType' => false
     ];
 
     /**
@@ -175,7 +178,8 @@ class AdminGroupsListResponse implements ModelInterface, ArrayAccess, \JsonSeria
     protected static $attributeMap = [
         'data' => 'data',
         'meta' => 'meta',
-        'pagination' => 'pagination'
+        'pagination' => 'pagination',
+        'resourceType' => 'resourceType'
     ];
 
     /**
@@ -186,7 +190,8 @@ class AdminGroupsListResponse implements ModelInterface, ArrayAccess, \JsonSeria
     protected static $setters = [
         'data' => 'setData',
         'meta' => 'setMeta',
-        'pagination' => 'setPagination'
+        'pagination' => 'setPagination',
+        'resourceType' => 'setResourceType'
     ];
 
     /**
@@ -197,7 +202,8 @@ class AdminGroupsListResponse implements ModelInterface, ArrayAccess, \JsonSeria
     protected static $getters = [
         'data' => 'getData',
         'meta' => 'getMeta',
-        'pagination' => 'getPagination'
+        'pagination' => 'getPagination',
+        'resourceType' => 'getResourceType'
     ];
 
     /**
@@ -260,6 +266,7 @@ class AdminGroupsListResponse implements ModelInterface, ArrayAccess, \JsonSeria
         $this->setIfExists('data', $data ?? [], null);
         $this->setIfExists('meta', $data ?? [], null);
         $this->setIfExists('pagination', $data ?? [], null);
+        $this->setIfExists('resourceType', $data ?? [], null);
     }
 
     /**
@@ -381,6 +388,33 @@ class AdminGroupsListResponse implements ModelInterface, ArrayAccess, \JsonSeria
             throw new \InvalidArgumentException('non-nullable pagination cannot be null');
         }
         $this->container['pagination'] = $pagination;
+
+        return $this;
+    }
+
+    /**
+     * Gets resourceType
+     *
+     * @return string|null
+     */
+    public function getResourceType()
+    {
+        return $this->container['resourceType'];
+    }
+
+    /**
+     * Sets resourceType
+     *
+     * @param string|null $resourceType resourceType
+     *
+     * @return self
+     */
+    public function setResourceType($resourceType)
+    {
+        if (is_null($resourceType)) {
+            throw new \InvalidArgumentException('non-nullable resourceType cannot be null');
+        }
+        $this->container['resourceType'] = $resourceType;
 
         return $this;
     }

@@ -12,17 +12,25 @@ import AnyCodable
 
 public struct AskResponse: Codable, JSONEncodable, Hashable {
 
+    public enum DecidedBy: String, Codable, CaseIterable {
+        case capability = "capability"
+        case pdp = "pdp"
+        case denyOverride = "deny_override"
+    }
     public var allowed: Bool?
     public var action: String?
     public var context: AnyCodable?
     public var reason: String?
+    /** Which check produced the answer. Always pdp for a user caller. */
+    public var decidedBy: DecidedBy?
     public var auditId: String?
 
-    public init(allowed: Bool? = nil, action: String? = nil, context: AnyCodable? = nil, reason: String? = nil, auditId: String? = nil) {
+    public init(allowed: Bool? = nil, action: String? = nil, context: AnyCodable? = nil, reason: String? = nil, decidedBy: DecidedBy? = nil, auditId: String? = nil) {
         self.allowed = allowed
         self.action = action
         self.context = context
         self.reason = reason
+        self.decidedBy = decidedBy
         self.auditId = auditId
     }
 
@@ -31,6 +39,7 @@ public struct AskResponse: Codable, JSONEncodable, Hashable {
         case action
         case context
         case reason
+        case decidedBy = "decided_by"
         case auditId = "audit_id"
     }
 
@@ -42,6 +51,7 @@ public struct AskResponse: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(action, forKey: .action)
         try container.encodeIfPresent(context, forKey: .context)
         try container.encodeIfPresent(reason, forKey: .reason)
+        try container.encodeIfPresent(decidedBy, forKey: .decidedBy)
         try container.encodeIfPresent(auditId, forKey: .auditId)
     }
 }

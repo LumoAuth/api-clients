@@ -12,6 +12,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**admin_identities_link**](AdminUsersApi.md#admin_identities_link) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user |
 | [**admin_identities_list**](AdminUsersApi.md#admin_identities_list) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links |
 | [**admin_identities_unlink**](AdminUsersApi.md#admin_identities_unlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity |
+| [**admin_users_restore**](AdminUsersApi.md#admin_users_restore) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/restore | Restore a deleted user |
 | [**block_user**](AdminUsersApi.md#block_user) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user |
 | [**create_user**](AdminUsersApi.md#create_user) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user |
 | [**delete_user**](AdminUsersApi.md#delete_user) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user |
@@ -115,6 +116,8 @@ end
 > <AddUserPermissionResponse> add_user_permission(org_id, user_id)
 
 Assign a permission to a user
+
+Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
 ### Examples
 
@@ -264,7 +267,7 @@ end
 
 Relink legacy SAML users to an IdP
 
-Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
 
 ### Examples
 
@@ -633,6 +636,82 @@ end
 ### Return type
 
 [**AdminAgentsGetResponse**](AdminAgentsGetResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## admin_users_restore
+
+> <AdminUsersRestoreResponse> admin_users_restore(org_id, user_id)
+
+Restore a deleted user
+
+Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminUsersApi.new
+org_id = 'org_id_example' # String | 
+user_id = 'user_id_example' # String | 
+
+begin
+  # Restore a deleted user
+  result = api_instance.admin_users_restore(org_id, user_id)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminUsersApi->admin_users_restore: #{e}"
+end
+```
+
+#### Using the admin_users_restore_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AdminUsersRestoreResponse>, Integer, Hash)> admin_users_restore_with_http_info(org_id, user_id)
+
+```ruby
+begin
+  # Restore a deleted user
+  data, status_code, headers = api_instance.admin_users_restore_with_http_info(org_id, user_id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AdminUsersRestoreResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminUsersApi->admin_users_restore_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **user_id** | **String** |  |  |
+
+### Return type
+
+[**AdminUsersRestoreResponse**](AdminUsersRestoreResponse.md)
 
 ### Authorization
 
@@ -1162,7 +1241,7 @@ end
 
 ## list_users
 
-> <ListUsersResponse> list_users(org_id)
+> <ListUsersResponse> list_users(org_id, opts)
 
 List users
 
@@ -1184,10 +1263,24 @@ end
 
 api_instance = LumoAuthApiClient::AdminUsersApi.new
 org_id = 'org_id_example' # String | 
+opts = {
+  page: 56, # Integer | Page number.
+  limit: 56, # Integer | Users per page (1 to 100).
+  search: 'search_example', # String | Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).
+  active: true, # Boolean | Only active (`true`) or inactive (`false`) users.
+  blocked: true, # Boolean | Only blocked (`true`) or not blocked (`false`) users.
+  deleted: true, # Boolean | `true` lists only the users that SCIM deleted (soft-deleted). Without it, or with `false`, the list leaves them out.
+  email_verified: true, # Boolean | Only users whose email address is verified (`true`) or not (`false`).
+  mfa_enabled: true, # Boolean | Only users with (`true`) or without (`false`) multi-factor authentication.
+  role: 'role_example', # String | Only users who hold the role with this slug.
+  group: 'group_example', # String | Only members of the group with this slug.
+  sort_by: 'email', # String | Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.
+  sort_dir: 'ASC' # String | Sort direction. Used only together with sortBy.
+}
 
 begin
   # List users
-  result = api_instance.list_users(org_id)
+  result = api_instance.list_users(org_id, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->list_users: #{e}"
@@ -1198,12 +1291,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<ListUsersResponse>, Integer, Hash)> list_users_with_http_info(org_id)
+> <Array(<ListUsersResponse>, Integer, Hash)> list_users_with_http_info(org_id, opts)
 
 ```ruby
 begin
   # List users
-  data, status_code, headers = api_instance.list_users_with_http_info(org_id)
+  data, status_code, headers = api_instance.list_users_with_http_info(org_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <ListUsersResponse>
@@ -1217,6 +1310,18 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **page** | **Integer** | Page number. | [optional][default to 1] |
+| **limit** | **Integer** | Users per page (1 to 100). | [optional][default to 25] |
+| **search** | **String** | Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). | [optional] |
+| **active** | **Boolean** | Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. | [optional] |
+| **blocked** | **Boolean** | Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. | [optional] |
+| **deleted** | **Boolean** | &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. | [optional][default to false] |
+| **email_verified** | **Boolean** | Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). | [optional] |
+| **mfa_enabled** | **Boolean** | Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. | [optional] |
+| **role** | **String** | Only users who hold the role with this slug. | [optional] |
+| **group** | **String** | Only members of the group with this slug. | [optional] |
+| **sort_by** | **String** | Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. | [optional] |
+| **sort_dir** | **String** | Sort direction. Used only together with sortBy. | [optional][default to &#39;DESC&#39;] |
 
 ### Return type
 
@@ -1763,6 +1868,8 @@ end
 
 Set a user's password
 
+Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
+
 ### Examples
 
 ```ruby
@@ -1836,6 +1943,8 @@ end
 > <SetUserPasswordPostResponse> set_user_password_post(org_id, user_id)
 
 Set a user's password
+
+Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
 ### Examples
 

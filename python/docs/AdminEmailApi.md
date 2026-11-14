@@ -107,6 +107,8 @@ Name | Type | Description  | Notes
 
 Get an email template (custom or built-in default)
 
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
+
 ### Example
 
 * Api Key Authentication (ApiKeyAuth):
@@ -196,6 +198,8 @@ Name | Type | Description  | Notes
 > AdminEmailTemplatesListResponse admin_email_templates_list(org_id)
 
 List every email template type with its current (custom or built-in) template
+
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 ### Example
 
@@ -454,6 +458,8 @@ Name | Type | Description  | Notes
 > AdminEmailTemplatesVariablesResponse admin_email_templates_variables(org_id, type)
 
 List the placeholders available to an email template type
+
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 ### Example
 

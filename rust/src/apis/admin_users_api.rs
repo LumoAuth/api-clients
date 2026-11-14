@@ -83,6 +83,16 @@ pub enum AdminIdentitiesUnlinkError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`admin_users_restore`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AdminUsersRestoreError {
+    Status403(),
+    Status404(),
+    Status409(),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`block_user`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -94,6 +104,7 @@ pub enum BlockUserError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateUserError {
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -193,6 +204,8 @@ pub enum SendUserVerificationEmailError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SetUserPasswordError {
+    Status401(),
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -200,6 +213,8 @@ pub enum SetUserPasswordError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SetUserPasswordPostError {
+    Status401(),
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -287,6 +302,7 @@ pub async fn add_user_group(configuration: &configuration::Configuration, org_id
     }
 }
 
+/// Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 pub async fn add_user_permission(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AddUserPermissionResponse, Error<AddUserPermissionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -383,7 +399,7 @@ pub async fn add_user_role(configuration: &configuration::Configuration, org_id:
     }
 }
 
-/// Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+/// Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
 pub async fn admin_identities_legacy_saml_relink(configuration: &configuration::Configuration, org_id: &str, admin_identities_legacy_saml_relink_request: models::AdminIdentitiesLegacySamlRelinkRequest) -> Result<models::AdminIdentitiesLegacySamlRelinkResponse, Error<AdminIdentitiesLegacySamlRelinkError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -631,6 +647,55 @@ pub async fn admin_identities_unlink(configuration: &configuration::Configuratio
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminIdentitiesUnlinkError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+pub async fn admin_users_restore(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AdminUsersRestoreResponse, Error<AdminUsersRestoreError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_user_id = user_id;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users/{userId}/restore", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), userId=crate::apis::urlencode(p_user_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminUsersRestoreResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminUsersRestoreResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<AdminUsersRestoreError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
@@ -970,13 +1035,61 @@ pub async fn list_user_roles(configuration: &configuration::Configuration, org_i
     }
 }
 
-pub async fn list_users(configuration: &configuration::Configuration, org_id: &str) -> Result<models::ListUsersResponse, Error<ListUsersError>> {
+pub async fn list_users(configuration: &configuration::Configuration, org_id: &str, page: Option<i32>, limit: Option<i32>, search: Option<&str>, active: Option<bool>, blocked: Option<bool>, deleted: Option<bool>, email_verified: Option<bool>, mfa_enabled: Option<bool>, role: Option<&str>, group: Option<&str>, sort_by: Option<&str>, sort_dir: Option<&str>) -> Result<models::ListUsersResponse, Error<ListUsersError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_page = page;
+    let p_limit = limit;
+    let p_search = search;
+    let p_active = active;
+    let p_blocked = blocked;
+    let p_deleted = deleted;
+    let p_email_verified = email_verified;
+    let p_mfa_enabled = mfa_enabled;
+    let p_role = role;
+    let p_group = group;
+    let p_sort_by = sort_by;
+    let p_sort_dir = sort_dir;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_page {
+        req_builder = req_builder.query(&[("page", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_search {
+        req_builder = req_builder.query(&[("search", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_active {
+        req_builder = req_builder.query(&[("active", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_blocked {
+        req_builder = req_builder.query(&[("blocked", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_deleted {
+        req_builder = req_builder.query(&[("deleted", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_email_verified {
+        req_builder = req_builder.query(&[("emailVerified", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_mfa_enabled {
+        req_builder = req_builder.query(&[("mfaEnabled", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_role {
+        req_builder = req_builder.query(&[("role", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group {
+        req_builder = req_builder.query(&[("group", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort_by {
+        req_builder = req_builder.query(&[("sortBy", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort_dir {
+        req_builder = req_builder.query(&[("sortDir", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -1346,6 +1459,7 @@ pub async fn send_user_verification_email(configuration: &configuration::Configu
     }
 }
 
+/// Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 pub async fn set_user_password(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::SetUserPasswordPostResponse, Error<SetUserPasswordError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -1394,6 +1508,7 @@ pub async fn set_user_password(configuration: &configuration::Configuration, org
     }
 }
 
+/// Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 pub async fn set_user_password_post(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::SetUserPasswordPostResponse, Error<SetUserPasswordPostError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;

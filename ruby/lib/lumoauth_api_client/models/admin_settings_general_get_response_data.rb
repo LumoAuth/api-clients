@@ -14,14 +14,15 @@ require 'date'
 require 'time'
 
 module LumoAuthApiClient
-  # Defaults (displayName, timezone, locale) are filled in, then the raw settings dictionary is merged over them: any stored key (display_name, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+  # name, displayName (the same value) and locale, then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
   class AdminSettingsGeneralGetResponseData
+    # Name of the organization, shown on the hosted pages and in mail.
     attr_accessor :name
 
+    # The same value as name.
     attr_accessor :display_name
 
-    attr_accessor :timezone
-
+    # Default language of the hosted pages (the Default language of the login page settings).
     attr_accessor :locale
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -29,7 +30,6 @@ module LumoAuthApiClient
       {
         :'name' => :'name',
         :'display_name' => :'displayName',
-        :'timezone' => :'timezone',
         :'locale' => :'locale'
       }
     end
@@ -49,7 +49,6 @@ module LumoAuthApiClient
       {
         :'name' => :'String',
         :'display_name' => :'String',
-        :'timezone' => :'String',
         :'locale' => :'String'
       }
     end
@@ -84,10 +83,6 @@ module LumoAuthApiClient
         self.display_name = attributes[:'display_name']
       end
 
-      if attributes.key?(:'timezone')
-        self.timezone = attributes[:'timezone']
-      end
-
       if attributes.key?(:'locale')
         self.locale = attributes[:'locale']
       end
@@ -115,7 +110,6 @@ module LumoAuthApiClient
       self.class == o.class &&
           name == o.name &&
           display_name == o.display_name &&
-          timezone == o.timezone &&
           locale == o.locale
     end
 
@@ -128,7 +122,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, display_name, timezone, locale].hash
+      [name, display_name, locale].hash
     end
 
     # Builds the object from hash

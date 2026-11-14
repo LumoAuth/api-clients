@@ -21,9 +21,8 @@ pub struct AdminSettingsAllResponseData {
     pub branding: Option<Box<models::BrandingSettings>>,
     #[serde(rename = "security", skip_serializing_if = "Option::is_none")]
     pub security: Option<models::AdminSettingsAllResponseDataSecurity>,
-    /// Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
     #[serde(rename = "email", skip_serializing_if = "Option::is_none")]
-    pub email: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub email: Option<Box<models::EmailSenderSettings>>,
 }
 
 impl AdminSettingsAllResponseData {

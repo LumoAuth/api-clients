@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **data** | [**List[Group]**](Group.md) |  | [optional] 
 **meta** | [**PaginationMeta**](PaginationMeta.md) |  | [optional] 
 **pagination** | [**PaginationMeta**](PaginationMeta.md) |  | [optional] 
+**resource_type** | **str** |  | [optional] 
 
 ## Example
 

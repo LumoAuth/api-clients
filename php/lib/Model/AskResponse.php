@@ -62,6 +62,7 @@ class AskResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'action' => 'string',
         'context' => 'object',
         'reason' => 'string',
+        'decidedBy' => 'string',
         'auditId' => 'string'
     ];
 
@@ -77,6 +78,7 @@ class AskResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'action' => null,
         'context' => null,
         'reason' => null,
+        'decidedBy' => null,
         'auditId' => null
     ];
 
@@ -90,6 +92,7 @@ class AskResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'action' => false,
         'context' => false,
         'reason' => false,
+        'decidedBy' => false,
         'auditId' => false
     ];
 
@@ -183,6 +186,7 @@ class AskResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'action' => 'action',
         'context' => 'context',
         'reason' => 'reason',
+        'decidedBy' => 'decided_by',
         'auditId' => 'audit_id'
     ];
 
@@ -196,6 +200,7 @@ class AskResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'action' => 'setAction',
         'context' => 'setContext',
         'reason' => 'setReason',
+        'decidedBy' => 'setDecidedBy',
         'auditId' => 'setAuditId'
     ];
 
@@ -209,6 +214,7 @@ class AskResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'action' => 'getAction',
         'context' => 'getContext',
         'reason' => 'getReason',
+        'decidedBy' => 'getDecidedBy',
         'auditId' => 'getAuditId'
     ];
 
@@ -253,6 +259,23 @@ class AskResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+    public const DECIDED_BY_CAPABILITY = 'capability';
+    public const DECIDED_BY_PDP = 'pdp';
+    public const DECIDED_BY_DENY_OVERRIDE = 'deny_override';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getDecidedByAllowableValues()
+    {
+        return [
+            self::DECIDED_BY_CAPABILITY,
+            self::DECIDED_BY_PDP,
+            self::DECIDED_BY_DENY_OVERRIDE,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -273,6 +296,7 @@ class AskResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('action', $data ?? [], null);
         $this->setIfExists('context', $data ?? [], null);
         $this->setIfExists('reason', $data ?? [], null);
+        $this->setIfExists('decidedBy', $data ?? [], null);
         $this->setIfExists('auditId', $data ?? [], null);
     }
 
@@ -302,6 +326,15 @@ class AskResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        $allowedValues = $this->getDecidedByAllowableValues();
+        if (!is_null($this->container['decidedBy']) && !in_array($this->container['decidedBy'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'decidedBy', must be one of '%s'",
+                $this->container['decidedBy'],
+                implode("', '", $allowedValues)
+            );
+        }
 
         return $invalidProperties;
     }
@@ -422,6 +455,43 @@ class AskResponse implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable reason cannot be null');
         }
         $this->container['reason'] = $reason;
+
+        return $this;
+    }
+
+    /**
+     * Gets decidedBy
+     *
+     * @return string|null
+     */
+    public function getDecidedBy()
+    {
+        return $this->container['decidedBy'];
+    }
+
+    /**
+     * Sets decidedBy
+     *
+     * @param string|null $decidedBy Which check produced the answer. Always pdp for a user caller.
+     *
+     * @return self
+     */
+    public function setDecidedBy($decidedBy)
+    {
+        if (is_null($decidedBy)) {
+            throw new \InvalidArgumentException('non-nullable decidedBy cannot be null');
+        }
+        $allowedValues = $this->getDecidedByAllowableValues();
+        if (!in_array($decidedBy, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'decidedBy', must be one of '%s'",
+                    $decidedBy,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['decidedBy'] = $decidedBy;
 
         return $this;
     }

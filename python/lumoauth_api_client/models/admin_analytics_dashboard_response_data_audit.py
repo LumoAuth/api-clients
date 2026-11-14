@@ -27,7 +27,7 @@ class AdminAnalyticsDashboardResponseDataAudit(BaseModel):
     """
     AdminAnalyticsDashboardResponseDataAudit
     """ # noqa: E501
-    events_last7_days: Optional[StrictInt] = Field(default=None, alias="eventsLast7Days")
+    events_last7_days: Optional[StrictInt] = Field(default=None, description="Audit events of the last 7 days, or of the audit retention period of the plan when that is shorter.", alias="eventsLast7Days")
     __properties: ClassVar[List[str]] = ["eventsLast7Days"]
 
     model_config = ConfigDict(

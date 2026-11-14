@@ -22,16 +22,12 @@
 |**logoUri** | **String** |  |  [optional] |
 |**policyUri** | **String** |  |  [optional] |
 |**tosUri** | **String** |  |  [optional] |
-|**sectorIdentifierUri** | **String** |  |  [optional] |
-|**subjectType** | **String** | Only when not \&quot;public\&quot;. |  [optional] |
 |**jwksUri** | **String** |  |  [optional] |
 |**jwks** | **Map&lt;String, Object&gt;** |  |  [optional] |
 |**postLogoutRedirectUris** | **List&lt;String&gt;** |  |  [optional] |
 |**initiateLoginUri** | **String** |  |  [optional] |
-|**requestUris** | **List&lt;String&gt;** |  |  [optional] |
 |**scope** | **String** | Space-separated registered scopes. |  [optional] |
 |**idTokenSignedResponseAlg** | **String** | Only when not RS256. |  [optional] |
-|**userinfoSignedResponseAlg** | **String** |  |  [optional] |
 |**requestObjectSigningAlg** | **String** |  |  [optional] |
 |**tokenEndpointAuthSigningAlg** | **String** |  |  [optional] |
 |**defaultMaxAge** | **Integer** |  |  [optional] |

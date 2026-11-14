@@ -11,26 +11,26 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// AdminSettingsGeneralGetResponseData : Defaults (displayName, timezone, locale) are filled in, then the raw settings dictionary is merged over them: any stored key (display_name, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+/// AdminSettingsGeneralGetResponseData : name, displayName (the same value) and locale, then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AdminSettingsGeneralGetResponseData {
+    /// Name of the organization, shown on the hosted pages and in mail.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
+    /// The same value as name.
     #[serde(rename = "displayName", skip_serializing_if = "Option::is_none")]
     pub display_name: Option<String>,
-    #[serde(rename = "timezone", skip_serializing_if = "Option::is_none")]
-    pub timezone: Option<String>,
+    /// Default language of the hosted pages (the Default language of the login page settings).
     #[serde(rename = "locale", skip_serializing_if = "Option::is_none")]
     pub locale: Option<String>,
 }
 
 impl AdminSettingsGeneralGetResponseData {
-    /// Defaults (displayName, timezone, locale) are filled in, then the raw settings dictionary is merged over them: any stored key (display_name, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+    /// name, displayName (the same value) and locale, then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
     pub fn new() -> AdminSettingsGeneralGetResponseData {
         AdminSettingsGeneralGetResponseData {
             name: None,
             display_name: None,
-            timezone: None,
             locale: None,
         }
     }

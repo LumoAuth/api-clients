@@ -46,14 +46,24 @@ import java.util.Set;
 import io.lumoauth.client.JSON;
 
 /**
- * Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+ * The organization name (name; displayName is the same value), locale (the default language of the hosted pages), then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T07:28:59.263497940Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminSettingsAllResponseDataGeneral {
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
   @javax.annotation.Nullable
   private String name;
+
+  public static final String SERIALIZED_NAME_DISPLAY_NAME = "displayName";
+  @SerializedName(SERIALIZED_NAME_DISPLAY_NAME)
+  @javax.annotation.Nullable
+  private String displayName;
+
+  public static final String SERIALIZED_NAME_LOCALE = "locale";
+  @SerializedName(SERIALIZED_NAME_LOCALE)
+  @javax.annotation.Nullable
+  private String locale;
 
   public AdminSettingsAllResponseDataGeneral() {
   }
@@ -74,6 +84,44 @@ public class AdminSettingsAllResponseDataGeneral {
 
   public void setName(@javax.annotation.Nullable String name) {
     this.name = name;
+  }
+
+
+  public AdminSettingsAllResponseDataGeneral displayName(@javax.annotation.Nullable String displayName) {
+    this.displayName = displayName;
+    return this;
+  }
+
+  /**
+   * Get displayName
+   * @return displayName
+   */
+  @javax.annotation.Nullable
+  public String getDisplayName() {
+    return displayName;
+  }
+
+  public void setDisplayName(@javax.annotation.Nullable String displayName) {
+    this.displayName = displayName;
+  }
+
+
+  public AdminSettingsAllResponseDataGeneral locale(@javax.annotation.Nullable String locale) {
+    this.locale = locale;
+    return this;
+  }
+
+  /**
+   * Get locale
+   * @return locale
+   */
+  @javax.annotation.Nullable
+  public String getLocale() {
+    return locale;
+  }
+
+  public void setLocale(@javax.annotation.Nullable String locale) {
+    this.locale = locale;
   }
 
   /**
@@ -131,13 +179,15 @@ public class AdminSettingsAllResponseDataGeneral {
       return false;
     }
     AdminSettingsAllResponseDataGeneral adminSettingsAllResponseDataGeneral = (AdminSettingsAllResponseDataGeneral) o;
-    return Objects.equals(this.name, adminSettingsAllResponseDataGeneral.name)&&
+    return Objects.equals(this.name, adminSettingsAllResponseDataGeneral.name) &&
+        Objects.equals(this.displayName, adminSettingsAllResponseDataGeneral.displayName) &&
+        Objects.equals(this.locale, adminSettingsAllResponseDataGeneral.locale)&&
         Objects.equals(this.additionalProperties, adminSettingsAllResponseDataGeneral.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, additionalProperties);
+    return Objects.hash(name, displayName, locale, additionalProperties);
   }
 
   @Override
@@ -145,6 +195,8 @@ public class AdminSettingsAllResponseDataGeneral {
     StringBuilder sb = new StringBuilder();
     sb.append("class AdminSettingsAllResponseDataGeneral {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
+    sb.append("    locale: ").append(toIndentedString(locale)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -167,7 +219,7 @@ public class AdminSettingsAllResponseDataGeneral {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("name"));
+    openapiFields = new HashSet<String>(Arrays.asList("name", "displayName", "locale"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -188,6 +240,12 @@ public class AdminSettingsAllResponseDataGeneral {
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("name") != null && !jsonObj.get("name").isJsonNull()) && !jsonObj.get("name").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `name` to be a primitive type in the JSON string but got `%s`", jsonObj.get("name").toString()));
+      }
+      if ((jsonObj.get("displayName") != null && !jsonObj.get("displayName").isJsonNull()) && !jsonObj.get("displayName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `displayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("displayName").toString()));
+      }
+      if ((jsonObj.get("locale") != null && !jsonObj.get("locale").isJsonNull()) && !jsonObj.get("locale").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `locale` to be a primitive type in the JSON string but got `%s`", jsonObj.get("locale").toString()));
       }
   }
 

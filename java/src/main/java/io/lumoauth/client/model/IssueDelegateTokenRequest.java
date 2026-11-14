@@ -49,7 +49,7 @@ import io.lumoauth.client.JSON;
 /**
  * IssueDelegateTokenRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T07:28:59.263497940Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class IssueDelegateTokenRequest {
   public static final String SERIALIZED_NAME_DELEGATE_SUB = "delegate_sub";
   @SerializedName(SERIALIZED_NAME_DELEGATE_SUB)

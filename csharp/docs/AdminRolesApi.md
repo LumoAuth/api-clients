@@ -24,6 +24,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Add permission(s) to a role
 
+Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+
 ### Example
 ```csharp
 using System.Collections.Generic;
@@ -117,6 +119,9 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Added; message reports how many permissions were added |  -  |
+| **400** | No permissionId / permissionIds, an id that is not a whole number, an unknown id, or a permission reserved for the platform |  -  |
+| **403** | A permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
+| **404** | Role not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -227,6 +232,8 @@ catch (ApiException e)
 > AdminRolesCreateResponse AdminRolesCreate (string orgId)
 
 Create a new role
+
+Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
 ### Example
 ```csharp
@@ -836,6 +843,8 @@ catch (ApiException e)
 
 Remove a permission from a role
 
+Needs `roles.assign-permissions` and `roles.edit`.
+
 ### Example
 ```csharp
 using System.Collections.Generic;
@@ -1044,6 +1053,8 @@ catch (ApiException e)
 
 Update role permissions (replaces all)
 
+Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+
 ### Example
 ```csharp
 using System.Collections.Generic;
@@ -1137,6 +1148,9 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated role |  -  |
+| **400** | permissions is missing or not a list, names an unknown slug, or names a permission reserved for the platform |  -  |
+| **403** | A new permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
+| **404** | Role not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -120,6 +120,7 @@ pub async fn admin_audit_logs_actions(configuration: &configuration::Configurati
     }
 }
 
+/// Needs `audit.export` and `audit.view`, as the export on the portal's audit log page does.
 pub async fn admin_audit_logs_export(configuration: &configuration::Configuration, org_id: &str) -> Result<String, Error<AdminAuditLogsExportError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -356,6 +357,7 @@ pub async fn admin_audit_logs_stats(configuration: &configuration::Configuration
     }
 }
 
+/// Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 pub async fn patch_admin_audit_logs_retention_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminAuditLogsRetentionResponse, Error<PatchAdminAuditLogsRetentionUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -403,6 +405,7 @@ pub async fn patch_admin_audit_logs_retention_update(configuration: &configurati
     }
 }
 
+/// Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 pub async fn put_admin_audit_logs_retention_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminAuditLogsRetentionResponse, Error<PutAdminAuditLogsRetentionUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;

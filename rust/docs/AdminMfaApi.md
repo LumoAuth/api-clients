@@ -18,7 +18,7 @@ Method | HTTP request | Description
 > models::DeleteUserAuthenticatorResponse delete_user_authenticator(org_id, user_id, authenticator_id)
 Remove one of a user's authenticators
 
-Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in.
+Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
 ### Parameters
 
@@ -50,7 +50,7 @@ Name | Type | Description  | Required | Notes
 > models::GetMfaCoverageReportResponse get_mfa_coverage_report(org_id)
 MFA enrollment coverage
 
-Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002).
+Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002). Needs `users.view` and `settings.view`, as the report on the portal's authentication settings page does.
 
 ### Parameters
 

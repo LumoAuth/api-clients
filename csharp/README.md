@@ -361,6 +361,7 @@ Class | Method | HTTP request | Description
 *AdminUsersApi* | [**AdminIdentitiesLink**](docs/AdminUsersApi.md#adminidentitieslink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user
 *AdminUsersApi* | [**AdminIdentitiesList**](docs/AdminUsersApi.md#adminidentitieslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user's federated identity links
 *AdminUsersApi* | [**AdminIdentitiesUnlink**](docs/AdminUsersApi.md#adminidentitiesunlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user's SAML, OpenID Connect, LDAP or social identity
+*AdminUsersApi* | [**AdminUsersRestore**](docs/AdminUsersApi.md#adminusersrestore) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/restore | Restore a deleted user
 *AdminUsersApi* | [**BlockUser**](docs/AdminUsersApi.md#blockuser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user
 *AdminUsersApi* | [**CreateUser**](docs/AdminUsersApi.md#createuser) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user
 *AdminUsersApi* | [**DeleteUser**](docs/AdminUsersApi.md#deleteuser) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user
@@ -459,6 +460,7 @@ Class | Method | HTTP request | Description
 *MfaApi* | [**VerifyMfaChallenge**](docs/MfaApi.md#verifymfachallenge) | **POST** /orgs/{orgId}/api/v1/mfa/challenges/{id}/verify | Answer a challenge
 *OAuthApi* | [**Authorize**](docs/OAuthApi.md#authorize) | **GET** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint
 *OAuthApi* | [**BackchannelAuthorize**](docs/OAuthApi.md#backchannelauthorize) | **POST** /orgs/{orgId}/api/v1/oauth/bc-authorize | CIBA backchannel authentication request
+*OAuthApi* | [**CheckEmailFirst**](docs/OAuthApi.md#checkemailfirst) | **POST** /orgs/{orgId}/api/v1/oauth/check-email | Sign-in methods for an email-first form
 *OAuthApi* | [**DeviceAuthorization**](docs/OAuthApi.md#deviceauthorization) | **POST** /orgs/{orgId}/api/v1/oauth/device_authorization | Device authorization request (RFC 8628)
 *OAuthApi* | [**GetClientConfiguration**](docs/OAuthApi.md#getclientconfiguration) | **GET** /orgs/{orgId}/api/v1/connect/register/{clientId} | Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
 *OAuthApi* | [**GetDeviceVerification**](docs/OAuthApi.md#getdeviceverification) | **GET** /orgs/{orgId}/api/v1/oauth/device | Device verification page (RFC 8628 §3.3)
@@ -584,7 +586,6 @@ Class | Method | HTTP request | Description
  - [Model.AdminMcpServersCreateResponse](docs/AdminMcpServersCreateResponse.md)
  - [Model.AdminMcpServersGetResponse](docs/AdminMcpServersGetResponse.md)
  - [Model.AdminMcpServersListResponse](docs/AdminMcpServersListResponse.md)
- - [Model.AdminMcpServersListResponseMeta](docs/AdminMcpServersListResponseMeta.md)
  - [Model.AdminOrgInvitationsCreateResponse](docs/AdminOrgInvitationsCreateResponse.md)
  - [Model.AdminOrgInvitationsListResponse](docs/AdminOrgInvitationsListResponse.md)
  - [Model.AdminOrgMembersAddResponse](docs/AdminOrgMembersAddResponse.md)
@@ -646,6 +647,7 @@ Class | Method | HTTP request | Description
  - [Model.AdminUserSessionsRevokePostResponse](docs/AdminUserSessionsRevokePostResponse.md)
  - [Model.AdminUserTokensRevokeAllResponse](docs/AdminUserTokensRevokeAllResponse.md)
  - [Model.AdminUserTokensRevokePostResponse](docs/AdminUserTokensRevokePostResponse.md)
+ - [Model.AdminUsersRestoreResponse](docs/AdminUsersRestoreResponse.md)
  - [Model.AdminWebhooksCreateResponse](docs/AdminWebhooksCreateResponse.md)
  - [Model.AdminWebhooksCreateResponseData](docs/AdminWebhooksCreateResponseData.md)
  - [Model.AdminWebhooksDeliveriesListResponse](docs/AdminWebhooksDeliveriesListResponse.md)
@@ -692,6 +694,8 @@ Class | Method | HTTP request | Description
  - [Model.CheckAbacResponse](docs/CheckAbacResponse.md)
  - [Model.CheckAbacResponseMatchedPoliciesItem](docs/CheckAbacResponseMatchedPoliciesItem.md)
  - [Model.CheckAnyPermissionResponse](docs/CheckAnyPermissionResponse.md)
+ - [Model.CheckEmailFirstRequest](docs/CheckEmailFirstRequest.md)
+ - [Model.CheckEmailFirstResponse](docs/CheckEmailFirstResponse.md)
  - [Model.CheckPermissionResponse](docs/CheckPermissionResponse.md)
  - [Model.CheckPermissionsBulkResponse](docs/CheckPermissionsBulkResponse.md)
  - [Model.CheckRelationResponse](docs/CheckRelationResponse.md)
@@ -715,6 +719,7 @@ Class | Method | HTTP request | Description
  - [Model.DenyRequestResponse](docs/DenyRequestResponse.md)
  - [Model.DeviceAuthorizationResponse](docs/DeviceAuthorizationResponse.md)
  - [Model.EmailEnrollmentStarted](docs/EmailEnrollmentStarted.md)
+ - [Model.EmailSenderSettings](docs/EmailSenderSettings.md)
  - [Model.EmailTemplate](docs/EmailTemplate.md)
  - [Model.EnrollAuthenticator201Response](docs/EnrollAuthenticator201Response.md)
  - [Model.EnrollAuthenticatorRequest](docs/EnrollAuthenticatorRequest.md)
@@ -835,7 +840,9 @@ Class | Method | HTTP request | Description
  - [Model.PutAdminOrgMembersUpdateResponse](docs/PutAdminOrgMembersUpdateResponse.md)
  - [Model.PutAdminSettingsAuthenticationUpdateResponse](docs/PutAdminSettingsAuthenticationUpdateResponse.md)
  - [Model.PutAdminSettingsBrandingUpdateResponse](docs/PutAdminSettingsBrandingUpdateResponse.md)
+ - [Model.PutAdminSettingsEmailUpdateRequest](docs/PutAdminSettingsEmailUpdateRequest.md)
  - [Model.PutAdminSettingsEmailUpdateResponse](docs/PutAdminSettingsEmailUpdateResponse.md)
+ - [Model.PutAdminSettingsGeneralUpdateRequest](docs/PutAdminSettingsGeneralUpdateRequest.md)
  - [Model.PutAdminSettingsGeneralUpdateResponse](docs/PutAdminSettingsGeneralUpdateResponse.md)
  - [Model.PutAdminSettingsGeneralUpdateResponseData](docs/PutAdminSettingsGeneralUpdateResponseData.md)
  - [Model.PutAdminSettingsScimUpdateResponse](docs/PutAdminSettingsScimUpdateResponse.md)

@@ -15,17 +15,20 @@ public struct AdminGroupsListResponse: Codable, JSONEncodable, Hashable {
     public var data: [Group]?
     public var meta: PaginationMeta?
     public var pagination: PaginationMeta?
+    public var resourceType: String?
 
-    public init(data: [Group]? = nil, meta: PaginationMeta? = nil, pagination: PaginationMeta? = nil) {
+    public init(data: [Group]? = nil, meta: PaginationMeta? = nil, pagination: PaginationMeta? = nil, resourceType: String? = nil) {
         self.data = data
         self.meta = meta
         self.pagination = pagination
+        self.resourceType = resourceType
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case data
         case meta
         case pagination
+        case resourceType
     }
 
     // Encodable protocol methods
@@ -35,6 +38,7 @@ public struct AdminGroupsListResponse: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(data, forKey: .data)
         try container.encodeIfPresent(meta, forKey: .meta)
         try container.encodeIfPresent(pagination, forKey: .pagination)
+        try container.encodeIfPresent(resourceType, forKey: .resourceType)
     }
 }
 

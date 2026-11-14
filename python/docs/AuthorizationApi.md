@@ -203,7 +203,7 @@ Check whether the subject holds all of the permissions
 POST /api/v1/authz/check-all
 Body: {
   "permissions": ["document.edit", "document.publish"],
-  "context": {"document_id": 123},
+  "context": {"resource_id": "doc-123"},
   "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
 }
 
@@ -289,7 +289,7 @@ Check whether the subject holds any of the permissions
 POST /api/v1/authz/check-any
 Body: {
   "permissions": ["document.edit", "document.view"],
-  "context": {"document_id": 123},
+  "context": {"resource_id": "doc-123"},
   "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
 }
 
@@ -375,7 +375,7 @@ Check one permission
 POST /api/v1/authz/check
 Body: {
   "permission": "document.edit",
-  "context": {"document_id": 123, "owner_id": 456},
+  "context": {"resource_id": "doc-123"},        // read: resource_id + defined environment attribute slugs
   "subject": {"type": "user", "id": "<uuid>"}   // optional — defaults to the caller
 }
 
@@ -466,7 +466,7 @@ Check up to 100 permissions in one call
 POST /api/v1/authz/check-bulk
 Body: {
   "permissions": ["document.edit", "document.delete"],
-  "context": {"document_id": 123},
+  "context": {"resource_id": "doc-123"},
   "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
 }
 

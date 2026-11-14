@@ -377,6 +377,7 @@ class AdminEmailApi:
     ) -> EmailTemplate:
         """Get an email template (custom or built-in default)
 
+        Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
         :param org_id: (required)
         :type org_id: str
@@ -456,6 +457,7 @@ class AdminEmailApi:
     ) -> ApiResponse[EmailTemplate]:
         """Get an email template (custom or built-in default)
 
+        Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
         :param org_id: (required)
         :type org_id: str
@@ -535,6 +537,7 @@ class AdminEmailApi:
     ) -> RESTResponseType:
         """Get an email template (custom or built-in default)
 
+        Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
         :param org_id: (required)
         :type org_id: str
@@ -685,6 +688,7 @@ class AdminEmailApi:
     ) -> AdminEmailTemplatesListResponse:
         """List every email template type with its current (custom or built-in) template
 
+        Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
         :param org_id: (required)
         :type org_id: str
@@ -751,6 +755,7 @@ class AdminEmailApi:
     ) -> ApiResponse[AdminEmailTemplatesListResponse]:
         """List every email template type with its current (custom or built-in) template
 
+        Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
         :param org_id: (required)
         :type org_id: str
@@ -817,6 +822,7 @@ class AdminEmailApi:
     ) -> RESTResponseType:
         """List every email template type with its current (custom or built-in) template
 
+        Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
         :param org_id: (required)
         :type org_id: str
@@ -1505,6 +1511,7 @@ class AdminEmailApi:
     ) -> AdminEmailTemplatesVariablesResponse:
         """List the placeholders available to an email template type
 
+        Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
         :param org_id: (required)
         :type org_id: str
@@ -1576,6 +1583,7 @@ class AdminEmailApi:
     ) -> ApiResponse[AdminEmailTemplatesVariablesResponse]:
         """List the placeholders available to an email template type
 
+        Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
         :param org_id: (required)
         :type org_id: str
@@ -1647,6 +1655,7 @@ class AdminEmailApi:
     ) -> RESTResponseType:
         """List the placeholders available to an email template type
 
+        Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
         :param org_id: (required)
         :type org_id: str

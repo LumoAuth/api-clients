@@ -147,6 +147,7 @@ module LumoAuthApiClient
     end
 
     # Read SSF stream configuration(s)
+    # Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :stream_id 
@@ -157,6 +158,7 @@ module LumoAuthApiClient
     end
 
     # Read SSF stream configuration(s)
+    # Needs &#x60;webhooks.view&#x60; and &#x60;agents.view&#x60;, as the Security signals page in the portal does.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :stream_id 
@@ -211,6 +213,7 @@ module LumoAuthApiClient
     end
 
     # Request a stream verification event
+    # Needs `settings.manage`, as the portal does.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [nil]
@@ -220,6 +223,7 @@ module LumoAuthApiClient
     end
 
     # Request a stream verification event
+    # Needs &#x60;settings.manage&#x60;, as the portal does.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers

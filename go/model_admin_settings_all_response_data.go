@@ -24,8 +24,7 @@ type AdminSettingsAllResponseData struct {
 	Authentication *AuthenticationSettings `json:"authentication,omitempty"`
 	Branding *BrandingSettings `json:"branding,omitempty"`
 	Security *AdminSettingsAllResponseDataSecurity `json:"security,omitempty"`
-	// Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
-	Email map[string]interface{} `json:"email,omitempty"`
+	Email *EmailSenderSettings `json:"email,omitempty"`
 }
 
 // NewAdminSettingsAllResponseData instantiates a new AdminSettingsAllResponseData object
@@ -174,19 +173,19 @@ func (o *AdminSettingsAllResponseData) SetSecurity(v AdminSettingsAllResponseDat
 }
 
 // GetEmail returns the Email field value if set, zero value otherwise.
-func (o *AdminSettingsAllResponseData) GetEmail() map[string]interface{} {
+func (o *AdminSettingsAllResponseData) GetEmail() EmailSenderSettings {
 	if o == nil || IsNil(o.Email) {
-		var ret map[string]interface{}
+		var ret EmailSenderSettings
 		return ret
 	}
-	return o.Email
+	return *o.Email
 }
 
 // GetEmailOk returns a tuple with the Email field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AdminSettingsAllResponseData) GetEmailOk() (map[string]interface{}, bool) {
+func (o *AdminSettingsAllResponseData) GetEmailOk() (*EmailSenderSettings, bool) {
 	if o == nil || IsNil(o.Email) {
-		return map[string]interface{}{}, false
+		return nil, false
 	}
 	return o.Email, true
 }
@@ -200,9 +199,9 @@ func (o *AdminSettingsAllResponseData) HasEmail() bool {
 	return false
 }
 
-// SetEmail gets a reference to the given map[string]interface{} and assigns it to the Email field.
-func (o *AdminSettingsAllResponseData) SetEmail(v map[string]interface{}) {
-	o.Email = v
+// SetEmail gets a reference to the given EmailSenderSettings and assigns it to the Email field.
+func (o *AdminSettingsAllResponseData) SetEmail(v EmailSenderSettings) {
+	o.Email = &v
 }
 
 func (o AdminSettingsAllResponseData) MarshalJSON() ([]byte, error) {

@@ -21,6 +21,8 @@ var _ MappedNullable = &PutAdminSettingsBrandingUpdateResponse{}
 // PutAdminSettingsBrandingUpdateResponse struct for PutAdminSettingsBrandingUpdateResponse
 type PutAdminSettingsBrandingUpdateResponse struct {
 	Data *BrandingSettings `json:"data,omitempty"`
+	// Keys whose value was refused by validation and not saved.
+	Rejected []string `json:"rejected,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
@@ -73,6 +75,38 @@ func (o *PutAdminSettingsBrandingUpdateResponse) SetData(v BrandingSettings) {
 	o.Data = &v
 }
 
+// GetRejected returns the Rejected field value if set, zero value otherwise.
+func (o *PutAdminSettingsBrandingUpdateResponse) GetRejected() []string {
+	if o == nil || IsNil(o.Rejected) {
+		var ret []string
+		return ret
+	}
+	return o.Rejected
+}
+
+// GetRejectedOk returns a tuple with the Rejected field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PutAdminSettingsBrandingUpdateResponse) GetRejectedOk() ([]string, bool) {
+	if o == nil || IsNil(o.Rejected) {
+		return nil, false
+	}
+	return o.Rejected, true
+}
+
+// HasRejected returns a boolean if a field has been set.
+func (o *PutAdminSettingsBrandingUpdateResponse) HasRejected() bool {
+	if o != nil && !IsNil(o.Rejected) {
+		return true
+	}
+
+	return false
+}
+
+// SetRejected gets a reference to the given []string and assigns it to the Rejected field.
+func (o *PutAdminSettingsBrandingUpdateResponse) SetRejected(v []string) {
+	o.Rejected = v
+}
+
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *PutAdminSettingsBrandingUpdateResponse) GetMessage() string {
 	if o == nil || IsNil(o.Message) {
@@ -117,6 +151,9 @@ func (o PutAdminSettingsBrandingUpdateResponse) ToMap() (map[string]interface{},
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
+	}
+	if !IsNil(o.Rejected) {
+		toSerialize["rejected"] = o.Rejected
 	}
 	if !IsNil(o.Message) {
 		toSerialize["message"] = o.Message

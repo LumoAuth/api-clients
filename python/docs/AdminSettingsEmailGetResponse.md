@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | **Dict[str, object]** | Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted. | [optional] 
+**data** | [**EmailSenderSettings**](EmailSenderSettings.md) |  | [optional] 
 
 ## Example
 

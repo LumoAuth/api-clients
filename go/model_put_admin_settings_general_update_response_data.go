@@ -18,11 +18,10 @@ import (
 // checks if the PutAdminSettingsGeneralUpdateResponseData type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &PutAdminSettingsGeneralUpdateResponseData{}
 
-// PutAdminSettingsGeneralUpdateResponseData Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+// PutAdminSettingsGeneralUpdateResponseData name, displayName (the same value) and locale, then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
 type PutAdminSettingsGeneralUpdateResponseData struct {
 	Name *string `json:"name,omitempty"`
 	DisplayName *string `json:"displayName,omitempty"`
-	Timezone *string `json:"timezone,omitempty"`
 	Locale *string `json:"locale,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -110,38 +109,6 @@ func (o *PutAdminSettingsGeneralUpdateResponseData) SetDisplayName(v string) {
 	o.DisplayName = &v
 }
 
-// GetTimezone returns the Timezone field value if set, zero value otherwise.
-func (o *PutAdminSettingsGeneralUpdateResponseData) GetTimezone() string {
-	if o == nil || IsNil(o.Timezone) {
-		var ret string
-		return ret
-	}
-	return *o.Timezone
-}
-
-// GetTimezoneOk returns a tuple with the Timezone field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PutAdminSettingsGeneralUpdateResponseData) GetTimezoneOk() (*string, bool) {
-	if o == nil || IsNil(o.Timezone) {
-		return nil, false
-	}
-	return o.Timezone, true
-}
-
-// HasTimezone returns a boolean if a field has been set.
-func (o *PutAdminSettingsGeneralUpdateResponseData) HasTimezone() bool {
-	if o != nil && !IsNil(o.Timezone) {
-		return true
-	}
-
-	return false
-}
-
-// SetTimezone gets a reference to the given string and assigns it to the Timezone field.
-func (o *PutAdminSettingsGeneralUpdateResponseData) SetTimezone(v string) {
-	o.Timezone = &v
-}
-
 // GetLocale returns the Locale field value if set, zero value otherwise.
 func (o *PutAdminSettingsGeneralUpdateResponseData) GetLocale() string {
 	if o == nil || IsNil(o.Locale) {
@@ -190,9 +157,6 @@ func (o PutAdminSettingsGeneralUpdateResponseData) ToMap() (map[string]interface
 	if !IsNil(o.DisplayName) {
 		toSerialize["displayName"] = o.DisplayName
 	}
-	if !IsNil(o.Timezone) {
-		toSerialize["timezone"] = o.Timezone
-	}
 	if !IsNil(o.Locale) {
 		toSerialize["locale"] = o.Locale
 	}
@@ -220,7 +184,6 @@ func (o *PutAdminSettingsGeneralUpdateResponseData) UnmarshalJSON(data []byte) (
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "name")
 		delete(additionalProperties, "displayName")
-		delete(additionalProperties, "timezone")
 		delete(additionalProperties, "locale")
 		o.AdditionalProperties = additionalProperties
 	}

@@ -13,6 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GetServerChallengeResponse {
+    /// `no_authorization_required` for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token.
     #[serde(rename = "status")]
     pub status: Status,
     /// MCP server display name.
@@ -31,11 +32,13 @@ impl GetServerChallengeResponse {
         }
     }
 }
-/// 
+/// `no_authorization_required` for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Status {
     #[serde(rename = "authenticated")]
     Authenticated,
+    #[serde(rename = "no_authorization_required")]
+    NoAuthorizationRequired,
 }
 
 impl Default for Status {

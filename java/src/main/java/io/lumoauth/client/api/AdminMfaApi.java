@@ -92,6 +92,8 @@ public class AdminMfaApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> User or authenticator not found </td><td>  -  </td></tr>
      </table>
      */
@@ -165,7 +167,7 @@ public class AdminMfaApi {
 
     /**
      * Remove one of a user&#39;s authenticators
-     * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in.
+     * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
      * @param authenticatorId  (required)
@@ -176,6 +178,8 @@ public class AdminMfaApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> User or authenticator not found </td><td>  -  </td></tr>
      </table>
      */
@@ -186,7 +190,7 @@ public class AdminMfaApi {
 
     /**
      * Remove one of a user&#39;s authenticators
-     * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in.
+     * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
      * @param authenticatorId  (required)
@@ -197,6 +201,8 @@ public class AdminMfaApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> User or authenticator not found </td><td>  -  </td></tr>
      </table>
      */
@@ -208,7 +214,7 @@ public class AdminMfaApi {
 
     /**
      * Remove one of a user&#39;s authenticators (asynchronously)
-     * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in.
+     * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
      * @param authenticatorId  (required)
@@ -220,6 +226,8 @@ public class AdminMfaApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> User or authenticator not found </td><td>  -  </td></tr>
      </table>
      */
@@ -301,7 +309,7 @@ public class AdminMfaApi {
 
     /**
      * MFA enrollment coverage
-     * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002).
+     * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002). Needs &#x60;users.view&#x60; and &#x60;settings.view&#x60;, as the report on the portal&#39;s authentication settings page does.
      * @param orgId  (required)
      * @return GetMfaCoverageReportResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -319,7 +327,7 @@ public class AdminMfaApi {
 
     /**
      * MFA enrollment coverage
-     * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002).
+     * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002). Needs &#x60;users.view&#x60; and &#x60;settings.view&#x60;, as the report on the portal&#39;s authentication settings page does.
      * @param orgId  (required)
      * @return ApiResponse&lt;GetMfaCoverageReportResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -338,7 +346,7 @@ public class AdminMfaApi {
 
     /**
      * MFA enrollment coverage (asynchronously)
-     * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002).
+     * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002). Needs &#x60;users.view&#x60; and &#x60;settings.view&#x60;, as the report on the portal&#39;s authentication settings page does.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call

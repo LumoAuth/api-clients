@@ -32,6 +32,8 @@ type IssueAgentTokenRequest struct {
 	AuthToken *string `json:"auth_token,omitempty"`
 	// Refresh token to redeem (request_type=refresh).
 	RefreshToken *string `json:"refresh_token,omitempty"`
+	// request_type=refresh only: optional space-delimited scopes that narrow the refreshed token. Must be a subset of the refresh grant and of the resource token scope (invalid_scope otherwise). Ignored for request_type=auth, where the resource token names the scope.
+	Scope *string `json:"scope,omitempty"`
 }
 
 // NewIssueAgentTokenRequest instantiates a new IssueAgentTokenRequest object
@@ -243,6 +245,38 @@ func (o *IssueAgentTokenRequest) SetRefreshToken(v string) {
 	o.RefreshToken = &v
 }
 
+// GetScope returns the Scope field value if set, zero value otherwise.
+func (o *IssueAgentTokenRequest) GetScope() string {
+	if o == nil || IsNil(o.Scope) {
+		var ret string
+		return ret
+	}
+	return *o.Scope
+}
+
+// GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *IssueAgentTokenRequest) GetScopeOk() (*string, bool) {
+	if o == nil || IsNil(o.Scope) {
+		return nil, false
+	}
+	return o.Scope, true
+}
+
+// HasScope returns a boolean if a field has been set.
+func (o *IssueAgentTokenRequest) HasScope() bool {
+	if o != nil && !IsNil(o.Scope) {
+		return true
+	}
+
+	return false
+}
+
+// SetScope gets a reference to the given string and assigns it to the Scope field.
+func (o *IssueAgentTokenRequest) SetScope(v string) {
+	o.Scope = &v
+}
+
 func (o IssueAgentTokenRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -270,6 +304,9 @@ func (o IssueAgentTokenRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RefreshToken) {
 		toSerialize["refresh_token"] = o.RefreshToken
+	}
+	if !IsNil(o.Scope) {
+		toSerialize["scope"] = o.Scope
 	}
 	return toSerialize, nil
 }

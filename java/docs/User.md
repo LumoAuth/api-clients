@@ -19,6 +19,8 @@
 |**phoneNumberVerified** | **Boolean** |  |  [optional] |
 |**isActive** | **Boolean** |  |  |
 |**blocked** | **Boolean** |  |  |
+|**deleted** | **Boolean** | Soft-deleted by inbound SCIM. Left out of the list unless deleted&#x3D;true is asked; POST /users/{userId}/restore brings the user back. |  [optional] |
+|**deletedAt** | **OffsetDateTime** |  |  [optional] |
 |**mfaEnabled** | **Boolean** |  |  |
 |**isAdmin** | **Boolean** |  |  |
 |**createdAt** | **OffsetDateTime** |  |  |

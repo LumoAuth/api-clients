@@ -49,6 +49,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Export audit logs as CSV (default) or JSON
         /// </summary>
+        /// <remarks>
+        /// Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <returns>string</returns>
@@ -58,7 +61,7 @@ namespace LumoAuth.ApiClient.Api
         /// Export audit logs as CSV (default) or JSON
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -141,6 +144,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Update audit log retention settings
         /// </summary>
+        /// <remarks>
+        /// Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <returns>AdminAuditLogsRetentionResponse</returns>
@@ -150,7 +156,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update audit log retention settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -159,6 +165,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Update audit log retention settings
         /// </summary>
+        /// <remarks>
+        /// Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <returns>AdminAuditLogsRetentionResponse</returns>
@@ -168,7 +177,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update audit log retention settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -210,7 +219,7 @@ namespace LumoAuth.ApiClient.Api
         /// Export audit logs as CSV (default) or JSON
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -222,7 +231,7 @@ namespace LumoAuth.ApiClient.Api
         /// Export audit logs as CSV (default) or JSON
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -327,7 +336,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update audit log retention settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -339,7 +348,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update audit log retention settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -350,7 +359,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update audit log retention settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -362,7 +371,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update audit log retention settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -720,7 +729,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Export audit logs as CSV (default) or JSON 
+        /// Export audit logs as CSV (default) or JSON Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -732,7 +741,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Export audit logs as CSV (default) or JSON 
+        /// Export audit logs as CSV (default) or JSON Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -787,7 +796,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Export audit logs as CSV (default) or JSON 
+        /// Export audit logs as CSV (default) or JSON Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -800,7 +809,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Export audit logs as CSV (default) or JSON 
+        /// Export audit logs as CSV (default) or JSON Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1421,7 +1430,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update audit log retention settings 
+        /// Update audit log retention settings Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1433,7 +1442,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update audit log retention settings 
+        /// Update audit log retention settings Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1487,7 +1496,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update audit log retention settings 
+        /// Update audit log retention settings Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1500,7 +1509,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update audit log retention settings 
+        /// Update audit log retention settings Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1558,7 +1567,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update audit log retention settings 
+        /// Update audit log retention settings Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1570,7 +1579,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update audit log retention settings 
+        /// Update audit log retention settings Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1624,7 +1633,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update audit log retention settings 
+        /// Update audit log retention settings Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1637,7 +1646,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update audit log retention settings 
+        /// Update audit log retention settings Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

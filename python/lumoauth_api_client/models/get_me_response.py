@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from lumoauth_api_client.models.group_ref import GroupRef
 from typing import Optional, Set
@@ -35,8 +35,10 @@ class GetMeResponse(BaseModel):
     mfa_enabled: Optional[StrictBool] = None
     roles: Optional[List[StrictStr]] = None
     capabilities: Optional[List[StrictStr]] = None
+    scope: Optional[List[StrictStr]] = Field(default=None, description="Agents only: the scope of the presented token.")
+    scope_narrowed: Optional[StrictBool] = Field(default=None, description="Agents only: true when the token scope leaves out one of the agent's capabilities.")
     tenant: Optional[GroupRef] = None
-    __properties: ClassVar[List[str]] = ["subject_type", "id", "email", "name", "mfa_enabled", "roles", "capabilities", "tenant"]
+    __properties: ClassVar[List[str]] = ["subject_type", "id", "email", "name", "mfa_enabled", "roles", "capabilities", "scope", "scope_narrowed", "tenant"]
 
     @field_validator('subject_type')
     def subject_type_validate_enum(cls, value):
@@ -115,6 +117,16 @@ class GetMeResponse(BaseModel):
         if self.capabilities is None and "capabilities" in self.model_fields_set:
             _dict['capabilities'] = None
 
+        # set to None if scope (nullable) is None
+        # and model_fields_set contains the field
+        if self.scope is None and "scope" in self.model_fields_set:
+            _dict['scope'] = None
+
+        # set to None if scope_narrowed (nullable) is None
+        # and model_fields_set contains the field
+        if self.scope_narrowed is None and "scope_narrowed" in self.model_fields_set:
+            _dict['scope_narrowed'] = None
+
         return _dict
 
     @classmethod
@@ -134,6 +146,8 @@ class GetMeResponse(BaseModel):
             "mfa_enabled": obj.get("mfa_enabled"),
             "roles": obj.get("roles"),
             "capabilities": obj.get("capabilities"),
+            "scope": obj.get("scope"),
+            "scope_narrowed": obj.get("scope_narrowed"),
             "tenant": GroupRef.from_dict(obj["tenant"]) if obj.get("tenant") is not None else None
         })
         return _obj

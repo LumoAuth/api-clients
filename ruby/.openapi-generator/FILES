@@ -100,7 +100,6 @@ docs/AdminMcpApi.md
 docs/AdminMcpServersCreateResponse.md
 docs/AdminMcpServersGetResponse.md
 docs/AdminMcpServersListResponse.md
-docs/AdminMcpServersListResponseMeta.md
 docs/AdminMfaApi.md
 docs/AdminOAuthClientsApi.md
 docs/AdminOrgInvitationsCreateResponse.md
@@ -171,6 +170,7 @@ docs/AdminUserSessionsRevokePostResponse.md
 docs/AdminUserTokensRevokeAllResponse.md
 docs/AdminUserTokensRevokePostResponse.md
 docs/AdminUsersApi.md
+docs/AdminUsersRestoreResponse.md
 docs/AdminWebhooksApi.md
 docs/AdminWebhooksCreateResponse.md
 docs/AdminWebhooksCreateResponseData.md
@@ -220,6 +220,8 @@ docs/CheckAbacBulkResponseResultsItem.md
 docs/CheckAbacResponse.md
 docs/CheckAbacResponseMatchedPoliciesItem.md
 docs/CheckAnyPermissionResponse.md
+docs/CheckEmailFirstRequest.md
+docs/CheckEmailFirstResponse.md
 docs/CheckPermissionResponse.md
 docs/CheckPermissionsBulkResponse.md
 docs/CheckRelationResponse.md
@@ -243,6 +245,7 @@ docs/DenyRequestRequest.md
 docs/DenyRequestResponse.md
 docs/DeviceAuthorizationResponse.md
 docs/EmailEnrollmentStarted.md
+docs/EmailSenderSettings.md
 docs/EmailTemplate.md
 docs/EnrollAuthenticator201Response.md
 docs/EnrollAuthenticatorRequest.md
@@ -369,7 +372,9 @@ docs/PutAdminClientsUpdateBrandingResponse.md
 docs/PutAdminOrgMembersUpdateResponse.md
 docs/PutAdminSettingsAuthenticationUpdateResponse.md
 docs/PutAdminSettingsBrandingUpdateResponse.md
+docs/PutAdminSettingsEmailUpdateRequest.md
 docs/PutAdminSettingsEmailUpdateResponse.md
+docs/PutAdminSettingsGeneralUpdateRequest.md
 docs/PutAdminSettingsGeneralUpdateResponse.md
 docs/PutAdminSettingsGeneralUpdateResponseData.md
 docs/PutAdminSettingsScimUpdateResponse.md
@@ -565,7 +570,6 @@ lib/lumoauth_api_client/models/admin_identities_list_response_data_bindings_item
 lib/lumoauth_api_client/models/admin_mcp_servers_create_response.rb
 lib/lumoauth_api_client/models/admin_mcp_servers_get_response.rb
 lib/lumoauth_api_client/models/admin_mcp_servers_list_response.rb
-lib/lumoauth_api_client/models/admin_mcp_servers_list_response_meta.rb
 lib/lumoauth_api_client/models/admin_org_invitations_create_response.rb
 lib/lumoauth_api_client/models/admin_org_invitations_list_response.rb
 lib/lumoauth_api_client/models/admin_org_members_add_response.rb
@@ -627,6 +631,7 @@ lib/lumoauth_api_client/models/admin_user_sessions_revoke_all_response.rb
 lib/lumoauth_api_client/models/admin_user_sessions_revoke_post_response.rb
 lib/lumoauth_api_client/models/admin_user_tokens_revoke_all_response.rb
 lib/lumoauth_api_client/models/admin_user_tokens_revoke_post_response.rb
+lib/lumoauth_api_client/models/admin_users_restore_response.rb
 lib/lumoauth_api_client/models/admin_webhooks_create_response.rb
 lib/lumoauth_api_client/models/admin_webhooks_create_response_data.rb
 lib/lumoauth_api_client/models/admin_webhooks_deliveries_list_response.rb
@@ -673,6 +678,8 @@ lib/lumoauth_api_client/models/check_abac_bulk_response_results_item.rb
 lib/lumoauth_api_client/models/check_abac_response.rb
 lib/lumoauth_api_client/models/check_abac_response_matched_policies_item.rb
 lib/lumoauth_api_client/models/check_any_permission_response.rb
+lib/lumoauth_api_client/models/check_email_first_request.rb
+lib/lumoauth_api_client/models/check_email_first_response.rb
 lib/lumoauth_api_client/models/check_permission_response.rb
 lib/lumoauth_api_client/models/check_permissions_bulk_response.rb
 lib/lumoauth_api_client/models/check_relation_response.rb
@@ -696,6 +703,7 @@ lib/lumoauth_api_client/models/deny_request_request.rb
 lib/lumoauth_api_client/models/deny_request_response.rb
 lib/lumoauth_api_client/models/device_authorization_response.rb
 lib/lumoauth_api_client/models/email_enrollment_started.rb
+lib/lumoauth_api_client/models/email_sender_settings.rb
 lib/lumoauth_api_client/models/email_template.rb
 lib/lumoauth_api_client/models/enroll_authenticator201_response.rb
 lib/lumoauth_api_client/models/enroll_authenticator_request.rb
@@ -816,7 +824,9 @@ lib/lumoauth_api_client/models/put_admin_clients_update_branding_response.rb
 lib/lumoauth_api_client/models/put_admin_org_members_update_response.rb
 lib/lumoauth_api_client/models/put_admin_settings_authentication_update_response.rb
 lib/lumoauth_api_client/models/put_admin_settings_branding_update_response.rb
+lib/lumoauth_api_client/models/put_admin_settings_email_update_request.rb
 lib/lumoauth_api_client/models/put_admin_settings_email_update_response.rb
+lib/lumoauth_api_client/models/put_admin_settings_general_update_request.rb
 lib/lumoauth_api_client/models/put_admin_settings_general_update_response.rb
 lib/lumoauth_api_client/models/put_admin_settings_general_update_response_data.rb
 lib/lumoauth_api_client/models/put_admin_settings_scim_update_response.rb

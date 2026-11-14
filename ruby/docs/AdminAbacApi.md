@@ -533,7 +533,7 @@ end
 
 ## abac_policies_list
 
-> <AbacPoliciesListResponse> abac_policies_list(org_id)
+> <AbacPoliciesListResponse> abac_policies_list(org_id, opts)
 
 List ABAC policies
 
@@ -555,10 +555,13 @@ end
 
 api_instance = LumoAuthApiClient::AdminAbacApi.new
 org_id = 'org_id_example' # String | 
+opts = {
+  action: 'action_example' # String | Only policies that name this action, alone or in a comma-separated list. `*` lists the policies that name `*`.
+}
 
 begin
   # List ABAC policies
-  result = api_instance.abac_policies_list(org_id)
+  result = api_instance.abac_policies_list(org_id, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAbacApi->abac_policies_list: #{e}"
@@ -569,12 +572,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AbacPoliciesListResponse>, Integer, Hash)> abac_policies_list_with_http_info(org_id)
+> <Array(<AbacPoliciesListResponse>, Integer, Hash)> abac_policies_list_with_http_info(org_id, opts)
 
 ```ruby
 begin
   # List ABAC policies
-  data, status_code, headers = api_instance.abac_policies_list_with_http_info(org_id)
+  data, status_code, headers = api_instance.abac_policies_list_with_http_info(org_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AbacPoliciesListResponse>
@@ -588,6 +591,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **action** | **String** | Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. | [optional] |
 
 ### Return type
 

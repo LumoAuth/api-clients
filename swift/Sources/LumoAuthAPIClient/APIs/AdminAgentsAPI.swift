@@ -504,14 +504,35 @@ open class AdminAgentsAPI {
     }
 
     /**
+     * enum for parameter sortBy
+     */
+    public enum SortBy_adminAgentsList: String, CaseIterable {
+        case name = "name"
+        case agentid = "agentId"
+        case status = "status"
+        case createdat = "createdAt"
+        case lastusedat = "lastUsedAt"
+    }
+
+    /**
+     * enum for parameter sortDir
+     */
+    public enum SortDir_adminAgentsList: String, CaseIterable {
+        case asc = "ASC"
+        case desc = "DESC"
+    }
+
+    /**
      List all agents in the tenant
      
      - parameter orgId: (path)  
+     - parameter sortBy: (query) Sort field. Default: name. Another value is ignored. (optional)
+     - parameter sortDir: (query) Sort direction, used with sortBy. (optional, default to .asc)
      - returns: AdminAgentsListResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminAgentsList(orgId: String) async throws -> AdminAgentsListResponse {
-        return try await adminAgentsListWithRequestBuilder(orgId: orgId).execute().body
+    open class func adminAgentsList(orgId: String, sortBy: SortBy_adminAgentsList? = nil, sortDir: SortDir_adminAgentsList? = nil) async throws -> AdminAgentsListResponse {
+        return try await adminAgentsListWithRequestBuilder(orgId: orgId, sortBy: sortBy, sortDir: sortDir).execute().body
     }
 
     /**
@@ -524,9 +545,11 @@ open class AdminAgentsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter sortBy: (query) Sort field. Default: name. Another value is ignored. (optional)
+     - parameter sortDir: (query) Sort direction, used with sortBy. (optional, default to .asc)
      - returns: RequestBuilder<AdminAgentsListResponse> 
      */
-    open class func adminAgentsListWithRequestBuilder(orgId: String) -> RequestBuilder<AdminAgentsListResponse> {
+    open class func adminAgentsListWithRequestBuilder(orgId: String, sortBy: SortBy_adminAgentsList? = nil, sortDir: SortDir_adminAgentsList? = nil) -> RequestBuilder<AdminAgentsListResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/agents"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -534,7 +557,11 @@ open class AdminAgentsAPI {
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "sortBy": (wrappedValue: sortBy?.encodeToJSON(), isExplode: true),
+            "sortDir": (wrappedValue: sortDir?.encodeToJSON(), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
             :

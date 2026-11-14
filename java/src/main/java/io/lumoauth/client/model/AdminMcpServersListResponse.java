@@ -19,7 +19,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.lumoauth.client.model.AdminMcpServersListResponseMeta;
 import io.lumoauth.client.model.McpServer;
 import io.lumoauth.client.model.PaginationMeta;
 import java.io.IOException;
@@ -53,7 +52,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminMcpServersListResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T07:28:59.263497940Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminMcpServersListResponse {
   public static final String SERIALIZED_NAME_DATA = "data";
   @SerializedName(SERIALIZED_NAME_DATA)
@@ -63,12 +62,17 @@ public class AdminMcpServersListResponse {
   public static final String SERIALIZED_NAME_META = "meta";
   @SerializedName(SERIALIZED_NAME_META)
   @javax.annotation.Nullable
-  private AdminMcpServersListResponseMeta meta;
+  private PaginationMeta meta;
 
   public static final String SERIALIZED_NAME_PAGINATION = "pagination";
   @SerializedName(SERIALIZED_NAME_PAGINATION)
   @javax.annotation.Nullable
   private PaginationMeta pagination;
+
+  public static final String SERIALIZED_NAME_RESOURCE_TYPE = "resourceType";
+  @SerializedName(SERIALIZED_NAME_RESOURCE_TYPE)
+  @javax.annotation.Nullable
+  private String resourceType;
 
   public AdminMcpServersListResponse() {
   }
@@ -100,7 +104,7 @@ public class AdminMcpServersListResponse {
   }
 
 
-  public AdminMcpServersListResponse meta(@javax.annotation.Nullable AdminMcpServersListResponseMeta meta) {
+  public AdminMcpServersListResponse meta(@javax.annotation.Nullable PaginationMeta meta) {
     this.meta = meta;
     return this;
   }
@@ -110,11 +114,11 @@ public class AdminMcpServersListResponse {
    * @return meta
    */
   @javax.annotation.Nullable
-  public AdminMcpServersListResponseMeta getMeta() {
+  public PaginationMeta getMeta() {
     return meta;
   }
 
-  public void setMeta(@javax.annotation.Nullable AdminMcpServersListResponseMeta meta) {
+  public void setMeta(@javax.annotation.Nullable PaginationMeta meta) {
     this.meta = meta;
   }
 
@@ -138,6 +142,25 @@ public class AdminMcpServersListResponse {
   }
 
 
+  public AdminMcpServersListResponse resourceType(@javax.annotation.Nullable String resourceType) {
+    this.resourceType = resourceType;
+    return this;
+  }
+
+  /**
+   * Get resourceType
+   * @return resourceType
+   */
+  @javax.annotation.Nullable
+  public String getResourceType() {
+    return resourceType;
+  }
+
+  public void setResourceType(@javax.annotation.Nullable String resourceType) {
+    this.resourceType = resourceType;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -150,12 +173,13 @@ public class AdminMcpServersListResponse {
     AdminMcpServersListResponse adminMcpServersListResponse = (AdminMcpServersListResponse) o;
     return Objects.equals(this.data, adminMcpServersListResponse.data) &&
         Objects.equals(this.meta, adminMcpServersListResponse.meta) &&
-        Objects.equals(this.pagination, adminMcpServersListResponse.pagination);
+        Objects.equals(this.pagination, adminMcpServersListResponse.pagination) &&
+        Objects.equals(this.resourceType, adminMcpServersListResponse.resourceType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, meta, pagination);
+    return Objects.hash(data, meta, pagination, resourceType);
   }
 
   @Override
@@ -165,6 +189,7 @@ public class AdminMcpServersListResponse {
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("    meta: ").append(toIndentedString(meta)).append("\n");
     sb.append("    pagination: ").append(toIndentedString(pagination)).append("\n");
+    sb.append("    resourceType: ").append(toIndentedString(resourceType)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -186,7 +211,7 @@ public class AdminMcpServersListResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("data", "meta", "pagination"));
+    openapiFields = new HashSet<String>(Arrays.asList("data", "meta", "pagination", "resourceType"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -229,11 +254,14 @@ public class AdminMcpServersListResponse {
       }
       // validate the optional field `meta`
       if (jsonObj.get("meta") != null && !jsonObj.get("meta").isJsonNull()) {
-        AdminMcpServersListResponseMeta.validateJsonElement(jsonObj.get("meta"));
+        PaginationMeta.validateJsonElement(jsonObj.get("meta"));
       }
       // validate the optional field `pagination`
       if (jsonObj.get("pagination") != null && !jsonObj.get("pagination").isJsonNull()) {
         PaginationMeta.validateJsonElement(jsonObj.get("pagination"));
+      }
+      if ((jsonObj.get("resourceType") != null && !jsonObj.get("resourceType").isJsonNull()) && !jsonObj.get("resourceType").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `resourceType` to be a primitive type in the JSON string but got `%s`", jsonObj.get("resourceType").toString()));
       }
   }
 

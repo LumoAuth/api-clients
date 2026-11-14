@@ -179,22 +179,6 @@ public class RegisterClientResponseTest {
     }
 
     /**
-     * Test the property 'sectorIdentifierUri'
-     */
-    @Test
-    public void sectorIdentifierUriTest() {
-        // TODO: test sectorIdentifierUri
-    }
-
-    /**
-     * Test the property 'subjectType'
-     */
-    @Test
-    public void subjectTypeTest() {
-        // TODO: test subjectType
-    }
-
-    /**
      * Test the property 'jwksUri'
      */
     @Test
@@ -227,14 +211,6 @@ public class RegisterClientResponseTest {
     }
 
     /**
-     * Test the property 'requestUris'
-     */
-    @Test
-    public void requestUrisTest() {
-        // TODO: test requestUris
-    }
-
-    /**
      * Test the property 'scope'
      */
     @Test
@@ -248,14 +224,6 @@ public class RegisterClientResponseTest {
     @Test
     public void idTokenSignedResponseAlgTest() {
         // TODO: test idTokenSignedResponseAlg
-    }
-
-    /**
-     * Test the property 'userinfoSignedResponseAlg'
-     */
-    @Test
-    public void userinfoSignedResponseAlgTest() {
-        // TODO: test userinfoSignedResponseAlg
     }
 
     /**

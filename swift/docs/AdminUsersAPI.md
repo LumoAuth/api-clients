@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**adminIdentitiesLink**](AdminUsersAPI.md#adminidentitieslink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user
 [**adminIdentitiesList**](AdminUsersAPI.md#adminidentitieslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links
 [**adminIdentitiesUnlink**](AdminUsersAPI.md#adminidentitiesunlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity
+[**adminUsersRestore**](AdminUsersAPI.md#adminusersrestore) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/restore | Restore a deleted user
 [**blockUser**](AdminUsersAPI.md#blockuser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user
 [**createUser**](AdminUsersAPI.md#createuser) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user
 [**deleteUser**](AdminUsersAPI.md#deleteuser) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user
@@ -92,6 +93,8 @@ Name | Type | Description  | Notes
 ```
 
 Assign a permission to a user
+
+Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
 ### Example
 ```swift
@@ -193,7 +196,7 @@ Name | Type | Description  | Notes
 
 Relink legacy SAML users to an IdP
 
-Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
 
 ### Example
 ```swift
@@ -438,6 +441,58 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**AdminAgentsGetResponse**](AdminAgentsGetResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminUsersRestore**
+```swift
+    open class func adminUsersRestore(orgId: String, userId: String, completion: @escaping (_ data: AdminUsersRestoreResponse?, _ error: Error?) -> Void)
+```
+
+Restore a deleted user
+
+Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import LumoAuthAPIClient
+
+let orgId = "orgId_example" // String | 
+let userId = "userId_example" // String | 
+
+// Restore a deleted user
+AdminUsersAPI.adminUsersRestore(orgId: orgId, userId: userId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **String** |  | 
+ **userId** | **String** |  | 
+
+### Return type
+
+[**AdminUsersRestoreResponse**](AdminUsersRestoreResponse.md)
 
 ### Authorization
 
@@ -800,7 +855,7 @@ Name | Type | Description  | Notes
 
 # **listUsers**
 ```swift
-    open class func listUsers(orgId: String, completion: @escaping (_ data: ListUsersResponse?, _ error: Error?) -> Void)
+    open class func listUsers(orgId: String, page: Int? = nil, limit: Int? = nil, search: String? = nil, active: Bool? = nil, blocked: Bool? = nil, deleted: Bool? = nil, emailVerified: Bool? = nil, mfaEnabled: Bool? = nil, role: String? = nil, group: String? = nil, sortBy: SortBy_listUsers? = nil, sortDir: SortDir_listUsers? = nil, completion: @escaping (_ data: ListUsersResponse?, _ error: Error?) -> Void)
 ```
 
 List users
@@ -811,9 +866,21 @@ List users
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let page = 987 // Int | Page number. (optional) (default to 1)
+let limit = 987 // Int | Users per page (1 to 100). (optional) (default to 25)
+let search = "search_example" // String | Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)
+let active = true // Bool | Only active (`true`) or inactive (`false`) users. (optional)
+let blocked = true // Bool | Only blocked (`true`) or not blocked (`false`) users. (optional)
+let deleted = true // Bool | `true` lists only the users that SCIM deleted (soft-deleted). Without it, or with `false`, the list leaves them out. (optional) (default to false)
+let emailVerified = true // Bool | Only users whose email address is verified (`true`) or not (`false`). (optional)
+let mfaEnabled = true // Bool | Only users with (`true`) or without (`false`) multi-factor authentication. (optional)
+let role = "role_example" // String | Only users who hold the role with this slug. (optional)
+let group = "group_example" // String | Only members of the group with this slug. (optional)
+let sortBy = "sortBy_example" // String | Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)
+let sortDir = "sortDir_example" // String | Sort direction. Used only together with sortBy. (optional) (default to .desc)
 
 // List users
-AdminUsersAPI.listUsers(orgId: orgId) { (response, error) in
+AdminUsersAPI.listUsers(orgId: orgId, page: page, limit: limit, search: search, active: active, blocked: blocked, deleted: deleted, emailVerified: emailVerified, mfaEnabled: mfaEnabled, role: role, group: group, sortBy: sortBy, sortDir: sortDir) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -830,6 +897,18 @@ AdminUsersAPI.listUsers(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **page** | **Int** | Page number. | [optional] [default to 1]
+ **limit** | **Int** | Users per page (1 to 100). | [optional] [default to 25]
+ **search** | **String** | Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). | [optional] 
+ **active** | **Bool** | Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. | [optional] 
+ **blocked** | **Bool** | Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. | [optional] 
+ **deleted** | **Bool** | &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. | [optional] [default to false]
+ **emailVerified** | **Bool** | Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). | [optional] 
+ **mfaEnabled** | **Bool** | Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. | [optional] 
+ **role** | **String** | Only users who hold the role with this slug. | [optional] 
+ **group** | **String** | Only members of the group with this slug. | [optional] 
+ **sortBy** | **String** | Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. | [optional] 
+ **sortDir** | **String** | Sort direction. Used only together with sortBy. | [optional] [default to .desc]
 
 ### Return type
 
@@ -1211,6 +1290,8 @@ Name | Type | Description  | Notes
 
 Set a user's password
 
+Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
+
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
@@ -1260,6 +1341,8 @@ Name | Type | Description  | Notes
 ```
 
 Set a user's password
+
+Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
 ### Example
 ```swift
