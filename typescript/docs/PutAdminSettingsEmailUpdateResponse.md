@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | **{ [key: string]: any; }** | Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted. | [optional] [default to undefined]
+**data** | [**EmailSenderSettings**](EmailSenderSettings.md) |  | [optional] [default to undefined]
 **message** | **string** |  | [optional] [default to undefined]
 
 ## Example

@@ -78,6 +78,8 @@ type AdminSettingsAPI interface {
 	/*
 	AdminSettingsAll Get all settings (combined)
 
+	Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal's branding page; without it the key is left out.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@return ApiAdminSettingsAllRequest
@@ -129,6 +131,8 @@ type AdminSettingsAPI interface {
 
 	/*
 	AdminSettingsEmailGet Get email settings
+
+	Shows who sends the organization's mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth's sender.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -234,6 +238,8 @@ type AdminSettingsAPI interface {
 	/*
 	PatchAdminSettingsBrandingUpdate Update branding/login page settings
 
+	Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@return ApiPatchAdminSettingsBrandingUpdateRequest
@@ -247,6 +253,8 @@ type AdminSettingsAPI interface {
 	/*
 	PatchAdminSettingsEmailUpdate Update email settings
 
+	Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@return ApiPatchAdminSettingsEmailUpdateRequest
@@ -259,6 +267,8 @@ type AdminSettingsAPI interface {
 
 	/*
 	PatchAdminSettingsGeneralUpdate Update general settings
+
+	Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -351,6 +361,8 @@ type AdminSettingsAPI interface {
 	/*
 	PutAdminSettingsBrandingUpdate Update branding/login page settings
 
+	Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@return ApiPutAdminSettingsBrandingUpdateRequest
@@ -364,6 +376,8 @@ type AdminSettingsAPI interface {
 	/*
 	PutAdminSettingsEmailUpdate Update email settings
 
+	Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@return ApiPutAdminSettingsEmailUpdateRequest
@@ -376,6 +390,8 @@ type AdminSettingsAPI interface {
 
 	/*
 	PutAdminSettingsGeneralUpdate Update general settings
+
+	Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -929,6 +945,8 @@ func (r ApiAdminSettingsAllRequest) Execute() (*AdminSettingsAllResponse, *http.
 /*
 AdminSettingsAll Get all settings (combined)
 
+Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal's branding page; without it the key is left out.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
  @return ApiAdminSettingsAllRequest
@@ -1388,6 +1406,8 @@ func (r ApiAdminSettingsEmailGetRequest) Execute() (*AdminSettingsEmailGetRespon
 
 /*
 AdminSettingsEmailGet Get email settings
+
+Shows who sends the organization's mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth's sender.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2309,6 +2329,8 @@ func (r ApiPatchAdminSettingsBrandingUpdateRequest) Execute() (*PutAdminSettings
 /*
 PatchAdminSettingsBrandingUpdate Update branding/login page settings
 
+Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
  @return ApiPatchAdminSettingsBrandingUpdateRequest
@@ -2415,6 +2437,12 @@ type ApiPatchAdminSettingsEmailUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	putAdminSettingsEmailUpdateRequest *PutAdminSettingsEmailUpdateRequest
+}
+
+func (r ApiPatchAdminSettingsEmailUpdateRequest) PutAdminSettingsEmailUpdateRequest(putAdminSettingsEmailUpdateRequest PutAdminSettingsEmailUpdateRequest) ApiPatchAdminSettingsEmailUpdateRequest {
+	r.putAdminSettingsEmailUpdateRequest = &putAdminSettingsEmailUpdateRequest
+	return r
 }
 
 func (r ApiPatchAdminSettingsEmailUpdateRequest) Execute() (*PutAdminSettingsEmailUpdateResponse, *http.Response, error) {
@@ -2423,6 +2451,8 @@ func (r ApiPatchAdminSettingsEmailUpdateRequest) Execute() (*PutAdminSettingsEma
 
 /*
 PatchAdminSettingsEmailUpdate Update email settings
+
+Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2459,7 +2489,7 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsEmailUpdateExecute(r ApiPatc
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2475,6 +2505,8 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsEmailUpdateExecute(r ApiPatc
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminSettingsEmailUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2530,6 +2562,12 @@ type ApiPatchAdminSettingsGeneralUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	putAdminSettingsGeneralUpdateRequest *PutAdminSettingsGeneralUpdateRequest
+}
+
+func (r ApiPatchAdminSettingsGeneralUpdateRequest) PutAdminSettingsGeneralUpdateRequest(putAdminSettingsGeneralUpdateRequest PutAdminSettingsGeneralUpdateRequest) ApiPatchAdminSettingsGeneralUpdateRequest {
+	r.putAdminSettingsGeneralUpdateRequest = &putAdminSettingsGeneralUpdateRequest
+	return r
 }
 
 func (r ApiPatchAdminSettingsGeneralUpdateRequest) Execute() (*PutAdminSettingsGeneralUpdateResponse, *http.Response, error) {
@@ -2538,6 +2576,8 @@ func (r ApiPatchAdminSettingsGeneralUpdateRequest) Execute() (*PutAdminSettingsG
 
 /*
 PatchAdminSettingsGeneralUpdate Update general settings
+
+Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2574,7 +2614,7 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsGeneralUpdateExecute(r ApiPa
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2590,6 +2630,8 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsGeneralUpdateExecute(r ApiPa
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminSettingsGeneralUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -3344,6 +3386,8 @@ func (r ApiPutAdminSettingsBrandingUpdateRequest) Execute() (*PutAdminSettingsBr
 /*
 PutAdminSettingsBrandingUpdate Update branding/login page settings
 
+Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
  @return ApiPutAdminSettingsBrandingUpdateRequest
@@ -3450,6 +3494,12 @@ type ApiPutAdminSettingsEmailUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	putAdminSettingsEmailUpdateRequest *PutAdminSettingsEmailUpdateRequest
+}
+
+func (r ApiPutAdminSettingsEmailUpdateRequest) PutAdminSettingsEmailUpdateRequest(putAdminSettingsEmailUpdateRequest PutAdminSettingsEmailUpdateRequest) ApiPutAdminSettingsEmailUpdateRequest {
+	r.putAdminSettingsEmailUpdateRequest = &putAdminSettingsEmailUpdateRequest
+	return r
 }
 
 func (r ApiPutAdminSettingsEmailUpdateRequest) Execute() (*PutAdminSettingsEmailUpdateResponse, *http.Response, error) {
@@ -3458,6 +3508,8 @@ func (r ApiPutAdminSettingsEmailUpdateRequest) Execute() (*PutAdminSettingsEmail
 
 /*
 PutAdminSettingsEmailUpdate Update email settings
+
+Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -3494,7 +3546,7 @@ func (a *AdminSettingsAPIService) PutAdminSettingsEmailUpdateExecute(r ApiPutAdm
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -3510,6 +3562,8 @@ func (a *AdminSettingsAPIService) PutAdminSettingsEmailUpdateExecute(r ApiPutAdm
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminSettingsEmailUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -3565,6 +3619,12 @@ type ApiPutAdminSettingsGeneralUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	putAdminSettingsGeneralUpdateRequest *PutAdminSettingsGeneralUpdateRequest
+}
+
+func (r ApiPutAdminSettingsGeneralUpdateRequest) PutAdminSettingsGeneralUpdateRequest(putAdminSettingsGeneralUpdateRequest PutAdminSettingsGeneralUpdateRequest) ApiPutAdminSettingsGeneralUpdateRequest {
+	r.putAdminSettingsGeneralUpdateRequest = &putAdminSettingsGeneralUpdateRequest
+	return r
 }
 
 func (r ApiPutAdminSettingsGeneralUpdateRequest) Execute() (*PutAdminSettingsGeneralUpdateResponse, *http.Response, error) {
@@ -3573,6 +3633,8 @@ func (r ApiPutAdminSettingsGeneralUpdateRequest) Execute() (*PutAdminSettingsGen
 
 /*
 PutAdminSettingsGeneralUpdate Update general settings
+
+Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -3609,7 +3671,7 @@ func (a *AdminSettingsAPIService) PutAdminSettingsGeneralUpdateExecute(r ApiPutA
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -3625,6 +3687,8 @@ func (a *AdminSettingsAPIService) PutAdminSettingsGeneralUpdateExecute(r ApiPutA
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminSettingsGeneralUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

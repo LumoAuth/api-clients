@@ -37,10 +37,12 @@ namespace LumoAuth.ApiClient.Model
         /// Initializes a new instance of the <see cref="PutAdminSettingsBrandingUpdateResponse" /> class.
         /// </summary>
         /// <param name="data">data.</param>
+        /// <param name="rejected">Keys whose value was refused by validation and not saved..</param>
         /// <param name="message">message.</param>
-        public PutAdminSettingsBrandingUpdateResponse(BrandingSettings data = default, string message = default)
+        public PutAdminSettingsBrandingUpdateResponse(BrandingSettings data = default, List<string> rejected = default, string message = default)
         {
             this.Data = data;
+            this.Rejected = rejected;
             this.Message = message;
         }
 
@@ -49,6 +51,13 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         [DataMember(Name = "data", EmitDefaultValue = false)]
         public BrandingSettings Data { get; set; }
+
+        /// <summary>
+        /// Keys whose value was refused by validation and not saved.
+        /// </summary>
+        /// <value>Keys whose value was refused by validation and not saved.</value>
+        [DataMember(Name = "rejected", EmitDefaultValue = false)]
+        public List<string> Rejected { get; set; }
 
         /// <summary>
         /// Gets or Sets Message
@@ -65,6 +74,7 @@ namespace LumoAuth.ApiClient.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class PutAdminSettingsBrandingUpdateResponse {\n");
             sb.Append("  Data: ").Append(Data).Append("\n");
+            sb.Append("  Rejected: ").Append(Rejected).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("}\n");
             return sb.ToString();

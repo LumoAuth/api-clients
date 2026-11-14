@@ -303,7 +303,7 @@ class AdminAnalyticsDashboardResponseDataAudit implements ModelInterface, ArrayA
     /**
      * Sets eventsLast7Days
      *
-     * @param int|null $eventsLast7Days eventsLast7Days
+     * @param int|null $eventsLast7Days Audit events of the last 7 days, or of the audit retention period of the plan when that is shorter.
      *
      * @return self
      */

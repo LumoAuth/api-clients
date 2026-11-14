@@ -73,16 +73,12 @@ class RegisteredClientMetadata implements ModelInterface, ArrayAccess, \JsonSeri
         'logoUri' => 'string',
         'policyUri' => 'string',
         'tosUri' => 'string',
-        'sectorIdentifierUri' => 'string',
-        'subjectType' => 'string',
         'jwksUri' => 'string',
         'jwks' => 'array<string,mixed>',
         'postLogoutRedirectUris' => 'string[]',
         'initiateLoginUri' => 'string',
-        'requestUris' => 'string[]',
         'scope' => 'string',
         'idTokenSignedResponseAlg' => 'string',
-        'userinfoSignedResponseAlg' => 'string',
         'requestObjectSigningAlg' => 'string',
         'tokenEndpointAuthSigningAlg' => 'string',
         'defaultMaxAge' => 'int',
@@ -118,16 +114,12 @@ class RegisteredClientMetadata implements ModelInterface, ArrayAccess, \JsonSeri
         'logoUri' => null,
         'policyUri' => null,
         'tosUri' => null,
-        'sectorIdentifierUri' => null,
-        'subjectType' => null,
         'jwksUri' => null,
         'jwks' => null,
         'postLogoutRedirectUris' => null,
         'initiateLoginUri' => null,
-        'requestUris' => null,
         'scope' => null,
         'idTokenSignedResponseAlg' => null,
-        'userinfoSignedResponseAlg' => null,
         'requestObjectSigningAlg' => null,
         'tokenEndpointAuthSigningAlg' => null,
         'defaultMaxAge' => null,
@@ -161,16 +153,12 @@ class RegisteredClientMetadata implements ModelInterface, ArrayAccess, \JsonSeri
         'logoUri' => false,
         'policyUri' => false,
         'tosUri' => false,
-        'sectorIdentifierUri' => false,
-        'subjectType' => false,
         'jwksUri' => false,
         'jwks' => false,
         'postLogoutRedirectUris' => false,
         'initiateLoginUri' => false,
-        'requestUris' => false,
         'scope' => false,
         'idTokenSignedResponseAlg' => false,
-        'userinfoSignedResponseAlg' => false,
         'requestObjectSigningAlg' => false,
         'tokenEndpointAuthSigningAlg' => false,
         'defaultMaxAge' => false,
@@ -284,16 +272,12 @@ class RegisteredClientMetadata implements ModelInterface, ArrayAccess, \JsonSeri
         'logoUri' => 'logo_uri',
         'policyUri' => 'policy_uri',
         'tosUri' => 'tos_uri',
-        'sectorIdentifierUri' => 'sector_identifier_uri',
-        'subjectType' => 'subject_type',
         'jwksUri' => 'jwks_uri',
         'jwks' => 'jwks',
         'postLogoutRedirectUris' => 'post_logout_redirect_uris',
         'initiateLoginUri' => 'initiate_login_uri',
-        'requestUris' => 'request_uris',
         'scope' => 'scope',
         'idTokenSignedResponseAlg' => 'id_token_signed_response_alg',
-        'userinfoSignedResponseAlg' => 'userinfo_signed_response_alg',
         'requestObjectSigningAlg' => 'request_object_signing_alg',
         'tokenEndpointAuthSigningAlg' => 'token_endpoint_auth_signing_alg',
         'defaultMaxAge' => 'default_max_age',
@@ -327,16 +311,12 @@ class RegisteredClientMetadata implements ModelInterface, ArrayAccess, \JsonSeri
         'logoUri' => 'setLogoUri',
         'policyUri' => 'setPolicyUri',
         'tosUri' => 'setTosUri',
-        'sectorIdentifierUri' => 'setSectorIdentifierUri',
-        'subjectType' => 'setSubjectType',
         'jwksUri' => 'setJwksUri',
         'jwks' => 'setJwks',
         'postLogoutRedirectUris' => 'setPostLogoutRedirectUris',
         'initiateLoginUri' => 'setInitiateLoginUri',
-        'requestUris' => 'setRequestUris',
         'scope' => 'setScope',
         'idTokenSignedResponseAlg' => 'setIdTokenSignedResponseAlg',
-        'userinfoSignedResponseAlg' => 'setUserinfoSignedResponseAlg',
         'requestObjectSigningAlg' => 'setRequestObjectSigningAlg',
         'tokenEndpointAuthSigningAlg' => 'setTokenEndpointAuthSigningAlg',
         'defaultMaxAge' => 'setDefaultMaxAge',
@@ -370,16 +350,12 @@ class RegisteredClientMetadata implements ModelInterface, ArrayAccess, \JsonSeri
         'logoUri' => 'getLogoUri',
         'policyUri' => 'getPolicyUri',
         'tosUri' => 'getTosUri',
-        'sectorIdentifierUri' => 'getSectorIdentifierUri',
-        'subjectType' => 'getSubjectType',
         'jwksUri' => 'getJwksUri',
         'jwks' => 'getJwks',
         'postLogoutRedirectUris' => 'getPostLogoutRedirectUris',
         'initiateLoginUri' => 'getInitiateLoginUri',
-        'requestUris' => 'getRequestUris',
         'scope' => 'getScope',
         'idTokenSignedResponseAlg' => 'getIdTokenSignedResponseAlg',
-        'userinfoSignedResponseAlg' => 'getUserinfoSignedResponseAlg',
         'requestObjectSigningAlg' => 'getRequestObjectSigningAlg',
         'tokenEndpointAuthSigningAlg' => 'getTokenEndpointAuthSigningAlg',
         'defaultMaxAge' => 'getDefaultMaxAge',
@@ -479,16 +455,12 @@ class RegisteredClientMetadata implements ModelInterface, ArrayAccess, \JsonSeri
         $this->setIfExists('logoUri', $data ?? [], null);
         $this->setIfExists('policyUri', $data ?? [], null);
         $this->setIfExists('tosUri', $data ?? [], null);
-        $this->setIfExists('sectorIdentifierUri', $data ?? [], null);
-        $this->setIfExists('subjectType', $data ?? [], null);
         $this->setIfExists('jwksUri', $data ?? [], null);
         $this->setIfExists('jwks', $data ?? [], null);
         $this->setIfExists('postLogoutRedirectUris', $data ?? [], null);
         $this->setIfExists('initiateLoginUri', $data ?? [], null);
-        $this->setIfExists('requestUris', $data ?? [], null);
         $this->setIfExists('scope', $data ?? [], null);
         $this->setIfExists('idTokenSignedResponseAlg', $data ?? [], null);
-        $this->setIfExists('userinfoSignedResponseAlg', $data ?? [], null);
         $this->setIfExists('requestObjectSigningAlg', $data ?? [], null);
         $this->setIfExists('tokenEndpointAuthSigningAlg', $data ?? [], null);
         $this->setIfExists('defaultMaxAge', $data ?? [], null);
@@ -999,60 +971,6 @@ class RegisteredClientMetadata implements ModelInterface, ArrayAccess, \JsonSeri
     }
 
     /**
-     * Gets sectorIdentifierUri
-     *
-     * @return string|null
-     */
-    public function getSectorIdentifierUri()
-    {
-        return $this->container['sectorIdentifierUri'];
-    }
-
-    /**
-     * Sets sectorIdentifierUri
-     *
-     * @param string|null $sectorIdentifierUri sectorIdentifierUri
-     *
-     * @return self
-     */
-    public function setSectorIdentifierUri($sectorIdentifierUri)
-    {
-        if (is_null($sectorIdentifierUri)) {
-            throw new \InvalidArgumentException('non-nullable sectorIdentifierUri cannot be null');
-        }
-        $this->container['sectorIdentifierUri'] = $sectorIdentifierUri;
-
-        return $this;
-    }
-
-    /**
-     * Gets subjectType
-     *
-     * @return string|null
-     */
-    public function getSubjectType()
-    {
-        return $this->container['subjectType'];
-    }
-
-    /**
-     * Sets subjectType
-     *
-     * @param string|null $subjectType Only when not \"public\".
-     *
-     * @return self
-     */
-    public function setSubjectType($subjectType)
-    {
-        if (is_null($subjectType)) {
-            throw new \InvalidArgumentException('non-nullable subjectType cannot be null');
-        }
-        $this->container['subjectType'] = $subjectType;
-
-        return $this;
-    }
-
-    /**
      * Gets jwksUri
      *
      * @return string|null
@@ -1161,33 +1079,6 @@ class RegisteredClientMetadata implements ModelInterface, ArrayAccess, \JsonSeri
     }
 
     /**
-     * Gets requestUris
-     *
-     * @return string[]|null
-     */
-    public function getRequestUris()
-    {
-        return $this->container['requestUris'];
-    }
-
-    /**
-     * Sets requestUris
-     *
-     * @param string[]|null $requestUris requestUris
-     *
-     * @return self
-     */
-    public function setRequestUris($requestUris)
-    {
-        if (is_null($requestUris)) {
-            throw new \InvalidArgumentException('non-nullable requestUris cannot be null');
-        }
-        $this->container['requestUris'] = $requestUris;
-
-        return $this;
-    }
-
-    /**
      * Gets scope
      *
      * @return string|null
@@ -1237,33 +1128,6 @@ class RegisteredClientMetadata implements ModelInterface, ArrayAccess, \JsonSeri
             throw new \InvalidArgumentException('non-nullable idTokenSignedResponseAlg cannot be null');
         }
         $this->container['idTokenSignedResponseAlg'] = $idTokenSignedResponseAlg;
-
-        return $this;
-    }
-
-    /**
-     * Gets userinfoSignedResponseAlg
-     *
-     * @return string|null
-     */
-    public function getUserinfoSignedResponseAlg()
-    {
-        return $this->container['userinfoSignedResponseAlg'];
-    }
-
-    /**
-     * Sets userinfoSignedResponseAlg
-     *
-     * @param string|null $userinfoSignedResponseAlg userinfoSignedResponseAlg
-     *
-     * @return self
-     */
-    public function setUserinfoSignedResponseAlg($userinfoSignedResponseAlg)
-    {
-        if (is_null($userinfoSignedResponseAlg)) {
-            throw new \InvalidArgumentException('non-nullable userinfoSignedResponseAlg cannot be null');
-        }
-        $this->container['userinfoSignedResponseAlg'] = $userinfoSignedResponseAlg;
 
         return $this;
     }

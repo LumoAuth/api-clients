@@ -30,11 +30,10 @@ class OAuthScope(BaseModel):
     """ # noqa: E501
     id: Optional[StrictInt] = None
     name: Optional[StrictStr] = None
-    description: Optional[StrictStr] = None
-    is_default: Optional[StrictBool] = Field(default=None, alias="isDefault")
+    description: Optional[StrictStr] = Field(default=None, description="Shown to users on the consent page next to the scope name.")
     is_system: Optional[StrictBool] = Field(default=None, alias="isSystem")
     created_at: Optional[datetime] = Field(default=None, alias="createdAt")
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "isDefault", "isSystem", "createdAt"]
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "isSystem", "createdAt"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -95,7 +94,6 @@ class OAuthScope(BaseModel):
             "id": obj.get("id"),
             "name": obj.get("name"),
             "description": obj.get("description"),
-            "isDefault": obj.get("isDefault"),
             "isSystem": obj.get("isSystem"),
             "createdAt": obj.get("createdAt")
         })

@@ -161,6 +161,19 @@ namespace LumoAuth.ApiClient.Test.Api
         }
 
         /// <summary>
+        /// Test AdminUsersRestore
+        /// </summary>
+        [Fact]
+        public void AdminUsersRestoreTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //string userId = null;
+            //var response = instance.AdminUsersRestore(orgId, userId);
+            //Assert.IsType<AdminUsersRestoreResponse>(response);
+        }
+
+        /// <summary>
         /// Test BlockUser
         /// </summary>
         [Fact]
@@ -258,7 +271,19 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.ListUsers(orgId);
+            //int? page = null;
+            //int? limit = null;
+            //string? search = null;
+            //bool? active = null;
+            //bool? blocked = null;
+            //bool? deleted = null;
+            //bool? emailVerified = null;
+            //bool? mfaEnabled = null;
+            //string? role = null;
+            //string? group = null;
+            //string? sortBy = null;
+            //string? sortDir = null;
+            //var response = instance.ListUsers(orgId, page, limit, search, active, blocked, deleted, emailVerified, mfaEnabled, role, group, sortBy, sortDir);
             //Assert.IsType<ListUsersResponse>(response);
         }
 

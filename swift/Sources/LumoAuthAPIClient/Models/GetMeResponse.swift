@@ -23,9 +23,13 @@ public struct GetMeResponse: Codable, JSONEncodable, Hashable {
     public var mfaEnabled: Bool?
     public var roles: [String]?
     public var capabilities: [String]?
+    /** Agents only: the scope of the presented token. */
+    public var scope: [String]?
+    /** Agents only: true when the token scope leaves out one of the agent's capabilities. */
+    public var scopeNarrowed: Bool?
     public var tenant: GroupRef?
 
-    public init(subjectType: SubjectType? = nil, id: String? = nil, email: String? = nil, name: String? = nil, mfaEnabled: Bool? = nil, roles: [String]? = nil, capabilities: [String]? = nil, tenant: GroupRef? = nil) {
+    public init(subjectType: SubjectType? = nil, id: String? = nil, email: String? = nil, name: String? = nil, mfaEnabled: Bool? = nil, roles: [String]? = nil, capabilities: [String]? = nil, scope: [String]? = nil, scopeNarrowed: Bool? = nil, tenant: GroupRef? = nil) {
         self.subjectType = subjectType
         self.id = id
         self.email = email
@@ -33,6 +37,8 @@ public struct GetMeResponse: Codable, JSONEncodable, Hashable {
         self.mfaEnabled = mfaEnabled
         self.roles = roles
         self.capabilities = capabilities
+        self.scope = scope
+        self.scopeNarrowed = scopeNarrowed
         self.tenant = tenant
     }
 
@@ -44,6 +50,8 @@ public struct GetMeResponse: Codable, JSONEncodable, Hashable {
         case mfaEnabled = "mfa_enabled"
         case roles
         case capabilities
+        case scope
+        case scopeNarrowed = "scope_narrowed"
         case tenant
     }
 
@@ -58,6 +66,8 @@ public struct GetMeResponse: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(mfaEnabled, forKey: .mfaEnabled)
         try container.encodeIfPresent(roles, forKey: .roles)
         try container.encodeIfPresent(capabilities, forKey: .capabilities)
+        try container.encodeIfPresent(scope, forKey: .scope)
+        try container.encodeIfPresent(scopeNarrowed, forKey: .scopeNarrowed)
         try container.encodeIfPresent(tenant, forKey: .tenant)
     }
 }

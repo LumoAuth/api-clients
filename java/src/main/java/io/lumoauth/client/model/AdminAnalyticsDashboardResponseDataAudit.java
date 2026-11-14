@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminAnalyticsDashboardResponseDataAudit
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T04:22:27.215396570Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminAnalyticsDashboardResponseDataAudit {
   public static final String SERIALIZED_NAME_EVENTS_LAST7_DAYS = "eventsLast7Days";
   @SerializedName(SERIALIZED_NAME_EVENTS_LAST7_DAYS)
@@ -64,7 +64,7 @@ public class AdminAnalyticsDashboardResponseDataAudit {
   }
 
   /**
-   * Get eventsLast7Days
+   * Audit events of the last 7 days, or of the audit retention period of the plan when that is shorter.
    * @return eventsLast7Days
    */
   @javax.annotation.Nullable

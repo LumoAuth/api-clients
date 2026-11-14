@@ -58,7 +58,7 @@ class PutAdminSettingsEmailUpdateResponse implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'data' => 'array<string,mixed>',
+        'data' => '\LumoAuth\ApiClient\Model\EmailSenderSettings',
         'message' => 'string'
     ];
 
@@ -300,7 +300,7 @@ class PutAdminSettingsEmailUpdateResponse implements ModelInterface, ArrayAccess
     /**
      * Gets data
      *
-     * @return array<string,mixed>|null
+     * @return \LumoAuth\ApiClient\Model\EmailSenderSettings|null
      */
     public function getData()
     {
@@ -310,7 +310,7 @@ class PutAdminSettingsEmailUpdateResponse implements ModelInterface, ArrayAccess
     /**
      * Sets data
      *
-     * @param array<string,mixed>|null $data Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
+     * @param \LumoAuth\ApiClient\Model\EmailSenderSettings|null $data data
      *
      * @return self
      */

@@ -121,7 +121,7 @@ export const SsfApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
          * @summary Read SSF stream configuration(s)
          * @param {string} orgId 
          * @param {string} [streamId] 
@@ -167,7 +167,7 @@ export const SsfApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Needs `settings.manage`, as the portal does.
          * @summary Request a stream verification event
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -245,7 +245,7 @@ export const SsfApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
          * @summary Read SSF stream configuration(s)
          * @param {string} orgId 
          * @param {string} [streamId] 
@@ -259,7 +259,7 @@ export const SsfApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `settings.manage`, as the portal does.
          * @summary Request a stream verification event
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -302,7 +302,7 @@ export const SsfApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.deleteStreamConfig(requestParameters.streamId, requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
          * @summary Read SSF stream configuration(s)
          * @param {SsfApiGetStreamConfigRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -312,7 +312,7 @@ export const SsfApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getStreamConfig(requestParameters.orgId, requestParameters.streamId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `settings.manage`, as the portal does.
          * @summary Request a stream verification event
          * @param {SsfApiVerifyStreamRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -351,7 +351,7 @@ export interface SsfApiInterface {
     deleteStreamConfig(requestParameters: SsfApiDeleteStreamConfigRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * 
+     * Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
      * @summary Read SSF stream configuration(s)
      * @param {SsfApiGetStreamConfigRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -361,7 +361,7 @@ export interface SsfApiInterface {
     getStreamConfig(requestParameters: SsfApiGetStreamConfigRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetStreamConfig200Response>;
 
     /**
-     * 
+     * Needs `settings.manage`, as the portal does.
      * @summary Request a stream verification event
      * @param {SsfApiVerifyStreamRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -474,7 +474,7 @@ export class SsfApi extends BaseAPI implements SsfApiInterface {
     }
 
     /**
-     * 
+     * Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
      * @summary Read SSF stream configuration(s)
      * @param {SsfApiGetStreamConfigRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -486,7 +486,7 @@ export class SsfApi extends BaseAPI implements SsfApiInterface {
     }
 
     /**
-     * 
+     * Needs `settings.manage`, as the portal does.
      * @summary Request a stream verification event
      * @param {SsfApiVerifyStreamRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

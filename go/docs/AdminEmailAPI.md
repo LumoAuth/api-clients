@@ -94,6 +94,8 @@ Name | Type | Description  | Notes
 
 Get an email template (custom or built-in default)
 
+
+
 ### Example
 
 ```go
@@ -168,6 +170,8 @@ Name | Type | Description  | Notes
 > AdminEmailTemplatesListResponse AdminEmailTemplatesList(ctx, orgId).Execute()
 
 List every email template type with its current (custom or built-in) template
+
+
 
 ### Example
 
@@ -380,6 +384,8 @@ Name | Type | Description  | Notes
 > AdminEmailTemplatesVariablesResponse AdminEmailTemplatesVariables(ctx, orgId, type_).Execute()
 
 List the placeholders available to an email template type
+
+
 
 ### Example
 

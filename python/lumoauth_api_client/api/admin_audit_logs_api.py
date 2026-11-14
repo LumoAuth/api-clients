@@ -321,6 +321,7 @@ class AdminAuditLogsApi:
     ) -> str:
         """Export audit logs as CSV (default) or JSON
 
+        Needs `audit.export` and `audit.view`, as the export on the portal's audit log page does.
 
         :param org_id: (required)
         :type org_id: str
@@ -387,6 +388,7 @@ class AdminAuditLogsApi:
     ) -> ApiResponse[str]:
         """Export audit logs as CSV (default) or JSON
 
+        Needs `audit.export` and `audit.view`, as the export on the portal's audit log page does.
 
         :param org_id: (required)
         :type org_id: str
@@ -453,6 +455,7 @@ class AdminAuditLogsApi:
     ) -> RESTResponseType:
         """Export audit logs as CSV (default) or JSON
 
+        Needs `audit.export` and `audit.view`, as the export on the portal's audit log page does.
 
         :param org_id: (required)
         :type org_id: str
@@ -1635,6 +1638,7 @@ class AdminAuditLogsApi:
     ) -> AdminAuditLogsRetentionResponse:
         """Update audit log retention settings
 
+        Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 
         :param org_id: (required)
         :type org_id: str
@@ -1701,6 +1705,7 @@ class AdminAuditLogsApi:
     ) -> ApiResponse[AdminAuditLogsRetentionResponse]:
         """Update audit log retention settings
 
+        Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 
         :param org_id: (required)
         :type org_id: str
@@ -1767,6 +1772,7 @@ class AdminAuditLogsApi:
     ) -> RESTResponseType:
         """Update audit log retention settings
 
+        Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 
         :param org_id: (required)
         :type org_id: str
@@ -1894,6 +1900,7 @@ class AdminAuditLogsApi:
     ) -> AdminAuditLogsRetentionResponse:
         """Update audit log retention settings
 
+        Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 
         :param org_id: (required)
         :type org_id: str
@@ -1960,6 +1967,7 @@ class AdminAuditLogsApi:
     ) -> ApiResponse[AdminAuditLogsRetentionResponse]:
         """Update audit log retention settings
 
+        Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 
         :param org_id: (required)
         :type org_id: str
@@ -2026,6 +2034,7 @@ class AdminAuditLogsApi:
     ) -> RESTResponseType:
         """Update audit log retention settings
 
+        Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 
         :param org_id: (required)
         :type org_id: str

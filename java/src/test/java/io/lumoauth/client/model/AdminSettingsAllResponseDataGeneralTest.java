@@ -45,4 +45,20 @@ public class AdminSettingsAllResponseDataGeneralTest {
         // TODO: test name
     }
 
+    /**
+     * Test the property 'displayName'
+     */
+    @Test
+    public void displayNameTest() {
+        // TODO: test displayName
+    }
+
+    /**
+     * Test the property 'locale'
+     */
+    @Test
+    public void localeTest() {
+        // TODO: test locale
+    }
+
 }

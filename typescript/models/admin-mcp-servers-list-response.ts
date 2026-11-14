@@ -15,9 +15,6 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { AdminMcpServersListResponseMeta } from './admin-mcp-servers-list-response-meta';
-// May contain unused imports in some cases
-// @ts-ignore
 import type { McpServer } from './mcp-server';
 // May contain unused imports in some cases
 // @ts-ignore
@@ -37,15 +34,21 @@ export interface AdminMcpServersListResponse {
     'data'?: Array<McpServer>;
     /**
      * 
-     * @type {AdminMcpServersListResponseMeta}
+     * @type {PaginationMeta}
      * @memberof AdminMcpServersListResponse
      */
-    'meta'?: AdminMcpServersListResponseMeta;
+    'meta'?: PaginationMeta;
     /**
      * 
      * @type {PaginationMeta}
      * @memberof AdminMcpServersListResponse
      */
     'pagination'?: PaginationMeta;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminMcpServersListResponse
+     */
+    'resourceType'?: string;
 }
 

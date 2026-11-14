@@ -44,5 +44,11 @@ export interface ListUsersResponse {
      * @memberof ListUsersResponse
      */
     'pagination'?: PaginationMeta;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListUsersResponse
+     */
+    'resourceType'?: string;
 }
 

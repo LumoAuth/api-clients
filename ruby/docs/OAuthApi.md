@@ -6,6 +6,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | ------ | ------------ | ----------- |
 | [**authorize**](OAuthApi.md#authorize) | **GET** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint |
 | [**backchannel_authorize**](OAuthApi.md#backchannel_authorize) | **POST** /orgs/{orgId}/api/v1/oauth/bc-authorize | CIBA backchannel authentication request |
+| [**check_email_first**](OAuthApi.md#check_email_first) | **POST** /orgs/{orgId}/api/v1/oauth/check-email | Sign-in methods for an email-first form |
 | [**device_authorization**](OAuthApi.md#device_authorization) | **POST** /orgs/{orgId}/api/v1/oauth/device_authorization | Device authorization request (RFC 8628) |
 | [**get_client_configuration**](OAuthApi.md#get_client_configuration) | **GET** /orgs/{orgId}/api/v1/connect/register/{clientId} | Read a dynamically registered client (RFC 7592 / OIDC DCR §4) |
 | [**get_device_verification**](OAuthApi.md#get_device_verification) | **GET** /orgs/{orgId}/api/v1/oauth/device | Device verification page (RFC 8628 §3.3) |
@@ -156,6 +157,72 @@ end
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## check_email_first
+
+> <CheckEmailFirstResponse> check_email_first(org_id, check_email_first_request)
+
+Sign-in methods for an email-first form
+
+For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: `exists` is always `true`, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by `client_id`.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+
+api_instance = LumoAuthApiClient::OAuthApi.new
+org_id = 'org_id_example' # String | 
+check_email_first_request = LumoAuthApiClient::CheckEmailFirstRequest.new({email: 'email_example', client_id: 'client_id_example'}) # CheckEmailFirstRequest | 
+
+begin
+  # Sign-in methods for an email-first form
+  result = api_instance.check_email_first(org_id, check_email_first_request)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling OAuthApi->check_email_first: #{e}"
+end
+```
+
+#### Using the check_email_first_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<CheckEmailFirstResponse>, Integer, Hash)> check_email_first_with_http_info(org_id, check_email_first_request)
+
+```ruby
+begin
+  # Sign-in methods for an email-first form
+  data, status_code, headers = api_instance.check_email_first_with_http_info(org_id, check_email_first_request)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <CheckEmailFirstResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling OAuthApi->check_email_first_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **check_email_first_request** | [**CheckEmailFirstRequest**](CheckEmailFirstRequest.md) |  |  |
+
+### Return type
+
+[**CheckEmailFirstResponse**](CheckEmailFirstResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -579,7 +646,7 @@ end
 
 Dynamic client registration (RFC 7591 / OIDC DCR)
 
-Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization's signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
 
 ### Examples
 

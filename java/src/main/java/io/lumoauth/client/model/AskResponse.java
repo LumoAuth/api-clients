@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * AskResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T04:22:27.215396570Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AskResponse {
   public static final String SERIALIZED_NAME_ALLOWED = "allowed";
   @SerializedName(SERIALIZED_NAME_ALLOWED)
@@ -69,6 +69,65 @@ public class AskResponse {
   @SerializedName(SERIALIZED_NAME_REASON)
   @javax.annotation.Nullable
   private String reason;
+
+  /**
+   * Which check produced the answer. Always pdp for a user caller.
+   */
+  @JsonAdapter(DecidedByEnum.Adapter.class)
+  public enum DecidedByEnum {
+    CAPABILITY("capability"),
+    
+    PDP("pdp"),
+    
+    DENY_OVERRIDE("deny_override");
+
+    private String value;
+
+    DecidedByEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static DecidedByEnum fromValue(String value) {
+      for (DecidedByEnum b : DecidedByEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<DecidedByEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final DecidedByEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public DecidedByEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return DecidedByEnum.fromValue(value);
+      }
+    }
+
+    public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      String value = jsonElement.getAsString();
+      DecidedByEnum.fromValue(value);
+    }
+  }
+
+  public static final String SERIALIZED_NAME_DECIDED_BY = "decided_by";
+  @SerializedName(SERIALIZED_NAME_DECIDED_BY)
+  @javax.annotation.Nullable
+  private DecidedByEnum decidedBy;
 
   public static final String SERIALIZED_NAME_AUDIT_ID = "audit_id";
   @SerializedName(SERIALIZED_NAME_AUDIT_ID)
@@ -154,6 +213,25 @@ public class AskResponse {
   }
 
 
+  public AskResponse decidedBy(@javax.annotation.Nullable DecidedByEnum decidedBy) {
+    this.decidedBy = decidedBy;
+    return this;
+  }
+
+  /**
+   * Which check produced the answer. Always pdp for a user caller.
+   * @return decidedBy
+   */
+  @javax.annotation.Nullable
+  public DecidedByEnum getDecidedBy() {
+    return decidedBy;
+  }
+
+  public void setDecidedBy(@javax.annotation.Nullable DecidedByEnum decidedBy) {
+    this.decidedBy = decidedBy;
+  }
+
+
   public AskResponse auditId(@javax.annotation.Nullable String auditId) {
     this.auditId = auditId;
     return this;
@@ -187,12 +265,13 @@ public class AskResponse {
         Objects.equals(this.action, askResponse.action) &&
         Objects.equals(this.context, askResponse.context) &&
         Objects.equals(this.reason, askResponse.reason) &&
+        Objects.equals(this.decidedBy, askResponse.decidedBy) &&
         Objects.equals(this.auditId, askResponse.auditId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(allowed, action, context, reason, auditId);
+    return Objects.hash(allowed, action, context, reason, decidedBy, auditId);
   }
 
   @Override
@@ -203,6 +282,7 @@ public class AskResponse {
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
     sb.append("    context: ").append(toIndentedString(context)).append("\n");
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
+    sb.append("    decidedBy: ").append(toIndentedString(decidedBy)).append("\n");
     sb.append("    auditId: ").append(toIndentedString(auditId)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -225,7 +305,7 @@ public class AskResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("allowed", "action", "context", "reason", "audit_id"));
+    openapiFields = new HashSet<String>(Arrays.asList("allowed", "action", "context", "reason", "decided_by", "audit_id"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -257,6 +337,13 @@ public class AskResponse {
       }
       if ((jsonObj.get("reason") != null && !jsonObj.get("reason").isJsonNull()) && !jsonObj.get("reason").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `reason` to be a primitive type in the JSON string but got `%s`", jsonObj.get("reason").toString()));
+      }
+      if ((jsonObj.get("decided_by") != null && !jsonObj.get("decided_by").isJsonNull()) && !jsonObj.get("decided_by").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `decided_by` to be a primitive type in the JSON string but got `%s`", jsonObj.get("decided_by").toString()));
+      }
+      // validate the optional field `decided_by`
+      if (jsonObj.get("decided_by") != null && !jsonObj.get("decided_by").isJsonNull()) {
+        DecidedByEnum.validateJsonElement(jsonObj.get("decided_by"));
       }
       if ((jsonObj.get("audit_id") != null && !jsonObj.get("audit_id").isJsonNull()) && !jsonObj.get("audit_id").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `audit_id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("audit_id").toString()));

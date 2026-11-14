@@ -12,11 +12,10 @@ import AnyCodable
 
 public struct PutAdminSettingsEmailUpdateResponse: Codable, JSONEncodable, Hashable {
 
-    /** Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted. */
-    public var data: [String: AnyCodable]?
+    public var data: EmailSenderSettings?
     public var message: String?
 
-    public init(data: [String: AnyCodable]? = nil, message: String? = nil) {
+    public init(data: EmailSenderSettings? = nil, message: String? = nil) {
         self.data = data
         self.message = message
     }

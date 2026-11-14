@@ -30,7 +30,7 @@ Name | Type | Description | Notes
 **RequestObjectSigningAlgValuesSupported** | Pointer to **[]string** |  | [optional] 
 **UiLocalesSupported** | Pointer to **[]string** |  | [optional] 
 **PromptValuesSupported** | Pointer to **[]string** |  | [optional] 
-**AcrValuesSupported** | Pointer to **[]string** | The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings. | [optional] 
+**AcrValuesSupported** | Pointer to **[]string** | The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session). The list is the same for every organization. | [optional] 
 **CodeChallengeMethodsSupported** | Pointer to **[]string** |  | [optional] 
 **AuthorizationResponseIssParameterSupported** | Pointer to **bool** |  | [optional] 
 **PushedAuthorizationRequestEndpoint** | Pointer to **string** |  | [optional] 
@@ -54,8 +54,8 @@ Name | Type | Description | Notes
 **EntityProfilesSupported** | Pointer to **[]string** |  | [optional] 
 **ClientIdMetadataDocumentSupported** | Pointer to **bool** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] 
 **AuthorizationGrantProfilesSupported** | Pointer to **[]string** | Only when the organization accepts ID-JAGs. | [optional] 
-**OpPolicyUri** | Pointer to **string** | Only when configured. | [optional] 
-**OpTosUri** | Pointer to **string** | Only when configured. | [optional] 
+**OpPolicyUri** | Pointer to **string** | The Privacy policy URL of the organization&#39;s login page settings. Only when it is set. | [optional] 
+**OpTosUri** | Pointer to **string** | The Terms of service URL of the organization&#39;s login page settings. Only when it is set. | [optional] 
 
 ## Methods
 

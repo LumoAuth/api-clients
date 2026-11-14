@@ -726,6 +726,7 @@ class SocialLoginProvider implements ModelInterface, ArrayAccess, \JsonSerializa
      * Gets customClaims
      *
      * @return array<string,mixed>|null
+     * @deprecated
      */
     public function getCustomClaims()
     {
@@ -735,9 +736,10 @@ class SocialLoginProvider implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets customClaims
      *
-     * @param array<string,mixed>|null $customClaims Detailed responses only
+     * @param array<string,mixed>|null $customClaims Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes.
      *
      * @return self
+     * @deprecated
      */
     public function setCustomClaims($customClaims)
     {

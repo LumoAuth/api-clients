@@ -259,12 +259,4 @@ public class UserinfoResponseTest {
         // TODO: test budgetPolicy
     }
 
-    /**
-     * Test the property 'clientId'
-     */
-    @Test
-    public void clientIdTest() {
-        // TODO: test clientId
-    }
-
 }

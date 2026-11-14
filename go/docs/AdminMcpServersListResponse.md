@@ -5,8 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Data** | Pointer to [**[]McpServer**](McpServer.md) |  | [optional] 
-**Meta** | Pointer to [**AdminMcpServersListResponseMeta**](AdminMcpServersListResponseMeta.md) |  | [optional] 
+**Meta** | Pointer to [**PaginationMeta**](PaginationMeta.md) |  | [optional] 
 **Pagination** | Pointer to [**PaginationMeta**](PaginationMeta.md) |  | [optional] 
+**ResourceType** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -54,20 +55,20 @@ HasData returns a boolean if a field has been set.
 
 ### GetMeta
 
-`func (o *AdminMcpServersListResponse) GetMeta() AdminMcpServersListResponseMeta`
+`func (o *AdminMcpServersListResponse) GetMeta() PaginationMeta`
 
 GetMeta returns the Meta field if non-nil, zero value otherwise.
 
 ### GetMetaOk
 
-`func (o *AdminMcpServersListResponse) GetMetaOk() (*AdminMcpServersListResponseMeta, bool)`
+`func (o *AdminMcpServersListResponse) GetMetaOk() (*PaginationMeta, bool)`
 
 GetMetaOk returns a tuple with the Meta field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMeta
 
-`func (o *AdminMcpServersListResponse) SetMeta(v AdminMcpServersListResponseMeta)`
+`func (o *AdminMcpServersListResponse) SetMeta(v PaginationMeta)`
 
 SetMeta sets Meta field to given value.
 
@@ -101,6 +102,31 @@ SetPagination sets Pagination field to given value.
 `func (o *AdminMcpServersListResponse) HasPagination() bool`
 
 HasPagination returns a boolean if a field has been set.
+
+### GetResourceType
+
+`func (o *AdminMcpServersListResponse) GetResourceType() string`
+
+GetResourceType returns the ResourceType field if non-nil, zero value otherwise.
+
+### GetResourceTypeOk
+
+`func (o *AdminMcpServersListResponse) GetResourceTypeOk() (*string, bool)`
+
+GetResourceTypeOk returns a tuple with the ResourceType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResourceType
+
+`func (o *AdminMcpServersListResponse) SetResourceType(v string)`
+
+SetResourceType sets ResourceType field to given value.
+
+### HasResourceType
+
+`func (o *AdminMcpServersListResponse) HasResourceType() bool`
+
+HasResourceType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

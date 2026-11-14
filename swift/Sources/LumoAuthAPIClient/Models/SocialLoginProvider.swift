@@ -25,7 +25,8 @@ public struct SocialLoginProvider: Codable, JSONEncodable, Hashable {
     public var callbackUrl: String?
     /** Detailed responses only */
     public var requestedScopes: [String]?
-    /** Detailed responses only */
+    /** Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes. */
+    @available(*, deprecated, message: "This property is deprecated.")
     public var customClaims: [String: AnyCodable]?
     /** Detailed responses only */
     public var claimMapping: [String: AnyCodable]?

@@ -12,6 +12,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | [**adminIdentitiesLink()**](AdminUsersApi.md#adminIdentitiesLink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user |
 | [**adminIdentitiesList()**](AdminUsersApi.md#adminIdentitiesList) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links |
 | [**adminIdentitiesUnlink()**](AdminUsersApi.md#adminIdentitiesUnlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity |
+| [**adminUsersRestore()**](AdminUsersApi.md#adminUsersRestore) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/restore | Restore a deleted user |
 | [**blockUser()**](AdminUsersApi.md#blockUser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user |
 | [**createUser()**](AdminUsersApi.md#createUser) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user |
 | [**deleteUser()**](AdminUsersApi.md#deleteUser) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user |
@@ -108,6 +109,8 @@ addUserPermission($orgId, $userId): \LumoAuth\ApiClient\Model\AddUserPermissionR
 ```
 
 Assign a permission to a user
+
+Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
 ### Example
 
@@ -239,7 +242,7 @@ adminIdentitiesLegacySamlRelink($orgId, $adminIdentitiesLegacySamlRelinkRequest)
 
 Relink legacy SAML users to an IdP
 
-Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
 
 ### Example
 
@@ -556,6 +559,73 @@ try {
 ### Return type
 
 [**\LumoAuth\ApiClient\Model\AdminAgentsGetResponse**](../Model/AdminAgentsGetResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `adminUsersRestore()`
+
+```php
+adminUsersRestore($orgId, $userId): \LumoAuth\ApiClient\Model\AdminUsersRestoreResponse
+```
+
+Restore a deleted user
+
+Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\AdminUsersApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$orgId = 'orgId_example'; // string
+$userId = 'userId_example'; // string
+
+try {
+    $result = $apiInstance->adminUsersRestore($orgId, $userId);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AdminUsersApi->adminUsersRestore: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+| **userId** | **string**|  | |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\AdminUsersRestoreResponse**](../Model/AdminUsersRestoreResponse.md)
 
 ### Authorization
 
@@ -1026,7 +1096,7 @@ try {
 ## `listUsers()`
 
 ```php
-listUsers($orgId): \LumoAuth\ApiClient\Model\ListUsersResponse
+listUsers($orgId, $page, $limit, $search, $active, $blocked, $deleted, $emailVerified, $mfaEnabled, $role, $group, $sortBy, $sortDir): \LumoAuth\ApiClient\Model\ListUsersResponse
 ```
 
 List users
@@ -1054,9 +1124,21 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminUsersApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$page = 1; // int | Page number.
+$limit = 25; // int | Users per page (1 to 100).
+$search = 'search_example'; // string | Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used).
+$active = True; // bool | Only active (`true`) or inactive (`false`) users.
+$blocked = True; // bool | Only blocked (`true`) or not blocked (`false`) users.
+$deleted = false; // bool | `true` lists only the users that SCIM deleted (soft-deleted). Without it, or with `false`, the list leaves them out.
+$emailVerified = True; // bool | Only users whose email address is verified (`true`) or not (`false`).
+$mfaEnabled = True; // bool | Only users with (`true`) or without (`false`) multi-factor authentication.
+$role = 'role_example'; // string | Only users who hold the role with this slug.
+$group = 'group_example'; // string | Only members of the group with this slug.
+$sortBy = 'sortBy_example'; // string | Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt.
+$sortDir = 'DESC'; // string | Sort direction. Used only together with sortBy.
 
 try {
-    $result = $apiInstance->listUsers($orgId);
+    $result = $apiInstance->listUsers($orgId, $page, $limit, $search, $active, $blocked, $deleted, $emailVerified, $mfaEnabled, $role, $group, $sortBy, $sortDir);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminUsersApi->listUsers: ', $e->getMessage(), PHP_EOL;
@@ -1068,6 +1150,18 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **page** | **int**| Page number. | [optional] [default to 1] |
+| **limit** | **int**| Users per page (1 to 100). | [optional] [default to 25] |
+| **search** | **string**| Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). | [optional] |
+| **active** | **bool**| Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. | [optional] |
+| **blocked** | **bool**| Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. | [optional] |
+| **deleted** | **bool**| &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. | [optional] [default to false] |
+| **emailVerified** | **bool**| Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). | [optional] |
+| **mfaEnabled** | **bool**| Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. | [optional] |
+| **role** | **string**| Only users who hold the role with this slug. | [optional] |
+| **group** | **string**| Only members of the group with this slug. | [optional] |
+| **sortBy** | **string**| Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. | [optional] |
+| **sortDir** | **string**| Sort direction. Used only together with sortBy. | [optional] [default to &#39;DESC&#39;] |
 
 ### Return type
 
@@ -1556,6 +1650,8 @@ setUserPassword($orgId, $userId): \LumoAuth\ApiClient\Model\SetUserPasswordPostR
 
 Set a user's password
 
+Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
+
 ### Example
 
 ```php
@@ -1620,6 +1716,8 @@ setUserPasswordPost($orgId, $userId): \LumoAuth\ApiClient\Model\SetUserPasswordP
 ```
 
 Set a user's password
+
+Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
 ### Example
 

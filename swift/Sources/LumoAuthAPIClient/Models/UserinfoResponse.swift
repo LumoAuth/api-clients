@@ -14,16 +14,14 @@ public struct UserinfoResponse: Codable, JSONEncodable, Hashable {
 
     public enum IdentityType: String, Codable, CaseIterable {
         case agent = "agent"
-        case client = "client"
-        case unknown = "unknown"
     }
-    /** User id; agent_<agent_id> for agents; client_<client_id> for clients. */
+    /** User id; agent_<agent_id> for agents. */
     public var sub: String
-    /** Only for non-user principals. */
+    /** Only for agents. */
     public var identityType: IdentityType?
     /** Organization slug. */
     public var tenant: String?
-    /** profile scope (users); agent / client display name. */
+    /** profile scope (users); agent display name. */
     public var name: String?
     /** profile scope. */
     public var givenName: String?
@@ -71,10 +69,8 @@ public struct UserinfoResponse: Codable, JSONEncodable, Hashable {
     public var capabilities: [String]?
     /** Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429. */
     public var budgetPolicy: [String: AnyCodable]?
-    /** Clients only. */
-    public var clientId: String?
 
-    public init(sub: String, identityType: IdentityType? = nil, tenant: String? = nil, name: String? = nil, givenName: String? = nil, familyName: String? = nil, middleName: String? = nil, nickname: String? = nil, preferredUsername: String? = nil, profile: String? = nil, picture: String? = nil, website: String? = nil, gender: String? = nil, birthdate: Date? = nil, zoneinfo: String? = nil, locale: String? = nil, updatedAt: Int? = nil, email: String? = nil, emailVerified: Bool? = nil, phoneNumber: String? = nil, phoneNumberVerified: Bool? = nil, address: [String: AnyCodable]? = nil, roles: [String]? = nil, agentId: String? = nil, workloadIdentity: String? = nil, capabilities: [String]? = nil, budgetPolicy: [String: AnyCodable]? = nil, clientId: String? = nil) {
+    public init(sub: String, identityType: IdentityType? = nil, tenant: String? = nil, name: String? = nil, givenName: String? = nil, familyName: String? = nil, middleName: String? = nil, nickname: String? = nil, preferredUsername: String? = nil, profile: String? = nil, picture: String? = nil, website: String? = nil, gender: String? = nil, birthdate: Date? = nil, zoneinfo: String? = nil, locale: String? = nil, updatedAt: Int? = nil, email: String? = nil, emailVerified: Bool? = nil, phoneNumber: String? = nil, phoneNumberVerified: Bool? = nil, address: [String: AnyCodable]? = nil, roles: [String]? = nil, agentId: String? = nil, workloadIdentity: String? = nil, capabilities: [String]? = nil, budgetPolicy: [String: AnyCodable]? = nil) {
         self.sub = sub
         self.identityType = identityType
         self.tenant = tenant
@@ -102,7 +98,6 @@ public struct UserinfoResponse: Codable, JSONEncodable, Hashable {
         self.workloadIdentity = workloadIdentity
         self.capabilities = capabilities
         self.budgetPolicy = budgetPolicy
-        self.clientId = clientId
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -133,7 +128,6 @@ public struct UserinfoResponse: Codable, JSONEncodable, Hashable {
         case workloadIdentity = "workload_identity"
         case capabilities
         case budgetPolicy = "budget_policy"
-        case clientId = "client_id"
     }
 
     // Encodable protocol methods
@@ -167,7 +161,6 @@ public struct UserinfoResponse: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(workloadIdentity, forKey: .workloadIdentity)
         try container.encodeIfPresent(capabilities, forKey: .capabilities)
         try container.encodeIfPresent(budgetPolicy, forKey: .budgetPolicy)
-        try container.encodeIfPresent(clientId, forKey: .clientId)
     }
 }
 

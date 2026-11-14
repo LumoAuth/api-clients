@@ -40,7 +40,7 @@ public struct OpenIdConfiguration: Codable, JSONEncodable, Hashable {
     public var requestObjectSigningAlgValuesSupported: [String]?
     public var uiLocalesSupported: [String]?
     public var promptValuesSupported: [String]?
-    /** The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings. */
+    /** The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session). The list is the same for every organization. */
     public var acrValuesSupported: [String]?
     public var codeChallengeMethodsSupported: [String]?
     public var authorizationResponseIssParameterSupported: Bool?
@@ -67,9 +67,9 @@ public struct OpenIdConfiguration: Codable, JSONEncodable, Hashable {
     public var clientIdMetadataDocumentSupported: Bool?
     /** Only when the organization accepts ID-JAGs. */
     public var authorizationGrantProfilesSupported: [String]?
-    /** Only when configured. */
+    /** The Privacy policy URL of the organization's login page settings. Only when it is set. */
     public var opPolicyUri: String?
-    /** Only when configured. */
+    /** The Terms of service URL of the organization's login page settings. Only when it is set. */
     public var opTosUri: String?
 
     public init(issuer: String, authorizationEndpoint: String, tokenEndpoint: String, jwksUri: String, responseTypesSupported: [String], subjectTypesSupported: [String], idTokenSigningAlgValuesSupported: [String], userinfoEndpoint: String? = nil, registrationEndpoint: String? = nil, scopesSupported: [String]? = nil, claimsSupported: [String]? = nil, responseModesSupported: [String]? = nil, authorizationSigningAlgValuesSupported: [String]? = nil, grantTypesSupported: [String]? = nil, deviceAuthorizationEndpoint: String? = nil, tokenEndpointAuthMethodsSupported: [String]? = nil, tokenEndpointAuthSigningAlgValuesSupported: [String]? = nil, claimTypesSupported: [String]? = nil, claimsParameterSupported: Bool? = nil, requestParameterSupported: Bool? = nil, requestUriParameterSupported: Bool? = nil, requireRequestUriRegistration: Bool? = nil, requireSignedRequestObject: Bool? = nil, requestObjectSigningAlgValuesSupported: [String]? = nil, uiLocalesSupported: [String]? = nil, promptValuesSupported: [String]? = nil, acrValuesSupported: [String]? = nil, codeChallengeMethodsSupported: [String]? = nil, authorizationResponseIssParameterSupported: Bool? = nil, pushedAuthorizationRequestEndpoint: String? = nil, requirePushedAuthorizationRequests: Bool? = nil, dpopSigningAlgValuesSupported: [String]? = nil, introspectionEndpoint: String? = nil, introspectionEndpointAuthMethodsSupported: [String]? = nil, revocationEndpoint: String? = nil, revocationEndpointAuthMethodsSupported: [String]? = nil, resourceIndicatorsSupported: Bool? = nil, endSessionEndpoint: String? = nil, checkSessionIframe: String? = nil, frontchannelLogoutSupported: Bool? = nil, frontchannelLogoutSessionSupported: Bool? = nil, backchannelLogoutSupported: Bool? = nil, backchannelLogoutSessionSupported: Bool? = nil, backchannelAuthenticationEndpoint: String? = nil, backchannelTokenDeliveryModesSupported: [String]? = nil, backchannelUserCodeParameterSupported: Bool? = nil, serviceDocumentation: String? = nil, entityProfilesSupported: [String]? = nil, clientIdMetadataDocumentSupported: Bool? = nil, authorizationGrantProfilesSupported: [String]? = nil, opPolicyUri: String? = nil, opTosUri: String? = nil) {

@@ -73,12 +73,13 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="backchannelAuthenticationEndpoint">backchannelAuthenticationEndpoint.</param>
         /// <param name="backchannelTokenDeliveryModesSupported">backchannelTokenDeliveryModesSupported.</param>
         /// <param name="backchannelUserCodeParameterSupported">backchannelUserCodeParameterSupported.</param>
+        /// <param name="resourceIndicatorsSupported">resourceIndicatorsSupported.</param>
         /// <param name="entityProfilesSupported">entityProfilesSupported.</param>
         /// <param name="clientIdMetadataDocumentSupported">Present (true) unless the organization switched Client ID Metadata Documents off..</param>
         /// <param name="authorizationGrantProfilesSupported">Only when the organization accepts ID-JAGs..</param>
-        /// <param name="opPolicyUri">Only when configured..</param>
-        /// <param name="opTosUri">Only when configured..</param>
-        public AuthorizationServerMetadata(string issuer = default, string authorizationEndpoint = default, string tokenEndpoint = default, List<string> responseTypesSupported = default, string jwksUri = default, string registrationEndpoint = default, List<string> scopesSupported = default, List<string> responseModesSupported = default, List<string> authorizationSigningAlgValuesSupported = default, List<string> grantTypesSupported = default, List<string> tokenEndpointAuthMethodsSupported = default, List<string> tokenEndpointAuthSigningAlgValuesSupported = default, string serviceDocumentation = default, List<string> uiLocalesSupported = default, string revocationEndpoint = default, List<string> revocationEndpointAuthMethodsSupported = default, string introspectionEndpoint = default, List<string> introspectionEndpointAuthMethodsSupported = default, List<string> codeChallengeMethodsSupported = default, bool authorizationResponseIssParameterSupported = default, bool requestParameterSupported = default, bool requestUriParameterSupported = default, bool requireRequestUriRegistration = default, bool requireSignedRequestObject = default, List<string> requestObjectSigningAlgValuesSupported = default, string deviceAuthorizationEndpoint = default, string pushedAuthorizationRequestEndpoint = default, bool requirePushedAuthorizationRequests = default, List<string> dpopSigningAlgValuesSupported = default, string backchannelAuthenticationEndpoint = default, List<string> backchannelTokenDeliveryModesSupported = default, bool backchannelUserCodeParameterSupported = default, List<string> entityProfilesSupported = default, bool clientIdMetadataDocumentSupported = default, List<string> authorizationGrantProfilesSupported = default, string opPolicyUri = default, string opTosUri = default)
+        /// <param name="opPolicyUri">The Privacy policy URL of the organization&#39;s login page settings. Only when it is set..</param>
+        /// <param name="opTosUri">The Terms of service URL of the organization&#39;s login page settings. Only when it is set..</param>
+        public AuthorizationServerMetadata(string issuer = default, string authorizationEndpoint = default, string tokenEndpoint = default, List<string> responseTypesSupported = default, string jwksUri = default, string registrationEndpoint = default, List<string> scopesSupported = default, List<string> responseModesSupported = default, List<string> authorizationSigningAlgValuesSupported = default, List<string> grantTypesSupported = default, List<string> tokenEndpointAuthMethodsSupported = default, List<string> tokenEndpointAuthSigningAlgValuesSupported = default, string serviceDocumentation = default, List<string> uiLocalesSupported = default, string revocationEndpoint = default, List<string> revocationEndpointAuthMethodsSupported = default, string introspectionEndpoint = default, List<string> introspectionEndpointAuthMethodsSupported = default, List<string> codeChallengeMethodsSupported = default, bool authorizationResponseIssParameterSupported = default, bool requestParameterSupported = default, bool requestUriParameterSupported = default, bool requireRequestUriRegistration = default, bool requireSignedRequestObject = default, List<string> requestObjectSigningAlgValuesSupported = default, string deviceAuthorizationEndpoint = default, string pushedAuthorizationRequestEndpoint = default, bool requirePushedAuthorizationRequests = default, List<string> dpopSigningAlgValuesSupported = default, string backchannelAuthenticationEndpoint = default, List<string> backchannelTokenDeliveryModesSupported = default, bool backchannelUserCodeParameterSupported = default, bool resourceIndicatorsSupported = default, List<string> entityProfilesSupported = default, bool clientIdMetadataDocumentSupported = default, List<string> authorizationGrantProfilesSupported = default, string opPolicyUri = default, string opTosUri = default)
         {
             // to ensure "issuer" is required (not null)
             if (issuer == null)
@@ -137,6 +138,7 @@ namespace LumoAuth.ApiClient.Model
             this.BackchannelAuthenticationEndpoint = backchannelAuthenticationEndpoint;
             this.BackchannelTokenDeliveryModesSupported = backchannelTokenDeliveryModesSupported;
             this.BackchannelUserCodeParameterSupported = backchannelUserCodeParameterSupported;
+            this.ResourceIndicatorsSupported = resourceIndicatorsSupported;
             this.EntityProfilesSupported = entityProfilesSupported;
             this.ClientIdMetadataDocumentSupported = clientIdMetadataDocumentSupported;
             this.AuthorizationGrantProfilesSupported = authorizationGrantProfilesSupported;
@@ -375,6 +377,15 @@ namespace LumoAuth.ApiClient.Model
         public bool BackchannelUserCodeParameterSupported { get; set; }
 
         /// <summary>
+        /// Gets or Sets ResourceIndicatorsSupported
+        /// </summary>
+        /*
+        <example>true</example>
+        */
+        [DataMember(Name = "resource_indicators_supported", EmitDefaultValue = true)]
+        public bool ResourceIndicatorsSupported { get; set; }
+
+        /// <summary>
         /// Gets or Sets EntityProfilesSupported
         /// </summary>
         /*
@@ -401,16 +412,16 @@ namespace LumoAuth.ApiClient.Model
         public List<string> AuthorizationGrantProfilesSupported { get; set; }
 
         /// <summary>
-        /// Only when configured.
+        /// The Privacy policy URL of the organization&#39;s login page settings. Only when it is set.
         /// </summary>
-        /// <value>Only when configured.</value>
+        /// <value>The Privacy policy URL of the organization&#39;s login page settings. Only when it is set.</value>
         [DataMember(Name = "op_policy_uri", EmitDefaultValue = false)]
         public string OpPolicyUri { get; set; }
 
         /// <summary>
-        /// Only when configured.
+        /// The Terms of service URL of the organization&#39;s login page settings. Only when it is set.
         /// </summary>
-        /// <value>Only when configured.</value>
+        /// <value>The Terms of service URL of the organization&#39;s login page settings. Only when it is set.</value>
         [DataMember(Name = "op_tos_uri", EmitDefaultValue = false)]
         public string OpTosUri { get; set; }
 
@@ -454,6 +465,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  BackchannelAuthenticationEndpoint: ").Append(BackchannelAuthenticationEndpoint).Append("\n");
             sb.Append("  BackchannelTokenDeliveryModesSupported: ").Append(BackchannelTokenDeliveryModesSupported).Append("\n");
             sb.Append("  BackchannelUserCodeParameterSupported: ").Append(BackchannelUserCodeParameterSupported).Append("\n");
+            sb.Append("  ResourceIndicatorsSupported: ").Append(ResourceIndicatorsSupported).Append("\n");
             sb.Append("  EntityProfilesSupported: ").Append(EntityProfilesSupported).Append("\n");
             sb.Append("  ClientIdMetadataDocumentSupported: ").Append(ClientIdMetadataDocumentSupported).Append("\n");
             sb.Append("  AuthorizationGrantProfilesSupported: ").Append(AuthorizationGrantProfilesSupported).Append("\n");

@@ -53,7 +53,7 @@ import io.lumoauth.client.JSON;
 /**
  * RegisterClientResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T04:22:27.215396570Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class RegisterClientResponse {
   public static final String SERIALIZED_NAME_CLIENT_ID = "client_id";
   @SerializedName(SERIALIZED_NAME_CLIENT_ID)
@@ -192,16 +192,6 @@ public class RegisterClientResponse {
   @javax.annotation.Nullable
   private String tosUri;
 
-  public static final String SERIALIZED_NAME_SECTOR_IDENTIFIER_URI = "sector_identifier_uri";
-  @SerializedName(SERIALIZED_NAME_SECTOR_IDENTIFIER_URI)
-  @javax.annotation.Nullable
-  private String sectorIdentifierUri;
-
-  public static final String SERIALIZED_NAME_SUBJECT_TYPE = "subject_type";
-  @SerializedName(SERIALIZED_NAME_SUBJECT_TYPE)
-  @javax.annotation.Nullable
-  private String subjectType;
-
   public static final String SERIALIZED_NAME_JWKS_URI = "jwks_uri";
   @SerializedName(SERIALIZED_NAME_JWKS_URI)
   @javax.annotation.Nullable
@@ -222,11 +212,6 @@ public class RegisterClientResponse {
   @javax.annotation.Nullable
   private String initiateLoginUri;
 
-  public static final String SERIALIZED_NAME_REQUEST_URIS = "request_uris";
-  @SerializedName(SERIALIZED_NAME_REQUEST_URIS)
-  @javax.annotation.Nullable
-  private List<String> requestUris = new ArrayList<>();
-
   public static final String SERIALIZED_NAME_SCOPE = "scope";
   @SerializedName(SERIALIZED_NAME_SCOPE)
   @javax.annotation.Nullable
@@ -236,11 +221,6 @@ public class RegisterClientResponse {
   @SerializedName(SERIALIZED_NAME_ID_TOKEN_SIGNED_RESPONSE_ALG)
   @javax.annotation.Nullable
   private String idTokenSignedResponseAlg;
-
-  public static final String SERIALIZED_NAME_USERINFO_SIGNED_RESPONSE_ALG = "userinfo_signed_response_alg";
-  @SerializedName(SERIALIZED_NAME_USERINFO_SIGNED_RESPONSE_ALG)
-  @javax.annotation.Nullable
-  private String userinfoSignedResponseAlg;
 
   public static final String SERIALIZED_NAME_REQUEST_OBJECT_SIGNING_ALG = "request_object_signing_alg";
   @SerializedName(SERIALIZED_NAME_REQUEST_OBJECT_SIGNING_ALG)
@@ -650,44 +630,6 @@ public class RegisterClientResponse {
   }
 
 
-  public RegisterClientResponse sectorIdentifierUri(@javax.annotation.Nullable String sectorIdentifierUri) {
-    this.sectorIdentifierUri = sectorIdentifierUri;
-    return this;
-  }
-
-  /**
-   * Get sectorIdentifierUri
-   * @return sectorIdentifierUri
-   */
-  @javax.annotation.Nullable
-  public String getSectorIdentifierUri() {
-    return sectorIdentifierUri;
-  }
-
-  public void setSectorIdentifierUri(@javax.annotation.Nullable String sectorIdentifierUri) {
-    this.sectorIdentifierUri = sectorIdentifierUri;
-  }
-
-
-  public RegisterClientResponse subjectType(@javax.annotation.Nullable String subjectType) {
-    this.subjectType = subjectType;
-    return this;
-  }
-
-  /**
-   * Only when not \&quot;public\&quot;.
-   * @return subjectType
-   */
-  @javax.annotation.Nullable
-  public String getSubjectType() {
-    return subjectType;
-  }
-
-  public void setSubjectType(@javax.annotation.Nullable String subjectType) {
-    this.subjectType = subjectType;
-  }
-
-
   public RegisterClientResponse jwksUri(@javax.annotation.Nullable String jwksUri) {
     this.jwksUri = jwksUri;
     return this;
@@ -780,33 +722,6 @@ public class RegisterClientResponse {
   }
 
 
-  public RegisterClientResponse requestUris(@javax.annotation.Nullable List<String> requestUris) {
-    this.requestUris = requestUris;
-    return this;
-  }
-
-  public RegisterClientResponse addRequestUrisItem(String requestUrisItem) {
-    if (this.requestUris == null) {
-      this.requestUris = new ArrayList<>();
-    }
-    this.requestUris.add(requestUrisItem);
-    return this;
-  }
-
-  /**
-   * Get requestUris
-   * @return requestUris
-   */
-  @javax.annotation.Nullable
-  public List<String> getRequestUris() {
-    return requestUris;
-  }
-
-  public void setRequestUris(@javax.annotation.Nullable List<String> requestUris) {
-    this.requestUris = requestUris;
-  }
-
-
   public RegisterClientResponse scope(@javax.annotation.Nullable String scope) {
     this.scope = scope;
     return this;
@@ -842,25 +757,6 @@ public class RegisterClientResponse {
 
   public void setIdTokenSignedResponseAlg(@javax.annotation.Nullable String idTokenSignedResponseAlg) {
     this.idTokenSignedResponseAlg = idTokenSignedResponseAlg;
-  }
-
-
-  public RegisterClientResponse userinfoSignedResponseAlg(@javax.annotation.Nullable String userinfoSignedResponseAlg) {
-    this.userinfoSignedResponseAlg = userinfoSignedResponseAlg;
-    return this;
-  }
-
-  /**
-   * Get userinfoSignedResponseAlg
-   * @return userinfoSignedResponseAlg
-   */
-  @javax.annotation.Nullable
-  public String getUserinfoSignedResponseAlg() {
-    return userinfoSignedResponseAlg;
-  }
-
-  public void setUserinfoSignedResponseAlg(@javax.annotation.Nullable String userinfoSignedResponseAlg) {
-    this.userinfoSignedResponseAlg = userinfoSignedResponseAlg;
   }
 
 
@@ -1097,16 +993,12 @@ public class RegisterClientResponse {
         Objects.equals(this.logoUri, registerClientResponse.logoUri) &&
         Objects.equals(this.policyUri, registerClientResponse.policyUri) &&
         Objects.equals(this.tosUri, registerClientResponse.tosUri) &&
-        Objects.equals(this.sectorIdentifierUri, registerClientResponse.sectorIdentifierUri) &&
-        Objects.equals(this.subjectType, registerClientResponse.subjectType) &&
         Objects.equals(this.jwksUri, registerClientResponse.jwksUri) &&
         Objects.equals(this.jwks, registerClientResponse.jwks) &&
         Objects.equals(this.postLogoutRedirectUris, registerClientResponse.postLogoutRedirectUris) &&
         Objects.equals(this.initiateLoginUri, registerClientResponse.initiateLoginUri) &&
-        Objects.equals(this.requestUris, registerClientResponse.requestUris) &&
         Objects.equals(this.scope, registerClientResponse.scope) &&
         Objects.equals(this.idTokenSignedResponseAlg, registerClientResponse.idTokenSignedResponseAlg) &&
-        Objects.equals(this.userinfoSignedResponseAlg, registerClientResponse.userinfoSignedResponseAlg) &&
         Objects.equals(this.requestObjectSigningAlg, registerClientResponse.requestObjectSigningAlg) &&
         Objects.equals(this.tokenEndpointAuthSigningAlg, registerClientResponse.tokenEndpointAuthSigningAlg) &&
         Objects.equals(this.defaultMaxAge, registerClientResponse.defaultMaxAge) &&
@@ -1121,7 +1013,7 @@ public class RegisterClientResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(clientId, clientSecret, clientSecretExpiresAt, clientIdIssuedAt, registrationAccessToken, registrationClientUri, clientName, redirectUris, responseTypes, grantTypes, applicationType, tokenEndpointAuthMethod, contacts, clientUri, logoUri, policyUri, tosUri, sectorIdentifierUri, subjectType, jwksUri, jwks, postLogoutRedirectUris, initiateLoginUri, requestUris, scope, idTokenSignedResponseAlg, userinfoSignedResponseAlg, requestObjectSigningAlg, tokenEndpointAuthSigningAlg, defaultMaxAge, requireAuthTime, defaultAcrValues, frontchannelLogoutUri, frontchannelLogoutSessionRequired, backchannelLogoutUri, backchannelLogoutSessionRequired, audienceUris);
+    return Objects.hash(clientId, clientSecret, clientSecretExpiresAt, clientIdIssuedAt, registrationAccessToken, registrationClientUri, clientName, redirectUris, responseTypes, grantTypes, applicationType, tokenEndpointAuthMethod, contacts, clientUri, logoUri, policyUri, tosUri, jwksUri, jwks, postLogoutRedirectUris, initiateLoginUri, scope, idTokenSignedResponseAlg, requestObjectSigningAlg, tokenEndpointAuthSigningAlg, defaultMaxAge, requireAuthTime, defaultAcrValues, frontchannelLogoutUri, frontchannelLogoutSessionRequired, backchannelLogoutUri, backchannelLogoutSessionRequired, audienceUris);
   }
 
   @Override
@@ -1145,16 +1037,12 @@ public class RegisterClientResponse {
     sb.append("    logoUri: ").append(toIndentedString(logoUri)).append("\n");
     sb.append("    policyUri: ").append(toIndentedString(policyUri)).append("\n");
     sb.append("    tosUri: ").append(toIndentedString(tosUri)).append("\n");
-    sb.append("    sectorIdentifierUri: ").append(toIndentedString(sectorIdentifierUri)).append("\n");
-    sb.append("    subjectType: ").append(toIndentedString(subjectType)).append("\n");
     sb.append("    jwksUri: ").append(toIndentedString(jwksUri)).append("\n");
     sb.append("    jwks: ").append(toIndentedString(jwks)).append("\n");
     sb.append("    postLogoutRedirectUris: ").append(toIndentedString(postLogoutRedirectUris)).append("\n");
     sb.append("    initiateLoginUri: ").append(toIndentedString(initiateLoginUri)).append("\n");
-    sb.append("    requestUris: ").append(toIndentedString(requestUris)).append("\n");
     sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
     sb.append("    idTokenSignedResponseAlg: ").append(toIndentedString(idTokenSignedResponseAlg)).append("\n");
-    sb.append("    userinfoSignedResponseAlg: ").append(toIndentedString(userinfoSignedResponseAlg)).append("\n");
     sb.append("    requestObjectSigningAlg: ").append(toIndentedString(requestObjectSigningAlg)).append("\n");
     sb.append("    tokenEndpointAuthSigningAlg: ").append(toIndentedString(tokenEndpointAuthSigningAlg)).append("\n");
     sb.append("    defaultMaxAge: ").append(toIndentedString(defaultMaxAge)).append("\n");
@@ -1186,7 +1074,7 @@ public class RegisterClientResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("client_id", "client_secret", "client_secret_expires_at", "client_id_issued_at", "registration_access_token", "registration_client_uri", "client_name", "redirect_uris", "response_types", "grant_types", "application_type", "token_endpoint_auth_method", "contacts", "client_uri", "logo_uri", "policy_uri", "tos_uri", "sector_identifier_uri", "subject_type", "jwks_uri", "jwks", "post_logout_redirect_uris", "initiate_login_uri", "request_uris", "scope", "id_token_signed_response_alg", "userinfo_signed_response_alg", "request_object_signing_alg", "token_endpoint_auth_signing_alg", "default_max_age", "require_auth_time", "default_acr_values", "frontchannel_logout_uri", "frontchannel_logout_session_required", "backchannel_logout_uri", "backchannel_logout_session_required", "audience_uris"));
+    openapiFields = new HashSet<String>(Arrays.asList("client_id", "client_secret", "client_secret_expires_at", "client_id_issued_at", "registration_access_token", "registration_client_uri", "client_name", "redirect_uris", "response_types", "grant_types", "application_type", "token_endpoint_auth_method", "contacts", "client_uri", "logo_uri", "policy_uri", "tos_uri", "jwks_uri", "jwks", "post_logout_redirect_uris", "initiate_login_uri", "scope", "id_token_signed_response_alg", "request_object_signing_alg", "token_endpoint_auth_signing_alg", "default_max_age", "require_auth_time", "default_acr_values", "frontchannel_logout_uri", "frontchannel_logout_session_required", "backchannel_logout_uri", "backchannel_logout_session_required", "audience_uris"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("client_id", "client_id_issued_at", "client_name", "redirect_uris", "response_types", "grant_types", "application_type", "token_endpoint_auth_method"));
@@ -1277,12 +1165,6 @@ public class RegisterClientResponse {
       if ((jsonObj.get("tos_uri") != null && !jsonObj.get("tos_uri").isJsonNull()) && !jsonObj.get("tos_uri").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `tos_uri` to be a primitive type in the JSON string but got `%s`", jsonObj.get("tos_uri").toString()));
       }
-      if ((jsonObj.get("sector_identifier_uri") != null && !jsonObj.get("sector_identifier_uri").isJsonNull()) && !jsonObj.get("sector_identifier_uri").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `sector_identifier_uri` to be a primitive type in the JSON string but got `%s`", jsonObj.get("sector_identifier_uri").toString()));
-      }
-      if ((jsonObj.get("subject_type") != null && !jsonObj.get("subject_type").isJsonNull()) && !jsonObj.get("subject_type").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `subject_type` to be a primitive type in the JSON string but got `%s`", jsonObj.get("subject_type").toString()));
-      }
       if ((jsonObj.get("jwks_uri") != null && !jsonObj.get("jwks_uri").isJsonNull()) && !jsonObj.get("jwks_uri").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `jwks_uri` to be a primitive type in the JSON string but got `%s`", jsonObj.get("jwks_uri").toString()));
       }
@@ -1293,18 +1175,11 @@ public class RegisterClientResponse {
       if ((jsonObj.get("initiate_login_uri") != null && !jsonObj.get("initiate_login_uri").isJsonNull()) && !jsonObj.get("initiate_login_uri").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `initiate_login_uri` to be a primitive type in the JSON string but got `%s`", jsonObj.get("initiate_login_uri").toString()));
       }
-      // ensure the optional json data is an array if present
-      if (jsonObj.get("request_uris") != null && !jsonObj.get("request_uris").isJsonNull() && !jsonObj.get("request_uris").isJsonArray()) {
-        throw new IllegalArgumentException(String.format("Expected the field `request_uris` to be an array in the JSON string but got `%s`", jsonObj.get("request_uris").toString()));
-      }
       if ((jsonObj.get("scope") != null && !jsonObj.get("scope").isJsonNull()) && !jsonObj.get("scope").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `scope` to be a primitive type in the JSON string but got `%s`", jsonObj.get("scope").toString()));
       }
       if ((jsonObj.get("id_token_signed_response_alg") != null && !jsonObj.get("id_token_signed_response_alg").isJsonNull()) && !jsonObj.get("id_token_signed_response_alg").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `id_token_signed_response_alg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("id_token_signed_response_alg").toString()));
-      }
-      if ((jsonObj.get("userinfo_signed_response_alg") != null && !jsonObj.get("userinfo_signed_response_alg").isJsonNull()) && !jsonObj.get("userinfo_signed_response_alg").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `userinfo_signed_response_alg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("userinfo_signed_response_alg").toString()));
       }
       if ((jsonObj.get("request_object_signing_alg") != null && !jsonObj.get("request_object_signing_alg").isJsonNull()) && !jsonObj.get("request_object_signing_alg").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `request_object_signing_alg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("request_object_signing_alg").toString()));

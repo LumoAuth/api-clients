@@ -141,6 +141,21 @@ func Test_lumoauthclient_AdminUsersAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test AdminUsersAPIService AdminUsersRestore", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+		var userId string
+
+		resp, httpRes, err := apiClient.AdminUsersAPI.AdminUsersRestore(context.Background(), orgId, userId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AdminUsersAPIService BlockUser", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

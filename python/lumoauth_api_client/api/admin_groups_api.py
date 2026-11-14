@@ -17,7 +17,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import Field, StrictStr, field_validator
+from typing_extensions import Annotated
 from lumoauth_api_client.models.admin_groups_create_response import AdminGroupsCreateResponse
 from lumoauth_api_client.models.admin_groups_get_members_response import AdminGroupsGetMembersResponse
 from lumoauth_api_client.models.admin_groups_get_response import AdminGroupsGetResponse
@@ -337,6 +338,7 @@ class AdminGroupsApi:
     ) -> MessageResponse:
         """Add a single role to a group
 
+        A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
         :param org_id: (required)
         :type org_id: str
@@ -407,6 +409,7 @@ class AdminGroupsApi:
     ) -> ApiResponse[MessageResponse]:
         """Add a single role to a group
 
+        A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
         :param org_id: (required)
         :type org_id: str
@@ -477,6 +480,7 @@ class AdminGroupsApi:
     ) -> RESTResponseType:
         """Add a single role to a group
 
+        A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
         :param org_id: (required)
         :type org_id: str
@@ -610,6 +614,7 @@ class AdminGroupsApi:
     ) -> AdminGroupsCreateResponse:
         """Create a new group
 
+        Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
         :param org_id: (required)
         :type org_id: str
@@ -676,6 +681,7 @@ class AdminGroupsApi:
     ) -> ApiResponse[AdminGroupsCreateResponse]:
         """Create a new group
 
+        Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
         :param org_id: (required)
         :type org_id: str
@@ -742,6 +748,7 @@ class AdminGroupsApi:
     ) -> RESTResponseType:
         """Create a new group
 
+        Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
         :param org_id: (required)
         :type org_id: str
@@ -2499,7 +2506,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2573,7 +2580,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2647,7 +2654,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
-        role_id: StrictStr,
+        role_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2803,6 +2810,7 @@ class AdminGroupsApi:
     ) -> AdminGroupsCreateResponse:
         """Update group roles (replaces all existing roles)
 
+        `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
         :param org_id: (required)
         :type org_id: str
@@ -2873,6 +2881,7 @@ class AdminGroupsApi:
     ) -> ApiResponse[AdminGroupsCreateResponse]:
         """Update group roles (replaces all existing roles)
 
+        `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
         :param org_id: (required)
         :type org_id: str
@@ -2943,6 +2952,7 @@ class AdminGroupsApi:
     ) -> RESTResponseType:
         """Update group roles (replaces all existing roles)
 
+        `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
         :param org_id: (required)
         :type org_id: str

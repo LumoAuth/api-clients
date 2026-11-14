@@ -34,9 +34,9 @@ namespace LumoAuth.ApiClient.Model
     public partial class UserinfoResponse : IValidatableObject
     {
         /// <summary>
-        /// Only for non-user principals.
+        /// Only for agents.
         /// </summary>
-        /// <value>Only for non-user principals.</value>
+        /// <value>Only for agents.</value>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum IdentityTypeEnum
         {
@@ -44,26 +44,14 @@ namespace LumoAuth.ApiClient.Model
             /// Enum Agent for value: agent
             /// </summary>
             [EnumMember(Value = "agent")]
-            Agent = 1,
-
-            /// <summary>
-            /// Enum Client for value: client
-            /// </summary>
-            [EnumMember(Value = "client")]
-            Client = 2,
-
-            /// <summary>
-            /// Enum Unknown for value: unknown
-            /// </summary>
-            [EnumMember(Value = "unknown")]
-            Unknown = 3
+            Agent = 1
         }
 
 
         /// <summary>
-        /// Only for non-user principals.
+        /// Only for agents.
         /// </summary>
-        /// <value>Only for non-user principals.</value>
+        /// <value>Only for agents.</value>
         [DataMember(Name = "identity_type", EmitDefaultValue = false)]
         public IdentityTypeEnum? IdentityType { get; set; }
         /// <summary>
@@ -74,10 +62,10 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="UserinfoResponse" /> class.
         /// </summary>
-        /// <param name="sub">User id; agent_&lt;agent_id&gt; for agents; client_&lt;client_id&gt; for clients. (required).</param>
-        /// <param name="identityType">Only for non-user principals..</param>
+        /// <param name="sub">User id; agent_&lt;agent_id&gt; for agents. (required).</param>
+        /// <param name="identityType">Only for agents..</param>
         /// <param name="tenant">Organization slug..</param>
-        /// <param name="name">profile scope (users); agent / client display name..</param>
+        /// <param name="name">profile scope (users); agent display name..</param>
         /// <param name="givenName">profile scope..</param>
         /// <param name="familyName">profile scope..</param>
         /// <param name="middleName">profile scope..</param>
@@ -101,8 +89,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="workloadIdentity">Agents only..</param>
         /// <param name="capabilities">Agents only..</param>
         /// <param name="budgetPolicy">Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429..</param>
-        /// <param name="clientId">Clients only..</param>
-        public UserinfoResponse(string sub = default, IdentityTypeEnum? identityType = default, string tenant = default, string name = default, string givenName = default, string familyName = default, string middleName = default, string nickname = default, string preferredUsername = default, string profile = default, string picture = default, string website = default, string gender = default, DateOnly birthdate = default, string zoneinfo = default, string locale = default, int updatedAt = default, string email = default, bool emailVerified = default, string phoneNumber = default, bool phoneNumberVerified = default, Dictionary<string, Object> address = default, List<string> roles = default, string agentId = default, string workloadIdentity = default, List<string> capabilities = default, Dictionary<string, Object> budgetPolicy = default, string clientId = default)
+        public UserinfoResponse(string sub = default, IdentityTypeEnum? identityType = default, string tenant = default, string name = default, string givenName = default, string familyName = default, string middleName = default, string nickname = default, string preferredUsername = default, string profile = default, string picture = default, string website = default, string gender = default, DateOnly birthdate = default, string zoneinfo = default, string locale = default, int updatedAt = default, string email = default, bool emailVerified = default, string phoneNumber = default, bool phoneNumberVerified = default, Dictionary<string, Object> address = default, List<string> roles = default, string agentId = default, string workloadIdentity = default, List<string> capabilities = default, Dictionary<string, Object> budgetPolicy = default)
         {
             // to ensure "sub" is required (not null)
             if (sub == null)
@@ -136,13 +123,12 @@ namespace LumoAuth.ApiClient.Model
             this.WorkloadIdentity = workloadIdentity;
             this.Capabilities = capabilities;
             this.BudgetPolicy = budgetPolicy;
-            this.ClientId = clientId;
         }
 
         /// <summary>
-        /// User id; agent_&lt;agent_id&gt; for agents; client_&lt;client_id&gt; for clients.
+        /// User id; agent_&lt;agent_id&gt; for agents.
         /// </summary>
-        /// <value>User id; agent_&lt;agent_id&gt; for agents; client_&lt;client_id&gt; for clients.</value>
+        /// <value>User id; agent_&lt;agent_id&gt; for agents.</value>
         [DataMember(Name = "sub", IsRequired = true, EmitDefaultValue = true)]
         public string Sub { get; set; }
 
@@ -154,9 +140,9 @@ namespace LumoAuth.ApiClient.Model
         public string Tenant { get; set; }
 
         /// <summary>
-        /// profile scope (users); agent / client display name.
+        /// profile scope (users); agent display name.
         /// </summary>
-        /// <value>profile scope (users); agent / client display name.</value>
+        /// <value>profile scope (users); agent display name.</value>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; }
 
@@ -322,13 +308,6 @@ namespace LumoAuth.ApiClient.Model
         public Dictionary<string, Object> BudgetPolicy { get; set; }
 
         /// <summary>
-        /// Clients only.
-        /// </summary>
-        /// <value>Clients only.</value>
-        [DataMember(Name = "client_id", EmitDefaultValue = false)]
-        public string ClientId { get; set; }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -363,7 +342,6 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  WorkloadIdentity: ").Append(WorkloadIdentity).Append("\n");
             sb.Append("  Capabilities: ").Append(Capabilities).Append("\n");
             sb.Append("  BudgetPolicy: ").Append(BudgetPolicy).Append("\n");
-            sb.Append("  ClientId: ").Append(ClientId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

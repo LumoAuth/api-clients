@@ -81,6 +81,8 @@ module LumoAuthApiClient
 
     attr_accessor :backchannel_user_code_parameter_supported
 
+    attr_accessor :resource_indicators_supported
+
     attr_accessor :entity_profiles_supported
 
     # Present (true) unless the organization switched Client ID Metadata Documents off.
@@ -89,10 +91,10 @@ module LumoAuthApiClient
     # Only when the organization accepts ID-JAGs.
     attr_accessor :authorization_grant_profiles_supported
 
-    # Only when configured.
+    # The Privacy policy URL of the organization's login page settings. Only when it is set.
     attr_accessor :op_policy_uri
 
-    # Only when configured.
+    # The Terms of service URL of the organization's login page settings. Only when it is set.
     attr_accessor :op_tos_uri
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -130,6 +132,7 @@ module LumoAuthApiClient
         :'backchannel_authentication_endpoint' => :'backchannel_authentication_endpoint',
         :'backchannel_token_delivery_modes_supported' => :'backchannel_token_delivery_modes_supported',
         :'backchannel_user_code_parameter_supported' => :'backchannel_user_code_parameter_supported',
+        :'resource_indicators_supported' => :'resource_indicators_supported',
         :'entity_profiles_supported' => :'entity_profiles_supported',
         :'client_id_metadata_document_supported' => :'client_id_metadata_document_supported',
         :'authorization_grant_profiles_supported' => :'authorization_grant_profiles_supported',
@@ -183,6 +186,7 @@ module LumoAuthApiClient
         :'backchannel_authentication_endpoint' => :'String',
         :'backchannel_token_delivery_modes_supported' => :'Array<String>',
         :'backchannel_user_code_parameter_supported' => :'Boolean',
+        :'resource_indicators_supported' => :'Boolean',
         :'entity_profiles_supported' => :'Array<String>',
         :'client_id_metadata_document_supported' => :'Boolean',
         :'authorization_grant_profiles_supported' => :'Array<String>',
@@ -379,6 +383,10 @@ module LumoAuthApiClient
         self.backchannel_user_code_parameter_supported = attributes[:'backchannel_user_code_parameter_supported']
       end
 
+      if attributes.key?(:'resource_indicators_supported')
+        self.resource_indicators_supported = attributes[:'resource_indicators_supported']
+      end
+
       if attributes.key?(:'entity_profiles_supported')
         if (value = attributes[:'entity_profiles_supported']).is_a?(Array)
           self.entity_profiles_supported = value
@@ -531,6 +539,7 @@ module LumoAuthApiClient
           backchannel_authentication_endpoint == o.backchannel_authentication_endpoint &&
           backchannel_token_delivery_modes_supported == o.backchannel_token_delivery_modes_supported &&
           backchannel_user_code_parameter_supported == o.backchannel_user_code_parameter_supported &&
+          resource_indicators_supported == o.resource_indicators_supported &&
           entity_profiles_supported == o.entity_profiles_supported &&
           client_id_metadata_document_supported == o.client_id_metadata_document_supported &&
           authorization_grant_profiles_supported == o.authorization_grant_profiles_supported &&
@@ -547,7 +556,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [issuer, authorization_endpoint, token_endpoint, response_types_supported, jwks_uri, registration_endpoint, scopes_supported, response_modes_supported, authorization_signing_alg_values_supported, grant_types_supported, token_endpoint_auth_methods_supported, token_endpoint_auth_signing_alg_values_supported, service_documentation, ui_locales_supported, revocation_endpoint, revocation_endpoint_auth_methods_supported, introspection_endpoint, introspection_endpoint_auth_methods_supported, code_challenge_methods_supported, authorization_response_iss_parameter_supported, request_parameter_supported, request_uri_parameter_supported, require_request_uri_registration, require_signed_request_object, request_object_signing_alg_values_supported, device_authorization_endpoint, pushed_authorization_request_endpoint, require_pushed_authorization_requests, dpop_signing_alg_values_supported, backchannel_authentication_endpoint, backchannel_token_delivery_modes_supported, backchannel_user_code_parameter_supported, entity_profiles_supported, client_id_metadata_document_supported, authorization_grant_profiles_supported, op_policy_uri, op_tos_uri].hash
+      [issuer, authorization_endpoint, token_endpoint, response_types_supported, jwks_uri, registration_endpoint, scopes_supported, response_modes_supported, authorization_signing_alg_values_supported, grant_types_supported, token_endpoint_auth_methods_supported, token_endpoint_auth_signing_alg_values_supported, service_documentation, ui_locales_supported, revocation_endpoint, revocation_endpoint_auth_methods_supported, introspection_endpoint, introspection_endpoint_auth_methods_supported, code_challenge_methods_supported, authorization_response_iss_parameter_supported, request_parameter_supported, request_uri_parameter_supported, require_request_uri_registration, require_signed_request_object, request_object_signing_alg_values_supported, device_authorization_endpoint, pushed_authorization_request_endpoint, require_pushed_authorization_requests, dpop_signing_alg_values_supported, backchannel_authentication_endpoint, backchannel_token_delivery_modes_supported, backchannel_user_code_parameter_supported, resource_indicators_supported, entity_profiles_supported, client_id_metadata_document_supported, authorization_grant_profiles_supported, op_policy_uri, op_tos_uri].hash
     end
 
     # Builds the object from hash

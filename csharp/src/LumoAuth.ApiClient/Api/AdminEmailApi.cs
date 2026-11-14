@@ -55,6 +55,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Get an email template (custom or built-in default)
         /// </summary>
+        /// <remarks>
+        /// Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
@@ -67,7 +70,7 @@ namespace LumoAuth.ApiClient.Api
         /// Get an email template (custom or built-in default)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -79,6 +82,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// List every email template type with its current (custom or built-in) template
         /// </summary>
+        /// <remarks>
+        /// Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <returns>AdminEmailTemplatesListResponse</returns>
@@ -88,7 +94,7 @@ namespace LumoAuth.ApiClient.Api
         /// List every email template type with its current (custom or built-in) template
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -140,6 +146,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// List the placeholders available to an email template type
         /// </summary>
+        /// <remarks>
+        /// Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
@@ -150,7 +159,7 @@ namespace LumoAuth.ApiClient.Api
         /// List the placeholders available to an email template type
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -199,7 +208,7 @@ namespace LumoAuth.ApiClient.Api
         /// Get an email template (custom or built-in default)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -214,7 +223,7 @@ namespace LumoAuth.ApiClient.Api
         /// Get an email template (custom or built-in default)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -228,7 +237,7 @@ namespace LumoAuth.ApiClient.Api
         /// List every email template type with its current (custom or built-in) template
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -240,7 +249,7 @@ namespace LumoAuth.ApiClient.Api
         /// List every email template type with its current (custom or built-in) template
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -301,7 +310,7 @@ namespace LumoAuth.ApiClient.Api
         /// List the placeholders available to an email template type
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -314,7 +323,7 @@ namespace LumoAuth.ApiClient.Api
         /// List the placeholders available to an email template type
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -711,7 +720,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get an email template (custom or built-in default) 
+        /// Get an email template (custom or built-in default) Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -726,7 +735,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get an email template (custom or built-in default) 
+        /// Get an email template (custom or built-in default) Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -796,7 +805,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get an email template (custom or built-in default) 
+        /// Get an email template (custom or built-in default) Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -812,7 +821,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get an email template (custom or built-in default) 
+        /// Get an email template (custom or built-in default) Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -886,7 +895,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List every email template type with its current (custom or built-in) template 
+        /// List every email template type with its current (custom or built-in) template Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -898,7 +907,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List every email template type with its current (custom or built-in) template 
+        /// List every email template type with its current (custom or built-in) template Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -952,7 +961,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List every email template type with its current (custom or built-in) template 
+        /// List every email template type with its current (custom or built-in) template Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -965,7 +974,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List every email template type with its current (custom or built-in) template 
+        /// List every email template type with its current (custom or built-in) template Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1325,7 +1334,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the placeholders available to an email template type 
+        /// List the placeholders available to an email template type Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1338,7 +1347,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the placeholders available to an email template type 
+        /// List the placeholders available to an email template type Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1398,7 +1407,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the placeholders available to an email template type 
+        /// List the placeholders available to an email template type Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1412,7 +1421,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the placeholders available to an email template type 
+        /// List the placeholders available to an email template type Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

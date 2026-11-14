@@ -19,6 +19,9 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminRolesAddPermissionsError {
+    Status400(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -89,6 +92,9 @@ pub enum AdminRolesRemoveUserError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminRolesUpdatePermissionsError {
+    Status400(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -107,6 +113,7 @@ pub enum PutAdminRolesUpdateError {
 }
 
 
+/// Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 pub async fn admin_roles_add_permissions(configuration: &configuration::Configuration, org_id: &str, role_id: &str) -> Result<models::MessageResponse, Error<AdminRolesAddPermissionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -203,6 +210,7 @@ pub async fn admin_roles_add_user(configuration: &configuration::Configuration, 
     }
 }
 
+/// Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
 pub async fn admin_roles_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminRolesCreateResponse, Error<AdminRolesCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -489,6 +497,7 @@ pub async fn admin_roles_list(configuration: &configuration::Configuration, org_
     }
 }
 
+/// Needs `roles.assign-permissions` and `roles.edit`.
 pub async fn admin_roles_remove_permission(configuration: &configuration::Configuration, org_id: &str, role_id: &str, permission_id: &str) -> Result<models::MessageResponse, Error<AdminRolesRemovePermissionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -587,6 +596,7 @@ pub async fn admin_roles_remove_user(configuration: &configuration::Configuratio
     }
 }
 
+/// Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 pub async fn admin_roles_update_permissions(configuration: &configuration::Configuration, org_id: &str, role_id: &str) -> Result<models::AdminRolesCreateResponse, Error<AdminRolesUpdatePermissionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;

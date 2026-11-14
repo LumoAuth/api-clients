@@ -12,6 +12,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**AdminIdentitiesLink**](AdminUsersApi.md#adminidentitieslink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user |
 | [**AdminIdentitiesList**](AdminUsersApi.md#adminidentitieslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links |
 | [**AdminIdentitiesUnlink**](AdminUsersApi.md#adminidentitiesunlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity |
+| [**AdminUsersRestore**](AdminUsersApi.md#adminusersrestore) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/restore | Restore a deleted user |
 | [**BlockUser**](AdminUsersApi.md#blockuser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user |
 | [**CreateUser**](AdminUsersApi.md#createuser) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user |
 | [**DeleteUser**](AdminUsersApi.md#deleteuser) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user |
@@ -142,6 +143,8 @@ catch (ApiException e)
 > AddUserPermissionResponse AddUserPermission (string orgId, string userId)
 
 Assign a permission to a user
+
+Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
 ### Example
 ```csharp
@@ -347,7 +350,7 @@ catch (ApiException e)
 
 Relink legacy SAML users to an IdP
 
-Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
 
 ### Example
 ```csharp
@@ -877,6 +880,113 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a id="adminusersrestore"></a>
+# **AdminUsersRestore**
+> AdminUsersRestoreResponse AdminUsersRestore (string orgId, string userId)
+
+Restore a deleted user
+
+Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class AdminUsersRestoreExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+            var userId = "userId_example";  // string | 
+
+            try
+            {
+                // Restore a deleted user
+                AdminUsersRestoreResponse result = apiInstance.AdminUsersRestore(orgId, userId);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AdminUsersApi.AdminUsersRestore: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the AdminUsersRestoreWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Restore a deleted user
+    ApiResponse<AdminUsersRestoreResponse> response = apiInstance.AdminUsersRestoreWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AdminUsersApi.AdminUsersRestoreWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+| **userId** | **string** |  |  |
+
+### Return type
+
+[**AdminUsersRestoreResponse**](AdminUsersRestoreResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | User restored |  -  |
+| **403** | The user holds privileges that the caller lacks, or the plan has no free administrator seat |  -  |
+| **404** | No such user in this organization |  -  |
+| **409** | The user is not deleted (&#x60;user_not_deleted&#x60;), was erased (&#x60;user_erased&#x60;), or its address is used by another account (&#x60;address_in_use&#x60;) |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a id="blockuser"></a>
 # **BlockUser**
 > BlockUserResponse BlockUser (string orgId, string userId)
@@ -1076,6 +1186,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | User created |  -  |
+| **403** | Missing permission, or a plan limit (&#x60;plan_limit_reached&#x60;): no admin seat free for a user created with admin access (&#x60;limit&#x60;: &#x60;admin_seats&#x60;), or every monthly-active-user place of a plan with a hard cap used this month (&#x60;limit&#x60;: &#x60;mau&#x60;, with &#x60;resets_on&#x60;). Nothing is created |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1591,7 +1702,7 @@ catch (ApiException e)
 
 <a id="listusers"></a>
 # **ListUsers**
-> ListUsersResponse ListUsers (string orgId)
+> ListUsersResponse ListUsers (string orgId, int? page = null, int? limit = null, string? search = null, bool? active = null, bool? blocked = null, bool? deleted = null, bool? emailVerified = null, bool? mfaEnabled = null, string? role = null, string? group = null, string? sortBy = null, string? sortDir = null)
 
 List users
 
@@ -1624,11 +1735,23 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var page = 1;  // int? | Page number. (optional)  (default to 1)
+            var limit = 25;  // int? | Users per page (1 to 100). (optional)  (default to 25)
+            var search = "search_example";  // string? | Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional) 
+            var active = true;  // bool? | Only active (`true`) or inactive (`false`) users. (optional) 
+            var blocked = true;  // bool? | Only blocked (`true`) or not blocked (`false`) users. (optional) 
+            var deleted = false;  // bool? | `true` lists only the users that SCIM deleted (soft-deleted). Without it, or with `false`, the list leaves them out. (optional)  (default to false)
+            var emailVerified = true;  // bool? | Only users whose email address is verified (`true`) or not (`false`). (optional) 
+            var mfaEnabled = true;  // bool? | Only users with (`true`) or without (`false`) multi-factor authentication. (optional) 
+            var role = "role_example";  // string? | Only users who hold the role with this slug. (optional) 
+            var group = "group_example";  // string? | Only members of the group with this slug. (optional) 
+            var sortBy = "email";  // string? | Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional) 
+            var sortDir = "ASC";  // string? | Sort direction. Used only together with sortBy. (optional)  (default to DESC)
 
             try
             {
                 // List users
-                ListUsersResponse result = apiInstance.ListUsers(orgId);
+                ListUsersResponse result = apiInstance.ListUsers(orgId, page, limit, search, active, blocked, deleted, emailVerified, mfaEnabled, role, group, sortBy, sortDir);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1649,7 +1772,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // List users
-    ApiResponse<ListUsersResponse> response = apiInstance.ListUsersWithHttpInfo(orgId);
+    ApiResponse<ListUsersResponse> response = apiInstance.ListUsersWithHttpInfo(orgId, page, limit, search, active, blocked, deleted, emailVerified, mfaEnabled, role, group, sortBy, sortDir);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1667,6 +1790,18 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **page** | **int?** | Page number. | [optional] [default to 1] |
+| **limit** | **int?** | Users per page (1 to 100). | [optional] [default to 25] |
+| **search** | **string?** | Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). | [optional]  |
+| **active** | **bool?** | Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. | [optional]  |
+| **blocked** | **bool?** | Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. | [optional]  |
+| **deleted** | **bool?** | &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. | [optional] [default to false] |
+| **emailVerified** | **bool?** | Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). | [optional]  |
+| **mfaEnabled** | **bool?** | Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. | [optional]  |
+| **role** | **string?** | Only users who hold the role with this slug. | [optional]  |
+| **group** | **string?** | Only members of the group with this slug. | [optional]  |
+| **sortBy** | **string?** | Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. | [optional]  |
+| **sortDir** | **string?** | Sort direction. Used only together with sortBy. | [optional] [default to DESC] |
 
 ### Return type
 
@@ -2413,6 +2548,8 @@ catch (ApiException e)
 
 Set a user's password
 
+Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
+
 ### Example
 ```csharp
 using System.Collections.Generic;
@@ -2506,6 +2643,8 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Password updated |  -  |
+| **401** | insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes |  -  |
+| **403** | Actor does not outrank the user, or step_up_required |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2514,6 +2653,8 @@ catch (ApiException e)
 > SetUserPasswordPostResponse SetUserPasswordPost (string orgId, string userId)
 
 Set a user's password
+
+Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
 ### Example
 ```csharp
@@ -2608,6 +2749,8 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Password updated |  -  |
+| **401** | insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes |  -  |
+| **403** | Actor does not outrank the user, or step_up_required |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -46,6 +46,9 @@ pub struct IntrospectResponse {
     /// JWT id (JWT tokens only).
     #[serde(rename = "jti", skip_serializing_if = "Option::is_none")]
     pub jti: Option<String>,
+    /// RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under `act`. JWT and opaque tokens.
+    #[serde(rename = "act", skip_serializing_if = "Option::is_none")]
+    pub act: Option<serde_json::Value>,
 }
 
 impl IntrospectResponse {
@@ -63,6 +66,7 @@ impl IntrospectResponse {
             iss: None,
             aud: None,
             jti: None,
+            act: None,
         }
     }
 }

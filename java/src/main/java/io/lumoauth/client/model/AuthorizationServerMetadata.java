@@ -51,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * AuthorizationServerMetadata
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T04:22:27.215396570Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AuthorizationServerMetadata {
   public static final String SERIALIZED_NAME_ISSUER = "issuer";
   @SerializedName(SERIALIZED_NAME_ISSUER)
@@ -212,6 +212,11 @@ public class AuthorizationServerMetadata {
   @SerializedName(SERIALIZED_NAME_BACKCHANNEL_USER_CODE_PARAMETER_SUPPORTED)
   @javax.annotation.Nullable
   private Boolean backchannelUserCodeParameterSupported;
+
+  public static final String SERIALIZED_NAME_RESOURCE_INDICATORS_SUPPORTED = "resource_indicators_supported";
+  @SerializedName(SERIALIZED_NAME_RESOURCE_INDICATORS_SUPPORTED)
+  @javax.annotation.Nullable
+  private Boolean resourceIndicatorsSupported;
 
   public static final String SERIALIZED_NAME_ENTITY_PROFILES_SUPPORTED = "entity_profiles_supported";
   @SerializedName(SERIALIZED_NAME_ENTITY_PROFILES_SUPPORTED)
@@ -961,6 +966,25 @@ public class AuthorizationServerMetadata {
   }
 
 
+  public AuthorizationServerMetadata resourceIndicatorsSupported(@javax.annotation.Nullable Boolean resourceIndicatorsSupported) {
+    this.resourceIndicatorsSupported = resourceIndicatorsSupported;
+    return this;
+  }
+
+  /**
+   * Get resourceIndicatorsSupported
+   * @return resourceIndicatorsSupported
+   */
+  @javax.annotation.Nullable
+  public Boolean getResourceIndicatorsSupported() {
+    return resourceIndicatorsSupported;
+  }
+
+  public void setResourceIndicatorsSupported(@javax.annotation.Nullable Boolean resourceIndicatorsSupported) {
+    this.resourceIndicatorsSupported = resourceIndicatorsSupported;
+  }
+
+
   public AuthorizationServerMetadata entityProfilesSupported(@javax.annotation.Nullable List<String> entityProfilesSupported) {
     this.entityProfilesSupported = entityProfilesSupported;
     return this;
@@ -1040,7 +1064,7 @@ public class AuthorizationServerMetadata {
   }
 
   /**
-   * Only when configured.
+   * The Privacy policy URL of the organization&#39;s login page settings. Only when it is set.
    * @return opPolicyUri
    */
   @javax.annotation.Nullable
@@ -1059,7 +1083,7 @@ public class AuthorizationServerMetadata {
   }
 
   /**
-   * Only when configured.
+   * The Terms of service URL of the organization&#39;s login page settings. Only when it is set.
    * @return opTosUri
    */
   @javax.annotation.Nullable
@@ -1114,6 +1138,7 @@ public class AuthorizationServerMetadata {
         Objects.equals(this.backchannelAuthenticationEndpoint, authorizationServerMetadata.backchannelAuthenticationEndpoint) &&
         Objects.equals(this.backchannelTokenDeliveryModesSupported, authorizationServerMetadata.backchannelTokenDeliveryModesSupported) &&
         Objects.equals(this.backchannelUserCodeParameterSupported, authorizationServerMetadata.backchannelUserCodeParameterSupported) &&
+        Objects.equals(this.resourceIndicatorsSupported, authorizationServerMetadata.resourceIndicatorsSupported) &&
         Objects.equals(this.entityProfilesSupported, authorizationServerMetadata.entityProfilesSupported) &&
         Objects.equals(this.clientIdMetadataDocumentSupported, authorizationServerMetadata.clientIdMetadataDocumentSupported) &&
         Objects.equals(this.authorizationGrantProfilesSupported, authorizationServerMetadata.authorizationGrantProfilesSupported) &&
@@ -1123,7 +1148,7 @@ public class AuthorizationServerMetadata {
 
   @Override
   public int hashCode() {
-    return Objects.hash(issuer, authorizationEndpoint, tokenEndpoint, responseTypesSupported, jwksUri, registrationEndpoint, scopesSupported, responseModesSupported, authorizationSigningAlgValuesSupported, grantTypesSupported, tokenEndpointAuthMethodsSupported, tokenEndpointAuthSigningAlgValuesSupported, serviceDocumentation, uiLocalesSupported, revocationEndpoint, revocationEndpointAuthMethodsSupported, introspectionEndpoint, introspectionEndpointAuthMethodsSupported, codeChallengeMethodsSupported, authorizationResponseIssParameterSupported, requestParameterSupported, requestUriParameterSupported, requireRequestUriRegistration, requireSignedRequestObject, requestObjectSigningAlgValuesSupported, deviceAuthorizationEndpoint, pushedAuthorizationRequestEndpoint, requirePushedAuthorizationRequests, dpopSigningAlgValuesSupported, backchannelAuthenticationEndpoint, backchannelTokenDeliveryModesSupported, backchannelUserCodeParameterSupported, entityProfilesSupported, clientIdMetadataDocumentSupported, authorizationGrantProfilesSupported, opPolicyUri, opTosUri);
+    return Objects.hash(issuer, authorizationEndpoint, tokenEndpoint, responseTypesSupported, jwksUri, registrationEndpoint, scopesSupported, responseModesSupported, authorizationSigningAlgValuesSupported, grantTypesSupported, tokenEndpointAuthMethodsSupported, tokenEndpointAuthSigningAlgValuesSupported, serviceDocumentation, uiLocalesSupported, revocationEndpoint, revocationEndpointAuthMethodsSupported, introspectionEndpoint, introspectionEndpointAuthMethodsSupported, codeChallengeMethodsSupported, authorizationResponseIssParameterSupported, requestParameterSupported, requestUriParameterSupported, requireRequestUriRegistration, requireSignedRequestObject, requestObjectSigningAlgValuesSupported, deviceAuthorizationEndpoint, pushedAuthorizationRequestEndpoint, requirePushedAuthorizationRequests, dpopSigningAlgValuesSupported, backchannelAuthenticationEndpoint, backchannelTokenDeliveryModesSupported, backchannelUserCodeParameterSupported, resourceIndicatorsSupported, entityProfilesSupported, clientIdMetadataDocumentSupported, authorizationGrantProfilesSupported, opPolicyUri, opTosUri);
   }
 
   @Override
@@ -1162,6 +1187,7 @@ public class AuthorizationServerMetadata {
     sb.append("    backchannelAuthenticationEndpoint: ").append(toIndentedString(backchannelAuthenticationEndpoint)).append("\n");
     sb.append("    backchannelTokenDeliveryModesSupported: ").append(toIndentedString(backchannelTokenDeliveryModesSupported)).append("\n");
     sb.append("    backchannelUserCodeParameterSupported: ").append(toIndentedString(backchannelUserCodeParameterSupported)).append("\n");
+    sb.append("    resourceIndicatorsSupported: ").append(toIndentedString(resourceIndicatorsSupported)).append("\n");
     sb.append("    entityProfilesSupported: ").append(toIndentedString(entityProfilesSupported)).append("\n");
     sb.append("    clientIdMetadataDocumentSupported: ").append(toIndentedString(clientIdMetadataDocumentSupported)).append("\n");
     sb.append("    authorizationGrantProfilesSupported: ").append(toIndentedString(authorizationGrantProfilesSupported)).append("\n");
@@ -1188,7 +1214,7 @@ public class AuthorizationServerMetadata {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("issuer", "authorization_endpoint", "token_endpoint", "response_types_supported", "jwks_uri", "registration_endpoint", "scopes_supported", "response_modes_supported", "authorization_signing_alg_values_supported", "grant_types_supported", "token_endpoint_auth_methods_supported", "token_endpoint_auth_signing_alg_values_supported", "service_documentation", "ui_locales_supported", "revocation_endpoint", "revocation_endpoint_auth_methods_supported", "introspection_endpoint", "introspection_endpoint_auth_methods_supported", "code_challenge_methods_supported", "authorization_response_iss_parameter_supported", "request_parameter_supported", "request_uri_parameter_supported", "require_request_uri_registration", "require_signed_request_object", "request_object_signing_alg_values_supported", "device_authorization_endpoint", "pushed_authorization_request_endpoint", "require_pushed_authorization_requests", "dpop_signing_alg_values_supported", "backchannel_authentication_endpoint", "backchannel_token_delivery_modes_supported", "backchannel_user_code_parameter_supported", "entity_profiles_supported", "client_id_metadata_document_supported", "authorization_grant_profiles_supported", "op_policy_uri", "op_tos_uri"));
+    openapiFields = new HashSet<String>(Arrays.asList("issuer", "authorization_endpoint", "token_endpoint", "response_types_supported", "jwks_uri", "registration_endpoint", "scopes_supported", "response_modes_supported", "authorization_signing_alg_values_supported", "grant_types_supported", "token_endpoint_auth_methods_supported", "token_endpoint_auth_signing_alg_values_supported", "service_documentation", "ui_locales_supported", "revocation_endpoint", "revocation_endpoint_auth_methods_supported", "introspection_endpoint", "introspection_endpoint_auth_methods_supported", "code_challenge_methods_supported", "authorization_response_iss_parameter_supported", "request_parameter_supported", "request_uri_parameter_supported", "require_request_uri_registration", "require_signed_request_object", "request_object_signing_alg_values_supported", "device_authorization_endpoint", "pushed_authorization_request_endpoint", "require_pushed_authorization_requests", "dpop_signing_alg_values_supported", "backchannel_authentication_endpoint", "backchannel_token_delivery_modes_supported", "backchannel_user_code_parameter_supported", "resource_indicators_supported", "entity_profiles_supported", "client_id_metadata_document_supported", "authorization_grant_profiles_supported", "op_policy_uri", "op_tos_uri"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("issuer", "authorization_endpoint", "token_endpoint", "response_types_supported", "jwks_uri"));

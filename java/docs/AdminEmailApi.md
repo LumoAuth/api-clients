@@ -96,6 +96,8 @@ public class Example {
 
 Get an email template (custom or built-in default)
 
+Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
+
 ### Example
 ```java
 // Import classes:
@@ -173,6 +175,8 @@ public class Example {
 > AdminEmailTemplatesListResponse adminEmailTemplatesList(orgId)
 
 List every email template type with its current (custom or built-in) template
+
+Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
 
 ### Example
 ```java
@@ -395,6 +399,8 @@ public class Example {
 > AdminEmailTemplatesVariablesResponse adminEmailTemplatesVariables(orgId, type)
 
 List the placeholders available to an email template type
+
+Needs &#x60;settings.manage&#x60; and &#x60;users.delete&#x60;, as the email template pages in the portal do.
 
 ### Example
 ```java

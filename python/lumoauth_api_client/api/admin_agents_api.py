@@ -17,7 +17,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr
+from pydantic import Field, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
 from lumoauth_api_client.models.admin_agents_activate_response import AdminAgentsActivateResponse
@@ -2976,6 +2976,8 @@ class AdminAgentsApi:
     def admin_agents_list(
         self,
         org_id: StrictStr,
+        sort_by: Annotated[Optional[StrictStr], Field(description="Sort field. Default: name. Another value is ignored.")] = None,
+        sort_dir: Annotated[Optional[StrictStr], Field(description="Sort direction, used with sortBy.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2994,6 +2996,10 @@ class AdminAgentsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param sort_by: Sort field. Default: name. Another value is ignored.
+        :type sort_by: str
+        :param sort_dir: Sort direction, used with sortBy.
+        :type sort_dir: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3018,6 +3024,8 @@ class AdminAgentsApi:
 
         _param = self._admin_agents_list_serialize(
             org_id=org_id,
+            sort_by=sort_by,
+            sort_dir=sort_dir,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3045,6 +3053,8 @@ class AdminAgentsApi:
     def admin_agents_list_with_http_info(
         self,
         org_id: StrictStr,
+        sort_by: Annotated[Optional[StrictStr], Field(description="Sort field. Default: name. Another value is ignored.")] = None,
+        sort_dir: Annotated[Optional[StrictStr], Field(description="Sort direction, used with sortBy.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3063,6 +3073,10 @@ class AdminAgentsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param sort_by: Sort field. Default: name. Another value is ignored.
+        :type sort_by: str
+        :param sort_dir: Sort direction, used with sortBy.
+        :type sort_dir: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3087,6 +3101,8 @@ class AdminAgentsApi:
 
         _param = self._admin_agents_list_serialize(
             org_id=org_id,
+            sort_by=sort_by,
+            sort_dir=sort_dir,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3114,6 +3130,8 @@ class AdminAgentsApi:
     def admin_agents_list_without_preload_content(
         self,
         org_id: StrictStr,
+        sort_by: Annotated[Optional[StrictStr], Field(description="Sort field. Default: name. Another value is ignored.")] = None,
+        sort_dir: Annotated[Optional[StrictStr], Field(description="Sort direction, used with sortBy.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3132,6 +3150,10 @@ class AdminAgentsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param sort_by: Sort field. Default: name. Another value is ignored.
+        :type sort_by: str
+        :param sort_dir: Sort direction, used with sortBy.
+        :type sort_dir: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3156,6 +3178,8 @@ class AdminAgentsApi:
 
         _param = self._admin_agents_list_serialize(
             org_id=org_id,
+            sort_by=sort_by,
+            sort_dir=sort_dir,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3178,6 +3202,8 @@ class AdminAgentsApi:
     def _admin_agents_list_serialize(
         self,
         org_id,
+        sort_by,
+        sort_dir,
         _request_auth,
         _content_type,
         _headers,
@@ -3202,6 +3228,14 @@ class AdminAgentsApi:
         if org_id is not None:
             _path_params['orgId'] = org_id
         # process the query parameters
+        if sort_by is not None:
+            
+            _query_params.append(('sortBy', sort_by))
+            
+        if sort_dir is not None:
+            
+            _query_params.append(('sortDir', sort_dir))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter

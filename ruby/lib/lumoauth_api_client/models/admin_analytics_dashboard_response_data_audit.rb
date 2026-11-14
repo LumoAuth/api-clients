@@ -15,6 +15,7 @@ require 'time'
 
 module LumoAuthApiClient
   class AdminAnalyticsDashboardResponseDataAudit
+    # Audit events of the last 7 days, or of the audit retention period of the plan when that is shorter.
     attr_accessor :events_last7_days
 
     # Attribute mapping from ruby-style variable name to JSON key.

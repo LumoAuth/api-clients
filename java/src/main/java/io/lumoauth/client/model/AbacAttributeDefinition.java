@@ -52,7 +52,7 @@ import io.lumoauth.client.JSON;
 /**
  * AbacAttributeDefinition
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-14T04:22:27.215396570Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AbacAttributeDefinition {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -157,6 +157,11 @@ public class AbacAttributeDefinition {
   @SerializedName(SERIALIZED_NAME_IS_SYSTEM)
   @javax.annotation.Nullable
   private Boolean isSystem;
+
+  public static final String SERIALIZED_NAME_BUILT_IN = "builtIn";
+  @SerializedName(SERIALIZED_NAME_BUILT_IN)
+  @javax.annotation.Nullable
+  private Boolean builtIn;
 
   public static final String SERIALIZED_NAME_CREATED_AT = "createdAt";
   @SerializedName(SERIALIZED_NAME_CREATED_AT)
@@ -369,6 +374,25 @@ public class AbacAttributeDefinition {
   }
 
 
+  public AbacAttributeDefinition builtIn(@javax.annotation.Nullable Boolean builtIn) {
+    this.builtIn = builtIn;
+    return this;
+  }
+
+  /**
+   * True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403).
+   * @return builtIn
+   */
+  @javax.annotation.Nullable
+  public Boolean getBuiltIn() {
+    return builtIn;
+  }
+
+  public void setBuiltIn(@javax.annotation.Nullable Boolean builtIn) {
+    this.builtIn = builtIn;
+  }
+
+
   public AbacAttributeDefinition createdAt(@javax.annotation.Nullable OffsetDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
@@ -427,6 +451,7 @@ public class AbacAttributeDefinition {
         Objects.equals(this.defaultValue, abacAttributeDefinition.defaultValue) &&
         Objects.equals(this.isRequired, abacAttributeDefinition.isRequired) &&
         Objects.equals(this.isSystem, abacAttributeDefinition.isSystem) &&
+        Objects.equals(this.builtIn, abacAttributeDefinition.builtIn) &&
         Objects.equals(this.createdAt, abacAttributeDefinition.createdAt) &&
         Objects.equals(this.updatedAt, abacAttributeDefinition.updatedAt);
   }
@@ -437,7 +462,7 @@ public class AbacAttributeDefinition {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, slug, description, attributeType, dataType, validationRules, defaultValue, isRequired, isSystem, createdAt, updatedAt);
+    return Objects.hash(id, name, slug, description, attributeType, dataType, validationRules, defaultValue, isRequired, isSystem, builtIn, createdAt, updatedAt);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -461,6 +486,7 @@ public class AbacAttributeDefinition {
     sb.append("    defaultValue: ").append(toIndentedString(defaultValue)).append("\n");
     sb.append("    isRequired: ").append(toIndentedString(isRequired)).append("\n");
     sb.append("    isSystem: ").append(toIndentedString(isSystem)).append("\n");
+    sb.append("    builtIn: ").append(toIndentedString(builtIn)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("}");
@@ -484,7 +510,7 @@ public class AbacAttributeDefinition {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("id", "name", "slug", "description", "attributeType", "dataType", "validationRules", "defaultValue", "isRequired", "isSystem", "createdAt", "updatedAt"));
+    openapiFields = new HashSet<String>(Arrays.asList("id", "name", "slug", "description", "attributeType", "dataType", "validationRules", "defaultValue", "isRequired", "isSystem", "builtIn", "createdAt", "updatedAt"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);

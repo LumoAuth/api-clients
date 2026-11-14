@@ -4,10 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | Pointer to **string** |  | [optional] 
-**DisplayName** | Pointer to **string** |  | [optional] 
-**Timezone** | Pointer to **string** |  | [optional] 
-**Locale** | Pointer to **string** |  | [optional] 
+**Name** | Pointer to **string** | Name of the organization, shown on the hosted pages and in mail. | [optional] 
+**DisplayName** | Pointer to **string** | The same value as name. | [optional] 
+**Locale** | Pointer to **string** | Default language of the hosted pages (the Default language of the login page settings). | [optional] 
 
 ## Methods
 
@@ -77,31 +76,6 @@ SetDisplayName sets DisplayName field to given value.
 `func (o *AdminSettingsGeneralGetResponseData) HasDisplayName() bool`
 
 HasDisplayName returns a boolean if a field has been set.
-
-### GetTimezone
-
-`func (o *AdminSettingsGeneralGetResponseData) GetTimezone() string`
-
-GetTimezone returns the Timezone field if non-nil, zero value otherwise.
-
-### GetTimezoneOk
-
-`func (o *AdminSettingsGeneralGetResponseData) GetTimezoneOk() (*string, bool)`
-
-GetTimezoneOk returns a tuple with the Timezone field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTimezone
-
-`func (o *AdminSettingsGeneralGetResponseData) SetTimezone(v string)`
-
-SetTimezone sets Timezone field to given value.
-
-### HasTimezone
-
-`func (o *AdminSettingsGeneralGetResponseData) HasTimezone() bool`
-
-HasTimezone returns a boolean if a field has been set.
 
 ### GetLocale
 

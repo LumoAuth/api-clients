@@ -40,6 +40,8 @@ type AdminEmailAPI interface {
 	/*
 	AdminEmailTemplatesGet Get an email template (custom or built-in default)
 
+	Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@param type_
@@ -53,6 +55,8 @@ type AdminEmailAPI interface {
 
 	/*
 	AdminEmailTemplatesList List every email template type with its current (custom or built-in) template
+
+	Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -96,6 +100,8 @@ type AdminEmailAPI interface {
 
 	/*
 	AdminEmailTemplatesVariables List the placeholders available to an email template type
+
+	Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -277,6 +283,8 @@ func (r ApiAdminEmailTemplatesGetRequest) Execute() (*EmailTemplate, *http.Respo
 /*
 AdminEmailTemplatesGet Get an email template (custom or built-in default)
 
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
  @param type_
@@ -400,6 +408,8 @@ func (r ApiAdminEmailTemplatesListRequest) Execute() (*AdminEmailTemplatesListRe
 
 /*
 AdminEmailTemplatesList List every email template type with its current (custom or built-in) template
+
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -756,6 +766,8 @@ func (r ApiAdminEmailTemplatesVariablesRequest) Execute() (*AdminEmailTemplatesV
 
 /*
 AdminEmailTemplatesVariables List the placeholders available to an email template type
+
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
