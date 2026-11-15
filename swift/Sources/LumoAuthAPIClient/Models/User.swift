@@ -24,6 +24,9 @@ public struct User: Codable, JSONEncodable, Hashable {
     public var phoneNumberVerified: Bool?
     public var isActive: Bool
     public var blocked: Bool
+    /** Soft-deleted by inbound SCIM. Left out of the list unless deleted=true is asked; POST /users/{userId}/restore brings the user back. */
+    public var deleted: Bool?
+    public var deletedAt: Date?
     public var mfaEnabled: Bool
     public var isAdmin: Bool
     public var createdAt: Date
@@ -48,7 +51,7 @@ public struct User: Codable, JSONEncodable, Hashable {
     /** Detailed responses only */
     public var socialProvider: String?
 
-    public init(id: UUID, email: String, username: String? = nil, name: String? = nil, givenName: String? = nil, familyName: String? = nil, picture: String? = nil, emailVerified: Bool, phoneNumber: String? = nil, phoneNumberVerified: Bool? = nil, isActive: Bool, blocked: Bool, mfaEnabled: Bool, isAdmin: Bool, createdAt: Date, lastLoginAt: Date? = nil, loginCount: Int, roles: [RoleRef]? = nil, groups: [GroupRef]? = nil, locale: String? = nil, zoneinfo: String? = nil, updatedAt: Date? = nil, blockedAt: Date? = nil, isJitProvisioned: Bool? = nil, jitProvisionedBy: String? = nil, socialProvider: String? = nil) {
+    public init(id: UUID, email: String, username: String? = nil, name: String? = nil, givenName: String? = nil, familyName: String? = nil, picture: String? = nil, emailVerified: Bool, phoneNumber: String? = nil, phoneNumberVerified: Bool? = nil, isActive: Bool, blocked: Bool, deleted: Bool? = nil, deletedAt: Date? = nil, mfaEnabled: Bool, isAdmin: Bool, createdAt: Date, lastLoginAt: Date? = nil, loginCount: Int, roles: [RoleRef]? = nil, groups: [GroupRef]? = nil, locale: String? = nil, zoneinfo: String? = nil, updatedAt: Date? = nil, blockedAt: Date? = nil, isJitProvisioned: Bool? = nil, jitProvisionedBy: String? = nil, socialProvider: String? = nil) {
         self.id = id
         self.email = email
         self.username = username
@@ -61,6 +64,8 @@ public struct User: Codable, JSONEncodable, Hashable {
         self.phoneNumberVerified = phoneNumberVerified
         self.isActive = isActive
         self.blocked = blocked
+        self.deleted = deleted
+        self.deletedAt = deletedAt
         self.mfaEnabled = mfaEnabled
         self.isAdmin = isAdmin
         self.createdAt = createdAt
@@ -90,6 +95,8 @@ public struct User: Codable, JSONEncodable, Hashable {
         case phoneNumberVerified
         case isActive
         case blocked
+        case deleted
+        case deletedAt
         case mfaEnabled
         case isAdmin
         case createdAt
@@ -122,6 +129,8 @@ public struct User: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(phoneNumberVerified, forKey: .phoneNumberVerified)
         try container.encode(isActive, forKey: .isActive)
         try container.encode(blocked, forKey: .blocked)
+        try container.encodeIfPresent(deleted, forKey: .deleted)
+        try container.encodeIfPresent(deletedAt, forKey: .deletedAt)
         try container.encode(mfaEnabled, forKey: .mfaEnabled)
         try container.encode(isAdmin, forKey: .isAdmin)
         try container.encode(createdAt, forKey: .createdAt)

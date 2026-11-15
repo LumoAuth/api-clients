@@ -40,7 +40,8 @@ class IntrospectResponse(BaseModel):
     iss: Optional[StrictStr] = Field(default=None, description="Issuer identifier of this organization.")
     aud: Optional[IntrospectResponseAud] = None
     jti: Optional[StrictStr] = Field(default=None, description="JWT id (JWT tokens only).")
-    __properties: ClassVar[List[str]] = ["active", "token_type", "scope", "client_id", "sub", "username", "exp", "iat", "nbf", "iss", "aud", "jti"]
+    act: Optional[Dict[str, Any]] = Field(default=None, description="RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under `act`. JWT and opaque tokens.")
+    __properties: ClassVar[List[str]] = ["active", "token_type", "scope", "client_id", "sub", "username", "exp", "iat", "nbf", "iss", "aud", "jti", "act"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -112,7 +113,8 @@ class IntrospectResponse(BaseModel):
             "nbf": obj.get("nbf"),
             "iss": obj.get("iss"),
             "aud": IntrospectResponseAud.from_dict(obj["aud"]) if obj.get("aud") is not None else None,
-            "jti": obj.get("jti")
+            "jti": obj.get("jti"),
+            "act": obj.get("act")
         })
         return _obj
 

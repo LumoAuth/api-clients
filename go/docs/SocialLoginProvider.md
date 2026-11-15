@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **ClientId** | Pointer to **NullableString** | Detailed responses only | [optional] 
 **CallbackUrl** | Pointer to **NullableString** | Detailed responses only | [optional] 
 **RequestedScopes** | Pointer to **[]string** | Detailed responses only | [optional] 
-**CustomClaims** | Pointer to **map[string]interface{}** | Detailed responses only | [optional] 
+**CustomClaims** | Pointer to **map[string]interface{}** | Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes. | [optional] 
 **ClaimMapping** | Pointer to **map[string]interface{}** | Detailed responses only | [optional] 
 **ProviderConfig** | Pointer to **map[string]interface{}** | Detailed responses only; secrets redacted | [optional] 
 **AuthorizationUrl** | Pointer to **NullableString** | Detailed responses only | [optional] 

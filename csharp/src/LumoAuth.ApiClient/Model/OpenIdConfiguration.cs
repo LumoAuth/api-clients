@@ -67,7 +67,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="requestObjectSigningAlgValuesSupported">requestObjectSigningAlgValuesSupported.</param>
         /// <param name="uiLocalesSupported">uiLocalesSupported.</param>
         /// <param name="promptValuesSupported">promptValuesSupported.</param>
-        /// <param name="acrValuesSupported">The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings..</param>
+        /// <param name="acrValuesSupported">The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session). The list is the same for every organization..</param>
         /// <param name="codeChallengeMethodsSupported">codeChallengeMethodsSupported.</param>
         /// <param name="authorizationResponseIssParameterSupported">authorizationResponseIssParameterSupported.</param>
         /// <param name="pushedAuthorizationRequestEndpoint">pushedAuthorizationRequestEndpoint.</param>
@@ -91,8 +91,8 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="entityProfilesSupported">entityProfilesSupported.</param>
         /// <param name="clientIdMetadataDocumentSupported">Present (true) unless the organization switched Client ID Metadata Documents off..</param>
         /// <param name="authorizationGrantProfilesSupported">Only when the organization accepts ID-JAGs..</param>
-        /// <param name="opPolicyUri">Only when configured..</param>
-        /// <param name="opTosUri">Only when configured..</param>
+        /// <param name="opPolicyUri">The Privacy policy URL of the organization&#39;s login page settings. Only when it is set..</param>
+        /// <param name="opTosUri">The Terms of service URL of the organization&#39;s login page settings. Only when it is set..</param>
         public OpenIdConfiguration(string issuer = default, string authorizationEndpoint = default, string tokenEndpoint = default, string jwksUri = default, List<string> responseTypesSupported = default, List<string> subjectTypesSupported = default, List<string> idTokenSigningAlgValuesSupported = default, string userinfoEndpoint = default, string registrationEndpoint = default, List<string> scopesSupported = default, List<string> claimsSupported = default, List<string> responseModesSupported = default, List<string> authorizationSigningAlgValuesSupported = default, List<string> grantTypesSupported = default, string deviceAuthorizationEndpoint = default, List<string> tokenEndpointAuthMethodsSupported = default, List<string> tokenEndpointAuthSigningAlgValuesSupported = default, List<string> claimTypesSupported = default, bool claimsParameterSupported = default, bool requestParameterSupported = default, bool requestUriParameterSupported = default, bool requireRequestUriRegistration = default, bool requireSignedRequestObject = default, List<string> requestObjectSigningAlgValuesSupported = default, List<string> uiLocalesSupported = default, List<string> promptValuesSupported = default, List<string> acrValuesSupported = default, List<string> codeChallengeMethodsSupported = default, bool authorizationResponseIssParameterSupported = default, string pushedAuthorizationRequestEndpoint = default, bool requirePushedAuthorizationRequests = default, List<string> dpopSigningAlgValuesSupported = default, string introspectionEndpoint = default, List<string> introspectionEndpointAuthMethodsSupported = default, string revocationEndpoint = default, List<string> revocationEndpointAuthMethodsSupported = default, bool resourceIndicatorsSupported = default, string endSessionEndpoint = default, string checkSessionIframe = default, bool frontchannelLogoutSupported = default, bool frontchannelLogoutSessionSupported = default, bool backchannelLogoutSupported = default, bool backchannelLogoutSessionSupported = default, string backchannelAuthenticationEndpoint = default, List<string> backchannelTokenDeliveryModesSupported = default, bool backchannelUserCodeParameterSupported = default, string serviceDocumentation = default, List<string> entityProfilesSupported = default, bool clientIdMetadataDocumentSupported = default, List<string> authorizationGrantProfilesSupported = default, string opPolicyUri = default, string opTosUri = default)
         {
             // to ensure "issuer" is required (not null)
@@ -373,9 +373,9 @@ namespace LumoAuth.ApiClient.Model
         public List<string> PromptValuesSupported { get; set; }
 
         /// <summary>
-        /// The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
+        /// The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session). The list is the same for every organization.
         /// </summary>
-        /// <value>The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.</value>
+        /// <value>The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session). The list is the same for every organization.</value>
         [DataMember(Name = "acr_values_supported", EmitDefaultValue = false)]
         public List<string> AcrValuesSupported { get; set; }
 
@@ -559,16 +559,16 @@ namespace LumoAuth.ApiClient.Model
         public List<string> AuthorizationGrantProfilesSupported { get; set; }
 
         /// <summary>
-        /// Only when configured.
+        /// The Privacy policy URL of the organization&#39;s login page settings. Only when it is set.
         /// </summary>
-        /// <value>Only when configured.</value>
+        /// <value>The Privacy policy URL of the organization&#39;s login page settings. Only when it is set.</value>
         [DataMember(Name = "op_policy_uri", EmitDefaultValue = false)]
         public string OpPolicyUri { get; set; }
 
         /// <summary>
-        /// Only when configured.
+        /// The Terms of service URL of the organization&#39;s login page settings. Only when it is set.
         /// </summary>
-        /// <value>Only when configured.</value>
+        /// <value>The Terms of service URL of the organization&#39;s login page settings. Only when it is set.</value>
         [DataMember(Name = "op_tos_uri", EmitDefaultValue = false)]
         public string OpTosUri { get; set; }
 

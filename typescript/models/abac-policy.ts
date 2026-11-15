@@ -51,7 +51,7 @@ export interface AbacPolicy {
      */
     'resourceType'?: string;
     /**
-     * 
+     * One action, several separated by commas (read, write), or * for every action. The policy decides a request for each action that it names; spaces around the commas are ignored and actions compare case-sensitively.
      * @type {string}
      * @memberof AbacPolicy
      */
@@ -86,6 +86,12 @@ export interface AbacPolicy {
      * @memberof AbacPolicy
      */
     'isSystem'?: boolean;
+    /**
+     * True for a policy that LumoAuth provides to every organization. It can be read, but not changed, switched or deleted (403).
+     * @type {boolean}
+     * @memberof AbacPolicy
+     */
+    'builtIn'?: boolean;
     /**
      * 
      * @type {string}

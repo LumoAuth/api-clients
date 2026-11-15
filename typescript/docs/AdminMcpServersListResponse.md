@@ -6,8 +6,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **data** | [**Array&lt;McpServer&gt;**](McpServer.md) |  | [optional] [default to undefined]
-**meta** | [**AdminMcpServersListResponseMeta**](AdminMcpServersListResponseMeta.md) |  | [optional] [default to undefined]
+**meta** | [**PaginationMeta**](PaginationMeta.md) |  | [optional] [default to undefined]
 **pagination** | [**PaginationMeta**](PaginationMeta.md) |  | [optional] [default to undefined]
+**resourceType** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -18,6 +19,7 @@ const instance: AdminMcpServersListResponse = {
     data,
     meta,
     pagination,
+    resourceType,
 };
 ```
 

@@ -85,7 +85,7 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
          * @summary Add a single role to a group
          * @param {string} orgId 
          * @param {string} groupId 
@@ -130,7 +130,7 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
          * @summary Create a new group
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -490,7 +490,7 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
          * @summary Update group roles (replaces all existing roles)
          * @param {string} orgId 
          * @param {string} groupId 
@@ -649,7 +649,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
          * @summary Add a single role to a group
          * @param {string} orgId 
          * @param {string} groupId 
@@ -663,7 +663,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
          * @summary Create a new group
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -775,7 +775,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
          * @summary Update group roles (replaces all existing roles)
          * @param {string} orgId 
          * @param {string} groupId 
@@ -837,7 +837,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.adminGroupsAddMembers(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
          * @summary Add a single role to a group
          * @param {AdminGroupsApiAdminGroupsAddRoleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -847,7 +847,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.adminGroupsAddRole(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
          * @summary Create a new group
          * @param {AdminGroupsApiAdminGroupsCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -927,7 +927,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.adminGroupsRemoveRole(requestParameters.orgId, requestParameters.groupId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
          * @summary Update group roles (replaces all existing roles)
          * @param {AdminGroupsApiAdminGroupsUpdateRolesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -976,7 +976,7 @@ export interface AdminGroupsApiInterface {
     adminGroupsAddMembers(requestParameters: AdminGroupsApiAdminGroupsAddMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse>;
 
     /**
-     * 
+     * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
      * @summary Add a single role to a group
      * @param {AdminGroupsApiAdminGroupsAddRoleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -986,7 +986,7 @@ export interface AdminGroupsApiInterface {
     adminGroupsAddRole(requestParameters: AdminGroupsApiAdminGroupsAddRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
-     * 
+     * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
      * @summary Create a new group
      * @param {AdminGroupsApiAdminGroupsCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1066,7 +1066,7 @@ export interface AdminGroupsApiInterface {
     adminGroupsRemoveRole(requestParameters: AdminGroupsApiAdminGroupsRemoveRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
-     * 
+     * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
      * @summary Update group roles (replaces all existing roles)
      * @param {AdminGroupsApiAdminGroupsUpdateRolesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1390,7 +1390,7 @@ export class AdminGroupsApi extends BaseAPI implements AdminGroupsApiInterface {
     }
 
     /**
-     * 
+     * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
      * @summary Add a single role to a group
      * @param {AdminGroupsApiAdminGroupsAddRoleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1402,7 +1402,7 @@ export class AdminGroupsApi extends BaseAPI implements AdminGroupsApiInterface {
     }
 
     /**
-     * 
+     * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
      * @summary Create a new group
      * @param {AdminGroupsApiAdminGroupsCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1498,7 +1498,7 @@ export class AdminGroupsApi extends BaseAPI implements AdminGroupsApiInterface {
     }
 
     /**
-     * 
+     * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
      * @summary Update group roles (replaces all existing roles)
      * @param {AdminGroupsApiAdminGroupsUpdateRolesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

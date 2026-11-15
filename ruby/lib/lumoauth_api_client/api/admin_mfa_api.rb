@@ -20,7 +20,7 @@ module LumoAuthApiClient
       @api_client = api_client
     end
     # Remove one of a user's authenticators
-    # Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in.
+    # Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param authenticator_id [String] 
@@ -32,7 +32,7 @@ module LumoAuthApiClient
     end
 
     # Remove one of a user&#39;s authenticators
-    # Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in.
+    # Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param authenticator_id [String] 
@@ -54,7 +54,7 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && authenticator_id.nil?
         fail ArgumentError, "Missing the required parameter 'authenticator_id' when calling AdminMfaApi.delete_user_authenticator"
       end
-      pattern = Regexp.new(/[a-z_]+:\d+/)
+      pattern = Regexp.new(/[a-z_]+:(?:[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7])/)
       if @api_client.config.client_side_validation && authenticator_id !~ pattern
         fail ArgumentError, "invalid value for 'authenticator_id' when calling AdminMfaApi.delete_user_authenticator, must conform to the pattern #{pattern}."
       end
@@ -100,7 +100,7 @@ module LumoAuthApiClient
     end
 
     # MFA enrollment coverage
-    # Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002).
+    # Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002). Needs `users.view` and `settings.view`, as the report on the portal's authentication settings page does.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [GetMfaCoverageReportResponse]
@@ -110,7 +110,7 @@ module LumoAuthApiClient
     end
 
     # MFA enrollment coverage
-    # Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002).
+    # Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002). Needs &#x60;users.view&#x60; and &#x60;settings.view&#x60;, as the report on the portal&#39;s authentication settings page does.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetMfaCoverageReportResponse, Integer, Hash)>] GetMfaCoverageReportResponse data, response status code and response headers

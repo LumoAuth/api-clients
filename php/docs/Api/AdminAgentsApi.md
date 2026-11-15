@@ -680,7 +680,7 @@ try {
 ## `adminAgentsList()`
 
 ```php
-adminAgentsList($orgId): \LumoAuth\ApiClient\Model\AdminAgentsListResponse
+adminAgentsList($orgId, $sortBy, $sortDir): \LumoAuth\ApiClient\Model\AdminAgentsListResponse
 ```
 
 List all agents in the tenant
@@ -708,9 +708,11 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminAgentsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$sortBy = 'sortBy_example'; // string | Sort field. Default: name. Another value is ignored.
+$sortDir = 'ASC'; // string | Sort direction, used with sortBy.
 
 try {
-    $result = $apiInstance->adminAgentsList($orgId);
+    $result = $apiInstance->adminAgentsList($orgId, $sortBy, $sortDir);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminAgentsApi->adminAgentsList: ', $e->getMessage(), PHP_EOL;
@@ -722,6 +724,8 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **sortBy** | **string**| Sort field. Default: name. Another value is ignored. | [optional] |
+| **sortDir** | **string**| Sort direction, used with sortBy. | [optional] [default to &#39;ASC&#39;] |
 
 ### Return type
 

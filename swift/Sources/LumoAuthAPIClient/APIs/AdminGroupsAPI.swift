@@ -76,6 +76,7 @@ open class AdminGroupsAPI {
     /**
      Add a single role to a group
      - POST /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles
+     - A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -124,6 +125,7 @@ open class AdminGroupsAPI {
     /**
      Create a new group
      - POST /orgs/{orgId}/api/v1/admin/groups
+     - Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -517,6 +519,7 @@ open class AdminGroupsAPI {
     /**
      Update group roles (replaces all existing roles)
      - PUT /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles
+     - `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth

@@ -13,9 +13,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AdminSettingsEmailGetResponse {
-    /// Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: Option<std::collections::HashMap<String, serde_json::Value>>,
+    pub data: Option<Box<models::EmailSenderSettings>>,
 }
 
 impl AdminSettingsEmailGetResponse {

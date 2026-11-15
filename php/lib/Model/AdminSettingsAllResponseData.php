@@ -62,7 +62,7 @@ class AdminSettingsAllResponseData implements ModelInterface, ArrayAccess, \Json
         'authentication' => '\LumoAuth\ApiClient\Model\AuthenticationSettings',
         'branding' => '\LumoAuth\ApiClient\Model\BrandingSettings',
         'security' => '\LumoAuth\ApiClient\Model\AdminSettingsAllResponseDataSecurity',
-        'email' => 'array<string,mixed>'
+        'email' => '\LumoAuth\ApiClient\Model\EmailSenderSettings'
     ];
 
     /**
@@ -429,7 +429,7 @@ class AdminSettingsAllResponseData implements ModelInterface, ArrayAccess, \Json
     /**
      * Gets email
      *
-     * @return array<string,mixed>|null
+     * @return \LumoAuth\ApiClient\Model\EmailSenderSettings|null
      */
     public function getEmail()
     {
@@ -439,7 +439,7 @@ class AdminSettingsAllResponseData implements ModelInterface, ArrayAccess, \Json
     /**
      * Sets email
      *
-     * @param array<string,mixed>|null $email Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
+     * @param \LumoAuth\ApiClient\Model\EmailSenderSettings|null $email email
      *
      * @return self
      */

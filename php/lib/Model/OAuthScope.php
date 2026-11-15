@@ -61,7 +61,6 @@ class OAuthScope implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'int',
         'name' => 'string',
         'description' => 'string',
-        'isDefault' => 'bool',
         'isSystem' => 'bool',
         'createdAt' => '\DateTime'
     ];
@@ -77,7 +76,6 @@ class OAuthScope implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => null,
         'name' => null,
         'description' => null,
-        'isDefault' => null,
         'isSystem' => null,
         'createdAt' => 'date-time'
     ];
@@ -91,7 +89,6 @@ class OAuthScope implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => false,
         'name' => false,
         'description' => true,
-        'isDefault' => false,
         'isSystem' => false,
         'createdAt' => false
     ];
@@ -185,7 +182,6 @@ class OAuthScope implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'id',
         'name' => 'name',
         'description' => 'description',
-        'isDefault' => 'isDefault',
         'isSystem' => 'isSystem',
         'createdAt' => 'createdAt'
     ];
@@ -199,7 +195,6 @@ class OAuthScope implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'setId',
         'name' => 'setName',
         'description' => 'setDescription',
-        'isDefault' => 'setIsDefault',
         'isSystem' => 'setIsSystem',
         'createdAt' => 'setCreatedAt'
     ];
@@ -213,7 +208,6 @@ class OAuthScope implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'getId',
         'name' => 'getName',
         'description' => 'getDescription',
-        'isDefault' => 'getIsDefault',
         'isSystem' => 'getIsSystem',
         'createdAt' => 'getCreatedAt'
     ];
@@ -278,7 +272,6 @@ class OAuthScope implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('id', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('description', $data ?? [], null);
-        $this->setIfExists('isDefault', $data ?? [], null);
         $this->setIfExists('isSystem', $data ?? [], null);
         $this->setIfExists('createdAt', $data ?? [], null);
     }
@@ -392,7 +385,7 @@ class OAuthScope implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets description
      *
-     * @param string|null $description description
+     * @param string|null $description Shown to users on the consent page next to the scope name.
      *
      * @return self
      */
@@ -409,33 +402,6 @@ class OAuthScope implements ModelInterface, ArrayAccess, \JsonSerializable
             }
         }
         $this->container['description'] = $description;
-
-        return $this;
-    }
-
-    /**
-     * Gets isDefault
-     *
-     * @return bool|null
-     */
-    public function getIsDefault()
-    {
-        return $this->container['isDefault'];
-    }
-
-    /**
-     * Sets isDefault
-     *
-     * @param bool|null $isDefault isDefault
-     *
-     * @return self
-     */
-    public function setIsDefault($isDefault)
-    {
-        if (is_null($isDefault)) {
-            throw new \InvalidArgumentException('non-nullable isDefault cannot be null');
-        }
-        $this->container['isDefault'] = $isDefault;
 
         return $this;
     }

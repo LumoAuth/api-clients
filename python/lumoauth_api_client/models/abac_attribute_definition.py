@@ -38,9 +38,10 @@ class AbacAttributeDefinition(BaseModel):
     default_value: Optional[Any] = Field(default=None, alias="defaultValue")
     is_required: Optional[StrictBool] = Field(default=None, alias="isRequired")
     is_system: Optional[StrictBool] = Field(default=None, alias="isSystem")
+    built_in: Optional[StrictBool] = Field(default=None, description="True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403).", alias="builtIn")
     created_at: Optional[datetime] = Field(default=None, alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, alias="updatedAt")
-    __properties: ClassVar[List[str]] = ["id", "name", "slug", "description", "attributeType", "dataType", "validationRules", "defaultValue", "isRequired", "isSystem", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["id", "name", "slug", "description", "attributeType", "dataType", "validationRules", "defaultValue", "isRequired", "isSystem", "builtIn", "createdAt", "updatedAt"]
 
     @field_validator('attribute_type')
     def attribute_type_validate_enum(cls, value):
@@ -133,6 +134,7 @@ class AbacAttributeDefinition(BaseModel):
             "defaultValue": obj.get("defaultValue"),
             "isRequired": obj.get("isRequired"),
             "isSystem": obj.get("isSystem"),
+            "builtIn": obj.get("builtIn"),
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt")
         })

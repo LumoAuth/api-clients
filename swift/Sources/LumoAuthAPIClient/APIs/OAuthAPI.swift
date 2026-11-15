@@ -94,6 +94,47 @@ open class OAuthAPI {
     }
 
     /**
+     Sign-in methods for an email-first form
+     
+     - parameter orgId: (path)  
+     - parameter checkEmailFirstRequest: (body)  
+     - returns: CheckEmailFirstResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func checkEmailFirst(orgId: String, checkEmailFirstRequest: CheckEmailFirstRequest) async throws -> CheckEmailFirstResponse {
+        return try await checkEmailFirstWithRequestBuilder(orgId: orgId, checkEmailFirstRequest: checkEmailFirstRequest).execute().body
+    }
+
+    /**
+     Sign-in methods for an email-first form
+     - POST /orgs/{orgId}/api/v1/oauth/check-email
+     - For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: `exists` is always `true`, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by `client_id`.
+     - parameter orgId: (path)  
+     - parameter checkEmailFirstRequest: (body)  
+     - returns: RequestBuilder<CheckEmailFirstResponse> 
+     */
+    open class func checkEmailFirstWithRequestBuilder(orgId: String, checkEmailFirstRequest: CheckEmailFirstRequest) -> RequestBuilder<CheckEmailFirstResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/oauth/check-email"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: checkEmailFirstRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<CheckEmailFirstResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
      Device authorization request (RFC 8628)
      
      - parameter orgId: (path)  
@@ -361,7 +402,7 @@ open class OAuthAPI {
     /**
      Dynamic client registration (RFC 7591 / OIDC DCR)
      - POST /orgs/{orgId}/api/v1/connect/register
-     - Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+     - Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization's signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth

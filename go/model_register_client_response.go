@@ -43,19 +43,14 @@ type RegisterClientResponse struct {
 	LogoUri *string `json:"logo_uri,omitempty"`
 	PolicyUri *string `json:"policy_uri,omitempty"`
 	TosUri *string `json:"tos_uri,omitempty"`
-	SectorIdentifierUri *string `json:"sector_identifier_uri,omitempty"`
-	// Only when not \"public\".
-	SubjectType *string `json:"subject_type,omitempty"`
 	JwksUri *string `json:"jwks_uri,omitempty"`
 	Jwks map[string]interface{} `json:"jwks,omitempty"`
 	PostLogoutRedirectUris []string `json:"post_logout_redirect_uris,omitempty"`
 	InitiateLoginUri *string `json:"initiate_login_uri,omitempty"`
-	RequestUris []string `json:"request_uris,omitempty"`
 	// Space-separated registered scopes.
 	Scope *string `json:"scope,omitempty"`
 	// Only when not RS256.
 	IdTokenSignedResponseAlg *string `json:"id_token_signed_response_alg,omitempty"`
-	UserinfoSignedResponseAlg *string `json:"userinfo_signed_response_alg,omitempty"`
 	RequestObjectSigningAlg *string `json:"request_object_signing_alg,omitempty"`
 	TokenEndpointAuthSigningAlg *string `json:"token_endpoint_auth_signing_alg,omitempty"`
 	DefaultMaxAge *int32 `json:"default_max_age,omitempty"`
@@ -581,70 +576,6 @@ func (o *RegisterClientResponse) SetTosUri(v string) {
 	o.TosUri = &v
 }
 
-// GetSectorIdentifierUri returns the SectorIdentifierUri field value if set, zero value otherwise.
-func (o *RegisterClientResponse) GetSectorIdentifierUri() string {
-	if o == nil || IsNil(o.SectorIdentifierUri) {
-		var ret string
-		return ret
-	}
-	return *o.SectorIdentifierUri
-}
-
-// GetSectorIdentifierUriOk returns a tuple with the SectorIdentifierUri field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *RegisterClientResponse) GetSectorIdentifierUriOk() (*string, bool) {
-	if o == nil || IsNil(o.SectorIdentifierUri) {
-		return nil, false
-	}
-	return o.SectorIdentifierUri, true
-}
-
-// HasSectorIdentifierUri returns a boolean if a field has been set.
-func (o *RegisterClientResponse) HasSectorIdentifierUri() bool {
-	if o != nil && !IsNil(o.SectorIdentifierUri) {
-		return true
-	}
-
-	return false
-}
-
-// SetSectorIdentifierUri gets a reference to the given string and assigns it to the SectorIdentifierUri field.
-func (o *RegisterClientResponse) SetSectorIdentifierUri(v string) {
-	o.SectorIdentifierUri = &v
-}
-
-// GetSubjectType returns the SubjectType field value if set, zero value otherwise.
-func (o *RegisterClientResponse) GetSubjectType() string {
-	if o == nil || IsNil(o.SubjectType) {
-		var ret string
-		return ret
-	}
-	return *o.SubjectType
-}
-
-// GetSubjectTypeOk returns a tuple with the SubjectType field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *RegisterClientResponse) GetSubjectTypeOk() (*string, bool) {
-	if o == nil || IsNil(o.SubjectType) {
-		return nil, false
-	}
-	return o.SubjectType, true
-}
-
-// HasSubjectType returns a boolean if a field has been set.
-func (o *RegisterClientResponse) HasSubjectType() bool {
-	if o != nil && !IsNil(o.SubjectType) {
-		return true
-	}
-
-	return false
-}
-
-// SetSubjectType gets a reference to the given string and assigns it to the SubjectType field.
-func (o *RegisterClientResponse) SetSubjectType(v string) {
-	o.SubjectType = &v
-}
-
 // GetJwksUri returns the JwksUri field value if set, zero value otherwise.
 func (o *RegisterClientResponse) GetJwksUri() string {
 	if o == nil || IsNil(o.JwksUri) {
@@ -773,38 +704,6 @@ func (o *RegisterClientResponse) SetInitiateLoginUri(v string) {
 	o.InitiateLoginUri = &v
 }
 
-// GetRequestUris returns the RequestUris field value if set, zero value otherwise.
-func (o *RegisterClientResponse) GetRequestUris() []string {
-	if o == nil || IsNil(o.RequestUris) {
-		var ret []string
-		return ret
-	}
-	return o.RequestUris
-}
-
-// GetRequestUrisOk returns a tuple with the RequestUris field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *RegisterClientResponse) GetRequestUrisOk() ([]string, bool) {
-	if o == nil || IsNil(o.RequestUris) {
-		return nil, false
-	}
-	return o.RequestUris, true
-}
-
-// HasRequestUris returns a boolean if a field has been set.
-func (o *RegisterClientResponse) HasRequestUris() bool {
-	if o != nil && !IsNil(o.RequestUris) {
-		return true
-	}
-
-	return false
-}
-
-// SetRequestUris gets a reference to the given []string and assigns it to the RequestUris field.
-func (o *RegisterClientResponse) SetRequestUris(v []string) {
-	o.RequestUris = v
-}
-
 // GetScope returns the Scope field value if set, zero value otherwise.
 func (o *RegisterClientResponse) GetScope() string {
 	if o == nil || IsNil(o.Scope) {
@@ -867,38 +766,6 @@ func (o *RegisterClientResponse) HasIdTokenSignedResponseAlg() bool {
 // SetIdTokenSignedResponseAlg gets a reference to the given string and assigns it to the IdTokenSignedResponseAlg field.
 func (o *RegisterClientResponse) SetIdTokenSignedResponseAlg(v string) {
 	o.IdTokenSignedResponseAlg = &v
-}
-
-// GetUserinfoSignedResponseAlg returns the UserinfoSignedResponseAlg field value if set, zero value otherwise.
-func (o *RegisterClientResponse) GetUserinfoSignedResponseAlg() string {
-	if o == nil || IsNil(o.UserinfoSignedResponseAlg) {
-		var ret string
-		return ret
-	}
-	return *o.UserinfoSignedResponseAlg
-}
-
-// GetUserinfoSignedResponseAlgOk returns a tuple with the UserinfoSignedResponseAlg field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *RegisterClientResponse) GetUserinfoSignedResponseAlgOk() (*string, bool) {
-	if o == nil || IsNil(o.UserinfoSignedResponseAlg) {
-		return nil, false
-	}
-	return o.UserinfoSignedResponseAlg, true
-}
-
-// HasUserinfoSignedResponseAlg returns a boolean if a field has been set.
-func (o *RegisterClientResponse) HasUserinfoSignedResponseAlg() bool {
-	if o != nil && !IsNil(o.UserinfoSignedResponseAlg) {
-		return true
-	}
-
-	return false
-}
-
-// SetUserinfoSignedResponseAlg gets a reference to the given string and assigns it to the UserinfoSignedResponseAlg field.
-func (o *RegisterClientResponse) SetUserinfoSignedResponseAlg(v string) {
-	o.UserinfoSignedResponseAlg = &v
 }
 
 // GetRequestObjectSigningAlg returns the RequestObjectSigningAlg field value if set, zero value otherwise.
@@ -1266,12 +1133,6 @@ func (o RegisterClientResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.TosUri) {
 		toSerialize["tos_uri"] = o.TosUri
 	}
-	if !IsNil(o.SectorIdentifierUri) {
-		toSerialize["sector_identifier_uri"] = o.SectorIdentifierUri
-	}
-	if !IsNil(o.SubjectType) {
-		toSerialize["subject_type"] = o.SubjectType
-	}
 	if !IsNil(o.JwksUri) {
 		toSerialize["jwks_uri"] = o.JwksUri
 	}
@@ -1284,17 +1145,11 @@ func (o RegisterClientResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.InitiateLoginUri) {
 		toSerialize["initiate_login_uri"] = o.InitiateLoginUri
 	}
-	if !IsNil(o.RequestUris) {
-		toSerialize["request_uris"] = o.RequestUris
-	}
 	if !IsNil(o.Scope) {
 		toSerialize["scope"] = o.Scope
 	}
 	if !IsNil(o.IdTokenSignedResponseAlg) {
 		toSerialize["id_token_signed_response_alg"] = o.IdTokenSignedResponseAlg
-	}
-	if !IsNil(o.UserinfoSignedResponseAlg) {
-		toSerialize["userinfo_signed_response_alg"] = o.UserinfoSignedResponseAlg
 	}
 	if !IsNil(o.RequestObjectSigningAlg) {
 		toSerialize["request_object_signing_alg"] = o.RequestObjectSigningAlg

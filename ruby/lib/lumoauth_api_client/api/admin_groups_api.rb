@@ -87,6 +87,7 @@ module LumoAuthApiClient
     end
 
     # Add a single role to a group
+    # A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
@@ -97,6 +98,7 @@ module LumoAuthApiClient
     end
 
     # Add a single role to a group
+    # A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
@@ -154,6 +156,7 @@ module LumoAuthApiClient
     end
 
     # Create a new group
+    # Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminGroupsCreateResponse]
@@ -163,6 +166,7 @@ module LumoAuthApiClient
     end
 
     # Create a new group
+    # Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminGroupsCreateResponse, Integer, Hash)>] AdminGroupsCreateResponse data, response status code and response headers
@@ -649,6 +653,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && role_id.nil?
         fail ArgumentError, "Missing the required parameter 'role_id' when calling AdminGroupsApi.admin_groups_remove_role"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && role_id !~ pattern
+        fail ArgumentError, "invalid value for 'role_id' when calling AdminGroupsApi.admin_groups_remove_role, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'groupId' + '}', CGI.escape(group_id.to_s)).sub('{' + 'roleId' + '}', CGI.escape(role_id.to_s))
 
@@ -690,6 +699,7 @@ module LumoAuthApiClient
     end
 
     # Update group roles (replaces all existing roles)
+    # `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
@@ -700,6 +710,7 @@ module LumoAuthApiClient
     end
 
     # Update group roles (replaces all existing roles)
+    # &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters

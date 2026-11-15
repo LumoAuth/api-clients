@@ -56,14 +56,15 @@ type AuthorizationServerMetadata struct {
 	BackchannelAuthenticationEndpoint *string `json:"backchannel_authentication_endpoint,omitempty"`
 	BackchannelTokenDeliveryModesSupported []string `json:"backchannel_token_delivery_modes_supported,omitempty"`
 	BackchannelUserCodeParameterSupported *bool `json:"backchannel_user_code_parameter_supported,omitempty"`
+	ResourceIndicatorsSupported *bool `json:"resource_indicators_supported,omitempty"`
 	EntityProfilesSupported []string `json:"entity_profiles_supported,omitempty"`
 	// Present (true) unless the organization switched Client ID Metadata Documents off.
 	ClientIdMetadataDocumentSupported *bool `json:"client_id_metadata_document_supported,omitempty"`
 	// Only when the organization accepts ID-JAGs.
 	AuthorizationGrantProfilesSupported []string `json:"authorization_grant_profiles_supported,omitempty"`
-	// Only when configured.
+	// The Privacy policy URL of the organization's login page settings. Only when it is set.
 	OpPolicyUri *string `json:"op_policy_uri,omitempty"`
-	// Only when configured.
+	// The Terms of service URL of the organization's login page settings. Only when it is set.
 	OpTosUri *string `json:"op_tos_uri,omitempty"`
 }
 
@@ -1075,6 +1076,38 @@ func (o *AuthorizationServerMetadata) SetBackchannelUserCodeParameterSupported(v
 	o.BackchannelUserCodeParameterSupported = &v
 }
 
+// GetResourceIndicatorsSupported returns the ResourceIndicatorsSupported field value if set, zero value otherwise.
+func (o *AuthorizationServerMetadata) GetResourceIndicatorsSupported() bool {
+	if o == nil || IsNil(o.ResourceIndicatorsSupported) {
+		var ret bool
+		return ret
+	}
+	return *o.ResourceIndicatorsSupported
+}
+
+// GetResourceIndicatorsSupportedOk returns a tuple with the ResourceIndicatorsSupported field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AuthorizationServerMetadata) GetResourceIndicatorsSupportedOk() (*bool, bool) {
+	if o == nil || IsNil(o.ResourceIndicatorsSupported) {
+		return nil, false
+	}
+	return o.ResourceIndicatorsSupported, true
+}
+
+// HasResourceIndicatorsSupported returns a boolean if a field has been set.
+func (o *AuthorizationServerMetadata) HasResourceIndicatorsSupported() bool {
+	if o != nil && !IsNil(o.ResourceIndicatorsSupported) {
+		return true
+	}
+
+	return false
+}
+
+// SetResourceIndicatorsSupported gets a reference to the given bool and assigns it to the ResourceIndicatorsSupported field.
+func (o *AuthorizationServerMetadata) SetResourceIndicatorsSupported(v bool) {
+	o.ResourceIndicatorsSupported = &v
+}
+
 // GetEntityProfilesSupported returns the EntityProfilesSupported field value if set, zero value otherwise.
 func (o *AuthorizationServerMetadata) GetEntityProfilesSupported() []string {
 	if o == nil || IsNil(o.EntityProfilesSupported) {
@@ -1330,6 +1363,9 @@ func (o AuthorizationServerMetadata) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.BackchannelUserCodeParameterSupported) {
 		toSerialize["backchannel_user_code_parameter_supported"] = o.BackchannelUserCodeParameterSupported
+	}
+	if !IsNil(o.ResourceIndicatorsSupported) {
+		toSerialize["resource_indicators_supported"] = o.ResourceIndicatorsSupported
 	}
 	if !IsNil(o.EntityProfilesSupported) {
 		toSerialize["entity_profiles_supported"] = o.EntityProfilesSupported

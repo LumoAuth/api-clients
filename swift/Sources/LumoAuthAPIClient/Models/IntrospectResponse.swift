@@ -33,8 +33,10 @@ public struct IntrospectResponse: Codable, JSONEncodable, Hashable {
     public var aud: IntrospectResponseAud?
     /** JWT id (JWT tokens only). */
     public var jti: String?
+    /** RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under `act`. JWT and opaque tokens. */
+    public var act: AnyCodable?
 
-    public init(active: Bool, tokenType: String? = nil, scope: String? = nil, clientId: String? = nil, sub: String? = nil, username: String? = nil, exp: Int? = nil, iat: Int? = nil, nbf: Int? = nil, iss: String? = nil, aud: IntrospectResponseAud? = nil, jti: String? = nil) {
+    public init(active: Bool, tokenType: String? = nil, scope: String? = nil, clientId: String? = nil, sub: String? = nil, username: String? = nil, exp: Int? = nil, iat: Int? = nil, nbf: Int? = nil, iss: String? = nil, aud: IntrospectResponseAud? = nil, jti: String? = nil, act: AnyCodable? = nil) {
         self.active = active
         self.tokenType = tokenType
         self.scope = scope
@@ -47,6 +49,7 @@ public struct IntrospectResponse: Codable, JSONEncodable, Hashable {
         self.iss = iss
         self.aud = aud
         self.jti = jti
+        self.act = act
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -62,6 +65,7 @@ public struct IntrospectResponse: Codable, JSONEncodable, Hashable {
         case iss
         case aud
         case jti
+        case act
     }
 
     // Encodable protocol methods
@@ -80,6 +84,7 @@ public struct IntrospectResponse: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(iss, forKey: .iss)
         try container.encodeIfPresent(aud, forKey: .aud)
         try container.encodeIfPresent(jti, forKey: .jti)
+        try container.encodeIfPresent(act, forKey: .act)
     }
 }
 

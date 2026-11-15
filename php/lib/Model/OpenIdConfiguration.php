@@ -1383,7 +1383,7 @@ class OpenIdConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets acrValuesSupported
      *
-     * @param string[]|null $acrValuesSupported The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
+     * @param string[]|null $acrValuesSupported The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session). The list is the same for every organization.
      *
      * @return self
      */
@@ -2031,7 +2031,7 @@ class OpenIdConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets opPolicyUri
      *
-     * @param string|null $opPolicyUri Only when configured.
+     * @param string|null $opPolicyUri The Privacy policy URL of the organization's login page settings. Only when it is set.
      *
      * @return self
      */
@@ -2058,7 +2058,7 @@ class OpenIdConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets opTosUri
      *
-     * @param string|null $opTosUri Only when configured.
+     * @param string|null $opTosUri The Terms of service URL of the organization's login page settings. Only when it is set.
      *
      * @return self
      */

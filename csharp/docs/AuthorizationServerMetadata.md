@@ -36,11 +36,12 @@ Name | Type | Description | Notes
 **BackchannelAuthenticationEndpoint** | **string** |  | [optional] 
 **BackchannelTokenDeliveryModesSupported** | **List&lt;string&gt;** |  | [optional] 
 **BackchannelUserCodeParameterSupported** | **bool** |  | [optional] 
+**ResourceIndicatorsSupported** | **bool** |  | [optional] 
 **EntityProfilesSupported** | **List&lt;string&gt;** |  | [optional] 
 **ClientIdMetadataDocumentSupported** | **bool** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] 
 **AuthorizationGrantProfilesSupported** | **List&lt;string&gt;** | Only when the organization accepts ID-JAGs. | [optional] 
-**OpPolicyUri** | **string** | Only when configured. | [optional] 
-**OpTosUri** | **string** | Only when configured. | [optional] 
+**OpPolicyUri** | **string** | The Privacy policy URL of the organization&#39;s login page settings. Only when it is set. | [optional] 
+**OpTosUri** | **string** | The Terms of service URL of the organization&#39;s login page settings. Only when it is set. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

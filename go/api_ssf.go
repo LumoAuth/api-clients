@@ -51,6 +51,8 @@ type SsfAPI interface {
 	/*
 	GetStreamConfig Read SSF stream configuration(s)
 
+	Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@return ApiGetStreamConfigRequest
@@ -63,6 +65,8 @@ type SsfAPI interface {
 
 	/*
 	VerifyStream Request a stream verification event
+
+	Needs `settings.manage`, as the portal does.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -325,6 +329,8 @@ func (r ApiGetStreamConfigRequest) Execute() (*GetStreamConfig200Response, *http
 /*
 GetStreamConfig Read SSF stream configuration(s)
 
+Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
  @return ApiGetStreamConfigRequest
@@ -442,6 +448,8 @@ func (r ApiVerifyStreamRequest) Execute() (*http.Response, error) {
 
 /*
 VerifyStream Request a stream verification event
+
+Needs `settings.manage`, as the portal does.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId

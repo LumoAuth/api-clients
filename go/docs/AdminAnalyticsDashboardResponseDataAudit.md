@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**EventsLast7Days** | Pointer to **int32** |  | [optional] 
+**EventsLast7Days** | Pointer to **int32** | Audit events of the last 7 days, or of the audit retention period of the plan when that is shorter. | [optional] 
 
 ## Methods
 

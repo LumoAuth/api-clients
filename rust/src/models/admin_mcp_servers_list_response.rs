@@ -16,9 +16,11 @@ pub struct AdminMcpServersListResponse {
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
     pub data: Option<Vec<models::McpServer>>,
     #[serde(rename = "meta", skip_serializing_if = "Option::is_none")]
-    pub meta: Option<Box<models::AdminMcpServersListResponseMeta>>,
+    pub meta: Option<Box<models::PaginationMeta>>,
     #[serde(rename = "pagination", skip_serializing_if = "Option::is_none")]
     pub pagination: Option<Box<models::PaginationMeta>>,
+    #[serde(rename = "resourceType", skip_serializing_if = "Option::is_none")]
+    pub resource_type: Option<String>,
 }
 
 impl AdminMcpServersListResponse {
@@ -27,6 +29,7 @@ impl AdminMcpServersListResponse {
             data: None,
             meta: None,
             pagination: None,
+            resource_type: None,
         }
     }
 }

@@ -21,8 +21,9 @@ var _ MappedNullable = &AdminMcpServersListResponse{}
 // AdminMcpServersListResponse struct for AdminMcpServersListResponse
 type AdminMcpServersListResponse struct {
 	Data []McpServer `json:"data,omitempty"`
-	Meta *AdminMcpServersListResponseMeta `json:"meta,omitempty"`
+	Meta *PaginationMeta `json:"meta,omitempty"`
 	Pagination *PaginationMeta `json:"pagination,omitempty"`
+	ResourceType *string `json:"resourceType,omitempty"`
 }
 
 // NewAdminMcpServersListResponse instantiates a new AdminMcpServersListResponse object
@@ -75,9 +76,9 @@ func (o *AdminMcpServersListResponse) SetData(v []McpServer) {
 }
 
 // GetMeta returns the Meta field value if set, zero value otherwise.
-func (o *AdminMcpServersListResponse) GetMeta() AdminMcpServersListResponseMeta {
+func (o *AdminMcpServersListResponse) GetMeta() PaginationMeta {
 	if o == nil || IsNil(o.Meta) {
-		var ret AdminMcpServersListResponseMeta
+		var ret PaginationMeta
 		return ret
 	}
 	return *o.Meta
@@ -85,7 +86,7 @@ func (o *AdminMcpServersListResponse) GetMeta() AdminMcpServersListResponseMeta 
 
 // GetMetaOk returns a tuple with the Meta field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AdminMcpServersListResponse) GetMetaOk() (*AdminMcpServersListResponseMeta, bool) {
+func (o *AdminMcpServersListResponse) GetMetaOk() (*PaginationMeta, bool) {
 	if o == nil || IsNil(o.Meta) {
 		return nil, false
 	}
@@ -101,8 +102,8 @@ func (o *AdminMcpServersListResponse) HasMeta() bool {
 	return false
 }
 
-// SetMeta gets a reference to the given AdminMcpServersListResponseMeta and assigns it to the Meta field.
-func (o *AdminMcpServersListResponse) SetMeta(v AdminMcpServersListResponseMeta) {
+// SetMeta gets a reference to the given PaginationMeta and assigns it to the Meta field.
+func (o *AdminMcpServersListResponse) SetMeta(v PaginationMeta) {
 	o.Meta = &v
 }
 
@@ -138,6 +139,38 @@ func (o *AdminMcpServersListResponse) SetPagination(v PaginationMeta) {
 	o.Pagination = &v
 }
 
+// GetResourceType returns the ResourceType field value if set, zero value otherwise.
+func (o *AdminMcpServersListResponse) GetResourceType() string {
+	if o == nil || IsNil(o.ResourceType) {
+		var ret string
+		return ret
+	}
+	return *o.ResourceType
+}
+
+// GetResourceTypeOk returns a tuple with the ResourceType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminMcpServersListResponse) GetResourceTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.ResourceType) {
+		return nil, false
+	}
+	return o.ResourceType, true
+}
+
+// HasResourceType returns a boolean if a field has been set.
+func (o *AdminMcpServersListResponse) HasResourceType() bool {
+	if o != nil && !IsNil(o.ResourceType) {
+		return true
+	}
+
+	return false
+}
+
+// SetResourceType gets a reference to the given string and assigns it to the ResourceType field.
+func (o *AdminMcpServersListResponse) SetResourceType(v string) {
+	o.ResourceType = &v
+}
+
 func (o AdminMcpServersListResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -156,6 +189,9 @@ func (o AdminMcpServersListResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Pagination) {
 		toSerialize["pagination"] = o.Pagination
+	}
+	if !IsNil(o.ResourceType) {
+		toSerialize["resourceType"] = o.ResourceType
 	}
 	return toSerialize, nil
 }

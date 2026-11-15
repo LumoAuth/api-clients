@@ -20,16 +20,12 @@ Name | Type | Description | Notes
 **logo_uri** | **string** |  | [optional] [default to undefined]
 **policy_uri** | **string** |  | [optional] [default to undefined]
 **tos_uri** | **string** |  | [optional] [default to undefined]
-**sector_identifier_uri** | **string** |  | [optional] [default to undefined]
-**subject_type** | **string** | Only when not \&quot;public\&quot;. | [optional] [default to undefined]
 **jwks_uri** | **string** |  | [optional] [default to undefined]
 **jwks** | **{ [key: string]: any; }** |  | [optional] [default to undefined]
 **post_logout_redirect_uris** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **initiate_login_uri** | **string** |  | [optional] [default to undefined]
-**request_uris** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **scope** | **string** | Space-separated registered scopes. | [optional] [default to undefined]
 **id_token_signed_response_alg** | **string** | Only when not RS256. | [optional] [default to undefined]
-**userinfo_signed_response_alg** | **string** |  | [optional] [default to undefined]
 **request_object_signing_alg** | **string** |  | [optional] [default to undefined]
 **token_endpoint_auth_signing_alg** | **string** |  | [optional] [default to undefined]
 **default_max_age** | **number** |  | [optional] [default to undefined]
@@ -62,16 +58,12 @@ const instance: RegisteredClientMetadata = {
     logo_uri,
     policy_uri,
     tos_uri,
-    sector_identifier_uri,
-    subject_type,
     jwks_uri,
     jwks,
     post_logout_redirect_uris,
     initiate_login_uri,
-    request_uris,
     scope,
     id_token_signed_response_alg,
-    userinfo_signed_response_alg,
     request_object_signing_alg,
     token_endpoint_auth_signing_alg,
     default_max_age,

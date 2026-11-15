@@ -24,6 +24,8 @@ type AskResponse struct {
 	Action *string `json:"action,omitempty"`
 	Context map[string]interface{} `json:"context,omitempty"`
 	Reason *string `json:"reason,omitempty"`
+	// Which check produced the answer. Always pdp for a user caller.
+	DecidedBy *string `json:"decided_by,omitempty"`
 	AuditId *string `json:"audit_id,omitempty"`
 }
 
@@ -172,6 +174,38 @@ func (o *AskResponse) SetReason(v string) {
 	o.Reason = &v
 }
 
+// GetDecidedBy returns the DecidedBy field value if set, zero value otherwise.
+func (o *AskResponse) GetDecidedBy() string {
+	if o == nil || IsNil(o.DecidedBy) {
+		var ret string
+		return ret
+	}
+	return *o.DecidedBy
+}
+
+// GetDecidedByOk returns a tuple with the DecidedBy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AskResponse) GetDecidedByOk() (*string, bool) {
+	if o == nil || IsNil(o.DecidedBy) {
+		return nil, false
+	}
+	return o.DecidedBy, true
+}
+
+// HasDecidedBy returns a boolean if a field has been set.
+func (o *AskResponse) HasDecidedBy() bool {
+	if o != nil && !IsNil(o.DecidedBy) {
+		return true
+	}
+
+	return false
+}
+
+// SetDecidedBy gets a reference to the given string and assigns it to the DecidedBy field.
+func (o *AskResponse) SetDecidedBy(v string) {
+	o.DecidedBy = &v
+}
+
 // GetAuditId returns the AuditId field value if set, zero value otherwise.
 func (o *AskResponse) GetAuditId() string {
 	if o == nil || IsNil(o.AuditId) {
@@ -225,6 +259,9 @@ func (o AskResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Reason) {
 		toSerialize["reason"] = o.Reason
+	}
+	if !IsNil(o.DecidedBy) {
+		toSerialize["decided_by"] = o.DecidedBy
 	}
 	if !IsNil(o.AuditId) {
 		toSerialize["audit_id"] = o.AuditId

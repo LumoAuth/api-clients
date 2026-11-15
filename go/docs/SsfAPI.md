@@ -153,6 +153,8 @@ Name | Type | Description  | Notes
 
 Read SSF stream configuration(s)
 
+
+
 ### Example
 
 ```go
@@ -222,6 +224,8 @@ Name | Type | Description  | Notes
 > VerifyStream(ctx, orgId).Execute()
 
 Request a stream verification event
+
+
 
 ### Example
 

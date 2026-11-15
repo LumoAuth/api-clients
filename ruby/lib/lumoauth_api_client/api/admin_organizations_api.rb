@@ -186,6 +186,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && inv_id.nil?
         fail ArgumentError, "Missing the required parameter 'inv_id' when calling AdminOrganizationsApi.admin_org_invitations_resend"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && inv_id !~ pattern
+        fail ArgumentError, "invalid value for 'inv_id' when calling AdminOrganizationsApi.admin_org_invitations_resend, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'organizationId' + '}', CGI.escape(organization_id.to_s)).sub('{' + 'invId' + '}', CGI.escape(inv_id.to_s))
 
@@ -259,6 +264,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && inv_id.nil?
         fail ArgumentError, "Missing the required parameter 'inv_id' when calling AdminOrganizationsApi.admin_org_invitations_revoke"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && inv_id !~ pattern
+        fail ArgumentError, "invalid value for 'inv_id' when calling AdminOrganizationsApi.admin_org_invitations_revoke, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'organizationId' + '}', CGI.escape(organization_id.to_s)).sub('{' + 'invId' + '}', CGI.escape(inv_id.to_s))
 
@@ -606,6 +616,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && role_id.nil?
         fail ArgumentError, "Missing the required parameter 'role_id' when calling AdminOrganizationsApi.admin_org_roles_delete"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && role_id !~ pattern
+        fail ArgumentError, "invalid value for 'role_id' when calling AdminOrganizationsApi.admin_org_roles_delete, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'organizationId' + '}', CGI.escape(organization_id.to_s)).sub('{' + 'roleId' + '}', CGI.escape(role_id.to_s))
 
@@ -1075,6 +1090,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && role_id.nil?
         fail ArgumentError, "Missing the required parameter 'role_id' when calling AdminOrganizationsApi.patch_admin_org_roles_update"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && role_id !~ pattern
+        fail ArgumentError, "invalid value for 'role_id' when calling AdminOrganizationsApi.patch_admin_org_roles_update, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'organizationId' + '}', CGI.escape(organization_id.to_s)).sub('{' + 'roleId' + '}', CGI.escape(role_id.to_s))
 
@@ -1288,6 +1308,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && role_id.nil?
         fail ArgumentError, "Missing the required parameter 'role_id' when calling AdminOrganizationsApi.put_admin_org_roles_update"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && role_id !~ pattern
+        fail ArgumentError, "invalid value for 'role_id' when calling AdminOrganizationsApi.put_admin_org_roles_update, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'organizationId' + '}', CGI.escape(organization_id.to_s)).sub('{' + 'roleId' + '}', CGI.escape(role_id.to_s))
 

@@ -48,7 +48,11 @@ import type { PutAdminSettingsAuthenticationUpdateResponse } from '../models';
 // @ts-ignore
 import type { PutAdminSettingsBrandingUpdateResponse } from '../models';
 // @ts-ignore
+import type { PutAdminSettingsEmailUpdateRequest } from '../models';
+// @ts-ignore
 import type { PutAdminSettingsEmailUpdateResponse } from '../models';
+// @ts-ignore
+import type { PutAdminSettingsGeneralUpdateRequest } from '../models';
 // @ts-ignore
 import type { PutAdminSettingsGeneralUpdateResponse } from '../models';
 // @ts-ignore
@@ -238,7 +242,7 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal\'s branding page; without it the key is left out.
          * @summary Get all settings (combined)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -402,7 +406,7 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * Shows who sends the organization\'s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth\'s sender.
          * @summary Get email settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -730,7 +734,7 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
          * @summary Update branding/login page settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -771,13 +775,14 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * Changes the sender of the mail that the organization\'s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth\'s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
          * @summary Update email settings
          * @param {string} orgId 
+         * @param {PutAdminSettingsEmailUpdateRequest} [putAdminSettingsEmailUpdateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSettingsEmailUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminSettingsEmailUpdate: async (orgId: string, putAdminSettingsEmailUpdateRequest?: PutAdminSettingsEmailUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminSettingsEmailUpdate', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/email`
@@ -802,9 +807,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminSettingsEmailUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -812,13 +820,14 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
          * @summary Update general settings
          * @param {string} orgId 
+         * @param {PutAdminSettingsGeneralUpdateRequest} [putAdminSettingsGeneralUpdateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSettingsGeneralUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminSettingsGeneralUpdate: async (orgId: string, putAdminSettingsGeneralUpdateRequest?: PutAdminSettingsGeneralUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminSettingsGeneralUpdate', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/general`
@@ -843,9 +852,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminSettingsGeneralUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1099,7 +1111,7 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
          * @summary Update branding/login page settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -1140,13 +1152,14 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * Changes the sender of the mail that the organization\'s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth\'s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
          * @summary Update email settings
          * @param {string} orgId 
+         * @param {PutAdminSettingsEmailUpdateRequest} [putAdminSettingsEmailUpdateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSettingsEmailUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminSettingsEmailUpdate: async (orgId: string, putAdminSettingsEmailUpdateRequest?: PutAdminSettingsEmailUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminSettingsEmailUpdate', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/email`
@@ -1171,9 +1184,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminSettingsEmailUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1181,13 +1197,14 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
          * @summary Update general settings
          * @param {string} orgId 
+         * @param {PutAdminSettingsGeneralUpdateRequest} [putAdminSettingsGeneralUpdateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSettingsGeneralUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminSettingsGeneralUpdate: async (orgId: string, putAdminSettingsGeneralUpdateRequest?: PutAdminSettingsGeneralUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminSettingsGeneralUpdate', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/general`
@@ -1212,9 +1229,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminSettingsGeneralUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1409,7 +1429,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal\'s branding page; without it the key is left out.
          * @summary Get all settings (combined)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -1461,7 +1481,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Shows who sends the organization\'s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth\'s sender.
          * @summary Get email settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -1565,7 +1585,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
          * @summary Update branding/login page settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -1578,27 +1598,29 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Changes the sender of the mail that the organization\'s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth\'s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
          * @summary Update email settings
          * @param {string} orgId 
+         * @param {PutAdminSettingsEmailUpdateRequest} [putAdminSettingsEmailUpdateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSettingsEmailUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsEmailUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsEmailUpdate(orgId, options);
+        async patchAdminSettingsEmailUpdate(orgId: string, putAdminSettingsEmailUpdateRequest?: PutAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsEmailUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsEmailUpdate(orgId, putAdminSettingsEmailUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminSettingsEmailUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
          * @summary Update general settings
          * @param {string} orgId 
+         * @param {PutAdminSettingsGeneralUpdateRequest} [putAdminSettingsGeneralUpdateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSettingsGeneralUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsGeneralUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsGeneralUpdate(orgId, options);
+        async patchAdminSettingsGeneralUpdate(orgId: string, putAdminSettingsGeneralUpdateRequest?: PutAdminSettingsGeneralUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsGeneralUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsGeneralUpdate(orgId, putAdminSettingsGeneralUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminSettingsGeneralUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1682,7 +1704,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
          * @summary Update branding/login page settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -1695,27 +1717,29 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Changes the sender of the mail that the organization\'s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth\'s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
          * @summary Update email settings
          * @param {string} orgId 
+         * @param {PutAdminSettingsEmailUpdateRequest} [putAdminSettingsEmailUpdateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSettingsEmailUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsEmailUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsEmailUpdate(orgId, options);
+        async putAdminSettingsEmailUpdate(orgId: string, putAdminSettingsEmailUpdateRequest?: PutAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsEmailUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsEmailUpdate(orgId, putAdminSettingsEmailUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminSettingsEmailUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
          * @summary Update general settings
          * @param {string} orgId 
+         * @param {PutAdminSettingsGeneralUpdateRequest} [putAdminSettingsGeneralUpdateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSettingsGeneralUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsGeneralUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsGeneralUpdate(orgId, options);
+        async putAdminSettingsGeneralUpdate(orgId: string, putAdminSettingsGeneralUpdateRequest?: PutAdminSettingsGeneralUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsGeneralUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsGeneralUpdate(orgId, putAdminSettingsGeneralUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminSettingsGeneralUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1810,7 +1834,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
             return localVarFp.adminOrganizationGet(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal\'s branding page; without it the key is left out.
          * @summary Get all settings (combined)
          * @param {AdminSettingsApiAdminSettingsAllRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1850,7 +1874,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
             return localVarFp.adminSettingsBrandingGet(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Shows who sends the organization\'s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth\'s sender.
          * @summary Get email settings
          * @param {AdminSettingsApiAdminSettingsEmailGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1930,7 +1954,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
             return localVarFp.patchAdminSettingsAuthenticationUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
          * @summary Update branding/login page settings
          * @param {AdminSettingsApiPatchAdminSettingsBrandingUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1940,24 +1964,24 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
             return localVarFp.patchAdminSettingsBrandingUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Changes the sender of the mail that the organization\'s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth\'s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
          * @summary Update email settings
          * @param {AdminSettingsApiPatchAdminSettingsEmailUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         patchAdminSettingsEmailUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsEmailUpdateResponse> {
-            return localVarFp.patchAdminSettingsEmailUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminSettingsEmailUpdate(requestParameters.orgId, requestParameters.putAdminSettingsEmailUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
          * @summary Update general settings
          * @param {AdminSettingsApiPatchAdminSettingsGeneralUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         patchAdminSettingsGeneralUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsGeneralUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsGeneralUpdateResponse> {
-            return localVarFp.patchAdminSettingsGeneralUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminSettingsGeneralUpdate(requestParameters.orgId, requestParameters.putAdminSettingsGeneralUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2020,7 +2044,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
             return localVarFp.putAdminSettingsAuthenticationUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
          * @summary Update branding/login page settings
          * @param {AdminSettingsApiPutAdminSettingsBrandingUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2030,24 +2054,24 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
             return localVarFp.putAdminSettingsBrandingUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Changes the sender of the mail that the organization\'s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth\'s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
          * @summary Update email settings
          * @param {AdminSettingsApiPutAdminSettingsEmailUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         putAdminSettingsEmailUpdate(requestParameters: AdminSettingsApiPutAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsEmailUpdateResponse> {
-            return localVarFp.putAdminSettingsEmailUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminSettingsEmailUpdate(requestParameters.orgId, requestParameters.putAdminSettingsEmailUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
          * @summary Update general settings
          * @param {AdminSettingsApiPutAdminSettingsGeneralUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         putAdminSettingsGeneralUpdate(requestParameters: AdminSettingsApiPutAdminSettingsGeneralUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsGeneralUpdateResponse> {
-            return localVarFp.putAdminSettingsGeneralUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminSettingsGeneralUpdate(requestParameters.orgId, requestParameters.putAdminSettingsGeneralUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2129,7 +2153,7 @@ export interface AdminSettingsApiInterface {
     adminOrganizationGet(requestParameters: AdminSettingsApiAdminOrganizationGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminTenantGetResponse>;
 
     /**
-     * 
+     * Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal\'s branding page; without it the key is left out.
      * @summary Get all settings (combined)
      * @param {AdminSettingsApiAdminSettingsAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2169,7 +2193,7 @@ export interface AdminSettingsApiInterface {
     adminSettingsBrandingGet(requestParameters: AdminSettingsApiAdminSettingsBrandingGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsBrandingGetResponse>;
 
     /**
-     * 
+     * Shows who sends the organization\'s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth\'s sender.
      * @summary Get email settings
      * @param {AdminSettingsApiAdminSettingsEmailGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2249,7 +2273,7 @@ export interface AdminSettingsApiInterface {
     patchAdminSettingsAuthenticationUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsAuthenticationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>;
 
     /**
-     * 
+     * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @summary Update branding/login page settings
      * @param {AdminSettingsApiPatchAdminSettingsBrandingUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2259,7 +2283,7 @@ export interface AdminSettingsApiInterface {
     patchAdminSettingsBrandingUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsBrandingUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsBrandingUpdateResponse>;
 
     /**
-     * 
+     * Changes the sender of the mail that the organization\'s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth\'s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
      * @summary Update email settings
      * @param {AdminSettingsApiPatchAdminSettingsEmailUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2269,7 +2293,7 @@ export interface AdminSettingsApiInterface {
     patchAdminSettingsEmailUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsEmailUpdateResponse>;
 
     /**
-     * 
+     * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
      * @summary Update general settings
      * @param {AdminSettingsApiPatchAdminSettingsGeneralUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2339,7 +2363,7 @@ export interface AdminSettingsApiInterface {
     putAdminSettingsAuthenticationUpdate(requestParameters: AdminSettingsApiPutAdminSettingsAuthenticationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>;
 
     /**
-     * 
+     * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @summary Update branding/login page settings
      * @param {AdminSettingsApiPutAdminSettingsBrandingUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2349,7 +2373,7 @@ export interface AdminSettingsApiInterface {
     putAdminSettingsBrandingUpdate(requestParameters: AdminSettingsApiPutAdminSettingsBrandingUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsBrandingUpdateResponse>;
 
     /**
-     * 
+     * Changes the sender of the mail that the organization\'s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth\'s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
      * @summary Update email settings
      * @param {AdminSettingsApiPutAdminSettingsEmailUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2359,7 +2383,7 @@ export interface AdminSettingsApiInterface {
     putAdminSettingsEmailUpdate(requestParameters: AdminSettingsApiPutAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsEmailUpdateResponse>;
 
     /**
-     * 
+     * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
      * @summary Update general settings
      * @param {AdminSettingsApiPutAdminSettingsGeneralUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2664,6 +2688,13 @@ export interface AdminSettingsApiPatchAdminSettingsEmailUpdateRequest {
      * @memberof AdminSettingsApiPatchAdminSettingsEmailUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {PutAdminSettingsEmailUpdateRequest}
+     * @memberof AdminSettingsApiPatchAdminSettingsEmailUpdate
+     */
+    readonly putAdminSettingsEmailUpdateRequest?: PutAdminSettingsEmailUpdateRequest
 }
 
 /**
@@ -2678,6 +2709,13 @@ export interface AdminSettingsApiPatchAdminSettingsGeneralUpdateRequest {
      * @memberof AdminSettingsApiPatchAdminSettingsGeneralUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {PutAdminSettingsGeneralUpdateRequest}
+     * @memberof AdminSettingsApiPatchAdminSettingsGeneralUpdate
+     */
+    readonly putAdminSettingsGeneralUpdateRequest?: PutAdminSettingsGeneralUpdateRequest
 }
 
 /**
@@ -2790,6 +2828,13 @@ export interface AdminSettingsApiPutAdminSettingsEmailUpdateRequest {
      * @memberof AdminSettingsApiPutAdminSettingsEmailUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {PutAdminSettingsEmailUpdateRequest}
+     * @memberof AdminSettingsApiPutAdminSettingsEmailUpdate
+     */
+    readonly putAdminSettingsEmailUpdateRequest?: PutAdminSettingsEmailUpdateRequest
 }
 
 /**
@@ -2804,6 +2849,13 @@ export interface AdminSettingsApiPutAdminSettingsGeneralUpdateRequest {
      * @memberof AdminSettingsApiPutAdminSettingsGeneralUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {PutAdminSettingsGeneralUpdateRequest}
+     * @memberof AdminSettingsApiPutAdminSettingsGeneralUpdate
+     */
+    readonly putAdminSettingsGeneralUpdateRequest?: PutAdminSettingsGeneralUpdateRequest
 }
 
 /**
@@ -2904,7 +2956,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
     }
 
     /**
-     * 
+     * Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal\'s branding page; without it the key is left out.
      * @summary Get all settings (combined)
      * @param {AdminSettingsApiAdminSettingsAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2952,7 +3004,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
     }
 
     /**
-     * 
+     * Shows who sends the organization\'s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth\'s sender.
      * @summary Get email settings
      * @param {AdminSettingsApiAdminSettingsEmailGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3048,7 +3100,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
     }
 
     /**
-     * 
+     * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @summary Update branding/login page settings
      * @param {AdminSettingsApiPatchAdminSettingsBrandingUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3060,7 +3112,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
     }
 
     /**
-     * 
+     * Changes the sender of the mail that the organization\'s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth\'s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
      * @summary Update email settings
      * @param {AdminSettingsApiPatchAdminSettingsEmailUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3068,11 +3120,11 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public patchAdminSettingsEmailUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).patchAdminSettingsEmailUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).patchAdminSettingsEmailUpdate(requestParameters.orgId, requestParameters.putAdminSettingsEmailUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
      * @summary Update general settings
      * @param {AdminSettingsApiPatchAdminSettingsGeneralUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3080,7 +3132,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public patchAdminSettingsGeneralUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsGeneralUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).patchAdminSettingsGeneralUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).patchAdminSettingsGeneralUpdate(requestParameters.orgId, requestParameters.putAdminSettingsGeneralUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3156,7 +3208,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
     }
 
     /**
-     * 
+     * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @summary Update branding/login page settings
      * @param {AdminSettingsApiPutAdminSettingsBrandingUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3168,7 +3220,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
     }
 
     /**
-     * 
+     * Changes the sender of the mail that the organization\'s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth\'s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
      * @summary Update email settings
      * @param {AdminSettingsApiPutAdminSettingsEmailUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3176,11 +3228,11 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public putAdminSettingsEmailUpdate(requestParameters: AdminSettingsApiPutAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).putAdminSettingsEmailUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).putAdminSettingsEmailUpdate(requestParameters.orgId, requestParameters.putAdminSettingsEmailUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
      * @summary Update general settings
      * @param {AdminSettingsApiPutAdminSettingsGeneralUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3188,7 +3240,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public putAdminSettingsGeneralUpdate(requestParameters: AdminSettingsApiPutAdminSettingsGeneralUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).putAdminSettingsGeneralUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).putAdminSettingsGeneralUpdate(requestParameters.orgId, requestParameters.putAdminSettingsGeneralUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
