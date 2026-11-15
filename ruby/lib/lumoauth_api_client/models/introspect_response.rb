@@ -48,6 +48,9 @@ module LumoAuthApiClient
     # JWT id (JWT tokens only).
     attr_accessor :jti
 
+    # RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under `act`. JWT and opaque tokens.
+    attr_accessor :act
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -62,7 +65,8 @@ module LumoAuthApiClient
         :'nbf' => :'nbf',
         :'iss' => :'iss',
         :'aud' => :'aud',
-        :'jti' => :'jti'
+        :'jti' => :'jti',
+        :'act' => :'act'
       }
     end
 
@@ -90,7 +94,8 @@ module LumoAuthApiClient
         :'nbf' => :'Integer',
         :'iss' => :'String',
         :'aud' => :'IntrospectResponseAud',
-        :'jti' => :'String'
+        :'jti' => :'String',
+        :'act' => :'Object'
       }
     end
 
@@ -166,6 +171,10 @@ module LumoAuthApiClient
       if attributes.key?(:'jti')
         self.jti = attributes[:'jti']
       end
+
+      if attributes.key?(:'act')
+        self.act = attributes[:'act']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -214,7 +223,8 @@ module LumoAuthApiClient
           nbf == o.nbf &&
           iss == o.iss &&
           aud == o.aud &&
-          jti == o.jti
+          jti == o.jti &&
+          act == o.act
     end
 
     # @see the `==` method
@@ -226,7 +236,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [active, token_type, scope, client_id, sub, username, exp, iat, nbf, iss, aud, jti].hash
+      [active, token_type, scope, client_id, sub, username, exp, iat, nbf, iss, aud, jti, act].hash
     end
 
     # Builds the object from hash

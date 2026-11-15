@@ -354,10 +354,11 @@ export const AdminAbacApiAxiosParamCreator = function (configuration?: Configura
          * 
          * @summary List ABAC policies
          * @param {string} orgId 
+         * @param {string} [action] Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abacPoliciesList: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        abacPoliciesList: async (orgId: string, action?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('abacPoliciesList', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/abac/policies`
@@ -379,6 +380,10 @@ export const AdminAbacApiAxiosParamCreator = function (configuration?: Configura
             // authentication BearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (action !== undefined) {
+                localVarQueryParameter['action'] = action;
+            }
 
 
     
@@ -725,11 +730,12 @@ export const AdminAbacApiFp = function(configuration?: Configuration) {
          * 
          * @summary List ABAC policies
          * @param {string} orgId 
+         * @param {string} [action] Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abacPoliciesList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbacPoliciesListResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.abacPoliciesList(orgId, options);
+        async abacPoliciesList(orgId: string, action?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbacPoliciesListResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.abacPoliciesList(orgId, action, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAbacApi.abacPoliciesList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -892,7 +898,7 @@ export const AdminAbacApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         abacPoliciesList(requestParameters: AdminAbacApiAbacPoliciesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacPoliciesListResponse> {
-            return localVarFp.abacPoliciesList(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.abacPoliciesList(requestParameters.orgId, requestParameters.action, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1223,6 +1229,13 @@ export interface AdminAbacApiAbacPoliciesListRequest {
      * @memberof AdminAbacApiAbacPoliciesList
      */
     readonly orgId: string
+
+    /**
+     * Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;.
+     * @type {string}
+     * @memberof AdminAbacApiAbacPoliciesList
+     */
+    readonly action?: string
 }
 
 /**
@@ -1430,7 +1443,7 @@ export class AdminAbacApi extends BaseAPI implements AdminAbacApiInterface {
      * @memberof AdminAbacApi
      */
     public abacPoliciesList(requestParameters: AdminAbacApiAbacPoliciesListRequest, options?: RawAxiosRequestConfig) {
-        return AdminAbacApiFp(this.configuration).abacPoliciesList(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminAbacApiFp(this.configuration).abacPoliciesList(requestParameters.orgId, requestParameters.action, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

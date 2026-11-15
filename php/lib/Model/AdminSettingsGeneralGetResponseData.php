@@ -36,7 +36,7 @@ use \LumoAuth\ApiClient\ObjectSerializer;
  * AdminSettingsGeneralGetResponseData Class Doc Comment
  *
  * @category Class
- * @description Defaults (displayName, timezone, locale) are filled in, then the raw settings dictionary is merged over them: any stored key (display_name, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+ * @description name, displayName (the same value) and locale, then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
  * @package  LumoAuth\ApiClient
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -61,7 +61,6 @@ class AdminSettingsGeneralGetResponseData implements ModelInterface, ArrayAccess
     protected static $openAPITypes = [
         'name' => 'string',
         'displayName' => 'string',
-        'timezone' => 'string',
         'locale' => 'string'
     ];
 
@@ -75,7 +74,6 @@ class AdminSettingsGeneralGetResponseData implements ModelInterface, ArrayAccess
     protected static $openAPIFormats = [
         'name' => null,
         'displayName' => null,
-        'timezone' => null,
         'locale' => null
     ];
 
@@ -87,7 +85,6 @@ class AdminSettingsGeneralGetResponseData implements ModelInterface, ArrayAccess
     protected static array $openAPINullables = [
         'name' => false,
         'displayName' => false,
-        'timezone' => false,
         'locale' => false
     ];
 
@@ -179,7 +176,6 @@ class AdminSettingsGeneralGetResponseData implements ModelInterface, ArrayAccess
     protected static $attributeMap = [
         'name' => 'name',
         'displayName' => 'displayName',
-        'timezone' => 'timezone',
         'locale' => 'locale'
     ];
 
@@ -191,7 +187,6 @@ class AdminSettingsGeneralGetResponseData implements ModelInterface, ArrayAccess
     protected static $setters = [
         'name' => 'setName',
         'displayName' => 'setDisplayName',
-        'timezone' => 'setTimezone',
         'locale' => 'setLocale'
     ];
 
@@ -203,7 +198,6 @@ class AdminSettingsGeneralGetResponseData implements ModelInterface, ArrayAccess
     protected static $getters = [
         'name' => 'getName',
         'displayName' => 'getDisplayName',
-        'timezone' => 'getTimezone',
         'locale' => 'getLocale'
     ];
 
@@ -266,7 +260,6 @@ class AdminSettingsGeneralGetResponseData implements ModelInterface, ArrayAccess
     {
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('displayName', $data ?? [], null);
-        $this->setIfExists('timezone', $data ?? [], null);
         $this->setIfExists('locale', $data ?? [], null);
     }
 
@@ -325,7 +318,7 @@ class AdminSettingsGeneralGetResponseData implements ModelInterface, ArrayAccess
     /**
      * Sets name
      *
-     * @param string|null $name name
+     * @param string|null $name Name of the organization, shown on the hosted pages and in mail.
      *
      * @return self
      */
@@ -352,7 +345,7 @@ class AdminSettingsGeneralGetResponseData implements ModelInterface, ArrayAccess
     /**
      * Sets displayName
      *
-     * @param string|null $displayName displayName
+     * @param string|null $displayName The same value as name.
      *
      * @return self
      */
@@ -362,33 +355,6 @@ class AdminSettingsGeneralGetResponseData implements ModelInterface, ArrayAccess
             throw new \InvalidArgumentException('non-nullable displayName cannot be null');
         }
         $this->container['displayName'] = $displayName;
-
-        return $this;
-    }
-
-    /**
-     * Gets timezone
-     *
-     * @return string|null
-     */
-    public function getTimezone()
-    {
-        return $this->container['timezone'];
-    }
-
-    /**
-     * Sets timezone
-     *
-     * @param string|null $timezone timezone
-     *
-     * @return self
-     */
-    public function setTimezone($timezone)
-    {
-        if (is_null($timezone)) {
-            throw new \InvalidArgumentException('non-nullable timezone cannot be null');
-        }
-        $this->container['timezone'] = $timezone;
 
         return $this;
     }
@@ -406,7 +372,7 @@ class AdminSettingsGeneralGetResponseData implements ModelInterface, ArrayAccess
     /**
      * Sets locale
      *
-     * @param string|null $locale locale
+     * @param string|null $locale Default language of the hosted pages (the Default language of the login page settings).
      *
      * @return self
      */

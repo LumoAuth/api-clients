@@ -304,6 +304,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && session_id.nil?
         fail ArgumentError, "Missing the required parameter 'session_id' when calling AdminSessionsApi.admin_sessions_revoke"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && session_id !~ pattern
+        fail ArgumentError, "invalid value for 'session_id' when calling AdminSessionsApi.admin_sessions_revoke, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/sessions/{sessionId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'sessionId' + '}', CGI.escape(session_id.to_s))
 
@@ -569,6 +574,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && token_id.nil?
         fail ArgumentError, "Missing the required parameter 'token_id' when calling AdminSessionsApi.admin_tokens_revoke"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && token_id !~ pattern
+        fail ArgumentError, "invalid value for 'token_id' when calling AdminSessionsApi.admin_tokens_revoke, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/tokens/{tokenId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'tokenId' + '}', CGI.escape(token_id.to_s))
 

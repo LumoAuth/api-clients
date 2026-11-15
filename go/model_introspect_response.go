@@ -43,6 +43,8 @@ type IntrospectResponse struct {
 	Aud *IntrospectResponseAud `json:"aud,omitempty"`
 	// JWT id (JWT tokens only).
 	Jti *string `json:"jti,omitempty"`
+	// RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under `act`. JWT and opaque tokens.
+	Act map[string]interface{} `json:"act,omitempty"`
 }
 
 type _IntrospectResponse IntrospectResponse
@@ -451,6 +453,38 @@ func (o *IntrospectResponse) SetJti(v string) {
 	o.Jti = &v
 }
 
+// GetAct returns the Act field value if set, zero value otherwise.
+func (o *IntrospectResponse) GetAct() map[string]interface{} {
+	if o == nil || IsNil(o.Act) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Act
+}
+
+// GetActOk returns a tuple with the Act field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *IntrospectResponse) GetActOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Act) {
+		return map[string]interface{}{}, false
+	}
+	return o.Act, true
+}
+
+// HasAct returns a boolean if a field has been set.
+func (o *IntrospectResponse) HasAct() bool {
+	if o != nil && !IsNil(o.Act) {
+		return true
+	}
+
+	return false
+}
+
+// SetAct gets a reference to the given map[string]interface{} and assigns it to the Act field.
+func (o *IntrospectResponse) SetAct(v map[string]interface{}) {
+	o.Act = v
+}
+
 func (o IntrospectResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -494,6 +528,9 @@ func (o IntrospectResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Jti) {
 		toSerialize["jti"] = o.Jti
+	}
+	if !IsNil(o.Act) {
+		toSerialize["act"] = o.Act
 	}
 	return toSerialize, nil
 }

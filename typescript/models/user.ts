@@ -99,6 +99,18 @@ export interface User {
      */
     'blocked': boolean;
     /**
+     * Soft-deleted by inbound SCIM. Left out of the list unless deleted=true is asked; POST /users/{userId}/restore brings the user back.
+     * @type {boolean}
+     * @memberof User
+     */
+    'deleted'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'deletedAt'?: string | null;
+    /**
      * 
      * @type {boolean}
      * @memberof User

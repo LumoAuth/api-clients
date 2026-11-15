@@ -793,7 +793,7 @@ public class Example {
 
 <a id="adminAgentsList"></a>
 # **adminAgentsList**
-> AdminAgentsListResponse adminAgentsList(orgId)
+> AdminAgentsListResponse adminAgentsList(orgId, sortBy, sortDir)
 
 List all agents in the tenant
 
@@ -824,8 +824,10 @@ public class Example {
 
     AdminAgentsApi apiInstance = new AdminAgentsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String sortBy = "name"; // String | Sort field. Default: name. Another value is ignored.
+    String sortDir = "ASC"; // String | Sort direction, used with sortBy.
     try {
-      AdminAgentsListResponse result = apiInstance.adminAgentsList(orgId);
+      AdminAgentsListResponse result = apiInstance.adminAgentsList(orgId, sortBy, sortDir);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAgentsApi#adminAgentsList");
@@ -843,6 +845,8 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **sortBy** | **String**| Sort field. Default: name. Another value is ignored. | [optional] [enum: name, agentId, status, createdAt, lastUsedAt] |
+| **sortDir** | **String**| Sort direction, used with sortBy. | [optional] [default to ASC] [enum: ASC, DESC] |
 
 ### Return type
 

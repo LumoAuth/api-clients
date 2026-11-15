@@ -19,9 +19,8 @@ module LumoAuthApiClient
 
     attr_accessor :name
 
+    # Shown to users on the consent page next to the scope name.
     attr_accessor :description
-
-    attr_accessor :is_default
 
     attr_accessor :is_system
 
@@ -33,7 +32,6 @@ module LumoAuthApiClient
         :'id' => :'id',
         :'name' => :'name',
         :'description' => :'description',
-        :'is_default' => :'isDefault',
         :'is_system' => :'isSystem',
         :'created_at' => :'createdAt'
       }
@@ -55,7 +53,6 @@ module LumoAuthApiClient
         :'id' => :'Integer',
         :'name' => :'String',
         :'description' => :'String',
-        :'is_default' => :'Boolean',
         :'is_system' => :'Boolean',
         :'created_at' => :'Time'
       }
@@ -96,10 +93,6 @@ module LumoAuthApiClient
         self.description = attributes[:'description']
       end
 
-      if attributes.key?(:'is_default')
-        self.is_default = attributes[:'is_default']
-      end
-
       if attributes.key?(:'is_system')
         self.is_system = attributes[:'is_system']
       end
@@ -132,7 +125,6 @@ module LumoAuthApiClient
           id == o.id &&
           name == o.name &&
           description == o.description &&
-          is_default == o.is_default &&
           is_system == o.is_system &&
           created_at == o.created_at
     end
@@ -146,7 +138,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, description, is_default, is_system, created_at].hash
+      [id, name, description, is_system, created_at].hash
     end
 
     # Builds the object from hash

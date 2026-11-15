@@ -89,6 +89,8 @@ Name | Type | Description  | Notes
 
 Export audit logs as CSV (default) or JSON
 
+
+
 ### Example
 
 ```go
@@ -432,6 +434,8 @@ Name | Type | Description  | Notes
 
 Update audit log retention settings
 
+
+
 ### Example
 
 ```go
@@ -499,6 +503,8 @@ Name | Type | Description  | Notes
 > AdminAuditLogsRetentionResponse PutAdminAuditLogsRetentionUpdate(ctx, orgId).Execute()
 
 Update audit log retention settings
+
+
 
 ### Example
 

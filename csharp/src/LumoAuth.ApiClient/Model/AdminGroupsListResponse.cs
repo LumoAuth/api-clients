@@ -39,11 +39,13 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="data">data.</param>
         /// <param name="meta">meta.</param>
         /// <param name="pagination">pagination.</param>
-        public AdminGroupsListResponse(List<Group> data = default, PaginationMeta meta = default, PaginationMeta pagination = default)
+        /// <param name="resourceType">resourceType.</param>
+        public AdminGroupsListResponse(List<Group> data = default, PaginationMeta meta = default, PaginationMeta pagination = default, string resourceType = default)
         {
             this.Data = data;
             this.Meta = meta;
             this.Pagination = pagination;
+            this.ResourceType = resourceType;
         }
 
         /// <summary>
@@ -65,6 +67,15 @@ namespace LumoAuth.ApiClient.Model
         public PaginationMeta Pagination { get; set; }
 
         /// <summary>
+        /// Gets or Sets ResourceType
+        /// </summary>
+        /*
+        <example>groups</example>
+        */
+        [DataMember(Name = "resourceType", EmitDefaultValue = false)]
+        public string ResourceType { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -75,6 +86,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Data: ").Append(Data).Append("\n");
             sb.Append("  Meta: ").Append(Meta).Append("\n");
             sb.Append("  Pagination: ").Append(Pagination).Append("\n");
+            sb.Append("  ResourceType: ").Append(ResourceType).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

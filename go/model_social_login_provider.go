@@ -35,7 +35,8 @@ type SocialLoginProvider struct {
 	CallbackUrl NullableString `json:"callbackUrl,omitempty"`
 	// Detailed responses only
 	RequestedScopes []string `json:"requestedScopes,omitempty"`
-	// Detailed responses only
+	// Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes.
+	// Deprecated
 	CustomClaims map[string]interface{} `json:"customClaims,omitempty"`
 	// Detailed responses only
 	ClaimMapping map[string]interface{} `json:"claimMapping,omitempty"`
@@ -397,6 +398,7 @@ func (o *SocialLoginProvider) SetRequestedScopes(v []string) {
 }
 
 // GetCustomClaims returns the CustomClaims field value if set, zero value otherwise (both if not set or set to explicit null).
+// Deprecated
 func (o *SocialLoginProvider) GetCustomClaims() map[string]interface{} {
 	if o == nil {
 		var ret map[string]interface{}
@@ -408,6 +410,7 @@ func (o *SocialLoginProvider) GetCustomClaims() map[string]interface{} {
 // GetCustomClaimsOk returns a tuple with the CustomClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
+// Deprecated
 func (o *SocialLoginProvider) GetCustomClaimsOk() (map[string]interface{}, bool) {
 	if o == nil || IsNil(o.CustomClaims) {
 		return map[string]interface{}{}, false
@@ -425,6 +428,7 @@ func (o *SocialLoginProvider) HasCustomClaims() bool {
 }
 
 // SetCustomClaims gets a reference to the given map[string]interface{} and assigns it to the CustomClaims field.
+// Deprecated
 func (o *SocialLoginProvider) SetCustomClaims(v map[string]interface{}) {
 	o.CustomClaims = v
 }

@@ -33,19 +33,14 @@ public struct RegisteredClientMetadata: Codable, JSONEncodable, Hashable {
     public var logoUri: String?
     public var policyUri: String?
     public var tosUri: String?
-    public var sectorIdentifierUri: String?
-    /** Only when not \"public\". */
-    public var subjectType: String?
     public var jwksUri: String?
     public var jwks: [String: AnyCodable]?
     public var postLogoutRedirectUris: [String]?
     public var initiateLoginUri: String?
-    public var requestUris: [String]?
     /** Space-separated registered scopes. */
     public var scope: String?
     /** Only when not RS256. */
     public var idTokenSignedResponseAlg: String?
-    public var userinfoSignedResponseAlg: String?
     public var requestObjectSigningAlg: String?
     public var tokenEndpointAuthSigningAlg: String?
     public var defaultMaxAge: Int?
@@ -61,7 +56,7 @@ public struct RegisteredClientMetadata: Codable, JSONEncodable, Hashable {
     /** RFC 8707 resource indicators the client may request. */
     public var audienceUris: [String]?
 
-    public init(clientId: String, clientSecretExpiresAt: Int? = nil, clientIdIssuedAt: Int, registrationClientUri: String? = nil, clientName: String?, redirectUris: [String], responseTypes: [String], grantTypes: [String], applicationType: ApplicationType, tokenEndpointAuthMethod: String, contacts: [String]? = nil, clientUri: String? = nil, logoUri: String? = nil, policyUri: String? = nil, tosUri: String? = nil, sectorIdentifierUri: String? = nil, subjectType: String? = nil, jwksUri: String? = nil, jwks: [String: AnyCodable]? = nil, postLogoutRedirectUris: [String]? = nil, initiateLoginUri: String? = nil, requestUris: [String]? = nil, scope: String? = nil, idTokenSignedResponseAlg: String? = nil, userinfoSignedResponseAlg: String? = nil, requestObjectSigningAlg: String? = nil, tokenEndpointAuthSigningAlg: String? = nil, defaultMaxAge: Int? = nil, requireAuthTime: Bool? = nil, defaultAcrValues: [String]? = nil, frontchannelLogoutUri: String? = nil, frontchannelLogoutSessionRequired: Bool? = nil, backchannelLogoutUri: String? = nil, backchannelLogoutSessionRequired: Bool? = nil, audienceUris: [String]? = nil) {
+    public init(clientId: String, clientSecretExpiresAt: Int? = nil, clientIdIssuedAt: Int, registrationClientUri: String? = nil, clientName: String?, redirectUris: [String], responseTypes: [String], grantTypes: [String], applicationType: ApplicationType, tokenEndpointAuthMethod: String, contacts: [String]? = nil, clientUri: String? = nil, logoUri: String? = nil, policyUri: String? = nil, tosUri: String? = nil, jwksUri: String? = nil, jwks: [String: AnyCodable]? = nil, postLogoutRedirectUris: [String]? = nil, initiateLoginUri: String? = nil, scope: String? = nil, idTokenSignedResponseAlg: String? = nil, requestObjectSigningAlg: String? = nil, tokenEndpointAuthSigningAlg: String? = nil, defaultMaxAge: Int? = nil, requireAuthTime: Bool? = nil, defaultAcrValues: [String]? = nil, frontchannelLogoutUri: String? = nil, frontchannelLogoutSessionRequired: Bool? = nil, backchannelLogoutUri: String? = nil, backchannelLogoutSessionRequired: Bool? = nil, audienceUris: [String]? = nil) {
         self.clientId = clientId
         self.clientSecretExpiresAt = clientSecretExpiresAt
         self.clientIdIssuedAt = clientIdIssuedAt
@@ -77,16 +72,12 @@ public struct RegisteredClientMetadata: Codable, JSONEncodable, Hashable {
         self.logoUri = logoUri
         self.policyUri = policyUri
         self.tosUri = tosUri
-        self.sectorIdentifierUri = sectorIdentifierUri
-        self.subjectType = subjectType
         self.jwksUri = jwksUri
         self.jwks = jwks
         self.postLogoutRedirectUris = postLogoutRedirectUris
         self.initiateLoginUri = initiateLoginUri
-        self.requestUris = requestUris
         self.scope = scope
         self.idTokenSignedResponseAlg = idTokenSignedResponseAlg
-        self.userinfoSignedResponseAlg = userinfoSignedResponseAlg
         self.requestObjectSigningAlg = requestObjectSigningAlg
         self.tokenEndpointAuthSigningAlg = tokenEndpointAuthSigningAlg
         self.defaultMaxAge = defaultMaxAge
@@ -115,16 +106,12 @@ public struct RegisteredClientMetadata: Codable, JSONEncodable, Hashable {
         case logoUri = "logo_uri"
         case policyUri = "policy_uri"
         case tosUri = "tos_uri"
-        case sectorIdentifierUri = "sector_identifier_uri"
-        case subjectType = "subject_type"
         case jwksUri = "jwks_uri"
         case jwks
         case postLogoutRedirectUris = "post_logout_redirect_uris"
         case initiateLoginUri = "initiate_login_uri"
-        case requestUris = "request_uris"
         case scope
         case idTokenSignedResponseAlg = "id_token_signed_response_alg"
-        case userinfoSignedResponseAlg = "userinfo_signed_response_alg"
         case requestObjectSigningAlg = "request_object_signing_alg"
         case tokenEndpointAuthSigningAlg = "token_endpoint_auth_signing_alg"
         case defaultMaxAge = "default_max_age"
@@ -156,16 +143,12 @@ public struct RegisteredClientMetadata: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(logoUri, forKey: .logoUri)
         try container.encodeIfPresent(policyUri, forKey: .policyUri)
         try container.encodeIfPresent(tosUri, forKey: .tosUri)
-        try container.encodeIfPresent(sectorIdentifierUri, forKey: .sectorIdentifierUri)
-        try container.encodeIfPresent(subjectType, forKey: .subjectType)
         try container.encodeIfPresent(jwksUri, forKey: .jwksUri)
         try container.encodeIfPresent(jwks, forKey: .jwks)
         try container.encodeIfPresent(postLogoutRedirectUris, forKey: .postLogoutRedirectUris)
         try container.encodeIfPresent(initiateLoginUri, forKey: .initiateLoginUri)
-        try container.encodeIfPresent(requestUris, forKey: .requestUris)
         try container.encodeIfPresent(scope, forKey: .scope)
         try container.encodeIfPresent(idTokenSignedResponseAlg, forKey: .idTokenSignedResponseAlg)
-        try container.encodeIfPresent(userinfoSignedResponseAlg, forKey: .userinfoSignedResponseAlg)
         try container.encodeIfPresent(requestObjectSigningAlg, forKey: .requestObjectSigningAlg)
         try container.encodeIfPresent(tokenEndpointAuthSigningAlg, forKey: .tokenEndpointAuthSigningAlg)
         try container.encodeIfPresent(defaultMaxAge, forKey: .defaultMaxAge)

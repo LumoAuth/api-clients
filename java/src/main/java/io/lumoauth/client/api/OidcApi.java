@@ -479,9 +479,9 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent. A token from the client credentials grant of an OAuth client names neither and is refused with 401 invalid_token, as a JWT and as an opaque token. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, wrong DPoP binding, or a client credentials token, which names no user) or invalid_dpop_proof. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
@@ -551,9 +551,9 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent. A token from the client credentials grant of an OAuth client names neither and is refused with 401 invalid_token, as a JWT and as an opaque token. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, wrong DPoP binding, or a client credentials token, which names no user) or invalid_dpop_proof. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
@@ -572,9 +572,9 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent. A token from the client credentials grant of an OAuth client names neither and is refused with 401 invalid_token, as a JWT and as an opaque token. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, wrong DPoP binding, or a client credentials token, which names no user) or invalid_dpop_proof. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
@@ -595,9 +595,9 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent. A token from the client credentials grant of an OAuth client names neither and is refused with 401 invalid_token, as a JWT and as an opaque token. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, wrong DPoP binding, or a client credentials token, which names no user) or invalid_dpop_proof. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
@@ -618,9 +618,9 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent. A token from the client credentials grant of an OAuth client names neither and is refused with 401 invalid_token, as a JWT and as an opaque token. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, wrong DPoP binding, or a client credentials token, which names no user) or invalid_dpop_proof. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
@@ -690,9 +690,9 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent. A token from the client credentials grant of an OAuth client names neither and is refused with 401 invalid_token, as a JWT and as an opaque token. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, wrong DPoP binding, or a client credentials token, which names no user) or invalid_dpop_proof. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
@@ -711,9 +711,9 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent. A token from the client credentials grant of an OAuth client names neither and is refused with 401 invalid_token, as a JWT and as an opaque token. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, wrong DPoP binding, or a client credentials token, which names no user) or invalid_dpop_proof. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
@@ -734,9 +734,9 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token (no openid scope needed: an agent is not an End-User and reads only its own record) yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, budget_policy, tenant, identity_type&#x3D;agent. A token from the client credentials grant of an OAuth client names neither and is refused with 401 invalid_token, as a JWT and as an opaque token. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, wrong DPoP binding, or a client credentials token, which names no user) or invalid_dpop_proof. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */

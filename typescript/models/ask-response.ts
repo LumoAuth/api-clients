@@ -45,10 +45,27 @@ export interface AskResponse {
      */
     'reason'?: string;
     /**
+     * Which check produced the answer. Always pdp for a user caller.
+     * @type {string}
+     * @memberof AskResponse
+     */
+    'decided_by'?: AskResponseDecidedBy;
+    /**
      * 
      * @type {string}
      * @memberof AskResponse
      */
     'audit_id'?: string;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AskResponseDecidedBy {
+    CAPABILITY = 'capability',
+    PDP = 'pdp',
+    DENY_OVERRIDE = 'deny_override'
+}
+
 

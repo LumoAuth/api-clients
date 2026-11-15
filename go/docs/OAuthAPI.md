@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**Authorize**](OAuthAPI.md#Authorize) | **Get** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint
 [**BackchannelAuthorize**](OAuthAPI.md#BackchannelAuthorize) | **Post** /orgs/{orgId}/api/v1/oauth/bc-authorize | CIBA backchannel authentication request
+[**CheckEmailFirst**](OAuthAPI.md#CheckEmailFirst) | **Post** /orgs/{orgId}/api/v1/oauth/check-email | Sign-in methods for an email-first form
 [**DeviceAuthorization**](OAuthAPI.md#DeviceAuthorization) | **Post** /orgs/{orgId}/api/v1/oauth/device_authorization | Device authorization request (RFC 8628)
 [**GetClientConfiguration**](OAuthAPI.md#GetClientConfiguration) | **Get** /orgs/{orgId}/api/v1/connect/register/{clientId} | Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
 [**GetDeviceVerification**](OAuthAPI.md#GetDeviceVerification) | **Get** /orgs/{orgId}/api/v1/oauth/device | Device verification page (RFC 8628 §3.3)
@@ -159,6 +160,78 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CheckEmailFirst
+
+> CheckEmailFirstResponse CheckEmailFirst(ctx, orgId).CheckEmailFirstRequest(checkEmailFirstRequest).Execute()
+
+Sign-in methods for an email-first form
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	checkEmailFirstRequest := *openapiclient.NewCheckEmailFirstRequest("Email_example", "ClientId_example") // CheckEmailFirstRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OAuthAPI.CheckEmailFirst(context.Background(), orgId).CheckEmailFirstRequest(checkEmailFirstRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.CheckEmailFirst``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CheckEmailFirst`: CheckEmailFirstResponse
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.CheckEmailFirst`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCheckEmailFirstRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **checkEmailFirstRequest** | [**CheckEmailFirstRequest**](CheckEmailFirstRequest.md) |  | 
+
+### Return type
+
+[**CheckEmailFirstResponse**](CheckEmailFirstResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

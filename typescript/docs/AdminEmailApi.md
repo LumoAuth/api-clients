@@ -74,6 +74,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesDelete(
 # **adminEmailTemplatesGet**
 > EmailTemplate adminEmailTemplatesGet()
 
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 ### Example
 
@@ -134,6 +135,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesGet(
 # **adminEmailTemplatesList**
 > AdminEmailTemplatesListResponse adminEmailTemplatesList()
 
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 ### Example
 
@@ -294,6 +296,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesUpsert(
 # **adminEmailTemplatesVariables**
 > AdminEmailTemplatesVariablesResponse adminEmailTemplatesVariables()
 
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 ### Example
 

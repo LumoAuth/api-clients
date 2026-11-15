@@ -21,13 +21,13 @@
  */
 export interface UserinfoResponse {
     /**
-     * User id; agent_<agent_id> for agents; client_<client_id> for clients.
+     * User id; agent_<agent_id> for agents.
      * @type {string}
      * @memberof UserinfoResponse
      */
     'sub': string;
     /**
-     * Only for non-user principals.
+     * Only for agents.
      * @type {string}
      * @memberof UserinfoResponse
      */
@@ -39,7 +39,7 @@ export interface UserinfoResponse {
      */
     'tenant'?: string;
     /**
-     * profile scope (users); agent / client display name.
+     * profile scope (users); agent display name.
      * @type {string}
      * @memberof UserinfoResponse
      */
@@ -182,12 +182,6 @@ export interface UserinfoResponse {
      * @memberof UserinfoResponse
      */
     'budget_policy'?: { [key: string]: any; };
-    /**
-     * Clients only.
-     * @type {string}
-     * @memberof UserinfoResponse
-     */
-    'client_id'?: string;
 }
 
 /**
@@ -195,9 +189,7 @@ export interface UserinfoResponse {
     * @enum {string}
     */
 export enum UserinfoResponseIdentityType {
-    AGENT = 'agent',
-    CLIENT = 'client',
-    UNKNOWN = 'unknown'
+    AGENT = 'agent'
 }
 
 

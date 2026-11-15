@@ -320,6 +320,8 @@ Name | Type | Description  | Notes
 
 Get all settings (combined)
 
+
+
 ### Example
 
 ```go
@@ -591,6 +593,8 @@ Name | Type | Description  | Notes
 > AdminSettingsEmailGetResponse AdminSettingsEmailGet(ctx, orgId).Execute()
 
 Get email settings
+
+
 
 ### Example
 
@@ -1136,6 +1140,8 @@ Name | Type | Description  | Notes
 
 Update branding/login page settings
 
+
+
 ### Example
 
 ```go
@@ -1200,9 +1206,11 @@ Name | Type | Description  | Notes
 
 ## PatchAdminSettingsEmailUpdate
 
-> PutAdminSettingsEmailUpdateResponse PatchAdminSettingsEmailUpdate(ctx, orgId).Execute()
+> PutAdminSettingsEmailUpdateResponse PatchAdminSettingsEmailUpdate(ctx, orgId).PutAdminSettingsEmailUpdateRequest(putAdminSettingsEmailUpdateRequest).Execute()
 
 Update email settings
+
+
 
 ### Example
 
@@ -1218,10 +1226,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	putAdminSettingsEmailUpdateRequest := *openapiclient.NewPutAdminSettingsEmailUpdateRequest() // PutAdminSettingsEmailUpdateRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsEmailUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsEmailUpdate(context.Background(), orgId).PutAdminSettingsEmailUpdateRequest(putAdminSettingsEmailUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PatchAdminSettingsEmailUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1247,6 +1256,7 @@ Other parameters are passed through a pointer to a apiPatchAdminSettingsEmailUpd
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **putAdminSettingsEmailUpdateRequest** | [**PutAdminSettingsEmailUpdateRequest**](PutAdminSettingsEmailUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -1258,7 +1268,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1268,9 +1278,11 @@ Name | Type | Description  | Notes
 
 ## PatchAdminSettingsGeneralUpdate
 
-> PutAdminSettingsGeneralUpdateResponse PatchAdminSettingsGeneralUpdate(ctx, orgId).Execute()
+> PutAdminSettingsGeneralUpdateResponse PatchAdminSettingsGeneralUpdate(ctx, orgId).PutAdminSettingsGeneralUpdateRequest(putAdminSettingsGeneralUpdateRequest).Execute()
 
 Update general settings
+
+
 
 ### Example
 
@@ -1286,10 +1298,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	putAdminSettingsGeneralUpdateRequest := *openapiclient.NewPutAdminSettingsGeneralUpdateRequest() // PutAdminSettingsGeneralUpdateRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsGeneralUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsGeneralUpdate(context.Background(), orgId).PutAdminSettingsGeneralUpdateRequest(putAdminSettingsGeneralUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PatchAdminSettingsGeneralUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1315,6 +1328,7 @@ Other parameters are passed through a pointer to a apiPatchAdminSettingsGeneralU
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **putAdminSettingsGeneralUpdateRequest** | [**PutAdminSettingsGeneralUpdateRequest**](PutAdminSettingsGeneralUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -1326,7 +1340,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1748,6 +1762,8 @@ Name | Type | Description  | Notes
 
 Update branding/login page settings
 
+
+
 ### Example
 
 ```go
@@ -1812,9 +1828,11 @@ Name | Type | Description  | Notes
 
 ## PutAdminSettingsEmailUpdate
 
-> PutAdminSettingsEmailUpdateResponse PutAdminSettingsEmailUpdate(ctx, orgId).Execute()
+> PutAdminSettingsEmailUpdateResponse PutAdminSettingsEmailUpdate(ctx, orgId).PutAdminSettingsEmailUpdateRequest(putAdminSettingsEmailUpdateRequest).Execute()
 
 Update email settings
+
+
 
 ### Example
 
@@ -1830,10 +1848,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	putAdminSettingsEmailUpdateRequest := *openapiclient.NewPutAdminSettingsEmailUpdateRequest() // PutAdminSettingsEmailUpdateRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminSettingsAPI.PutAdminSettingsEmailUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PutAdminSettingsEmailUpdate(context.Background(), orgId).PutAdminSettingsEmailUpdateRequest(putAdminSettingsEmailUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PutAdminSettingsEmailUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1859,6 +1878,7 @@ Other parameters are passed through a pointer to a apiPutAdminSettingsEmailUpdat
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **putAdminSettingsEmailUpdateRequest** | [**PutAdminSettingsEmailUpdateRequest**](PutAdminSettingsEmailUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -1870,7 +1890,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1880,9 +1900,11 @@ Name | Type | Description  | Notes
 
 ## PutAdminSettingsGeneralUpdate
 
-> PutAdminSettingsGeneralUpdateResponse PutAdminSettingsGeneralUpdate(ctx, orgId).Execute()
+> PutAdminSettingsGeneralUpdateResponse PutAdminSettingsGeneralUpdate(ctx, orgId).PutAdminSettingsGeneralUpdateRequest(putAdminSettingsGeneralUpdateRequest).Execute()
 
 Update general settings
+
+
 
 ### Example
 
@@ -1898,10 +1920,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	putAdminSettingsGeneralUpdateRequest := *openapiclient.NewPutAdminSettingsGeneralUpdateRequest() // PutAdminSettingsGeneralUpdateRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminSettingsAPI.PutAdminSettingsGeneralUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PutAdminSettingsGeneralUpdate(context.Background(), orgId).PutAdminSettingsGeneralUpdateRequest(putAdminSettingsGeneralUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PutAdminSettingsGeneralUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1927,6 +1950,7 @@ Other parameters are passed through a pointer to a apiPutAdminSettingsGeneralUpd
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **putAdminSettingsGeneralUpdateRequest** | [**PutAdminSettingsGeneralUpdateRequest**](PutAdminSettingsGeneralUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -1938,7 +1962,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

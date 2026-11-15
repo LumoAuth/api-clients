@@ -15,7 +15,6 @@ require 'time'
 
 module LumoAuthApiClient
   class AdminSettingsEmailGetResponse
-    # Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
     attr_accessor :data
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -38,7 +37,7 @@ module LumoAuthApiClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'data' => :'Hash<String, Object>'
+        :'data' => :'EmailSenderSettings'
       }
     end
 
@@ -65,9 +64,7 @@ module LumoAuthApiClient
       }
 
       if attributes.key?(:'data')
-        if (value = attributes[:'data']).is_a?(Hash)
-          self.data = value
-        end
+        self.data = attributes[:'data']
       end
     end
 

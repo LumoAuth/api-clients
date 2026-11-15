@@ -55,7 +55,7 @@ namespace LumoAuth.ApiClient.Api
         /// Get an OAuth client&#39;s login and consent page branding
         /// </summary>
         /// <remarks>
-        /// Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// Needs &#x60;branding.view&#x60; and &#x60;clients.view&#x60;. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -67,7 +67,7 @@ namespace LumoAuth.ApiClient.Api
         /// Get an OAuth client&#39;s login and consent page branding
         /// </summary>
         /// <remarks>
-        /// Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// Needs &#x60;branding.view&#x60; and &#x60;clients.view&#x60;. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -213,6 +213,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Change keys of an OAuth client&#39;s login and/or consent page branding
         /// </summary>
+        /// <remarks>
+        /// Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
@@ -224,7 +227,7 @@ namespace LumoAuth.ApiClient.Api
         /// Change keys of an OAuth client&#39;s login and/or consent page branding
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -255,6 +258,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Replace an OAuth client&#39;s login and/or consent page branding
         /// </summary>
+        /// <remarks>
+        /// Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
@@ -266,7 +272,7 @@ namespace LumoAuth.ApiClient.Api
         /// Replace an OAuth client&#39;s login and/or consent page branding
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -372,7 +378,7 @@ namespace LumoAuth.ApiClient.Api
         /// Get an OAuth client&#39;s login and consent page branding
         /// </summary>
         /// <remarks>
-        /// Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// Needs &#x60;branding.view&#x60; and &#x60;clients.view&#x60;. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -385,7 +391,7 @@ namespace LumoAuth.ApiClient.Api
         /// Get an OAuth client&#39;s login and consent page branding
         /// </summary>
         /// <remarks>
-        /// Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// Needs &#x60;branding.view&#x60; and &#x60;clients.view&#x60;. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -568,7 +574,7 @@ namespace LumoAuth.ApiClient.Api
         /// Change keys of an OAuth client&#39;s login and/or consent page branding
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -582,7 +588,7 @@ namespace LumoAuth.ApiClient.Api
         /// Change keys of an OAuth client&#39;s login and/or consent page branding
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -620,7 +626,7 @@ namespace LumoAuth.ApiClient.Api
         /// Replace an OAuth client&#39;s login and/or consent page branding
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -634,7 +640,7 @@ namespace LumoAuth.ApiClient.Api
         /// Replace an OAuth client&#39;s login and/or consent page branding
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1085,7 +1091,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get an OAuth client&#39;s login and consent page branding Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// Get an OAuth client&#39;s login and consent page branding Needs &#x60;branding.view&#x60; and &#x60;clients.view&#x60;. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1098,7 +1104,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get an OAuth client&#39;s login and consent page branding Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// Get an OAuth client&#39;s login and consent page branding Needs &#x60;branding.view&#x60; and &#x60;clients.view&#x60;. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1158,7 +1164,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get an OAuth client&#39;s login and consent page branding Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// Get an OAuth client&#39;s login and consent page branding Needs &#x60;branding.view&#x60; and &#x60;clients.view&#x60;. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1172,7 +1178,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get an OAuth client&#39;s login and consent page branding Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+        /// Get an OAuth client&#39;s login and consent page branding Needs &#x60;branding.view&#x60; and &#x60;clients.view&#x60;. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2265,7 +2271,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Change keys of an OAuth client&#39;s login and/or consent page branding 
+        /// Change keys of an OAuth client&#39;s login and/or consent page branding Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2279,7 +2285,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Change keys of an OAuth client&#39;s login and/or consent page branding 
+        /// Change keys of an OAuth client&#39;s login and/or consent page branding Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2342,7 +2348,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Change keys of an OAuth client&#39;s login and/or consent page branding 
+        /// Change keys of an OAuth client&#39;s login and/or consent page branding Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2357,7 +2363,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Change keys of an OAuth client&#39;s login and/or consent page branding 
+        /// Change keys of an OAuth client&#39;s login and/or consent page branding Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2575,7 +2581,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replace an OAuth client&#39;s login and/or consent page branding 
+        /// Replace an OAuth client&#39;s login and/or consent page branding Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2589,7 +2595,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replace an OAuth client&#39;s login and/or consent page branding 
+        /// Replace an OAuth client&#39;s login and/or consent page branding Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2652,7 +2658,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replace an OAuth client&#39;s login and/or consent page branding 
+        /// Replace an OAuth client&#39;s login and/or consent page branding Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2667,7 +2673,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replace an OAuth client&#39;s login and/or consent page branding 
+        /// Replace an OAuth client&#39;s login and/or consent page branding Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

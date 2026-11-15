@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **defaultValue** | **any** |  | [optional] [default to undefined]
 **isRequired** | **boolean** |  | [optional] [default to undefined]
 **isSystem** | **boolean** |  | [optional] [default to undefined]
+**builtIn** | **boolean** | True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403). | [optional] [default to undefined]
 **createdAt** | **string** |  | [optional] [default to undefined]
 **updatedAt** | **string** |  | [optional] [default to undefined]
 
@@ -34,6 +35,7 @@ const instance: AbacAttributeDefinition = {
     defaultValue,
     isRequired,
     isSystem,
+    builtIn,
     createdAt,
     updatedAt,
 };

@@ -27,6 +27,12 @@ pub struct GetMeResponse {
     pub roles: Option<Option<Vec<String>>>,
     #[serde(rename = "capabilities", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub capabilities: Option<Option<Vec<String>>>,
+    /// Agents only: the scope of the presented token.
+    #[serde(rename = "scope", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub scope: Option<Option<Vec<String>>>,
+    /// Agents only: true when the token scope leaves out one of the agent's capabilities.
+    #[serde(rename = "scope_narrowed", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub scope_narrowed: Option<Option<bool>>,
     #[serde(rename = "tenant", skip_serializing_if = "Option::is_none")]
     pub tenant: Option<Box<models::GroupRef>>,
 }
@@ -41,6 +47,8 @@ impl GetMeResponse {
             mfa_enabled: None,
             roles: None,
             capabilities: None,
+            scope: None,
+            scope_narrowed: None,
             tenant: None,
         }
     }

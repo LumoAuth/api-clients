@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **action** | **string** |  | [optional] [default to undefined]
 **context** | **object** |  | [optional] [default to undefined]
 **reason** | **string** |  | [optional] [default to undefined]
+**decided_by** | **string** | Which check produced the answer. Always pdp for a user caller. | [optional] [default to undefined]
 **audit_id** | **string** |  | [optional] [default to undefined]
 
 ## Example
@@ -21,6 +22,7 @@ const instance: AskResponse = {
     action,
     context,
     reason,
+    decided_by,
     audit_id,
 };
 ```

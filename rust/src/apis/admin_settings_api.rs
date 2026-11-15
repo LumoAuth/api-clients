@@ -110,6 +110,7 @@ pub enum AdminTenantGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminOrganizationUpdateError {
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -117,6 +118,7 @@ pub enum PatchAdminOrganizationUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminSettingsAuthUpdateError {
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -124,6 +126,7 @@ pub enum PatchAdminSettingsAuthUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminSettingsAuthenticationUpdateError {
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -131,6 +134,7 @@ pub enum PatchAdminSettingsAuthenticationUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminSettingsBrandingUpdateError {
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -138,6 +142,8 @@ pub enum PatchAdminSettingsBrandingUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminSettingsEmailUpdateError {
+    Status400(),
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -145,6 +151,8 @@ pub enum PatchAdminSettingsEmailUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminSettingsGeneralUpdateError {
+    Status400(),
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -166,6 +174,7 @@ pub enum PatchAdminSettingsSecurityUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminTenantUpdateError {
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -173,6 +182,7 @@ pub enum PatchAdminTenantUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminOrganizationUpdateError {
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -180,6 +190,7 @@ pub enum PutAdminOrganizationUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminSettingsAuthUpdateError {
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -187,6 +198,7 @@ pub enum PutAdminSettingsAuthUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminSettingsAuthenticationUpdateError {
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -194,6 +206,7 @@ pub enum PutAdminSettingsAuthenticationUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminSettingsBrandingUpdateError {
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -201,6 +214,8 @@ pub enum PutAdminSettingsBrandingUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminSettingsEmailUpdateError {
+    Status400(),
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -208,6 +223,8 @@ pub enum PutAdminSettingsEmailUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminSettingsGeneralUpdateError {
+    Status400(),
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -229,6 +246,7 @@ pub enum PutAdminSettingsSecurityUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminTenantUpdateError {
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -429,6 +447,7 @@ pub async fn admin_organization_get(configuration: &configuration::Configuration
     }
 }
 
+/// Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal's branding page; without it the key is left out.
 pub async fn admin_settings_all(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSettingsAllResponse, Error<AdminSettingsAllError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -617,6 +636,7 @@ pub async fn admin_settings_branding_get(configuration: &configuration::Configur
     }
 }
 
+/// Shows who sends the organization's mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth's sender.
 pub async fn admin_settings_email_get(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSettingsEmailGetResponse, Error<AdminSettingsEmailGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -993,6 +1013,7 @@ pub async fn patch_admin_settings_authentication_update(configuration: &configur
     }
 }
 
+/// Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
 pub async fn patch_admin_settings_branding_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsBrandingUpdateResponse, Error<PatchAdminSettingsBrandingUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -1040,9 +1061,11 @@ pub async fn patch_admin_settings_branding_update(configuration: &configuration:
     }
 }
 
-pub async fn patch_admin_settings_email_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsEmailUpdateResponse, Error<PatchAdminSettingsEmailUpdateError>> {
+/// Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
+pub async fn patch_admin_settings_email_update(configuration: &configuration::Configuration, org_id: &str, put_admin_settings_email_update_request: Option<models::PutAdminSettingsEmailUpdateRequest>) -> Result<models::PutAdminSettingsEmailUpdateResponse, Error<PatchAdminSettingsEmailUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_put_admin_settings_email_update_request = put_admin_settings_email_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/email", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -1061,6 +1084,7 @@ pub async fn patch_admin_settings_email_update(configuration: &configuration::Co
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_settings_email_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1087,9 +1111,11 @@ pub async fn patch_admin_settings_email_update(configuration: &configuration::Co
     }
 }
 
-pub async fn patch_admin_settings_general_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsGeneralUpdateResponse, Error<PatchAdminSettingsGeneralUpdateError>> {
+/// Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
+pub async fn patch_admin_settings_general_update(configuration: &configuration::Configuration, org_id: &str, put_admin_settings_general_update_request: Option<models::PutAdminSettingsGeneralUpdateRequest>) -> Result<models::PutAdminSettingsGeneralUpdateResponse, Error<PatchAdminSettingsGeneralUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_put_admin_settings_general_update_request = put_admin_settings_general_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/general", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -1108,6 +1134,7 @@ pub async fn patch_admin_settings_general_update(configuration: &configuration::
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_settings_general_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1416,6 +1443,7 @@ pub async fn put_admin_settings_authentication_update(configuration: &configurat
     }
 }
 
+/// Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
 pub async fn put_admin_settings_branding_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsBrandingUpdateResponse, Error<PutAdminSettingsBrandingUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -1463,9 +1491,11 @@ pub async fn put_admin_settings_branding_update(configuration: &configuration::C
     }
 }
 
-pub async fn put_admin_settings_email_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsEmailUpdateResponse, Error<PutAdminSettingsEmailUpdateError>> {
+/// Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
+pub async fn put_admin_settings_email_update(configuration: &configuration::Configuration, org_id: &str, put_admin_settings_email_update_request: Option<models::PutAdminSettingsEmailUpdateRequest>) -> Result<models::PutAdminSettingsEmailUpdateResponse, Error<PutAdminSettingsEmailUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_put_admin_settings_email_update_request = put_admin_settings_email_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/email", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1484,6 +1514,7 @@ pub async fn put_admin_settings_email_update(configuration: &configuration::Conf
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_settings_email_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1510,9 +1541,11 @@ pub async fn put_admin_settings_email_update(configuration: &configuration::Conf
     }
 }
 
-pub async fn put_admin_settings_general_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsGeneralUpdateResponse, Error<PutAdminSettingsGeneralUpdateError>> {
+/// Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
+pub async fn put_admin_settings_general_update(configuration: &configuration::Configuration, org_id: &str, put_admin_settings_general_update_request: Option<models::PutAdminSettingsGeneralUpdateRequest>) -> Result<models::PutAdminSettingsGeneralUpdateResponse, Error<PutAdminSettingsGeneralUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_put_admin_settings_general_update_request = put_admin_settings_general_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/general", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1531,6 +1564,7 @@ pub async fn put_admin_settings_general_update(configuration: &configuration::Co
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_settings_general_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

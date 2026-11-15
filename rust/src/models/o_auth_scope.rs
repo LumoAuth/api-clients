@@ -17,10 +17,9 @@ pub struct OAuthScope {
     pub id: Option<i32>,
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
+    /// Shown to users on the consent page next to the scope name.
     #[serde(rename = "description", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub description: Option<Option<String>>,
-    #[serde(rename = "isDefault", skip_serializing_if = "Option::is_none")]
-    pub is_default: Option<bool>,
     #[serde(rename = "isSystem", skip_serializing_if = "Option::is_none")]
     pub is_system: Option<bool>,
     #[serde(rename = "createdAt", skip_serializing_if = "Option::is_none")]
@@ -33,7 +32,6 @@ impl OAuthScope {
             id: None,
             name: None,
             description: None,
-            is_default: None,
             is_system: None,
             created_at: None,
         }

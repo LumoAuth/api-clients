@@ -359,8 +359,8 @@ class AdminMfaApi
                 'Missing the required parameter $authenticatorId when calling deleteUserAuthenticator'
             );
         }
-        if (!preg_match("/[a-z_]+:\\d+/", $authenticatorId)) {
-            throw new \InvalidArgumentException("invalid value for \"authenticatorId\" when calling AdminMfaApi.deleteUserAuthenticator, must conform to the pattern /[a-z_]+:\\d+/.");
+        if (!preg_match("/[a-z_]+:(?:[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7])/", $authenticatorId)) {
+            throw new \InvalidArgumentException("invalid value for \"authenticatorId\" when calling AdminMfaApi.deleteUserAuthenticator, must conform to the pattern /[a-z_]+:(?:[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7])/.");
         }
         
 

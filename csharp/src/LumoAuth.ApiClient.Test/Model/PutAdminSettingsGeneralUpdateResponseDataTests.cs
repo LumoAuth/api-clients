@@ -74,15 +74,6 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'Timezone'
-        /// </summary>
-        [Fact]
-        public void TimezoneTest()
-        {
-            // TODO unit test for the property 'Timezone'
-        }
-
-        /// <summary>
         /// Test the property 'Locale'
         /// </summary>
         [Fact]

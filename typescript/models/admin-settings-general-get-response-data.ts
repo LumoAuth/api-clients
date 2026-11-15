@@ -15,7 +15,7 @@
 
 
 /**
- * Defaults (displayName, timezone, locale) are filled in, then the raw settings dictionary is merged over them: any stored key (display_name, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+ * name, displayName (the same value) and locale, then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
  * @export
  * @interface AdminSettingsGeneralGetResponseData
  */
@@ -23,25 +23,19 @@ export interface AdminSettingsGeneralGetResponseData {
     [key: string]: any;
 
     /**
-     * 
+     * Name of the organization, shown on the hosted pages and in mail.
      * @type {string}
      * @memberof AdminSettingsGeneralGetResponseData
      */
     'name'?: string;
     /**
-     * 
+     * The same value as name.
      * @type {string}
      * @memberof AdminSettingsGeneralGetResponseData
      */
     'displayName'?: string;
     /**
-     * 
-     * @type {string}
-     * @memberof AdminSettingsGeneralGetResponseData
-     */
-    'timezone'?: string;
-    /**
-     * 
+     * Default language of the hosted pages (the Default language of the login page settings).
      * @type {string}
      * @memberof AdminSettingsGeneralGetResponseData
      */

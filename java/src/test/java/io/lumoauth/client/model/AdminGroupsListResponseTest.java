@@ -65,4 +65,12 @@ public class AdminGroupsListResponseTest {
         // TODO: test pagination
     }
 
+    /**
+     * Test the property 'resourceType'
+     */
+    @Test
+    public void resourceTypeTest() {
+        // TODO: test resourceType
+    }
+
 }

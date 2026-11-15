@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { EmailSenderSettings } from './email-sender-settings';
 
 /**
  * 
@@ -21,11 +24,11 @@
  */
 export interface PutAdminSettingsEmailUpdateResponse {
     /**
-     * Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
-     * @type {{ [key: string]: any; }}
+     * 
+     * @type {EmailSenderSettings}
      * @memberof PutAdminSettingsEmailUpdateResponse
      */
-    'data'?: { [key: string]: any; };
+    'data'?: EmailSenderSettings;
     /**
      * 
      * @type {string}

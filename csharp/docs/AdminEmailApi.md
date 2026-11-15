@@ -124,6 +124,8 @@ catch (ApiException e)
 
 Get an email template (custom or built-in default)
 
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
+
 ### Example
 ```csharp
 using System.Collections.Generic;
@@ -230,6 +232,8 @@ catch (ApiException e)
 > AdminEmailTemplatesListResponse AdminEmailTemplatesList (string orgId)
 
 List every email template type with its current (custom or built-in) template
+
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 ### Example
 ```csharp
@@ -539,6 +543,8 @@ catch (ApiException e)
 > AdminEmailTemplatesVariablesResponse AdminEmailTemplatesVariables (string orgId, string type)
 
 List the placeholders available to an email template type
+
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 ### Example
 ```csharp

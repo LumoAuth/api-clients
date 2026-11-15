@@ -64,14 +64,6 @@ public class OAuthScopeTest {
     }
 
     /**
-     * Test the property 'isDefault'
-     */
-    @Test
-    public void isDefaultTest() {
-        // TODO: test isDefault
-    }
-
-    /**
      * Test the property 'isSystem'
      */
     @Test

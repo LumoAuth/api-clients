@@ -157,6 +157,8 @@ Name | Type | Description  | Required | Notes
 > models::AdminSettingsAllResponse admin_settings_all(org_id)
 Get all settings (combined)
 
+Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal's branding page; without it the key is left out.
+
 ### Parameters
 
 
@@ -268,6 +270,8 @@ Name | Type | Description  | Required | Notes
 
 > models::AdminSettingsEmailGetResponse admin_settings_email_get(org_id)
 Get email settings
+
+Shows who sends the organization's mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth's sender.
 
 ### Parameters
 
@@ -493,6 +497,8 @@ Name | Type | Description  | Required | Notes
 > models::PutAdminSettingsBrandingUpdateResponse patch_admin_settings_branding_update(org_id)
 Update branding/login page settings
 
+Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
+
 ### Parameters
 
 
@@ -518,8 +524,10 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_settings_email_update
 
-> models::PutAdminSettingsEmailUpdateResponse patch_admin_settings_email_update(org_id)
+> models::PutAdminSettingsEmailUpdateResponse patch_admin_settings_email_update(org_id, put_admin_settings_email_update_request)
 Update email settings
+
+Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
 ### Parameters
 
@@ -527,6 +535,7 @@ Update email settings
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**put_admin_settings_email_update_request** | Option<[**PutAdminSettingsEmailUpdateRequest**](PutAdminSettingsEmailUpdateRequest.md)> |  |  |
 
 ### Return type
 
@@ -538,7 +547,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -546,8 +555,10 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_settings_general_update
 
-> models::PutAdminSettingsGeneralUpdateResponse patch_admin_settings_general_update(org_id)
+> models::PutAdminSettingsGeneralUpdateResponse patch_admin_settings_general_update(org_id, put_admin_settings_general_update_request)
 Update general settings
+
+Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
 ### Parameters
 
@@ -555,6 +566,7 @@ Update general settings
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**put_admin_settings_general_update_request** | Option<[**PutAdminSettingsGeneralUpdateRequest**](PutAdminSettingsGeneralUpdateRequest.md)> |  |  |
 
 ### Return type
 
@@ -566,7 +578,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -745,6 +757,8 @@ Name | Type | Description  | Required | Notes
 > models::PutAdminSettingsBrandingUpdateResponse put_admin_settings_branding_update(org_id)
 Update branding/login page settings
 
+Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
+
 ### Parameters
 
 
@@ -770,8 +784,10 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_settings_email_update
 
-> models::PutAdminSettingsEmailUpdateResponse put_admin_settings_email_update(org_id)
+> models::PutAdminSettingsEmailUpdateResponse put_admin_settings_email_update(org_id, put_admin_settings_email_update_request)
 Update email settings
+
+Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
 ### Parameters
 
@@ -779,6 +795,7 @@ Update email settings
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**put_admin_settings_email_update_request** | Option<[**PutAdminSettingsEmailUpdateRequest**](PutAdminSettingsEmailUpdateRequest.md)> |  |  |
 
 ### Return type
 
@@ -790,7 +807,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -798,8 +815,10 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_settings_general_update
 
-> models::PutAdminSettingsGeneralUpdateResponse put_admin_settings_general_update(org_id)
+> models::PutAdminSettingsGeneralUpdateResponse put_admin_settings_general_update(org_id, put_admin_settings_general_update_request)
 Update general settings
+
+Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
 ### Parameters
 
@@ -807,6 +826,7 @@ Update general settings
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**put_admin_settings_general_update_request** | Option<[**PutAdminSettingsGeneralUpdateRequest**](PutAdminSettingsGeneralUpdateRequest.md)> |  |  |
 
 ### Return type
 
@@ -818,7 +838,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

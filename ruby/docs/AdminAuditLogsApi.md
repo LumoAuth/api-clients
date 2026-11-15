@@ -92,6 +92,8 @@ end
 
 Export audit logs as CSV (default) or JSON
 
+Needs `audit.export` and `audit.view`, as the export on the portal's audit log page does.
+
 ### Examples
 
 ```ruby
@@ -454,6 +456,8 @@ end
 
 Update audit log retention settings
 
+Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
+
 ### Examples
 
 ```ruby
@@ -525,6 +529,8 @@ end
 > <AdminAuditLogsRetentionResponse> put_admin_audit_logs_retention_update(org_id)
 
 Update audit log retention settings
+
+Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 
 ### Examples
 

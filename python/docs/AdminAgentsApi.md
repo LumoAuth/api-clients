@@ -915,7 +915,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_agents_list**
-> AdminAgentsListResponse admin_agents_list(org_id)
+> AdminAgentsListResponse admin_agents_list(org_id, sort_by=sort_by, sort_dir=sort_dir)
 
 List all agents in the tenant
 
@@ -957,10 +957,12 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminAgentsApi(api_client)
     org_id = 'org_id_example' # str | 
+    sort_by = 'sort_by_example' # str | Sort field. Default: name. Another value is ignored. (optional)
+    sort_dir = ASC # str | Sort direction, used with sortBy. (optional) (default to ASC)
 
     try:
         # List all agents in the tenant
-        api_response = api_instance.admin_agents_list(org_id)
+        api_response = api_instance.admin_agents_list(org_id, sort_by=sort_by, sort_dir=sort_dir)
         print("The response of AdminAgentsApi->admin_agents_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -975,6 +977,8 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **sort_by** | **str**| Sort field. Default: name. Another value is ignored. | [optional] 
+ **sort_dir** | **str**| Sort direction, used with sortBy. | [optional] [default to ASC]
 
 ### Return type
 

@@ -995,7 +995,10 @@ class AdminOrganizationsApi
                 'Missing the required parameter $invId when calling adminOrgInvitationsResend'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $invId)) {
+            throw new \InvalidArgumentException("invalid value for \"invId\" when calling AdminOrganizationsApi.adminOrgInvitationsResend, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend';
         $formParams = [];
@@ -1312,7 +1315,10 @@ class AdminOrganizationsApi
                 'Missing the required parameter $invId when calling adminOrgInvitationsRevoke'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $invId)) {
+            throw new \InvalidArgumentException("invalid value for \"invId\" when calling AdminOrganizationsApi.adminOrgInvitationsRevoke, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}';
         $formParams = [];
@@ -2837,7 +2843,10 @@ class AdminOrganizationsApi
                 'Missing the required parameter $roleId when calling adminOrgRolesDelete'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $roleId)) {
+            throw new \InvalidArgumentException("invalid value for \"roleId\" when calling AdminOrganizationsApi.adminOrgRolesDelete, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}';
         $formParams = [];
@@ -4916,7 +4925,10 @@ class AdminOrganizationsApi
                 'Missing the required parameter $roleId when calling patchAdminOrgRolesUpdate'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $roleId)) {
+            throw new \InvalidArgumentException("invalid value for \"roleId\" when calling AdminOrganizationsApi.patchAdminOrgRolesUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}';
         $formParams = [];
@@ -5847,7 +5859,10 @@ class AdminOrganizationsApi
                 'Missing the required parameter $roleId when calling putAdminOrgRolesUpdate'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $roleId)) {
+            throw new \InvalidArgumentException("invalid value for \"roleId\" when calling AdminOrganizationsApi.putAdminOrgRolesUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}';
         $formParams = [];

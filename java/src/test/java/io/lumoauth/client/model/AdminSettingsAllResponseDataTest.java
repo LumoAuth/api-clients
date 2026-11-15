@@ -22,10 +22,9 @@ import io.lumoauth.client.model.AdminSettingsAllResponseDataGeneral;
 import io.lumoauth.client.model.AdminSettingsAllResponseDataSecurity;
 import io.lumoauth.client.model.AuthenticationSettings;
 import io.lumoauth.client.model.BrandingSettings;
+import io.lumoauth.client.model.EmailSenderSettings;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 

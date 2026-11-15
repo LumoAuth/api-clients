@@ -36,7 +36,7 @@ use \LumoAuth\ApiClient\ObjectSerializer;
  * AdminSettingsAllResponseDataGeneral Class Doc Comment
  *
  * @category Class
- * @description Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+ * @description The organization name (name; displayName is the same value), locale (the default language of the hosted pages), then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
  * @package  LumoAuth\ApiClient
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -59,7 +59,9 @@ class AdminSettingsAllResponseDataGeneral implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'name' => 'string'
+        'name' => 'string',
+        'displayName' => 'string',
+        'locale' => 'string'
     ];
 
     /**
@@ -70,7 +72,9 @@ class AdminSettingsAllResponseDataGeneral implements ModelInterface, ArrayAccess
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'name' => null
+        'name' => null,
+        'displayName' => null,
+        'locale' => null
     ];
 
     /**
@@ -79,7 +83,9 @@ class AdminSettingsAllResponseDataGeneral implements ModelInterface, ArrayAccess
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'name' => false
+        'name' => false,
+        'displayName' => false,
+        'locale' => false
     ];
 
     /**
@@ -168,7 +174,9 @@ class AdminSettingsAllResponseDataGeneral implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'name' => 'name'
+        'name' => 'name',
+        'displayName' => 'displayName',
+        'locale' => 'locale'
     ];
 
     /**
@@ -177,7 +185,9 @@ class AdminSettingsAllResponseDataGeneral implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'name' => 'setName'
+        'name' => 'setName',
+        'displayName' => 'setDisplayName',
+        'locale' => 'setLocale'
     ];
 
     /**
@@ -186,7 +196,9 @@ class AdminSettingsAllResponseDataGeneral implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'name' => 'getName'
+        'name' => 'getName',
+        'displayName' => 'getDisplayName',
+        'locale' => 'getLocale'
     ];
 
     /**
@@ -247,6 +259,8 @@ class AdminSettingsAllResponseDataGeneral implements ModelInterface, ArrayAccess
     public function __construct(?array $data = null)
     {
         $this->setIfExists('name', $data ?? [], null);
+        $this->setIfExists('displayName', $data ?? [], null);
+        $this->setIfExists('locale', $data ?? [], null);
     }
 
     /**
@@ -314,6 +328,60 @@ class AdminSettingsAllResponseDataGeneral implements ModelInterface, ArrayAccess
             throw new \InvalidArgumentException('non-nullable name cannot be null');
         }
         $this->container['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets displayName
+     *
+     * @return string|null
+     */
+    public function getDisplayName()
+    {
+        return $this->container['displayName'];
+    }
+
+    /**
+     * Sets displayName
+     *
+     * @param string|null $displayName displayName
+     *
+     * @return self
+     */
+    public function setDisplayName($displayName)
+    {
+        if (is_null($displayName)) {
+            throw new \InvalidArgumentException('non-nullable displayName cannot be null');
+        }
+        $this->container['displayName'] = $displayName;
+
+        return $this;
+    }
+
+    /**
+     * Gets locale
+     *
+     * @return string|null
+     */
+    public function getLocale()
+    {
+        return $this->container['locale'];
+    }
+
+    /**
+     * Sets locale
+     *
+     * @param string|null $locale locale
+     *
+     * @return self
+     */
+    public function setLocale($locale)
+    {
+        if (is_null($locale)) {
+            throw new \InvalidArgumentException('non-nullable locale cannot be null');
+        }
+        $this->container['locale'] = $locale;
 
         return $this;
     }

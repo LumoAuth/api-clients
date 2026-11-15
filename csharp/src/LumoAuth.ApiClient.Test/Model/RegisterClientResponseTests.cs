@@ -209,24 +209,6 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'SectorIdentifierUri'
-        /// </summary>
-        [Fact]
-        public void SectorIdentifierUriTest()
-        {
-            // TODO unit test for the property 'SectorIdentifierUri'
-        }
-
-        /// <summary>
-        /// Test the property 'SubjectType'
-        /// </summary>
-        [Fact]
-        public void SubjectTypeTest()
-        {
-            // TODO unit test for the property 'SubjectType'
-        }
-
-        /// <summary>
         /// Test the property 'JwksUri'
         /// </summary>
         [Fact]
@@ -263,15 +245,6 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'RequestUris'
-        /// </summary>
-        [Fact]
-        public void RequestUrisTest()
-        {
-            // TODO unit test for the property 'RequestUris'
-        }
-
-        /// <summary>
         /// Test the property 'Scope'
         /// </summary>
         [Fact]
@@ -287,15 +260,6 @@ namespace LumoAuth.ApiClient.Test.Model
         public void IdTokenSignedResponseAlgTest()
         {
             // TODO unit test for the property 'IdTokenSignedResponseAlg'
-        }
-
-        /// <summary>
-        /// Test the property 'UserinfoSignedResponseAlg'
-        /// </summary>
-        [Fact]
-        public void UserinfoSignedResponseAlgTest()
-        {
-            // TODO unit test for the property 'UserinfoSignedResponseAlg'
         }
 
         /// <summary>

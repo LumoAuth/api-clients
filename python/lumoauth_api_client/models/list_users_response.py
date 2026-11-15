@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from lumoauth_api_client.models.pagination_meta import PaginationMeta
 from lumoauth_api_client.models.user import User
@@ -32,7 +32,8 @@ class ListUsersResponse(BaseModel):
     data: Optional[List[User]] = None
     meta: Optional[PaginationMeta] = None
     pagination: Optional[PaginationMeta] = None
-    __properties: ClassVar[List[str]] = ["data", "meta", "pagination"]
+    resource_type: Optional[StrictStr] = Field(default=None, alias="resourceType")
+    __properties: ClassVar[List[str]] = ["data", "meta", "pagination", "resourceType"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -100,7 +101,8 @@ class ListUsersResponse(BaseModel):
         _obj = cls.model_validate({
             "data": [User.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None,
             "meta": PaginationMeta.from_dict(obj["meta"]) if obj.get("meta") is not None else None,
-            "pagination": PaginationMeta.from_dict(obj["pagination"]) if obj.get("pagination") is not None else None
+            "pagination": PaginationMeta.from_dict(obj["pagination"]) if obj.get("pagination") is not None else None,
+            "resourceType": obj.get("resourceType")
         })
         return _obj
 

@@ -119,6 +119,8 @@ catch (ApiException e)
 
 Export audit logs as CSV (default) or JSON
 
+Needs `audit.export` and `audit.view`, as the export on the portal's audit log page does.
+
 ### Example
 ```csharp
 using System.Collections.Generic;
@@ -622,6 +624,8 @@ catch (ApiException e)
 
 Update audit log retention settings
 
+Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
+
 ### Example
 ```csharp
 using System.Collections.Generic;
@@ -721,6 +725,8 @@ catch (ApiException e)
 > AdminAuditLogsRetentionResponse PutAdminAuditLogsRetentionUpdate (string orgId)
 
 Update audit log retention settings
+
+Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 
 ### Example
 ```csharp

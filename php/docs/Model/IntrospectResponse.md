@@ -16,5 +16,6 @@ Name | Type | Description | Notes
 **iss** | **string** | Issuer identifier of this organization. | [optional]
 **aud** | [**\LumoAuth\ApiClient\Model\IntrospectResponseAud**](IntrospectResponseAud.md) |  | [optional]
 **jti** | **string** | JWT id (JWT tokens only). | [optional]
+**act** | **object** | RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under &#x60;act&#x60;. JWT and opaque tokens. | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

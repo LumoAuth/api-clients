@@ -1483,6 +1483,20 @@ type ApiAdminAgentsListRequest struct {
 	ctx context.Context
 	ApiService AdminAgentsAPI
 	orgId string
+	sortBy *string
+	sortDir *string
+}
+
+// Sort field. Default: name. Another value is ignored.
+func (r ApiAdminAgentsListRequest) SortBy(sortBy string) ApiAdminAgentsListRequest {
+	r.sortBy = &sortBy
+	return r
+}
+
+// Sort direction, used with sortBy.
+func (r ApiAdminAgentsListRequest) SortDir(sortDir string) ApiAdminAgentsListRequest {
+	r.sortDir = &sortDir
+	return r
 }
 
 func (r ApiAdminAgentsListRequest) Execute() (*AdminAgentsListResponse, *http.Response, error) {
@@ -1526,6 +1540,15 @@ func (a *AdminAgentsAPIService) AdminAgentsListExecute(r ApiAdminAgentsListReque
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.sortBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sortBy", r.sortBy, "form", "")
+	}
+	if r.sortDir != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sortDir", r.sortDir, "form", "")
+	} else {
+		var defaultValue string = "ASC"
+		r.sortDir = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
