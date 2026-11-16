@@ -218,7 +218,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Deleted |  -  |
-| **403** | System attribute definitions cannot be deleted |  -  |
+| **403** | System and built-in attribute definitions cannot be deleted |  -  |
 | **404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -523,7 +523,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Created |  -  |
-| **400** | Invalid effect, priority (a whole number from 0 to 1000) or policy conditions |  -  |
+| **400** | Invalid effect, priority (a whole number from 0 to 1000), resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions. &#x60;action&#x60; is one action, several separated by commas (&#x60;read, write&#x60;), or &#x60;*&#x60;. |  -  |
 | **409** | A policy with this slug already exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -627,7 +627,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Deleted |  -  |
-| **403** | System policies cannot be deleted |  -  |
+| **403** | System and built-in policies cannot be deleted |  -  |
 | **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -737,7 +737,7 @@ catch (ApiException e)
 
 <a id="abacpolicieslist"></a>
 # **AbacPoliciesList**
-> AbacPoliciesListResponse AbacPoliciesList (string orgId)
+> AbacPoliciesListResponse AbacPoliciesList (string orgId, string? action = null)
 
 List ABAC policies
 
@@ -770,11 +770,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminAbacApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var action = "action_example";  // string? | Only policies that name this action, alone or in a comma-separated list. `*` lists the policies that name `*`. (optional) 
 
             try
             {
                 // List ABAC policies
-                AbacPoliciesListResponse result = apiInstance.AbacPoliciesList(orgId);
+                AbacPoliciesListResponse result = apiInstance.AbacPoliciesList(orgId, action);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -795,7 +796,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // List ABAC policies
-    ApiResponse<AbacPoliciesListResponse> response = apiInstance.AbacPoliciesListWithHttpInfo(orgId);
+    ApiResponse<AbacPoliciesListResponse> response = apiInstance.AbacPoliciesListWithHttpInfo(orgId, action);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -813,6 +814,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **action** | **string?** | Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. | [optional]  |
 
 ### Return type
 
@@ -934,7 +936,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Toggled policy |  -  |
-| **403** | System policies cannot be modified |  -  |
+| **403** | System and built-in policies cannot be modified |  -  |
 | **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1038,7 +1040,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated |  -  |
-| **403** | System attribute definitions cannot be modified |  -  |
+| **403** | System and built-in attribute definitions cannot be modified |  -  |
 | **404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1142,7 +1144,8 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated |  -  |
-| **403** | System policies cannot be modified |  -  |
+| **400** | Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions |  -  |
+| **403** | System and built-in policies cannot be modified |  -  |
 | **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1246,7 +1249,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated |  -  |
-| **403** | System attribute definitions cannot be modified |  -  |
+| **403** | System and built-in attribute definitions cannot be modified |  -  |
 | **404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1350,7 +1353,8 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated |  -  |
-| **403** | System policies cannot be modified |  -  |
+| **400** | Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions |  -  |
+| **403** | System and built-in policies cannot be modified |  -  |
 | **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

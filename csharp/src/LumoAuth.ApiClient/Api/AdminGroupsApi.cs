@@ -51,6 +51,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Add a single role to a group
         /// </summary>
+        /// <remarks>
+        /// A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
@@ -61,7 +64,7 @@ namespace LumoAuth.ApiClient.Api
         /// Add a single role to a group
         /// </summary>
         /// <remarks>
-        /// 
+        /// A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -71,6 +74,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Create a new group
         /// </summary>
+        /// <remarks>
+        /// Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <returns>AdminGroupsCreateResponse</returns>
@@ -80,7 +86,7 @@ namespace LumoAuth.ApiClient.Api
         /// Create a new group
         /// </summary>
         /// <remarks>
-        /// 
+        /// Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -231,6 +237,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Update group roles (replaces all existing roles)
         /// </summary>
+        /// <remarks>
+        /// &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
@@ -241,7 +250,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update group roles (replaces all existing roles)
         /// </summary>
         /// <remarks>
-        /// 
+        /// &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -326,7 +335,7 @@ namespace LumoAuth.ApiClient.Api
         /// Add a single role to a group
         /// </summary>
         /// <remarks>
-        /// 
+        /// A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -339,7 +348,7 @@ namespace LumoAuth.ApiClient.Api
         /// Add a single role to a group
         /// </summary>
         /// <remarks>
-        /// 
+        /// A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -351,7 +360,7 @@ namespace LumoAuth.ApiClient.Api
         /// Create a new group
         /// </summary>
         /// <remarks>
-        /// 
+        /// Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -363,7 +372,7 @@ namespace LumoAuth.ApiClient.Api
         /// Create a new group
         /// </summary>
         /// <remarks>
-        /// 
+        /// Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -551,7 +560,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update group roles (replaces all existing roles)
         /// </summary>
         /// <remarks>
-        /// 
+        /// &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -564,7 +573,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update group roles (replaces all existing roles)
         /// </summary>
         /// <remarks>
-        /// 
+        /// &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -987,7 +996,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Add a single role to a group 
+        /// Add a single role to a group A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1000,7 +1009,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Add a single role to a group 
+        /// Add a single role to a group A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1060,7 +1069,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Add a single role to a group 
+        /// Add a single role to a group A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1074,7 +1083,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Add a single role to a group 
+        /// Add a single role to a group A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1138,7 +1147,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new group 
+        /// Create a new group Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1150,7 +1159,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new group 
+        /// Create a new group Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1204,7 +1213,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new group 
+        /// Create a new group Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1217,7 +1226,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new group 
+        /// Create a new group Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2346,7 +2355,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update group roles (replaces all existing roles) 
+        /// Update group roles (replaces all existing roles) &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2359,7 +2368,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update group roles (replaces all existing roles) 
+        /// Update group roles (replaces all existing roles) &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2419,7 +2428,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update group roles (replaces all existing roles) 
+        /// Update group roles (replaces all existing roles) &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2433,7 +2442,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update group roles (replaces all existing roles) 
+        /// Update group roles (replaces all existing roles) &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

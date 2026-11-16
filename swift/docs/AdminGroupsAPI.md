@@ -76,6 +76,8 @@ Name | Type | Description  | Notes
 
 Add a single role to a group
 
+A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
@@ -125,6 +127,8 @@ Name | Type | Description  | Notes
 ```
 
 Create a new group
+
+Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 ### Example
 ```swift
@@ -525,6 +529,8 @@ Name | Type | Description  | Notes
 ```
 
 Update group roles (replaces all existing roles)
+
+`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
 ### Example
 ```swift

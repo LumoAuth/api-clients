@@ -226,7 +226,7 @@ pub async fn check_abac_bulk(configuration: &configuration::Configuration, org_i
     }
 }
 
-/// POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
+/// POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 pub async fn check_all_permissions(configuration: &configuration::Configuration, ) -> Result<models::CheckAnyPermissionResponse, Error<CheckAllPermissionsError>> {
 
     let uri_str = format!("{}/api/v1/authz/check-all", configuration.base_path);
@@ -272,7 +272,7 @@ pub async fn check_all_permissions(configuration: &configuration::Configuration,
     }
 }
 
-/// POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
+/// POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 pub async fn check_any_permission(configuration: &configuration::Configuration, ) -> Result<models::CheckAnyPermissionResponse, Error<CheckAnyPermissionError>> {
 
     let uri_str = format!("{}/api/v1/authz/check-any", configuration.base_path);
@@ -318,7 +318,7 @@ pub async fn check_any_permission(configuration: &configuration::Configuration, 
     }
 }
 
-/// POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
+/// POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"resource_id\": \"doc-123\"},        // read: resource_id + defined environment attribute slugs   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
 pub async fn check_permission(configuration: &configuration::Configuration, ) -> Result<models::CheckPermissionResponse, Error<CheckPermissionError>> {
 
     let uri_str = format!("{}/api/v1/authz/check", configuration.base_path);
@@ -364,7 +364,7 @@ pub async fn check_permission(configuration: &configuration::Configuration, ) ->
     }
 }
 
-/// POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
+/// POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 pub async fn check_permissions_bulk(configuration: &configuration::Configuration, ) -> Result<models::CheckPermissionsBulkResponse, Error<CheckPermissionsBulkError>> {
 
     let uri_str = format!("{}/api/v1/authz/check-bulk", configuration.base_path);

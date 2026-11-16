@@ -94,7 +94,7 @@ module LumoAuthApiClient
     end
 
     # Get an OAuth client's login and consent page branding
-    # Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+    # Needs `branding.view` and `clients.view`. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
@@ -105,7 +105,7 @@ module LumoAuthApiClient
     end
 
     # Get an OAuth client&#39;s login and consent page branding
-    # Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
+    # Needs &#x60;branding.view&#x60; and &#x60;clients.view&#x60;. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \&quot;same as the organization\&quot;.
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
@@ -620,6 +620,7 @@ module LumoAuthApiClient
     end
 
     # Change keys of an OAuth client's login and/or consent page branding
+    # Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
@@ -631,6 +632,7 @@ module LumoAuthApiClient
     end
 
     # Change keys of an OAuth client&#39;s login and/or consent page branding
+    # Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
@@ -761,6 +763,7 @@ module LumoAuthApiClient
     end
 
     # Replace an OAuth client's login and/or consent page branding
+    # Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
@@ -772,6 +775,7 @@ module LumoAuthApiClient
     end
 
     # Replace an OAuth client&#39;s login and/or consent page branding
+    # Needs &#x60;branding.edit&#x60; and &#x60;clients.edit&#x60;, as the Branding tab of the application in the portal does.
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters

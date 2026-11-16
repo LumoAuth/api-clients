@@ -108,5 +108,14 @@ namespace LumoAuth.ApiClient.Test.Model
         {
             // TODO unit test for the property 'RefreshToken'
         }
+
+        /// <summary>
+        /// Test the property 'Scope'
+        /// </summary>
+        [Fact]
+        public void ScopeTest()
+        {
+            // TODO unit test for the property 'Scope'
+        }
     }
 }

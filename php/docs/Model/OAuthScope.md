@@ -6,8 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** |  | [optional]
 **name** | **string** |  | [optional]
-**description** | **string** |  | [optional]
-**isDefault** | **bool** |  | [optional]
+**description** | **string** | Shown to users on the consent page next to the scope name. | [optional]
 **isSystem** | **bool** |  | [optional]
 **createdAt** | **\DateTime** |  | [optional]
 

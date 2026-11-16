@@ -146,7 +146,7 @@ module LumoAuthApiClient
     end
 
     # Check whether the subject holds all of the permissions
-    # POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
+    # POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
     # @param [Hash] opts the optional parameters
     # @return [CheckAnyPermissionResponse]
     def check_all_permissions(opts = {})
@@ -155,7 +155,7 @@ module LumoAuthApiClient
     end
 
     # Check whether the subject holds all of the permissions
-    # POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+    # POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
     # @param [Hash] opts the optional parameters
     # @return [Array<(CheckAnyPermissionResponse, Integer, Hash)>] CheckAnyPermissionResponse data, response status code and response headers
     def check_all_permissions_with_http_info(opts = {})
@@ -203,7 +203,7 @@ module LumoAuthApiClient
     end
 
     # Check whether the subject holds any of the permissions
-    # POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
+    # POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
     # @param [Hash] opts the optional parameters
     # @return [CheckAnyPermissionResponse]
     def check_any_permission(opts = {})
@@ -212,7 +212,7 @@ module LumoAuthApiClient
     end
 
     # Check whether the subject holds any of the permissions
-    # POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+    # POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
     # @param [Hash] opts the optional parameters
     # @return [Array<(CheckAnyPermissionResponse, Integer, Hash)>] CheckAnyPermissionResponse data, response status code and response headers
     def check_any_permission_with_http_info(opts = {})
@@ -260,7 +260,7 @@ module LumoAuthApiClient
     end
 
     # Check one permission
-    # POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
+    # POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"resource_id\": \"doc-123\"},        // read: resource_id + defined environment attribute slugs   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
     # @param [Hash] opts the optional parameters
     # @return [CheckPermissionResponse]
     def check_permission(opts = {})
@@ -269,7 +269,7 @@ module LumoAuthApiClient
     end
 
     # Check one permission
-    # POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123, \&quot;owner_id\&quot;: 456},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
+    # POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},        // read: resource_id + defined environment attribute slugs   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
     # @param [Hash] opts the optional parameters
     # @return [Array<(CheckPermissionResponse, Integer, Hash)>] CheckPermissionResponse data, response status code and response headers
     def check_permission_with_http_info(opts = {})
@@ -317,7 +317,7 @@ module LumoAuthApiClient
     end
 
     # Check up to 100 permissions in one call
-    # POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
+    # POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
     # @param [Hash] opts the optional parameters
     # @return [CheckPermissionsBulkResponse]
     def check_permissions_bulk(opts = {})
@@ -326,7 +326,7 @@ module LumoAuthApiClient
     end
 
     # Check up to 100 permissions in one call
-    # POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+    # POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
     # @param [Hash] opts the optional parameters
     # @return [Array<(CheckPermissionsBulkResponse, Integer, Hash)>] CheckPermissionsBulkResponse data, response status code and response headers
     def check_permissions_bulk_with_http_info(opts = {})

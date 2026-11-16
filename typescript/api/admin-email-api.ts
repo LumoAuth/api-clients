@@ -93,7 +93,7 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
          * @summary Get an email template (custom or built-in default)
          * @param {string} orgId 
          * @param {string} type 
@@ -148,7 +148,7 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
          * @summary List every email template type with its current (custom or built-in) template
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -279,7 +279,7 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
          * @summary List the placeholders available to an email template type
          * @param {string} orgId 
          * @param {string} type 
@@ -350,7 +350,7 @@ export const AdminEmailApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
          * @summary Get an email template (custom or built-in default)
          * @param {string} orgId 
          * @param {string} type 
@@ -366,7 +366,7 @@ export const AdminEmailApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
          * @summary List every email template type with its current (custom or built-in) template
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -407,7 +407,7 @@ export const AdminEmailApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
          * @summary List the placeholders available to an email template type
          * @param {string} orgId 
          * @param {string} type 
@@ -441,7 +441,7 @@ export const AdminEmailApiFactory = function (configuration?: Configuration, bas
             return localVarFp.adminEmailTemplatesDelete(requestParameters.orgId, requestParameters.type, requestParameters.locale, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
          * @summary Get an email template (custom or built-in default)
          * @param {AdminEmailApiAdminEmailTemplatesGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -451,7 +451,7 @@ export const AdminEmailApiFactory = function (configuration?: Configuration, bas
             return localVarFp.adminEmailTemplatesGet(requestParameters.orgId, requestParameters.type, requestParameters.locale, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
          * @summary List every email template type with its current (custom or built-in) template
          * @param {AdminEmailApiAdminEmailTemplatesListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -481,7 +481,7 @@ export const AdminEmailApiFactory = function (configuration?: Configuration, bas
             return localVarFp.adminEmailTemplatesUpsert(requestParameters.orgId, requestParameters.type, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
          * @summary List the placeholders available to an email template type
          * @param {AdminEmailApiAdminEmailTemplatesVariablesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -510,7 +510,7 @@ export interface AdminEmailApiInterface {
     adminEmailTemplatesDelete(requestParameters: AdminEmailApiAdminEmailTemplatesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
-     * 
+     * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
      * @summary Get an email template (custom or built-in default)
      * @param {AdminEmailApiAdminEmailTemplatesGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -520,7 +520,7 @@ export interface AdminEmailApiInterface {
     adminEmailTemplatesGet(requestParameters: AdminEmailApiAdminEmailTemplatesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<EmailTemplate>;
 
     /**
-     * 
+     * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
      * @summary List every email template type with its current (custom or built-in) template
      * @param {AdminEmailApiAdminEmailTemplatesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -550,7 +550,7 @@ export interface AdminEmailApiInterface {
     adminEmailTemplatesUpsert(requestParameters: AdminEmailApiAdminEmailTemplatesUpsertRequest, options?: RawAxiosRequestConfig): AxiosPromise<EmailTemplate>;
 
     /**
-     * 
+     * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
      * @summary List the placeholders available to an email template type
      * @param {AdminEmailApiAdminEmailTemplatesVariablesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -728,7 +728,7 @@ export class AdminEmailApi extends BaseAPI implements AdminEmailApiInterface {
     }
 
     /**
-     * 
+     * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
      * @summary Get an email template (custom or built-in default)
      * @param {AdminEmailApiAdminEmailTemplatesGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -740,7 +740,7 @@ export class AdminEmailApi extends BaseAPI implements AdminEmailApiInterface {
     }
 
     /**
-     * 
+     * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
      * @summary List every email template type with its current (custom or built-in) template
      * @param {AdminEmailApiAdminEmailTemplatesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -776,7 +776,7 @@ export class AdminEmailApi extends BaseAPI implements AdminEmailApiInterface {
     }
 
     /**
-     * 
+     * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
      * @summary List the placeholders available to an email template type
      * @param {AdminEmailApiAdminEmailTemplatesVariablesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

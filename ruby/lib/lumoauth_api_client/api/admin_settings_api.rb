@@ -286,6 +286,7 @@ module LumoAuthApiClient
     end
 
     # Get all settings (combined)
+    # Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal's branding page; without it the key is left out.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminSettingsAllResponse]
@@ -295,6 +296,7 @@ module LumoAuthApiClient
     end
 
     # Get all settings (combined)
+    # Needs &#x60;settings.view&#x60;. The &#x60;branding&#x60; part is returned only to a caller who also holds &#x60;branding.view&#x60; (for an API key, its creator), as for GET /settings/branding and the portal&#39;s branding page; without it the key is left out.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminSettingsAllResponse, Integer, Hash)>] AdminSettingsAllResponse data, response status code and response headers
@@ -530,6 +532,7 @@ module LumoAuthApiClient
     end
 
     # Get email settings
+    # Shows who sends the organization's mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth's sender.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminSettingsEmailGetResponse]
@@ -539,6 +542,7 @@ module LumoAuthApiClient
     end
 
     # Get email settings
+    # Shows who sends the organization&#39;s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth&#39;s sender.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminSettingsEmailGetResponse, Integer, Hash)>] AdminSettingsEmailGetResponse data, response status code and response headers
@@ -1018,6 +1022,7 @@ module LumoAuthApiClient
     end
 
     # Update branding/login page settings
+    # Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminSettingsBrandingUpdateResponse]
@@ -1027,6 +1032,7 @@ module LumoAuthApiClient
     end
 
     # Update branding/login page settings
+    # Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminSettingsBrandingUpdateResponse, Integer, Hash)>] PutAdminSettingsBrandingUpdateResponse data, response status code and response headers
@@ -1079,8 +1085,10 @@ module LumoAuthApiClient
     end
 
     # Update email settings
+    # Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [PutAdminSettingsEmailUpdateRequest] :put_admin_settings_email_update_request 
     # @return [PutAdminSettingsEmailUpdateResponse]
     def patch_admin_settings_email_update(org_id, opts = {})
       data, _status_code, _headers = patch_admin_settings_email_update_with_http_info(org_id, opts)
@@ -1088,8 +1096,10 @@ module LumoAuthApiClient
     end
 
     # Update email settings
+    # Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [PutAdminSettingsEmailUpdateRequest] :put_admin_settings_email_update_request 
     # @return [Array<(PutAdminSettingsEmailUpdateResponse, Integer, Hash)>] PutAdminSettingsEmailUpdateResponse data, response status code and response headers
     def patch_admin_settings_email_update_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
@@ -1109,12 +1119,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'put_admin_settings_email_update_request'])
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminSettingsEmailUpdateResponse'
@@ -1140,8 +1155,10 @@ module LumoAuthApiClient
     end
 
     # Update general settings
+    # Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [PutAdminSettingsGeneralUpdateRequest] :put_admin_settings_general_update_request 
     # @return [PutAdminSettingsGeneralUpdateResponse]
     def patch_admin_settings_general_update(org_id, opts = {})
       data, _status_code, _headers = patch_admin_settings_general_update_with_http_info(org_id, opts)
@@ -1149,8 +1166,10 @@ module LumoAuthApiClient
     end
 
     # Update general settings
+    # Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [PutAdminSettingsGeneralUpdateRequest] :put_admin_settings_general_update_request 
     # @return [Array<(PutAdminSettingsGeneralUpdateResponse, Integer, Hash)>] PutAdminSettingsGeneralUpdateResponse data, response status code and response headers
     def patch_admin_settings_general_update_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
@@ -1170,12 +1189,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'put_admin_settings_general_update_request'])
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminSettingsGeneralUpdateResponse'
@@ -1567,6 +1591,7 @@ module LumoAuthApiClient
     end
 
     # Update branding/login page settings
+    # Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminSettingsBrandingUpdateResponse]
@@ -1576,6 +1601,7 @@ module LumoAuthApiClient
     end
 
     # Update branding/login page settings
+    # Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminSettingsBrandingUpdateResponse, Integer, Hash)>] PutAdminSettingsBrandingUpdateResponse data, response status code and response headers
@@ -1628,8 +1654,10 @@ module LumoAuthApiClient
     end
 
     # Update email settings
+    # Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [PutAdminSettingsEmailUpdateRequest] :put_admin_settings_email_update_request 
     # @return [PutAdminSettingsEmailUpdateResponse]
     def put_admin_settings_email_update(org_id, opts = {})
       data, _status_code, _headers = put_admin_settings_email_update_with_http_info(org_id, opts)
@@ -1637,8 +1665,10 @@ module LumoAuthApiClient
     end
 
     # Update email settings
+    # Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [PutAdminSettingsEmailUpdateRequest] :put_admin_settings_email_update_request 
     # @return [Array<(PutAdminSettingsEmailUpdateResponse, Integer, Hash)>] PutAdminSettingsEmailUpdateResponse data, response status code and response headers
     def put_admin_settings_email_update_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
@@ -1658,12 +1688,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'put_admin_settings_email_update_request'])
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminSettingsEmailUpdateResponse'
@@ -1689,8 +1724,10 @@ module LumoAuthApiClient
     end
 
     # Update general settings
+    # Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [PutAdminSettingsGeneralUpdateRequest] :put_admin_settings_general_update_request 
     # @return [PutAdminSettingsGeneralUpdateResponse]
     def put_admin_settings_general_update(org_id, opts = {})
       data, _status_code, _headers = put_admin_settings_general_update_with_http_info(org_id, opts)
@@ -1698,8 +1735,10 @@ module LumoAuthApiClient
     end
 
     # Update general settings
+    # Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [PutAdminSettingsGeneralUpdateRequest] :put_admin_settings_general_update_request 
     # @return [Array<(PutAdminSettingsGeneralUpdateResponse, Integer, Hash)>] PutAdminSettingsGeneralUpdateResponse data, response status code and response headers
     def put_admin_settings_general_update_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
@@ -1719,12 +1758,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'put_admin_settings_general_update_request'])
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminSettingsGeneralUpdateResponse'

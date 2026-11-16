@@ -68,8 +68,10 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="mfaEnabled">mfaEnabled.</param>
         /// <param name="roles">roles.</param>
         /// <param name="capabilities">capabilities.</param>
+        /// <param name="scope">Agents only: the scope of the presented token..</param>
+        /// <param name="scopeNarrowed">Agents only: true when the token scope leaves out one of the agent&#39;s capabilities..</param>
         /// <param name="tenant">tenant.</param>
-        public GetMeResponse(SubjectTypeEnum? subjectType = default, string id = default, string email = default, string name = default, bool? mfaEnabled = default, List<string> roles = default, List<string> capabilities = default, GroupRef tenant = default)
+        public GetMeResponse(SubjectTypeEnum? subjectType = default, string id = default, string email = default, string name = default, bool? mfaEnabled = default, List<string> roles = default, List<string> capabilities = default, List<string> scope = default, bool? scopeNarrowed = default, GroupRef tenant = default)
         {
             this.SubjectType = subjectType;
             this.Id = id;
@@ -78,6 +80,8 @@ namespace LumoAuth.ApiClient.Model
             this.MfaEnabled = mfaEnabled;
             this.Roles = roles;
             this.Capabilities = capabilities;
+            this.Scope = scope;
+            this.ScopeNarrowed = scopeNarrowed;
             this.Tenant = tenant;
         }
 
@@ -118,6 +122,20 @@ namespace LumoAuth.ApiClient.Model
         public List<string> Capabilities { get; set; }
 
         /// <summary>
+        /// Agents only: the scope of the presented token.
+        /// </summary>
+        /// <value>Agents only: the scope of the presented token.</value>
+        [DataMember(Name = "scope", EmitDefaultValue = true)]
+        public List<string> Scope { get; set; }
+
+        /// <summary>
+        /// Agents only: true when the token scope leaves out one of the agent&#39;s capabilities.
+        /// </summary>
+        /// <value>Agents only: true when the token scope leaves out one of the agent&#39;s capabilities.</value>
+        [DataMember(Name = "scope_narrowed", EmitDefaultValue = true)]
+        public bool? ScopeNarrowed { get; set; }
+
+        /// <summary>
         /// Gets or Sets Tenant
         /// </summary>
         [DataMember(Name = "tenant", EmitDefaultValue = false)]
@@ -138,6 +156,8 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  MfaEnabled: ").Append(MfaEnabled).Append("\n");
             sb.Append("  Roles: ").Append(Roles).Append("\n");
             sb.Append("  Capabilities: ").Append(Capabilities).Append("\n");
+            sb.Append("  Scope: ").Append(Scope).Append("\n");
+            sb.Append("  ScopeNarrowed: ").Append(ScopeNarrowed).Append("\n");
             sb.Append("  Tenant: ").Append(Tenant).Append("\n");
             sb.Append("}\n");
             return sb.ToString();

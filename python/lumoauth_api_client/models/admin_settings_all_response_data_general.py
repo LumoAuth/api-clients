@@ -18,18 +18,20 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
 class AdminSettingsAllResponseDataGeneral(BaseModel):
     """
-    Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+    The organization name (name; displayName is the same value), locale (the default language of the hosted pages), then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
     """ # noqa: E501
     name: Optional[StrictStr] = None
+    display_name: Optional[StrictStr] = Field(default=None, alias="displayName")
+    locale: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name"]
+    __properties: ClassVar[List[str]] = ["name", "displayName", "locale"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -89,7 +91,9 @@ class AdminSettingsAllResponseDataGeneral(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "name": obj.get("name")
+            "name": obj.get("name"),
+            "displayName": obj.get("displayName"),
+            "locale": obj.get("locale")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

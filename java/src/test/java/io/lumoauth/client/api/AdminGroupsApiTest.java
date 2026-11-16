@@ -52,6 +52,8 @@ public class AdminGroupsApiTest {
     /**
      * Add a single role to a group
      *
+     * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -64,6 +66,8 @@ public class AdminGroupsApiTest {
 
     /**
      * Create a new group
+     *
+     * Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
      *
      * @throws ApiException if the Api call fails
      */
@@ -168,6 +172,8 @@ public class AdminGroupsApiTest {
 
     /**
      * Update group roles (replaces all existing roles)
+     *
+     * &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
      *
      * @throws ApiException if the Api call fails
      */

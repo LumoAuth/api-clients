@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**authorize**](OAuthApi.md#authorize) | **GET** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint
 [**backchannel_authorize**](OAuthApi.md#backchannel_authorize) | **POST** /orgs/{orgId}/api/v1/oauth/bc-authorize | CIBA backchannel authentication request
+[**check_email_first**](OAuthApi.md#check_email_first) | **POST** /orgs/{orgId}/api/v1/oauth/check-email | Sign-in methods for an email-first form
 [**device_authorization**](OAuthApi.md#device_authorization) | **POST** /orgs/{orgId}/api/v1/oauth/device_authorization | Device authorization request (RFC 8628)
 [**get_client_configuration**](OAuthApi.md#get_client_configuration) | **GET** /orgs/{orgId}/api/v1/connect/register/{clientId} | Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
 [**get_device_verification**](OAuthApi.md#get_device_verification) | **GET** /orgs/{orgId}/api/v1/oauth/device | Device verification page (RFC 8628 §3.3)
@@ -92,7 +93,7 @@ No authorization required
 **303** | Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. |  * Location -  <br>  |
 **302** | Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. |  * Location -  <br>  |
 **400** | HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). |  -  |
-**429** | too_many_requests (JSON). |  -  |
+**429** | too_many_requests (JSON); Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -175,7 +176,82 @@ Name | Type | Description  | Notes
 **400** | invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. |  -  |
 **401** | invalid_client — client authentication failed. |  -  |
 **403** | unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. |  -  |
-**429** | too_many_requests, or slow_down when the target user already has too many pending requests. |  -  |
+**429** | too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **check_email_first**
+> CheckEmailFirstResponse check_email_first(org_id, check_email_first_request)
+
+Sign-in methods for an email-first form
+
+For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: `exists` is always `true`, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by `client_id`.
+
+### Example
+
+
+```python
+import lumoauth_api_client
+from lumoauth_api_client.models.check_email_first_request import CheckEmailFirstRequest
+from lumoauth_api_client.models.check_email_first_response import CheckEmailFirstResponse
+from lumoauth_api_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.lumoauth.dev
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lumoauth_api_client.Configuration(
+    host = "https://app.lumoauth.dev"
+)
+
+
+# Enter a context with an instance of the API client
+with lumoauth_api_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lumoauth_api_client.OAuthApi(api_client)
+    org_id = 'org_id_example' # str | 
+    check_email_first_request = lumoauth_api_client.CheckEmailFirstRequest() # CheckEmailFirstRequest | 
+
+    try:
+        # Sign-in methods for an email-first form
+        api_response = api_instance.check_email_first(org_id, check_email_first_request)
+        print("The response of OAuthApi->check_email_first:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling OAuthApi->check_email_first: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**|  | 
+ **check_email_first_request** | [**CheckEmailFirstRequest**](CheckEmailFirstRequest.md)|  | 
+
+### Return type
+
+[**CheckEmailFirstResponse**](CheckEmailFirstResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | The organization&#39;s sign-in methods. The same for every address. |  -  |
+**400** | &#x60;{\&quot;error\&quot;: …, \&quot;message\&quot;: …}&#x60; with error &#x60;invalid_request&#x60; or &#x60;invalid_client&#x60;. |  -  |
+**403** | &#x60;{\&quot;error\&quot;:\&quot;origin_not_allowed\&quot;}&#x60;: the page that made the request is not one of the application&#39;s allowed origins. |  -  |
+**404** | &#x60;{\&quot;error\&quot;:\&quot;not_found\&quot;}&#x60; for an unknown organization. |  -  |
+**429** | &#x60;{\&quot;error\&quot;:\&quot;rate_limited\&quot;}&#x60;; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -257,7 +333,7 @@ Name | Type | Description  | Notes
 **200** | Device authorization response (RFC 8628 §3.2). |  -  |
 **400** | invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. |  -  |
 **401** | invalid_client — a confidential client failed to authenticate. |  -  |
-**429** | too_many_requests — rate limit exceeded. |  -  |
+**429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -414,7 +490,7 @@ No authorization required
 |-------------|-------------|------------------|
 **200** | HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. |  -  |
 **302** | Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. |  * Location -  <br>  |
-**429** | HTML error page — too many attempts. |  -  |
+**429** | HTML error page — too many attempts (Retry-After header). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -565,7 +641,7 @@ Name | Type | Description  | Notes
 **200** | Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. |  -  |
 **400** | invalid_request — token parameter missing. |  -  |
 **401** | invalid_client — client authentication failed. |  -  |
-**429** | Rate limit exceeded. |  -  |
+**429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -647,7 +723,7 @@ Name | Type | Description  | Notes
 **201** | Pushed authorization request created (RFC 9126 §2.2). |  -  |
 **400** | invalid_request / invalid_target / invalid_request_object, or the organization is unknown. |  -  |
 **401** | invalid_client — client authentication failed. |  -  |
-**429** | too_many_requests — rate limit exceeded. |  -  |
+**429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -656,7 +732,7 @@ Name | Type | Description  | Notes
 
 Dynamic client registration (RFC 7591 / OIDC DCR)
 
-Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization's signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
 
 ### Example
 
@@ -736,7 +812,7 @@ Name | Type | Description  | Notes
 **400** | invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. |  -  |
 **401** | access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). |  -  |
 **403** | access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. |  -  |
-**429** | too_many_requests — rate limit exceeded. |  -  |
+**429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -892,7 +968,7 @@ Name | Type | Description  | Notes
 **200** | Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). |  -  |
 **400** | invalid_request (token parameter missing) or unsupported_token_type. |  -  |
 **401** | invalid_client — client authentication failed. |  -  |
-**429** | too_many_requests — rate limit exceeded. |  -  |
+**429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1164,7 +1240,7 @@ No authorization required
 **303** | Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. |  * Location -  <br>  |
 **302** | Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. |  * Location -  <br>  |
 **400** | HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). |  -  |
-**429** | too_many_requests (JSON). |  -  |
+**429** | too_many_requests (JSON); Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1233,7 +1309,7 @@ No authorization required
 |-------------|-------------|------------------|
 **200** | HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. |  -  |
 **302** | Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. |  * Location -  <br>  |
-**429** | HTML error page — too many attempts. |  -  |
+**429** | HTML error page — too many attempts (Retry-After header). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1458,7 +1534,7 @@ Name | Type | Description  | Notes
 **400** | invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). |  -  |
 **401** | invalid_client — client authentication failed. |  -  |
 **403** | plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. |  -  |
-**429** | too_many_requests — rate limit exceeded. |  -  |
+**429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

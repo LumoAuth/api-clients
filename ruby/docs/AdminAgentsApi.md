@@ -773,7 +773,7 @@ end
 
 ## admin_agents_list
 
-> <AdminAgentsListResponse> admin_agents_list(org_id)
+> <AdminAgentsListResponse> admin_agents_list(org_id, opts)
 
 List all agents in the tenant
 
@@ -795,10 +795,14 @@ end
 
 api_instance = LumoAuthApiClient::AdminAgentsApi.new
 org_id = 'org_id_example' # String | 
+opts = {
+  sort_by: 'name', # String | Sort field. Default: name. Another value is ignored.
+  sort_dir: 'ASC' # String | Sort direction, used with sortBy.
+}
 
 begin
   # List all agents in the tenant
-  result = api_instance.admin_agents_list(org_id)
+  result = api_instance.admin_agents_list(org_id, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAgentsApi->admin_agents_list: #{e}"
@@ -809,12 +813,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminAgentsListResponse>, Integer, Hash)> admin_agents_list_with_http_info(org_id)
+> <Array(<AdminAgentsListResponse>, Integer, Hash)> admin_agents_list_with_http_info(org_id, opts)
 
 ```ruby
 begin
   # List all agents in the tenant
-  data, status_code, headers = api_instance.admin_agents_list_with_http_info(org_id)
+  data, status_code, headers = api_instance.admin_agents_list_with_http_info(org_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminAgentsListResponse>
@@ -828,6 +832,8 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **sort_by** | **String** | Sort field. Default: name. Another value is ignored. | [optional] |
+| **sort_dir** | **String** | Sort direction, used with sortBy. | [optional][default to &#39;ASC&#39;] |
 
 ### Return type
 

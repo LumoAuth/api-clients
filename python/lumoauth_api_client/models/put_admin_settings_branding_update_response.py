@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from lumoauth_api_client.models.branding_settings import BrandingSettings
 from typing import Optional, Set
@@ -29,8 +29,9 @@ class PutAdminSettingsBrandingUpdateResponse(BaseModel):
     PutAdminSettingsBrandingUpdateResponse
     """ # noqa: E501
     data: Optional[BrandingSettings] = None
+    rejected: Optional[List[StrictStr]] = Field(default=None, description="Keys whose value was refused by validation and not saved.")
     message: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["data", "message"]
+    __properties: ClassVar[List[str]] = ["data", "rejected", "message"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -87,6 +88,7 @@ class PutAdminSettingsBrandingUpdateResponse(BaseModel):
 
         _obj = cls.model_validate({
             "data": BrandingSettings.from_dict(obj["data"]) if obj.get("data") is not None else None,
+            "rejected": obj.get("rejected"),
             "message": obj.get("message")
         })
         return _obj

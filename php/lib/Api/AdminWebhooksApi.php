@@ -657,7 +657,10 @@ class AdminWebhooksApi
                 'Missing the required parameter $webhookId when calling adminWebhooksDelete'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $webhookId)) {
+            throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.adminWebhooksDelete, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}';
         $formParams = [];
@@ -954,7 +957,10 @@ class AdminWebhooksApi
                 'Missing the required parameter $webhookId when calling adminWebhooksDeliveriesList'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $webhookId)) {
+            throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.adminWebhooksDeliveriesList, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries';
         $formParams = [];
@@ -1256,7 +1262,10 @@ class AdminWebhooksApi
                 'Missing the required parameter $webhookId when calling adminWebhooksDeliveryReplay'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $webhookId)) {
+            throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.adminWebhooksDeliveryReplay, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
         // verify the required parameter 'deliveryId' is set
         if ($deliveryId === null || (is_array($deliveryId) && count($deliveryId) === 0)) {
             throw new \InvalidArgumentException(
@@ -1573,7 +1582,10 @@ class AdminWebhooksApi
                 'Missing the required parameter $webhookId when calling adminWebhooksDeliveryShow'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $webhookId)) {
+            throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.adminWebhooksDeliveryShow, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
         // verify the required parameter 'deliveryId' is set
         if ($deliveryId === null || (is_array($deliveryId) && count($deliveryId) === 0)) {
             throw new \InvalidArgumentException(
@@ -2162,7 +2174,10 @@ class AdminWebhooksApi
                 'Missing the required parameter $webhookId when calling adminWebhooksGet'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $webhookId)) {
+            throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.adminWebhooksGet, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}';
         $formParams = [];
@@ -2736,7 +2751,10 @@ class AdminWebhooksApi
                 'Missing the required parameter $webhookId when calling adminWebhooksRotateSecret'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $webhookId)) {
+            throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.adminWebhooksRotateSecret, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret';
         $formParams = [];
@@ -3033,7 +3051,10 @@ class AdminWebhooksApi
                 'Missing the required parameter $webhookId when calling adminWebhooksTest'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $webhookId)) {
+            throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.adminWebhooksTest, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test';
         $formParams = [];
@@ -3607,7 +3628,10 @@ class AdminWebhooksApi
                 'Missing the required parameter $webhookId when calling adminWebhooksTunnelStop'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $webhookId)) {
+            throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.adminWebhooksTunnelStop, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop';
         $formParams = [];
@@ -3904,7 +3928,10 @@ class AdminWebhooksApi
                 'Missing the required parameter $webhookId when calling adminWebhooksTunnelStream'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $webhookId)) {
+            throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.adminWebhooksTunnelStream, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream';
         $formParams = [];
@@ -4201,7 +4228,10 @@ class AdminWebhooksApi
                 'Missing the required parameter $webhookId when calling adminWebhooksWebhooksDisable'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $webhookId)) {
+            throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.adminWebhooksWebhooksDisable, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable';
         $formParams = [];
@@ -4498,7 +4528,10 @@ class AdminWebhooksApi
                 'Missing the required parameter $webhookId when calling adminWebhooksWebhooksEnable'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $webhookId)) {
+            throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.adminWebhooksWebhooksEnable, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable';
         $formParams = [];
@@ -4795,7 +4828,10 @@ class AdminWebhooksApi
                 'Missing the required parameter $webhookId when calling patchAdminWebhooksUpdate'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $webhookId)) {
+            throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.patchAdminWebhooksUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}';
         $formParams = [];
@@ -5092,7 +5128,10 @@ class AdminWebhooksApi
                 'Missing the required parameter $webhookId when calling putAdminWebhooksUpdate'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $webhookId)) {
+            throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.putAdminWebhooksUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}';
         $formParams = [];

@@ -13,6 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AdminAnalyticsDashboardResponseDataAudit {
+    /// Audit events of the last 7 days, or of the audit retention period of the plan when that is shorter.
     #[serde(rename = "eventsLast7Days", skip_serializing_if = "Option::is_none")]
     pub events_last7_days: Option<i32>,
 }

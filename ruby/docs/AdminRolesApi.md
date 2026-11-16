@@ -25,6 +25,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Add permission(s) to a role
 
+Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+
 ### Examples
 
 ```ruby
@@ -172,6 +174,8 @@ end
 > <AdminRolesCreateResponse> admin_roles_create(org_id)
 
 Create a new role
+
+Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
 ### Examples
 
@@ -613,6 +617,8 @@ end
 
 Remove a permission from a role
 
+Needs `roles.assign-permissions` and `roles.edit`.
+
 ### Examples
 
 ```ruby
@@ -764,6 +770,8 @@ end
 > <AdminRolesCreateResponse> admin_roles_update_permissions(org_id, role_id)
 
 Update role permissions (replaces all)
+
+Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 ### Examples
 

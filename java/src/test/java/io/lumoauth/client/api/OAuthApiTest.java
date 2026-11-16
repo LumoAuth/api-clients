@@ -15,6 +15,8 @@ package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
 import io.lumoauth.client.model.BackchannelAuthorizeResponse;
+import io.lumoauth.client.model.CheckEmailFirstRequest;
+import io.lumoauth.client.model.CheckEmailFirstResponse;
 import io.lumoauth.client.model.DeviceAuthorizationResponse;
 import io.lumoauth.client.model.IntrospectResponse;
 import io.lumoauth.client.model.ParResponse;
@@ -65,6 +67,21 @@ public class OAuthApiTest {
     public void backchannelAuthorizeTest() throws ApiException {
         String orgId = null;
         BackchannelAuthorizeResponse response = api.backchannelAuthorize(orgId);
+        // TODO: test validations
+    }
+
+    /**
+     * Sign-in methods for an email-first form
+     *
+     * For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: &#x60;exists&#x60; is always &#x60;true&#x60;, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void checkEmailFirstTest() throws ApiException {
+        String orgId = null;
+        CheckEmailFirstRequest checkEmailFirstRequest = null;
+        CheckEmailFirstResponse response = api.checkEmailFirst(orgId, checkEmailFirstRequest);
         // TODO: test validations
     }
 
@@ -156,7 +173,7 @@ public class OAuthApiTest {
     /**
      * Dynamic client registration (RFC 7591 / OIDC DCR)
      *
-     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
      *
      * @throws ApiException if the Api call fails
      */

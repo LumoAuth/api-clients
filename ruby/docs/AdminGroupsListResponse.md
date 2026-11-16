@@ -7,6 +7,7 @@
 | **data** | [**Array&lt;Group&gt;**](Group.md) |  | [optional] |
 | **meta** | [**PaginationMeta**](PaginationMeta.md) |  | [optional] |
 | **pagination** | [**PaginationMeta**](PaginationMeta.md) |  | [optional] |
+| **resource_type** | **String** |  | [optional] |
 
 ## Example
 
@@ -16,7 +17,8 @@ require 'lumoauth_api_client'
 instance = LumoAuthApiClient::AdminGroupsListResponse.new(
   data: null,
   meta: null,
-  pagination: null
+  pagination: null,
+  resource_type: groups
 )
 ```
 

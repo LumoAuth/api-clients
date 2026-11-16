@@ -135,4 +135,12 @@ public class IntrospectResponseTest {
         // TODO: test jti
     }
 
+    /**
+     * Test the property 'act'
+     */
+    @Test
+    public void actTest() {
+        // TODO: test act
+    }
+
 }

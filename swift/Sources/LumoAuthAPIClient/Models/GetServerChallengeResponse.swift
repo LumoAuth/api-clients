@@ -14,7 +14,9 @@ public struct GetServerChallengeResponse: Codable, JSONEncodable, Hashable {
 
     public enum Status: String, Codable, CaseIterable {
         case authenticated = "authenticated"
+        case noAuthorizationRequired = "no_authorization_required"
     }
+    /** `no_authorization_required` for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token. */
     public var status: Status
     /** MCP server display name. */
     public var server: String

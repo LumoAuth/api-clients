@@ -15,6 +15,9 @@ use serde::{Deserialize, Serialize};
 pub struct PutAdminSettingsBrandingUpdateResponse {
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
     pub data: Option<Box<models::BrandingSettings>>,
+    /// Keys whose value was refused by validation and not saved.
+    #[serde(rename = "rejected", skip_serializing_if = "Option::is_none")]
+    pub rejected: Option<Vec<String>>,
     #[serde(rename = "message", skip_serializing_if = "Option::is_none")]
     pub message: Option<String>,
 }
@@ -23,6 +26,7 @@ impl PutAdminSettingsBrandingUpdateResponse {
     pub fn new() -> PutAdminSettingsBrandingUpdateResponse {
         PutAdminSettingsBrandingUpdateResponse {
             data: None,
+            rejected: None,
             message: None,
         }
     }

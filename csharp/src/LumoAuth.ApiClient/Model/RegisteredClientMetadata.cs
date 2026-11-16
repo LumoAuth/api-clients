@@ -81,16 +81,12 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="logoUri">logoUri.</param>
         /// <param name="policyUri">policyUri.</param>
         /// <param name="tosUri">tosUri.</param>
-        /// <param name="sectorIdentifierUri">sectorIdentifierUri.</param>
-        /// <param name="subjectType">Only when not \&quot;public\&quot;..</param>
         /// <param name="jwksUri">jwksUri.</param>
         /// <param name="jwks">jwks.</param>
         /// <param name="postLogoutRedirectUris">postLogoutRedirectUris.</param>
         /// <param name="initiateLoginUri">initiateLoginUri.</param>
-        /// <param name="requestUris">requestUris.</param>
         /// <param name="scope">Space-separated registered scopes..</param>
         /// <param name="idTokenSignedResponseAlg">Only when not RS256..</param>
-        /// <param name="userinfoSignedResponseAlg">userinfoSignedResponseAlg.</param>
         /// <param name="requestObjectSigningAlg">requestObjectSigningAlg.</param>
         /// <param name="tokenEndpointAuthSigningAlg">tokenEndpointAuthSigningAlg.</param>
         /// <param name="defaultMaxAge">defaultMaxAge.</param>
@@ -101,7 +97,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="backchannelLogoutUri">backchannelLogoutUri.</param>
         /// <param name="backchannelLogoutSessionRequired">Only when true..</param>
         /// <param name="audienceUris">RFC 8707 resource indicators the client may request..</param>
-        public RegisteredClientMetadata(string clientId = default, int clientSecretExpiresAt = default, int clientIdIssuedAt = default, string registrationClientUri = default, string clientName = default, List<string> redirectUris = default, List<string> responseTypes = default, List<string> grantTypes = default, ApplicationTypeEnum applicationType = default, string tokenEndpointAuthMethod = default, List<string> contacts = default, string clientUri = default, string logoUri = default, string policyUri = default, string tosUri = default, string sectorIdentifierUri = default, string subjectType = default, string jwksUri = default, Dictionary<string, Object> jwks = default, List<string> postLogoutRedirectUris = default, string initiateLoginUri = default, List<string> requestUris = default, string scope = default, string idTokenSignedResponseAlg = default, string userinfoSignedResponseAlg = default, string requestObjectSigningAlg = default, string tokenEndpointAuthSigningAlg = default, int defaultMaxAge = default, bool requireAuthTime = default, List<string> defaultAcrValues = default, string frontchannelLogoutUri = default, bool frontchannelLogoutSessionRequired = default, string backchannelLogoutUri = default, bool backchannelLogoutSessionRequired = default, List<string> audienceUris = default)
+        public RegisteredClientMetadata(string clientId = default, int clientSecretExpiresAt = default, int clientIdIssuedAt = default, string registrationClientUri = default, string clientName = default, List<string> redirectUris = default, List<string> responseTypes = default, List<string> grantTypes = default, ApplicationTypeEnum applicationType = default, string tokenEndpointAuthMethod = default, List<string> contacts = default, string clientUri = default, string logoUri = default, string policyUri = default, string tosUri = default, string jwksUri = default, Dictionary<string, Object> jwks = default, List<string> postLogoutRedirectUris = default, string initiateLoginUri = default, string scope = default, string idTokenSignedResponseAlg = default, string requestObjectSigningAlg = default, string tokenEndpointAuthSigningAlg = default, int defaultMaxAge = default, bool requireAuthTime = default, List<string> defaultAcrValues = default, string frontchannelLogoutUri = default, bool frontchannelLogoutSessionRequired = default, string backchannelLogoutUri = default, bool backchannelLogoutSessionRequired = default, List<string> audienceUris = default)
         {
             // to ensure "clientId" is required (not null)
             if (clientId == null)
@@ -148,16 +144,12 @@ namespace LumoAuth.ApiClient.Model
             this.LogoUri = logoUri;
             this.PolicyUri = policyUri;
             this.TosUri = tosUri;
-            this.SectorIdentifierUri = sectorIdentifierUri;
-            this.SubjectType = subjectType;
             this.JwksUri = jwksUri;
             this.Jwks = jwks;
             this.PostLogoutRedirectUris = postLogoutRedirectUris;
             this.InitiateLoginUri = initiateLoginUri;
-            this.RequestUris = requestUris;
             this.Scope = scope;
             this.IdTokenSignedResponseAlg = idTokenSignedResponseAlg;
-            this.UserinfoSignedResponseAlg = userinfoSignedResponseAlg;
             this.RequestObjectSigningAlg = requestObjectSigningAlg;
             this.TokenEndpointAuthSigningAlg = tokenEndpointAuthSigningAlg;
             this.DefaultMaxAge = defaultMaxAge;
@@ -257,19 +249,6 @@ namespace LumoAuth.ApiClient.Model
         public string TosUri { get; set; }
 
         /// <summary>
-        /// Gets or Sets SectorIdentifierUri
-        /// </summary>
-        [DataMember(Name = "sector_identifier_uri", EmitDefaultValue = false)]
-        public string SectorIdentifierUri { get; set; }
-
-        /// <summary>
-        /// Only when not \&quot;public\&quot;.
-        /// </summary>
-        /// <value>Only when not \&quot;public\&quot;.</value>
-        [DataMember(Name = "subject_type", EmitDefaultValue = false)]
-        public string SubjectType { get; set; }
-
-        /// <summary>
         /// Gets or Sets JwksUri
         /// </summary>
         [DataMember(Name = "jwks_uri", EmitDefaultValue = false)]
@@ -294,12 +273,6 @@ namespace LumoAuth.ApiClient.Model
         public string InitiateLoginUri { get; set; }
 
         /// <summary>
-        /// Gets or Sets RequestUris
-        /// </summary>
-        [DataMember(Name = "request_uris", EmitDefaultValue = false)]
-        public List<string> RequestUris { get; set; }
-
-        /// <summary>
         /// Space-separated registered scopes.
         /// </summary>
         /// <value>Space-separated registered scopes.</value>
@@ -312,12 +285,6 @@ namespace LumoAuth.ApiClient.Model
         /// <value>Only when not RS256.</value>
         [DataMember(Name = "id_token_signed_response_alg", EmitDefaultValue = false)]
         public string IdTokenSignedResponseAlg { get; set; }
-
-        /// <summary>
-        /// Gets or Sets UserinfoSignedResponseAlg
-        /// </summary>
-        [DataMember(Name = "userinfo_signed_response_alg", EmitDefaultValue = false)]
-        public string UserinfoSignedResponseAlg { get; set; }
 
         /// <summary>
         /// Gets or Sets RequestObjectSigningAlg
@@ -406,16 +373,12 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  LogoUri: ").Append(LogoUri).Append("\n");
             sb.Append("  PolicyUri: ").Append(PolicyUri).Append("\n");
             sb.Append("  TosUri: ").Append(TosUri).Append("\n");
-            sb.Append("  SectorIdentifierUri: ").Append(SectorIdentifierUri).Append("\n");
-            sb.Append("  SubjectType: ").Append(SubjectType).Append("\n");
             sb.Append("  JwksUri: ").Append(JwksUri).Append("\n");
             sb.Append("  Jwks: ").Append(Jwks).Append("\n");
             sb.Append("  PostLogoutRedirectUris: ").Append(PostLogoutRedirectUris).Append("\n");
             sb.Append("  InitiateLoginUri: ").Append(InitiateLoginUri).Append("\n");
-            sb.Append("  RequestUris: ").Append(RequestUris).Append("\n");
             sb.Append("  Scope: ").Append(Scope).Append("\n");
             sb.Append("  IdTokenSignedResponseAlg: ").Append(IdTokenSignedResponseAlg).Append("\n");
-            sb.Append("  UserinfoSignedResponseAlg: ").Append(UserinfoSignedResponseAlg).Append("\n");
             sb.Append("  RequestObjectSigningAlg: ").Append(RequestObjectSigningAlg).Append("\n");
             sb.Append("  TokenEndpointAuthSigningAlg: ").Append(TokenEndpointAuthSigningAlg).Append("\n");
             sb.Append("  DefaultMaxAge: ").Append(DefaultMaxAge).Append("\n");

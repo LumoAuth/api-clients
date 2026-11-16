@@ -645,7 +645,10 @@ class AdminAbacApi
                 'Missing the required parameter $id when calling abacAttributesDelete'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling AdminAbacApi.abacAttributesDelete, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/abac/attributes/{id}';
         $formParams = [];
@@ -942,7 +945,10 @@ class AdminAbacApi
                 'Missing the required parameter $id when calling abacAttributesGet'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling AdminAbacApi.abacAttributesGet, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/abac/attributes/{id}';
         $formParams = [];
@@ -1793,7 +1799,10 @@ class AdminAbacApi
                 'Missing the required parameter $id when calling abacPoliciesDelete'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling AdminAbacApi.abacPoliciesDelete, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/abac/policies/{id}';
         $formParams = [];
@@ -2090,7 +2099,10 @@ class AdminAbacApi
                 'Missing the required parameter $id when calling abacPoliciesGet'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling AdminAbacApi.abacPoliciesGet, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/abac/policies/{id}';
         $formParams = [];
@@ -2187,15 +2199,16 @@ class AdminAbacApi
      * List ABAC policies
      *
      * @param  string $orgId orgId (required)
+     * @param  string|null $action Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacPoliciesList'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AbacPoliciesListResponse
      */
-    public function abacPoliciesList($orgId, string $contentType = self::contentTypes['abacPoliciesList'][0])
+    public function abacPoliciesList($orgId, $action = null, string $contentType = self::contentTypes['abacPoliciesList'][0])
     {
-        list($response) = $this->abacPoliciesListWithHttpInfo($orgId, $contentType);
+        list($response) = $this->abacPoliciesListWithHttpInfo($orgId, $action, $contentType);
         return $response;
     }
 
@@ -2205,15 +2218,16 @@ class AdminAbacApi
      * List ABAC policies
      *
      * @param  string $orgId (required)
+     * @param  string|null $action Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacPoliciesList'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AbacPoliciesListResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function abacPoliciesListWithHttpInfo($orgId, string $contentType = self::contentTypes['abacPoliciesList'][0])
+    public function abacPoliciesListWithHttpInfo($orgId, $action = null, string $contentType = self::contentTypes['abacPoliciesList'][0])
     {
-        $request = $this->abacPoliciesListRequest($orgId, $contentType);
+        $request = $this->abacPoliciesListRequest($orgId, $action, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2290,14 +2304,15 @@ class AdminAbacApi
      * List ABAC policies
      *
      * @param  string $orgId (required)
+     * @param  string|null $action Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacPoliciesList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function abacPoliciesListAsync($orgId, string $contentType = self::contentTypes['abacPoliciesList'][0])
+    public function abacPoliciesListAsync($orgId, $action = null, string $contentType = self::contentTypes['abacPoliciesList'][0])
     {
-        return $this->abacPoliciesListAsyncWithHttpInfo($orgId, $contentType)
+        return $this->abacPoliciesListAsyncWithHttpInfo($orgId, $action, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2311,15 +2326,16 @@ class AdminAbacApi
      * List ABAC policies
      *
      * @param  string $orgId (required)
+     * @param  string|null $action Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacPoliciesList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function abacPoliciesListAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['abacPoliciesList'][0])
+    public function abacPoliciesListAsyncWithHttpInfo($orgId, $action = null, string $contentType = self::contentTypes['abacPoliciesList'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AbacPoliciesListResponse';
-        $request = $this->abacPoliciesListRequest($orgId, $contentType);
+        $request = $this->abacPoliciesListRequest($orgId, $action, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2361,12 +2377,13 @@ class AdminAbacApi
      * Create request for operation 'abacPoliciesList'
      *
      * @param  string $orgId (required)
+     * @param  string|null $action Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacPoliciesList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function abacPoliciesListRequest($orgId, string $contentType = self::contentTypes['abacPoliciesList'][0])
+    public function abacPoliciesListRequest($orgId, $action = null, string $contentType = self::contentTypes['abacPoliciesList'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -2377,6 +2394,7 @@ class AdminAbacApi
         }
 
 
+
         $resourcePath = '/orgs/{orgId}/api/v1/abac/policies';
         $formParams = [];
         $queryParams = [];
@@ -2384,6 +2402,15 @@ class AdminAbacApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $action,
+            'action', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
         // path params
@@ -2664,7 +2691,10 @@ class AdminAbacApi
                 'Missing the required parameter $id when calling abacPoliciesToggle'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling AdminAbacApi.abacPoliciesToggle, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/abac/policies/{id}/toggle';
         $formParams = [];
@@ -2961,7 +2991,10 @@ class AdminAbacApi
                 'Missing the required parameter $id when calling patchAbacAttributesUpdate'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling AdminAbacApi.patchAbacAttributesUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/abac/attributes/{id}';
         $formParams = [];
@@ -3258,7 +3291,10 @@ class AdminAbacApi
                 'Missing the required parameter $id when calling patchAbacPoliciesUpdate'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling AdminAbacApi.patchAbacPoliciesUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/abac/policies/{id}';
         $formParams = [];
@@ -3555,7 +3591,10 @@ class AdminAbacApi
                 'Missing the required parameter $id when calling putAbacAttributesUpdate'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling AdminAbacApi.putAbacAttributesUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/abac/attributes/{id}';
         $formParams = [];
@@ -3852,7 +3891,10 @@ class AdminAbacApi
                 'Missing the required parameter $id when calling putAbacPoliciesUpdate'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling AdminAbacApi.putAbacPoliciesUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/abac/policies/{id}';
         $formParams = [];

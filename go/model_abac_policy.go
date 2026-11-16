@@ -26,12 +26,15 @@ type AbacPolicy struct {
 	Slug *string `json:"slug,omitempty"`
 	Description NullableString `json:"description,omitempty"`
 	ResourceType *string `json:"resourceType,omitempty"`
+	// One action, several separated by commas (read, write), or * for every action. The policy decides a request for each action that it names; spaces around the commas are ignored and actions compare case-sensitively.
 	Action *string `json:"action,omitempty"`
 	Effect *string `json:"effect,omitempty"`
 	Priority *int32 `json:"priority,omitempty"`
 	Conditions map[string]interface{} `json:"conditions,omitempty"`
 	IsActive *bool `json:"isActive,omitempty"`
 	IsSystem *bool `json:"isSystem,omitempty"`
+	// True for a policy that LumoAuth provides to every organization. It can be read, but not changed, switched or deleted (403).
+	BuiltIn *bool `json:"builtIn,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	UpdatedAt NullableTime `json:"updatedAt,omitempty"`
 }
@@ -415,6 +418,38 @@ func (o *AbacPolicy) SetIsSystem(v bool) {
 	o.IsSystem = &v
 }
 
+// GetBuiltIn returns the BuiltIn field value if set, zero value otherwise.
+func (o *AbacPolicy) GetBuiltIn() bool {
+	if o == nil || IsNil(o.BuiltIn) {
+		var ret bool
+		return ret
+	}
+	return *o.BuiltIn
+}
+
+// GetBuiltInOk returns a tuple with the BuiltIn field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AbacPolicy) GetBuiltInOk() (*bool, bool) {
+	if o == nil || IsNil(o.BuiltIn) {
+		return nil, false
+	}
+	return o.BuiltIn, true
+}
+
+// HasBuiltIn returns a boolean if a field has been set.
+func (o *AbacPolicy) HasBuiltIn() bool {
+	if o != nil && !IsNil(o.BuiltIn) {
+		return true
+	}
+
+	return false
+}
+
+// SetBuiltIn gets a reference to the given bool and assigns it to the BuiltIn field.
+func (o *AbacPolicy) SetBuiltIn(v bool) {
+	o.BuiltIn = &v
+}
+
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *AbacPolicy) GetCreatedAt() time.Time {
 	if o == nil || IsNil(o.CreatedAt) {
@@ -531,6 +566,9 @@ func (o AbacPolicy) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IsSystem) {
 		toSerialize["isSystem"] = o.IsSystem
+	}
+	if !IsNil(o.BuiltIn) {
+		toSerialize["builtIn"] = o.BuiltIn
 	}
 	if !IsNil(o.CreatedAt) {
 		toSerialize["createdAt"] = o.CreatedAt

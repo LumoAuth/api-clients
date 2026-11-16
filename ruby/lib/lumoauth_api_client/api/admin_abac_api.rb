@@ -107,6 +107,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling AdminAbacApi.abac_attributes_delete"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && id !~ pattern
+        fail ArgumentError, "invalid value for 'id' when calling AdminAbacApi.abac_attributes_delete, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/attributes/{id}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
@@ -174,6 +179,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling AdminAbacApi.abac_attributes_get"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && id !~ pattern
+        fail ArgumentError, "invalid value for 'id' when calling AdminAbacApi.abac_attributes_get, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/attributes/{id}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
@@ -363,6 +373,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling AdminAbacApi.abac_policies_delete"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && id !~ pattern
+        fail ArgumentError, "invalid value for 'id' when calling AdminAbacApi.abac_policies_delete, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/policies/{id}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
@@ -430,6 +445,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling AdminAbacApi.abac_policies_get"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && id !~ pattern
+        fail ArgumentError, "invalid value for 'id' when calling AdminAbacApi.abac_policies_get, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/policies/{id}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
@@ -473,6 +493,7 @@ module LumoAuthApiClient
     # List ABAC policies
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :action Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;.
     # @return [AbacPoliciesListResponse]
     def abac_policies_list(org_id, opts = {})
       data, _status_code, _headers = abac_policies_list_with_http_info(org_id, opts)
@@ -482,6 +503,7 @@ module LumoAuthApiClient
     # List ABAC policies
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :action Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;.
     # @return [Array<(AbacPoliciesListResponse, Integer, Hash)>] AbacPoliciesListResponse data, response status code and response headers
     def abac_policies_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
@@ -496,6 +518,7 @@ module LumoAuthApiClient
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'action'] = opts[:'action'] if !opts[:'action'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -558,6 +581,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling AdminAbacApi.abac_policies_toggle"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && id !~ pattern
+        fail ArgumentError, "invalid value for 'id' when calling AdminAbacApi.abac_policies_toggle, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/policies/{id}/toggle'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
@@ -625,6 +653,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling AdminAbacApi.patch_abac_attributes_update"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && id !~ pattern
+        fail ArgumentError, "invalid value for 'id' when calling AdminAbacApi.patch_abac_attributes_update, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/attributes/{id}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
@@ -692,6 +725,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling AdminAbacApi.patch_abac_policies_update"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && id !~ pattern
+        fail ArgumentError, "invalid value for 'id' when calling AdminAbacApi.patch_abac_policies_update, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/policies/{id}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
@@ -759,6 +797,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling AdminAbacApi.put_abac_attributes_update"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && id !~ pattern
+        fail ArgumentError, "invalid value for 'id' when calling AdminAbacApi.put_abac_attributes_update, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/attributes/{id}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
@@ -826,6 +869,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling AdminAbacApi.put_abac_policies_update"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && id !~ pattern
+        fail ArgumentError, "invalid value for 'id' when calling AdminAbacApi.put_abac_policies_update, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/policies/{id}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'id' + '}', CGI.escape(id.to_s))
 

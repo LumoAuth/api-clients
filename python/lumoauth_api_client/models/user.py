@@ -42,6 +42,8 @@ class User(BaseModel):
     phone_number_verified: Optional[StrictBool] = Field(default=None, alias="phoneNumberVerified")
     is_active: StrictBool = Field(alias="isActive")
     blocked: StrictBool
+    deleted: Optional[StrictBool] = Field(default=None, description="Soft-deleted by inbound SCIM. Left out of the list unless deleted=true is asked; POST /users/{userId}/restore brings the user back.")
+    deleted_at: Optional[datetime] = Field(default=None, alias="deletedAt")
     mfa_enabled: StrictBool = Field(alias="mfaEnabled")
     is_admin: StrictBool = Field(alias="isAdmin")
     created_at: datetime = Field(alias="createdAt")
@@ -56,7 +58,7 @@ class User(BaseModel):
     is_jit_provisioned: Optional[StrictBool] = Field(default=None, description="Detailed responses only", alias="isJitProvisioned")
     jit_provisioned_by: Optional[StrictStr] = Field(default=None, description="Detailed responses only", alias="jitProvisionedBy")
     social_provider: Optional[StrictStr] = Field(default=None, description="Detailed responses only", alias="socialProvider")
-    __properties: ClassVar[List[str]] = ["id", "email", "username", "name", "givenName", "familyName", "picture", "emailVerified", "phoneNumber", "phoneNumberVerified", "isActive", "blocked", "mfaEnabled", "isAdmin", "createdAt", "lastLoginAt", "loginCount", "roles", "groups", "locale", "zoneinfo", "updatedAt", "blockedAt", "isJitProvisioned", "jitProvisionedBy", "socialProvider"]
+    __properties: ClassVar[List[str]] = ["id", "email", "username", "name", "givenName", "familyName", "picture", "emailVerified", "phoneNumber", "phoneNumberVerified", "isActive", "blocked", "deleted", "deletedAt", "mfaEnabled", "isAdmin", "createdAt", "lastLoginAt", "loginCount", "roles", "groups", "locale", "zoneinfo", "updatedAt", "blockedAt", "isJitProvisioned", "jitProvisionedBy", "socialProvider"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -141,6 +143,11 @@ class User(BaseModel):
         if self.phone_number is None and "phone_number" in self.model_fields_set:
             _dict['phoneNumber'] = None
 
+        # set to None if deleted_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.deleted_at is None and "deleted_at" in self.model_fields_set:
+            _dict['deletedAt'] = None
+
         # set to None if last_login_at (nullable) is None
         # and model_fields_set contains the field
         if self.last_login_at is None and "last_login_at" in self.model_fields_set:
@@ -200,6 +207,8 @@ class User(BaseModel):
             "phoneNumberVerified": obj.get("phoneNumberVerified"),
             "isActive": obj.get("isActive"),
             "blocked": obj.get("blocked"),
+            "deleted": obj.get("deleted"),
+            "deletedAt": obj.get("deletedAt"),
             "mfaEnabled": obj.get("mfaEnabled"),
             "isAdmin": obj.get("isAdmin"),
             "createdAt": obj.get("createdAt"),

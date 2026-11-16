@@ -17,7 +17,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Remove one of a user's authenticators
 
-Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in.
+Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
 ### Example
 ```csharp
@@ -114,6 +114,8 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Removed |  -  |
+| **401** | insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes |  -  |
+| **403** | Actor does not outrank the user, or step_up_required |  -  |
 | **404** | User or authenticator not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -124,7 +126,7 @@ catch (ApiException e)
 
 MFA enrollment coverage
 
-Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002).
+Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002). Needs `users.view` and `settings.view`, as the report on the portal's authentication settings page does.
 
 ### Example
 ```csharp

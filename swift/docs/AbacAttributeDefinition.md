@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **defaultValue** | **AnyCodable** |  | [optional] 
 **isRequired** | **Bool** |  | [optional] 
 **isSystem** | **Bool** |  | [optional] 
+**builtIn** | **Bool** | True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403). | [optional] 
 **createdAt** | **Date** |  | [optional] 
 **updatedAt** | **Date** |  | [optional] 
 

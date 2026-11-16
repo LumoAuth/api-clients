@@ -11,18 +11,24 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// AdminSettingsAllResponseDataGeneral : Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+/// AdminSettingsAllResponseDataGeneral : The organization name (name; displayName is the same value), locale (the default language of the hosted pages), then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AdminSettingsAllResponseDataGeneral {
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
+    #[serde(rename = "displayName", skip_serializing_if = "Option::is_none")]
+    pub display_name: Option<String>,
+    #[serde(rename = "locale", skip_serializing_if = "Option::is_none")]
+    pub locale: Option<String>,
 }
 
 impl AdminSettingsAllResponseDataGeneral {
-    /// Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+    /// The organization name (name; displayName is the same value), locale (the default language of the hosted pages), then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
     pub fn new() -> AdminSettingsAllResponseDataGeneral {
         AdminSettingsAllResponseDataGeneral {
             name: None,
+            display_name: None,
+            locale: None,
         }
     }
 }

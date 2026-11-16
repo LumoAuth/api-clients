@@ -33,7 +33,9 @@ from lumoauth_api_client.models.admin_settings_security_get_response import Admi
 from lumoauth_api_client.models.admin_tenant_get_response import AdminTenantGetResponse
 from lumoauth_api_client.models.put_admin_settings_authentication_update_response import PutAdminSettingsAuthenticationUpdateResponse
 from lumoauth_api_client.models.put_admin_settings_branding_update_response import PutAdminSettingsBrandingUpdateResponse
+from lumoauth_api_client.models.put_admin_settings_email_update_request import PutAdminSettingsEmailUpdateRequest
 from lumoauth_api_client.models.put_admin_settings_email_update_response import PutAdminSettingsEmailUpdateResponse
+from lumoauth_api_client.models.put_admin_settings_general_update_request import PutAdminSettingsGeneralUpdateRequest
 from lumoauth_api_client.models.put_admin_settings_general_update_response import PutAdminSettingsGeneralUpdateResponse
 from lumoauth_api_client.models.put_admin_settings_scim_update_response import PutAdminSettingsScimUpdateResponse
 from lumoauth_api_client.models.put_admin_settings_security_update_response import PutAdminSettingsSecurityUpdateResponse
@@ -1146,6 +1148,7 @@ class AdminSettingsApi:
     ) -> AdminSettingsAllResponse:
         """Get all settings (combined)
 
+        Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal's branding page; without it the key is left out.
 
         :param org_id: (required)
         :type org_id: str
@@ -1212,6 +1215,7 @@ class AdminSettingsApi:
     ) -> ApiResponse[AdminSettingsAllResponse]:
         """Get all settings (combined)
 
+        Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal's branding page; without it the key is left out.
 
         :param org_id: (required)
         :type org_id: str
@@ -1278,6 +1282,7 @@ class AdminSettingsApi:
     ) -> RESTResponseType:
         """Get all settings (combined)
 
+        Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal's branding page; without it the key is left out.
 
         :param org_id: (required)
         :type org_id: str
@@ -2182,6 +2187,7 @@ class AdminSettingsApi:
     ) -> AdminSettingsEmailGetResponse:
         """Get email settings
 
+        Shows who sends the organization's mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth's sender.
 
         :param org_id: (required)
         :type org_id: str
@@ -2248,6 +2254,7 @@ class AdminSettingsApi:
     ) -> ApiResponse[AdminSettingsEmailGetResponse]:
         """Get email settings
 
+        Shows who sends the organization's mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth's sender.
 
         :param org_id: (required)
         :type org_id: str
@@ -2314,6 +2321,7 @@ class AdminSettingsApi:
     ) -> RESTResponseType:
         """Get email settings
 
+        Shows who sends the organization's mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth's sender.
 
         :param org_id: (required)
         :type org_id: str
@@ -3512,6 +3520,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminTenantUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3578,6 +3587,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminTenantUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3644,6 +3654,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminTenantUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3771,6 +3782,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsAuthenticationUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3837,6 +3849,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsAuthenticationUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3903,6 +3916,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsAuthenticationUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4030,6 +4044,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsAuthenticationUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4096,6 +4111,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsAuthenticationUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4162,6 +4178,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsAuthenticationUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4254,6 +4271,7 @@ class AdminSettingsApi:
     ) -> PutAdminSettingsBrandingUpdateResponse:
         """Update branding/login page settings
 
+        Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
 
         :param org_id: (required)
         :type org_id: str
@@ -4289,6 +4307,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsBrandingUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4320,6 +4339,7 @@ class AdminSettingsApi:
     ) -> ApiResponse[PutAdminSettingsBrandingUpdateResponse]:
         """Update branding/login page settings
 
+        Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
 
         :param org_id: (required)
         :type org_id: str
@@ -4355,6 +4375,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsBrandingUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4386,6 +4407,7 @@ class AdminSettingsApi:
     ) -> RESTResponseType:
         """Update branding/login page settings
 
+        Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
 
         :param org_id: (required)
         :type org_id: str
@@ -4421,6 +4443,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsBrandingUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4498,6 +4521,7 @@ class AdminSettingsApi:
     def patch_admin_settings_email_update(
         self,
         org_id: StrictStr,
+        put_admin_settings_email_update_request: Optional[PutAdminSettingsEmailUpdateRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4513,9 +4537,12 @@ class AdminSettingsApi:
     ) -> PutAdminSettingsEmailUpdateResponse:
         """Update email settings
 
+        Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_email_update_request:
+        :type put_admin_settings_email_update_request: PutAdminSettingsEmailUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4540,6 +4567,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_email_update_serialize(
             org_id=org_id,
+            put_admin_settings_email_update_request=put_admin_settings_email_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4548,6 +4576,8 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsEmailUpdateResponse",
+            '400': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4564,6 +4594,7 @@ class AdminSettingsApi:
     def patch_admin_settings_email_update_with_http_info(
         self,
         org_id: StrictStr,
+        put_admin_settings_email_update_request: Optional[PutAdminSettingsEmailUpdateRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4579,9 +4610,12 @@ class AdminSettingsApi:
     ) -> ApiResponse[PutAdminSettingsEmailUpdateResponse]:
         """Update email settings
 
+        Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_email_update_request:
+        :type put_admin_settings_email_update_request: PutAdminSettingsEmailUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4606,6 +4640,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_email_update_serialize(
             org_id=org_id,
+            put_admin_settings_email_update_request=put_admin_settings_email_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4614,6 +4649,8 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsEmailUpdateResponse",
+            '400': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4630,6 +4667,7 @@ class AdminSettingsApi:
     def patch_admin_settings_email_update_without_preload_content(
         self,
         org_id: StrictStr,
+        put_admin_settings_email_update_request: Optional[PutAdminSettingsEmailUpdateRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4645,9 +4683,12 @@ class AdminSettingsApi:
     ) -> RESTResponseType:
         """Update email settings
 
+        Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_email_update_request:
+        :type put_admin_settings_email_update_request: PutAdminSettingsEmailUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4672,6 +4713,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_email_update_serialize(
             org_id=org_id,
+            put_admin_settings_email_update_request=put_admin_settings_email_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4680,6 +4722,8 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsEmailUpdateResponse",
+            '400': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4691,6 +4735,7 @@ class AdminSettingsApi:
     def _patch_admin_settings_email_update_serialize(
         self,
         org_id,
+        put_admin_settings_email_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -4718,6 +4763,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_settings_email_update_request is not None:
+            _body_params = put_admin_settings_email_update_request
 
 
         # set the HTTP header `Accept`
@@ -4728,6 +4775,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -4757,6 +4817,7 @@ class AdminSettingsApi:
     def patch_admin_settings_general_update(
         self,
         org_id: StrictStr,
+        put_admin_settings_general_update_request: Optional[PutAdminSettingsGeneralUpdateRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4772,9 +4833,12 @@ class AdminSettingsApi:
     ) -> PutAdminSettingsGeneralUpdateResponse:
         """Update general settings
 
+        Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_general_update_request:
+        :type put_admin_settings_general_update_request: PutAdminSettingsGeneralUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4799,6 +4863,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_general_update_serialize(
             org_id=org_id,
+            put_admin_settings_general_update_request=put_admin_settings_general_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4807,6 +4872,8 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsGeneralUpdateResponse",
+            '400': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4823,6 +4890,7 @@ class AdminSettingsApi:
     def patch_admin_settings_general_update_with_http_info(
         self,
         org_id: StrictStr,
+        put_admin_settings_general_update_request: Optional[PutAdminSettingsGeneralUpdateRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4838,9 +4906,12 @@ class AdminSettingsApi:
     ) -> ApiResponse[PutAdminSettingsGeneralUpdateResponse]:
         """Update general settings
 
+        Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_general_update_request:
+        :type put_admin_settings_general_update_request: PutAdminSettingsGeneralUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4865,6 +4936,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_general_update_serialize(
             org_id=org_id,
+            put_admin_settings_general_update_request=put_admin_settings_general_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4873,6 +4945,8 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsGeneralUpdateResponse",
+            '400': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4889,6 +4963,7 @@ class AdminSettingsApi:
     def patch_admin_settings_general_update_without_preload_content(
         self,
         org_id: StrictStr,
+        put_admin_settings_general_update_request: Optional[PutAdminSettingsGeneralUpdateRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4904,9 +4979,12 @@ class AdminSettingsApi:
     ) -> RESTResponseType:
         """Update general settings
 
+        Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_general_update_request:
+        :type put_admin_settings_general_update_request: PutAdminSettingsGeneralUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4931,6 +5009,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_general_update_serialize(
             org_id=org_id,
+            put_admin_settings_general_update_request=put_admin_settings_general_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4939,6 +5018,8 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsGeneralUpdateResponse",
+            '400': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4950,6 +5031,7 @@ class AdminSettingsApi:
     def _patch_admin_settings_general_update_serialize(
         self,
         org_id,
+        put_admin_settings_general_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -4977,6 +5059,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_settings_general_update_request is not None:
+            _body_params = put_admin_settings_general_update_request
 
 
         # set the HTTP header `Accept`
@@ -4987,6 +5071,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -5584,6 +5681,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminTenantUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5650,6 +5748,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminTenantUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5716,6 +5815,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminTenantUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5843,6 +5943,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminTenantUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5909,6 +6010,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminTenantUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5975,6 +6077,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminTenantUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6102,6 +6205,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsAuthenticationUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6168,6 +6272,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsAuthenticationUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6234,6 +6339,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsAuthenticationUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6361,6 +6467,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsAuthenticationUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6427,6 +6534,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsAuthenticationUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6493,6 +6601,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsAuthenticationUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6585,6 +6694,7 @@ class AdminSettingsApi:
     ) -> PutAdminSettingsBrandingUpdateResponse:
         """Update branding/login page settings
 
+        Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
 
         :param org_id: (required)
         :type org_id: str
@@ -6620,6 +6730,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsBrandingUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6651,6 +6762,7 @@ class AdminSettingsApi:
     ) -> ApiResponse[PutAdminSettingsBrandingUpdateResponse]:
         """Update branding/login page settings
 
+        Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
 
         :param org_id: (required)
         :type org_id: str
@@ -6686,6 +6798,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsBrandingUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6717,6 +6830,7 @@ class AdminSettingsApi:
     ) -> RESTResponseType:
         """Update branding/login page settings
 
+        Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
 
         :param org_id: (required)
         :type org_id: str
@@ -6752,6 +6866,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsBrandingUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6829,6 +6944,7 @@ class AdminSettingsApi:
     def put_admin_settings_email_update(
         self,
         org_id: StrictStr,
+        put_admin_settings_email_update_request: Optional[PutAdminSettingsEmailUpdateRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6844,9 +6960,12 @@ class AdminSettingsApi:
     ) -> PutAdminSettingsEmailUpdateResponse:
         """Update email settings
 
+        Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_email_update_request:
+        :type put_admin_settings_email_update_request: PutAdminSettingsEmailUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6871,6 +6990,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_email_update_serialize(
             org_id=org_id,
+            put_admin_settings_email_update_request=put_admin_settings_email_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6879,6 +6999,8 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsEmailUpdateResponse",
+            '400': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6895,6 +7017,7 @@ class AdminSettingsApi:
     def put_admin_settings_email_update_with_http_info(
         self,
         org_id: StrictStr,
+        put_admin_settings_email_update_request: Optional[PutAdminSettingsEmailUpdateRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6910,9 +7033,12 @@ class AdminSettingsApi:
     ) -> ApiResponse[PutAdminSettingsEmailUpdateResponse]:
         """Update email settings
 
+        Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_email_update_request:
+        :type put_admin_settings_email_update_request: PutAdminSettingsEmailUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6937,6 +7063,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_email_update_serialize(
             org_id=org_id,
+            put_admin_settings_email_update_request=put_admin_settings_email_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6945,6 +7072,8 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsEmailUpdateResponse",
+            '400': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6961,6 +7090,7 @@ class AdminSettingsApi:
     def put_admin_settings_email_update_without_preload_content(
         self,
         org_id: StrictStr,
+        put_admin_settings_email_update_request: Optional[PutAdminSettingsEmailUpdateRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6976,9 +7106,12 @@ class AdminSettingsApi:
     ) -> RESTResponseType:
         """Update email settings
 
+        Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_email_update_request:
+        :type put_admin_settings_email_update_request: PutAdminSettingsEmailUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7003,6 +7136,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_email_update_serialize(
             org_id=org_id,
+            put_admin_settings_email_update_request=put_admin_settings_email_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7011,6 +7145,8 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsEmailUpdateResponse",
+            '400': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7022,6 +7158,7 @@ class AdminSettingsApi:
     def _put_admin_settings_email_update_serialize(
         self,
         org_id,
+        put_admin_settings_email_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -7049,6 +7186,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_settings_email_update_request is not None:
+            _body_params = put_admin_settings_email_update_request
 
 
         # set the HTTP header `Accept`
@@ -7059,6 +7198,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -7088,6 +7240,7 @@ class AdminSettingsApi:
     def put_admin_settings_general_update(
         self,
         org_id: StrictStr,
+        put_admin_settings_general_update_request: Optional[PutAdminSettingsGeneralUpdateRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7103,9 +7256,12 @@ class AdminSettingsApi:
     ) -> PutAdminSettingsGeneralUpdateResponse:
         """Update general settings
 
+        Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_general_update_request:
+        :type put_admin_settings_general_update_request: PutAdminSettingsGeneralUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7130,6 +7286,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_general_update_serialize(
             org_id=org_id,
+            put_admin_settings_general_update_request=put_admin_settings_general_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7138,6 +7295,8 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsGeneralUpdateResponse",
+            '400': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7154,6 +7313,7 @@ class AdminSettingsApi:
     def put_admin_settings_general_update_with_http_info(
         self,
         org_id: StrictStr,
+        put_admin_settings_general_update_request: Optional[PutAdminSettingsGeneralUpdateRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7169,9 +7329,12 @@ class AdminSettingsApi:
     ) -> ApiResponse[PutAdminSettingsGeneralUpdateResponse]:
         """Update general settings
 
+        Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_general_update_request:
+        :type put_admin_settings_general_update_request: PutAdminSettingsGeneralUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7196,6 +7359,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_general_update_serialize(
             org_id=org_id,
+            put_admin_settings_general_update_request=put_admin_settings_general_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7204,6 +7368,8 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsGeneralUpdateResponse",
+            '400': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7220,6 +7386,7 @@ class AdminSettingsApi:
     def put_admin_settings_general_update_without_preload_content(
         self,
         org_id: StrictStr,
+        put_admin_settings_general_update_request: Optional[PutAdminSettingsGeneralUpdateRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7235,9 +7402,12 @@ class AdminSettingsApi:
     ) -> RESTResponseType:
         """Update general settings
 
+        Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_general_update_request:
+        :type put_admin_settings_general_update_request: PutAdminSettingsGeneralUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7262,6 +7432,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_general_update_serialize(
             org_id=org_id,
+            put_admin_settings_general_update_request=put_admin_settings_general_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7270,6 +7441,8 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminSettingsGeneralUpdateResponse",
+            '400': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7281,6 +7454,7 @@ class AdminSettingsApi:
     def _put_admin_settings_general_update_serialize(
         self,
         org_id,
+        put_admin_settings_general_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -7308,6 +7482,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_settings_general_update_request is not None:
+            _body_params = put_admin_settings_general_update_request
 
 
         # set the HTTP header `Accept`
@@ -7318,6 +7494,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -7915,6 +8104,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminTenantUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7981,6 +8171,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminTenantUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8047,6 +8238,7 @@ class AdminSettingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAdminTenantUpdateResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,

@@ -1082,7 +1082,7 @@ catch (ApiException e)
 
 <a id="adminagentslist"></a>
 # **AdminAgentsList**
-> AdminAgentsListResponse AdminAgentsList (string orgId)
+> AdminAgentsListResponse AdminAgentsList (string orgId, string? sortBy = null, string? sortDir = null)
 
 List all agents in the tenant
 
@@ -1115,11 +1115,13 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminAgentsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var sortBy = "name";  // string? | Sort field. Default: name. Another value is ignored. (optional) 
+            var sortDir = "ASC";  // string? | Sort direction, used with sortBy. (optional)  (default to ASC)
 
             try
             {
                 // List all agents in the tenant
-                AdminAgentsListResponse result = apiInstance.AdminAgentsList(orgId);
+                AdminAgentsListResponse result = apiInstance.AdminAgentsList(orgId, sortBy, sortDir);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1140,7 +1142,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // List all agents in the tenant
-    ApiResponse<AdminAgentsListResponse> response = apiInstance.AdminAgentsListWithHttpInfo(orgId);
+    ApiResponse<AdminAgentsListResponse> response = apiInstance.AdminAgentsListWithHttpInfo(orgId, sortBy, sortDir);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1158,6 +1160,8 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **sortBy** | **string?** | Sort field. Default: name. Another value is ignored. | [optional]  |
+| **sortDir** | **string?** | Sort direction, used with sortBy. | [optional] [default to ASC] |
 
 ### Return type
 

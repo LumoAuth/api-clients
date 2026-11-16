@@ -13,15 +13,19 @@ import AnyCodable
 public struct PutAdminSettingsBrandingUpdateResponse: Codable, JSONEncodable, Hashable {
 
     public var data: BrandingSettings?
+    /** Keys whose value was refused by validation and not saved. */
+    public var rejected: [String]?
     public var message: String?
 
-    public init(data: BrandingSettings? = nil, message: String? = nil) {
+    public init(data: BrandingSettings? = nil, rejected: [String]? = nil, message: String? = nil) {
         self.data = data
+        self.rejected = rejected
         self.message = message
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case data
+        case rejected
         case message
     }
 
@@ -30,6 +34,7 @@ public struct PutAdminSettingsBrandingUpdateResponse: Codable, JSONEncodable, Ha
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(data, forKey: .data)
+        try container.encodeIfPresent(rejected, forKey: .rejected)
         try container.encodeIfPresent(message, forKey: .message)
     }
 }

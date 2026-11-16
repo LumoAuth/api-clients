@@ -18,8 +18,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
+from lumoauth_api_client.models.email_sender_settings import EmailSenderSettings
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +28,7 @@ class AdminSettingsEmailGetResponse(BaseModel):
     """
     AdminSettingsEmailGetResponse
     """ # noqa: E501
-    data: Optional[Dict[str, Any]] = Field(default=None, description="Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.")
+    data: Optional[EmailSenderSettings] = None
     __properties: ClassVar[List[str]] = ["data"]
 
     model_config = ConfigDict(
@@ -69,6 +70,9 @@ class AdminSettingsEmailGetResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of data
+        if self.data:
+            _dict['data'] = self.data.to_dict()
         return _dict
 
     @classmethod
@@ -81,7 +85,7 @@ class AdminSettingsEmailGetResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "data": obj.get("data")
+            "data": EmailSenderSettings.from_dict(obj["data"]) if obj.get("data") is not None else None
         })
         return _obj
 

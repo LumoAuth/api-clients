@@ -21,6 +21,9 @@ pub struct AskResponse {
     pub context: Option<serde_json::Value>,
     #[serde(rename = "reason", skip_serializing_if = "Option::is_none")]
     pub reason: Option<String>,
+    /// Which check produced the answer. Always pdp for a user caller.
+    #[serde(rename = "decided_by", skip_serializing_if = "Option::is_none")]
+    pub decided_by: Option<DecidedBy>,
     #[serde(rename = "audit_id", skip_serializing_if = "Option::is_none")]
     pub audit_id: Option<String>,
 }
@@ -32,8 +35,25 @@ impl AskResponse {
             action: None,
             context: None,
             reason: None,
+            decided_by: None,
             audit_id: None,
         }
+    }
+}
+/// Which check produced the answer. Always pdp for a user caller.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum DecidedBy {
+    #[serde(rename = "capability")]
+    Capability,
+    #[serde(rename = "pdp")]
+    Pdp,
+    #[serde(rename = "deny_override")]
+    DenyOverride,
+}
+
+impl Default for DecidedBy {
+    fn default() -> DecidedBy {
+        Self::Capability
     }
 }
 

@@ -711,6 +711,8 @@ module LumoAuthApiClient
     # List all agents in the tenant
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :sort_by Sort field. Default: name. Another value is ignored.
+    # @option opts [String] :sort_dir Sort direction, used with sortBy. (default to 'ASC')
     # @return [AdminAgentsListResponse]
     def admin_agents_list(org_id, opts = {})
       data, _status_code, _headers = admin_agents_list_with_http_info(org_id, opts)
@@ -720,6 +722,8 @@ module LumoAuthApiClient
     # List all agents in the tenant
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :sort_by Sort field. Default: name. Another value is ignored.
+    # @option opts [String] :sort_dir Sort direction, used with sortBy. (default to 'ASC')
     # @return [Array<(AdminAgentsListResponse, Integer, Hash)>] AdminAgentsListResponse data, response status code and response headers
     def admin_agents_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
@@ -729,11 +733,21 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminAgentsApi.admin_agents_list"
       end
+      allowable_values = ["name", "agentId", "status", "createdAt", "lastUsedAt"]
+      if @api_client.config.client_side_validation && opts[:'sort_by'] && !allowable_values.include?(opts[:'sort_by'])
+        fail ArgumentError, "invalid value for \"sort_by\", must be one of #{allowable_values}"
+      end
+      allowable_values = ["ASC", "DESC"]
+      if @api_client.config.client_side_validation && opts[:'sort_dir'] && !allowable_values.include?(opts[:'sort_dir'])
+        fail ArgumentError, "invalid value for \"sort_dir\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/agents'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'sortBy'] = opts[:'sort_by'] if !opts[:'sort_by'].nil?
+      query_params[:'sortDir'] = opts[:'sort_dir'] if !opts[:'sort_dir'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}

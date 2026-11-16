@@ -305,6 +305,7 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AdminUsersApi* | [**admin_identities_link**](docs/AdminUsersApi.md#admin_identities_link) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user
 *LumoAuthApiClient::AdminUsersApi* | [**admin_identities_list**](docs/AdminUsersApi.md#admin_identities_list) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user's federated identity links
 *LumoAuthApiClient::AdminUsersApi* | [**admin_identities_unlink**](docs/AdminUsersApi.md#admin_identities_unlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user's SAML, OpenID Connect, LDAP or social identity
+*LumoAuthApiClient::AdminUsersApi* | [**admin_users_restore**](docs/AdminUsersApi.md#admin_users_restore) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/restore | Restore a deleted user
 *LumoAuthApiClient::AdminUsersApi* | [**block_user**](docs/AdminUsersApi.md#block_user) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user
 *LumoAuthApiClient::AdminUsersApi* | [**create_user**](docs/AdminUsersApi.md#create_user) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user
 *LumoAuthApiClient::AdminUsersApi* | [**delete_user**](docs/AdminUsersApi.md#delete_user) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user
@@ -403,6 +404,7 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::MfaApi* | [**verify_mfa_challenge**](docs/MfaApi.md#verify_mfa_challenge) | **POST** /orgs/{orgId}/api/v1/mfa/challenges/{id}/verify | Answer a challenge
 *LumoAuthApiClient::OAuthApi* | [**authorize**](docs/OAuthApi.md#authorize) | **GET** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint
 *LumoAuthApiClient::OAuthApi* | [**backchannel_authorize**](docs/OAuthApi.md#backchannel_authorize) | **POST** /orgs/{orgId}/api/v1/oauth/bc-authorize | CIBA backchannel authentication request
+*LumoAuthApiClient::OAuthApi* | [**check_email_first**](docs/OAuthApi.md#check_email_first) | **POST** /orgs/{orgId}/api/v1/oauth/check-email | Sign-in methods for an email-first form
 *LumoAuthApiClient::OAuthApi* | [**device_authorization**](docs/OAuthApi.md#device_authorization) | **POST** /orgs/{orgId}/api/v1/oauth/device_authorization | Device authorization request (RFC 8628)
 *LumoAuthApiClient::OAuthApi* | [**get_client_configuration**](docs/OAuthApi.md#get_client_configuration) | **GET** /orgs/{orgId}/api/v1/connect/register/{clientId} | Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
 *LumoAuthApiClient::OAuthApi* | [**get_device_verification**](docs/OAuthApi.md#get_device_verification) | **GET** /orgs/{orgId}/api/v1/oauth/device | Device verification page (RFC 8628 §3.3)
@@ -527,7 +529,6 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::AdminMcpServersCreateResponse](docs/AdminMcpServersCreateResponse.md)
  - [LumoAuthApiClient::AdminMcpServersGetResponse](docs/AdminMcpServersGetResponse.md)
  - [LumoAuthApiClient::AdminMcpServersListResponse](docs/AdminMcpServersListResponse.md)
- - [LumoAuthApiClient::AdminMcpServersListResponseMeta](docs/AdminMcpServersListResponseMeta.md)
  - [LumoAuthApiClient::AdminOrgInvitationsCreateResponse](docs/AdminOrgInvitationsCreateResponse.md)
  - [LumoAuthApiClient::AdminOrgInvitationsListResponse](docs/AdminOrgInvitationsListResponse.md)
  - [LumoAuthApiClient::AdminOrgMembersAddResponse](docs/AdminOrgMembersAddResponse.md)
@@ -589,6 +590,7 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::AdminUserSessionsRevokePostResponse](docs/AdminUserSessionsRevokePostResponse.md)
  - [LumoAuthApiClient::AdminUserTokensRevokeAllResponse](docs/AdminUserTokensRevokeAllResponse.md)
  - [LumoAuthApiClient::AdminUserTokensRevokePostResponse](docs/AdminUserTokensRevokePostResponse.md)
+ - [LumoAuthApiClient::AdminUsersRestoreResponse](docs/AdminUsersRestoreResponse.md)
  - [LumoAuthApiClient::AdminWebhooksCreateResponse](docs/AdminWebhooksCreateResponse.md)
  - [LumoAuthApiClient::AdminWebhooksCreateResponseData](docs/AdminWebhooksCreateResponseData.md)
  - [LumoAuthApiClient::AdminWebhooksDeliveriesListResponse](docs/AdminWebhooksDeliveriesListResponse.md)
@@ -635,6 +637,8 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::CheckAbacResponse](docs/CheckAbacResponse.md)
  - [LumoAuthApiClient::CheckAbacResponseMatchedPoliciesItem](docs/CheckAbacResponseMatchedPoliciesItem.md)
  - [LumoAuthApiClient::CheckAnyPermissionResponse](docs/CheckAnyPermissionResponse.md)
+ - [LumoAuthApiClient::CheckEmailFirstRequest](docs/CheckEmailFirstRequest.md)
+ - [LumoAuthApiClient::CheckEmailFirstResponse](docs/CheckEmailFirstResponse.md)
  - [LumoAuthApiClient::CheckPermissionResponse](docs/CheckPermissionResponse.md)
  - [LumoAuthApiClient::CheckPermissionsBulkResponse](docs/CheckPermissionsBulkResponse.md)
  - [LumoAuthApiClient::CheckRelationResponse](docs/CheckRelationResponse.md)
@@ -658,6 +662,7 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::DenyRequestResponse](docs/DenyRequestResponse.md)
  - [LumoAuthApiClient::DeviceAuthorizationResponse](docs/DeviceAuthorizationResponse.md)
  - [LumoAuthApiClient::EmailEnrollmentStarted](docs/EmailEnrollmentStarted.md)
+ - [LumoAuthApiClient::EmailSenderSettings](docs/EmailSenderSettings.md)
  - [LumoAuthApiClient::EmailTemplate](docs/EmailTemplate.md)
  - [LumoAuthApiClient::EnrollAuthenticator201Response](docs/EnrollAuthenticator201Response.md)
  - [LumoAuthApiClient::EnrollAuthenticatorRequest](docs/EnrollAuthenticatorRequest.md)
@@ -778,7 +783,9 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::PutAdminOrgMembersUpdateResponse](docs/PutAdminOrgMembersUpdateResponse.md)
  - [LumoAuthApiClient::PutAdminSettingsAuthenticationUpdateResponse](docs/PutAdminSettingsAuthenticationUpdateResponse.md)
  - [LumoAuthApiClient::PutAdminSettingsBrandingUpdateResponse](docs/PutAdminSettingsBrandingUpdateResponse.md)
+ - [LumoAuthApiClient::PutAdminSettingsEmailUpdateRequest](docs/PutAdminSettingsEmailUpdateRequest.md)
  - [LumoAuthApiClient::PutAdminSettingsEmailUpdateResponse](docs/PutAdminSettingsEmailUpdateResponse.md)
+ - [LumoAuthApiClient::PutAdminSettingsGeneralUpdateRequest](docs/PutAdminSettingsGeneralUpdateRequest.md)
  - [LumoAuthApiClient::PutAdminSettingsGeneralUpdateResponse](docs/PutAdminSettingsGeneralUpdateResponse.md)
  - [LumoAuthApiClient::PutAdminSettingsGeneralUpdateResponseData](docs/PutAdminSettingsGeneralUpdateResponseData.md)
  - [LumoAuthApiClient::PutAdminSettingsScimUpdateResponse](docs/PutAdminSettingsScimUpdateResponse.md)

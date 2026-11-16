@@ -183,6 +183,8 @@ void (empty response body)
 
 Read SSF stream configuration(s)
 
+Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
+
 ### Example
 
 * Api Key Authentication (ApiKeyAuth):
@@ -268,6 +270,8 @@ Name | Type | Description  | Notes
 > verify_stream(org_id)
 
 Request a stream verification event
+
+Needs `settings.manage`, as the portal does.
 
 ### Example
 

@@ -15,16 +15,16 @@ require 'time'
 
 module LumoAuthApiClient
   class UserinfoResponse
-    # User id; agent_<agent_id> for agents; client_<client_id> for clients.
+    # User id; agent_<agent_id> for agents.
     attr_accessor :sub
 
-    # Only for non-user principals.
+    # Only for agents.
     attr_accessor :identity_type
 
     # Organization slug.
     attr_accessor :tenant
 
-    # profile scope (users); agent / client display name.
+    # profile scope (users); agent display name.
     attr_accessor :name
 
     # profile scope.
@@ -96,9 +96,6 @@ module LumoAuthApiClient
     # Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429.
     attr_accessor :budget_policy
 
-    # Clients only.
-    attr_accessor :client_id
-
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -150,8 +147,7 @@ module LumoAuthApiClient
         :'agent_id' => :'agent_id',
         :'workload_identity' => :'workload_identity',
         :'capabilities' => :'capabilities',
-        :'budget_policy' => :'budget_policy',
-        :'client_id' => :'client_id'
+        :'budget_policy' => :'budget_policy'
       }
     end
 
@@ -194,8 +190,7 @@ module LumoAuthApiClient
         :'agent_id' => :'String',
         :'workload_identity' => :'String',
         :'capabilities' => :'Array<String>',
-        :'budget_policy' => :'Hash<String, Object>',
-        :'client_id' => :'String'
+        :'budget_policy' => :'Hash<String, Object>'
       }
     end
 
@@ -340,10 +335,6 @@ module LumoAuthApiClient
           self.budget_policy = value
         end
       end
-
-      if attributes.key?(:'client_id')
-        self.client_id = attributes[:'client_id']
-      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -363,7 +354,7 @@ module LumoAuthApiClient
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @sub.nil?
-      identity_type_validator = EnumAttributeValidator.new('String', ["agent", "client", "unknown"])
+      identity_type_validator = EnumAttributeValidator.new('String', ["agent"])
       return false unless identity_type_validator.valid?(@identity_type)
       true
     end
@@ -381,7 +372,7 @@ module LumoAuthApiClient
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] identity_type Object to be assigned
     def identity_type=(identity_type)
-      validator = EnumAttributeValidator.new('String', ["agent", "client", "unknown"])
+      validator = EnumAttributeValidator.new('String', ["agent"])
       unless validator.valid?(identity_type)
         fail ArgumentError, "invalid value for \"identity_type\", must be one of #{validator.allowable_values}."
       end
@@ -419,8 +410,7 @@ module LumoAuthApiClient
           agent_id == o.agent_id &&
           workload_identity == o.workload_identity &&
           capabilities == o.capabilities &&
-          budget_policy == o.budget_policy &&
-          client_id == o.client_id
+          budget_policy == o.budget_policy
     end
 
     # @see the `==` method
@@ -432,7 +422,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [sub, identity_type, tenant, name, given_name, family_name, middle_name, nickname, preferred_username, profile, picture, website, gender, birthdate, zoneinfo, locale, updated_at, email, email_verified, phone_number, phone_number_verified, address, roles, agent_id, workload_identity, capabilities, budget_policy, client_id].hash
+      [sub, identity_type, tenant, name, given_name, family_name, middle_name, nickname, preferred_username, profile, picture, website, gender, birthdate, zoneinfo, locale, updated_at, email, email_verified, phone_number, phone_number_verified, address, roles, agent_id, workload_identity, capabilities, budget_policy].hash
     end
 
     # Builds the object from hash

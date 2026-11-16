@@ -53,6 +53,8 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="phoneNumberVerified">phoneNumberVerified.</param>
         /// <param name="isActive">isActive (required).</param>
         /// <param name="blocked">blocked (required).</param>
+        /// <param name="deleted">Soft-deleted by inbound SCIM. Left out of the list unless deleted&#x3D;true is asked; POST /users/{userId}/restore brings the user back..</param>
+        /// <param name="deletedAt">deletedAt.</param>
         /// <param name="mfaEnabled">mfaEnabled (required).</param>
         /// <param name="isAdmin">isAdmin (required).</param>
         /// <param name="createdAt">createdAt (required).</param>
@@ -67,7 +69,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="isJitProvisioned">Detailed responses only.</param>
         /// <param name="jitProvisionedBy">Detailed responses only.</param>
         /// <param name="socialProvider">Detailed responses only.</param>
-        public User(Guid id = default, string email = default, string username = default, string name = default, string givenName = default, string familyName = default, string picture = default, bool emailVerified = default, string phoneNumber = default, bool phoneNumberVerified = default, bool isActive = default, bool blocked = default, bool mfaEnabled = default, bool isAdmin = default, DateTime createdAt = default, DateTime? lastLoginAt = default, int loginCount = default, List<RoleRef> roles = default, List<GroupRef> groups = default, string locale = default, string zoneinfo = default, DateTime? updatedAt = default, DateTime? blockedAt = default, bool isJitProvisioned = default, string jitProvisionedBy = default, string socialProvider = default)
+        public User(Guid id = default, string email = default, string username = default, string name = default, string givenName = default, string familyName = default, string picture = default, bool emailVerified = default, string phoneNumber = default, bool phoneNumberVerified = default, bool isActive = default, bool blocked = default, bool deleted = default, DateTime? deletedAt = default, bool mfaEnabled = default, bool isAdmin = default, DateTime createdAt = default, DateTime? lastLoginAt = default, int loginCount = default, List<RoleRef> roles = default, List<GroupRef> groups = default, string locale = default, string zoneinfo = default, DateTime? updatedAt = default, DateTime? blockedAt = default, bool isJitProvisioned = default, string jitProvisionedBy = default, string socialProvider = default)
         {
             this.Id = id;
             // to ensure "email" is required (not null)
@@ -90,6 +92,8 @@ namespace LumoAuth.ApiClient.Model
             this.Picture = picture;
             this.PhoneNumber = phoneNumber;
             this.PhoneNumberVerified = phoneNumberVerified;
+            this.Deleted = deleted;
+            this.DeletedAt = deletedAt;
             this.LastLoginAt = lastLoginAt;
             this.Roles = roles;
             this.Groups = groups;
@@ -173,6 +177,19 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         [DataMember(Name = "blocked", IsRequired = true, EmitDefaultValue = true)]
         public bool Blocked { get; set; }
+
+        /// <summary>
+        /// Soft-deleted by inbound SCIM. Left out of the list unless deleted&#x3D;true is asked; POST /users/{userId}/restore brings the user back.
+        /// </summary>
+        /// <value>Soft-deleted by inbound SCIM. Left out of the list unless deleted&#x3D;true is asked; POST /users/{userId}/restore brings the user back.</value>
+        [DataMember(Name = "deleted", EmitDefaultValue = true)]
+        public bool Deleted { get; set; }
+
+        /// <summary>
+        /// Gets or Sets DeletedAt
+        /// </summary>
+        [DataMember(Name = "deletedAt", EmitDefaultValue = true)]
+        public DateTime? DeletedAt { get; set; }
 
         /// <summary>
         /// Gets or Sets MfaEnabled
@@ -287,6 +304,8 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  PhoneNumberVerified: ").Append(PhoneNumberVerified).Append("\n");
             sb.Append("  IsActive: ").Append(IsActive).Append("\n");
             sb.Append("  Blocked: ").Append(Blocked).Append("\n");
+            sb.Append("  Deleted: ").Append(Deleted).Append("\n");
+            sb.Append("  DeletedAt: ").Append(DeletedAt).Append("\n");
             sb.Append("  MfaEnabled: ").Append(MfaEnabled).Append("\n");
             sb.Append("  IsAdmin: ").Append(IsAdmin).Append("\n");
             sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");

@@ -194,7 +194,9 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.AdminAgentsList(orgId);
+            //string? sortBy = null;
+            //string? sortDir = null;
+            //var response = instance.AdminAgentsList(orgId, sortBy, sortDir);
             //Assert.IsType<AdminAgentsListResponse>(response);
         }
 

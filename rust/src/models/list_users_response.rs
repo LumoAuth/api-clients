@@ -19,6 +19,8 @@ pub struct ListUsersResponse {
     pub meta: Option<Box<models::PaginationMeta>>,
     #[serde(rename = "pagination", skip_serializing_if = "Option::is_none")]
     pub pagination: Option<Box<models::PaginationMeta>>,
+    #[serde(rename = "resourceType", skip_serializing_if = "Option::is_none")]
+    pub resource_type: Option<String>,
 }
 
 impl ListUsersResponse {
@@ -27,6 +29,7 @@ impl ListUsersResponse {
             data: None,
             meta: None,
             pagination: None,
+            resource_type: None,
         }
     }
 }

@@ -365,7 +365,7 @@ Name | Type | Description  | Notes
 
 # **abacPoliciesList**
 ```swift
-    open class func abacPoliciesList(orgId: String, completion: @escaping (_ data: AbacPoliciesListResponse?, _ error: Error?) -> Void)
+    open class func abacPoliciesList(orgId: String, action: String? = nil, completion: @escaping (_ data: AbacPoliciesListResponse?, _ error: Error?) -> Void)
 ```
 
 List ABAC policies
@@ -376,9 +376,10 @@ List ABAC policies
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let action = "action_example" // String | Only policies that name this action, alone or in a comma-separated list. `*` lists the policies that name `*`. (optional)
 
 // List ABAC policies
-AdminAbacAPI.abacPoliciesList(orgId: orgId) { (response, error) in
+AdminAbacAPI.abacPoliciesList(orgId: orgId, action: action) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -395,6 +396,7 @@ AdminAbacAPI.abacPoliciesList(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **action** | **String** | Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. | [optional] 
 
 ### Return type
 

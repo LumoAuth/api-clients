@@ -192,7 +192,9 @@ public class AdminAgentsApiTest {
     @Test
     public void adminAgentsListTest() throws ApiException {
         String orgId = null;
-        AdminAgentsListResponse response = api.adminAgentsList(orgId);
+        String sortBy = null;
+        String sortDir = null;
+        AdminAgentsListResponse response = api.adminAgentsList(orgId, sortBy, sortDir);
         // TODO: test validations
     }
 
