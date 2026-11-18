@@ -69,7 +69,7 @@ module LumoAuthApiClient
 
     attr_accessor :prompt_values_supported
 
-    # The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
+    # The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session). The list is the same for every organization.
     attr_accessor :acr_values_supported
 
     attr_accessor :code_challenge_methods_supported
@@ -120,10 +120,10 @@ module LumoAuthApiClient
     # Only when the organization accepts ID-JAGs.
     attr_accessor :authorization_grant_profiles_supported
 
-    # Only when configured.
+    # The Privacy policy URL of the organization's login page settings. Only when it is set.
     attr_accessor :op_policy_uri
 
-    # Only when configured.
+    # The Terms of service URL of the organization's login page settings. Only when it is set.
     attr_accessor :op_tos_uri
 
     # Attribute mapping from ruby-style variable name to JSON key.

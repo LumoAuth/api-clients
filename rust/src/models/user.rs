@@ -37,6 +37,11 @@ pub struct User {
     pub is_active: bool,
     #[serde(rename = "blocked")]
     pub blocked: bool,
+    /// Soft-deleted by inbound SCIM. Left out of the list unless deleted=true is asked; POST /users/{userId}/restore brings the user back.
+    #[serde(rename = "deleted", skip_serializing_if = "Option::is_none")]
+    pub deleted: Option<bool>,
+    #[serde(rename = "deletedAt", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub deleted_at: Option<Option<String>>,
     #[serde(rename = "mfaEnabled")]
     pub mfa_enabled: bool,
     #[serde(rename = "isAdmin")]
@@ -91,6 +96,8 @@ impl User {
             phone_number_verified: None,
             is_active,
             blocked,
+            deleted: None,
+            deleted_at: None,
             mfa_enabled,
             is_admin,
             created_at,

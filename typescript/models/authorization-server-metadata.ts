@@ -214,6 +214,12 @@ export interface AuthorizationServerMetadata {
     'backchannel_user_code_parameter_supported'?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof AuthorizationServerMetadata
+     */
+    'resource_indicators_supported'?: boolean;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof AuthorizationServerMetadata
      */
@@ -231,13 +237,13 @@ export interface AuthorizationServerMetadata {
      */
     'authorization_grant_profiles_supported'?: Array<string>;
     /**
-     * Only when configured.
+     * The Privacy policy URL of the organization\'s login page settings. Only when it is set.
      * @type {string}
      * @memberof AuthorizationServerMetadata
      */
     'op_policy_uri'?: string;
     /**
-     * Only when configured.
+     * The Terms of service URL of the organization\'s login page settings. Only when it is set.
      * @type {string}
      * @memberof AuthorizationServerMetadata
      */

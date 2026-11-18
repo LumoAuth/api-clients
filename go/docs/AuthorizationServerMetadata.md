@@ -36,11 +36,12 @@ Name | Type | Description | Notes
 **BackchannelAuthenticationEndpoint** | Pointer to **string** |  | [optional] 
 **BackchannelTokenDeliveryModesSupported** | Pointer to **[]string** |  | [optional] 
 **BackchannelUserCodeParameterSupported** | Pointer to **bool** |  | [optional] 
+**ResourceIndicatorsSupported** | Pointer to **bool** |  | [optional] 
 **EntityProfilesSupported** | Pointer to **[]string** |  | [optional] 
 **ClientIdMetadataDocumentSupported** | Pointer to **bool** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] 
 **AuthorizationGrantProfilesSupported** | Pointer to **[]string** | Only when the organization accepts ID-JAGs. | [optional] 
-**OpPolicyUri** | Pointer to **string** | Only when configured. | [optional] 
-**OpTosUri** | Pointer to **string** | Only when configured. | [optional] 
+**OpPolicyUri** | Pointer to **string** | The Privacy policy URL of the organization&#39;s login page settings. Only when it is set. | [optional] 
+**OpTosUri** | Pointer to **string** | The Terms of service URL of the organization&#39;s login page settings. Only when it is set. | [optional] 
 
 ## Methods
 
@@ -835,6 +836,31 @@ SetBackchannelUserCodeParameterSupported sets BackchannelUserCodeParameterSuppor
 `func (o *AuthorizationServerMetadata) HasBackchannelUserCodeParameterSupported() bool`
 
 HasBackchannelUserCodeParameterSupported returns a boolean if a field has been set.
+
+### GetResourceIndicatorsSupported
+
+`func (o *AuthorizationServerMetadata) GetResourceIndicatorsSupported() bool`
+
+GetResourceIndicatorsSupported returns the ResourceIndicatorsSupported field if non-nil, zero value otherwise.
+
+### GetResourceIndicatorsSupportedOk
+
+`func (o *AuthorizationServerMetadata) GetResourceIndicatorsSupportedOk() (*bool, bool)`
+
+GetResourceIndicatorsSupportedOk returns a tuple with the ResourceIndicatorsSupported field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResourceIndicatorsSupported
+
+`func (o *AuthorizationServerMetadata) SetResourceIndicatorsSupported(v bool)`
+
+SetResourceIndicatorsSupported sets ResourceIndicatorsSupported field to given value.
+
+### HasResourceIndicatorsSupported
+
+`func (o *AuthorizationServerMetadata) HasResourceIndicatorsSupported() bool`
+
+HasResourceIndicatorsSupported returns a boolean if a field has been set.
 
 ### GetEntityProfilesSupported
 

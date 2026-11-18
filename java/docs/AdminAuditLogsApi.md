@@ -91,6 +91,8 @@ public class Example {
 
 Export audit logs as CSV (default) or JSON
 
+Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
+
 ### Example
 ```java
 // Import classes:
@@ -449,6 +451,8 @@ public class Example {
 
 Update audit log retention settings
 
+Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
+
 ### Example
 ```java
 // Import classes:
@@ -519,6 +523,8 @@ public class Example {
 > AdminAuditLogsRetentionResponse putAdminAuditLogsRetentionUpdate(orgId)
 
 Update audit log retention settings
+
+Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
 
 ### Example
 ```java

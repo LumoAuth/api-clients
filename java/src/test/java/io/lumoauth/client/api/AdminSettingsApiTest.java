@@ -27,7 +27,9 @@ import io.lumoauth.client.model.AdminSettingsSecurityGetResponse;
 import io.lumoauth.client.model.AdminTenantGetResponse;
 import io.lumoauth.client.model.PutAdminSettingsAuthenticationUpdateResponse;
 import io.lumoauth.client.model.PutAdminSettingsBrandingUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsEmailUpdateRequest;
 import io.lumoauth.client.model.PutAdminSettingsEmailUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsGeneralUpdateRequest;
 import io.lumoauth.client.model.PutAdminSettingsGeneralUpdateResponse;
 import io.lumoauth.client.model.PutAdminSettingsScimUpdateResponse;
 import io.lumoauth.client.model.PutAdminSettingsSecurityUpdateResponse;
@@ -101,6 +103,8 @@ public class AdminSettingsApiTest {
     /**
      * Get all settings (combined)
      *
+     * Needs &#x60;settings.view&#x60;. The &#x60;branding&#x60; part is returned only to a caller who also holds &#x60;branding.view&#x60; (for an API key, its creator), as for GET /settings/branding and the portal&#39;s branding page; without it the key is left out.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -148,6 +152,8 @@ public class AdminSettingsApiTest {
 
     /**
      * Get email settings
+     *
+     * Shows who sends the organization&#39;s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth&#39;s sender.
      *
      * @throws ApiException if the Api call fails
      */
@@ -245,6 +251,8 @@ public class AdminSettingsApiTest {
     /**
      * Update branding/login page settings
      *
+     * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -257,24 +265,30 @@ public class AdminSettingsApiTest {
     /**
      * Update email settings
      *
+     * Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void patchAdminSettingsEmailUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminSettingsEmailUpdateResponse response = api.patchAdminSettingsEmailUpdate(orgId);
+        PutAdminSettingsEmailUpdateRequest putAdminSettingsEmailUpdateRequest = null;
+        PutAdminSettingsEmailUpdateResponse response = api.patchAdminSettingsEmailUpdate(orgId, putAdminSettingsEmailUpdateRequest);
         // TODO: test validations
     }
 
     /**
      * Update general settings
      *
+     * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void patchAdminSettingsGeneralUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminSettingsGeneralUpdateResponse response = api.patchAdminSettingsGeneralUpdate(orgId);
+        PutAdminSettingsGeneralUpdateRequest putAdminSettingsGeneralUpdateRequest = null;
+        PutAdminSettingsGeneralUpdateResponse response = api.patchAdminSettingsGeneralUpdate(orgId, putAdminSettingsGeneralUpdateRequest);
         // TODO: test validations
     }
 
@@ -353,6 +367,8 @@ public class AdminSettingsApiTest {
     /**
      * Update branding/login page settings
      *
+     * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -365,24 +381,30 @@ public class AdminSettingsApiTest {
     /**
      * Update email settings
      *
+     * Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void putAdminSettingsEmailUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminSettingsEmailUpdateResponse response = api.putAdminSettingsEmailUpdate(orgId);
+        PutAdminSettingsEmailUpdateRequest putAdminSettingsEmailUpdateRequest = null;
+        PutAdminSettingsEmailUpdateResponse response = api.putAdminSettingsEmailUpdate(orgId, putAdminSettingsEmailUpdateRequest);
         // TODO: test validations
     }
 
     /**
      * Update general settings
      *
+     * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void putAdminSettingsGeneralUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminSettingsGeneralUpdateResponse response = api.putAdminSettingsGeneralUpdate(orgId);
+        PutAdminSettingsGeneralUpdateRequest putAdminSettingsGeneralUpdateRequest = null;
+        PutAdminSettingsGeneralUpdateResponse response = api.putAdminSettingsGeneralUpdate(orgId, putAdminSettingsGeneralUpdateRequest);
         // TODO: test validations
     }
 

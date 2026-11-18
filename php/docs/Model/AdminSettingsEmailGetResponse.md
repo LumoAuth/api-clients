@@ -4,6 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | **array<string,mixed>** | Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted. | [optional]
+**data** | [**\LumoAuth\ApiClient\Model\EmailSenderSettings**](EmailSenderSettings.md) |  | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

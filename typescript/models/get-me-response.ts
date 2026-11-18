@@ -66,6 +66,18 @@ export interface GetMeResponse {
      */
     'capabilities'?: Array<string> | null;
     /**
+     * Agents only: the scope of the presented token.
+     * @type {Array<string>}
+     * @memberof GetMeResponse
+     */
+    'scope'?: Array<string> | null;
+    /**
+     * Agents only: true when the token scope leaves out one of the agent\'s capabilities.
+     * @type {boolean}
+     * @memberof GetMeResponse
+     */
+    'scope_narrowed'?: boolean | null;
+    /**
      * 
      * @type {GroupRef}
      * @memberof GetMeResponse

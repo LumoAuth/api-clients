@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **client_id** | Option<**String**> | Detailed responses only | [optional]
 **callback_url** | Option<**String**> | Detailed responses only | [optional]
 **requested_scopes** | Option<**Vec<String>**> | Detailed responses only | [optional]
-**custom_claims** | Option<[**std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)> | Detailed responses only | [optional]
+**custom_claims** | Option<[**std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)> | Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes. | [optional]
 **claim_mapping** | Option<[**std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)> | Detailed responses only | [optional]
 **provider_config** | Option<[**std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)> | Detailed responses only; secrets redacted | [optional]
 **authorization_url** | Option<**String**> | Detailed responses only | [optional]

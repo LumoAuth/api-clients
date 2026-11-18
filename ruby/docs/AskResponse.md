@@ -8,6 +8,7 @@
 | **action** | **String** |  | [optional] |
 | **context** | **Object** |  | [optional] |
 | **reason** | **String** |  | [optional] |
+| **decided_by** | **String** | Which check produced the answer. Always pdp for a user caller. | [optional] |
 | **audit_id** | **String** |  | [optional] |
 
 ## Example
@@ -20,6 +21,7 @@ instance = LumoAuthApiClient::AskResponse.new(
   action: document.read,
   context: null,
   reason: null,
+  decided_by: null,
   audit_id: null
 )
 ```

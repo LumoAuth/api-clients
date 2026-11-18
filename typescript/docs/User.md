@@ -17,6 +17,8 @@ Name | Type | Description | Notes
 **phoneNumberVerified** | **boolean** |  | [optional] [default to undefined]
 **isActive** | **boolean** |  | [default to undefined]
 **blocked** | **boolean** |  | [default to undefined]
+**deleted** | **boolean** | Soft-deleted by inbound SCIM. Left out of the list unless deleted&#x3D;true is asked; POST /users/{userId}/restore brings the user back. | [optional] [default to undefined]
+**deletedAt** | **string** |  | [optional] [default to undefined]
 **mfaEnabled** | **boolean** |  | [default to undefined]
 **isAdmin** | **boolean** |  | [default to undefined]
 **createdAt** | **string** |  | [default to undefined]
@@ -50,6 +52,8 @@ const instance: User = {
     phoneNumberVerified,
     isActive,
     blocked,
+    deleted,
+    deletedAt,
     mfaEnabled,
     isAdmin,
     createdAt,

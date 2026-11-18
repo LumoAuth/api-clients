@@ -23,7 +23,32 @@ module LumoAuthApiClient
 
     attr_accessor :reason
 
+    # Which check produced the answer. Always pdp for a user caller.
+    attr_accessor :decided_by
+
     attr_accessor :audit_id
+
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -32,6 +57,7 @@ module LumoAuthApiClient
         :'action' => :'action',
         :'context' => :'context',
         :'reason' => :'reason',
+        :'decided_by' => :'decided_by',
         :'audit_id' => :'audit_id'
       }
     end
@@ -53,6 +79,7 @@ module LumoAuthApiClient
         :'action' => :'String',
         :'context' => :'Object',
         :'reason' => :'String',
+        :'decided_by' => :'String',
         :'audit_id' => :'String'
       }
     end
@@ -95,6 +122,10 @@ module LumoAuthApiClient
         self.reason = attributes[:'reason']
       end
 
+      if attributes.key?(:'decided_by')
+        self.decided_by = attributes[:'decided_by']
+      end
+
       if attributes.key?(:'audit_id')
         self.audit_id = attributes[:'audit_id']
       end
@@ -112,7 +143,19 @@ module LumoAuthApiClient
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      decided_by_validator = EnumAttributeValidator.new('String', ["capability", "pdp", "deny_override"])
+      return false unless decided_by_validator.valid?(@decided_by)
       true
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] decided_by Object to be assigned
+    def decided_by=(decided_by)
+      validator = EnumAttributeValidator.new('String', ["capability", "pdp", "deny_override"])
+      unless validator.valid?(decided_by)
+        fail ArgumentError, "invalid value for \"decided_by\", must be one of #{validator.allowable_values}."
+      end
+      @decided_by = decided_by
     end
 
     # Checks equality by comparing each attribute.
@@ -124,6 +167,7 @@ module LumoAuthApiClient
           action == o.action &&
           context == o.context &&
           reason == o.reason &&
+          decided_by == o.decided_by &&
           audit_id == o.audit_id
     end
 
@@ -136,7 +180,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [allowed, action, context, reason, audit_id].hash
+      [allowed, action, context, reason, decided_by, audit_id].hash
     end
 
     # Builds the object from hash

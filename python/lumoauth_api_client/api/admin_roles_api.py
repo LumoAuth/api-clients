@@ -17,7 +17,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import Field, StrictStr, field_validator
+from typing_extensions import Annotated
 from lumoauth_api_client.models.admin_roles_create_response import AdminRolesCreateResponse
 from lumoauth_api_client.models.admin_roles_get_permissions_response import AdminRolesGetPermissionsResponse
 from lumoauth_api_client.models.admin_roles_get_response import AdminRolesGetResponse
@@ -63,6 +64,7 @@ class AdminRolesApi:
     ) -> MessageResponse:
         """Add permission(s) to a role
 
+        Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
         :param org_id: (required)
         :type org_id: str
@@ -101,6 +103,9 @@ class AdminRolesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MessageResponse",
+            '400': None,
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -133,6 +138,7 @@ class AdminRolesApi:
     ) -> ApiResponse[MessageResponse]:
         """Add permission(s) to a role
 
+        Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
         :param org_id: (required)
         :type org_id: str
@@ -171,6 +177,9 @@ class AdminRolesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MessageResponse",
+            '400': None,
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -203,6 +212,7 @@ class AdminRolesApi:
     ) -> RESTResponseType:
         """Add permission(s) to a role
 
+        Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
         :param org_id: (required)
         :type org_id: str
@@ -241,6 +251,9 @@ class AdminRolesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MessageResponse",
+            '400': None,
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -610,6 +623,7 @@ class AdminRolesApi:
     ) -> AdminRolesCreateResponse:
         """Create a new role
 
+        Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
         :param org_id: (required)
         :type org_id: str
@@ -676,6 +690,7 @@ class AdminRolesApi:
     ) -> ApiResponse[AdminRolesCreateResponse]:
         """Create a new role
 
+        Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
         :param org_id: (required)
         :type org_id: str
@@ -742,6 +757,7 @@ class AdminRolesApi:
     ) -> RESTResponseType:
         """Create a new role
 
+        Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
         :param org_id: (required)
         :type org_id: str
@@ -2210,7 +2226,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
-        permission_id: StrictStr,
+        permission_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2226,6 +2242,7 @@ class AdminRolesApi:
     ) -> MessageResponse:
         """Remove a permission from a role
 
+        Needs `roles.assign-permissions` and `roles.edit`.
 
         :param org_id: (required)
         :type org_id: str
@@ -2284,7 +2301,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
-        permission_id: StrictStr,
+        permission_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2300,6 +2317,7 @@ class AdminRolesApi:
     ) -> ApiResponse[MessageResponse]:
         """Remove a permission from a role
 
+        Needs `roles.assign-permissions` and `roles.edit`.
 
         :param org_id: (required)
         :type org_id: str
@@ -2358,7 +2376,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
-        permission_id: StrictStr,
+        permission_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2374,6 +2392,7 @@ class AdminRolesApi:
     ) -> RESTResponseType:
         """Remove a permission from a role
 
+        Needs `roles.assign-permissions` and `roles.edit`.
 
         :param org_id: (required)
         :type org_id: str
@@ -2803,6 +2822,7 @@ class AdminRolesApi:
     ) -> AdminRolesCreateResponse:
         """Update role permissions (replaces all)
 
+        Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
         :param org_id: (required)
         :type org_id: str
@@ -2841,6 +2861,9 @@ class AdminRolesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AdminRolesCreateResponse",
+            '400': None,
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2873,6 +2896,7 @@ class AdminRolesApi:
     ) -> ApiResponse[AdminRolesCreateResponse]:
         """Update role permissions (replaces all)
 
+        Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
         :param org_id: (required)
         :type org_id: str
@@ -2911,6 +2935,9 @@ class AdminRolesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AdminRolesCreateResponse",
+            '400': None,
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2943,6 +2970,7 @@ class AdminRolesApi:
     ) -> RESTResponseType:
         """Update role permissions (replaces all)
 
+        Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
         :param org_id: (required)
         :type org_id: str
@@ -2981,6 +3009,9 @@ class AdminRolesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AdminRolesCreateResponse",
+            '400': None,
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,

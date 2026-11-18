@@ -63,5 +63,23 @@ namespace LumoAuth.ApiClient.Test.Model
         {
             // TODO unit test for the property 'Name'
         }
+
+        /// <summary>
+        /// Test the property 'DisplayName'
+        /// </summary>
+        [Fact]
+        public void DisplayNameTest()
+        {
+            // TODO unit test for the property 'DisplayName'
+        }
+
+        /// <summary>
+        /// Test the property 'Locale'
+        /// </summary>
+        [Fact]
+        public void LocaleTest()
+        {
+            // TODO unit test for the property 'Locale'
+        }
     }
 }

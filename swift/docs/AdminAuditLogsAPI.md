@@ -69,6 +69,8 @@ Name | Type | Description  | Notes
 
 Export audit logs as CSV (default) or JSON
 
+Needs `audit.export` and `audit.view`, as the export on the portal's audit log page does.
+
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
@@ -311,6 +313,8 @@ Name | Type | Description  | Notes
 
 Update audit log retention settings
 
+Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
+
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
@@ -358,6 +362,8 @@ Name | Type | Description  | Notes
 ```
 
 Update audit log retention settings
+
+Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
 
 ### Example
 ```swift

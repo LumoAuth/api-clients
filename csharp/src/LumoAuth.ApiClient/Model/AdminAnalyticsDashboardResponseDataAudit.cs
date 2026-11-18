@@ -36,15 +36,16 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="AdminAnalyticsDashboardResponseDataAudit" /> class.
         /// </summary>
-        /// <param name="eventsLast7Days">eventsLast7Days.</param>
+        /// <param name="eventsLast7Days">Audit events of the last 7 days, or of the audit retention period of the plan when that is shorter..</param>
         public AdminAnalyticsDashboardResponseDataAudit(int eventsLast7Days = default)
         {
             this.EventsLast7Days = eventsLast7Days;
         }
 
         /// <summary>
-        /// Gets or Sets EventsLast7Days
+        /// Audit events of the last 7 days, or of the audit retention period of the plan when that is shorter.
         /// </summary>
+        /// <value>Audit events of the last 7 days, or of the audit retention period of the plan when that is shorter.</value>
         [DataMember(Name = "eventsLast7Days", EmitDefaultValue = false)]
         public int EventsLast7Days { get; set; }
 

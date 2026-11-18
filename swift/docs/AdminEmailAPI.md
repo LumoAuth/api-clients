@@ -73,6 +73,8 @@ Name | Type | Description  | Notes
 
 Get an email template (custom or built-in default)
 
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
+
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
@@ -126,6 +128,8 @@ Name | Type | Description  | Notes
 ```
 
 List every email template type with its current (custom or built-in) template
+
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 ### Example
 ```swift
@@ -276,6 +280,8 @@ Name | Type | Description  | Notes
 ```
 
 List the placeholders available to an email template type
+
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 ### Example
 ```swift

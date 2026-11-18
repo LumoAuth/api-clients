@@ -27,10 +27,12 @@ public struct AbacAttributeDefinition: Codable, JSONEncodable, Hashable {
     public var defaultValue: AnyCodable?
     public var isRequired: Bool?
     public var isSystem: Bool?
+    /** True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403). */
+    public var builtIn: Bool?
     public var createdAt: Date?
     public var updatedAt: Date?
 
-    public init(id: Int? = nil, name: String? = nil, slug: String? = nil, description: String? = nil, attributeType: AttributeType? = nil, dataType: String? = nil, validationRules: [String: AnyCodable]? = nil, defaultValue: AnyCodable? = nil, isRequired: Bool? = nil, isSystem: Bool? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
+    public init(id: Int? = nil, name: String? = nil, slug: String? = nil, description: String? = nil, attributeType: AttributeType? = nil, dataType: String? = nil, validationRules: [String: AnyCodable]? = nil, defaultValue: AnyCodable? = nil, isRequired: Bool? = nil, isSystem: Bool? = nil, builtIn: Bool? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
         self.id = id
         self.name = name
         self.slug = slug
@@ -41,6 +43,7 @@ public struct AbacAttributeDefinition: Codable, JSONEncodable, Hashable {
         self.defaultValue = defaultValue
         self.isRequired = isRequired
         self.isSystem = isSystem
+        self.builtIn = builtIn
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
@@ -56,6 +59,7 @@ public struct AbacAttributeDefinition: Codable, JSONEncodable, Hashable {
         case defaultValue
         case isRequired
         case isSystem
+        case builtIn
         case createdAt
         case updatedAt
     }
@@ -74,6 +78,7 @@ public struct AbacAttributeDefinition: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(defaultValue, forKey: .defaultValue)
         try container.encodeIfPresent(isRequired, forKey: .isRequired)
         try container.encodeIfPresent(isSystem, forKey: .isSystem)
+        try container.encodeIfPresent(builtIn, forKey: .builtIn)
         try container.encodeIfPresent(createdAt, forKey: .createdAt)
         try container.encodeIfPresent(updatedAt, forKey: .updatedAt)
     }

@@ -99,7 +99,6 @@ docs/AdminMcpApi.md
 docs/AdminMcpServersCreateResponse.md
 docs/AdminMcpServersGetResponse.md
 docs/AdminMcpServersListResponse.md
-docs/AdminMcpServersListResponseMeta.md
 docs/AdminMfaApi.md
 docs/AdminOAuthClientsApi.md
 docs/AdminOrgInvitationsCreateResponse.md
@@ -170,6 +169,7 @@ docs/AdminUserSessionsRevokePostResponse.md
 docs/AdminUserTokensRevokeAllResponse.md
 docs/AdminUserTokensRevokePostResponse.md
 docs/AdminUsersApi.md
+docs/AdminUsersRestoreResponse.md
 docs/AdminWebhooksApi.md
 docs/AdminWebhooksCreateResponse.md
 docs/AdminWebhooksCreateResponseData.md
@@ -219,6 +219,8 @@ docs/CheckAbacBulkResponseResultsItem.md
 docs/CheckAbacResponse.md
 docs/CheckAbacResponseMatchedPoliciesItem.md
 docs/CheckAnyPermissionResponse.md
+docs/CheckEmailFirstRequest.md
+docs/CheckEmailFirstResponse.md
 docs/CheckPermissionResponse.md
 docs/CheckPermissionsBulkResponse.md
 docs/CheckRelationResponse.md
@@ -242,6 +244,7 @@ docs/DenyRequestRequest.md
 docs/DenyRequestResponse.md
 docs/DeviceAuthorizationResponse.md
 docs/EmailEnrollmentStarted.md
+docs/EmailSenderSettings.md
 docs/EmailTemplate.md
 docs/EnrollAuthenticator201Response.md
 docs/EnrollAuthenticatorRequest.md
@@ -368,7 +371,9 @@ docs/PutAdminClientsUpdateBrandingResponse.md
 docs/PutAdminOrgMembersUpdateResponse.md
 docs/PutAdminSettingsAuthenticationUpdateResponse.md
 docs/PutAdminSettingsBrandingUpdateResponse.md
+docs/PutAdminSettingsEmailUpdateRequest.md
 docs/PutAdminSettingsEmailUpdateResponse.md
+docs/PutAdminSettingsGeneralUpdateRequest.md
 docs/PutAdminSettingsGeneralUpdateResponse.md
 docs/PutAdminSettingsGeneralUpdateResponseData.md
 docs/PutAdminSettingsScimUpdateResponse.md
@@ -586,7 +591,6 @@ src/main/java/io/lumoauth/client/model/AdminIdentitiesListResponseDataBindingsIt
 src/main/java/io/lumoauth/client/model/AdminMcpServersCreateResponse.java
 src/main/java/io/lumoauth/client/model/AdminMcpServersGetResponse.java
 src/main/java/io/lumoauth/client/model/AdminMcpServersListResponse.java
-src/main/java/io/lumoauth/client/model/AdminMcpServersListResponseMeta.java
 src/main/java/io/lumoauth/client/model/AdminOrgInvitationsCreateResponse.java
 src/main/java/io/lumoauth/client/model/AdminOrgInvitationsListResponse.java
 src/main/java/io/lumoauth/client/model/AdminOrgMembersAddResponse.java
@@ -648,6 +652,7 @@ src/main/java/io/lumoauth/client/model/AdminUserSessionsRevokeAllResponse.java
 src/main/java/io/lumoauth/client/model/AdminUserSessionsRevokePostResponse.java
 src/main/java/io/lumoauth/client/model/AdminUserTokensRevokeAllResponse.java
 src/main/java/io/lumoauth/client/model/AdminUserTokensRevokePostResponse.java
+src/main/java/io/lumoauth/client/model/AdminUsersRestoreResponse.java
 src/main/java/io/lumoauth/client/model/AdminWebhooksCreateResponse.java
 src/main/java/io/lumoauth/client/model/AdminWebhooksCreateResponseData.java
 src/main/java/io/lumoauth/client/model/AdminWebhooksDeliveriesListResponse.java
@@ -694,6 +699,8 @@ src/main/java/io/lumoauth/client/model/CheckAbacBulkResponseResultsItem.java
 src/main/java/io/lumoauth/client/model/CheckAbacResponse.java
 src/main/java/io/lumoauth/client/model/CheckAbacResponseMatchedPoliciesItem.java
 src/main/java/io/lumoauth/client/model/CheckAnyPermissionResponse.java
+src/main/java/io/lumoauth/client/model/CheckEmailFirstRequest.java
+src/main/java/io/lumoauth/client/model/CheckEmailFirstResponse.java
 src/main/java/io/lumoauth/client/model/CheckPermissionResponse.java
 src/main/java/io/lumoauth/client/model/CheckPermissionsBulkResponse.java
 src/main/java/io/lumoauth/client/model/CheckRelationResponse.java
@@ -717,6 +724,7 @@ src/main/java/io/lumoauth/client/model/DenyRequestRequest.java
 src/main/java/io/lumoauth/client/model/DenyRequestResponse.java
 src/main/java/io/lumoauth/client/model/DeviceAuthorizationResponse.java
 src/main/java/io/lumoauth/client/model/EmailEnrollmentStarted.java
+src/main/java/io/lumoauth/client/model/EmailSenderSettings.java
 src/main/java/io/lumoauth/client/model/EmailTemplate.java
 src/main/java/io/lumoauth/client/model/EnrollAuthenticator201Response.java
 src/main/java/io/lumoauth/client/model/EnrollAuthenticatorRequest.java
@@ -837,7 +845,9 @@ src/main/java/io/lumoauth/client/model/PutAdminClientsUpdateBrandingResponse.jav
 src/main/java/io/lumoauth/client/model/PutAdminOrgMembersUpdateResponse.java
 src/main/java/io/lumoauth/client/model/PutAdminSettingsAuthenticationUpdateResponse.java
 src/main/java/io/lumoauth/client/model/PutAdminSettingsBrandingUpdateResponse.java
+src/main/java/io/lumoauth/client/model/PutAdminSettingsEmailUpdateRequest.java
 src/main/java/io/lumoauth/client/model/PutAdminSettingsEmailUpdateResponse.java
+src/main/java/io/lumoauth/client/model/PutAdminSettingsGeneralUpdateRequest.java
 src/main/java/io/lumoauth/client/model/PutAdminSettingsGeneralUpdateResponse.java
 src/main/java/io/lumoauth/client/model/PutAdminSettingsGeneralUpdateResponseData.java
 src/main/java/io/lumoauth/client/model/PutAdminSettingsScimUpdateResponse.java
@@ -1025,7 +1035,6 @@ src/test/java/io/lumoauth/client/model/AdminIdentitiesListResponseDataTest.java
 src/test/java/io/lumoauth/client/model/AdminIdentitiesListResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminMcpServersCreateResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminMcpServersGetResponseTest.java
-src/test/java/io/lumoauth/client/model/AdminMcpServersListResponseMetaTest.java
 src/test/java/io/lumoauth/client/model/AdminMcpServersListResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminOrgInvitationsCreateResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminOrgInvitationsListResponseTest.java
@@ -1088,6 +1097,7 @@ src/test/java/io/lumoauth/client/model/AdminUserSessionsRevokeAllResponseTest.ja
 src/test/java/io/lumoauth/client/model/AdminUserSessionsRevokePostResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminUserTokensRevokeAllResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminUserTokensRevokePostResponseTest.java
+src/test/java/io/lumoauth/client/model/AdminUsersRestoreResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminWebhooksCreateResponseDataTest.java
 src/test/java/io/lumoauth/client/model/AdminWebhooksCreateResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminWebhooksDeliveriesListResponseMetaTest.java
@@ -1134,6 +1144,8 @@ src/test/java/io/lumoauth/client/model/CheckAbacBulkResponseTest.java
 src/test/java/io/lumoauth/client/model/CheckAbacResponseMatchedPoliciesItemTest.java
 src/test/java/io/lumoauth/client/model/CheckAbacResponseTest.java
 src/test/java/io/lumoauth/client/model/CheckAnyPermissionResponseTest.java
+src/test/java/io/lumoauth/client/model/CheckEmailFirstRequestTest.java
+src/test/java/io/lumoauth/client/model/CheckEmailFirstResponseTest.java
 src/test/java/io/lumoauth/client/model/CheckPermissionResponseTest.java
 src/test/java/io/lumoauth/client/model/CheckPermissionsBulkResponseTest.java
 src/test/java/io/lumoauth/client/model/CheckRelationResponseTest.java
@@ -1157,6 +1169,7 @@ src/test/java/io/lumoauth/client/model/DenyRequestRequestTest.java
 src/test/java/io/lumoauth/client/model/DenyRequestResponseTest.java
 src/test/java/io/lumoauth/client/model/DeviceAuthorizationResponseTest.java
 src/test/java/io/lumoauth/client/model/EmailEnrollmentStartedTest.java
+src/test/java/io/lumoauth/client/model/EmailSenderSettingsTest.java
 src/test/java/io/lumoauth/client/model/EmailTemplateTest.java
 src/test/java/io/lumoauth/client/model/EnrollAuthenticator201ResponseTest.java
 src/test/java/io/lumoauth/client/model/EnrollAuthenticatorRequestTest.java
@@ -1277,7 +1290,9 @@ src/test/java/io/lumoauth/client/model/PutAdminClientsUpdateBrandingResponseTest
 src/test/java/io/lumoauth/client/model/PutAdminOrgMembersUpdateResponseTest.java
 src/test/java/io/lumoauth/client/model/PutAdminSettingsAuthenticationUpdateResponseTest.java
 src/test/java/io/lumoauth/client/model/PutAdminSettingsBrandingUpdateResponseTest.java
+src/test/java/io/lumoauth/client/model/PutAdminSettingsEmailUpdateRequestTest.java
 src/test/java/io/lumoauth/client/model/PutAdminSettingsEmailUpdateResponseTest.java
+src/test/java/io/lumoauth/client/model/PutAdminSettingsGeneralUpdateRequestTest.java
 src/test/java/io/lumoauth/client/model/PutAdminSettingsGeneralUpdateResponseDataTest.java
 src/test/java/io/lumoauth/client/model/PutAdminSettingsGeneralUpdateResponseTest.java
 src/test/java/io/lumoauth/client/model/PutAdminSettingsScimUpdateResponseTest.java

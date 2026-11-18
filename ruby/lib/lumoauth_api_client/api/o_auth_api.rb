@@ -145,6 +145,80 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Sign-in methods for an email-first form
+    # For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: `exists` is always `true`, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by `client_id`.
+    # @param org_id [String] 
+    # @param check_email_first_request [CheckEmailFirstRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [CheckEmailFirstResponse]
+    def check_email_first(org_id, check_email_first_request, opts = {})
+      data, _status_code, _headers = check_email_first_with_http_info(org_id, check_email_first_request, opts)
+      data
+    end
+
+    # Sign-in methods for an email-first form
+    # For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: &#x60;exists&#x60; is always &#x60;true&#x60;, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+    # @param org_id [String] 
+    # @param check_email_first_request [CheckEmailFirstRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CheckEmailFirstResponse, Integer, Hash)>] CheckEmailFirstResponse data, response status code and response headers
+    def check_email_first_with_http_info(org_id, check_email_first_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: OAuthApi.check_email_first ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling OAuthApi.check_email_first"
+      end
+      # verify the required parameter 'check_email_first_request' is set
+      if @api_client.config.client_side_validation && check_email_first_request.nil?
+        fail ArgumentError, "Missing the required parameter 'check_email_first_request' when calling OAuthApi.check_email_first"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/oauth/check-email'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(check_email_first_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CheckEmailFirstResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"OAuthApi.check_email_first",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: OAuthApi#check_email_first\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Device authorization request (RFC 8628)
     # Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
     # @param org_id [String] 
@@ -530,7 +604,7 @@ module LumoAuthApiClient
     end
 
     # Dynamic client registration (RFC 7591 / OIDC DCR)
-    # Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+    # Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization's signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [RegisterClientResponse]
@@ -540,7 +614,7 @@ module LumoAuthApiClient
     end
 
     # Dynamic client registration (RFC 7591 / OIDC DCR)
-    # Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+    # Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(RegisterClientResponse, Integer, Hash)>] RegisterClientResponse data, response status code and response headers

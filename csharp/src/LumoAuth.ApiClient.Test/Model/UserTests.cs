@@ -164,6 +164,24 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'Deleted'
+        /// </summary>
+        [Fact]
+        public void DeletedTest()
+        {
+            // TODO unit test for the property 'Deleted'
+        }
+
+        /// <summary>
+        /// Test the property 'DeletedAt'
+        /// </summary>
+        [Fact]
+        public void DeletedAtTest()
+        {
+            // TODO unit test for the property 'DeletedAt'
+        }
+
+        /// <summary>
         /// Test the property 'MfaEnabled'
         /// </summary>
         [Fact]

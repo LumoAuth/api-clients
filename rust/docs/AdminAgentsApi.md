@@ -318,7 +318,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_agents_list
 
-> models::AdminAgentsListResponse admin_agents_list(org_id)
+> models::AdminAgentsListResponse admin_agents_list(org_id, sort_by, sort_dir)
 List all agents in the tenant
 
 ### Parameters
@@ -327,6 +327,8 @@ List all agents in the tenant
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**sort_by** | Option<**String**> | Sort field. Default: name. Another value is ignored. |  |
+**sort_dir** | Option<**String**> | Sort direction, used with sortBy. |  |[default to ASC]
 
 ### Return type
 

@@ -92,6 +92,15 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'DecidedBy'
+        /// </summary>
+        [Fact]
+        public void DecidedByTest()
+        {
+            // TODO unit test for the property 'DecidedBy'
+        }
+
+        /// <summary>
         /// Test the property 'AuditId'
         /// </summary>
         [Fact]

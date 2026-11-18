@@ -18,9 +18,11 @@ import (
 // checks if the AdminSettingsAllResponseDataGeneral type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AdminSettingsAllResponseDataGeneral{}
 
-// AdminSettingsAllResponseDataGeneral Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+// AdminSettingsAllResponseDataGeneral The organization name (name; displayName is the same value), locale (the default language of the hosted pages), then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
 type AdminSettingsAllResponseDataGeneral struct {
 	Name *string `json:"name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
+	Locale *string `json:"locale,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -75,6 +77,70 @@ func (o *AdminSettingsAllResponseDataGeneral) SetName(v string) {
 	o.Name = &v
 }
 
+// GetDisplayName returns the DisplayName field value if set, zero value otherwise.
+func (o *AdminSettingsAllResponseDataGeneral) GetDisplayName() string {
+	if o == nil || IsNil(o.DisplayName) {
+		var ret string
+		return ret
+	}
+	return *o.DisplayName
+}
+
+// GetDisplayNameOk returns a tuple with the DisplayName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminSettingsAllResponseDataGeneral) GetDisplayNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DisplayName) {
+		return nil, false
+	}
+	return o.DisplayName, true
+}
+
+// HasDisplayName returns a boolean if a field has been set.
+func (o *AdminSettingsAllResponseDataGeneral) HasDisplayName() bool {
+	if o != nil && !IsNil(o.DisplayName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDisplayName gets a reference to the given string and assigns it to the DisplayName field.
+func (o *AdminSettingsAllResponseDataGeneral) SetDisplayName(v string) {
+	o.DisplayName = &v
+}
+
+// GetLocale returns the Locale field value if set, zero value otherwise.
+func (o *AdminSettingsAllResponseDataGeneral) GetLocale() string {
+	if o == nil || IsNil(o.Locale) {
+		var ret string
+		return ret
+	}
+	return *o.Locale
+}
+
+// GetLocaleOk returns a tuple with the Locale field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminSettingsAllResponseDataGeneral) GetLocaleOk() (*string, bool) {
+	if o == nil || IsNil(o.Locale) {
+		return nil, false
+	}
+	return o.Locale, true
+}
+
+// HasLocale returns a boolean if a field has been set.
+func (o *AdminSettingsAllResponseDataGeneral) HasLocale() bool {
+	if o != nil && !IsNil(o.Locale) {
+		return true
+	}
+
+	return false
+}
+
+// SetLocale gets a reference to the given string and assigns it to the Locale field.
+func (o *AdminSettingsAllResponseDataGeneral) SetLocale(v string) {
+	o.Locale = &v
+}
+
 func (o AdminSettingsAllResponseDataGeneral) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -87,6 +153,12 @@ func (o AdminSettingsAllResponseDataGeneral) ToMap() (map[string]interface{}, er
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.DisplayName) {
+		toSerialize["displayName"] = o.DisplayName
+	}
+	if !IsNil(o.Locale) {
+		toSerialize["locale"] = o.Locale
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -111,6 +183,8 @@ func (o *AdminSettingsAllResponseDataGeneral) UnmarshalJSON(data []byte) (err er
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "name")
+		delete(additionalProperties, "displayName")
+		delete(additionalProperties, "locale")
 		o.AdditionalProperties = additionalProperties
 	}
 

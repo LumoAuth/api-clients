@@ -120,6 +120,7 @@ open class SsfAPI {
     /**
      Read SSF stream configuration(s)
      - GET /orgs/{orgId}/api/v1/ssf/stream
+     - Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -168,6 +169,7 @@ open class SsfAPI {
     /**
      Request a stream verification event
      - POST /orgs/{orgId}/api/v1/ssf/verify
+     - Needs `settings.manage`, as the portal does.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth

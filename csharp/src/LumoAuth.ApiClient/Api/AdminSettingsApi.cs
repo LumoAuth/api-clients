@@ -107,6 +107,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Get all settings (combined)
         /// </summary>
+        /// <remarks>
+        /// Needs &#x60;settings.view&#x60;. The &#x60;branding&#x60; part is returned only to a caller who also holds &#x60;branding.view&#x60; (for an API key, its creator), as for GET /settings/branding and the portal&#39;s branding page; without it the key is left out.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <returns>AdminSettingsAllResponse</returns>
@@ -116,7 +119,7 @@ namespace LumoAuth.ApiClient.Api
         /// Get all settings (combined)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.view&#x60;. The &#x60;branding&#x60; part is returned only to a caller who also holds &#x60;branding.view&#x60; (for an API key, its creator), as for GET /settings/branding and the portal&#39;s branding page; without it the key is left out.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -179,6 +182,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Get email settings
         /// </summary>
+        /// <remarks>
+        /// Shows who sends the organization&#39;s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth&#39;s sender.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <returns>AdminSettingsEmailGetResponse</returns>
@@ -188,7 +194,7 @@ namespace LumoAuth.ApiClient.Api
         /// Get email settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Shows who sends the organization&#39;s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth&#39;s sender.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -323,6 +329,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Update branding/login page settings
         /// </summary>
+        /// <remarks>
+        /// Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <returns>PutAdminSettingsBrandingUpdateResponse</returns>
@@ -332,7 +341,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update branding/login page settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -341,39 +350,49 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Update email settings
         /// </summary>
+        /// <remarks>
+        /// Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <returns>PutAdminSettingsEmailUpdateResponse</returns>
-        PutAdminSettingsEmailUpdateResponse PatchAdminSettingsEmailUpdate(string orgId);
+        PutAdminSettingsEmailUpdateResponse PatchAdminSettingsEmailUpdate(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default);
 
         /// <summary>
         /// Update email settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <returns>ApiResponse of PutAdminSettingsEmailUpdateResponse</returns>
-        ApiResponse<PutAdminSettingsEmailUpdateResponse> PatchAdminSettingsEmailUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminSettingsEmailUpdateResponse> PatchAdminSettingsEmailUpdateWithHttpInfo(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default);
         /// <summary>
         /// Update general settings
         /// </summary>
+        /// <remarks>
+        /// Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <returns>PutAdminSettingsGeneralUpdateResponse</returns>
-        PutAdminSettingsGeneralUpdateResponse PatchAdminSettingsGeneralUpdate(string orgId);
+        PutAdminSettingsGeneralUpdateResponse PatchAdminSettingsGeneralUpdate(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default);
 
         /// <summary>
         /// Update general settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <returns>ApiResponse of PutAdminSettingsGeneralUpdateResponse</returns>
-        ApiResponse<PutAdminSettingsGeneralUpdateResponse> PatchAdminSettingsGeneralUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminSettingsGeneralUpdateResponse> PatchAdminSettingsGeneralUpdateWithHttpInfo(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default);
         /// <summary>
         /// Update SCIM settings
         /// </summary>
@@ -485,6 +504,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Update branding/login page settings
         /// </summary>
+        /// <remarks>
+        /// Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <returns>PutAdminSettingsBrandingUpdateResponse</returns>
@@ -494,7 +516,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update branding/login page settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -503,39 +525,49 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Update email settings
         /// </summary>
+        /// <remarks>
+        /// Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <returns>PutAdminSettingsEmailUpdateResponse</returns>
-        PutAdminSettingsEmailUpdateResponse PutAdminSettingsEmailUpdate(string orgId);
+        PutAdminSettingsEmailUpdateResponse PutAdminSettingsEmailUpdate(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default);
 
         /// <summary>
         /// Update email settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <returns>ApiResponse of PutAdminSettingsEmailUpdateResponse</returns>
-        ApiResponse<PutAdminSettingsEmailUpdateResponse> PutAdminSettingsEmailUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminSettingsEmailUpdateResponse> PutAdminSettingsEmailUpdateWithHttpInfo(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default);
         /// <summary>
         /// Update general settings
         /// </summary>
+        /// <remarks>
+        /// Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <returns>PutAdminSettingsGeneralUpdateResponse</returns>
-        PutAdminSettingsGeneralUpdateResponse PutAdminSettingsGeneralUpdate(string orgId);
+        PutAdminSettingsGeneralUpdateResponse PutAdminSettingsGeneralUpdate(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default);
 
         /// <summary>
         /// Update general settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <returns>ApiResponse of PutAdminSettingsGeneralUpdateResponse</returns>
-        ApiResponse<PutAdminSettingsGeneralUpdateResponse> PutAdminSettingsGeneralUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminSettingsGeneralUpdateResponse> PutAdminSettingsGeneralUpdateWithHttpInfo(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default);
         /// <summary>
         /// Update SCIM settings
         /// </summary>
@@ -699,7 +731,7 @@ namespace LumoAuth.ApiClient.Api
         /// Get all settings (combined)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.view&#x60;. The &#x60;branding&#x60; part is returned only to a caller who also holds &#x60;branding.view&#x60; (for an API key, its creator), as for GET /settings/branding and the portal&#39;s branding page; without it the key is left out.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -711,7 +743,7 @@ namespace LumoAuth.ApiClient.Api
         /// Get all settings (combined)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.view&#x60;. The &#x60;branding&#x60; part is returned only to a caller who also holds &#x60;branding.view&#x60; (for an API key, its creator), as for GET /settings/branding and the portal&#39;s branding page; without it the key is left out.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -791,7 +823,7 @@ namespace LumoAuth.ApiClient.Api
         /// Get email settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Shows who sends the organization&#39;s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth&#39;s sender.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -803,7 +835,7 @@ namespace LumoAuth.ApiClient.Api
         /// Get email settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Shows who sends the organization&#39;s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth&#39;s sender.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -975,7 +1007,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update branding/login page settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -987,7 +1019,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update branding/login page settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -998,48 +1030,52 @@ namespace LumoAuth.ApiClient.Api
         /// Update email settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsEmailUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminSettingsEmailUpdateResponse> PatchAdminSettingsEmailUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminSettingsEmailUpdateResponse> PatchAdminSettingsEmailUpdateAsync(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update email settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsEmailUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsEmailUpdateResponse>> PatchAdminSettingsEmailUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsEmailUpdateResponse>> PatchAdminSettingsEmailUpdateWithHttpInfoAsync(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update general settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsGeneralUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminSettingsGeneralUpdateResponse> PatchAdminSettingsGeneralUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminSettingsGeneralUpdateResponse> PatchAdminSettingsGeneralUpdateAsync(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update general settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsGeneralUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsGeneralUpdateResponse>> PatchAdminSettingsGeneralUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsGeneralUpdateResponse>> PatchAdminSettingsGeneralUpdateWithHttpInfoAsync(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update SCIM settings
         /// </summary>
@@ -1182,7 +1218,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update branding/login page settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1194,7 +1230,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update branding/login page settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1205,48 +1241,52 @@ namespace LumoAuth.ApiClient.Api
         /// Update email settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsEmailUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminSettingsEmailUpdateResponse> PutAdminSettingsEmailUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminSettingsEmailUpdateResponse> PutAdminSettingsEmailUpdateAsync(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update email settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsEmailUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsEmailUpdateResponse>> PutAdminSettingsEmailUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsEmailUpdateResponse>> PutAdminSettingsEmailUpdateWithHttpInfoAsync(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update general settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsGeneralUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminSettingsGeneralUpdateResponse> PutAdminSettingsGeneralUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminSettingsGeneralUpdateResponse> PutAdminSettingsGeneralUpdateAsync(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update general settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsGeneralUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsGeneralUpdateResponse>> PutAdminSettingsGeneralUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsGeneralUpdateResponse>> PutAdminSettingsGeneralUpdateWithHttpInfoAsync(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update SCIM settings
         /// </summary>
@@ -2102,7 +2142,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get all settings (combined) 
+        /// Get all settings (combined) Needs &#x60;settings.view&#x60;. The &#x60;branding&#x60; part is returned only to a caller who also holds &#x60;branding.view&#x60; (for an API key, its creator), as for GET /settings/branding and the portal&#39;s branding page; without it the key is left out.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2114,7 +2154,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get all settings (combined) 
+        /// Get all settings (combined) Needs &#x60;settings.view&#x60;. The &#x60;branding&#x60; part is returned only to a caller who also holds &#x60;branding.view&#x60; (for an API key, its creator), as for GET /settings/branding and the portal&#39;s branding page; without it the key is left out.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2168,7 +2208,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get all settings (combined) 
+        /// Get all settings (combined) Needs &#x60;settings.view&#x60;. The &#x60;branding&#x60; part is returned only to a caller who also holds &#x60;branding.view&#x60; (for an API key, its creator), as for GET /settings/branding and the portal&#39;s branding page; without it the key is left out.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2181,7 +2221,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get all settings (combined) 
+        /// Get all settings (combined) Needs &#x60;settings.view&#x60;. The &#x60;branding&#x60; part is returned only to a caller who also holds &#x60;branding.view&#x60; (for an API key, its creator), as for GET /settings/branding and the portal&#39;s branding page; without it the key is left out.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2650,7 +2690,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get email settings 
+        /// Get email settings Shows who sends the organization&#39;s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth&#39;s sender.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2662,7 +2702,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get email settings 
+        /// Get email settings Shows who sends the organization&#39;s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth&#39;s sender.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2716,7 +2756,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get email settings 
+        /// Get email settings Shows who sends the organization&#39;s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth&#39;s sender.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2729,7 +2769,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get email settings 
+        /// Get email settings Shows who sends the organization&#39;s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth&#39;s sender.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3746,7 +3786,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update branding/login page settings 
+        /// Update branding/login page settings Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3758,7 +3798,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update branding/login page settings 
+        /// Update branding/login page settings Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3812,7 +3852,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update branding/login page settings 
+        /// Update branding/login page settings Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3825,7 +3865,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update branding/login page settings 
+        /// Update branding/login page settings Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3883,24 +3923,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update email settings 
+        /// Update email settings Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <returns>PutAdminSettingsEmailUpdateResponse</returns>
-        public PutAdminSettingsEmailUpdateResponse PatchAdminSettingsEmailUpdate(string orgId)
+        public PutAdminSettingsEmailUpdateResponse PatchAdminSettingsEmailUpdate(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse> localVarResponse = PatchAdminSettingsEmailUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse> localVarResponse = PatchAdminSettingsEmailUpdateWithHttpInfo(orgId, putAdminSettingsEmailUpdateRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update email settings 
+        /// Update email settings Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <returns>ApiResponse of PutAdminSettingsEmailUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse> PatchAdminSettingsEmailUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse> PatchAdminSettingsEmailUpdateWithHttpInfo(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3909,6 +3951,7 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3923,6 +3966,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminSettingsEmailUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3949,26 +3993,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update email settings 
+        /// Update email settings Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsEmailUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminSettingsEmailUpdateResponse> PatchAdminSettingsEmailUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminSettingsEmailUpdateResponse> PatchAdminSettingsEmailUpdateAsync(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse> localVarResponse = await PatchAdminSettingsEmailUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse> localVarResponse = await PatchAdminSettingsEmailUpdateWithHttpInfoAsync(orgId, putAdminSettingsEmailUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update email settings 
+        /// Update email settings Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsEmailUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse>> PatchAdminSettingsEmailUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse>> PatchAdminSettingsEmailUpdateWithHttpInfoAsync(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3978,6 +4024,7 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3993,6 +4040,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminSettingsEmailUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4020,24 +4068,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update general settings 
+        /// Update general settings Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <returns>PutAdminSettingsGeneralUpdateResponse</returns>
-        public PutAdminSettingsGeneralUpdateResponse PatchAdminSettingsGeneralUpdate(string orgId)
+        public PutAdminSettingsGeneralUpdateResponse PatchAdminSettingsGeneralUpdate(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse> localVarResponse = PatchAdminSettingsGeneralUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse> localVarResponse = PatchAdminSettingsGeneralUpdateWithHttpInfo(orgId, putAdminSettingsGeneralUpdateRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update general settings 
+        /// Update general settings Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <returns>ApiResponse of PutAdminSettingsGeneralUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse> PatchAdminSettingsGeneralUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse> PatchAdminSettingsGeneralUpdateWithHttpInfo(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -4046,6 +4096,7 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4060,6 +4111,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminSettingsGeneralUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4086,26 +4138,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update general settings 
+        /// Update general settings Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsGeneralUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminSettingsGeneralUpdateResponse> PatchAdminSettingsGeneralUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminSettingsGeneralUpdateResponse> PatchAdminSettingsGeneralUpdateAsync(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse> localVarResponse = await PatchAdminSettingsGeneralUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse> localVarResponse = await PatchAdminSettingsGeneralUpdateWithHttpInfoAsync(orgId, putAdminSettingsGeneralUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update general settings 
+        /// Update general settings Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsGeneralUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse>> PatchAdminSettingsGeneralUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse>> PatchAdminSettingsGeneralUpdateWithHttpInfoAsync(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -4115,6 +4169,7 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4130,6 +4185,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminSettingsGeneralUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4979,7 +5035,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update branding/login page settings 
+        /// Update branding/login page settings Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -4991,7 +5047,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update branding/login page settings 
+        /// Update branding/login page settings Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -5045,7 +5101,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update branding/login page settings 
+        /// Update branding/login page settings Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -5058,7 +5114,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update branding/login page settings 
+        /// Update branding/login page settings Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -5116,24 +5172,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update email settings 
+        /// Update email settings Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <returns>PutAdminSettingsEmailUpdateResponse</returns>
-        public PutAdminSettingsEmailUpdateResponse PutAdminSettingsEmailUpdate(string orgId)
+        public PutAdminSettingsEmailUpdateResponse PutAdminSettingsEmailUpdate(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse> localVarResponse = PutAdminSettingsEmailUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse> localVarResponse = PutAdminSettingsEmailUpdateWithHttpInfo(orgId, putAdminSettingsEmailUpdateRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update email settings 
+        /// Update email settings Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <returns>ApiResponse of PutAdminSettingsEmailUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse> PutAdminSettingsEmailUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse> PutAdminSettingsEmailUpdateWithHttpInfo(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -5142,6 +5200,7 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5156,6 +5215,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminSettingsEmailUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5182,26 +5242,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update email settings 
+        /// Update email settings Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsEmailUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminSettingsEmailUpdateResponse> PutAdminSettingsEmailUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminSettingsEmailUpdateResponse> PutAdminSettingsEmailUpdateAsync(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse> localVarResponse = await PutAdminSettingsEmailUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse> localVarResponse = await PutAdminSettingsEmailUpdateWithHttpInfoAsync(orgId, putAdminSettingsEmailUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update email settings 
+        /// Update email settings Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsEmailUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsEmailUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse>> PutAdminSettingsEmailUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsEmailUpdateResponse>> PutAdminSettingsEmailUpdateWithHttpInfoAsync(string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -5211,6 +5273,7 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5226,6 +5289,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminSettingsEmailUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5253,24 +5317,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update general settings 
+        /// Update general settings Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <returns>PutAdminSettingsGeneralUpdateResponse</returns>
-        public PutAdminSettingsGeneralUpdateResponse PutAdminSettingsGeneralUpdate(string orgId)
+        public PutAdminSettingsGeneralUpdateResponse PutAdminSettingsGeneralUpdate(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse> localVarResponse = PutAdminSettingsGeneralUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse> localVarResponse = PutAdminSettingsGeneralUpdateWithHttpInfo(orgId, putAdminSettingsGeneralUpdateRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update general settings 
+        /// Update general settings Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <returns>ApiResponse of PutAdminSettingsGeneralUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse> PutAdminSettingsGeneralUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse> PutAdminSettingsGeneralUpdateWithHttpInfo(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -5279,6 +5345,7 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5293,6 +5360,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminSettingsGeneralUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5319,26 +5387,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update general settings 
+        /// Update general settings Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsGeneralUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminSettingsGeneralUpdateResponse> PutAdminSettingsGeneralUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminSettingsGeneralUpdateResponse> PutAdminSettingsGeneralUpdateAsync(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse> localVarResponse = await PutAdminSettingsGeneralUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse> localVarResponse = await PutAdminSettingsGeneralUpdateWithHttpInfoAsync(orgId, putAdminSettingsGeneralUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update general settings 
+        /// Update general settings Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsGeneralUpdateRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsGeneralUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse>> PutAdminSettingsGeneralUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsGeneralUpdateResponse>> PutAdminSettingsGeneralUpdateWithHttpInfoAsync(string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -5348,6 +5418,7 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5363,6 +5434,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminSettingsGeneralUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

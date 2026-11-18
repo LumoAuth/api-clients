@@ -25,6 +25,9 @@ import type { AuthenticationSettings } from './authentication-settings';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { BrandingSettings } from './branding-settings';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { EmailSenderSettings } from './email-sender-settings';
 
 /**
  * 
@@ -57,10 +60,10 @@ export interface AdminSettingsAllResponseData {
      */
     'security'?: AdminSettingsAllResponseDataSecurity;
     /**
-     * Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
-     * @type {{ [key: string]: any; }}
+     * 
+     * @type {EmailSenderSettings}
      * @memberof AdminSettingsAllResponseData
      */
-    'email'?: { [key: string]: any; };
+    'email'?: EmailSenderSettings;
 }
 

@@ -81,6 +81,12 @@ export interface AbacAttributeDefinition {
      */
     'isSystem'?: boolean;
     /**
+     * True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403).
+     * @type {boolean}
+     * @memberof AbacAttributeDefinition
+     */
+    'builtIn'?: boolean;
+    /**
      * 
      * @type {string}
      * @memberof AbacAttributeDefinition

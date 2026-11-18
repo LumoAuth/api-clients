@@ -155,6 +155,15 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'BuiltIn'
+        /// </summary>
+        [Fact]
+        public void BuiltInTest()
+        {
+            // TODO unit test for the property 'BuiltIn'
+        }
+
+        /// <summary>
         /// Test the property 'CreatedAt'
         /// </summary>
         [Fact]

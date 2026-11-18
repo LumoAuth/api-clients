@@ -71,6 +71,29 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of BackchannelAuthorizeResponse</returns>
         ApiResponse<BackchannelAuthorizeResponse> BackchannelAuthorizeWithHttpInfo(string orgId);
         /// <summary>
+        /// Sign-in methods for an email-first form
+        /// </summary>
+        /// <remarks>
+        /// For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: &#x60;exists&#x60; is always &#x60;true&#x60;, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="checkEmailFirstRequest"></param>
+        /// <returns>CheckEmailFirstResponse</returns>
+        CheckEmailFirstResponse CheckEmailFirst(string orgId, CheckEmailFirstRequest checkEmailFirstRequest);
+
+        /// <summary>
+        /// Sign-in methods for an email-first form
+        /// </summary>
+        /// <remarks>
+        /// For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: &#x60;exists&#x60; is always &#x60;true&#x60;, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="checkEmailFirstRequest"></param>
+        /// <returns>ApiResponse of CheckEmailFirstResponse</returns>
+        ApiResponse<CheckEmailFirstResponse> CheckEmailFirstWithHttpInfo(string orgId, CheckEmailFirstRequest checkEmailFirstRequest);
+        /// <summary>
         /// Device authorization request (RFC 8628)
         /// </summary>
         /// <remarks>
@@ -202,7 +225,7 @@ namespace LumoAuth.ApiClient.Api
         /// Dynamic client registration (RFC 7591 / OIDC DCR)
         /// </summary>
         /// <remarks>
-        /// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+        /// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -213,7 +236,7 @@ namespace LumoAuth.ApiClient.Api
         /// Dynamic client registration (RFC 7591 / OIDC DCR)
         /// </summary>
         /// <remarks>
-        /// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+        /// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -493,6 +516,31 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (BackchannelAuthorizeResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<BackchannelAuthorizeResponse>> BackchannelAuthorizeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
+        /// Sign-in methods for an email-first form
+        /// </summary>
+        /// <remarks>
+        /// For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: &#x60;exists&#x60; is always &#x60;true&#x60;, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="checkEmailFirstRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of CheckEmailFirstResponse</returns>
+        System.Threading.Tasks.Task<CheckEmailFirstResponse> CheckEmailFirstAsync(string orgId, CheckEmailFirstRequest checkEmailFirstRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Sign-in methods for an email-first form
+        /// </summary>
+        /// <remarks>
+        /// For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: &#x60;exists&#x60; is always &#x60;true&#x60;, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="checkEmailFirstRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (CheckEmailFirstResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<CheckEmailFirstResponse>> CheckEmailFirstWithHttpInfoAsync(string orgId, CheckEmailFirstRequest checkEmailFirstRequest, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
         /// Device authorization request (RFC 8628)
         /// </summary>
         /// <remarks>
@@ -636,7 +684,7 @@ namespace LumoAuth.ApiClient.Api
         /// Dynamic client registration (RFC 7591 / OIDC DCR)
         /// </summary>
         /// <remarks>
-        /// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+        /// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -648,7 +696,7 @@ namespace LumoAuth.ApiClient.Api
         /// Dynamic client registration (RFC 7591 / OIDC DCR)
         /// </summary>
         /// <remarks>
-        /// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+        /// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1342,6 +1390,137 @@ namespace LumoAuth.ApiClient.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("BackchannelAuthorize", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Sign-in methods for an email-first form For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: &#x60;exists&#x60; is always &#x60;true&#x60;, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="checkEmailFirstRequest"></param>
+        /// <returns>CheckEmailFirstResponse</returns>
+        public CheckEmailFirstResponse CheckEmailFirst(string orgId, CheckEmailFirstRequest checkEmailFirstRequest)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<CheckEmailFirstResponse> localVarResponse = CheckEmailFirstWithHttpInfo(orgId, checkEmailFirstRequest);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Sign-in methods for an email-first form For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: &#x60;exists&#x60; is always &#x60;true&#x60;, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="checkEmailFirstRequest"></param>
+        /// <returns>ApiResponse of CheckEmailFirstResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<CheckEmailFirstResponse> CheckEmailFirstWithHttpInfo(string orgId, CheckEmailFirstRequest checkEmailFirstRequest)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->CheckEmailFirst");
+
+            // verify the required parameter 'checkEmailFirstRequest' is set
+            if (checkEmailFirstRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkEmailFirstRequest' when calling OAuthApi->CheckEmailFirst");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = checkEmailFirstRequest;
+
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<CheckEmailFirstResponse>("/orgs/{orgId}/api/v1/oauth/check-email", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("CheckEmailFirst", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Sign-in methods for an email-first form For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: &#x60;exists&#x60; is always &#x60;true&#x60;, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="checkEmailFirstRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of CheckEmailFirstResponse</returns>
+        public async System.Threading.Tasks.Task<CheckEmailFirstResponse> CheckEmailFirstAsync(string orgId, CheckEmailFirstRequest checkEmailFirstRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<CheckEmailFirstResponse> localVarResponse = await CheckEmailFirstWithHttpInfoAsync(orgId, checkEmailFirstRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Sign-in methods for an email-first form For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: &#x60;exists&#x60; is always &#x60;true&#x60;, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="checkEmailFirstRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (CheckEmailFirstResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckEmailFirstResponse>> CheckEmailFirstWithHttpInfoAsync(string orgId, CheckEmailFirstRequest checkEmailFirstRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->CheckEmailFirst");
+
+            // verify the required parameter 'checkEmailFirstRequest' is set
+            if (checkEmailFirstRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkEmailFirstRequest' when calling OAuthApi->CheckEmailFirst");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = checkEmailFirstRequest;
+
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<CheckEmailFirstResponse>("/orgs/{orgId}/api/v1/oauth/check-email", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("CheckEmailFirst", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 
@@ -2111,7 +2290,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Dynamic client registration (RFC 7591 / OIDC DCR) Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+        /// Dynamic client registration (RFC 7591 / OIDC DCR) Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2123,7 +2302,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Dynamic client registration (RFC 7591 / OIDC DCR) Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+        /// Dynamic client registration (RFC 7591 / OIDC DCR) Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2177,7 +2356,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Dynamic client registration (RFC 7591 / OIDC DCR) Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+        /// Dynamic client registration (RFC 7591 / OIDC DCR) Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2190,7 +2369,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Dynamic client registration (RFC 7591 / OIDC DCR) Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+        /// Dynamic client registration (RFC 7591 / OIDC DCR) Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
