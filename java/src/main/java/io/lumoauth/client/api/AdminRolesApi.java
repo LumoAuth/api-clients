@@ -89,6 +89,9 @@ public class AdminRolesApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Added; message reports how many permissions were added </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> No permissionId / permissionIds, an id that is not a whole number, an unknown id, or a permission reserved for the platform </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesAddPermissionsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
@@ -155,7 +158,7 @@ public class AdminRolesApi {
 
     /**
      * Add permission(s) to a role
-     * 
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
      * @param orgId  (required)
      * @param roleId  (required)
      * @return MessageResponse
@@ -165,6 +168,9 @@ public class AdminRolesApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Added; message reports how many permissions were added </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> No permissionId / permissionIds, an id that is not a whole number, an unknown id, or a permission reserved for the platform </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
     public MessageResponse adminRolesAddPermissions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
@@ -174,7 +180,7 @@ public class AdminRolesApi {
 
     /**
      * Add permission(s) to a role
-     * 
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
      * @param orgId  (required)
      * @param roleId  (required)
      * @return ApiResponse&lt;MessageResponse&gt;
@@ -184,6 +190,9 @@ public class AdminRolesApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Added; message reports how many permissions were added </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> No permissionId / permissionIds, an id that is not a whole number, an unknown id, or a permission reserved for the platform </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<MessageResponse> adminRolesAddPermissionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
@@ -194,7 +203,7 @@ public class AdminRolesApi {
 
     /**
      * Add permission(s) to a role (asynchronously)
-     * 
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
      * @param orgId  (required)
      * @param roleId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -205,6 +214,9 @@ public class AdminRolesApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Added; message reports how many permissions were added </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> No permissionId / permissionIds, an id that is not a whole number, an unknown id, or a permission reserved for the platform </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesAddPermissionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<MessageResponse> _callback) throws ApiException {
@@ -422,7 +434,7 @@ public class AdminRolesApi {
 
     /**
      * Create a new role
-     * 
+     * Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
      * @param orgId  (required)
      * @return AdminRolesCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -440,7 +452,7 @@ public class AdminRolesApi {
 
     /**
      * Create a new role
-     * 
+     * Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminRolesCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -459,7 +471,7 @@ public class AdminRolesApi {
 
     /**
      * Create a new role (asynchronously)
-     * 
+     * Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1238,7 +1250,7 @@ public class AdminRolesApi {
 
     /**
      * Remove a permission from a role
-     * 
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;.
      * @param orgId  (required)
      * @param roleId  (required)
      * @param permissionId  (required)
@@ -1258,7 +1270,7 @@ public class AdminRolesApi {
 
     /**
      * Remove a permission from a role
-     * 
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;.
      * @param orgId  (required)
      * @param roleId  (required)
      * @param permissionId  (required)
@@ -1279,7 +1291,7 @@ public class AdminRolesApi {
 
     /**
      * Remove a permission from a role (asynchronously)
-     * 
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;.
      * @param orgId  (required)
      * @param roleId  (required)
      * @param permissionId  (required)
@@ -1459,6 +1471,9 @@ public class AdminRolesApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> permissions is missing or not a list, names an unknown slug, or names a permission reserved for the platform </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A new permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesUpdatePermissionsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
@@ -1525,7 +1540,7 @@ public class AdminRolesApi {
 
     /**
      * Update role permissions (replaces all)
-     * 
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
      * @param orgId  (required)
      * @param roleId  (required)
      * @return AdminRolesCreateResponse
@@ -1535,6 +1550,9 @@ public class AdminRolesApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> permissions is missing or not a list, names an unknown slug, or names a permission reserved for the platform </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A new permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
     public AdminRolesCreateResponse adminRolesUpdatePermissions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
@@ -1544,7 +1562,7 @@ public class AdminRolesApi {
 
     /**
      * Update role permissions (replaces all)
-     * 
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
      * @param orgId  (required)
      * @param roleId  (required)
      * @return ApiResponse&lt;AdminRolesCreateResponse&gt;
@@ -1554,6 +1572,9 @@ public class AdminRolesApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> permissions is missing or not a list, names an unknown slug, or names a permission reserved for the platform </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A new permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminRolesCreateResponse> adminRolesUpdatePermissionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
@@ -1564,7 +1585,7 @@ public class AdminRolesApi {
 
     /**
      * Update role permissions (replaces all) (asynchronously)
-     * 
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
      * @param orgId  (required)
      * @param roleId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1575,6 +1596,9 @@ public class AdminRolesApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> permissions is missing or not a list, names an unknown slug, or names a permission reserved for the platform </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A new permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesUpdatePermissionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<AdminRolesCreateResponse> _callback) throws ApiException {

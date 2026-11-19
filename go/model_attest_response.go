@@ -25,8 +25,8 @@ type AttestResponse struct {
 	AccessToken string `json:"access_token"`
 	TokenType string `json:"token_type"`
 	ExpiresIn int32 `json:"expires_in"`
-	// Space-separated agent capabilities.
-	Scope string `json:"scope"`
+	// The issued scope values (the agent's capabilities, or the requested subset), separated by one space. Left out when none was issued.
+	Scope *string `json:"scope,omitempty"`
 	Identity AttestResponseIdentity `json:"identity"`
 }
 
@@ -36,12 +36,11 @@ type _AttestResponse AttestResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAttestResponse(accessToken string, tokenType string, expiresIn int32, scope string, identity AttestResponseIdentity) *AttestResponse {
+func NewAttestResponse(accessToken string, tokenType string, expiresIn int32, identity AttestResponseIdentity) *AttestResponse {
 	this := AttestResponse{}
 	this.AccessToken = accessToken
 	this.TokenType = tokenType
 	this.ExpiresIn = expiresIn
-	this.Scope = scope
 	this.Identity = identity
 	return &this
 }
@@ -126,28 +125,36 @@ func (o *AttestResponse) SetExpiresIn(v int32) {
 	o.ExpiresIn = v
 }
 
-// GetScope returns the Scope field value
+// GetScope returns the Scope field value if set, zero value otherwise.
 func (o *AttestResponse) GetScope() string {
-	if o == nil {
+	if o == nil || IsNil(o.Scope) {
 		var ret string
 		return ret
 	}
-
-	return o.Scope
+	return *o.Scope
 }
 
-// GetScopeOk returns a tuple with the Scope field value
+// GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AttestResponse) GetScopeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Scope) {
 		return nil, false
 	}
-	return &o.Scope, true
+	return o.Scope, true
 }
 
-// SetScope sets field value
+// HasScope returns a boolean if a field has been set.
+func (o *AttestResponse) HasScope() bool {
+	if o != nil && !IsNil(o.Scope) {
+		return true
+	}
+
+	return false
+}
+
+// SetScope gets a reference to the given string and assigns it to the Scope field.
 func (o *AttestResponse) SetScope(v string) {
-	o.Scope = v
+	o.Scope = &v
 }
 
 // GetIdentity returns the Identity field value
@@ -187,7 +194,9 @@ func (o AttestResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize["access_token"] = o.AccessToken
 	toSerialize["token_type"] = o.TokenType
 	toSerialize["expires_in"] = o.ExpiresIn
-	toSerialize["scope"] = o.Scope
+	if !IsNil(o.Scope) {
+		toSerialize["scope"] = o.Scope
+	}
 	toSerialize["identity"] = o.Identity
 	return toSerialize, nil
 }
@@ -200,7 +209,6 @@ func (o *AttestResponse) UnmarshalJSON(data []byte) (err error) {
 		"access_token",
 		"token_type",
 		"expires_in",
-		"scope",
 		"identity",
 	}
 

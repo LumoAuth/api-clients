@@ -28,7 +28,7 @@ using OpenAPIDateConverter = LumoAuth.ApiClient.Client.OpenAPIDateConverter;
 namespace LumoAuth.ApiClient.Model
 {
     /// <summary>
-    /// Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+    /// name, displayName (the same value) and locale, then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
     /// </summary>
     [DataContract(Name = "PutAdminSettingsGeneralUpdateResponseData")]
     public partial class PutAdminSettingsGeneralUpdateResponseData : IValidatableObject
@@ -38,13 +38,11 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         /// <param name="name">name.</param>
         /// <param name="displayName">displayName.</param>
-        /// <param name="timezone">timezone.</param>
         /// <param name="locale">locale.</param>
-        public PutAdminSettingsGeneralUpdateResponseData(string name = default, string displayName = default, string timezone = default, string locale = default)
+        public PutAdminSettingsGeneralUpdateResponseData(string name = default, string displayName = default, string locale = default)
         {
             this.Name = name;
             this.DisplayName = displayName;
-            this.Timezone = timezone;
             this.Locale = locale;
             this.AdditionalProperties = new Dictionary<string, object>();
         }
@@ -60,12 +58,6 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Timezone
-        /// </summary>
-        [DataMember(Name = "timezone", EmitDefaultValue = false)]
-        public string Timezone { get; set; }
 
         /// <summary>
         /// Gets or Sets Locale
@@ -89,7 +81,6 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("class PutAdminSettingsGeneralUpdateResponseData {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  DisplayName: ").Append(DisplayName).Append("\n");
-            sb.Append("  Timezone: ").Append(Timezone).Append("\n");
             sb.Append("  Locale: ").Append(Locale).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");

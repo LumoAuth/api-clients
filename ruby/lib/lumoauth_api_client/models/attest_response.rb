@@ -21,7 +21,7 @@ module LumoAuthApiClient
 
     attr_accessor :expires_in
 
-    # Space-separated agent capabilities.
+    # The issued scope values (the agent's capabilities, or the requested subset), separated by one space. Left out when none was issued.
     attr_accessor :scope
 
     attr_accessor :identity
@@ -122,8 +122,6 @@ module LumoAuthApiClient
 
       if attributes.key?(:'scope')
         self.scope = attributes[:'scope']
-      else
-        self.scope = nil
       end
 
       if attributes.key?(:'identity')
@@ -150,10 +148,6 @@ module LumoAuthApiClient
         invalid_properties.push('invalid value for "expires_in", expires_in cannot be nil.')
       end
 
-      if @scope.nil?
-        invalid_properties.push('invalid value for "scope", scope cannot be nil.')
-      end
-
       if @identity.nil?
         invalid_properties.push('invalid value for "identity", identity cannot be nil.')
       end
@@ -170,7 +164,6 @@ module LumoAuthApiClient
       token_type_validator = EnumAttributeValidator.new('String', ["Bearer", "DPoP"])
       return false unless token_type_validator.valid?(@token_type)
       return false if @expires_in.nil?
-      return false if @scope.nil?
       return false if @identity.nil?
       true
     end
@@ -203,16 +196,6 @@ module LumoAuthApiClient
       end
 
       @expires_in = expires_in
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] scope Value to be assigned
-    def scope=(scope)
-      if scope.nil?
-        fail ArgumentError, 'scope cannot be nil'
-      end
-
-      @scope = scope
     end
 
     # Custom attribute writer method with validation

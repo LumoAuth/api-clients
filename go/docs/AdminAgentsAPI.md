@@ -739,7 +739,7 @@ Name | Type | Description  | Notes
 
 ## AdminAgentsList
 
-> AdminAgentsListResponse AdminAgentsList(ctx, orgId).Execute()
+> AdminAgentsListResponse AdminAgentsList(ctx, orgId).SortBy(sortBy).SortDir(sortDir).Execute()
 
 List all agents in the tenant
 
@@ -757,10 +757,12 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	sortBy := "sortBy_example" // string | Sort field. Default: name. Another value is ignored. (optional)
+	sortDir := "sortDir_example" // string | Sort direction, used with sortBy. (optional) (default to "ASC")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminAgentsAPI.AdminAgentsList(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAgentsAPI.AdminAgentsList(context.Background(), orgId).SortBy(sortBy).SortDir(sortDir).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAgentsAPI.AdminAgentsList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -786,6 +788,8 @@ Other parameters are passed through a pointer to a apiAdminAgentsListRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **sortBy** | **string** | Sort field. Default: name. Another value is ignored. | 
+ **sortDir** | **string** | Sort direction, used with sortBy. | [default to &quot;ASC&quot;]
 
 ### Return type
 

@@ -184,7 +184,7 @@ pub async fn admin_clients_cimd_check(configuration: &configuration::Configurati
     }
 }
 
-/// Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+/// Needs `branding.view` and `clients.view`. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
 pub async fn admin_clients_get_branding(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::AdminClientsGetBrandingResponse, Error<AdminClientsGetBrandingError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -567,6 +567,7 @@ pub async fn list_clients(configuration: &configuration::Configuration, org_id: 
     }
 }
 
+/// Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
 pub async fn patch_admin_clients_update_branding(configuration: &configuration::Configuration, org_id: &str, client_id: &str, admin_clients_get_branding_response_data: Option<models::AdminClientsGetBrandingResponseData>) -> Result<models::PatchAdminClientsUpdateBrandingResponse, Error<PatchAdminClientsUpdateBrandingError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -665,6 +666,7 @@ pub async fn patch_client(configuration: &configuration::Configuration, org_id: 
     }
 }
 
+/// Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
 pub async fn put_admin_clients_update_branding(configuration: &configuration::Configuration, org_id: &str, client_id: &str, put_admin_clients_update_branding_request: Option<models::PutAdminClientsUpdateBrandingRequest>) -> Result<models::PutAdminClientsUpdateBrandingResponse, Error<PutAdminClientsUpdateBrandingError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;

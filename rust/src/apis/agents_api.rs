@@ -114,7 +114,7 @@ pub enum VerifyAgentCardError {
 }
 
 
-/// POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document.read\",   \"context\": {\"id\": \"123\"} }
+/// POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
 pub async fn ask(configuration: &configuration::Configuration, org_id: &str, ask_request: models::AskRequest) -> Result<models::AskResponse, Error<AskError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;

@@ -15,7 +15,7 @@ require 'lumoauth_api_client'
 
 instance = LumoAuthApiClient::AdminAgentsGenerateTokenRequest.new(
   expires_in: 600,
-  scopes: [&quot;invoices.read&quot;],
+  scopes: [&quot;invoices:read&quot;],
   resource: https://invoices.example.com/mcp
 )
 ```

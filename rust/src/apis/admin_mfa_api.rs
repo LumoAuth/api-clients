@@ -19,6 +19,8 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteUserAuthenticatorError {
+    Status401(),
+    Status403(),
     Status404(),
     UnknownValue(serde_json::Value),
 }
@@ -62,7 +64,7 @@ pub enum UpdateMfaPolicyError {
 }
 
 
-/// Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in.
+/// Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 pub async fn delete_user_authenticator(configuration: &configuration::Configuration, org_id: &str, user_id: &str, authenticator_id: &str) -> Result<models::DeleteUserAuthenticatorResponse, Error<DeleteUserAuthenticatorError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -112,7 +114,7 @@ pub async fn delete_user_authenticator(configuration: &configuration::Configurat
     }
 }
 
-/// Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002).
+/// Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002). Needs `users.view` and `settings.view`, as the report on the portal's authentication settings page does.
 pub async fn get_mfa_coverage_report(configuration: &configuration::Configuration, org_id: &str) -> Result<models::GetMfaCoverageReportResponse, Error<GetMfaCoverageReportError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;

@@ -16,6 +16,8 @@ Name | Type | Description | Notes
 **PhoneNumberVerified** | Pointer to **bool** |  | [optional] 
 **IsActive** | **bool** |  | 
 **Blocked** | **bool** |  | 
+**Deleted** | Pointer to **bool** | Soft-deleted by inbound SCIM. Left out of the list unless deleted&#x3D;true is asked; POST /users/{userId}/restore brings the user back. | [optional] 
+**DeletedAt** | Pointer to **NullableTime** |  | [optional] 
 **MfaEnabled** | **bool** |  | 
 **IsAdmin** | **bool** |  | 
 **CreatedAt** | **time.Time** |  | 
@@ -385,6 +387,66 @@ and a boolean to check if the value has been set.
 SetBlocked sets Blocked field to given value.
 
 
+### GetDeleted
+
+`func (o *User) GetDeleted() bool`
+
+GetDeleted returns the Deleted field if non-nil, zero value otherwise.
+
+### GetDeletedOk
+
+`func (o *User) GetDeletedOk() (*bool, bool)`
+
+GetDeletedOk returns a tuple with the Deleted field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeleted
+
+`func (o *User) SetDeleted(v bool)`
+
+SetDeleted sets Deleted field to given value.
+
+### HasDeleted
+
+`func (o *User) HasDeleted() bool`
+
+HasDeleted returns a boolean if a field has been set.
+
+### GetDeletedAt
+
+`func (o *User) GetDeletedAt() time.Time`
+
+GetDeletedAt returns the DeletedAt field if non-nil, zero value otherwise.
+
+### GetDeletedAtOk
+
+`func (o *User) GetDeletedAtOk() (*time.Time, bool)`
+
+GetDeletedAtOk returns a tuple with the DeletedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeletedAt
+
+`func (o *User) SetDeletedAt(v time.Time)`
+
+SetDeletedAt sets DeletedAt field to given value.
+
+### HasDeletedAt
+
+`func (o *User) HasDeletedAt() bool`
+
+HasDeletedAt returns a boolean if a field has been set.
+
+### SetDeletedAtNil
+
+`func (o *User) SetDeletedAtNil(b bool)`
+
+ SetDeletedAtNil sets the value for DeletedAt to be an explicit nil
+
+### UnsetDeletedAt
+`func (o *User) UnsetDeletedAt()`
+
+UnsetDeletedAt ensures that no value is present for DeletedAt, not even an explicit nil
 ### GetMfaEnabled
 
 `func (o *User) GetMfaEnabled() bool`

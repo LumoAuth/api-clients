@@ -29,7 +29,7 @@ Name | Type | Description | Notes
 **requestObjectSigningAlgValuesSupported** | **[String]** |  | [optional] 
 **uiLocalesSupported** | **[String]** |  | [optional] 
 **promptValuesSupported** | **[String]** |  | [optional] 
-**acrValuesSupported** | **[String]** | The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings. | [optional] 
+**acrValuesSupported** | **[String]** | The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session). The list is the same for every organization. | [optional] 
 **codeChallengeMethodsSupported** | **[String]** |  | [optional] 
 **authorizationResponseIssParameterSupported** | **Bool** |  | [optional] 
 **pushedAuthorizationRequestEndpoint** | **String** |  | [optional] 
@@ -53,8 +53,8 @@ Name | Type | Description | Notes
 **entityProfilesSupported** | **[String]** |  | [optional] 
 **clientIdMetadataDocumentSupported** | **Bool** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] 
 **authorizationGrantProfilesSupported** | **[String]** | Only when the organization accepts ID-JAGs. | [optional] 
-**opPolicyUri** | **String** | Only when configured. | [optional] 
-**opTosUri** | **String** | Only when configured. | [optional] 
+**opPolicyUri** | **String** | The Privacy policy URL of the organization&#39;s login page settings. Only when it is set. | [optional] 
+**opTosUri** | **String** | The Terms of service URL of the organization&#39;s login page settings. Only when it is set. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

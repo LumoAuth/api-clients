@@ -1612,6 +1612,8 @@ public class AdminAgentsApi {
     /**
      * Build call for adminAgentsList
      * @param orgId  (required)
+     * @param sortBy Sort field. Default: name. Another value is ignored. (optional)
+     * @param sortDir Sort direction, used with sortBy. (optional, default to ASC)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1625,7 +1627,7 @@ public class AdminAgentsApi {
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAgentsListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminAgentsListCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String sortBy, @javax.annotation.Nullable String sortDir, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1651,6 +1653,14 @@ public class AdminAgentsApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (sortBy != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("sortBy", sortBy));
+        }
+
+        if (sortDir != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("sortDir", sortDir));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1671,13 +1681,13 @@ public class AdminAgentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminAgentsListValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminAgentsListValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String sortBy, @javax.annotation.Nullable String sortDir, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminAgentsList(Async)");
         }
 
-        return adminAgentsListCall(orgId, _callback);
+        return adminAgentsListCall(orgId, sortBy, sortDir, _callback);
 
     }
 
@@ -1685,6 +1695,8 @@ public class AdminAgentsApi {
      * List all agents in the tenant
      * 
      * @param orgId  (required)
+     * @param sortBy Sort field. Default: name. Another value is ignored. (optional)
+     * @param sortDir Sort direction, used with sortBy. (optional, default to ASC)
      * @return AdminAgentsListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1697,8 +1709,8 @@ public class AdminAgentsApi {
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
      </table>
      */
-    public AdminAgentsListResponse adminAgentsList(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<AdminAgentsListResponse> localVarResp = adminAgentsListWithHttpInfo(orgId);
+    public AdminAgentsListResponse adminAgentsList(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String sortBy, @javax.annotation.Nullable String sortDir) throws ApiException {
+        ApiResponse<AdminAgentsListResponse> localVarResp = adminAgentsListWithHttpInfo(orgId, sortBy, sortDir);
         return localVarResp.getData();
     }
 
@@ -1706,6 +1718,8 @@ public class AdminAgentsApi {
      * List all agents in the tenant
      * 
      * @param orgId  (required)
+     * @param sortBy Sort field. Default: name. Another value is ignored. (optional)
+     * @param sortDir Sort direction, used with sortBy. (optional, default to ASC)
      * @return ApiResponse&lt;AdminAgentsListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1718,8 +1732,8 @@ public class AdminAgentsApi {
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminAgentsListResponse> adminAgentsListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = adminAgentsListValidateBeforeCall(orgId, null);
+    public ApiResponse<AdminAgentsListResponse> adminAgentsListWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String sortBy, @javax.annotation.Nullable String sortDir) throws ApiException {
+        okhttp3.Call localVarCall = adminAgentsListValidateBeforeCall(orgId, sortBy, sortDir, null);
         Type localVarReturnType = new TypeToken<AdminAgentsListResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1728,6 +1742,8 @@ public class AdminAgentsApi {
      * List all agents in the tenant (asynchronously)
      * 
      * @param orgId  (required)
+     * @param sortBy Sort field. Default: name. Another value is ignored. (optional)
+     * @param sortDir Sort direction, used with sortBy. (optional, default to ASC)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1741,9 +1757,9 @@ public class AdminAgentsApi {
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAgentsListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminAgentsListResponse> _callback) throws ApiException {
+    public okhttp3.Call adminAgentsListAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String sortBy, @javax.annotation.Nullable String sortDir, final ApiCallback<AdminAgentsListResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminAgentsListValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = adminAgentsListValidateBeforeCall(orgId, sortBy, sortDir, _callback);
         Type localVarReturnType = new TypeToken<AdminAgentsListResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

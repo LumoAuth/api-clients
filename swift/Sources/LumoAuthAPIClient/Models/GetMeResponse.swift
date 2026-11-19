@@ -23,9 +23,15 @@ public struct GetMeResponse: Codable, JSONEncodable, Hashable {
     public var mfaEnabled: Bool?
     public var roles: [String]?
     public var capabilities: [String]?
+    /** Agents only: the OAuth scope values that the agent may request for this organization's API, as RFC 7591 defines a client's registered scope. They are its capabilities, each a scope token (RFC 6749 section 3.3). */
+    public var scopes: [String]?
+    /** Agents only: the scope of the presented token. */
+    public var scope: [String]?
+    /** Agents only: true when the token scope leaves out one of the agent's capabilities. */
+    public var scopeNarrowed: Bool?
     public var tenant: GroupRef?
 
-    public init(subjectType: SubjectType? = nil, id: String? = nil, email: String? = nil, name: String? = nil, mfaEnabled: Bool? = nil, roles: [String]? = nil, capabilities: [String]? = nil, tenant: GroupRef? = nil) {
+    public init(subjectType: SubjectType? = nil, id: String? = nil, email: String? = nil, name: String? = nil, mfaEnabled: Bool? = nil, roles: [String]? = nil, capabilities: [String]? = nil, scopes: [String]? = nil, scope: [String]? = nil, scopeNarrowed: Bool? = nil, tenant: GroupRef? = nil) {
         self.subjectType = subjectType
         self.id = id
         self.email = email
@@ -33,6 +39,9 @@ public struct GetMeResponse: Codable, JSONEncodable, Hashable {
         self.mfaEnabled = mfaEnabled
         self.roles = roles
         self.capabilities = capabilities
+        self.scopes = scopes
+        self.scope = scope
+        self.scopeNarrowed = scopeNarrowed
         self.tenant = tenant
     }
 
@@ -44,6 +53,9 @@ public struct GetMeResponse: Codable, JSONEncodable, Hashable {
         case mfaEnabled = "mfa_enabled"
         case roles
         case capabilities
+        case scopes
+        case scope
+        case scopeNarrowed = "scope_narrowed"
         case tenant
     }
 
@@ -58,6 +70,9 @@ public struct GetMeResponse: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(mfaEnabled, forKey: .mfaEnabled)
         try container.encodeIfPresent(roles, forKey: .roles)
         try container.encodeIfPresent(capabilities, forKey: .capabilities)
+        try container.encodeIfPresent(scopes, forKey: .scopes)
+        try container.encodeIfPresent(scope, forKey: .scope)
+        try container.encodeIfPresent(scopeNarrowed, forKey: .scopeNarrowed)
         try container.encodeIfPresent(tenant, forKey: .tenant)
     }
 }

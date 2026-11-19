@@ -89,6 +89,8 @@ adminEmailTemplatesGet($orgId, $type, $locale, $clientId): \LumoAuth\ApiClient\M
 
 Get an email template (custom or built-in default)
 
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
+
 ### Example
 
 ```php
@@ -157,6 +159,8 @@ adminEmailTemplatesList($orgId): \LumoAuth\ApiClient\Model\AdminEmailTemplatesLi
 ```
 
 List every email template type with its current (custom or built-in) template
+
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 ### Example
 
@@ -352,6 +356,8 @@ adminEmailTemplatesVariables($orgId, $type): \LumoAuth\ApiClient\Model\AdminEmai
 ```
 
 List the placeholders available to an email template type
+
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 ### Example
 

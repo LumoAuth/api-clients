@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **clientId** | **string** | Detailed responses only | [optional]
 **callbackUrl** | **string** | Detailed responses only | [optional]
 **requestedScopes** | **string[]** | Detailed responses only | [optional]
-**customClaims** | **array<string,mixed>** | Detailed responses only | [optional]
+**customClaims** | **array<string,mixed>** | Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes. | [optional]
 **claimMapping** | **array<string,mixed>** | Detailed responses only | [optional]
 **providerConfig** | **array<string,mixed>** | Detailed responses only; secrets redacted | [optional]
 **authorizationUrl** | **string** | Detailed responses only | [optional]

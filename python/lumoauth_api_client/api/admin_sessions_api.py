@@ -17,7 +17,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import Field, StrictStr, field_validator
+from typing_extensions import Annotated
 from lumoauth_api_client.models.admin_client_tokens_revoke_all_response import AdminClientTokensRevokeAllResponse
 from lumoauth_api_client.models.admin_sessions_count_response import AdminSessionsCountResponse
 from lumoauth_api_client.models.admin_sessions_list_response import AdminSessionsListResponse
@@ -1130,7 +1131,7 @@ class AdminSessionsApi:
     def admin_sessions_revoke(
         self,
         org_id: StrictStr,
-        session_id: StrictStr,
+        session_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1202,7 +1203,7 @@ class AdminSessionsApi:
     def admin_sessions_revoke_with_http_info(
         self,
         org_id: StrictStr,
-        session_id: StrictStr,
+        session_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1274,7 +1275,7 @@ class AdminSessionsApi:
     def admin_sessions_revoke_without_preload_content(
         self,
         org_id: StrictStr,
-        session_id: StrictStr,
+        session_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2224,7 +2225,7 @@ class AdminSessionsApi:
     def admin_tokens_revoke(
         self,
         org_id: StrictStr,
-        token_id: StrictStr,
+        token_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2296,7 +2297,7 @@ class AdminSessionsApi:
     def admin_tokens_revoke_with_http_info(
         self,
         org_id: StrictStr,
-        token_id: StrictStr,
+        token_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2368,7 +2369,7 @@ class AdminSessionsApi:
     def admin_tokens_revoke_without_preload_content(
         self,
         org_id: StrictStr,
-        token_id: StrictStr,
+        token_id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],

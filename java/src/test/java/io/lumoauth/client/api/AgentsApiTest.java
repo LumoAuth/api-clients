@@ -49,7 +49,7 @@ public class AgentsApiTest {
     /**
      * Agent-friendly permission check (Natural Language style)
      *
-     * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \&quot;action\&quot;: \&quot;document.read\&quot;,   \&quot;context\&quot;: {\&quot;id\&quot;: \&quot;123\&quot;} }
+     * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \&quot;action\&quot;: \&quot;document:read\&quot;,   \&quot;context\&quot;: {\&quot;id\&quot;: \&quot;123\&quot;} }
      *
      * @throws ApiException if the Api call fails
      */

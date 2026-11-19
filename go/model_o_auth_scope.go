@@ -23,8 +23,8 @@ var _ MappedNullable = &OAuthScope{}
 type OAuthScope struct {
 	Id *int32 `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
+	// Shown to users on the consent page next to the scope name.
 	Description NullableString `json:"description,omitempty"`
-	IsDefault *bool `json:"isDefault,omitempty"`
 	IsSystem *bool `json:"isSystem,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 }
@@ -152,38 +152,6 @@ func (o *OAuthScope) UnsetDescription() {
 	o.Description.Unset()
 }
 
-// GetIsDefault returns the IsDefault field value if set, zero value otherwise.
-func (o *OAuthScope) GetIsDefault() bool {
-	if o == nil || IsNil(o.IsDefault) {
-		var ret bool
-		return ret
-	}
-	return *o.IsDefault
-}
-
-// GetIsDefaultOk returns a tuple with the IsDefault field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *OAuthScope) GetIsDefaultOk() (*bool, bool) {
-	if o == nil || IsNil(o.IsDefault) {
-		return nil, false
-	}
-	return o.IsDefault, true
-}
-
-// HasIsDefault returns a boolean if a field has been set.
-func (o *OAuthScope) HasIsDefault() bool {
-	if o != nil && !IsNil(o.IsDefault) {
-		return true
-	}
-
-	return false
-}
-
-// SetIsDefault gets a reference to the given bool and assigns it to the IsDefault field.
-func (o *OAuthScope) SetIsDefault(v bool) {
-	o.IsDefault = &v
-}
-
 // GetIsSystem returns the IsSystem field value if set, zero value otherwise.
 func (o *OAuthScope) GetIsSystem() bool {
 	if o == nil || IsNil(o.IsSystem) {
@@ -266,9 +234,6 @@ func (o OAuthScope) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Description.IsSet() {
 		toSerialize["description"] = o.Description.Get()
-	}
-	if !IsNil(o.IsDefault) {
-		toSerialize["isDefault"] = o.IsDefault
 	}
 	if !IsNil(o.IsSystem) {
 		toSerialize["isSystem"] = o.IsSystem

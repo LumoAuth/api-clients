@@ -29,6 +29,15 @@ module LumoAuthApiClient
 
     attr_accessor :capabilities
 
+    # Agents only: the OAuth scope values that the agent may request for this organization's API, as RFC 7591 defines a client's registered scope. They are its capabilities, each a scope token (RFC 6749 section 3.3).
+    attr_accessor :scopes
+
+    # Agents only: the scope of the presented token.
+    attr_accessor :scope
+
+    # Agents only: true when the token scope leaves out one of the agent's capabilities.
+    attr_accessor :scope_narrowed
+
     attr_accessor :tenant
 
     class EnumAttributeValidator
@@ -63,6 +72,9 @@ module LumoAuthApiClient
         :'mfa_enabled' => :'mfa_enabled',
         :'roles' => :'roles',
         :'capabilities' => :'capabilities',
+        :'scopes' => :'scopes',
+        :'scope' => :'scope',
+        :'scope_narrowed' => :'scope_narrowed',
         :'tenant' => :'tenant'
       }
     end
@@ -87,6 +99,9 @@ module LumoAuthApiClient
         :'mfa_enabled' => :'Boolean',
         :'roles' => :'Array<String>',
         :'capabilities' => :'Array<String>',
+        :'scopes' => :'Array<String>',
+        :'scope' => :'Array<String>',
+        :'scope_narrowed' => :'Boolean',
         :'tenant' => :'GroupRef'
       }
     end
@@ -99,6 +114,9 @@ module LumoAuthApiClient
         :'mfa_enabled',
         :'roles',
         :'capabilities',
+        :'scopes',
+        :'scope',
+        :'scope_narrowed',
       ])
     end
 
@@ -150,6 +168,22 @@ module LumoAuthApiClient
         end
       end
 
+      if attributes.key?(:'scopes')
+        if (value = attributes[:'scopes']).is_a?(Array)
+          self.scopes = value
+        end
+      end
+
+      if attributes.key?(:'scope')
+        if (value = attributes[:'scope']).is_a?(Array)
+          self.scope = value
+        end
+      end
+
+      if attributes.key?(:'scope_narrowed')
+        self.scope_narrowed = attributes[:'scope_narrowed']
+      end
+
       if attributes.key?(:'tenant')
         self.tenant = attributes[:'tenant']
       end
@@ -194,6 +228,9 @@ module LumoAuthApiClient
           mfa_enabled == o.mfa_enabled &&
           roles == o.roles &&
           capabilities == o.capabilities &&
+          scopes == o.scopes &&
+          scope == o.scope &&
+          scope_narrowed == o.scope_narrowed &&
           tenant == o.tenant
     end
 
@@ -206,7 +243,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [subject_type, id, email, name, mfa_enabled, roles, capabilities, tenant].hash
+      [subject_type, id, email, name, mfa_enabled, roles, capabilities, scopes, scope, scope_narrowed, tenant].hash
     end
 
     # Builds the object from hash

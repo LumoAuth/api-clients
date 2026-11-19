@@ -69,7 +69,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="accessToken">accessToken (required).</param>
         /// <param name="tokenType">tokenType (required).</param>
         /// <param name="expiresIn">expiresIn (required).</param>
-        /// <param name="scope">Space-separated agent capabilities. (required).</param>
+        /// <param name="scope">The issued scope values (the agent&#39;s capabilities, or the requested subset), separated by one space. Left out when none was issued..</param>
         /// <param name="identity">identity (required).</param>
         public AttestResponse(string accessToken = default, TokenTypeEnum tokenType = default, int expiresIn = default, string scope = default, AttestResponseIdentity identity = default)
         {
@@ -81,18 +81,13 @@ namespace LumoAuth.ApiClient.Model
             this.AccessToken = accessToken;
             this.TokenType = tokenType;
             this.ExpiresIn = expiresIn;
-            // to ensure "scope" is required (not null)
-            if (scope == null)
-            {
-                throw new ArgumentNullException("scope is a required property for AttestResponse and cannot be null");
-            }
-            this.Scope = scope;
             // to ensure "identity" is required (not null)
             if (identity == null)
             {
                 throw new ArgumentNullException("identity is a required property for AttestResponse and cannot be null");
             }
             this.Identity = identity;
+            this.Scope = scope;
         }
 
         /// <summary>
@@ -111,10 +106,10 @@ namespace LumoAuth.ApiClient.Model
         public int ExpiresIn { get; set; }
 
         /// <summary>
-        /// Space-separated agent capabilities.
+        /// The issued scope values (the agent&#39;s capabilities, or the requested subset), separated by one space. Left out when none was issued.
         /// </summary>
-        /// <value>Space-separated agent capabilities.</value>
-        [DataMember(Name = "scope", IsRequired = true, EmitDefaultValue = true)]
+        /// <value>The issued scope values (the agent&#39;s capabilities, or the requested subset), separated by one space. Left out when none was issued.</value>
+        [DataMember(Name = "scope", EmitDefaultValue = false)]
         public string Scope { get; set; }
 
         /// <summary>

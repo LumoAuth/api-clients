@@ -22,6 +22,7 @@ var _ MappedNullable = &GetServerChallengeResponse{}
 
 // GetServerChallengeResponse struct for GetServerChallengeResponse
 type GetServerChallengeResponse struct {
+	// `no_authorization_required` for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token.
 	Status string `json:"status"`
 	// MCP server display name.
 	Server string `json:"server"`

@@ -242,6 +242,7 @@ class GetServerChallengeResponse implements ModelInterface, ArrayAccess, \JsonSe
     }
 
     public const STATUS_AUTHENTICATED = 'authenticated';
+    public const STATUS_NO_AUTHORIZATION_REQUIRED = 'no_authorization_required';
 
     /**
      * Gets allowable values of the enum
@@ -252,6 +253,7 @@ class GetServerChallengeResponse implements ModelInterface, ArrayAccess, \JsonSe
     {
         return [
             self::STATUS_AUTHENTICATED,
+            self::STATUS_NO_AUTHORIZATION_REQUIRED,
         ];
     }
 
@@ -348,7 +350,7 @@ class GetServerChallengeResponse implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Sets status
      *
-     * @param string $status status
+     * @param string $status `no_authorization_required` for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token.
      *
      * @return self
      */

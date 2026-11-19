@@ -70,6 +70,14 @@ public class AskResponseTest {
     }
 
     /**
+     * Test the property 'decidedBy'
+     */
+    @Test
+    public void decidedByTest() {
+        // TODO: test decidedBy
+    }
+
+    /**
      * Test the property 'auditId'
      */
     @Test

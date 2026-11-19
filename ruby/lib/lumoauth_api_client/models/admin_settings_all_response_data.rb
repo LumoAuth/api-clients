@@ -23,7 +23,6 @@ module LumoAuthApiClient
 
     attr_accessor :security
 
-    # Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
     attr_accessor :email
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -54,7 +53,7 @@ module LumoAuthApiClient
         :'authentication' => :'AuthenticationSettings',
         :'branding' => :'BrandingSettings',
         :'security' => :'AdminSettingsAllResponseDataSecurity',
-        :'email' => :'Hash<String, Object>'
+        :'email' => :'EmailSenderSettings'
       }
     end
 
@@ -97,9 +96,7 @@ module LumoAuthApiClient
       end
 
       if attributes.key?(:'email')
-        if (value = attributes[:'email']).is_a?(Hash)
-          self.email = value
-        end
+        self.email = attributes[:'email']
       end
     end
 

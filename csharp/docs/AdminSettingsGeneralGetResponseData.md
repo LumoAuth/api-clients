@@ -1,14 +1,13 @@
 # LumoAuth.ApiClient.Model.AdminSettingsGeneralGetResponseData
-Defaults (displayName, timezone, locale) are filled in, then the raw settings dictionary is merged over them: any stored key (display_name, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+name, displayName (the same value) and locale, then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** |  | [optional] 
-**DisplayName** | **string** |  | [optional] 
-**Timezone** | **string** |  | [optional] 
-**Locale** | **string** |  | [optional] 
+**Name** | **string** | Name of the organization, shown on the hosted pages and in mail. | [optional] 
+**DisplayName** | **string** | The same value as name. | [optional] 
+**Locale** | **string** | Default language of the hosted pages (the Default language of the login page settings). | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -19,20 +19,20 @@ pub struct AttestResponse {
     pub token_type: TokenType,
     #[serde(rename = "expires_in")]
     pub expires_in: i32,
-    /// Space-separated agent capabilities.
-    #[serde(rename = "scope")]
-    pub scope: String,
+    /// The issued scope values (the agent's capabilities, or the requested subset), separated by one space. Left out when none was issued.
+    #[serde(rename = "scope", skip_serializing_if = "Option::is_none")]
+    pub scope: Option<String>,
     #[serde(rename = "identity")]
     pub identity: Box<models::AttestResponseIdentity>,
 }
 
 impl AttestResponse {
-    pub fn new(access_token: String, token_type: TokenType, expires_in: i32, scope: String, identity: models::AttestResponseIdentity) -> AttestResponse {
+    pub fn new(access_token: String, token_type: TokenType, expires_in: i32, identity: models::AttestResponseIdentity) -> AttestResponse {
         AttestResponse {
             access_token,
             token_type,
             expires_in,
-            scope,
+            scope: None,
             identity: Box::new(identity),
         }
     }

@@ -42,11 +42,11 @@ export interface AttestResponse {
      */
     'expires_in': number;
     /**
-     * Space-separated agent capabilities.
+     * The issued scope values (the agent\'s capabilities, or the requested subset), separated by one space. Left out when none was issued.
      * @type {string}
      * @memberof AttestResponse
      */
-    'scope': string;
+    'scope'?: string;
     /**
      * 
      * @type {AttestResponseIdentity}

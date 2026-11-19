@@ -33,6 +33,9 @@ module LumoAuthApiClient
     # Refresh token to redeem (request_type=refresh).
     attr_accessor :refresh_token
 
+    # request_type=refresh only: optional space-delimited scopes that narrow the refreshed token. Must be a subset of the refresh grant and of the resource token scope (invalid_scope otherwise). Ignored for request_type=auth, where the resource token names the scope.
+    attr_accessor :scope
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -41,7 +44,8 @@ module LumoAuthApiClient
         :'redirect_uri' => :'redirect_uri',
         :'code' => :'code',
         :'auth_token' => :'auth_token',
-        :'refresh_token' => :'refresh_token'
+        :'refresh_token' => :'refresh_token',
+        :'scope' => :'scope'
       }
     end
 
@@ -63,7 +67,8 @@ module LumoAuthApiClient
         :'redirect_uri' => :'String',
         :'code' => :'String',
         :'auth_token' => :'String',
-        :'refresh_token' => :'String'
+        :'refresh_token' => :'String',
+        :'scope' => :'String'
       }
     end
 
@@ -112,6 +117,10 @@ module LumoAuthApiClient
       if attributes.key?(:'refresh_token')
         self.refresh_token = attributes[:'refresh_token']
       end
+
+      if attributes.key?(:'scope')
+        self.scope = attributes[:'scope']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -139,7 +148,8 @@ module LumoAuthApiClient
           redirect_uri == o.redirect_uri &&
           code == o.code &&
           auth_token == o.auth_token &&
-          refresh_token == o.refresh_token
+          refresh_token == o.refresh_token &&
+          scope == o.scope
     end
 
     # @see the `==` method
@@ -151,7 +161,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [request_type, resource_token, redirect_uri, code, auth_token, refresh_token].hash
+      [request_type, resource_token, redirect_uri, code, auth_token, refresh_token, scope].hash
     end
 
     # Builds the object from hash

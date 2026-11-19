@@ -28,6 +28,8 @@ import java.io.IOException;
 
 
 import io.lumoauth.client.model.BackchannelAuthorizeResponse;
+import io.lumoauth.client.model.CheckEmailFirstRequest;
+import io.lumoauth.client.model.CheckEmailFirstResponse;
 import io.lumoauth.client.model.DeviceAuthorizationResponse;
 import io.lumoauth.client.model.IntrospectResponse;
 import io.lumoauth.client.model.ParResponse;
@@ -95,7 +97,7 @@ public class OAuthApi {
         <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON); Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call authorizeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -168,7 +170,7 @@ public class OAuthApi {
         <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON); Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public String authorize(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -190,7 +192,7 @@ public class OAuthApi {
         <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON); Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<String> authorizeWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -214,7 +216,7 @@ public class OAuthApi {
         <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON); Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call authorizeAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
@@ -238,7 +240,7 @@ public class OAuthApi {
         <tr><td> 400 </td><td> invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests, or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call backchannelAuthorizeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -311,7 +313,7 @@ public class OAuthApi {
         <tr><td> 400 </td><td> invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests, or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
     public BackchannelAuthorizeResponse backchannelAuthorize(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -333,7 +335,7 @@ public class OAuthApi {
         <tr><td> 400 </td><td> invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests, or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<BackchannelAuthorizeResponse> backchannelAuthorizeWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -357,13 +359,166 @@ public class OAuthApi {
         <tr><td> 400 </td><td> invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests, or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call backchannelAuthorizeAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<BackchannelAuthorizeResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = backchannelAuthorizeValidateBeforeCall(orgId, _callback);
         Type localVarReturnType = new TypeToken<BackchannelAuthorizeResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for checkEmailFirst
+     * @param orgId  (required)
+     * @param checkEmailFirstRequest  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The organization&#39;s sign-in methods. The same for every address. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> &#x60;{\&quot;error\&quot;: …, \&quot;message\&quot;: …}&#x60; with error &#x60;invalid_request&#x60; or &#x60;invalid_client&#x60;. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> &#x60;{\&quot;error\&quot;:\&quot;origin_not_allowed\&quot;}&#x60;: the page that made the request is not one of the application&#39;s allowed origins. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> &#x60;{\&quot;error\&quot;:\&quot;not_found\&quot;}&#x60; for an unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> &#x60;{\&quot;error\&quot;:\&quot;rate_limited\&quot;}&#x60;; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call checkEmailFirstCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckEmailFirstRequest checkEmailFirstRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = checkEmailFirstRequest;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/oauth/check-email"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call checkEmailFirstValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckEmailFirstRequest checkEmailFirstRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling checkEmailFirst(Async)");
+        }
+
+        // verify the required parameter 'checkEmailFirstRequest' is set
+        if (checkEmailFirstRequest == null) {
+            throw new ApiException("Missing the required parameter 'checkEmailFirstRequest' when calling checkEmailFirst(Async)");
+        }
+
+        return checkEmailFirstCall(orgId, checkEmailFirstRequest, _callback);
+
+    }
+
+    /**
+     * Sign-in methods for an email-first form
+     * For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: &#x60;exists&#x60; is always &#x60;true&#x60;, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+     * @param orgId  (required)
+     * @param checkEmailFirstRequest  (required)
+     * @return CheckEmailFirstResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The organization&#39;s sign-in methods. The same for every address. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> &#x60;{\&quot;error\&quot;: …, \&quot;message\&quot;: …}&#x60; with error &#x60;invalid_request&#x60; or &#x60;invalid_client&#x60;. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> &#x60;{\&quot;error\&quot;:\&quot;origin_not_allowed\&quot;}&#x60;: the page that made the request is not one of the application&#39;s allowed origins. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> &#x60;{\&quot;error\&quot;:\&quot;not_found\&quot;}&#x60; for an unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> &#x60;{\&quot;error\&quot;:\&quot;rate_limited\&quot;}&#x60;; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
+     </table>
+     */
+    public CheckEmailFirstResponse checkEmailFirst(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckEmailFirstRequest checkEmailFirstRequest) throws ApiException {
+        ApiResponse<CheckEmailFirstResponse> localVarResp = checkEmailFirstWithHttpInfo(orgId, checkEmailFirstRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Sign-in methods for an email-first form
+     * For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: &#x60;exists&#x60; is always &#x60;true&#x60;, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+     * @param orgId  (required)
+     * @param checkEmailFirstRequest  (required)
+     * @return ApiResponse&lt;CheckEmailFirstResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The organization&#39;s sign-in methods. The same for every address. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> &#x60;{\&quot;error\&quot;: …, \&quot;message\&quot;: …}&#x60; with error &#x60;invalid_request&#x60; or &#x60;invalid_client&#x60;. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> &#x60;{\&quot;error\&quot;:\&quot;origin_not_allowed\&quot;}&#x60;: the page that made the request is not one of the application&#39;s allowed origins. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> &#x60;{\&quot;error\&quot;:\&quot;not_found\&quot;}&#x60; for an unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> &#x60;{\&quot;error\&quot;:\&quot;rate_limited\&quot;}&#x60;; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<CheckEmailFirstResponse> checkEmailFirstWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckEmailFirstRequest checkEmailFirstRequest) throws ApiException {
+        okhttp3.Call localVarCall = checkEmailFirstValidateBeforeCall(orgId, checkEmailFirstRequest, null);
+        Type localVarReturnType = new TypeToken<CheckEmailFirstResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Sign-in methods for an email-first form (asynchronously)
+     * For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: &#x60;exists&#x60; is always &#x60;true&#x60;, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by &#x60;client_id&#x60;.
+     * @param orgId  (required)
+     * @param checkEmailFirstRequest  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The organization&#39;s sign-in methods. The same for every address. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> &#x60;{\&quot;error\&quot;: …, \&quot;message\&quot;: …}&#x60; with error &#x60;invalid_request&#x60; or &#x60;invalid_client&#x60;. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> &#x60;{\&quot;error\&quot;:\&quot;origin_not_allowed\&quot;}&#x60;: the page that made the request is not one of the application&#39;s allowed origins. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> &#x60;{\&quot;error\&quot;:\&quot;not_found\&quot;}&#x60; for an unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> &#x60;{\&quot;error\&quot;:\&quot;rate_limited\&quot;}&#x60;; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call checkEmailFirstAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckEmailFirstRequest checkEmailFirstRequest, final ApiCallback<CheckEmailFirstResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = checkEmailFirstValidateBeforeCall(orgId, checkEmailFirstRequest, _callback);
+        Type localVarReturnType = new TypeToken<CheckEmailFirstResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -380,7 +535,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Device authorization response (RFC 8628 §3.2). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — a confidential client failed to authenticate. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call deviceAuthorizationCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -452,7 +607,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Device authorization response (RFC 8628 §3.2). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — a confidential client failed to authenticate. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public DeviceAuthorizationResponse deviceAuthorization(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -473,7 +628,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Device authorization response (RFC 8628 §3.2). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — a confidential client failed to authenticate. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<DeviceAuthorizationResponse> deviceAuthorizationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -496,7 +651,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Device authorization response (RFC 8628 §3.2). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — a confidential client failed to authenticate. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call deviceAuthorizationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<DeviceAuthorizationResponse> _callback) throws ApiException {
@@ -659,7 +814,7 @@ public class OAuthApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
         <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
-        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getDeviceVerificationCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -730,7 +885,7 @@ public class OAuthApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
         <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
-        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
     public String getDeviceVerification(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -750,7 +905,7 @@ public class OAuthApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
         <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
-        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<String> getDeviceVerificationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -772,7 +927,7 @@ public class OAuthApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
         <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
-        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getDeviceVerificationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
@@ -930,7 +1085,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request — token parameter missing. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call introspectCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1002,7 +1157,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request — token parameter missing. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public IntrospectResponse introspect(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1023,7 +1178,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request — token parameter missing. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<IntrospectResponse> introspectWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1046,7 +1201,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request — token parameter missing. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call introspectAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<IntrospectResponse> _callback) throws ApiException {
@@ -1069,7 +1224,7 @@ public class OAuthApi {
         <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call parCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1141,7 +1296,7 @@ public class OAuthApi {
         <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public ParResponse par(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1162,7 +1317,7 @@ public class OAuthApi {
         <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<ParResponse> parWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1185,7 +1340,7 @@ public class OAuthApi {
         <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call parAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<ParResponse> _callback) throws ApiException {
@@ -1209,7 +1364,7 @@ public class OAuthApi {
         <tr><td> 400 </td><td> invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call registerClientCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1270,7 +1425,7 @@ public class OAuthApi {
 
     /**
      * Dynamic client registration (RFC 7591 / OIDC DCR)
-     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
      * @param orgId  (required)
      * @return RegisterClientResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1282,7 +1437,7 @@ public class OAuthApi {
         <tr><td> 400 </td><td> invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public RegisterClientResponse registerClient(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1292,7 +1447,7 @@ public class OAuthApi {
 
     /**
      * Dynamic client registration (RFC 7591 / OIDC DCR)
-     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
      * @param orgId  (required)
      * @return ApiResponse&lt;RegisterClientResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1304,7 +1459,7 @@ public class OAuthApi {
         <tr><td> 400 </td><td> invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<RegisterClientResponse> registerClientWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1315,7 +1470,7 @@ public class OAuthApi {
 
     /**
      * Dynamic client registration (RFC 7591 / OIDC DCR) (asynchronously)
-     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1328,7 +1483,7 @@ public class OAuthApi {
         <tr><td> 400 </td><td> invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call registerClientAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<RegisterClientResponse> _callback) throws ApiException {
@@ -1504,7 +1659,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call revokeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1576,7 +1731,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public Object revoke(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1597,7 +1752,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<Object> revokeWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1620,7 +1775,7 @@ public class OAuthApi {
         <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call revokeAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Object> _callback) throws ApiException {
@@ -2040,7 +2195,7 @@ public class OAuthApi {
         <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON); Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call submitAuthorizationCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2113,7 +2268,7 @@ public class OAuthApi {
         <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON); Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public String submitAuthorization(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2135,7 +2290,7 @@ public class OAuthApi {
         <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON); Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<String> submitAuthorizationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2159,7 +2314,7 @@ public class OAuthApi {
         <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON); Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call submitAuthorizationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
@@ -2181,7 +2336,7 @@ public class OAuthApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
         <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
-        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call submitDeviceVerificationCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2252,7 +2407,7 @@ public class OAuthApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
         <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
-        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
     public String submitDeviceVerification(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2272,7 +2427,7 @@ public class OAuthApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
         <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
-        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<String> submitDeviceVerificationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2294,7 +2449,7 @@ public class OAuthApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
         <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
-        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call submitDeviceVerificationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
@@ -2600,7 +2755,7 @@ public class OAuthApi {
         <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call tokenCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2673,7 +2828,7 @@ public class OAuthApi {
         <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public TokenResponse token(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2695,7 +2850,7 @@ public class OAuthApi {
         <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<TokenResponse> tokenWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2719,7 +2874,7 @@ public class OAuthApi {
         <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call tokenAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<TokenResponse> _callback) throws ApiException {

@@ -76,8 +76,7 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Protected resource metadata. scopes_supported only when the server declares scopes; the dpop_* members only when the server requires DPoP-bound tokens. Any additional admin-supplied metadata fields are merged in (they can never override resource, authorization_servers, bearer_methods_supported or scopes_supported). |  -  |
-| **400** | not_applicable — the MCP server does not require authorization. |  -  |
-| **404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
+| **404** | not_found — unknown organization, unknown / inactive MCP server, or an MCP server that checks no token (Public or stdio): such a server has no protected resource metadata. |  -  |
 
 <a id="getProtectedResourceMetadataRoot"></a>
 # **getProtectedResourceMetadataRoot**
@@ -216,7 +215,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | A single MCP server with discovery metadata. |  -  |
-| **403** | Caller lacks the settings.manage permission. |  -  |
+| **403** | Caller lacks the agents.view permission. |  -  |
 | **404** | Tenant or MCP server not found. |  -  |
 
 <a id="getServerChallenge"></a>
@@ -286,7 +285,7 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | The access token is valid for this MCP server. |  -  |
+| **200** | The access token is valid for this MCP server, or the server checks no token. |  -  |
 | **401** | unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). |  * WWW-Authenticate -  <br>  |
 | **403** | insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). |  * WWW-Authenticate -  <br>  |
 | **404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
@@ -364,7 +363,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | List of active MCP servers for the tenant. |  -  |
-| **403** | Caller lacks the settings.manage permission. |  -  |
+| **403** | Caller lacks the agents.view permission. |  -  |
 | **404** | Tenant not found. |  -  |
 
 <a id="mcpServerToolAuthorize"></a>
@@ -516,7 +515,7 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | The access token is valid for this MCP server. |  -  |
+| **200** | The access token is valid for this MCP server, or the server checks no token. |  -  |
 | **401** | unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). |  * WWW-Authenticate -  <br>  |
 | **403** | insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). |  * WWW-Authenticate -  <br>  |
 | **404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |

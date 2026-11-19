@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **access_token** | **str** |  | 
 **token_type** | **str** |  | 
 **expires_in** | **int** |  | 
-**scope** | **str** | Space-separated agent capabilities. | 
+**scope** | **str** | The issued scope values (the agent&#39;s capabilities, or the requested subset), separated by one space. Left out when none was issued. | [optional] 
 **identity** | [**AttestResponseIdentity**](AttestResponseIdentity.md) |  | 
 
 ## Example

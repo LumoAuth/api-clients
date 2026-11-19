@@ -510,7 +510,7 @@ Name | Type | Description  | Notes
 
 ## AbacPoliciesList
 
-> AbacPoliciesListResponse AbacPoliciesList(ctx, orgId).Execute()
+> AbacPoliciesListResponse AbacPoliciesList(ctx, orgId).Action(action).Execute()
 
 List ABAC policies
 
@@ -528,10 +528,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	action := "action_example" // string | Only policies that name this action, alone or in a comma-separated list. `*` lists the policies that name `*`. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminAbacAPI.AbacPoliciesList(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.AbacPoliciesList(context.Background(), orgId).Action(action).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.AbacPoliciesList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -557,6 +558,7 @@ Other parameters are passed through a pointer to a apiAbacPoliciesListRequest st
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **action** | **string** | Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. | 
 
 ### Return type
 

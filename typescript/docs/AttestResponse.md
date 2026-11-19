@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **access_token** | **string** |  | [default to undefined]
 **token_type** | **string** |  | [default to undefined]
 **expires_in** | **number** |  | [default to undefined]
-**scope** | **string** | Space-separated agent capabilities. | [default to undefined]
+**scope** | **string** | The issued scope values (the agent\&#39;s capabilities, or the requested subset), separated by one space. Left out when none was issued. | [optional] [default to undefined]
 **identity** | [**AttestResponseIdentity**](AttestResponseIdentity.md) |  | [default to undefined]
 
 ## Example

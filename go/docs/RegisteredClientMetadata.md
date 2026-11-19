@@ -19,16 +19,12 @@ Name | Type | Description | Notes
 **LogoUri** | Pointer to **string** |  | [optional] 
 **PolicyUri** | Pointer to **string** |  | [optional] 
 **TosUri** | Pointer to **string** |  | [optional] 
-**SectorIdentifierUri** | Pointer to **string** |  | [optional] 
-**SubjectType** | Pointer to **string** | Only when not \&quot;public\&quot;. | [optional] 
 **JwksUri** | Pointer to **string** |  | [optional] 
 **Jwks** | Pointer to **map[string]interface{}** |  | [optional] 
 **PostLogoutRedirectUris** | Pointer to **[]string** |  | [optional] 
 **InitiateLoginUri** | Pointer to **string** |  | [optional] 
-**RequestUris** | Pointer to **[]string** |  | [optional] 
 **Scope** | Pointer to **string** | Space-separated registered scopes. | [optional] 
 **IdTokenSignedResponseAlg** | Pointer to **string** | Only when not RS256. | [optional] 
-**UserinfoSignedResponseAlg** | Pointer to **string** |  | [optional] 
 **RequestObjectSigningAlg** | Pointer to **string** |  | [optional] 
 **TokenEndpointAuthSigningAlg** | Pointer to **string** |  | [optional] 
 **DefaultMaxAge** | Pointer to **int32** |  | [optional] 
@@ -404,56 +400,6 @@ SetTosUri sets TosUri field to given value.
 
 HasTosUri returns a boolean if a field has been set.
 
-### GetSectorIdentifierUri
-
-`func (o *RegisteredClientMetadata) GetSectorIdentifierUri() string`
-
-GetSectorIdentifierUri returns the SectorIdentifierUri field if non-nil, zero value otherwise.
-
-### GetSectorIdentifierUriOk
-
-`func (o *RegisteredClientMetadata) GetSectorIdentifierUriOk() (*string, bool)`
-
-GetSectorIdentifierUriOk returns a tuple with the SectorIdentifierUri field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSectorIdentifierUri
-
-`func (o *RegisteredClientMetadata) SetSectorIdentifierUri(v string)`
-
-SetSectorIdentifierUri sets SectorIdentifierUri field to given value.
-
-### HasSectorIdentifierUri
-
-`func (o *RegisteredClientMetadata) HasSectorIdentifierUri() bool`
-
-HasSectorIdentifierUri returns a boolean if a field has been set.
-
-### GetSubjectType
-
-`func (o *RegisteredClientMetadata) GetSubjectType() string`
-
-GetSubjectType returns the SubjectType field if non-nil, zero value otherwise.
-
-### GetSubjectTypeOk
-
-`func (o *RegisteredClientMetadata) GetSubjectTypeOk() (*string, bool)`
-
-GetSubjectTypeOk returns a tuple with the SubjectType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSubjectType
-
-`func (o *RegisteredClientMetadata) SetSubjectType(v string)`
-
-SetSubjectType sets SubjectType field to given value.
-
-### HasSubjectType
-
-`func (o *RegisteredClientMetadata) HasSubjectType() bool`
-
-HasSubjectType returns a boolean if a field has been set.
-
 ### GetJwksUri
 
 `func (o *RegisteredClientMetadata) GetJwksUri() string`
@@ -554,31 +500,6 @@ SetInitiateLoginUri sets InitiateLoginUri field to given value.
 
 HasInitiateLoginUri returns a boolean if a field has been set.
 
-### GetRequestUris
-
-`func (o *RegisteredClientMetadata) GetRequestUris() []string`
-
-GetRequestUris returns the RequestUris field if non-nil, zero value otherwise.
-
-### GetRequestUrisOk
-
-`func (o *RegisteredClientMetadata) GetRequestUrisOk() (*[]string, bool)`
-
-GetRequestUrisOk returns a tuple with the RequestUris field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetRequestUris
-
-`func (o *RegisteredClientMetadata) SetRequestUris(v []string)`
-
-SetRequestUris sets RequestUris field to given value.
-
-### HasRequestUris
-
-`func (o *RegisteredClientMetadata) HasRequestUris() bool`
-
-HasRequestUris returns a boolean if a field has been set.
-
 ### GetScope
 
 `func (o *RegisteredClientMetadata) GetScope() string`
@@ -628,31 +549,6 @@ SetIdTokenSignedResponseAlg sets IdTokenSignedResponseAlg field to given value.
 `func (o *RegisteredClientMetadata) HasIdTokenSignedResponseAlg() bool`
 
 HasIdTokenSignedResponseAlg returns a boolean if a field has been set.
-
-### GetUserinfoSignedResponseAlg
-
-`func (o *RegisteredClientMetadata) GetUserinfoSignedResponseAlg() string`
-
-GetUserinfoSignedResponseAlg returns the UserinfoSignedResponseAlg field if non-nil, zero value otherwise.
-
-### GetUserinfoSignedResponseAlgOk
-
-`func (o *RegisteredClientMetadata) GetUserinfoSignedResponseAlgOk() (*string, bool)`
-
-GetUserinfoSignedResponseAlgOk returns a tuple with the UserinfoSignedResponseAlg field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetUserinfoSignedResponseAlg
-
-`func (o *RegisteredClientMetadata) SetUserinfoSignedResponseAlg(v string)`
-
-SetUserinfoSignedResponseAlg sets UserinfoSignedResponseAlg field to given value.
-
-### HasUserinfoSignedResponseAlg
-
-`func (o *RegisteredClientMetadata) HasUserinfoSignedResponseAlg() bool`
-
-HasUserinfoSignedResponseAlg returns a boolean if a field has been set.
 
 ### GetRequestObjectSigningAlg
 

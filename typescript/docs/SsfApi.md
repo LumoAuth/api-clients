@@ -118,6 +118,7 @@ void (empty response body)
 # **getStreamConfig**
 > GetStreamConfig200Response getStreamConfig()
 
+Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
 
 ### Example
 
@@ -172,6 +173,7 @@ const { status, data } = await apiInstance.getStreamConfig(
 # **verifyStream**
 > verifyStream()
 
+Needs `settings.manage`, as the portal does.
 
 ### Example
 

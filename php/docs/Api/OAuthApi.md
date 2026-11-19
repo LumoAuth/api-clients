@@ -6,6 +6,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | ------------- | ------------- | ------------- |
 | [**authorize()**](OAuthApi.md#authorize) | **GET** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint |
 | [**backchannelAuthorize()**](OAuthApi.md#backchannelAuthorize) | **POST** /orgs/{orgId}/api/v1/oauth/bc-authorize | CIBA backchannel authentication request |
+| [**checkEmailFirst()**](OAuthApi.md#checkEmailFirst) | **POST** /orgs/{orgId}/api/v1/oauth/check-email | Sign-in methods for an email-first form |
 | [**deviceAuthorization()**](OAuthApi.md#deviceAuthorization) | **POST** /orgs/{orgId}/api/v1/oauth/device_authorization | Device authorization request (RFC 8628) |
 | [**getClientConfiguration()**](OAuthApi.md#getClientConfiguration) | **GET** /orgs/{orgId}/api/v1/connect/register/{clientId} | Read a dynamically registered client (RFC 7592 / OIDC DCR §4) |
 | [**getDeviceVerification()**](OAuthApi.md#getDeviceVerification) | **GET** /orgs/{orgId}/api/v1/oauth/device | Device verification page (RFC 8628 §3.3) |
@@ -137,6 +138,64 @@ try {
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `checkEmailFirst()`
+
+```php
+checkEmailFirst($orgId, $checkEmailFirstRequest): \LumoAuth\ApiClient\Model\CheckEmailFirstResponse
+```
+
+Sign-in methods for an email-first form
+
+For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: `exists` is always `true`, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by `client_id`.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\OAuthApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client()
+);
+$orgId = 'orgId_example'; // string
+$checkEmailFirstRequest = new \LumoAuth\ApiClient\Model\CheckEmailFirstRequest(); // \LumoAuth\ApiClient\Model\CheckEmailFirstRequest
+
+try {
+    $result = $apiInstance->checkEmailFirst($orgId, $checkEmailFirstRequest);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling OAuthApi->checkEmailFirst: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+| **checkEmailFirstRequest** | [**\LumoAuth\ApiClient\Model\CheckEmailFirstRequest**](../Model/CheckEmailFirstRequest.md)|  | |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\CheckEmailFirstResponse**](../Model/CheckEmailFirstResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -516,7 +575,7 @@ registerClient($orgId): \LumoAuth\ApiClient\Model\RegisterClientResponse
 
 Dynamic client registration (RFC 7591 / OIDC DCR)
 
-Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization's signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
 
 ### Example
 

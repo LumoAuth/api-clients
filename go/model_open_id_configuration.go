@@ -50,7 +50,7 @@ type OpenIdConfiguration struct {
 	RequestObjectSigningAlgValuesSupported []string `json:"request_object_signing_alg_values_supported,omitempty"`
 	UiLocalesSupported []string `json:"ui_locales_supported,omitempty"`
 	PromptValuesSupported []string `json:"prompt_values_supported,omitempty"`
-	// The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session), unless overridden in organization settings.
+	// The four MFA tier ACR values plus the single-factor urn:lumoauth:acr:pwd (any signed-in session). The list is the same for every organization.
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty"`
 	CodeChallengeMethodsSupported []string `json:"code_challenge_methods_supported,omitempty"`
 	AuthorizationResponseIssParameterSupported *bool `json:"authorization_response_iss_parameter_supported,omitempty"`
@@ -77,9 +77,9 @@ type OpenIdConfiguration struct {
 	ClientIdMetadataDocumentSupported *bool `json:"client_id_metadata_document_supported,omitempty"`
 	// Only when the organization accepts ID-JAGs.
 	AuthorizationGrantProfilesSupported []string `json:"authorization_grant_profiles_supported,omitempty"`
-	// Only when configured.
+	// The Privacy policy URL of the organization's login page settings. Only when it is set.
 	OpPolicyUri *string `json:"op_policy_uri,omitempty"`
-	// Only when configured.
+	// The Terms of service URL of the organization's login page settings. Only when it is set.
 	OpTosUri *string `json:"op_tos_uri,omitempty"`
 }
 

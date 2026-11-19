@@ -150,7 +150,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.AbacPoliciesList(orgId);
+            //string? action = null;
+            //var response = instance.AbacPoliciesList(orgId, action);
             //Assert.IsType<AbacPoliciesListResponse>(response);
         }
 

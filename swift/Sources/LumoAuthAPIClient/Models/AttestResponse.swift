@@ -19,11 +19,11 @@ public struct AttestResponse: Codable, JSONEncodable, Hashable {
     public var accessToken: String
     public var tokenType: TokenType
     public var expiresIn: Int
-    /** Space-separated agent capabilities. */
-    public var scope: String
+    /** The issued scope values (the agent's capabilities, or the requested subset), separated by one space. Left out when none was issued. */
+    public var scope: String?
     public var identity: AttestResponseIdentity
 
-    public init(accessToken: String, tokenType: TokenType, expiresIn: Int, scope: String, identity: AttestResponseIdentity) {
+    public init(accessToken: String, tokenType: TokenType, expiresIn: Int, scope: String? = nil, identity: AttestResponseIdentity) {
         self.accessToken = accessToken
         self.tokenType = tokenType
         self.expiresIn = expiresIn
@@ -46,7 +46,7 @@ public struct AttestResponse: Codable, JSONEncodable, Hashable {
         try container.encode(accessToken, forKey: .accessToken)
         try container.encode(tokenType, forKey: .tokenType)
         try container.encode(expiresIn, forKey: .expiresIn)
-        try container.encode(scope, forKey: .scope)
+        try container.encodeIfPresent(scope, forKey: .scope)
         try container.encode(identity, forKey: .identity)
     }
 }

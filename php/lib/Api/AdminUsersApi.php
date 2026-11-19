@@ -99,6 +99,9 @@ class AdminUsersApi
         'adminIdentitiesUnlink' => [
             'application/json',
         ],
+        'adminUsersRestore' => [
+            'application/json',
+        ],
         'blockUser' => [
             'application/json',
         ],
@@ -2623,6 +2626,303 @@ class AdminUsersApi
     }
 
     /**
+     * Operation adminUsersRestore
+     *
+     * Restore a deleted user
+     *
+     * @param  string $orgId orgId (required)
+     * @param  string $userId userId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminUsersRestore'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \LumoAuth\ApiClient\Model\AdminUsersRestoreResponse
+     */
+    public function adminUsersRestore($orgId, $userId, string $contentType = self::contentTypes['adminUsersRestore'][0])
+    {
+        list($response) = $this->adminUsersRestoreWithHttpInfo($orgId, $userId, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation adminUsersRestoreWithHttpInfo
+     *
+     * Restore a deleted user
+     *
+     * @param  string $orgId (required)
+     * @param  string $userId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminUsersRestore'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \LumoAuth\ApiClient\Model\AdminUsersRestoreResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function adminUsersRestoreWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['adminUsersRestore'][0])
+    {
+        $request = $this->adminUsersRestoreRequest($orgId, $userId, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\LumoAuth\ApiClient\Model\AdminUsersRestoreResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\LumoAuth\ApiClient\Model\AdminUsersRestoreResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\LumoAuth\ApiClient\Model\AdminUsersRestoreResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation adminUsersRestoreAsync
+     *
+     * Restore a deleted user
+     *
+     * @param  string $orgId (required)
+     * @param  string $userId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminUsersRestore'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function adminUsersRestoreAsync($orgId, $userId, string $contentType = self::contentTypes['adminUsersRestore'][0])
+    {
+        return $this->adminUsersRestoreAsyncWithHttpInfo($orgId, $userId, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation adminUsersRestoreAsyncWithHttpInfo
+     *
+     * Restore a deleted user
+     *
+     * @param  string $orgId (required)
+     * @param  string $userId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminUsersRestore'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function adminUsersRestoreAsyncWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['adminUsersRestore'][0])
+    {
+        $returnType = '\LumoAuth\ApiClient\Model\AdminUsersRestoreResponse';
+        $request = $this->adminUsersRestoreRequest($orgId, $userId, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'adminUsersRestore'
+     *
+     * @param  string $orgId (required)
+     * @param  string $userId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminUsersRestore'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function adminUsersRestoreRequest($orgId, $userId, string $contentType = self::contentTypes['adminUsersRestore'][0])
+    {
+
+        // verify the required parameter 'orgId' is set
+        if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $orgId when calling adminUsersRestore'
+            );
+        }
+
+        // verify the required parameter 'userId' is set
+        if ($userId === null || (is_array($userId) && count($userId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $userId when calling adminUsersRestore'
+            );
+        }
+
+
+        $resourcePath = '/orgs/{orgId}/api/v1/admin/users/{userId}/restore';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($orgId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'orgId' . '}',
+                ObjectSerializer::toPathValue($orgId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($userId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'userId' . '}',
+                ObjectSerializer::toPathValue($userId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-API-Key');
+        if ($apiKey !== null) {
+            $headers['X-API-Key'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation blockUser
      *
      * Block a user
@@ -4687,15 +4987,27 @@ class AdminUsersApi
      * List users
      *
      * @param  string $orgId orgId (required)
+     * @param  int|null $page Page number. (optional, default to 1)
+     * @param  int|null $limit Users per page (1 to 100). (optional, default to 25)
+     * @param  string|null $search Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)
+     * @param  bool|null $active Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)
+     * @param  bool|null $blocked Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)
+     * @param  bool|null $deleted &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)
+     * @param  bool|null $emailVerified Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)
+     * @param  bool|null $mfaEnabled Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)
+     * @param  string|null $role Only users who hold the role with this slug. (optional)
+     * @param  string|null $group Only members of the group with this slug. (optional)
+     * @param  string|null $sortBy Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)
+     * @param  string|null $sortDir Sort direction. Used only together with sortBy. (optional, default to 'DESC')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listUsers'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\ListUsersResponse
      */
-    public function listUsers($orgId, string $contentType = self::contentTypes['listUsers'][0])
+    public function listUsers($orgId, $page = 1, $limit = 25, $search = null, $active = null, $blocked = null, $deleted = false, $emailVerified = null, $mfaEnabled = null, $role = null, $group = null, $sortBy = null, $sortDir = 'DESC', string $contentType = self::contentTypes['listUsers'][0])
     {
-        list($response) = $this->listUsersWithHttpInfo($orgId, $contentType);
+        list($response) = $this->listUsersWithHttpInfo($orgId, $page, $limit, $search, $active, $blocked, $deleted, $emailVerified, $mfaEnabled, $role, $group, $sortBy, $sortDir, $contentType);
         return $response;
     }
 
@@ -4705,15 +5017,27 @@ class AdminUsersApi
      * List users
      *
      * @param  string $orgId (required)
+     * @param  int|null $page Page number. (optional, default to 1)
+     * @param  int|null $limit Users per page (1 to 100). (optional, default to 25)
+     * @param  string|null $search Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)
+     * @param  bool|null $active Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)
+     * @param  bool|null $blocked Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)
+     * @param  bool|null $deleted &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)
+     * @param  bool|null $emailVerified Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)
+     * @param  bool|null $mfaEnabled Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)
+     * @param  string|null $role Only users who hold the role with this slug. (optional)
+     * @param  string|null $group Only members of the group with this slug. (optional)
+     * @param  string|null $sortBy Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)
+     * @param  string|null $sortDir Sort direction. Used only together with sortBy. (optional, default to 'DESC')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listUsers'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\ListUsersResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listUsersWithHttpInfo($orgId, string $contentType = self::contentTypes['listUsers'][0])
+    public function listUsersWithHttpInfo($orgId, $page = 1, $limit = 25, $search = null, $active = null, $blocked = null, $deleted = false, $emailVerified = null, $mfaEnabled = null, $role = null, $group = null, $sortBy = null, $sortDir = 'DESC', string $contentType = self::contentTypes['listUsers'][0])
     {
-        $request = $this->listUsersRequest($orgId, $contentType);
+        $request = $this->listUsersRequest($orgId, $page, $limit, $search, $active, $blocked, $deleted, $emailVerified, $mfaEnabled, $role, $group, $sortBy, $sortDir, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -4790,14 +5114,26 @@ class AdminUsersApi
      * List users
      *
      * @param  string $orgId (required)
+     * @param  int|null $page Page number. (optional, default to 1)
+     * @param  int|null $limit Users per page (1 to 100). (optional, default to 25)
+     * @param  string|null $search Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)
+     * @param  bool|null $active Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)
+     * @param  bool|null $blocked Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)
+     * @param  bool|null $deleted &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)
+     * @param  bool|null $emailVerified Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)
+     * @param  bool|null $mfaEnabled Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)
+     * @param  string|null $role Only users who hold the role with this slug. (optional)
+     * @param  string|null $group Only members of the group with this slug. (optional)
+     * @param  string|null $sortBy Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)
+     * @param  string|null $sortDir Sort direction. Used only together with sortBy. (optional, default to 'DESC')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listUsers'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listUsersAsync($orgId, string $contentType = self::contentTypes['listUsers'][0])
+    public function listUsersAsync($orgId, $page = 1, $limit = 25, $search = null, $active = null, $blocked = null, $deleted = false, $emailVerified = null, $mfaEnabled = null, $role = null, $group = null, $sortBy = null, $sortDir = 'DESC', string $contentType = self::contentTypes['listUsers'][0])
     {
-        return $this->listUsersAsyncWithHttpInfo($orgId, $contentType)
+        return $this->listUsersAsyncWithHttpInfo($orgId, $page, $limit, $search, $active, $blocked, $deleted, $emailVerified, $mfaEnabled, $role, $group, $sortBy, $sortDir, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4811,15 +5147,27 @@ class AdminUsersApi
      * List users
      *
      * @param  string $orgId (required)
+     * @param  int|null $page Page number. (optional, default to 1)
+     * @param  int|null $limit Users per page (1 to 100). (optional, default to 25)
+     * @param  string|null $search Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)
+     * @param  bool|null $active Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)
+     * @param  bool|null $blocked Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)
+     * @param  bool|null $deleted &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)
+     * @param  bool|null $emailVerified Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)
+     * @param  bool|null $mfaEnabled Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)
+     * @param  string|null $role Only users who hold the role with this slug. (optional)
+     * @param  string|null $group Only members of the group with this slug. (optional)
+     * @param  string|null $sortBy Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)
+     * @param  string|null $sortDir Sort direction. Used only together with sortBy. (optional, default to 'DESC')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listUsers'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listUsersAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['listUsers'][0])
+    public function listUsersAsyncWithHttpInfo($orgId, $page = 1, $limit = 25, $search = null, $active = null, $blocked = null, $deleted = false, $emailVerified = null, $mfaEnabled = null, $role = null, $group = null, $sortBy = null, $sortDir = 'DESC', string $contentType = self::contentTypes['listUsers'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\ListUsersResponse';
-        $request = $this->listUsersRequest($orgId, $contentType);
+        $request = $this->listUsersRequest($orgId, $page, $limit, $search, $active, $blocked, $deleted, $emailVerified, $mfaEnabled, $role, $group, $sortBy, $sortDir, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -4861,12 +5209,24 @@ class AdminUsersApi
      * Create request for operation 'listUsers'
      *
      * @param  string $orgId (required)
+     * @param  int|null $page Page number. (optional, default to 1)
+     * @param  int|null $limit Users per page (1 to 100). (optional, default to 25)
+     * @param  string|null $search Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)
+     * @param  bool|null $active Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)
+     * @param  bool|null $blocked Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)
+     * @param  bool|null $deleted &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)
+     * @param  bool|null $emailVerified Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)
+     * @param  bool|null $mfaEnabled Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)
+     * @param  string|null $role Only users who hold the role with this slug. (optional)
+     * @param  string|null $group Only members of the group with this slug. (optional)
+     * @param  string|null $sortBy Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)
+     * @param  string|null $sortDir Sort direction. Used only together with sortBy. (optional, default to 'DESC')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listUsers'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listUsersRequest($orgId, string $contentType = self::contentTypes['listUsers'][0])
+    public function listUsersRequest($orgId, $page = 1, $limit = 25, $search = null, $active = null, $blocked = null, $deleted = false, $emailVerified = null, $mfaEnabled = null, $role = null, $group = null, $sortBy = null, $sortDir = 'DESC', string $contentType = self::contentTypes['listUsers'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -4876,6 +5236,27 @@ class AdminUsersApi
             );
         }
 
+        if ($page !== null && $page < 1) {
+            throw new \InvalidArgumentException('invalid value for "$page" when calling AdminUsersApi.listUsers, must be bigger than or equal to 1.');
+        }
+        
+        if ($limit !== null && $limit > 100) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling AdminUsersApi.listUsers, must be smaller than or equal to 100.');
+        }
+        if ($limit !== null && $limit < 1) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling AdminUsersApi.listUsers, must be bigger than or equal to 1.');
+        }
+        
+
+
+
+
+
+
+
+
+
+
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/users';
         $formParams = [];
@@ -4884,6 +5265,114 @@ class AdminUsersApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $page,
+            'page', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $limit,
+            'limit', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $search,
+            'search', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $active,
+            'active', // param base name
+            'boolean', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $blocked,
+            'blocked', // param base name
+            'boolean', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $deleted,
+            'deleted', // param base name
+            'boolean', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $emailVerified,
+            'emailVerified', // param base name
+            'boolean', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $mfaEnabled,
+            'mfaEnabled', // param base name
+            'boolean', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $role,
+            'role', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $group,
+            'group', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $sortBy,
+            'sortBy', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $sortDir,
+            'sortDir', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
         // path params
@@ -5770,7 +6259,10 @@ class AdminUsersApi
                 'Missing the required parameter $groupId when calling removeUserGroup'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $groupId)) {
+            throw new \InvalidArgumentException("invalid value for \"groupId\" when calling AdminUsersApi.removeUserGroup, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/users/{userId}/groups/{groupId}';
         $formParams = [];
@@ -6087,7 +6579,10 @@ class AdminUsersApi
                 'Missing the required parameter $permissionId when calling removeUserPermission'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $permissionId)) {
+            throw new \InvalidArgumentException("invalid value for \"permissionId\" when calling AdminUsersApi.removeUserPermission, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/users/{userId}/permissions/{permissionId}';
         $formParams = [];
@@ -6404,7 +6899,10 @@ class AdminUsersApi
                 'Missing the required parameter $roleId when calling removeUserRole'
             );
         }
-
+        if (!preg_match("/[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/", $roleId)) {
+            throw new \InvalidArgumentException("invalid value for \"roleId\" when calling AdminUsersApi.removeUserRole, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
+        }
+        
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/users/{userId}/roles/{roleId}';
         $formParams = [];

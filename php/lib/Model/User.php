@@ -70,6 +70,8 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'phoneNumberVerified' => 'bool',
         'isActive' => 'bool',
         'blocked' => 'bool',
+        'deleted' => 'bool',
+        'deletedAt' => '\DateTime',
         'mfaEnabled' => 'bool',
         'isAdmin' => 'bool',
         'createdAt' => '\DateTime',
@@ -106,6 +108,8 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'phoneNumberVerified' => null,
         'isActive' => null,
         'blocked' => null,
+        'deleted' => null,
+        'deletedAt' => 'date-time',
         'mfaEnabled' => null,
         'isAdmin' => null,
         'createdAt' => 'date-time',
@@ -140,6 +144,8 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'phoneNumberVerified' => false,
         'isActive' => false,
         'blocked' => false,
+        'deleted' => false,
+        'deletedAt' => true,
         'mfaEnabled' => false,
         'isAdmin' => false,
         'createdAt' => false,
@@ -254,6 +260,8 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'phoneNumberVerified' => 'phoneNumberVerified',
         'isActive' => 'isActive',
         'blocked' => 'blocked',
+        'deleted' => 'deleted',
+        'deletedAt' => 'deletedAt',
         'mfaEnabled' => 'mfaEnabled',
         'isAdmin' => 'isAdmin',
         'createdAt' => 'createdAt',
@@ -288,6 +296,8 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'phoneNumberVerified' => 'setPhoneNumberVerified',
         'isActive' => 'setIsActive',
         'blocked' => 'setBlocked',
+        'deleted' => 'setDeleted',
+        'deletedAt' => 'setDeletedAt',
         'mfaEnabled' => 'setMfaEnabled',
         'isAdmin' => 'setIsAdmin',
         'createdAt' => 'setCreatedAt',
@@ -322,6 +332,8 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'phoneNumberVerified' => 'getPhoneNumberVerified',
         'isActive' => 'getIsActive',
         'blocked' => 'getBlocked',
+        'deleted' => 'getDeleted',
+        'deletedAt' => 'getDeletedAt',
         'mfaEnabled' => 'getMfaEnabled',
         'isAdmin' => 'getIsAdmin',
         'createdAt' => 'getCreatedAt',
@@ -407,6 +419,8 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('phoneNumberVerified', $data ?? [], null);
         $this->setIfExists('isActive', $data ?? [], null);
         $this->setIfExists('blocked', $data ?? [], null);
+        $this->setIfExists('deleted', $data ?? [], null);
+        $this->setIfExists('deletedAt', $data ?? [], null);
         $this->setIfExists('mfaEnabled', $data ?? [], null);
         $this->setIfExists('isAdmin', $data ?? [], null);
         $this->setIfExists('createdAt', $data ?? [], null);
@@ -854,6 +868,67 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable blocked cannot be null');
         }
         $this->container['blocked'] = $blocked;
+
+        return $this;
+    }
+
+    /**
+     * Gets deleted
+     *
+     * @return bool|null
+     */
+    public function getDeleted()
+    {
+        return $this->container['deleted'];
+    }
+
+    /**
+     * Sets deleted
+     *
+     * @param bool|null $deleted Soft-deleted by inbound SCIM. Left out of the list unless deleted=true is asked; POST /users/{userId}/restore brings the user back.
+     *
+     * @return self
+     */
+    public function setDeleted($deleted)
+    {
+        if (is_null($deleted)) {
+            throw new \InvalidArgumentException('non-nullable deleted cannot be null');
+        }
+        $this->container['deleted'] = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Gets deletedAt
+     *
+     * @return \DateTime|null
+     */
+    public function getDeletedAt()
+    {
+        return $this->container['deletedAt'];
+    }
+
+    /**
+     * Sets deletedAt
+     *
+     * @param \DateTime|null $deletedAt deletedAt
+     *
+     * @return self
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        if (is_null($deletedAt)) {
+            array_push($this->openAPINullablesSetToNull, 'deletedAt');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('deletedAt', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['deletedAt'] = $deletedAt;
 
         return $this;
     }
