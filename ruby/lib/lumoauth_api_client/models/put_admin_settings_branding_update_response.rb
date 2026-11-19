@@ -17,12 +17,16 @@ module LumoAuthApiClient
   class PutAdminSettingsBrandingUpdateResponse
     attr_accessor :data
 
+    # Keys whose value was refused by validation and not saved.
+    attr_accessor :rejected
+
     attr_accessor :message
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'data' => :'data',
+        :'rejected' => :'rejected',
         :'message' => :'message'
       }
     end
@@ -41,6 +45,7 @@ module LumoAuthApiClient
     def self.openapi_types
       {
         :'data' => :'BrandingSettings',
+        :'rejected' => :'Array<String>',
         :'message' => :'String'
       }
     end
@@ -71,6 +76,12 @@ module LumoAuthApiClient
         self.data = attributes[:'data']
       end
 
+      if attributes.key?(:'rejected')
+        if (value = attributes[:'rejected']).is_a?(Array)
+          self.rejected = value
+        end
+      end
+
       if attributes.key?(:'message')
         self.message = attributes[:'message']
       end
@@ -97,6 +108,7 @@ module LumoAuthApiClient
       return true if self.equal?(o)
       self.class == o.class &&
           data == o.data &&
+          rejected == o.rejected &&
           message == o.message
     end
 
@@ -109,7 +121,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [data, message].hash
+      [data, rejected, message].hash
     end
 
     # Builds the object from hash

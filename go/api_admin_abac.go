@@ -1030,6 +1030,13 @@ type ApiAbacPoliciesListRequest struct {
 	ctx context.Context
 	ApiService AdminAbacAPI
 	orgId string
+	action *string
+}
+
+// Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;.
+func (r ApiAbacPoliciesListRequest) Action(action string) ApiAbacPoliciesListRequest {
+	r.action = &action
+	return r
 }
 
 func (r ApiAbacPoliciesListRequest) Execute() (*AbacPoliciesListResponse, *http.Response, error) {
@@ -1073,6 +1080,9 @@ func (a *AdminAbacAPIService) AbacPoliciesListExecute(r ApiAbacPoliciesListReque
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.action != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "action", r.action, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

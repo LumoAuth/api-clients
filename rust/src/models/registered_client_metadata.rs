@@ -45,11 +45,6 @@ pub struct RegisteredClientMetadata {
     pub policy_uri: Option<String>,
     #[serde(rename = "tos_uri", skip_serializing_if = "Option::is_none")]
     pub tos_uri: Option<String>,
-    #[serde(rename = "sector_identifier_uri", skip_serializing_if = "Option::is_none")]
-    pub sector_identifier_uri: Option<String>,
-    /// Only when not \"public\".
-    #[serde(rename = "subject_type", skip_serializing_if = "Option::is_none")]
-    pub subject_type: Option<String>,
     #[serde(rename = "jwks_uri", skip_serializing_if = "Option::is_none")]
     pub jwks_uri: Option<String>,
     #[serde(rename = "jwks", skip_serializing_if = "Option::is_none")]
@@ -58,16 +53,12 @@ pub struct RegisteredClientMetadata {
     pub post_logout_redirect_uris: Option<Vec<String>>,
     #[serde(rename = "initiate_login_uri", skip_serializing_if = "Option::is_none")]
     pub initiate_login_uri: Option<String>,
-    #[serde(rename = "request_uris", skip_serializing_if = "Option::is_none")]
-    pub request_uris: Option<Vec<String>>,
     /// Space-separated registered scopes.
     #[serde(rename = "scope", skip_serializing_if = "Option::is_none")]
     pub scope: Option<String>,
     /// Only when not RS256.
     #[serde(rename = "id_token_signed_response_alg", skip_serializing_if = "Option::is_none")]
     pub id_token_signed_response_alg: Option<String>,
-    #[serde(rename = "userinfo_signed_response_alg", skip_serializing_if = "Option::is_none")]
-    pub userinfo_signed_response_alg: Option<String>,
     #[serde(rename = "request_object_signing_alg", skip_serializing_if = "Option::is_none")]
     pub request_object_signing_alg: Option<String>,
     #[serde(rename = "token_endpoint_auth_signing_alg", skip_serializing_if = "Option::is_none")]
@@ -112,16 +103,12 @@ impl RegisteredClientMetadata {
             logo_uri: None,
             policy_uri: None,
             tos_uri: None,
-            sector_identifier_uri: None,
-            subject_type: None,
             jwks_uri: None,
             jwks: None,
             post_logout_redirect_uris: None,
             initiate_login_uri: None,
-            request_uris: None,
             scope: None,
             id_token_signed_response_alg: None,
-            userinfo_signed_response_alg: None,
             request_object_signing_alg: None,
             token_endpoint_auth_signing_alg: None,
             default_max_age: None,

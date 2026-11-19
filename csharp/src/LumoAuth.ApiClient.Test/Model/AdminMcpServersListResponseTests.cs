@@ -81,5 +81,14 @@ namespace LumoAuth.ApiClient.Test.Model
         {
             // TODO unit test for the property 'Pagination'
         }
+
+        /// <summary>
+        /// Test the property 'ResourceType'
+        /// </summary>
+        [Fact]
+        public void ResourceTypeTest()
+        {
+            // TODO unit test for the property 'ResourceType'
+        }
     }
 }

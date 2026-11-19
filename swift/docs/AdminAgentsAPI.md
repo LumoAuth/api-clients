@@ -529,7 +529,7 @@ Name | Type | Description  | Notes
 
 # **adminAgentsList**
 ```swift
-    open class func adminAgentsList(orgId: String, completion: @escaping (_ data: AdminAgentsListResponse?, _ error: Error?) -> Void)
+    open class func adminAgentsList(orgId: String, sortBy: SortBy_adminAgentsList? = nil, sortDir: SortDir_adminAgentsList? = nil, completion: @escaping (_ data: AdminAgentsListResponse?, _ error: Error?) -> Void)
 ```
 
 List all agents in the tenant
@@ -540,9 +540,11 @@ List all agents in the tenant
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let sortBy = "sortBy_example" // String | Sort field. Default: name. Another value is ignored. (optional)
+let sortDir = "sortDir_example" // String | Sort direction, used with sortBy. (optional) (default to .asc)
 
 // List all agents in the tenant
-AdminAgentsAPI.adminAgentsList(orgId: orgId) { (response, error) in
+AdminAgentsAPI.adminAgentsList(orgId: orgId, sortBy: sortBy, sortDir: sortDir) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -559,6 +561,8 @@ AdminAgentsAPI.adminAgentsList(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **sortBy** | **String** | Sort field. Default: name. Another value is ignored. | [optional] 
+ **sortDir** | **String** | Sort direction, used with sortBy. | [optional] [default to .asc]
 
 ### Return type
 

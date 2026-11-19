@@ -77,9 +77,10 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="defaultValue">defaultValue.</param>
         /// <param name="isRequired">isRequired.</param>
         /// <param name="isSystem">isSystem.</param>
+        /// <param name="builtIn">True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403)..</param>
         /// <param name="createdAt">createdAt.</param>
         /// <param name="updatedAt">updatedAt.</param>
-        public AbacAttributeDefinition(int id = default, string name = default, string slug = default, string description = default, AttributeTypeEnum? attributeType = default, string dataType = default, Dictionary<string, Object> validationRules = default, Object defaultValue = default, bool isRequired = default, bool isSystem = default, DateTime createdAt = default, DateTime? updatedAt = default)
+        public AbacAttributeDefinition(int id = default, string name = default, string slug = default, string description = default, AttributeTypeEnum? attributeType = default, string dataType = default, Dictionary<string, Object> validationRules = default, Object defaultValue = default, bool isRequired = default, bool isSystem = default, bool builtIn = default, DateTime createdAt = default, DateTime? updatedAt = default)
         {
             this.Id = id;
             this.Name = name;
@@ -91,6 +92,7 @@ namespace LumoAuth.ApiClient.Model
             this.DefaultValue = defaultValue;
             this.IsRequired = isRequired;
             this.IsSystem = isSystem;
+            this.BuiltIn = builtIn;
             this.CreatedAt = createdAt;
             this.UpdatedAt = updatedAt;
         }
@@ -150,6 +152,13 @@ namespace LumoAuth.ApiClient.Model
         public bool IsSystem { get; set; }
 
         /// <summary>
+        /// True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403).
+        /// </summary>
+        /// <value>True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403).</value>
+        [DataMember(Name = "builtIn", EmitDefaultValue = true)]
+        public bool BuiltIn { get; set; }
+
+        /// <summary>
         /// Gets or Sets CreatedAt
         /// </summary>
         [DataMember(Name = "createdAt", EmitDefaultValue = false)]
@@ -179,6 +188,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  DefaultValue: ").Append(DefaultValue).Append("\n");
             sb.Append("  IsRequired: ").Append(IsRequired).Append("\n");
             sb.Append("  IsSystem: ").Append(IsSystem).Append("\n");
+            sb.Append("  BuiltIn: ").Append(BuiltIn).Append("\n");
             sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
             sb.Append("  UpdatedAt: ").Append(UpdatedAt).Append("\n");
             sb.Append("}\n");

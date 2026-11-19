@@ -20,7 +20,7 @@ module LumoAuthApiClient
       @api_client = api_client
     end
     # Agent-friendly permission check (Natural Language style)
-    # POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document.read\",   \"context\": {\"id\": \"123\"} }
+    # POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
     # @param org_id [String] 
     # @param ask_request [AskRequest] 
     # @param [Hash] opts the optional parameters
@@ -31,7 +31,7 @@ module LumoAuthApiClient
     end
 
     # Agent-friendly permission check (Natural Language style)
-    # POST /orgs/{orgId}/api/v1/agents/ask Body: {   \&quot;action\&quot;: \&quot;document.read\&quot;,   \&quot;context\&quot;: {\&quot;id\&quot;: \&quot;123\&quot;} }
+    # POST /orgs/{orgId}/api/v1/agents/ask Body: {   \&quot;action\&quot;: \&quot;document:read\&quot;,   \&quot;context\&quot;: {\&quot;id\&quot;: \&quot;123\&quot;} }
     # @param org_id [String] 
     # @param ask_request [AskRequest] 
     # @param [Hash] opts the optional parameters

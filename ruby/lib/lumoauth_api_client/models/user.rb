@@ -39,6 +39,11 @@ module LumoAuthApiClient
 
     attr_accessor :blocked
 
+    # Soft-deleted by inbound SCIM. Left out of the list unless deleted=true is asked; POST /users/{userId}/restore brings the user back.
+    attr_accessor :deleted
+
+    attr_accessor :deleted_at
+
     attr_accessor :mfa_enabled
 
     attr_accessor :is_admin
@@ -91,6 +96,8 @@ module LumoAuthApiClient
         :'phone_number_verified' => :'phoneNumberVerified',
         :'is_active' => :'isActive',
         :'blocked' => :'blocked',
+        :'deleted' => :'deleted',
+        :'deleted_at' => :'deletedAt',
         :'mfa_enabled' => :'mfaEnabled',
         :'is_admin' => :'isAdmin',
         :'created_at' => :'createdAt',
@@ -133,6 +140,8 @@ module LumoAuthApiClient
         :'phone_number_verified' => :'Boolean',
         :'is_active' => :'Boolean',
         :'blocked' => :'Boolean',
+        :'deleted' => :'Boolean',
+        :'deleted_at' => :'Time',
         :'mfa_enabled' => :'Boolean',
         :'is_admin' => :'Boolean',
         :'created_at' => :'Time',
@@ -159,6 +168,7 @@ module LumoAuthApiClient
         :'family_name',
         :'picture',
         :'phone_number',
+        :'deleted_at',
         :'last_login_at',
         :'locale',
         :'zoneinfo',
@@ -241,6 +251,14 @@ module LumoAuthApiClient
         self.blocked = attributes[:'blocked']
       else
         self.blocked = nil
+      end
+
+      if attributes.key?(:'deleted')
+        self.deleted = attributes[:'deleted']
+      end
+
+      if attributes.key?(:'deleted_at')
+        self.deleted_at = attributes[:'deleted_at']
       end
 
       if attributes.key?(:'mfa_enabled')
@@ -479,6 +497,8 @@ module LumoAuthApiClient
           phone_number_verified == o.phone_number_verified &&
           is_active == o.is_active &&
           blocked == o.blocked &&
+          deleted == o.deleted &&
+          deleted_at == o.deleted_at &&
           mfa_enabled == o.mfa_enabled &&
           is_admin == o.is_admin &&
           created_at == o.created_at &&
@@ -504,7 +524,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, email, username, name, given_name, family_name, picture, email_verified, phone_number, phone_number_verified, is_active, blocked, mfa_enabled, is_admin, created_at, last_login_at, login_count, roles, groups, locale, zoneinfo, updated_at, blocked_at, is_jit_provisioned, jit_provisioned_by, social_provider].hash
+      [id, email, username, name, given_name, family_name, picture, email_verified, phone_number, phone_number_verified, is_active, blocked, deleted, deleted_at, mfa_enabled, is_admin, created_at, last_login_at, login_count, roles, groups, locale, zoneinfo, updated_at, blocked_at, is_jit_provisioned, jit_provisioned_by, social_provider].hash
     end
 
     # Builds the object from hash

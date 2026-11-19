@@ -36,7 +36,7 @@ pub struct SocialLoginProvider {
     /// Detailed responses only
     #[serde(rename = "requestedScopes", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub requested_scopes: Option<Option<Vec<String>>>,
-    /// Detailed responses only
+    /// Deprecated. Always null. The field is accepted on create and update and ignored: no sign-in sends extra claims to a provider. Ask for more profile data with requestedScopes.
     #[serde(rename = "customClaims", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub custom_claims: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
     /// Detailed responses only

@@ -15,7 +15,7 @@
 
 
 /**
- * Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+ * name, displayName (the same value) and locale, then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
  * @export
  * @interface PutAdminSettingsGeneralUpdateResponseData
  */
@@ -34,12 +34,6 @@ export interface PutAdminSettingsGeneralUpdateResponseData {
      * @memberof PutAdminSettingsGeneralUpdateResponseData
      */
     'displayName'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PutAdminSettingsGeneralUpdateResponseData
-     */
-    'timezone'?: string;
     /**
      * 
      * @type {string}

@@ -85,4 +85,12 @@ public class IssueAgentTokenRequestTest {
         // TODO: test refreshToken
     }
 
+    /**
+     * Test the property 'scope'
+     */
+    @Test
+    public void scopeTest() {
+        // TODO: test scope
+    }
+
 }

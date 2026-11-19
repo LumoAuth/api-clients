@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **Action** | Pointer to **string** |  | [optional] 
 **Context** | Pointer to **map[string]interface{}** |  | [optional] 
 **Reason** | Pointer to **string** |  | [optional] 
+**DecidedBy** | Pointer to **string** | Which check produced the answer. Always pdp for a user caller. | [optional] 
 **AuditId** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -128,6 +129,31 @@ SetReason sets Reason field to given value.
 `func (o *AskResponse) HasReason() bool`
 
 HasReason returns a boolean if a field has been set.
+
+### GetDecidedBy
+
+`func (o *AskResponse) GetDecidedBy() string`
+
+GetDecidedBy returns the DecidedBy field if non-nil, zero value otherwise.
+
+### GetDecidedByOk
+
+`func (o *AskResponse) GetDecidedByOk() (*string, bool)`
+
+GetDecidedByOk returns a tuple with the DecidedBy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDecidedBy
+
+`func (o *AskResponse) SetDecidedBy(v string)`
+
+SetDecidedBy sets DecidedBy field to given value.
+
+### HasDecidedBy
+
+`func (o *AskResponse) HasDecidedBy() bool`
+
+HasDecidedBy returns a boolean if a field has been set.
 
 ### GetAuditId
 

@@ -336,9 +336,6 @@ class AttestResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['expiresIn'] === null) {
             $invalidProperties[] = "'expiresIn' can't be null";
         }
-        if ($this->container['scope'] === null) {
-            $invalidProperties[] = "'scope' can't be null";
-        }
         if ($this->container['identity'] === null) {
             $invalidProperties[] = "'identity' can't be null";
         }
@@ -451,7 +448,7 @@ class AttestResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets scope
      *
-     * @return string
+     * @return string|null
      */
     public function getScope()
     {
@@ -461,7 +458,7 @@ class AttestResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets scope
      *
-     * @param string $scope Space-separated agent capabilities.
+     * @param string|null $scope The issued scope values (the agent's capabilities, or the requested subset), separated by one space. Left out when none was issued.
      *
      * @return self
      */

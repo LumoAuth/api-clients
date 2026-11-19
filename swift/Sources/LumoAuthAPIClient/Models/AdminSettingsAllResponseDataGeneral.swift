@@ -10,17 +10,23 @@ import Foundation
 import AnyCodable
 #endif
 
-/** Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted. */
+/** The organization name (name; displayName is the same value), locale (the default language of the hosted pages), then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted. */
 public struct AdminSettingsAllResponseDataGeneral: Codable, JSONEncodable, Hashable {
 
     public var name: String?
+    public var displayName: String?
+    public var locale: String?
 
-    public init(name: String? = nil) {
+    public init(name: String? = nil, displayName: String? = nil, locale: String? = nil) {
         self.name = name
+        self.displayName = displayName
+        self.locale = locale
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case name
+        case displayName
+        case locale
     }
 
     public var additionalProperties: [String: AnyCodable] = [:]
@@ -43,6 +49,8 @@ public struct AdminSettingsAllResponseDataGeneral: Codable, JSONEncodable, Hasha
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(displayName, forKey: .displayName)
+        try container.encodeIfPresent(locale, forKey: .locale)
         var additionalPropertiesContainer = encoder.container(keyedBy: String.self)
         try additionalPropertiesContainer.encodeMap(additionalProperties)
     }
@@ -53,8 +61,12 @@ public struct AdminSettingsAllResponseDataGeneral: Codable, JSONEncodable, Hasha
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         name = try container.decodeIfPresent(String.self, forKey: .name)
+        displayName = try container.decodeIfPresent(String.self, forKey: .displayName)
+        locale = try container.decodeIfPresent(String.self, forKey: .locale)
         var nonAdditionalPropertyKeys = Set<String>()
         nonAdditionalPropertyKeys.insert("name")
+        nonAdditionalPropertyKeys.insert("displayName")
+        nonAdditionalPropertyKeys.insert("locale")
         let additionalPropertiesContainer = try decoder.container(keyedBy: String.self)
         additionalProperties = try additionalPropertiesContainer.decodeMap(AnyCodable.self, excludedKeys: nonAdditionalPropertyKeys)
     }

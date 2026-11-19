@@ -14,6 +14,7 @@
 | **default_value** | **Object** |  | [optional] |
 | **is_required** | **Boolean** |  | [optional] |
 | **is_system** | **Boolean** |  | [optional] |
+| **built_in** | **Boolean** | True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403). | [optional] |
 | **created_at** | **Time** |  | [optional] |
 | **updated_at** | **Time** |  | [optional] |
 
@@ -33,6 +34,7 @@ instance = LumoAuthApiClient::AbacAttributeDefinition.new(
   default_value: null,
   is_required: null,
   is_system: null,
+  built_in: null,
   created_at: null,
   updated_at: null
 )

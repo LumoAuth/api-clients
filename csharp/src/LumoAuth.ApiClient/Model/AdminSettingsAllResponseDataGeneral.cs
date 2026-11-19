@@ -28,7 +28,7 @@ using OpenAPIDateConverter = LumoAuth.ApiClient.Client.OpenAPIDateConverter;
 namespace LumoAuth.ApiClient.Model
 {
     /// <summary>
-    /// Organization name plus the raw settings dictionary: any stored key (display_name, timezone, locale, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+    /// The organization name (name; displayName is the same value), locale (the default language of the hosted pages), then the stored settings dictionary: any stored key (security, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
     /// </summary>
     [DataContract(Name = "AdminSettingsAllResponseDataGeneral")]
     public partial class AdminSettingsAllResponseDataGeneral : IValidatableObject
@@ -37,9 +37,13 @@ namespace LumoAuth.ApiClient.Model
         /// Initializes a new instance of the <see cref="AdminSettingsAllResponseDataGeneral" /> class.
         /// </summary>
         /// <param name="name">name.</param>
-        public AdminSettingsAllResponseDataGeneral(string name = default)
+        /// <param name="displayName">displayName.</param>
+        /// <param name="locale">locale.</param>
+        public AdminSettingsAllResponseDataGeneral(string name = default, string displayName = default, string locale = default)
         {
             this.Name = name;
+            this.DisplayName = displayName;
+            this.Locale = locale;
             this.AdditionalProperties = new Dictionary<string, object>();
         }
 
@@ -48,6 +52,18 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or Sets DisplayName
+        /// </summary>
+        [DataMember(Name = "displayName", EmitDefaultValue = false)]
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Locale
+        /// </summary>
+        [DataMember(Name = "locale", EmitDefaultValue = false)]
+        public string Locale { get; set; }
 
         /// <summary>
         /// Gets or Sets additional properties
@@ -64,6 +80,8 @@ namespace LumoAuth.ApiClient.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class AdminSettingsAllResponseDataGeneral {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  DisplayName: ").Append(DisplayName).Append("\n");
+            sb.Append("  Locale: ").Append(Locale).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();

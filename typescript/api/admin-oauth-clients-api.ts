@@ -105,7 +105,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+         * Needs `branding.view` and `clients.view`. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
          * @summary Get an OAuth client\'s login and consent page branding
          * @param {string} orgId 
          * @param {string} clientId 
@@ -457,7 +457,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * 
+         * Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
          * @summary Change keys of an OAuth client\'s login and/or consent page branding
          * @param {string} orgId 
          * @param {string} clientId 
@@ -551,7 +551,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * 
+         * Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
          * @summary Replace an OAuth client\'s login and/or consent page branding
          * @param {string} orgId 
          * @param {string} clientId 
@@ -759,7 +759,7 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+         * Needs `branding.view` and `clients.view`. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
          * @summary Get an OAuth client\'s login and consent page branding
          * @param {string} orgId 
          * @param {string} clientId 
@@ -869,7 +869,7 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
          * @summary Change keys of an OAuth client\'s login and/or consent page branding
          * @param {string} orgId 
          * @param {string} clientId 
@@ -898,7 +898,7 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
          * @summary Replace an OAuth client\'s login and/or consent page branding
          * @param {string} orgId 
          * @param {string} clientId 
@@ -975,7 +975,7 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
             return localVarFp.adminClientsCimdCheck(requestParameters.orgId, requestParameters.adminClientsCimdCheckRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+         * Needs `branding.view` and `clients.view`. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
          * @summary Get an OAuth client\'s login and consent page branding
          * @param {AdminOAuthClientsApiAdminClientsGetBrandingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1055,7 +1055,7 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
             return localVarFp.listClients(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
          * @summary Change keys of an OAuth client\'s login and/or consent page branding
          * @param {AdminOAuthClientsApiPatchAdminClientsUpdateBrandingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1075,7 +1075,7 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
             return localVarFp.patchClient(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
          * @summary Replace an OAuth client\'s login and/or consent page branding
          * @param {AdminOAuthClientsApiPutAdminClientsUpdateBrandingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1134,7 +1134,7 @@ export interface AdminOAuthClientsApiInterface {
     adminClientsCimdCheck(requestParameters: AdminOAuthClientsApiAdminClientsCimdCheckRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminClientsCimdCheckResponse>;
 
     /**
-     * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+     * Needs `branding.view` and `clients.view`. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
      * @summary Get an OAuth client\'s login and consent page branding
      * @param {AdminOAuthClientsApiAdminClientsGetBrandingRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1214,7 +1214,7 @@ export interface AdminOAuthClientsApiInterface {
     listClients(requestParameters: AdminOAuthClientsApiListClientsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListClientsResponse>;
 
     /**
-     * 
+     * Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
      * @summary Change keys of an OAuth client\'s login and/or consent page branding
      * @param {AdminOAuthClientsApiPatchAdminClientsUpdateBrandingRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1234,7 +1234,7 @@ export interface AdminOAuthClientsApiInterface {
     patchClient(requestParameters: AdminOAuthClientsApiPatchClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse>;
 
     /**
-     * 
+     * Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
      * @summary Replace an OAuth client\'s login and/or consent page branding
      * @param {AdminOAuthClientsApiPutAdminClientsUpdateBrandingRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1610,7 +1610,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
     }
 
     /**
-     * Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+     * Needs `branding.view` and `clients.view`. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
      * @summary Get an OAuth client\'s login and consent page branding
      * @param {AdminOAuthClientsApiAdminClientsGetBrandingRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1706,7 +1706,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
     }
 
     /**
-     * 
+     * Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
      * @summary Change keys of an OAuth client\'s login and/or consent page branding
      * @param {AdminOAuthClientsApiPatchAdminClientsUpdateBrandingRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1730,7 +1730,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
     }
 
     /**
-     * 
+     * Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
      * @summary Replace an OAuth client\'s login and/or consent page branding
      * @param {AdminOAuthClientsApiPutAdminClientsUpdateBrandingRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

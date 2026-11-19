@@ -7,14 +7,14 @@ Name | Type | Description | Notes
 **AccessToken** | **string** |  | 
 **TokenType** | **string** |  | 
 **ExpiresIn** | **int32** |  | 
-**Scope** | **string** | Space-separated agent capabilities. | 
+**Scope** | Pointer to **string** | The issued scope values (the agent&#39;s capabilities, or the requested subset), separated by one space. Left out when none was issued. | [optional] 
 **Identity** | [**AttestResponseIdentity**](AttestResponseIdentity.md) |  | 
 
 ## Methods
 
 ### NewAttestResponse
 
-`func NewAttestResponse(accessToken string, tokenType string, expiresIn int32, scope string, identity AttestResponseIdentity, ) *AttestResponse`
+`func NewAttestResponse(accessToken string, tokenType string, expiresIn int32, identity AttestResponseIdentity, ) *AttestResponse`
 
 NewAttestResponse instantiates a new AttestResponse object
 This constructor will assign default values to properties that have it defined,
@@ -108,6 +108,11 @@ and a boolean to check if the value has been set.
 
 SetScope sets Scope field to given value.
 
+### HasScope
+
+`func (o *AttestResponse) HasScope() bool`
+
+HasScope returns a boolean if a field has been set.
 
 ### GetIdentity
 

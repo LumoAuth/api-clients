@@ -38,6 +38,7 @@ import io.lumoauth.client.model.AdminIdentitiesLegacySamlReportResponse;
 import io.lumoauth.client.model.AdminIdentitiesLinkRequest;
 import io.lumoauth.client.model.AdminIdentitiesListResponse;
 import io.lumoauth.client.model.AdminRolesGetPermissionsResponse;
+import io.lumoauth.client.model.AdminUsersRestoreResponse;
 import io.lumoauth.client.model.BlockUserResponse;
 import io.lumoauth.client.model.CreateUserResponse;
 import io.lumoauth.client.model.DeleteUserResponse;
@@ -313,7 +314,7 @@ public class AdminUsersApi {
 
     /**
      * Assign a permission to a user
-     * 
+     * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
      * @param orgId  (required)
      * @param userId  (required)
      * @return AddUserPermissionResponse
@@ -332,7 +333,7 @@ public class AdminUsersApi {
 
     /**
      * Assign a permission to a user
-     * 
+     * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
      * @param orgId  (required)
      * @param userId  (required)
      * @return ApiResponse&lt;AddUserPermissionResponse&gt;
@@ -352,7 +353,7 @@ public class AdminUsersApi {
 
     /**
      * Assign a permission to a user (asynchronously)
-     * 
+     * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
      * @param orgId  (required)
      * @param userId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -590,7 +591,7 @@ public class AdminUsersApi {
 
     /**
      * Relink legacy SAML users to an IdP
-     * Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+     * Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends &#x60;\&quot;dry_run\&quot;: true&#x60;.
      * @param orgId  (required)
      * @param adminIdentitiesLegacySamlRelinkRequest  (required)
      * @return AdminIdentitiesLegacySamlRelinkResponse
@@ -612,7 +613,7 @@ public class AdminUsersApi {
 
     /**
      * Relink legacy SAML users to an IdP
-     * Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+     * Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends &#x60;\&quot;dry_run\&quot;: true&#x60;.
      * @param orgId  (required)
      * @param adminIdentitiesLegacySamlRelinkRequest  (required)
      * @return ApiResponse&lt;AdminIdentitiesLegacySamlRelinkResponse&gt;
@@ -635,7 +636,7 @@ public class AdminUsersApi {
 
     /**
      * Relink legacy SAML users to an IdP (asynchronously)
-     * Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+     * Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends &#x60;\&quot;dry_run\&quot;: true&#x60;.
      * @param orgId  (required)
      * @param adminIdentitiesLegacySamlRelinkRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1261,6 +1262,155 @@ public class AdminUsersApi {
         return localVarCall;
     }
     /**
+     * Build call for adminUsersRestore
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> User restored </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or the plan has no free administrator seat </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> No such user in this organization </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The user is not deleted (&#x60;user_not_deleted&#x60;), was erased (&#x60;user_erased&#x60;), or its address is used by another account (&#x60;address_in_use&#x60;) </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminUsersRestoreCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/users/{userId}/restore"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "userId" + "}", localVarApiClient.escapeString(userId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminUsersRestoreValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminUsersRestore(Async)");
+        }
+
+        // verify the required parameter 'userId' is set
+        if (userId == null) {
+            throw new ApiException("Missing the required parameter 'userId' when calling adminUsersRestore(Async)");
+        }
+
+        return adminUsersRestoreCall(orgId, userId, _callback);
+
+    }
+
+    /**
+     * Restore a deleted user
+     * Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted&#x3D;true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @return AdminUsersRestoreResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> User restored </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or the plan has no free administrator seat </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> No such user in this organization </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The user is not deleted (&#x60;user_not_deleted&#x60;), was erased (&#x60;user_erased&#x60;), or its address is used by another account (&#x60;address_in_use&#x60;) </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminUsersRestoreResponse adminUsersRestore(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<AdminUsersRestoreResponse> localVarResp = adminUsersRestoreWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Restore a deleted user
+     * Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted&#x3D;true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @return ApiResponse&lt;AdminUsersRestoreResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> User restored </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or the plan has no free administrator seat </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> No such user in this organization </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The user is not deleted (&#x60;user_not_deleted&#x60;), was erased (&#x60;user_erased&#x60;), or its address is used by another account (&#x60;address_in_use&#x60;) </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminUsersRestoreResponse> adminUsersRestoreWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        okhttp3.Call localVarCall = adminUsersRestoreValidateBeforeCall(orgId, userId, null);
+        Type localVarReturnType = new TypeToken<AdminUsersRestoreResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Restore a deleted user (asynchronously)
+     * Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted&#x3D;true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> User restored </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or the plan has no free administrator seat </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> No such user in this organization </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The user is not deleted (&#x60;user_not_deleted&#x60;), was erased (&#x60;user_erased&#x60;), or its address is used by another account (&#x60;address_in_use&#x60;) </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminUsersRestoreAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AdminUsersRestoreResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminUsersRestoreValidateBeforeCall(orgId, userId, _callback);
+        Type localVarReturnType = new TypeToken<AdminUsersRestoreResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for blockUser
      * @param orgId  (required)
      * @param userId  (required)
@@ -1408,6 +1558,7 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> User created </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Missing permission, or a plan limit (&#x60;plan_limit_reached&#x60;): no admin seat free for a user created with admin access (&#x60;limit&#x60;: &#x60;admin_seats&#x60;), or every monthly-active-user place of a plan with a hard cap used this month (&#x60;limit&#x60;: &#x60;mau&#x60;, with &#x60;resets_on&#x60;). Nothing is created </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call createUserCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1477,6 +1628,7 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> User created </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Missing permission, or a plan limit (&#x60;plan_limit_reached&#x60;): no admin seat free for a user created with admin access (&#x60;limit&#x60;: &#x60;admin_seats&#x60;), or every monthly-active-user place of a plan with a hard cap used this month (&#x60;limit&#x60;: &#x60;mau&#x60;, with &#x60;resets_on&#x60;). Nothing is created </td><td>  -  </td></tr>
      </table>
      */
     public CreateUserResponse createUser(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1495,6 +1647,7 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> User created </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Missing permission, or a plan limit (&#x60;plan_limit_reached&#x60;): no admin seat free for a user created with admin access (&#x60;limit&#x60;: &#x60;admin_seats&#x60;), or every monthly-active-user place of a plan with a hard cap used this month (&#x60;limit&#x60;: &#x60;mau&#x60;, with &#x60;resets_on&#x60;). Nothing is created </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<CreateUserResponse> createUserWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1515,6 +1668,7 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> User created </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Missing permission, or a plan limit (&#x60;plan_limit_reached&#x60;): no admin seat free for a user created with admin access (&#x60;limit&#x60;: &#x60;admin_seats&#x60;), or every monthly-active-user place of a plan with a hard cap used this month (&#x60;limit&#x60;: &#x60;mau&#x60;, with &#x60;resets_on&#x60;). Nothing is created </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call createUserAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<CreateUserResponse> _callback) throws ApiException {
@@ -2212,6 +2366,18 @@ public class AdminUsersApi {
     /**
      * Build call for listUsers
      * @param orgId  (required)
+     * @param page Page number. (optional, default to 1)
+     * @param limit Users per page (1 to 100). (optional, default to 25)
+     * @param search Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)
+     * @param active Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)
+     * @param blocked Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)
+     * @param deleted &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)
+     * @param emailVerified Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)
+     * @param mfaEnabled Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)
+     * @param role Only users who hold the role with this slug. (optional)
+     * @param group Only members of the group with this slug. (optional)
+     * @param sortBy Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)
+     * @param sortDir Sort direction. Used only together with sortBy. (optional, default to DESC)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2222,7 +2388,7 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> Users </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listUsersCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call listUsersCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer limit, @javax.annotation.Nullable String search, @javax.annotation.Nullable Boolean active, @javax.annotation.Nullable Boolean blocked, @javax.annotation.Nullable Boolean deleted, @javax.annotation.Nullable Boolean emailVerified, @javax.annotation.Nullable Boolean mfaEnabled, @javax.annotation.Nullable String role, @javax.annotation.Nullable String group, @javax.annotation.Nullable String sortBy, @javax.annotation.Nullable String sortDir, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2248,6 +2414,54 @@ public class AdminUsersApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (page != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("page", page));
+        }
+
+        if (limit != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("limit", limit));
+        }
+
+        if (search != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("search", search));
+        }
+
+        if (active != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("active", active));
+        }
+
+        if (blocked != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("blocked", blocked));
+        }
+
+        if (deleted != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("deleted", deleted));
+        }
+
+        if (emailVerified != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("emailVerified", emailVerified));
+        }
+
+        if (mfaEnabled != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("mfaEnabled", mfaEnabled));
+        }
+
+        if (role != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("role", role));
+        }
+
+        if (group != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("group", group));
+        }
+
+        if (sortBy != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("sortBy", sortBy));
+        }
+
+        if (sortDir != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("sortDir", sortDir));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -2268,13 +2482,13 @@ public class AdminUsersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listUsersValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listUsersValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer limit, @javax.annotation.Nullable String search, @javax.annotation.Nullable Boolean active, @javax.annotation.Nullable Boolean blocked, @javax.annotation.Nullable Boolean deleted, @javax.annotation.Nullable Boolean emailVerified, @javax.annotation.Nullable Boolean mfaEnabled, @javax.annotation.Nullable String role, @javax.annotation.Nullable String group, @javax.annotation.Nullable String sortBy, @javax.annotation.Nullable String sortDir, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling listUsers(Async)");
         }
 
-        return listUsersCall(orgId, _callback);
+        return listUsersCall(orgId, page, limit, search, active, blocked, deleted, emailVerified, mfaEnabled, role, group, sortBy, sortDir, _callback);
 
     }
 
@@ -2282,6 +2496,18 @@ public class AdminUsersApi {
      * List users
      * 
      * @param orgId  (required)
+     * @param page Page number. (optional, default to 1)
+     * @param limit Users per page (1 to 100). (optional, default to 25)
+     * @param search Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)
+     * @param active Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)
+     * @param blocked Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)
+     * @param deleted &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)
+     * @param emailVerified Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)
+     * @param mfaEnabled Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)
+     * @param role Only users who hold the role with this slug. (optional)
+     * @param group Only members of the group with this slug. (optional)
+     * @param sortBy Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)
+     * @param sortDir Sort direction. Used only together with sortBy. (optional, default to DESC)
      * @return ListUsersResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2291,8 +2517,8 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> Users </td><td>  -  </td></tr>
      </table>
      */
-    public ListUsersResponse listUsers(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<ListUsersResponse> localVarResp = listUsersWithHttpInfo(orgId);
+    public ListUsersResponse listUsers(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer limit, @javax.annotation.Nullable String search, @javax.annotation.Nullable Boolean active, @javax.annotation.Nullable Boolean blocked, @javax.annotation.Nullable Boolean deleted, @javax.annotation.Nullable Boolean emailVerified, @javax.annotation.Nullable Boolean mfaEnabled, @javax.annotation.Nullable String role, @javax.annotation.Nullable String group, @javax.annotation.Nullable String sortBy, @javax.annotation.Nullable String sortDir) throws ApiException {
+        ApiResponse<ListUsersResponse> localVarResp = listUsersWithHttpInfo(orgId, page, limit, search, active, blocked, deleted, emailVerified, mfaEnabled, role, group, sortBy, sortDir);
         return localVarResp.getData();
     }
 
@@ -2300,6 +2526,18 @@ public class AdminUsersApi {
      * List users
      * 
      * @param orgId  (required)
+     * @param page Page number. (optional, default to 1)
+     * @param limit Users per page (1 to 100). (optional, default to 25)
+     * @param search Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)
+     * @param active Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)
+     * @param blocked Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)
+     * @param deleted &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)
+     * @param emailVerified Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)
+     * @param mfaEnabled Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)
+     * @param role Only users who hold the role with this slug. (optional)
+     * @param group Only members of the group with this slug. (optional)
+     * @param sortBy Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)
+     * @param sortDir Sort direction. Used only together with sortBy. (optional, default to DESC)
      * @return ApiResponse&lt;ListUsersResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2309,8 +2547,8 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> Users </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<ListUsersResponse> listUsersWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = listUsersValidateBeforeCall(orgId, null);
+    public ApiResponse<ListUsersResponse> listUsersWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer limit, @javax.annotation.Nullable String search, @javax.annotation.Nullable Boolean active, @javax.annotation.Nullable Boolean blocked, @javax.annotation.Nullable Boolean deleted, @javax.annotation.Nullable Boolean emailVerified, @javax.annotation.Nullable Boolean mfaEnabled, @javax.annotation.Nullable String role, @javax.annotation.Nullable String group, @javax.annotation.Nullable String sortBy, @javax.annotation.Nullable String sortDir) throws ApiException {
+        okhttp3.Call localVarCall = listUsersValidateBeforeCall(orgId, page, limit, search, active, blocked, deleted, emailVerified, mfaEnabled, role, group, sortBy, sortDir, null);
         Type localVarReturnType = new TypeToken<ListUsersResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2319,6 +2557,18 @@ public class AdminUsersApi {
      * List users (asynchronously)
      * 
      * @param orgId  (required)
+     * @param page Page number. (optional, default to 1)
+     * @param limit Users per page (1 to 100). (optional, default to 25)
+     * @param search Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)
+     * @param active Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)
+     * @param blocked Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)
+     * @param deleted &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)
+     * @param emailVerified Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)
+     * @param mfaEnabled Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)
+     * @param role Only users who hold the role with this slug. (optional)
+     * @param group Only members of the group with this slug. (optional)
+     * @param sortBy Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)
+     * @param sortDir Sort direction. Used only together with sortBy. (optional, default to DESC)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2329,9 +2579,9 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> Users </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listUsersAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<ListUsersResponse> _callback) throws ApiException {
+    public okhttp3.Call listUsersAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer limit, @javax.annotation.Nullable String search, @javax.annotation.Nullable Boolean active, @javax.annotation.Nullable Boolean blocked, @javax.annotation.Nullable Boolean deleted, @javax.annotation.Nullable Boolean emailVerified, @javax.annotation.Nullable Boolean mfaEnabled, @javax.annotation.Nullable String role, @javax.annotation.Nullable String group, @javax.annotation.Nullable String sortBy, @javax.annotation.Nullable String sortDir, final ApiCallback<ListUsersResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listUsersValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = listUsersValidateBeforeCall(orgId, page, limit, search, active, blocked, deleted, emailVerified, mfaEnabled, role, group, sortBy, sortDir, _callback);
         Type localVarReturnType = new TypeToken<ListUsersResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -3341,6 +3591,8 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call setUserPasswordCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -3407,7 +3659,7 @@ public class AdminUsersApi {
 
     /**
      * Set a user&#39;s password
-     * 
+     * Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
      * @return SetUserPasswordPostResponse
@@ -3417,6 +3669,8 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
     public SetUserPasswordPostResponse setUserPassword(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
@@ -3426,7 +3680,7 @@ public class AdminUsersApi {
 
     /**
      * Set a user&#39;s password
-     * 
+     * Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
      * @return ApiResponse&lt;SetUserPasswordPostResponse&gt;
@@ -3436,6 +3690,8 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<SetUserPasswordPostResponse> setUserPasswordWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
@@ -3446,7 +3702,7 @@ public class AdminUsersApi {
 
     /**
      * Set a user&#39;s password (asynchronously)
-     * 
+     * Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -3457,6 +3713,8 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call setUserPasswordAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<SetUserPasswordPostResponse> _callback) throws ApiException {
@@ -3478,6 +3736,8 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call setUserPasswordPostCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -3544,7 +3804,7 @@ public class AdminUsersApi {
 
     /**
      * Set a user&#39;s password
-     * 
+     * Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
      * @return SetUserPasswordPostResponse
@@ -3554,6 +3814,8 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
     public SetUserPasswordPostResponse setUserPasswordPost(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
@@ -3563,7 +3825,7 @@ public class AdminUsersApi {
 
     /**
      * Set a user&#39;s password
-     * 
+     * Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
      * @return ApiResponse&lt;SetUserPasswordPostResponse&gt;
@@ -3573,6 +3835,8 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<SetUserPasswordPostResponse> setUserPasswordPostWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
@@ -3583,7 +3847,7 @@ public class AdminUsersApi {
 
     /**
      * Set a user&#39;s password (asynchronously)
-     * 
+     * Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -3594,6 +3858,8 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call setUserPasswordPostAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<SetUserPasswordPostResponse> _callback) throws ApiException {

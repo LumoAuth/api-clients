@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -31,8 +31,19 @@ class AskResponse(BaseModel):
     action: Optional[StrictStr] = None
     context: Optional[Dict[str, Any]] = None
     reason: Optional[StrictStr] = None
+    decided_by: Optional[StrictStr] = Field(default=None, description="Which check produced the answer. Always pdp for a user caller.")
     audit_id: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["allowed", "action", "context", "reason", "audit_id"]
+    __properties: ClassVar[List[str]] = ["allowed", "action", "context", "reason", "decided_by", "audit_id"]
+
+    @field_validator('decided_by')
+    def decided_by_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['capability', 'pdp', 'deny_override']):
+            raise ValueError("must be one of enum values ('capability', 'pdp', 'deny_override')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -89,6 +100,7 @@ class AskResponse(BaseModel):
             "action": obj.get("action"),
             "context": obj.get("context"),
             "reason": obj.get("reason"),
+            "decided_by": obj.get("decided_by"),
             "audit_id": obj.get("audit_id")
         })
         return _obj

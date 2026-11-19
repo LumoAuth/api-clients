@@ -84,8 +84,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'agentId' => 'string',
         'workloadIdentity' => 'string',
         'capabilities' => 'string[]',
-        'budgetPolicy' => 'array<string,mixed>',
-        'clientId' => 'string'
+        'budgetPolicy' => 'array<string,mixed>'
     ];
 
     /**
@@ -122,8 +121,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'agentId' => null,
         'workloadIdentity' => null,
         'capabilities' => null,
-        'budgetPolicy' => null,
-        'clientId' => null
+        'budgetPolicy' => null
     ];
 
     /**
@@ -158,8 +156,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'agentId' => false,
         'workloadIdentity' => true,
         'capabilities' => true,
-        'budgetPolicy' => false,
-        'clientId' => false
+        'budgetPolicy' => false
     ];
 
     /**
@@ -274,8 +271,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'agentId' => 'agent_id',
         'workloadIdentity' => 'workload_identity',
         'capabilities' => 'capabilities',
-        'budgetPolicy' => 'budget_policy',
-        'clientId' => 'client_id'
+        'budgetPolicy' => 'budget_policy'
     ];
 
     /**
@@ -310,8 +306,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'agentId' => 'setAgentId',
         'workloadIdentity' => 'setWorkloadIdentity',
         'capabilities' => 'setCapabilities',
-        'budgetPolicy' => 'setBudgetPolicy',
-        'clientId' => 'setClientId'
+        'budgetPolicy' => 'setBudgetPolicy'
     ];
 
     /**
@@ -346,8 +341,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'agentId' => 'getAgentId',
         'workloadIdentity' => 'getWorkloadIdentity',
         'capabilities' => 'getCapabilities',
-        'budgetPolicy' => 'getBudgetPolicy',
-        'clientId' => 'getClientId'
+        'budgetPolicy' => 'getBudgetPolicy'
     ];
 
     /**
@@ -392,8 +386,6 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     public const IDENTITY_TYPE_AGENT = 'agent';
-    public const IDENTITY_TYPE_CLIENT = 'client';
-    public const IDENTITY_TYPE_UNKNOWN = 'unknown';
 
     /**
      * Gets allowable values of the enum
@@ -404,8 +396,6 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return [
             self::IDENTITY_TYPE_AGENT,
-            self::IDENTITY_TYPE_CLIENT,
-            self::IDENTITY_TYPE_UNKNOWN,
         ];
     }
 
@@ -451,7 +441,6 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('workloadIdentity', $data ?? [], null);
         $this->setIfExists('capabilities', $data ?? [], null);
         $this->setIfExists('budgetPolicy', $data ?? [], null);
-        $this->setIfExists('clientId', $data ?? [], null);
     }
 
     /**
@@ -521,7 +510,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets sub
      *
-     * @param string $sub User id; agent_<agent_id> for agents; client_<client_id> for clients.
+     * @param string $sub User id; agent_<agent_id> for agents.
      *
      * @return self
      */
@@ -548,7 +537,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets identityType
      *
-     * @param string|null $identityType Only for non-user principals.
+     * @param string|null $identityType Only for agents.
      *
      * @return self
      */
@@ -612,7 +601,7 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets name
      *
-     * @param string|null $name profile scope (users); agent / client display name.
+     * @param string|null $name profile scope (users); agent display name.
      *
      * @return self
      */
@@ -1257,33 +1246,6 @@ class UserinfoResponse implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable budgetPolicy cannot be null');
         }
         $this->container['budgetPolicy'] = $budgetPolicy;
-
-        return $this;
-    }
-
-    /**
-     * Gets clientId
-     *
-     * @return string|null
-     */
-    public function getClientId()
-    {
-        return $this->container['clientId'];
-    }
-
-    /**
-     * Sets clientId
-     *
-     * @param string|null $clientId Clients only.
-     *
-     * @return self
-     */
-    public function setClientId($clientId)
-    {
-        if (is_null($clientId)) {
-            throw new \InvalidArgumentException('non-nullable clientId cannot be null');
-        }
-        $this->container['clientId'] = $clientId;
 
         return $this;
     }

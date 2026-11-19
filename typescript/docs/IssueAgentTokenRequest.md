@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **code** | **string** | Authorization code to exchange (request_type&#x3D;code). | [optional] [default to undefined]
 **auth_token** | **string** | Upstream auth token to exchange (request_type&#x3D;exchange). | [optional] [default to undefined]
 **refresh_token** | **string** | Refresh token to redeem (request_type&#x3D;refresh). | [optional] [default to undefined]
+**scope** | **string** | request_type&#x3D;refresh only: optional space-delimited scopes that narrow the refreshed token. Must be a subset of the refresh grant and of the resource token scope (invalid_scope otherwise). Ignored for request_type&#x3D;auth, where the resource token names the scope. | [optional] [default to undefined]
 
 ## Example
 
@@ -24,6 +25,7 @@ const instance: IssueAgentTokenRequest = {
     code,
     auth_token,
     refresh_token,
+    scope,
 };
 ```
 

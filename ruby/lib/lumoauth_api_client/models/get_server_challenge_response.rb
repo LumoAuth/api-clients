@@ -15,6 +15,7 @@ require 'time'
 
 module LumoAuthApiClient
   class GetServerChallengeResponse
+    # `no_authorization_required` for an MCP server that checks no token (Public or stdio): there is nothing to challenge, with or without a token.
     attr_accessor :status
 
     # MCP server display name.
@@ -138,7 +139,7 @@ module LumoAuthApiClient
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @status.nil?
-      status_validator = EnumAttributeValidator.new('String', ["authenticated"])
+      status_validator = EnumAttributeValidator.new('String', ["authenticated", "no_authorization_required"])
       return false unless status_validator.valid?(@status)
       return false if @server.nil?
       return false if @server_id.nil?
@@ -148,7 +149,7 @@ module LumoAuthApiClient
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] status Object to be assigned
     def status=(status)
-      validator = EnumAttributeValidator.new('String', ["authenticated"])
+      validator = EnumAttributeValidator.new('String', ["authenticated", "no_authorization_required"])
       unless validator.valid?(status)
         fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
       end

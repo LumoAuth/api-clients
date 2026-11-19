@@ -20,6 +20,7 @@ module LumoAuthApiClient
       @api_client = api_client
     end
     # Add permission(s) to a role
+    # Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
@@ -30,6 +31,7 @@ module LumoAuthApiClient
     end
 
     # Add permission(s) to a role
+    # Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
@@ -154,6 +156,7 @@ module LumoAuthApiClient
     end
 
     # Create a new role
+    # Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminRolesCreateResponse]
@@ -163,6 +166,7 @@ module LumoAuthApiClient
     end
 
     # Create a new role
+    # Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminRolesCreateResponse, Integer, Hash)>] AdminRolesCreateResponse data, response status code and response headers
@@ -544,6 +548,7 @@ module LumoAuthApiClient
     end
 
     # Remove a permission from a role
+    # Needs `roles.assign-permissions` and `roles.edit`.
     # @param org_id [String] 
     # @param role_id [String] 
     # @param permission_id [String] 
@@ -555,6 +560,7 @@ module LumoAuthApiClient
     end
 
     # Remove a permission from a role
+    # Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;.
     # @param org_id [String] 
     # @param role_id [String] 
     # @param permission_id [String] 
@@ -576,6 +582,11 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && permission_id.nil?
         fail ArgumentError, "Missing the required parameter 'permission_id' when calling AdminRolesApi.admin_roles_remove_permission"
       end
+      pattern = Regexp.new(/[1-9]\d{0,8}|1\d{9}|20\d{8}|21[0-3]\d{7}|214[0-6]\d{6}|2147[0-3]\d{5}|21474[0-7]\d{4}|214748[0-2]\d{3}|2147483[0-5]\d{2}|21474836[0-3]\d|214748364[0-7]/)
+      if @api_client.config.client_side_validation && permission_id !~ pattern
+        fail ArgumentError, "invalid value for 'permission_id' when calling AdminRolesApi.admin_roles_remove_permission, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'roleId' + '}', CGI.escape(role_id.to_s)).sub('{' + 'permissionId' + '}', CGI.escape(permission_id.to_s))
 
@@ -690,6 +701,7 @@ module LumoAuthApiClient
     end
 
     # Update role permissions (replaces all)
+    # Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
@@ -700,6 +712,7 @@ module LumoAuthApiClient
     end
 
     # Update role permissions (replaces all)
+    # Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters

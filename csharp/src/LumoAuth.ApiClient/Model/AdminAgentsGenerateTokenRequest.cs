@@ -61,7 +61,7 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         /// <value>Optional subset of the agent&#39;s capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400.</value>
         /*
-        <example>[&quot;invoices.read&quot;]</example>
+        <example>[&quot;invoices:read&quot;]</example>
         */
         [DataMember(Name = "scopes", EmitDefaultValue = false)]
         public List<string> Scopes { get; set; }

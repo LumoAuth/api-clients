@@ -79,7 +79,7 @@ const { status, data } = await apiInstance.adminClientsCimdCheck(
 # **adminClientsGetBranding**
 > AdminClientsGetBrandingResponse adminClientsGetBranding()
 
-Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+Needs `branding.view` and `clients.view`. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
 
 ### Example
 
@@ -504,6 +504,7 @@ const { status, data } = await apiInstance.listClients(
 # **patchAdminClientsUpdateBranding**
 > PatchAdminClientsUpdateBrandingResponse patchAdminClientsUpdateBranding()
 
+Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
 
 ### Example
 
@@ -616,6 +617,7 @@ const { status, data } = await apiInstance.patchClient(
 # **putAdminClientsUpdateBranding**
 > PutAdminClientsUpdateBrandingResponse putAdminClientsUpdateBranding()
 
+Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
 
 ### Example
 

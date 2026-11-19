@@ -94,8 +94,10 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Invitation sent </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid role for this organization </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A roleId that names no role of this organization, an email that is not an email address, or a message longer than 500 characters </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Missing permission, or (&#x60;plan_limit_reached&#x60;, &#x60;limit&#x60;: &#x60;mau&#x60;) the address has no account here and every monthly-active-user place of a plan with a hard cap is used this month </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Too many invitations from this organization, or to this address, in the last hour </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminOrgInvitationsCreateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback _callback) throws ApiException {
@@ -172,8 +174,10 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Invitation sent </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid role for this organization </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A roleId that names no role of this organization, an email that is not an email address, or a message longer than 500 characters </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Missing permission, or (&#x60;plan_limit_reached&#x60;, &#x60;limit&#x60;: &#x60;mau&#x60;) the address has no account here and every monthly-active-user place of a plan with a hard cap is used this month </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Too many invitations from this organization, or to this address, in the last hour </td><td>  -  </td></tr>
      </table>
      */
     public AdminOrgInvitationsCreateResponse adminOrgInvitationsCreate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
@@ -193,8 +197,10 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Invitation sent </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid role for this organization </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A roleId that names no role of this organization, an email that is not an email address, or a message longer than 500 characters </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Missing permission, or (&#x60;plan_limit_reached&#x60;, &#x60;limit&#x60;: &#x60;mau&#x60;) the address has no account here and every monthly-active-user place of a plan with a hard cap is used this month </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Too many invitations from this organization, or to this address, in the last hour </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminOrgInvitationsCreateResponse> adminOrgInvitationsCreateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
@@ -216,8 +222,10 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Invitation sent </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid role for this organization </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A roleId that names no role of this organization, an email that is not an email address, or a message longer than 500 characters </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Missing permission, or (&#x60;plan_limit_reached&#x60;, &#x60;limit&#x60;: &#x60;mau&#x60;) the address has no account here and every monthly-active-user place of a plan with a hard cap is used this month </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Too many invitations from this organization, or to this address, in the last hour </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminOrgInvitationsCreateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback<AdminOrgInvitationsCreateResponse> _callback) throws ApiException {
@@ -381,6 +389,7 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Invitation resent </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;mau&#x60;): the invited address has no account here and every monthly-active-user place of a plan with a hard cap is used this month </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization or invitation not found </td><td>  -  </td></tr>
         <tr><td> 422 </td><td> Unable to resend invitation </td><td>  -  </td></tr>
      </table>
@@ -466,6 +475,7 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Invitation resent </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;mau&#x60;): the invited address has no account here and every monthly-active-user place of a plan with a hard cap is used this month </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization or invitation not found </td><td>  -  </td></tr>
         <tr><td> 422 </td><td> Unable to resend invitation </td><td>  -  </td></tr>
      </table>
@@ -488,6 +498,7 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Invitation resent </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;mau&#x60;): the invited address has no account here and every monthly-active-user place of a plan with a hard cap is used this month </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization or invitation not found </td><td>  -  </td></tr>
         <tr><td> 422 </td><td> Unable to resend invitation </td><td>  -  </td></tr>
      </table>
@@ -512,6 +523,7 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Invitation resent </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;mau&#x60;): the invited address has no account here and every monthly-active-user place of a plan with a hard cap is used this month </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization or invitation not found </td><td>  -  </td></tr>
         <tr><td> 422 </td><td> Unable to resend invitation </td><td>  -  </td></tr>
      </table>
@@ -1127,8 +1139,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Role created </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing name or slug, a slug that is not 2 to 40 lowercase letters, digits, hyphens or underscores, a name longer than 100 characters or a description longer than 1,000 </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> A role with this name or slug already exists </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> A role with this slug already exists in this organization </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminOrgRolesCreateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback _callback) throws ApiException {
@@ -1205,8 +1218,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Role created </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing name or slug, a slug that is not 2 to 40 lowercase letters, digits, hyphens or underscores, a name longer than 100 characters or a description longer than 1,000 </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> A role with this name or slug already exists </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> A role with this slug already exists in this organization </td><td>  -  </td></tr>
      </table>
      */
     public AdminOrgRolesCreateResponse adminOrgRolesCreate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
@@ -1226,8 +1240,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Role created </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing name or slug, a slug that is not 2 to 40 lowercase letters, digits, hyphens or underscores, a name longer than 100 characters or a description longer than 1,000 </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> A role with this name or slug already exists </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> A role with this slug already exists in this organization </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminOrgRolesCreateResponse> adminOrgRolesCreateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
@@ -1249,8 +1264,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Role created </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing name or slug, a slug that is not 2 to 40 lowercase letters, digits, hyphens or underscores, a name longer than 100 characters or a description longer than 1,000 </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> A role with this name or slug already exists </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> A role with this slug already exists in this organization </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminOrgRolesCreateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback<AdminOrgRolesCreateResponse> _callback) throws ApiException {
@@ -1567,7 +1583,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Organization created </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> Organization already exists or data invalid </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> name missing, empty or over 100 characters; a slug that does not fit the rule; displayName over 255 characters; logoUrl not an absolute https URL </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached: the plan allows no further customer organization </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminOrganizationsCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1637,7 +1655,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Organization created </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> Organization already exists or data invalid </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> name missing, empty or over 100 characters; a slug that does not fit the rule; displayName over 255 characters; logoUrl not an absolute https URL </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached: the plan allows no further customer organization </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
     public AdminOrganizationsCreateResponse adminOrganizationsCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1656,7 +1676,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Organization created </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> Organization already exists or data invalid </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> name missing, empty or over 100 characters; a slug that does not fit the rule; displayName over 255 characters; logoUrl not an absolute https URL </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached: the plan allows no further customer organization </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminOrganizationsCreateResponse> adminOrganizationsCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1677,7 +1699,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Organization created </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> Organization already exists or data invalid </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> name missing, empty or over 100 characters; a slug that does not fit the rule; displayName over 255 characters; logoUrl not an absolute https URL </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached: the plan allows no further customer organization </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminOrganizationsCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminOrganizationsCreateResponse> _callback) throws ApiException {
@@ -2418,8 +2442,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A field that does not fit (see create), or an empty &#x60;slug&#x60; (leave the field out to keep the slug) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> Data invalid or conflicts with an existing record </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminOrganizationsUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback _callback) throws ApiException {
@@ -2496,8 +2521,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A field that does not fit (see create), or an empty &#x60;slug&#x60; (leave the field out to keep the slug) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> Data invalid or conflicts with an existing record </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
     public AdminOrganizationsGetResponse patchAdminOrganizationsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
@@ -2517,8 +2543,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A field that does not fit (see create), or an empty &#x60;slug&#x60; (leave the field out to keep the slug) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> Data invalid or conflicts with an existing record </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminOrganizationsGetResponse> patchAdminOrganizationsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
@@ -2540,8 +2567,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A field that does not fit (see create), or an empty &#x60;slug&#x60; (leave the field out to keep the slug) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> Data invalid or conflicts with an existing record </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminOrganizationsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback<AdminOrganizationsGetResponse> _callback) throws ApiException {
@@ -2873,8 +2901,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A field that does not fit (see create), or an empty &#x60;slug&#x60; (leave the field out to keep the slug) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> Data invalid or conflicts with an existing record </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminOrganizationsUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback _callback) throws ApiException {
@@ -2951,8 +2980,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A field that does not fit (see create), or an empty &#x60;slug&#x60; (leave the field out to keep the slug) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> Data invalid or conflicts with an existing record </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
     public AdminOrganizationsGetResponse putAdminOrganizationsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
@@ -2972,8 +3002,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A field that does not fit (see create), or an empty &#x60;slug&#x60; (leave the field out to keep the slug) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> Data invalid or conflicts with an existing record </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminOrganizationsGetResponse> putAdminOrganizationsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
@@ -2995,8 +3026,9 @@ public class AdminOrganizationsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A field that does not fit (see create), or an empty &#x60;slug&#x60; (leave the field out to keep the slug) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
-        <tr><td> 409 </td><td> Data invalid or conflicts with an existing record </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminOrganizationsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback<AdminOrganizationsGetResponse> _callback) throws ApiException {

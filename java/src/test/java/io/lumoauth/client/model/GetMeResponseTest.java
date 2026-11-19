@@ -98,6 +98,30 @@ public class GetMeResponseTest {
     }
 
     /**
+     * Test the property 'scopes'
+     */
+    @Test
+    public void scopesTest() {
+        // TODO: test scopes
+    }
+
+    /**
+     * Test the property 'scope'
+     */
+    @Test
+    public void scopeTest() {
+        // TODO: test scope
+    }
+
+    /**
+     * Test the property 'scopeNarrowed'
+     */
+    @Test
+    public void scopeNarrowedTest() {
+        // TODO: test scopeNarrowed
+    }
+
+    /**
      * Test the property 'tenant'
      */
     @Test

@@ -6,8 +6,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **data** | [**List[McpServer]**](McpServer.md) |  | [optional] 
-**meta** | [**AdminMcpServersListResponseMeta**](AdminMcpServersListResponseMeta.md) |  | [optional] 
+**meta** | [**PaginationMeta**](PaginationMeta.md) |  | [optional] 
 **pagination** | [**PaginationMeta**](PaginationMeta.md) |  | [optional] 
+**resource_type** | **str** |  | [optional] 
 
 ## Example
 

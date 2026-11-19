@@ -95,5 +95,11 @@ export interface IntrospectResponse {
      * @memberof IntrospectResponse
      */
     'jti'?: string;
+    /**
+     * RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under `act`. JWT and opaque tokens.
+     * @type {object}
+     * @memberof IntrospectResponse
+     */
+    'act'?: object;
 }
 

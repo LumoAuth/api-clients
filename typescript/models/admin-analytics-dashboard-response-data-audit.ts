@@ -21,7 +21,7 @@
  */
 export interface AdminAnalyticsDashboardResponseDataAudit {
     /**
-     * 
+     * Audit events of the last 7 days, or of the audit retention period of the plan when that is shorter.
      * @type {number}
      * @memberof AdminAnalyticsDashboardResponseDataAudit
      */

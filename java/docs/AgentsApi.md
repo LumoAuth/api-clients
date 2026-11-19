@@ -22,7 +22,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Agent-friendly permission check (Natural Language style)
 
-POST /orgs/{orgId}/api/v1/agents/ask Body: {   \&quot;action\&quot;: \&quot;document.read\&quot;,   \&quot;context\&quot;: {\&quot;id\&quot;: \&quot;123\&quot;} }
+POST /orgs/{orgId}/api/v1/agents/ask Body: {   \&quot;action\&quot;: \&quot;document:read\&quot;,   \&quot;context\&quot;: {\&quot;id\&quot;: \&quot;123\&quot;} }
 
 ### Example
 ```java
@@ -90,7 +90,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Authorization decision for the requested action. |  -  |
-| **400** | Missing required field: action. |  -  |
+| **400** | Missing required field: action; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. |  -  |
 | **403** | plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). |  -  |
 | **429** | budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. |  -  |
 

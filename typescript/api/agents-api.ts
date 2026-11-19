@@ -60,7 +60,7 @@ import type { VerifyAgentCardResponse } from '../models';
 export const AgentsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document.read\",   \"context\": {\"id\": \"123\"} }
+         * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
          * @summary Agent-friendly permission check (Natural Language style)
          * @param {string} orgId 
          * @param {AskRequest} askRequest 
@@ -519,7 +519,7 @@ export const AgentsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AgentsApiAxiosParamCreator(configuration)
     return {
         /**
-         * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document.read\",   \"context\": {\"id\": \"123\"} }
+         * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
          * @summary Agent-friendly permission check (Natural Language style)
          * @param {string} orgId 
          * @param {AskRequest} askRequest 
@@ -666,7 +666,7 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = AgentsApiFp(configuration)
     return {
         /**
-         * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document.read\",   \"context\": {\"id\": \"123\"} }
+         * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
          * @summary Agent-friendly permission check (Natural Language style)
          * @param {AgentsApiAskRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -773,7 +773,7 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
  */
 export interface AgentsApiInterface {
     /**
-     * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document.read\",   \"context\": {\"id\": \"123\"} }
+     * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
      * @summary Agent-friendly permission check (Natural Language style)
      * @param {AgentsApiAskRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1083,7 +1083,7 @@ export interface AgentsApiVerifyAgentCardRequest {
  */
 export class AgentsApi extends BaseAPI implements AgentsApiInterface {
     /**
-     * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document.read\",   \"context\": {\"id\": \"123\"} }
+     * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
      * @summary Agent-friendly permission check (Natural Language style)
      * @param {AgentsApiAskRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

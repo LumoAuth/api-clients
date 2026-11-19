@@ -224,7 +224,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System attribute definitions cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be deleted </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -302,7 +302,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System attribute definitions cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be deleted </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -323,7 +323,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System attribute definitions cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be deleted </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -346,7 +346,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System attribute definitions cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be deleted </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -636,7 +636,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid effect, priority (a whole number from 0 to 1000) or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority (a whole number from 0 to 1000), resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions. &#x60;action&#x60; is one action, several separated by commas (&#x60;read, write&#x60;), or &#x60;*&#x60;. </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> A policy with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
@@ -707,7 +707,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid effect, priority (a whole number from 0 to 1000) or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority (a whole number from 0 to 1000), resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions. &#x60;action&#x60; is one action, several separated by commas (&#x60;read, write&#x60;), or &#x60;*&#x60;. </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> A policy with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
@@ -727,7 +727,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid effect, priority (a whole number from 0 to 1000) or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority (a whole number from 0 to 1000), resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions. &#x60;action&#x60; is one action, several separated by commas (&#x60;read, write&#x60;), or &#x60;*&#x60;. </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> A policy with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
@@ -749,7 +749,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid effect, priority (a whole number from 0 to 1000) or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority (a whole number from 0 to 1000), resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions. &#x60;action&#x60; is one action, several separated by commas (&#x60;read, write&#x60;), or &#x60;*&#x60;. </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> A policy with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
@@ -772,7 +772,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be deleted </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -850,7 +850,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be deleted </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -871,7 +871,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be deleted </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -894,7 +894,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be deleted </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1049,6 +1049,7 @@ public class AdminAbacApi {
     /**
      * Build call for abacPoliciesList
      * @param orgId  (required)
+     * @param action Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1059,7 +1060,7 @@ public class AdminAbacApi {
         <tr><td> 200 </td><td> Paginated policies </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call abacPoliciesListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call abacPoliciesListCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String action, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1085,6 +1086,10 @@ public class AdminAbacApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (action != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("action", action));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1105,13 +1110,13 @@ public class AdminAbacApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call abacPoliciesListValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call abacPoliciesListValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String action, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling abacPoliciesList(Async)");
         }
 
-        return abacPoliciesListCall(orgId, _callback);
+        return abacPoliciesListCall(orgId, action, _callback);
 
     }
 
@@ -1119,6 +1124,7 @@ public class AdminAbacApi {
      * List ABAC policies
      * 
      * @param orgId  (required)
+     * @param action Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)
      * @return AbacPoliciesListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1128,8 +1134,8 @@ public class AdminAbacApi {
         <tr><td> 200 </td><td> Paginated policies </td><td>  -  </td></tr>
      </table>
      */
-    public AbacPoliciesListResponse abacPoliciesList(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<AbacPoliciesListResponse> localVarResp = abacPoliciesListWithHttpInfo(orgId);
+    public AbacPoliciesListResponse abacPoliciesList(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String action) throws ApiException {
+        ApiResponse<AbacPoliciesListResponse> localVarResp = abacPoliciesListWithHttpInfo(orgId, action);
         return localVarResp.getData();
     }
 
@@ -1137,6 +1143,7 @@ public class AdminAbacApi {
      * List ABAC policies
      * 
      * @param orgId  (required)
+     * @param action Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)
      * @return ApiResponse&lt;AbacPoliciesListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1146,8 +1153,8 @@ public class AdminAbacApi {
         <tr><td> 200 </td><td> Paginated policies </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AbacPoliciesListResponse> abacPoliciesListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = abacPoliciesListValidateBeforeCall(orgId, null);
+    public ApiResponse<AbacPoliciesListResponse> abacPoliciesListWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String action) throws ApiException {
+        okhttp3.Call localVarCall = abacPoliciesListValidateBeforeCall(orgId, action, null);
         Type localVarReturnType = new TypeToken<AbacPoliciesListResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1156,6 +1163,7 @@ public class AdminAbacApi {
      * List ABAC policies (asynchronously)
      * 
      * @param orgId  (required)
+     * @param action Only policies that name this action, alone or in a comma-separated list. &#x60;*&#x60; lists the policies that name &#x60;*&#x60;. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1166,9 +1174,9 @@ public class AdminAbacApi {
         <tr><td> 200 </td><td> Paginated policies </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call abacPoliciesListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AbacPoliciesListResponse> _callback) throws ApiException {
+    public okhttp3.Call abacPoliciesListAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String action, final ApiCallback<AbacPoliciesListResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = abacPoliciesListValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = abacPoliciesListValidateBeforeCall(orgId, action, _callback);
         Type localVarReturnType = new TypeToken<AbacPoliciesListResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1185,7 +1193,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Toggled policy </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1263,7 +1271,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Toggled policy </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1284,7 +1292,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Toggled policy </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1307,7 +1315,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Toggled policy </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1330,7 +1338,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1408,7 +1416,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1429,7 +1437,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1452,7 +1460,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1475,7 +1483,8 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1553,7 +1562,8 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1574,7 +1584,8 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1597,7 +1608,8 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1620,7 +1632,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1698,7 +1710,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1719,7 +1731,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1742,7 +1754,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1765,7 +1777,8 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1843,7 +1856,8 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1864,7 +1878,8 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1887,7 +1902,8 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */

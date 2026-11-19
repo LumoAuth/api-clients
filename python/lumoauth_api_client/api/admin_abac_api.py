@@ -17,7 +17,9 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import Field, StrictStr, field_validator
+from typing import Optional
+from typing_extensions import Annotated
 from lumoauth_api_client.models.abac_attributes_create_response import AbacAttributesCreateResponse
 from lumoauth_api_client.models.abac_attributes_get_response import AbacAttributesGetResponse
 from lumoauth_api_client.models.abac_attributes_list_response import AbacAttributesListResponse
@@ -313,7 +315,7 @@ class AdminAbacApi:
     def abac_attributes_delete(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -385,7 +387,7 @@ class AdminAbacApi:
     def abac_attributes_delete_with_http_info(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -457,7 +459,7 @@ class AdminAbacApi:
     def abac_attributes_delete_without_preload_content(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -593,7 +595,7 @@ class AdminAbacApi:
     def abac_attributes_get(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -664,7 +666,7 @@ class AdminAbacApi:
     def abac_attributes_get_with_http_info(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -735,7 +737,7 @@ class AdminAbacApi:
     def abac_attributes_get_without_preload_content(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1394,7 +1396,7 @@ class AdminAbacApi:
     def abac_policies_delete(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1466,7 +1468,7 @@ class AdminAbacApi:
     def abac_policies_delete_with_http_info(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1538,7 +1540,7 @@ class AdminAbacApi:
     def abac_policies_delete_without_preload_content(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1674,7 +1676,7 @@ class AdminAbacApi:
     def abac_policies_get(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1745,7 +1747,7 @@ class AdminAbacApi:
     def abac_policies_get_with_http_info(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1816,7 +1818,7 @@ class AdminAbacApi:
     def abac_policies_get_without_preload_content(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1951,6 +1953,7 @@ class AdminAbacApi:
     def abac_policies_list(
         self,
         org_id: StrictStr,
+        action: Annotated[Optional[StrictStr], Field(description="Only policies that name this action, alone or in a comma-separated list. `*` lists the policies that name `*`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1969,6 +1972,8 @@ class AdminAbacApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param action: Only policies that name this action, alone or in a comma-separated list. `*` lists the policies that name `*`.
+        :type action: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1993,6 +1998,7 @@ class AdminAbacApi:
 
         _param = self._abac_policies_list_serialize(
             org_id=org_id,
+            action=action,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2017,6 +2023,7 @@ class AdminAbacApi:
     def abac_policies_list_with_http_info(
         self,
         org_id: StrictStr,
+        action: Annotated[Optional[StrictStr], Field(description="Only policies that name this action, alone or in a comma-separated list. `*` lists the policies that name `*`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2035,6 +2042,8 @@ class AdminAbacApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param action: Only policies that name this action, alone or in a comma-separated list. `*` lists the policies that name `*`.
+        :type action: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2059,6 +2068,7 @@ class AdminAbacApi:
 
         _param = self._abac_policies_list_serialize(
             org_id=org_id,
+            action=action,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2083,6 +2093,7 @@ class AdminAbacApi:
     def abac_policies_list_without_preload_content(
         self,
         org_id: StrictStr,
+        action: Annotated[Optional[StrictStr], Field(description="Only policies that name this action, alone or in a comma-separated list. `*` lists the policies that name `*`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2101,6 +2112,8 @@ class AdminAbacApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param action: Only policies that name this action, alone or in a comma-separated list. `*` lists the policies that name `*`.
+        :type action: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2125,6 +2138,7 @@ class AdminAbacApi:
 
         _param = self._abac_policies_list_serialize(
             org_id=org_id,
+            action=action,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2144,6 +2158,7 @@ class AdminAbacApi:
     def _abac_policies_list_serialize(
         self,
         org_id,
+        action,
         _request_auth,
         _content_type,
         _headers,
@@ -2168,6 +2183,10 @@ class AdminAbacApi:
         if org_id is not None:
             _path_params['orgId'] = org_id
         # process the query parameters
+        if action is not None:
+            
+            _query_params.append(('action', action))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -2210,7 +2229,7 @@ class AdminAbacApi:
     def abac_policies_toggle(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2282,7 +2301,7 @@ class AdminAbacApi:
     def abac_policies_toggle_with_http_info(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2354,7 +2373,7 @@ class AdminAbacApi:
     def abac_policies_toggle_without_preload_content(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2490,7 +2509,7 @@ class AdminAbacApi:
     def patch_abac_attributes_update(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2562,7 +2581,7 @@ class AdminAbacApi:
     def patch_abac_attributes_update_with_http_info(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2634,7 +2653,7 @@ class AdminAbacApi:
     def patch_abac_attributes_update_without_preload_content(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2770,7 +2789,7 @@ class AdminAbacApi:
     def patch_abac_policies_update(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2824,6 +2843,7 @@ class AdminAbacApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAbacPoliciesUpdateResponse",
+            '400': None,
             '403': None,
             '404': None,
         }
@@ -2842,7 +2862,7 @@ class AdminAbacApi:
     def patch_abac_policies_update_with_http_info(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2896,6 +2916,7 @@ class AdminAbacApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAbacPoliciesUpdateResponse",
+            '400': None,
             '403': None,
             '404': None,
         }
@@ -2914,7 +2935,7 @@ class AdminAbacApi:
     def patch_abac_policies_update_without_preload_content(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2968,6 +2989,7 @@ class AdminAbacApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAbacPoliciesUpdateResponse",
+            '400': None,
             '403': None,
             '404': None,
         }
@@ -3050,7 +3072,7 @@ class AdminAbacApi:
     def put_abac_attributes_update(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3122,7 +3144,7 @@ class AdminAbacApi:
     def put_abac_attributes_update_with_http_info(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3194,7 +3216,7 @@ class AdminAbacApi:
     def put_abac_attributes_update_without_preload_content(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3330,7 +3352,7 @@ class AdminAbacApi:
     def put_abac_policies_update(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3384,6 +3406,7 @@ class AdminAbacApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAbacPoliciesUpdateResponse",
+            '400': None,
             '403': None,
             '404': None,
         }
@@ -3402,7 +3425,7 @@ class AdminAbacApi:
     def put_abac_policies_update_with_http_info(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3456,6 +3479,7 @@ class AdminAbacApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAbacPoliciesUpdateResponse",
+            '400': None,
             '403': None,
             '404': None,
         }
@@ -3474,7 +3498,7 @@ class AdminAbacApi:
     def put_abac_policies_update_without_preload_content(
         self,
         org_id: StrictStr,
-        id: StrictStr,
+        id: Annotated[str, Field(strict=True)],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3528,6 +3552,7 @@ class AdminAbacApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PutAbacPoliciesUpdateResponse",
+            '400': None,
             '403': None,
             '404': None,
         }

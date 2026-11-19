@@ -339,6 +339,8 @@ end
 
 Get all settings (combined)
 
+Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal's branding page; without it the key is left out.
+
 ### Examples
 
 ```ruby
@@ -626,6 +628,8 @@ end
 > <AdminSettingsEmailGetResponse> admin_settings_email_get(org_id)
 
 Get email settings
+
+Shows who sends the organization's mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth's sender.
 
 ### Examples
 
@@ -1203,6 +1207,8 @@ end
 
 Update branding/login page settings
 
+Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
+
 ### Examples
 
 ```ruby
@@ -1271,9 +1277,11 @@ end
 
 ## patch_admin_settings_email_update
 
-> <PutAdminSettingsEmailUpdateResponse> patch_admin_settings_email_update(org_id)
+> <PutAdminSettingsEmailUpdateResponse> patch_admin_settings_email_update(org_id, opts)
 
 Update email settings
+
+Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
 ### Examples
 
@@ -1293,10 +1301,13 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+opts = {
+  put_admin_settings_email_update_request: LumoAuthApiClient::PutAdminSettingsEmailUpdateRequest.new # PutAdminSettingsEmailUpdateRequest | 
+}
 
 begin
   # Update email settings
-  result = api_instance.patch_admin_settings_email_update(org_id)
+  result = api_instance.patch_admin_settings_email_update(org_id, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->patch_admin_settings_email_update: #{e}"
@@ -1307,12 +1318,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminSettingsEmailUpdateResponse>, Integer, Hash)> patch_admin_settings_email_update_with_http_info(org_id)
+> <Array(<PutAdminSettingsEmailUpdateResponse>, Integer, Hash)> patch_admin_settings_email_update_with_http_info(org_id, opts)
 
 ```ruby
 begin
   # Update email settings
-  data, status_code, headers = api_instance.patch_admin_settings_email_update_with_http_info(org_id)
+  data, status_code, headers = api_instance.patch_admin_settings_email_update_with_http_info(org_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminSettingsEmailUpdateResponse>
@@ -1326,6 +1337,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **put_admin_settings_email_update_request** | [**PutAdminSettingsEmailUpdateRequest**](PutAdminSettingsEmailUpdateRequest.md) |  | [optional] |
 
 ### Return type
 
@@ -1337,15 +1349,17 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## patch_admin_settings_general_update
 
-> <PutAdminSettingsGeneralUpdateResponse> patch_admin_settings_general_update(org_id)
+> <PutAdminSettingsGeneralUpdateResponse> patch_admin_settings_general_update(org_id, opts)
 
 Update general settings
+
+Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
 ### Examples
 
@@ -1365,10 +1379,13 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+opts = {
+  put_admin_settings_general_update_request: LumoAuthApiClient::PutAdminSettingsGeneralUpdateRequest.new # PutAdminSettingsGeneralUpdateRequest | 
+}
 
 begin
   # Update general settings
-  result = api_instance.patch_admin_settings_general_update(org_id)
+  result = api_instance.patch_admin_settings_general_update(org_id, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->patch_admin_settings_general_update: #{e}"
@@ -1379,12 +1396,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminSettingsGeneralUpdateResponse>, Integer, Hash)> patch_admin_settings_general_update_with_http_info(org_id)
+> <Array(<PutAdminSettingsGeneralUpdateResponse>, Integer, Hash)> patch_admin_settings_general_update_with_http_info(org_id, opts)
 
 ```ruby
 begin
   # Update general settings
-  data, status_code, headers = api_instance.patch_admin_settings_general_update_with_http_info(org_id)
+  data, status_code, headers = api_instance.patch_admin_settings_general_update_with_http_info(org_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminSettingsGeneralUpdateResponse>
@@ -1398,6 +1415,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **put_admin_settings_general_update_request** | [**PutAdminSettingsGeneralUpdateRequest**](PutAdminSettingsGeneralUpdateRequest.md) |  | [optional] |
 
 ### Return type
 
@@ -1409,7 +1427,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -1851,6 +1869,8 @@ end
 
 Update branding/login page settings
 
+Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
+
 ### Examples
 
 ```ruby
@@ -1919,9 +1939,11 @@ end
 
 ## put_admin_settings_email_update
 
-> <PutAdminSettingsEmailUpdateResponse> put_admin_settings_email_update(org_id)
+> <PutAdminSettingsEmailUpdateResponse> put_admin_settings_email_update(org_id, opts)
 
 Update email settings
+
+Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
 ### Examples
 
@@ -1941,10 +1963,13 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+opts = {
+  put_admin_settings_email_update_request: LumoAuthApiClient::PutAdminSettingsEmailUpdateRequest.new # PutAdminSettingsEmailUpdateRequest | 
+}
 
 begin
   # Update email settings
-  result = api_instance.put_admin_settings_email_update(org_id)
+  result = api_instance.put_admin_settings_email_update(org_id, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->put_admin_settings_email_update: #{e}"
@@ -1955,12 +1980,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminSettingsEmailUpdateResponse>, Integer, Hash)> put_admin_settings_email_update_with_http_info(org_id)
+> <Array(<PutAdminSettingsEmailUpdateResponse>, Integer, Hash)> put_admin_settings_email_update_with_http_info(org_id, opts)
 
 ```ruby
 begin
   # Update email settings
-  data, status_code, headers = api_instance.put_admin_settings_email_update_with_http_info(org_id)
+  data, status_code, headers = api_instance.put_admin_settings_email_update_with_http_info(org_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminSettingsEmailUpdateResponse>
@@ -1974,6 +1999,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **put_admin_settings_email_update_request** | [**PutAdminSettingsEmailUpdateRequest**](PutAdminSettingsEmailUpdateRequest.md) |  | [optional] |
 
 ### Return type
 
@@ -1985,15 +2011,17 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## put_admin_settings_general_update
 
-> <PutAdminSettingsGeneralUpdateResponse> put_admin_settings_general_update(org_id)
+> <PutAdminSettingsGeneralUpdateResponse> put_admin_settings_general_update(org_id, opts)
 
 Update general settings
+
+Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
 ### Examples
 
@@ -2013,10 +2041,13 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+opts = {
+  put_admin_settings_general_update_request: LumoAuthApiClient::PutAdminSettingsGeneralUpdateRequest.new # PutAdminSettingsGeneralUpdateRequest | 
+}
 
 begin
   # Update general settings
-  result = api_instance.put_admin_settings_general_update(org_id)
+  result = api_instance.put_admin_settings_general_update(org_id, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->put_admin_settings_general_update: #{e}"
@@ -2027,12 +2058,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminSettingsGeneralUpdateResponse>, Integer, Hash)> put_admin_settings_general_update_with_http_info(org_id)
+> <Array(<PutAdminSettingsGeneralUpdateResponse>, Integer, Hash)> put_admin_settings_general_update_with_http_info(org_id, opts)
 
 ```ruby
 begin
   # Update general settings
-  data, status_code, headers = api_instance.put_admin_settings_general_update_with_http_info(org_id)
+  data, status_code, headers = api_instance.put_admin_settings_general_update_with_http_info(org_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminSettingsGeneralUpdateResponse>
@@ -2046,6 +2077,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **put_admin_settings_general_update_request** | [**PutAdminSettingsGeneralUpdateRequest**](PutAdminSettingsGeneralUpdateRequest.md) |  | [optional] |
 
 ### Return type
 
@@ -2057,7 +2089,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 

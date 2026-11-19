@@ -378,6 +378,8 @@ Name | Type | Description  | Notes
 
 Get all settings (combined)
 
+Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal's branding page; without it the key is left out.
+
 ### Example
 
 * Api Key Authentication (ApiKeyAuth):
@@ -709,6 +711,8 @@ Name | Type | Description  | Notes
 > AdminSettingsEmailGetResponse admin_settings_email_get(org_id)
 
 Get email settings
+
+Shows who sends the organization's mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth's sender.
 
 ### Example
 
@@ -1200,6 +1204,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated organization profile |  -  |
+**403** | The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1283,6 +1288,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated authentication settings |  -  |
+**403** | The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1366,6 +1372,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated authentication settings |  -  |
+**403** | The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1373,6 +1380,8 @@ Name | Type | Description  | Notes
 > PutAdminSettingsBrandingUpdateResponse patch_admin_settings_branding_update(org_id)
 
 Update branding/login page settings
+
+Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
 
 ### Example
 
@@ -1449,13 +1458,16 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated branding settings |  -  |
+**403** | A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_settings_email_update**
-> PutAdminSettingsEmailUpdateResponse patch_admin_settings_email_update(org_id)
+> PutAdminSettingsEmailUpdateResponse patch_admin_settings_email_update(org_id, put_admin_settings_email_update_request=put_admin_settings_email_update_request)
 
 Update email settings
+
+Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
 ### Example
 
@@ -1464,6 +1476,7 @@ Update email settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_email_update_request import PutAdminSettingsEmailUpdateRequest
 from lumoauth_api_client.models.put_admin_settings_email_update_response import PutAdminSettingsEmailUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1495,10 +1508,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    put_admin_settings_email_update_request = lumoauth_api_client.PutAdminSettingsEmailUpdateRequest() # PutAdminSettingsEmailUpdateRequest |  (optional)
 
     try:
         # Update email settings
-        api_response = api_instance.patch_admin_settings_email_update(org_id)
+        api_response = api_instance.patch_admin_settings_email_update(org_id, put_admin_settings_email_update_request=put_admin_settings_email_update_request)
         print("The response of AdminSettingsApi->patch_admin_settings_email_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1513,6 +1527,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **put_admin_settings_email_update_request** | [**PutAdminSettingsEmailUpdateRequest**](PutAdminSettingsEmailUpdateRequest.md)|  | [optional] 
 
 ### Return type
 
@@ -1524,7 +1539,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1532,13 +1547,17 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated email settings |  -  |
+**400** | A value is not valid, a field is not supported, or the organization has no mail provider of its own (details.rejected_keys names the fields). Nothing is stored. |  -  |
+**403** | The caller does not hold settings.manage and users.delete. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_settings_general_update**
-> PutAdminSettingsGeneralUpdateResponse patch_admin_settings_general_update(org_id)
+> PutAdminSettingsGeneralUpdateResponse patch_admin_settings_general_update(org_id, put_admin_settings_general_update_request=put_admin_settings_general_update_request)
 
 Update general settings
+
+Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
 ### Example
 
@@ -1547,6 +1566,7 @@ Update general settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_general_update_request import PutAdminSettingsGeneralUpdateRequest
 from lumoauth_api_client.models.put_admin_settings_general_update_response import PutAdminSettingsGeneralUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1578,10 +1598,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    put_admin_settings_general_update_request = lumoauth_api_client.PutAdminSettingsGeneralUpdateRequest() # PutAdminSettingsGeneralUpdateRequest |  (optional)
 
     try:
         # Update general settings
-        api_response = api_instance.patch_admin_settings_general_update(org_id)
+        api_response = api_instance.patch_admin_settings_general_update(org_id, put_admin_settings_general_update_request=put_admin_settings_general_update_request)
         print("The response of AdminSettingsApi->patch_admin_settings_general_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1596,6 +1617,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **put_admin_settings_general_update_request** | [**PutAdminSettingsGeneralUpdateRequest**](PutAdminSettingsGeneralUpdateRequest.md)|  | [optional] 
 
 ### Return type
 
@@ -1607,7 +1629,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1615,6 +1637,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated general settings |  -  |
+**400** | A value is not valid (empty or too long name, unknown language, different values for name and one of its aliases) or is not a setting (timezone). Nothing is stored. |  -  |
+**403** | The caller does not hold settings.manage, or locale would change and the caller does not hold branding.edit. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1864,6 +1888,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated organization profile |  -  |
+**403** | The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1947,6 +1972,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated organization profile |  -  |
+**403** | The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2030,6 +2056,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated authentication settings |  -  |
+**403** | The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2113,6 +2140,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated authentication settings |  -  |
+**403** | The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2120,6 +2148,8 @@ Name | Type | Description  | Notes
 > PutAdminSettingsBrandingUpdateResponse put_admin_settings_branding_update(org_id)
 
 Update branding/login page settings
+
+Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
 
 ### Example
 
@@ -2196,13 +2226,16 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated branding settings |  -  |
+**403** | A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_settings_email_update**
-> PutAdminSettingsEmailUpdateResponse put_admin_settings_email_update(org_id)
+> PutAdminSettingsEmailUpdateResponse put_admin_settings_email_update(org_id, put_admin_settings_email_update_request=put_admin_settings_email_update_request)
 
 Update email settings
+
+Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
 ### Example
 
@@ -2211,6 +2244,7 @@ Update email settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_email_update_request import PutAdminSettingsEmailUpdateRequest
 from lumoauth_api_client.models.put_admin_settings_email_update_response import PutAdminSettingsEmailUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -2242,10 +2276,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    put_admin_settings_email_update_request = lumoauth_api_client.PutAdminSettingsEmailUpdateRequest() # PutAdminSettingsEmailUpdateRequest |  (optional)
 
     try:
         # Update email settings
-        api_response = api_instance.put_admin_settings_email_update(org_id)
+        api_response = api_instance.put_admin_settings_email_update(org_id, put_admin_settings_email_update_request=put_admin_settings_email_update_request)
         print("The response of AdminSettingsApi->put_admin_settings_email_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -2260,6 +2295,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **put_admin_settings_email_update_request** | [**PutAdminSettingsEmailUpdateRequest**](PutAdminSettingsEmailUpdateRequest.md)|  | [optional] 
 
 ### Return type
 
@@ -2271,7 +2307,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2279,13 +2315,17 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated email settings |  -  |
+**400** | A value is not valid, a field is not supported, or the organization has no mail provider of its own (details.rejected_keys names the fields). Nothing is stored. |  -  |
+**403** | The caller does not hold settings.manage and users.delete. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_settings_general_update**
-> PutAdminSettingsGeneralUpdateResponse put_admin_settings_general_update(org_id)
+> PutAdminSettingsGeneralUpdateResponse put_admin_settings_general_update(org_id, put_admin_settings_general_update_request=put_admin_settings_general_update_request)
 
 Update general settings
+
+Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
 ### Example
 
@@ -2294,6 +2334,7 @@ Update general settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_general_update_request import PutAdminSettingsGeneralUpdateRequest
 from lumoauth_api_client.models.put_admin_settings_general_update_response import PutAdminSettingsGeneralUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -2325,10 +2366,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    put_admin_settings_general_update_request = lumoauth_api_client.PutAdminSettingsGeneralUpdateRequest() # PutAdminSettingsGeneralUpdateRequest |  (optional)
 
     try:
         # Update general settings
-        api_response = api_instance.put_admin_settings_general_update(org_id)
+        api_response = api_instance.put_admin_settings_general_update(org_id, put_admin_settings_general_update_request=put_admin_settings_general_update_request)
         print("The response of AdminSettingsApi->put_admin_settings_general_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -2343,6 +2385,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **put_admin_settings_general_update_request** | [**PutAdminSettingsGeneralUpdateRequest**](PutAdminSettingsGeneralUpdateRequest.md)|  | [optional] 
 
 ### Return type
 
@@ -2354,7 +2397,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2362,6 +2405,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated general settings |  -  |
+**400** | A value is not valid (empty or too long name, unknown language, different values for name and one of its aliases) or is not a setting (timezone). Nothing is stored. |  -  |
+**403** | The caller does not hold settings.manage, or locale would change and the caller does not hold branding.edit. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2611,6 +2656,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated organization profile |  -  |
+**403** | The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

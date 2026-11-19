@@ -69,6 +69,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Read SSF stream configuration(s)
         /// </summary>
+        /// <remarks>
+        /// Needs &#x60;webhooks.view&#x60; and &#x60;agents.view&#x60;, as the Security signals page in the portal does.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="streamId"> (optional)</param>
@@ -79,7 +82,7 @@ namespace LumoAuth.ApiClient.Api
         /// Read SSF stream configuration(s)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;webhooks.view&#x60; and &#x60;agents.view&#x60;, as the Security signals page in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -89,6 +92,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Request a stream verification event
         /// </summary>
+        /// <remarks>
+        /// Needs &#x60;settings.manage&#x60;, as the portal does.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <returns></returns>
@@ -98,7 +104,7 @@ namespace LumoAuth.ApiClient.Api
         /// Request a stream verification event
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60;, as the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -165,7 +171,7 @@ namespace LumoAuth.ApiClient.Api
         /// Read SSF stream configuration(s)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;webhooks.view&#x60; and &#x60;agents.view&#x60;, as the Security signals page in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -178,7 +184,7 @@ namespace LumoAuth.ApiClient.Api
         /// Read SSF stream configuration(s)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;webhooks.view&#x60; and &#x60;agents.view&#x60;, as the Security signals page in the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -190,7 +196,7 @@ namespace LumoAuth.ApiClient.Api
         /// Request a stream verification event
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60;, as the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -202,7 +208,7 @@ namespace LumoAuth.ApiClient.Api
         /// Request a stream verification event
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;settings.manage&#x60;, as the portal does.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -707,7 +713,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Read SSF stream configuration(s) 
+        /// Read SSF stream configuration(s) Needs &#x60;webhooks.view&#x60; and &#x60;agents.view&#x60;, as the Security signals page in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -720,7 +726,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Read SSF stream configuration(s) 
+        /// Read SSF stream configuration(s) Needs &#x60;webhooks.view&#x60; and &#x60;agents.view&#x60;, as the Security signals page in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -779,7 +785,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Read SSF stream configuration(s) 
+        /// Read SSF stream configuration(s) Needs &#x60;webhooks.view&#x60; and &#x60;agents.view&#x60;, as the Security signals page in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -793,7 +799,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Read SSF stream configuration(s) 
+        /// Read SSF stream configuration(s) Needs &#x60;webhooks.view&#x60; and &#x60;agents.view&#x60;, as the Security signals page in the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -856,7 +862,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Request a stream verification event 
+        /// Request a stream verification event Needs &#x60;settings.manage&#x60;, as the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -867,7 +873,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Request a stream verification event 
+        /// Request a stream verification event Needs &#x60;settings.manage&#x60;, as the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -920,7 +926,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Request a stream verification event 
+        /// Request a stream verification event Needs &#x60;settings.manage&#x60;, as the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -932,7 +938,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Request a stream verification event 
+        /// Request a stream verification event Needs &#x60;settings.manage&#x60;, as the portal does.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

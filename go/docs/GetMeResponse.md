@@ -11,6 +11,9 @@ Name | Type | Description | Notes
 **MfaEnabled** | Pointer to **NullableBool** |  | [optional] 
 **Roles** | Pointer to **[]string** |  | [optional] 
 **Capabilities** | Pointer to **[]string** |  | [optional] 
+**Scopes** | Pointer to **[]string** | Agents only: the OAuth scope values that the agent may request for this organization&#39;s API, as RFC 7591 defines a client&#39;s registered scope. They are its capabilities, each a scope token (RFC 6749 section 3.3). | [optional] 
+**Scope** | Pointer to **[]string** | Agents only: the scope of the presented token. | [optional] 
+**ScopeNarrowed** | Pointer to **NullableBool** | Agents only: true when the token scope leaves out one of the agent&#39;s capabilities. | [optional] 
 **Tenant** | Pointer to [**GroupRef**](GroupRef.md) |  | [optional] 
 
 ## Methods
@@ -257,6 +260,111 @@ HasCapabilities returns a boolean if a field has been set.
 `func (o *GetMeResponse) UnsetCapabilities()`
 
 UnsetCapabilities ensures that no value is present for Capabilities, not even an explicit nil
+### GetScopes
+
+`func (o *GetMeResponse) GetScopes() []string`
+
+GetScopes returns the Scopes field if non-nil, zero value otherwise.
+
+### GetScopesOk
+
+`func (o *GetMeResponse) GetScopesOk() (*[]string, bool)`
+
+GetScopesOk returns a tuple with the Scopes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScopes
+
+`func (o *GetMeResponse) SetScopes(v []string)`
+
+SetScopes sets Scopes field to given value.
+
+### HasScopes
+
+`func (o *GetMeResponse) HasScopes() bool`
+
+HasScopes returns a boolean if a field has been set.
+
+### SetScopesNil
+
+`func (o *GetMeResponse) SetScopesNil(b bool)`
+
+ SetScopesNil sets the value for Scopes to be an explicit nil
+
+### UnsetScopes
+`func (o *GetMeResponse) UnsetScopes()`
+
+UnsetScopes ensures that no value is present for Scopes, not even an explicit nil
+### GetScope
+
+`func (o *GetMeResponse) GetScope() []string`
+
+GetScope returns the Scope field if non-nil, zero value otherwise.
+
+### GetScopeOk
+
+`func (o *GetMeResponse) GetScopeOk() (*[]string, bool)`
+
+GetScopeOk returns a tuple with the Scope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScope
+
+`func (o *GetMeResponse) SetScope(v []string)`
+
+SetScope sets Scope field to given value.
+
+### HasScope
+
+`func (o *GetMeResponse) HasScope() bool`
+
+HasScope returns a boolean if a field has been set.
+
+### SetScopeNil
+
+`func (o *GetMeResponse) SetScopeNil(b bool)`
+
+ SetScopeNil sets the value for Scope to be an explicit nil
+
+### UnsetScope
+`func (o *GetMeResponse) UnsetScope()`
+
+UnsetScope ensures that no value is present for Scope, not even an explicit nil
+### GetScopeNarrowed
+
+`func (o *GetMeResponse) GetScopeNarrowed() bool`
+
+GetScopeNarrowed returns the ScopeNarrowed field if non-nil, zero value otherwise.
+
+### GetScopeNarrowedOk
+
+`func (o *GetMeResponse) GetScopeNarrowedOk() (*bool, bool)`
+
+GetScopeNarrowedOk returns a tuple with the ScopeNarrowed field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScopeNarrowed
+
+`func (o *GetMeResponse) SetScopeNarrowed(v bool)`
+
+SetScopeNarrowed sets ScopeNarrowed field to given value.
+
+### HasScopeNarrowed
+
+`func (o *GetMeResponse) HasScopeNarrowed() bool`
+
+HasScopeNarrowed returns a boolean if a field has been set.
+
+### SetScopeNarrowedNil
+
+`func (o *GetMeResponse) SetScopeNarrowedNil(b bool)`
+
+ SetScopeNarrowedNil sets the value for ScopeNarrowed to be an explicit nil
+
+### UnsetScopeNarrowed
+`func (o *GetMeResponse) UnsetScopeNarrowed()`
+
+UnsetScopeNarrowed ensures that no value is present for ScopeNarrowed, not even an explicit nil
 ### GetTenant
 
 `func (o *GetMeResponse) GetTenant() GroupRef`

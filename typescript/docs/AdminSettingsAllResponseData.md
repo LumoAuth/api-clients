@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **authentication** | [**AuthenticationSettings**](AuthenticationSettings.md) |  | [optional] [default to undefined]
 **branding** | [**BrandingSettings**](BrandingSettings.md) |  | [optional] [default to undefined]
 **security** | [**AdminSettingsAllResponseDataSecurity**](AdminSettingsAllResponseDataSecurity.md) |  | [optional] [default to undefined]
-**email** | **{ [key: string]: any; }** | Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted. | [optional] [default to undefined]
+**email** | [**EmailSenderSettings**](EmailSenderSettings.md) |  | [optional] [default to undefined]
 
 ## Example
 

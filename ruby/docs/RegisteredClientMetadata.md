@@ -19,16 +19,12 @@
 | **logo_uri** | **String** |  | [optional] |
 | **policy_uri** | **String** |  | [optional] |
 | **tos_uri** | **String** |  | [optional] |
-| **sector_identifier_uri** | **String** |  | [optional] |
-| **subject_type** | **String** | Only when not \&quot;public\&quot;. | [optional] |
 | **jwks_uri** | **String** |  | [optional] |
 | **jwks** | **Hash&lt;String, Object&gt;** |  | [optional] |
 | **post_logout_redirect_uris** | **Array&lt;String&gt;** |  | [optional] |
 | **initiate_login_uri** | **String** |  | [optional] |
-| **request_uris** | **Array&lt;String&gt;** |  | [optional] |
 | **scope** | **String** | Space-separated registered scopes. | [optional] |
 | **id_token_signed_response_alg** | **String** | Only when not RS256. | [optional] |
-| **userinfo_signed_response_alg** | **String** |  | [optional] |
 | **request_object_signing_alg** | **String** |  | [optional] |
 | **token_endpoint_auth_signing_alg** | **String** |  | [optional] |
 | **default_max_age** | **Integer** |  | [optional] |
@@ -61,16 +57,12 @@ instance = LumoAuthApiClient::RegisteredClientMetadata.new(
   logo_uri: null,
   policy_uri: null,
   tos_uri: null,
-  sector_identifier_uri: null,
-  subject_type: null,
   jwks_uri: null,
   jwks: null,
   post_logout_redirect_uris: null,
   initiate_login_uri: null,
-  request_uris: null,
   scope: null,
   id_token_signed_response_alg: null,
-  userinfo_signed_response_alg: null,
   request_object_signing_alg: null,
   token_endpoint_auth_signing_alg: null,
   default_max_age: null,

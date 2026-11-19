@@ -40,8 +40,8 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="authentication">authentication.</param>
         /// <param name="branding">branding.</param>
         /// <param name="security">security.</param>
-        /// <param name="email">Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted..</param>
-        public AdminSettingsAllResponseData(AdminSettingsAllResponseDataGeneral general = default, AuthenticationSettings authentication = default, BrandingSettings branding = default, AdminSettingsAllResponseDataSecurity security = default, Dictionary<string, Object> email = default)
+        /// <param name="email">email.</param>
+        public AdminSettingsAllResponseData(AdminSettingsAllResponseDataGeneral general = default, AuthenticationSettings authentication = default, BrandingSettings branding = default, AdminSettingsAllResponseDataSecurity security = default, EmailSenderSettings email = default)
         {
             this.General = general;
             this.Authentication = authentication;
@@ -75,11 +75,10 @@ namespace LumoAuth.ApiClient.Model
         public AdminSettingsAllResponseDataSecurity Security { get; set; }
 
         /// <summary>
-        /// Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
+        /// Gets or Sets Email
         /// </summary>
-        /// <value>Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.</value>
         [DataMember(Name = "email", EmitDefaultValue = false)]
-        public Dictionary<string, Object> Email { get; set; }
+        public EmailSenderSettings Email { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

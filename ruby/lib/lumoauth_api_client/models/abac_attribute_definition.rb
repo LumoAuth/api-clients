@@ -35,6 +35,9 @@ module LumoAuthApiClient
 
     attr_accessor :is_system
 
+    # True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403).
+    attr_accessor :built_in
+
     attr_accessor :created_at
 
     attr_accessor :updated_at
@@ -74,6 +77,7 @@ module LumoAuthApiClient
         :'default_value' => :'defaultValue',
         :'is_required' => :'isRequired',
         :'is_system' => :'isSystem',
+        :'built_in' => :'builtIn',
         :'created_at' => :'createdAt',
         :'updated_at' => :'updatedAt'
       }
@@ -102,6 +106,7 @@ module LumoAuthApiClient
         :'default_value' => :'Object',
         :'is_required' => :'Boolean',
         :'is_system' => :'Boolean',
+        :'built_in' => :'Boolean',
         :'created_at' => :'Time',
         :'updated_at' => :'Time'
       }
@@ -175,6 +180,10 @@ module LumoAuthApiClient
         self.is_system = attributes[:'is_system']
       end
 
+      if attributes.key?(:'built_in')
+        self.built_in = attributes[:'built_in']
+      end
+
       if attributes.key?(:'created_at')
         self.created_at = attributes[:'created_at']
       end
@@ -226,6 +235,7 @@ module LumoAuthApiClient
           default_value == o.default_value &&
           is_required == o.is_required &&
           is_system == o.is_system &&
+          built_in == o.built_in &&
           created_at == o.created_at &&
           updated_at == o.updated_at
     end
@@ -239,7 +249,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, slug, description, attribute_type, data_type, validation_rules, default_value, is_required, is_system, created_at, updated_at].hash
+      [id, name, slug, description, attribute_type, data_type, validation_rules, default_value, is_required, is_system, built_in, created_at, updated_at].hash
     end
 
     # Builds the object from hash

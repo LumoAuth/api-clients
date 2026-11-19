@@ -26,6 +26,8 @@ Method | HTTP request | Description
 
 Add permission(s) to a role
 
+
+
 ### Example
 
 ```go
@@ -167,6 +169,8 @@ Name | Type | Description  | Notes
 > AdminRolesCreateResponse AdminRolesCreate(ctx, orgId).Execute()
 
 Create a new role
+
+
 
 ### Example
 
@@ -588,6 +592,8 @@ Name | Type | Description  | Notes
 
 Remove a permission from a role
 
+
+
 ### Example
 
 ```go
@@ -735,6 +741,8 @@ Name | Type | Description  | Notes
 > AdminRolesCreateResponse AdminRolesUpdatePermissions(ctx, orgId, roleId).Execute()
 
 Update role permissions (replaces all)
+
+
 
 ### Example
 

@@ -16,10 +16,9 @@ public struct AdminSettingsAllResponseData: Codable, JSONEncodable, Hashable {
     public var authentication: AuthenticationSettings?
     public var branding: BrandingSettings?
     public var security: AdminSettingsAllResponseDataSecurity?
-    /** Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted. */
-    public var email: [String: AnyCodable]?
+    public var email: EmailSenderSettings?
 
-    public init(general: AdminSettingsAllResponseDataGeneral? = nil, authentication: AuthenticationSettings? = nil, branding: BrandingSettings? = nil, security: AdminSettingsAllResponseDataSecurity? = nil, email: [String: AnyCodable]? = nil) {
+    public init(general: AdminSettingsAllResponseDataGeneral? = nil, authentication: AuthenticationSettings? = nil, branding: BrandingSettings? = nil, security: AdminSettingsAllResponseDataSecurity? = nil, email: EmailSenderSettings? = nil) {
         self.general = general
         self.authentication = authentication
         self.branding = branding

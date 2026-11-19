@@ -21,7 +21,7 @@ instance = LumoAuthApiClient::AdminAgentsGenerateTokenResponseData.new(
   token_type: Bearer,
   expires_in: 600,
   jti: null,
-  scopes: [&quot;invoices.read&quot;],
+  scopes: [&quot;invoices:read&quot;],
   resource: null
 )
 ```
