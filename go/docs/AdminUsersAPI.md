@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**AdminIdentitiesLink**](AdminUsersAPI.md#AdminIdentitiesLink) | **Post** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user
 [**AdminIdentitiesList**](AdminUsersAPI.md#AdminIdentitiesList) | **Get** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links
 [**AdminIdentitiesUnlink**](AdminUsersAPI.md#AdminIdentitiesUnlink) | **Delete** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, OpenID Connect, LDAP or social identity
+[**AdminUsersRestore**](AdminUsersAPI.md#AdminUsersRestore) | **Post** /orgs/{orgId}/api/v1/admin/users/{userId}/restore | Restore a deleted user
 [**BlockUser**](AdminUsersAPI.md#BlockUser) | **Post** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user
 [**CreateUser**](AdminUsersAPI.md#CreateUser) | **Post** /orgs/{orgId}/api/v1/admin/users | Create a user
 [**DeleteUser**](AdminUsersAPI.md#DeleteUser) | **Delete** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user
@@ -113,6 +114,8 @@ Name | Type | Description  | Notes
 > AddUserPermissionResponse AddUserPermission(ctx, orgId, userId).Execute()
 
 Assign a permission to a user
+
+
 
 ### Example
 
@@ -603,6 +606,79 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**AdminAgentsGetResponse**](AdminAgentsGetResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## AdminUsersRestore
+
+> AdminUsersRestoreResponse AdminUsersRestore(ctx, orgId, userId).Execute()
+
+Restore a deleted user
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	userId := "userId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AdminUsersAPI.AdminUsersRestore(context.Background(), orgId, userId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AdminUsersAPI.AdminUsersRestore``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AdminUsersRestore`: AdminUsersRestoreResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminUsersAPI.AdminUsersRestore`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+**userId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAdminUsersRestoreRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**AdminUsersRestoreResponse**](AdminUsersRestoreResponse.md)
 
 ### Authorization
 
@@ -1114,7 +1190,7 @@ Name | Type | Description  | Notes
 
 ## ListUsers
 
-> ListUsersResponse ListUsers(ctx, orgId).Execute()
+> ListUsersResponse ListUsers(ctx, orgId).Page(page).Limit(limit).Search(search).Active(active).Blocked(blocked).Deleted(deleted).EmailVerified(emailVerified).MfaEnabled(mfaEnabled).Role(role).Group(group).SortBy(sortBy).SortDir(sortDir).Execute()
 
 List users
 
@@ -1132,10 +1208,22 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	page := int32(56) // int32 | Page number. (optional) (default to 1)
+	limit := int32(56) // int32 | Users per page (1 to 100). (optional) (default to 25)
+	search := "search_example" // string | Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)
+	active := true // bool | Only active (`true`) or inactive (`false`) users. (optional)
+	blocked := true // bool | Only blocked (`true`) or not blocked (`false`) users. (optional)
+	deleted := true // bool | `true` lists only the users that SCIM deleted (soft-deleted). Without it, or with `false`, the list leaves them out. (optional) (default to false)
+	emailVerified := true // bool | Only users whose email address is verified (`true`) or not (`false`). (optional)
+	mfaEnabled := true // bool | Only users with (`true`) or without (`false`) multi-factor authentication. (optional)
+	role := "role_example" // string | Only users who hold the role with this slug. (optional)
+	group := "group_example" // string | Only members of the group with this slug. (optional)
+	sortBy := "sortBy_example" // string | Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)
+	sortDir := "sortDir_example" // string | Sort direction. Used only together with sortBy. (optional) (default to "DESC")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminUsersAPI.ListUsers(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminUsersAPI.ListUsers(context.Background(), orgId).Page(page).Limit(limit).Search(search).Active(active).Blocked(blocked).Deleted(deleted).EmailVerified(emailVerified).MfaEnabled(mfaEnabled).Role(role).Group(group).SortBy(sortBy).SortDir(sortDir).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminUsersAPI.ListUsers``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1161,6 +1249,18 @@ Other parameters are passed through a pointer to a apiListUsersRequest struct vi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **page** | **int32** | Page number. | [default to 1]
+ **limit** | **int32** | Users per page (1 to 100). | [default to 25]
+ **search** | **string** | Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). | 
+ **active** | **bool** | Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. | 
+ **blocked** | **bool** | Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. | 
+ **deleted** | **bool** | &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. | [default to false]
+ **emailVerified** | **bool** | Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). | 
+ **mfaEnabled** | **bool** | Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. | 
+ **role** | **string** | Only users who hold the role with this slug. | 
+ **group** | **string** | Only members of the group with this slug. | 
+ **sortBy** | **string** | Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. | 
+ **sortDir** | **string** | Sort direction. Used only together with sortBy. | [default to &quot;DESC&quot;]
 
 ### Return type
 
@@ -1692,6 +1792,8 @@ Name | Type | Description  | Notes
 
 Set a user's password
 
+
+
 ### Example
 
 ```go
@@ -1762,6 +1864,8 @@ Name | Type | Description  | Notes
 > SetUserPasswordPostResponse SetUserPasswordPost(ctx, orgId, userId).Execute()
 
 Set a user's password
+
+
 
 ### Example
 

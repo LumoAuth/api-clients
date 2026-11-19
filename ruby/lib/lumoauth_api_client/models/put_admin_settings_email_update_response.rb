@@ -15,7 +15,6 @@ require 'time'
 
 module LumoAuthApiClient
   class PutAdminSettingsEmailUpdateResponse
-    # Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
     attr_accessor :data
 
     attr_accessor :message
@@ -41,7 +40,7 @@ module LumoAuthApiClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'data' => :'Hash<String, Object>',
+        :'data' => :'EmailSenderSettings',
         :'message' => :'String'
       }
     end
@@ -69,9 +68,7 @@ module LumoAuthApiClient
       }
 
       if attributes.key?(:'data')
-        if (value = attributes[:'data']).is_a?(Hash)
-          self.data = value
-        end
+        self.data = attributes[:'data']
       end
 
       if attributes.key?(:'message')

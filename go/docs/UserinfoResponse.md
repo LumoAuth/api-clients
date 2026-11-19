@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Sub** | **string** | User id; agent_&lt;agent_id&gt; for agents; client_&lt;client_id&gt; for clients. | 
-**IdentityType** | Pointer to **string** | Only for non-user principals. | [optional] 
+**Sub** | **string** | User id; agent_&lt;agent_id&gt; for agents. | 
+**IdentityType** | Pointer to **string** | Only for agents. | [optional] 
 **Tenant** | Pointer to **string** | Organization slug. | [optional] 
-**Name** | Pointer to **string** | profile scope (users); agent / client display name. | [optional] 
+**Name** | Pointer to **string** | profile scope (users); agent display name. | [optional] 
 **GivenName** | Pointer to **string** | profile scope. | [optional] 
 **FamilyName** | Pointer to **string** | profile scope. | [optional] 
 **MiddleName** | Pointer to **string** | profile scope. | [optional] 
@@ -31,7 +31,6 @@ Name | Type | Description | Notes
 **WorkloadIdentity** | Pointer to **NullableString** | Agents only. | [optional] 
 **Capabilities** | Pointer to **[]string** | Agents only. | [optional] 
 **BudgetPolicy** | Pointer to **map[string]interface{}** | Agents only. The budget limits that are set (max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day, max_cost_per_day_usd, max_cost_per_month_usd, hard_limit; unlimited ones are left out) and any other policy keys, the usage in the current UTC windows (api_calls_this_hour, api_calls_today, tokens_used_this_hour, tokens_used_today, cost_today_usd, cost_this_month_usd), and exhausted: true when a limit is reached and the next metered call would get 429. | [optional] 
-**ClientId** | Pointer to **string** | Clients only. | [optional] 
 
 ## Methods
 
@@ -741,31 +740,6 @@ SetBudgetPolicy sets BudgetPolicy field to given value.
 `func (o *UserinfoResponse) HasBudgetPolicy() bool`
 
 HasBudgetPolicy returns a boolean if a field has been set.
-
-### GetClientId
-
-`func (o *UserinfoResponse) GetClientId() string`
-
-GetClientId returns the ClientId field if non-nil, zero value otherwise.
-
-### GetClientIdOk
-
-`func (o *UserinfoResponse) GetClientIdOk() (*string, bool)`
-
-GetClientIdOk returns a tuple with the ClientId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetClientId
-
-`func (o *UserinfoResponse) SetClientId(v string)`
-
-SetClientId sets ClientId field to given value.
-
-### HasClientId
-
-`func (o *UserinfoResponse) HasClientId() bool`
-
-HasClientId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

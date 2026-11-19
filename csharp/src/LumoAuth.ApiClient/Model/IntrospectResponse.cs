@@ -53,7 +53,8 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="iss">Issuer identifier of this organization..</param>
         /// <param name="aud">aud.</param>
         /// <param name="jti">JWT id (JWT tokens only)..</param>
-        public IntrospectResponse(bool active = default, string tokenType = default, string scope = default, string clientId = default, string sub = default, string username = default, int exp = default, int iat = default, int nbf = default, string iss = default, IntrospectResponseAud aud = default, string jti = default)
+        /// <param name="act">RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under &#x60;act&#x60;. JWT and opaque tokens..</param>
+        public IntrospectResponse(bool active = default, string tokenType = default, string scope = default, string clientId = default, string sub = default, string username = default, int exp = default, int iat = default, int nbf = default, string iss = default, IntrospectResponseAud aud = default, string jti = default, Object act = default)
         {
             this.Active = active;
             this.TokenType = tokenType;
@@ -67,6 +68,7 @@ namespace LumoAuth.ApiClient.Model
             this.Iss = iss;
             this.Aud = aud;
             this.Jti = jti;
+            this.Act = act;
         }
 
         /// <summary>
@@ -157,6 +159,13 @@ namespace LumoAuth.ApiClient.Model
         public string Jti { get; set; }
 
         /// <summary>
+        /// RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under &#x60;act&#x60;. JWT and opaque tokens.
+        /// </summary>
+        /// <value>RFC 8693 actor of a delegated access token (token exchange, or a redeemed identity assertion), with earlier actors nested under &#x60;act&#x60;. JWT and opaque tokens.</value>
+        [DataMember(Name = "act", EmitDefaultValue = false)]
+        public Object Act { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -176,6 +185,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Iss: ").Append(Iss).Append("\n");
             sb.Append("  Aud: ").Append(Aud).Append("\n");
             sb.Append("  Jti: ").Append(Jti).Append("\n");
+            sb.Append("  Act: ").Append(Act).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

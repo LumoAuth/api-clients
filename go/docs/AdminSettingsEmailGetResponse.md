@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to **map[string]interface{}** | Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted. | [optional] 
+**Data** | Pointer to [**EmailSenderSettings**](EmailSenderSettings.md) |  | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *AdminSettingsEmailGetResponse) GetData() map[string]interface{}`
+`func (o *AdminSettingsEmailGetResponse) GetData() EmailSenderSettings`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *AdminSettingsEmailGetResponse) GetDataOk() (*map[string]interface{}, bool)`
+`func (o *AdminSettingsEmailGetResponse) GetDataOk() (*EmailSenderSettings, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *AdminSettingsEmailGetResponse) SetData(v map[string]interface{})`
+`func (o *AdminSettingsEmailGetResponse) SetData(v EmailSenderSettings)`
 
 SetData sets Data field to given value.
 

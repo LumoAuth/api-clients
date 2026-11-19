@@ -611,9 +611,13 @@ const configuration = new Configuration();
 const apiInstance = new AdminAgentsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let sortBy: 'name' | 'agentId' | 'status' | 'createdAt' | 'lastUsedAt'; //Sort field. Default: name. Another value is ignored. (optional) (default to undefined)
+let sortDir: 'ASC' | 'DESC'; //Sort direction, used with sortBy. (optional) (default to 'ASC')
 
 const { status, data } = await apiInstance.adminAgentsList(
-    orgId
+    orgId,
+    sortBy,
+    sortDir
 );
 ```
 
@@ -622,6 +626,8 @@ const { status, data } = await apiInstance.adminAgentsList(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **sortBy** | [**&#39;name&#39; | &#39;agentId&#39; | &#39;status&#39; | &#39;createdAt&#39; | &#39;lastUsedAt&#39;**]**Array<&#39;name&#39; &#124; &#39;agentId&#39; &#124; &#39;status&#39; &#124; &#39;createdAt&#39; &#124; &#39;lastUsedAt&#39;>** | Sort field. Default: name. Another value is ignored. | (optional) defaults to undefined|
+| **sortDir** | [**&#39;ASC&#39; | &#39;DESC&#39;**]**Array<&#39;ASC&#39; &#124; &#39;DESC&#39;>** | Sort direction, used with sortBy. | (optional) defaults to 'ASC'|
 
 
 ### Return type

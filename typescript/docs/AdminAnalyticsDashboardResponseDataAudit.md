@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**eventsLast7Days** | **number** |  | [optional] [default to undefined]
+**eventsLast7Days** | **number** | Audit events of the last 7 days, or of the audit retention period of the plan when that is shorter. | [optional] [default to undefined]
 
 ## Example
 

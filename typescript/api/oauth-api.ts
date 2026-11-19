@@ -24,6 +24,10 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { BackchannelAuthorizeResponse } from '../models';
 // @ts-ignore
+import type { CheckEmailFirstRequest } from '../models';
+// @ts-ignore
+import type { CheckEmailFirstResponse } from '../models';
+// @ts-ignore
 import type { DeviceAuthorizationResponse } from '../models';
 // @ts-ignore
 import type { IntrospectResponse } from '../models';
@@ -113,6 +117,46 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: `exists` is always `true`, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by `client_id`.
+         * @summary Sign-in methods for an email-first form
+         * @param {string} orgId 
+         * @param {CheckEmailFirstRequest} checkEmailFirstRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkEmailFirst: async (orgId: string, checkEmailFirstRequest: CheckEmailFirstRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('checkEmailFirst', 'orgId', orgId)
+            // verify required parameter 'checkEmailFirstRequest' is not null or undefined
+            assertParamExists('checkEmailFirst', 'checkEmailFirstRequest', checkEmailFirstRequest)
+            const localVarPath = `/orgs/{orgId}/api/v1/oauth/check-email`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(checkEmailFirstRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -347,7 +391,7 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+         * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization\'s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
          * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -790,6 +834,20 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: `exists` is always `true`, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by `client_id`.
+         * @summary Sign-in methods for an email-first form
+         * @param {string} orgId 
+         * @param {CheckEmailFirstRequest} checkEmailFirstRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkEmailFirst(orgId: string, checkEmailFirstRequest: CheckEmailFirstRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckEmailFirstResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkEmailFirst(orgId, checkEmailFirstRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OAuthApi.checkEmailFirst']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
          * @summary Device authorization request (RFC 8628)
          * @param {string} orgId 
@@ -869,7 +927,7 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+         * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization\'s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
          * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -1046,6 +1104,16 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.backchannelAuthorize(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
+         * For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: `exists` is always `true`, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by `client_id`.
+         * @summary Sign-in methods for an email-first form
+         * @param {OAuthApiCheckEmailFirstRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkEmailFirst(requestParameters: OAuthApiCheckEmailFirstRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckEmailFirstResponse> {
+            return localVarFp.checkEmailFirst(requestParameters.orgId, requestParameters.checkEmailFirstRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
          * @summary Device authorization request (RFC 8628)
          * @param {OAuthApiDeviceAuthorizationRequest} requestParameters Request parameters.
@@ -1106,7 +1174,7 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.par(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+         * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization\'s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
          * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
          * @param {OAuthApiRegisterClientRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1245,6 +1313,16 @@ export interface OAuthApiInterface {
     backchannelAuthorize(requestParameters: OAuthApiBackchannelAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<BackchannelAuthorizeResponse>;
 
     /**
+     * For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: `exists` is always `true`, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by `client_id`.
+     * @summary Sign-in methods for an email-first form
+     * @param {OAuthApiCheckEmailFirstRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OAuthApiInterface
+     */
+    checkEmailFirst(requestParameters: OAuthApiCheckEmailFirstRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckEmailFirstResponse>;
+
+    /**
      * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
      * @summary Device authorization request (RFC 8628)
      * @param {OAuthApiDeviceAuthorizationRequest} requestParameters Request parameters.
@@ -1305,7 +1383,7 @@ export interface OAuthApiInterface {
     par(requestParameters: OAuthApiParRequest, options?: RawAxiosRequestConfig): AxiosPromise<ParResponse>;
 
     /**
-     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization\'s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
      * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
      * @param {OAuthApiRegisterClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1442,6 +1520,27 @@ export interface OAuthApiBackchannelAuthorizeRequest {
      * @memberof OAuthApiBackchannelAuthorize
      */
     readonly orgId: string
+}
+
+/**
+ * Request parameters for checkEmailFirst operation in OAuthApi.
+ * @export
+ * @interface OAuthApiCheckEmailFirstRequest
+ */
+export interface OAuthApiCheckEmailFirstRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiCheckEmailFirst
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {CheckEmailFirstRequest}
+     * @memberof OAuthApiCheckEmailFirst
+     */
+    readonly checkEmailFirstRequest: CheckEmailFirstRequest
 }
 
 /**
@@ -1749,6 +1848,18 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
+     * For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: `exists` is always `true`, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by `client_id`.
+     * @summary Sign-in methods for an email-first form
+     * @param {OAuthApiCheckEmailFirstRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OAuthApi
+     */
+    public checkEmailFirst(requestParameters: OAuthApiCheckEmailFirstRequest, options?: RawAxiosRequestConfig) {
+        return OAuthApiFp(this.configuration).checkEmailFirst(requestParameters.orgId, requestParameters.checkEmailFirstRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
      * @summary Device authorization request (RFC 8628)
      * @param {OAuthApiDeviceAuthorizationRequest} requestParameters Request parameters.
@@ -1821,7 +1932,7 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization\'s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
      * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
      * @param {OAuthApiRegisterClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

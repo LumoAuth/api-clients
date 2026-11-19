@@ -65,6 +65,9 @@ class GetMeResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'mfaEnabled' => 'bool',
         'roles' => 'string[]',
         'capabilities' => 'string[]',
+        'scopes' => 'string[]',
+        'scope' => 'string[]',
+        'scopeNarrowed' => 'bool',
         'tenant' => '\LumoAuth\ApiClient\Model\GroupRef'
     ];
 
@@ -83,6 +86,9 @@ class GetMeResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'mfaEnabled' => null,
         'roles' => null,
         'capabilities' => null,
+        'scopes' => null,
+        'scope' => null,
+        'scopeNarrowed' => null,
         'tenant' => null
     ];
 
@@ -99,6 +105,9 @@ class GetMeResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'mfaEnabled' => true,
         'roles' => true,
         'capabilities' => true,
+        'scopes' => true,
+        'scope' => true,
+        'scopeNarrowed' => true,
         'tenant' => false
     ];
 
@@ -195,6 +204,9 @@ class GetMeResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'mfaEnabled' => 'mfa_enabled',
         'roles' => 'roles',
         'capabilities' => 'capabilities',
+        'scopes' => 'scopes',
+        'scope' => 'scope',
+        'scopeNarrowed' => 'scope_narrowed',
         'tenant' => 'tenant'
     ];
 
@@ -211,6 +223,9 @@ class GetMeResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'mfaEnabled' => 'setMfaEnabled',
         'roles' => 'setRoles',
         'capabilities' => 'setCapabilities',
+        'scopes' => 'setScopes',
+        'scope' => 'setScope',
+        'scopeNarrowed' => 'setScopeNarrowed',
         'tenant' => 'setTenant'
     ];
 
@@ -227,6 +242,9 @@ class GetMeResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'mfaEnabled' => 'getMfaEnabled',
         'roles' => 'getRoles',
         'capabilities' => 'getCapabilities',
+        'scopes' => 'getScopes',
+        'scope' => 'getScope',
+        'scopeNarrowed' => 'getScopeNarrowed',
         'tenant' => 'getTenant'
     ];
 
@@ -309,6 +327,9 @@ class GetMeResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('mfaEnabled', $data ?? [], null);
         $this->setIfExists('roles', $data ?? [], null);
         $this->setIfExists('capabilities', $data ?? [], null);
+        $this->setIfExists('scopes', $data ?? [], null);
+        $this->setIfExists('scope', $data ?? [], null);
+        $this->setIfExists('scopeNarrowed', $data ?? [], null);
         $this->setIfExists('tenant', $data ?? [], null);
     }
 
@@ -593,6 +614,108 @@ class GetMeResponse implements ModelInterface, ArrayAccess, \JsonSerializable
             }
         }
         $this->container['capabilities'] = $capabilities;
+
+        return $this;
+    }
+
+    /**
+     * Gets scopes
+     *
+     * @return string[]|null
+     */
+    public function getScopes()
+    {
+        return $this->container['scopes'];
+    }
+
+    /**
+     * Sets scopes
+     *
+     * @param string[]|null $scopes Agents only: the OAuth scope values that the agent may request for this organization's API, as RFC 7591 defines a client's registered scope. They are its capabilities, each a scope token (RFC 6749 section 3.3).
+     *
+     * @return self
+     */
+    public function setScopes($scopes)
+    {
+        if (is_null($scopes)) {
+            array_push($this->openAPINullablesSetToNull, 'scopes');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('scopes', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['scopes'] = $scopes;
+
+        return $this;
+    }
+
+    /**
+     * Gets scope
+     *
+     * @return string[]|null
+     */
+    public function getScope()
+    {
+        return $this->container['scope'];
+    }
+
+    /**
+     * Sets scope
+     *
+     * @param string[]|null $scope Agents only: the scope of the presented token.
+     *
+     * @return self
+     */
+    public function setScope($scope)
+    {
+        if (is_null($scope)) {
+            array_push($this->openAPINullablesSetToNull, 'scope');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('scope', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['scope'] = $scope;
+
+        return $this;
+    }
+
+    /**
+     * Gets scopeNarrowed
+     *
+     * @return bool|null
+     */
+    public function getScopeNarrowed()
+    {
+        return $this->container['scopeNarrowed'];
+    }
+
+    /**
+     * Sets scopeNarrowed
+     *
+     * @param bool|null $scopeNarrowed Agents only: true when the token scope leaves out one of the agent's capabilities.
+     *
+     * @return self
+     */
+    public function setScopeNarrowed($scopeNarrowed)
+    {
+        if (is_null($scopeNarrowed)) {
+            array_push($this->openAPINullablesSetToNull, 'scopeNarrowed');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('scopeNarrowed', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['scopeNarrowed'] = $scopeNarrowed;
 
         return $this;
     }

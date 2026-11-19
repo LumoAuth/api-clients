@@ -276,7 +276,7 @@ public class AdminAuditLogsApi {
 
     /**
      * Export audit logs as CSV (default) or JSON
-     * 
+     * Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
      * @param orgId  (required)
      * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -294,7 +294,7 @@ public class AdminAuditLogsApi {
 
     /**
      * Export audit logs as CSV (default) or JSON
-     * 
+     * Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
      * @param orgId  (required)
      * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -313,7 +313,7 @@ public class AdminAuditLogsApi {
 
     /**
      * Export audit logs as CSV (default) or JSON (asynchronously)
-     * 
+     * Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -925,7 +925,7 @@ public class AdminAuditLogsApi {
 
     /**
      * Update audit log retention settings
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
      * @param orgId  (required)
      * @return AdminAuditLogsRetentionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -943,7 +943,7 @@ public class AdminAuditLogsApi {
 
     /**
      * Update audit log retention settings
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminAuditLogsRetentionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -962,7 +962,7 @@ public class AdminAuditLogsApi {
 
     /**
      * Update audit log retention settings (asynchronously)
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1052,7 +1052,7 @@ public class AdminAuditLogsApi {
 
     /**
      * Update audit log retention settings
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
      * @param orgId  (required)
      * @return AdminAuditLogsRetentionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1070,7 +1070,7 @@ public class AdminAuditLogsApi {
 
     /**
      * Update audit log retention settings
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminAuditLogsRetentionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1089,7 +1089,7 @@ public class AdminAuditLogsApi {
 
     /**
      * Update audit log retention settings (asynchronously)
-     * 
+     * Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call

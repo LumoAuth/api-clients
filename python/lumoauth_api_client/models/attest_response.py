@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from lumoauth_api_client.models.attest_response_identity import AttestResponseIdentity
 from typing import Optional, Set
 from typing_extensions import Self
@@ -31,7 +31,7 @@ class AttestResponse(BaseModel):
     access_token: StrictStr
     token_type: StrictStr
     expires_in: StrictInt
-    scope: StrictStr = Field(description="Space-separated agent capabilities.")
+    scope: Optional[StrictStr] = Field(default=None, description="The issued scope values (the agent's capabilities, or the requested subset), separated by one space. Left out when none was issued.")
     identity: AttestResponseIdentity
     __properties: ClassVar[List[str]] = ["access_token", "token_type", "expires_in", "scope", "identity"]
 

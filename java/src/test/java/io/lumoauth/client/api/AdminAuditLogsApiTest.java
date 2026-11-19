@@ -51,6 +51,8 @@ public class AdminAuditLogsApiTest {
     /**
      * Export audit logs as CSV (default) or JSON
      *
+     * Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -112,6 +114,8 @@ public class AdminAuditLogsApiTest {
     /**
      * Update audit log retention settings
      *
+     * Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -123,6 +127,8 @@ public class AdminAuditLogsApiTest {
 
     /**
      * Update audit log retention settings
+     *
+     * Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
      *
      * @throws ApiException if the Api call fails
      */

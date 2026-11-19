@@ -90,7 +90,7 @@ namespace LumoAuth.ApiClient.Model
         /// Gets or Sets Scopes
         /// </summary>
         /*
-        <example>[&quot;invoices.read&quot;]</example>
+        <example>[&quot;invoices:read&quot;]</example>
         */
         [DataMember(Name = "scopes", EmitDefaultValue = false)]
         public List<string> Scopes { get; set; }

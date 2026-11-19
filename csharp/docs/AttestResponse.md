@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **AccessToken** | **string** |  | 
 **TokenType** | **string** |  | 
 **ExpiresIn** | **int** |  | 
-**Scope** | **string** | Space-separated agent capabilities. | 
+**Scope** | **string** | The issued scope values (the agent&#39;s capabilities, or the requested subset), separated by one space. Left out when none was issued. | [optional] 
 **Identity** | [**AttestResponseIdentity**](AttestResponseIdentity.md) |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -11,6 +11,9 @@ Name | Type | Description | Notes
 **mfa_enabled** | Option<**bool**> |  | [optional]
 **roles** | Option<**Vec<String>**> |  | [optional]
 **capabilities** | Option<**Vec<String>**> |  | [optional]
+**scopes** | Option<**Vec<String>**> | Agents only: the OAuth scope values that the agent may request for this organization's API, as RFC 7591 defines a client's registered scope. They are its capabilities, each a scope token (RFC 6749 section 3.3). | [optional]
+**scope** | Option<**Vec<String>**> | Agents only: the scope of the presented token. | [optional]
+**scope_narrowed** | Option<**bool**> | Agents only: true when the token scope leaves out one of the agent's capabilities. | [optional]
 **tenant** | Option<[**models::GroupRef**](GroupRef.md)> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

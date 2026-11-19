@@ -49,7 +49,7 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         /// <value>The action to authorize.</value>
         /*
-        <example>document.read</example>
+        <example>document:read</example>
         */
         [DataMember(Name = "action", EmitDefaultValue = false)]
         public string Action { get; set; }

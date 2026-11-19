@@ -28,7 +28,7 @@ type AgentsAPI interface {
 
 	POST /orgs/{orgId}/api/v1/agents/ask
 Body: {
-  "action": "document.read",
+  "action": "document:read",
   "context": {"id": "123"}
 }
 
@@ -210,7 +210,7 @@ Ask Agent-friendly permission check (Natural Language style)
 
 POST /orgs/{orgId}/api/v1/agents/ask
 Body: {
-  "action": "document.read",
+  "action": "document:read",
   "context": {"id": "123"}
 }
 

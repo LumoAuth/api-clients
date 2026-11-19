@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **default_value** | Option<[**serde_json::Value**](.md)> |  | [optional]
 **is_required** | Option<**bool**> |  | [optional]
 **is_system** | Option<**bool**> |  | [optional]
+**built_in** | Option<**bool**> | True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403). | [optional]
 **created_at** | Option<**String**> |  | [optional]
 **updated_at** | Option<**String**> |  | [optional]
 

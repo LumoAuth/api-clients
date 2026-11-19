@@ -22,7 +22,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Agent-friendly permission check (Natural Language style)
 
-POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document.read\",   \"context\": {\"id\": \"123\"} }
+POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
 
 ### Examples
 

@@ -10,6 +10,7 @@
 | **code** | **String** | Authorization code to exchange (request_type&#x3D;code). | [optional] |
 | **auth_token** | **String** | Upstream auth token to exchange (request_type&#x3D;exchange). | [optional] |
 | **refresh_token** | **String** | Refresh token to redeem (request_type&#x3D;refresh). | [optional] |
+| **scope** | **String** | request_type&#x3D;refresh only: optional space-delimited scopes that narrow the refreshed token. Must be a subset of the refresh grant and of the resource token scope (invalid_scope otherwise). Ignored for request_type&#x3D;auth, where the resource token names the scope. | [optional] |
 
 ## Example
 
@@ -22,7 +23,8 @@ instance = LumoAuthApiClient::IssueAgentTokenRequest.new(
   redirect_uri: null,
   code: null,
   auth_token: null,
-  refresh_token: null
+  refresh_token: null,
+  scope: null
 )
 ```
 

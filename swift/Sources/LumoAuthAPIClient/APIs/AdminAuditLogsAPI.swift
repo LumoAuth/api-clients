@@ -70,6 +70,7 @@ open class AdminAuditLogsAPI {
     /**
      Export audit logs as CSV (default) or JSON
      - GET /orgs/{orgId}/api/v1/admin/audit-logs/export
+     - Needs `audit.export` and `audit.view`, as the export on the portal's audit log page does.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -295,6 +296,7 @@ open class AdminAuditLogsAPI {
     /**
      Update audit log retention settings
      - PATCH /orgs/{orgId}/api/v1/admin/audit-logs/retention
+     - Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -339,6 +341,7 @@ open class AdminAuditLogsAPI {
     /**
      Update audit log retention settings
      - PUT /orgs/{orgId}/api/v1/admin/audit-logs/retention
+     - Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth

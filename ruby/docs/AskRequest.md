@@ -13,7 +13,7 @@
 require 'lumoauth_api_client'
 
 instance = LumoAuthApiClient::AskRequest.new(
-  action: document.read,
+  action: document:read,
   context: {&quot;id&quot;:&quot;123&quot;}
 )
 ```

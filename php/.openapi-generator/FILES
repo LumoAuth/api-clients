@@ -118,7 +118,6 @@ docs/Model/AdminIdentitiesListResponseDataBindingsItem.md
 docs/Model/AdminMcpServersCreateResponse.md
 docs/Model/AdminMcpServersGetResponse.md
 docs/Model/AdminMcpServersListResponse.md
-docs/Model/AdminMcpServersListResponseMeta.md
 docs/Model/AdminOrgInvitationsCreateResponse.md
 docs/Model/AdminOrgInvitationsListResponse.md
 docs/Model/AdminOrgMembersAddResponse.md
@@ -180,6 +179,7 @@ docs/Model/AdminUserSessionsRevokeAllResponse.md
 docs/Model/AdminUserSessionsRevokePostResponse.md
 docs/Model/AdminUserTokensRevokeAllResponse.md
 docs/Model/AdminUserTokensRevokePostResponse.md
+docs/Model/AdminUsersRestoreResponse.md
 docs/Model/AdminWebhooksCreateResponse.md
 docs/Model/AdminWebhooksCreateResponseData.md
 docs/Model/AdminWebhooksDeliveriesListResponse.md
@@ -226,6 +226,8 @@ docs/Model/CheckAbacBulkResponseResultsItem.md
 docs/Model/CheckAbacResponse.md
 docs/Model/CheckAbacResponseMatchedPoliciesItem.md
 docs/Model/CheckAnyPermissionResponse.md
+docs/Model/CheckEmailFirstRequest.md
+docs/Model/CheckEmailFirstResponse.md
 docs/Model/CheckPermissionResponse.md
 docs/Model/CheckPermissionsBulkResponse.md
 docs/Model/CheckRelationResponse.md
@@ -249,6 +251,7 @@ docs/Model/DenyRequestRequest.md
 docs/Model/DenyRequestResponse.md
 docs/Model/DeviceAuthorizationResponse.md
 docs/Model/EmailEnrollmentStarted.md
+docs/Model/EmailSenderSettings.md
 docs/Model/EmailTemplate.md
 docs/Model/EnrollAuthenticator201Response.md
 docs/Model/EnrollAuthenticatorRequest.md
@@ -369,7 +372,9 @@ docs/Model/PutAdminClientsUpdateBrandingResponse.md
 docs/Model/PutAdminOrgMembersUpdateResponse.md
 docs/Model/PutAdminSettingsAuthenticationUpdateResponse.md
 docs/Model/PutAdminSettingsBrandingUpdateResponse.md
+docs/Model/PutAdminSettingsEmailUpdateRequest.md
 docs/Model/PutAdminSettingsEmailUpdateResponse.md
+docs/Model/PutAdminSettingsGeneralUpdateRequest.md
 docs/Model/PutAdminSettingsGeneralUpdateResponse.md
 docs/Model/PutAdminSettingsGeneralUpdateResponseData.md
 docs/Model/PutAdminSettingsScimUpdateResponse.md
@@ -562,7 +567,6 @@ lib/Model/AdminIdentitiesListResponseDataBindingsItem.php
 lib/Model/AdminMcpServersCreateResponse.php
 lib/Model/AdminMcpServersGetResponse.php
 lib/Model/AdminMcpServersListResponse.php
-lib/Model/AdminMcpServersListResponseMeta.php
 lib/Model/AdminOrgInvitationsCreateResponse.php
 lib/Model/AdminOrgInvitationsListResponse.php
 lib/Model/AdminOrgMembersAddResponse.php
@@ -624,6 +628,7 @@ lib/Model/AdminUserSessionsRevokeAllResponse.php
 lib/Model/AdminUserSessionsRevokePostResponse.php
 lib/Model/AdminUserTokensRevokeAllResponse.php
 lib/Model/AdminUserTokensRevokePostResponse.php
+lib/Model/AdminUsersRestoreResponse.php
 lib/Model/AdminWebhooksCreateResponse.php
 lib/Model/AdminWebhooksCreateResponseData.php
 lib/Model/AdminWebhooksDeliveriesListResponse.php
@@ -670,6 +675,8 @@ lib/Model/CheckAbacBulkResponseResultsItem.php
 lib/Model/CheckAbacResponse.php
 lib/Model/CheckAbacResponseMatchedPoliciesItem.php
 lib/Model/CheckAnyPermissionResponse.php
+lib/Model/CheckEmailFirstRequest.php
+lib/Model/CheckEmailFirstResponse.php
 lib/Model/CheckPermissionResponse.php
 lib/Model/CheckPermissionsBulkResponse.php
 lib/Model/CheckRelationResponse.php
@@ -693,6 +700,7 @@ lib/Model/DenyRequestRequest.php
 lib/Model/DenyRequestResponse.php
 lib/Model/DeviceAuthorizationResponse.php
 lib/Model/EmailEnrollmentStarted.php
+lib/Model/EmailSenderSettings.php
 lib/Model/EmailTemplate.php
 lib/Model/EnrollAuthenticator201Response.php
 lib/Model/EnrollAuthenticatorRequest.php
@@ -814,7 +822,9 @@ lib/Model/PutAdminClientsUpdateBrandingResponse.php
 lib/Model/PutAdminOrgMembersUpdateResponse.php
 lib/Model/PutAdminSettingsAuthenticationUpdateResponse.php
 lib/Model/PutAdminSettingsBrandingUpdateResponse.php
+lib/Model/PutAdminSettingsEmailUpdateRequest.php
 lib/Model/PutAdminSettingsEmailUpdateResponse.php
+lib/Model/PutAdminSettingsGeneralUpdateRequest.php
 lib/Model/PutAdminSettingsGeneralUpdateResponse.php
 lib/Model/PutAdminSettingsGeneralUpdateResponseData.php
 lib/Model/PutAdminSettingsScimUpdateResponse.php

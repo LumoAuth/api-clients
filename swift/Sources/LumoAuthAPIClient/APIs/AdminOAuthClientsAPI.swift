@@ -74,7 +74,7 @@ open class AdminOAuthClientsAPI {
     /**
      Get an OAuth client's login and consent page branding
      - GET /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding
-     - Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
+     - Needs `branding.view` and `clients.view`. Login settings use the same keys as the organization branding settings (GET /settings/branding); a missing or null value means \"same as the organization\".
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -458,6 +458,7 @@ open class AdminOAuthClientsAPI {
     /**
      Change keys of an OAuth client's login and/or consent page branding
      - PATCH /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding
+     - Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -558,6 +559,7 @@ open class AdminOAuthClientsAPI {
     /**
      Replace an OAuth client's login and/or consent page branding
      - PUT /orgs/{orgId}/api/v1/admin/clients/{clientId}/branding
+     - Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth

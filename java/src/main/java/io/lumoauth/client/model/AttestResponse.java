@@ -49,7 +49,7 @@ import io.lumoauth.client.JSON;
 /**
  * AttestResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-13T17:04:54.677037242Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-19T07:11:38.754531054-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class AttestResponse {
   public static final String SERIALIZED_NAME_ACCESS_TOKEN = "access_token";
   @SerializedName(SERIALIZED_NAME_ACCESS_TOKEN)
@@ -120,7 +120,7 @@ public class AttestResponse {
 
   public static final String SERIALIZED_NAME_SCOPE = "scope";
   @SerializedName(SERIALIZED_NAME_SCOPE)
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   private String scope;
 
   public static final String SERIALIZED_NAME_IDENTITY = "identity";
@@ -188,21 +188,21 @@ public class AttestResponse {
   }
 
 
-  public AttestResponse scope(@javax.annotation.Nonnull String scope) {
+  public AttestResponse scope(@javax.annotation.Nullable String scope) {
     this.scope = scope;
     return this;
   }
 
   /**
-   * Space-separated agent capabilities.
+   * The issued scope values (the agent&#39;s capabilities, or the requested subset), separated by one space. Left out when none was issued.
    * @return scope
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getScope() {
     return scope;
   }
 
-  public void setScope(@javax.annotation.Nonnull String scope) {
+  public void setScope(@javax.annotation.Nullable String scope) {
     this.scope = scope;
   }
 
@@ -281,7 +281,7 @@ public class AttestResponse {
     openapiFields = new HashSet<String>(Arrays.asList("access_token", "token_type", "expires_in", "scope", "identity"));
 
     // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>(Arrays.asList("access_token", "token_type", "expires_in", "scope", "identity"));
+    openapiRequiredFields = new HashSet<String>(Arrays.asList("access_token", "token_type", "expires_in", "identity"));
   }
 
   /**
@@ -320,7 +320,7 @@ public class AttestResponse {
       }
       // validate the required field `token_type`
       TokenTypeEnum.validateJsonElement(jsonObj.get("token_type"));
-      if (!jsonObj.get("scope").isJsonPrimitive()) {
+      if ((jsonObj.get("scope") != null && !jsonObj.get("scope").isJsonNull()) && !jsonObj.get("scope").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `scope` to be a primitive type in the JSON string but got `%s`", jsonObj.get("scope").toString()));
       }
       // validate the required field `identity`

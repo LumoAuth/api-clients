@@ -12,6 +12,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**adminIdentitiesLink**](#adminidentitieslink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML, OpenID Connect or LDAP identity to a user|
 |[**adminIdentitiesList**](#adminidentitieslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user\&#39;s federated identity links|
 |[**adminIdentitiesUnlink**](#adminidentitiesunlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user\&#39;s SAML, OpenID Connect, LDAP or social identity|
+|[**adminUsersRestore**](#adminusersrestore) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/restore | Restore a deleted user|
 |[**blockUser**](#blockuser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user|
 |[**createUser**](#createuser) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user|
 |[**deleteUser**](#deleteuser) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user|
@@ -91,6 +92,7 @@ const { status, data } = await apiInstance.addUserGroup(
 # **addUserPermission**
 > AddUserPermissionResponse addUserPermission()
 
+Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
 ### Example
 
@@ -197,7 +199,7 @@ const { status, data } = await apiInstance.addUserRole(
 # **adminIdentitiesLegacySamlRelink**
 > AdminIdentitiesLegacySamlRelinkResponse adminIdentitiesLegacySamlRelink(adminIdentitiesLegacySamlRelinkRequest)
 
-Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
 
 ### Example
 
@@ -484,6 +486,63 @@ const { status, data } = await apiInstance.adminIdentitiesUnlink(
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **adminUsersRestore**
+> AdminUsersRestoreResponse adminUsersRestore()
+
+Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted=true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+
+### Example
+
+```typescript
+import {
+    AdminUsersApi,
+    Configuration
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminUsersApi(configuration);
+
+let orgId: string; // (default to undefined)
+let userId: string; // (default to undefined)
+
+const { status, data } = await apiInstance.adminUsersRestore(
+    orgId,
+    userId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | [**string**] |  | defaults to undefined|
+| **userId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminUsersRestoreResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | User restored |  -  |
+|**403** | The user holds privileges that the caller lacks, or the plan has no free administrator seat |  -  |
+|**404** | No such user in this organization |  -  |
+|**409** | The user is not deleted (&#x60;user_not_deleted&#x60;), was erased (&#x60;user_erased&#x60;), or its address is used by another account (&#x60;address_in_use&#x60;) |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **blockUser**
 > BlockUserResponse blockUser()
 
@@ -584,6 +643,7 @@ const { status, data } = await apiInstance.createUser(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**201** | User created |  -  |
+|**403** | Missing permission, or a plan limit (&#x60;plan_limit_reached&#x60;): no admin seat free for a user created with admin access (&#x60;limit&#x60;: &#x60;admin_seats&#x60;), or every monthly-active-user place of a plan with a hard cap used this month (&#x60;limit&#x60;: &#x60;mau&#x60;, with &#x60;resets_on&#x60;). Nothing is created |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -868,9 +928,33 @@ const configuration = new Configuration();
 const apiInstance = new AdminUsersApi(configuration);
 
 let orgId: string; // (default to undefined)
+let page: number; //Page number. (optional) (default to 1)
+let limit: number; //Users per page (1 to 100). (optional) (default to 25)
+let search: string; //Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional) (default to undefined)
+let active: boolean; //Only active (`true`) or inactive (`false`) users. (optional) (default to undefined)
+let blocked: boolean; //Only blocked (`true`) or not blocked (`false`) users. (optional) (default to undefined)
+let deleted: boolean; //`true` lists only the users that SCIM deleted (soft-deleted). Without it, or with `false`, the list leaves them out. (optional) (default to false)
+let emailVerified: boolean; //Only users whose email address is verified (`true`) or not (`false`). (optional) (default to undefined)
+let mfaEnabled: boolean; //Only users with (`true`) or without (`false`) multi-factor authentication. (optional) (default to undefined)
+let role: string; //Only users who hold the role with this slug. (optional) (default to undefined)
+let group: string; //Only members of the group with this slug. (optional) (default to undefined)
+let sortBy: 'email' | 'name' | 'username' | 'createdAt' | 'lastLoginAt'; //Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional) (default to undefined)
+let sortDir: 'ASC' | 'DESC'; //Sort direction. Used only together with sortBy. (optional) (default to 'DESC')
 
 const { status, data } = await apiInstance.listUsers(
-    orgId
+    orgId,
+    page,
+    limit,
+    search,
+    active,
+    blocked,
+    deleted,
+    emailVerified,
+    mfaEnabled,
+    role,
+    group,
+    sortBy,
+    sortDir
 );
 ```
 
@@ -879,6 +963,18 @@ const { status, data } = await apiInstance.listUsers(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **page** | [**number**] | Page number. | (optional) defaults to 1|
+| **limit** | [**number**] | Users per page (1 to 100). | (optional) defaults to 25|
+| **search** | [**string**] | Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). | (optional) defaults to undefined|
+| **active** | [**boolean**] | Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. | (optional) defaults to undefined|
+| **blocked** | [**boolean**] | Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. | (optional) defaults to undefined|
+| **deleted** | [**boolean**] | &#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. | (optional) defaults to false|
+| **emailVerified** | [**boolean**] | Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). | (optional) defaults to undefined|
+| **mfaEnabled** | [**boolean**] | Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. | (optional) defaults to undefined|
+| **role** | [**string**] | Only users who hold the role with this slug. | (optional) defaults to undefined|
+| **group** | [**string**] | Only members of the group with this slug. | (optional) defaults to undefined|
+| **sortBy** | [**&#39;email&#39; | &#39;name&#39; | &#39;username&#39; | &#39;createdAt&#39; | &#39;lastLoginAt&#39;**]**Array<&#39;email&#39; &#124; &#39;name&#39; &#124; &#39;username&#39; &#124; &#39;createdAt&#39; &#124; &#39;lastLoginAt&#39;>** | Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. | (optional) defaults to undefined|
+| **sortDir** | [**&#39;ASC&#39; | &#39;DESC&#39;**]**Array<&#39;ASC&#39; &#124; &#39;DESC&#39;>** | Sort direction. Used only together with sortBy. | (optional) defaults to 'DESC'|
 
 
 ### Return type
@@ -1286,6 +1382,7 @@ const { status, data } = await apiInstance.sendUserVerificationEmail(
 # **setUserPassword**
 > SetUserPasswordPostResponse setUserPassword()
 
+Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
 ### Example
 
@@ -1333,12 +1430,15 @@ const { status, data } = await apiInstance.setUserPassword(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Password updated |  -  |
+|**401** | insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes |  -  |
+|**403** | Actor does not outrank the user, or step_up_required |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **setUserPasswordPost**
 > SetUserPasswordPostResponse setUserPasswordPost()
 
+Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
 ### Example
 
@@ -1386,6 +1486,8 @@ const { status, data } = await apiInstance.setUserPasswordPost(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Password updated |  -  |
+|**401** | insufficient_user_authentication: the access token comes from a sign-in older than 10 minutes |  -  |
+|**403** | Actor does not outrank the user, or step_up_required |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

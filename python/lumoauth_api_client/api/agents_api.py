@@ -73,7 +73,7 @@ class AgentsApi:
     ) -> AskResponse:
         """Agent-friendly permission check (Natural Language style)
 
-        POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document.read\",   \"context\": {\"id\": \"123\"} }
+        POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
 
         :param org_id: (required)
         :type org_id: str
@@ -147,7 +147,7 @@ class AgentsApi:
     ) -> ApiResponse[AskResponse]:
         """Agent-friendly permission check (Natural Language style)
 
-        POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document.read\",   \"context\": {\"id\": \"123\"} }
+        POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
 
         :param org_id: (required)
         :type org_id: str
@@ -221,7 +221,7 @@ class AgentsApi:
     ) -> RESTResponseType:
         """Agent-friendly permission check (Natural Language style)
 
-        POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document.read\",   \"context\": {\"id\": \"123\"} }
+        POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
 
         :param org_id: (required)
         :type org_id: str

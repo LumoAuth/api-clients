@@ -98,7 +98,6 @@ docs/AdminMcpApi.md
 docs/AdminMcpServersCreateResponse.md
 docs/AdminMcpServersGetResponse.md
 docs/AdminMcpServersListResponse.md
-docs/AdminMcpServersListResponseMeta.md
 docs/AdminMfaApi.md
 docs/AdminOAuthClientsApi.md
 docs/AdminOrgInvitationsCreateResponse.md
@@ -169,6 +168,7 @@ docs/AdminUserSessionsRevokePostResponse.md
 docs/AdminUserTokensRevokeAllResponse.md
 docs/AdminUserTokensRevokePostResponse.md
 docs/AdminUsersApi.md
+docs/AdminUsersRestoreResponse.md
 docs/AdminWebhooksApi.md
 docs/AdminWebhooksCreateResponse.md
 docs/AdminWebhooksCreateResponseData.md
@@ -218,6 +218,8 @@ docs/CheckAbacBulkResponseResultsItem.md
 docs/CheckAbacResponse.md
 docs/CheckAbacResponseMatchedPoliciesItem.md
 docs/CheckAnyPermissionResponse.md
+docs/CheckEmailFirstRequest.md
+docs/CheckEmailFirstResponse.md
 docs/CheckPermissionResponse.md
 docs/CheckPermissionsBulkResponse.md
 docs/CheckRelationResponse.md
@@ -241,6 +243,7 @@ docs/DenyRequestRequest.md
 docs/DenyRequestResponse.md
 docs/DeviceAuthorizationResponse.md
 docs/EmailEnrollmentStarted.md
+docs/EmailSenderSettings.md
 docs/EmailTemplate.md
 docs/EnrollAuthenticator201Response.md
 docs/EnrollAuthenticatorRequest.md
@@ -367,7 +370,9 @@ docs/PutAdminClientsUpdateBrandingResponse.md
 docs/PutAdminOrgMembersUpdateResponse.md
 docs/PutAdminSettingsAuthenticationUpdateResponse.md
 docs/PutAdminSettingsBrandingUpdateResponse.md
+docs/PutAdminSettingsEmailUpdateRequest.md
 docs/PutAdminSettingsEmailUpdateResponse.md
+docs/PutAdminSettingsGeneralUpdateRequest.md
 docs/PutAdminSettingsGeneralUpdateResponse.md
 docs/PutAdminSettingsGeneralUpdateResponseData.md
 docs/PutAdminSettingsScimUpdateResponse.md
@@ -559,7 +564,6 @@ src/LumoAuth.ApiClient.Test/Model/AdminIdentitiesListResponseDataTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminIdentitiesListResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminMcpServersCreateResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminMcpServersGetResponseTests.cs
-src/LumoAuth.ApiClient.Test/Model/AdminMcpServersListResponseMetaTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminMcpServersListResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminOrgInvitationsCreateResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminOrgInvitationsListResponseTests.cs
@@ -622,6 +626,7 @@ src/LumoAuth.ApiClient.Test/Model/AdminUserSessionsRevokeAllResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminUserSessionsRevokePostResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminUserTokensRevokeAllResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminUserTokensRevokePostResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/AdminUsersRestoreResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminWebhooksCreateResponseDataTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminWebhooksCreateResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminWebhooksDeliveriesListResponseMetaTests.cs
@@ -668,6 +673,8 @@ src/LumoAuth.ApiClient.Test/Model/CheckAbacBulkResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/CheckAbacResponseMatchedPoliciesItemTests.cs
 src/LumoAuth.ApiClient.Test/Model/CheckAbacResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/CheckAnyPermissionResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/CheckEmailFirstRequestTests.cs
+src/LumoAuth.ApiClient.Test/Model/CheckEmailFirstResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/CheckPermissionResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/CheckPermissionsBulkResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/CheckRelationResponseTests.cs
@@ -691,6 +698,7 @@ src/LumoAuth.ApiClient.Test/Model/DenyRequestRequestTests.cs
 src/LumoAuth.ApiClient.Test/Model/DenyRequestResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/DeviceAuthorizationResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/EmailEnrollmentStartedTests.cs
+src/LumoAuth.ApiClient.Test/Model/EmailSenderSettingsTests.cs
 src/LumoAuth.ApiClient.Test/Model/EmailTemplateTests.cs
 src/LumoAuth.ApiClient.Test/Model/EnrollAuthenticator201ResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/EnrollAuthenticatorRequestTests.cs
@@ -811,7 +819,9 @@ src/LumoAuth.ApiClient.Test/Model/PutAdminClientsUpdateBrandingResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/PutAdminOrgMembersUpdateResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/PutAdminSettingsAuthenticationUpdateResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/PutAdminSettingsBrandingUpdateResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/PutAdminSettingsEmailUpdateRequestTests.cs
 src/LumoAuth.ApiClient.Test/Model/PutAdminSettingsEmailUpdateResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/PutAdminSettingsGeneralUpdateRequestTests.cs
 src/LumoAuth.ApiClient.Test/Model/PutAdminSettingsGeneralUpdateResponseDataTests.cs
 src/LumoAuth.ApiClient.Test/Model/PutAdminSettingsGeneralUpdateResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/PutAdminSettingsScimUpdateResponseTests.cs
@@ -1019,7 +1029,6 @@ src/LumoAuth.ApiClient/Model/AdminIdentitiesListResponseDataBindingsItem.cs
 src/LumoAuth.ApiClient/Model/AdminMcpServersCreateResponse.cs
 src/LumoAuth.ApiClient/Model/AdminMcpServersGetResponse.cs
 src/LumoAuth.ApiClient/Model/AdminMcpServersListResponse.cs
-src/LumoAuth.ApiClient/Model/AdminMcpServersListResponseMeta.cs
 src/LumoAuth.ApiClient/Model/AdminOrgInvitationsCreateResponse.cs
 src/LumoAuth.ApiClient/Model/AdminOrgInvitationsListResponse.cs
 src/LumoAuth.ApiClient/Model/AdminOrgMembersAddResponse.cs
@@ -1081,6 +1090,7 @@ src/LumoAuth.ApiClient/Model/AdminUserSessionsRevokeAllResponse.cs
 src/LumoAuth.ApiClient/Model/AdminUserSessionsRevokePostResponse.cs
 src/LumoAuth.ApiClient/Model/AdminUserTokensRevokeAllResponse.cs
 src/LumoAuth.ApiClient/Model/AdminUserTokensRevokePostResponse.cs
+src/LumoAuth.ApiClient/Model/AdminUsersRestoreResponse.cs
 src/LumoAuth.ApiClient/Model/AdminWebhooksCreateResponse.cs
 src/LumoAuth.ApiClient/Model/AdminWebhooksCreateResponseData.cs
 src/LumoAuth.ApiClient/Model/AdminWebhooksDeliveriesListResponse.cs
@@ -1127,6 +1137,8 @@ src/LumoAuth.ApiClient/Model/CheckAbacBulkResponseResultsItem.cs
 src/LumoAuth.ApiClient/Model/CheckAbacResponse.cs
 src/LumoAuth.ApiClient/Model/CheckAbacResponseMatchedPoliciesItem.cs
 src/LumoAuth.ApiClient/Model/CheckAnyPermissionResponse.cs
+src/LumoAuth.ApiClient/Model/CheckEmailFirstRequest.cs
+src/LumoAuth.ApiClient/Model/CheckEmailFirstResponse.cs
 src/LumoAuth.ApiClient/Model/CheckPermissionResponse.cs
 src/LumoAuth.ApiClient/Model/CheckPermissionsBulkResponse.cs
 src/LumoAuth.ApiClient/Model/CheckRelationResponse.cs
@@ -1150,6 +1162,7 @@ src/LumoAuth.ApiClient/Model/DenyRequestRequest.cs
 src/LumoAuth.ApiClient/Model/DenyRequestResponse.cs
 src/LumoAuth.ApiClient/Model/DeviceAuthorizationResponse.cs
 src/LumoAuth.ApiClient/Model/EmailEnrollmentStarted.cs
+src/LumoAuth.ApiClient/Model/EmailSenderSettings.cs
 src/LumoAuth.ApiClient/Model/EmailTemplate.cs
 src/LumoAuth.ApiClient/Model/EnrollAuthenticator201Response.cs
 src/LumoAuth.ApiClient/Model/EnrollAuthenticatorRequest.cs
@@ -1270,7 +1283,9 @@ src/LumoAuth.ApiClient/Model/PutAdminClientsUpdateBrandingResponse.cs
 src/LumoAuth.ApiClient/Model/PutAdminOrgMembersUpdateResponse.cs
 src/LumoAuth.ApiClient/Model/PutAdminSettingsAuthenticationUpdateResponse.cs
 src/LumoAuth.ApiClient/Model/PutAdminSettingsBrandingUpdateResponse.cs
+src/LumoAuth.ApiClient/Model/PutAdminSettingsEmailUpdateRequest.cs
 src/LumoAuth.ApiClient/Model/PutAdminSettingsEmailUpdateResponse.cs
+src/LumoAuth.ApiClient/Model/PutAdminSettingsGeneralUpdateRequest.cs
 src/LumoAuth.ApiClient/Model/PutAdminSettingsGeneralUpdateResponse.cs
 src/LumoAuth.ApiClient/Model/PutAdminSettingsGeneralUpdateResponseData.cs
 src/LumoAuth.ApiClient/Model/PutAdminSettingsScimUpdateResponse.cs

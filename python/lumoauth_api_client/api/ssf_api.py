@@ -597,6 +597,7 @@ class SsfApi:
     ) -> GetStreamConfig200Response:
         """Read SSF stream configuration(s)
 
+        Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
 
         :param org_id: (required)
         :type org_id: str
@@ -668,6 +669,7 @@ class SsfApi:
     ) -> ApiResponse[GetStreamConfig200Response]:
         """Read SSF stream configuration(s)
 
+        Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
 
         :param org_id: (required)
         :type org_id: str
@@ -739,6 +741,7 @@ class SsfApi:
     ) -> RESTResponseType:
         """Read SSF stream configuration(s)
 
+        Needs `webhooks.view` and `agents.view`, as the Security signals page in the portal does.
 
         :param org_id: (required)
         :type org_id: str
@@ -875,6 +878,7 @@ class SsfApi:
     ) -> None:
         """Request a stream verification event
 
+        Needs `settings.manage`, as the portal does.
 
         :param org_id: (required)
         :type org_id: str
@@ -944,6 +948,7 @@ class SsfApi:
     ) -> ApiResponse[None]:
         """Request a stream verification event
 
+        Needs `settings.manage`, as the portal does.
 
         :param org_id: (required)
         :type org_id: str
@@ -1013,6 +1018,7 @@ class SsfApi:
     ) -> RESTResponseType:
         """Request a stream verification event
 
+        Needs `settings.manage`, as the portal does.
 
         :param org_id: (required)
         :type org_id: str

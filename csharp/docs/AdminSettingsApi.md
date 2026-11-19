@@ -446,6 +446,8 @@ catch (ApiException e)
 
 Get all settings (combined)
 
+Needs `settings.view`. The `branding` part is returned only to a caller who also holds `branding.view` (for an API key, its creator), as for GET /settings/branding and the portal's branding page; without it the key is left out.
+
 ### Example
 ```csharp
 using System.Collections.Generic;
@@ -845,6 +847,8 @@ catch (ApiException e)
 > AdminSettingsEmailGetResponse AdminSettingsEmailGet (string orgId)
 
 Get email settings
+
+Shows who sends the organization's mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth's sender.
 
 ### Example
 ```csharp
@@ -1437,6 +1441,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated organization profile |  -  |
+| **403** | The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1537,6 +1542,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated authentication settings |  -  |
+| **403** | The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1637,6 +1643,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated authentication settings |  -  |
+| **403** | The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1645,6 +1652,8 @@ catch (ApiException e)
 > PutAdminSettingsBrandingUpdateResponse PatchAdminSettingsBrandingUpdate (string orgId)
 
 Update branding/login page settings
+
+Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
 
 ### Example
 ```csharp
@@ -1737,14 +1746,17 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated branding settings |  -  |
+| **403** | A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminsettingsemailupdate"></a>
 # **PatchAdminSettingsEmailUpdate**
-> PutAdminSettingsEmailUpdateResponse PatchAdminSettingsEmailUpdate (string orgId)
+> PutAdminSettingsEmailUpdateResponse PatchAdminSettingsEmailUpdate (string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = null)
 
 Update email settings
+
+Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
 ### Example
 ```csharp
@@ -1775,11 +1787,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var putAdminSettingsEmailUpdateRequest = new PutAdminSettingsEmailUpdateRequest?(); // PutAdminSettingsEmailUpdateRequest? |  (optional) 
 
             try
             {
                 // Update email settings
-                PutAdminSettingsEmailUpdateResponse result = apiInstance.PatchAdminSettingsEmailUpdate(orgId);
+                PutAdminSettingsEmailUpdateResponse result = apiInstance.PatchAdminSettingsEmailUpdate(orgId, putAdminSettingsEmailUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1800,7 +1813,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update email settings
-    ApiResponse<PutAdminSettingsEmailUpdateResponse> response = apiInstance.PatchAdminSettingsEmailUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsEmailUpdateResponse> response = apiInstance.PatchAdminSettingsEmailUpdateWithHttpInfo(orgId, putAdminSettingsEmailUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1818,6 +1831,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **putAdminSettingsEmailUpdateRequest** | [**PutAdminSettingsEmailUpdateRequest?**](PutAdminSettingsEmailUpdateRequest?.md) |  | [optional]  |
 
 ### Return type
 
@@ -1829,7 +1843,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1837,14 +1851,18 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated email settings |  -  |
+| **400** | A value is not valid, a field is not supported, or the organization has no mail provider of its own (details.rejected_keys names the fields). Nothing is stored. |  -  |
+| **403** | The caller does not hold settings.manage and users.delete. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminsettingsgeneralupdate"></a>
 # **PatchAdminSettingsGeneralUpdate**
-> PutAdminSettingsGeneralUpdateResponse PatchAdminSettingsGeneralUpdate (string orgId)
+> PutAdminSettingsGeneralUpdateResponse PatchAdminSettingsGeneralUpdate (string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = null)
 
 Update general settings
+
+Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
 ### Example
 ```csharp
@@ -1875,11 +1893,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var putAdminSettingsGeneralUpdateRequest = new PutAdminSettingsGeneralUpdateRequest?(); // PutAdminSettingsGeneralUpdateRequest? |  (optional) 
 
             try
             {
                 // Update general settings
-                PutAdminSettingsGeneralUpdateResponse result = apiInstance.PatchAdminSettingsGeneralUpdate(orgId);
+                PutAdminSettingsGeneralUpdateResponse result = apiInstance.PatchAdminSettingsGeneralUpdate(orgId, putAdminSettingsGeneralUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1900,7 +1919,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update general settings
-    ApiResponse<PutAdminSettingsGeneralUpdateResponse> response = apiInstance.PatchAdminSettingsGeneralUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsGeneralUpdateResponse> response = apiInstance.PatchAdminSettingsGeneralUpdateWithHttpInfo(orgId, putAdminSettingsGeneralUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1918,6 +1937,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **putAdminSettingsGeneralUpdateRequest** | [**PutAdminSettingsGeneralUpdateRequest?**](PutAdminSettingsGeneralUpdateRequest?.md) |  | [optional]  |
 
 ### Return type
 
@@ -1929,7 +1949,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1937,6 +1957,8 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated general settings |  -  |
+| **400** | A value is not valid (empty or too long name, unknown language, different values for name and one of its aliases) or is not a setting (timezone). Nothing is stored. |  -  |
+| **403** | The caller does not hold settings.manage, or locale would change and the caller does not hold branding.edit. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2237,6 +2259,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated organization profile |  -  |
+| **403** | The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2337,6 +2360,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated organization profile |  -  |
+| **403** | The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2437,6 +2461,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated authentication settings |  -  |
+| **403** | The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2537,6 +2562,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated authentication settings |  -  |
+| **403** | The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2545,6 +2571,8 @@ catch (ApiException e)
 > PutAdminSettingsBrandingUpdateResponse PutAdminSettingsBrandingUpdate (string orgId)
 
 Update branding/login page settings
+
+Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
 
 ### Example
 ```csharp
@@ -2637,14 +2665,17 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated branding settings |  -  |
+| **403** | A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminsettingsemailupdate"></a>
 # **PutAdminSettingsEmailUpdate**
-> PutAdminSettingsEmailUpdateResponse PutAdminSettingsEmailUpdate (string orgId)
+> PutAdminSettingsEmailUpdateResponse PutAdminSettingsEmailUpdate (string orgId, PutAdminSettingsEmailUpdateRequest? putAdminSettingsEmailUpdateRequest = null)
 
 Update email settings
+
+Changes the sender of the mail that the organization's own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth's sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
 
 ### Example
 ```csharp
@@ -2675,11 +2706,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var putAdminSettingsEmailUpdateRequest = new PutAdminSettingsEmailUpdateRequest?(); // PutAdminSettingsEmailUpdateRequest? |  (optional) 
 
             try
             {
                 // Update email settings
-                PutAdminSettingsEmailUpdateResponse result = apiInstance.PutAdminSettingsEmailUpdate(orgId);
+                PutAdminSettingsEmailUpdateResponse result = apiInstance.PutAdminSettingsEmailUpdate(orgId, putAdminSettingsEmailUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2700,7 +2732,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update email settings
-    ApiResponse<PutAdminSettingsEmailUpdateResponse> response = apiInstance.PutAdminSettingsEmailUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsEmailUpdateResponse> response = apiInstance.PutAdminSettingsEmailUpdateWithHttpInfo(orgId, putAdminSettingsEmailUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2718,6 +2750,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **putAdminSettingsEmailUpdateRequest** | [**PutAdminSettingsEmailUpdateRequest?**](PutAdminSettingsEmailUpdateRequest?.md) |  | [optional]  |
 
 ### Return type
 
@@ -2729,7 +2762,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -2737,14 +2770,18 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated email settings |  -  |
+| **400** | A value is not valid, a field is not supported, or the organization has no mail provider of its own (details.rejected_keys names the fields). Nothing is stored. |  -  |
+| **403** | The caller does not hold settings.manage and users.delete. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminsettingsgeneralupdate"></a>
 # **PutAdminSettingsGeneralUpdate**
-> PutAdminSettingsGeneralUpdateResponse PutAdminSettingsGeneralUpdate (string orgId)
+> PutAdminSettingsGeneralUpdateResponse PutAdminSettingsGeneralUpdate (string orgId, PutAdminSettingsGeneralUpdateRequest? putAdminSettingsGeneralUpdateRequest = null)
 
 Update general settings
+
+Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
 
 ### Example
 ```csharp
@@ -2775,11 +2812,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var putAdminSettingsGeneralUpdateRequest = new PutAdminSettingsGeneralUpdateRequest?(); // PutAdminSettingsGeneralUpdateRequest? |  (optional) 
 
             try
             {
                 // Update general settings
-                PutAdminSettingsGeneralUpdateResponse result = apiInstance.PutAdminSettingsGeneralUpdate(orgId);
+                PutAdminSettingsGeneralUpdateResponse result = apiInstance.PutAdminSettingsGeneralUpdate(orgId, putAdminSettingsGeneralUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2800,7 +2838,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update general settings
-    ApiResponse<PutAdminSettingsGeneralUpdateResponse> response = apiInstance.PutAdminSettingsGeneralUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsGeneralUpdateResponse> response = apiInstance.PutAdminSettingsGeneralUpdateWithHttpInfo(orgId, putAdminSettingsGeneralUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2818,6 +2856,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **putAdminSettingsGeneralUpdateRequest** | [**PutAdminSettingsGeneralUpdateRequest?**](PutAdminSettingsGeneralUpdateRequest?.md) |  | [optional]  |
 
 ### Return type
 
@@ -2829,7 +2868,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -2837,6 +2876,8 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated general settings |  -  |
+| **400** | A value is not valid (empty or too long name, unknown language, different values for name and one of its aliases) or is not a setting (timezone). Nothing is stored. |  -  |
+| **403** | The caller does not hold settings.manage, or locale would change and the caller does not hold branding.edit. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -3137,6 +3178,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated organization profile |  -  |
+| **403** | The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

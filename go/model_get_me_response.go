@@ -27,6 +27,12 @@ type GetMeResponse struct {
 	MfaEnabled NullableBool `json:"mfa_enabled,omitempty"`
 	Roles []string `json:"roles,omitempty"`
 	Capabilities []string `json:"capabilities,omitempty"`
+	// Agents only: the OAuth scope values that the agent may request for this organization's API, as RFC 7591 defines a client's registered scope. They are its capabilities, each a scope token (RFC 6749 section 3.3).
+	Scopes []string `json:"scopes,omitempty"`
+	// Agents only: the scope of the presented token.
+	Scope []string `json:"scope,omitempty"`
+	// Agents only: true when the token scope leaves out one of the agent's capabilities.
+	ScopeNarrowed NullableBool `json:"scope_narrowed,omitempty"`
 	Tenant *GroupRef `json:"tenant,omitempty"`
 }
 
@@ -303,6 +309,114 @@ func (o *GetMeResponse) SetCapabilities(v []string) {
 	o.Capabilities = v
 }
 
+// GetScopes returns the Scopes field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetMeResponse) GetScopes() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.Scopes
+}
+
+// GetScopesOk returns a tuple with the Scopes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetMeResponse) GetScopesOk() ([]string, bool) {
+	if o == nil || IsNil(o.Scopes) {
+		return nil, false
+	}
+	return o.Scopes, true
+}
+
+// HasScopes returns a boolean if a field has been set.
+func (o *GetMeResponse) HasScopes() bool {
+	if o != nil && !IsNil(o.Scopes) {
+		return true
+	}
+
+	return false
+}
+
+// SetScopes gets a reference to the given []string and assigns it to the Scopes field.
+func (o *GetMeResponse) SetScopes(v []string) {
+	o.Scopes = v
+}
+
+// GetScope returns the Scope field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetMeResponse) GetScope() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.Scope
+}
+
+// GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetMeResponse) GetScopeOk() ([]string, bool) {
+	if o == nil || IsNil(o.Scope) {
+		return nil, false
+	}
+	return o.Scope, true
+}
+
+// HasScope returns a boolean if a field has been set.
+func (o *GetMeResponse) HasScope() bool {
+	if o != nil && !IsNil(o.Scope) {
+		return true
+	}
+
+	return false
+}
+
+// SetScope gets a reference to the given []string and assigns it to the Scope field.
+func (o *GetMeResponse) SetScope(v []string) {
+	o.Scope = v
+}
+
+// GetScopeNarrowed returns the ScopeNarrowed field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetMeResponse) GetScopeNarrowed() bool {
+	if o == nil || IsNil(o.ScopeNarrowed.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.ScopeNarrowed.Get()
+}
+
+// GetScopeNarrowedOk returns a tuple with the ScopeNarrowed field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetMeResponse) GetScopeNarrowedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ScopeNarrowed.Get(), o.ScopeNarrowed.IsSet()
+}
+
+// HasScopeNarrowed returns a boolean if a field has been set.
+func (o *GetMeResponse) HasScopeNarrowed() bool {
+	if o != nil && o.ScopeNarrowed.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetScopeNarrowed gets a reference to the given NullableBool and assigns it to the ScopeNarrowed field.
+func (o *GetMeResponse) SetScopeNarrowed(v bool) {
+	o.ScopeNarrowed.Set(&v)
+}
+// SetScopeNarrowedNil sets the value for ScopeNarrowed to be an explicit nil
+func (o *GetMeResponse) SetScopeNarrowedNil() {
+	o.ScopeNarrowed.Set(nil)
+}
+
+// UnsetScopeNarrowed ensures that no value is present for ScopeNarrowed, not even an explicit nil
+func (o *GetMeResponse) UnsetScopeNarrowed() {
+	o.ScopeNarrowed.Unset()
+}
+
 // GetTenant returns the Tenant field value if set, zero value otherwise.
 func (o *GetMeResponse) GetTenant() GroupRef {
 	if o == nil || IsNil(o.Tenant) {
@@ -365,6 +479,15 @@ func (o GetMeResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Capabilities != nil {
 		toSerialize["capabilities"] = o.Capabilities
+	}
+	if o.Scopes != nil {
+		toSerialize["scopes"] = o.Scopes
+	}
+	if o.Scope != nil {
+		toSerialize["scope"] = o.Scope
+	}
+	if o.ScopeNarrowed.IsSet() {
+		toSerialize["scope_narrowed"] = o.ScopeNarrowed.Get()
 	}
 	if !IsNil(o.Tenant) {
 		toSerialize["tenant"] = o.Tenant

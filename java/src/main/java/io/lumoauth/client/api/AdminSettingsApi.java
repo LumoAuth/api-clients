@@ -40,7 +40,9 @@ import io.lumoauth.client.model.AdminSettingsSecurityGetResponse;
 import io.lumoauth.client.model.AdminTenantGetResponse;
 import io.lumoauth.client.model.PutAdminSettingsAuthenticationUpdateResponse;
 import io.lumoauth.client.model.PutAdminSettingsBrandingUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsEmailUpdateRequest;
 import io.lumoauth.client.model.PutAdminSettingsEmailUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsGeneralUpdateRequest;
 import io.lumoauth.client.model.PutAdminSettingsGeneralUpdateResponse;
 import io.lumoauth.client.model.PutAdminSettingsScimUpdateResponse;
 import io.lumoauth.client.model.PutAdminSettingsSecurityUpdateResponse;
@@ -684,7 +686,7 @@ public class AdminSettingsApi {
 
     /**
      * Get all settings (combined)
-     * 
+     * Needs &#x60;settings.view&#x60;. The &#x60;branding&#x60; part is returned only to a caller who also holds &#x60;branding.view&#x60; (for an API key, its creator), as for GET /settings/branding and the portal&#39;s branding page; without it the key is left out.
      * @param orgId  (required)
      * @return AdminSettingsAllResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -702,7 +704,7 @@ public class AdminSettingsApi {
 
     /**
      * Get all settings (combined)
-     * 
+     * Needs &#x60;settings.view&#x60;. The &#x60;branding&#x60; part is returned only to a caller who also holds &#x60;branding.view&#x60; (for an API key, its creator), as for GET /settings/branding and the portal&#39;s branding page; without it the key is left out.
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminSettingsAllResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -721,7 +723,7 @@ public class AdminSettingsApi {
 
     /**
      * Get all settings (combined) (asynchronously)
-     * 
+     * Needs &#x60;settings.view&#x60;. The &#x60;branding&#x60; part is returned only to a caller who also holds &#x60;branding.view&#x60; (for an API key, its creator), as for GET /settings/branding and the portal&#39;s branding page; without it the key is left out.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1192,7 +1194,7 @@ public class AdminSettingsApi {
 
     /**
      * Get email settings
-     * 
+     * Shows who sends the organization&#39;s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth&#39;s sender.
      * @param orgId  (required)
      * @return AdminSettingsEmailGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1210,7 +1212,7 @@ public class AdminSettingsApi {
 
     /**
      * Get email settings
-     * 
+     * Shows who sends the organization&#39;s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth&#39;s sender.
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminSettingsEmailGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1229,7 +1231,7 @@ public class AdminSettingsApi {
 
     /**
      * Get email settings (asynchronously)
-     * 
+     * Shows who sends the organization&#39;s mail: its own mail provider (set up in the portal) with the From address, From name and Reply-To stored there, or LumoAuth with LumoAuth&#39;s sender.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1767,6 +1769,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminOrganizationUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1836,6 +1839,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public PutAdminTenantUpdateResponse patchAdminOrganizationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1854,6 +1858,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<PutAdminTenantUpdateResponse> patchAdminOrganizationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1874,6 +1879,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminOrganizationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
@@ -1894,6 +1900,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminSettingsAuthUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1963,6 +1970,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1981,6 +1989,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> patchAdminSettingsAuthUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2001,6 +2010,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminSettingsAuthUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
@@ -2021,6 +2031,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminSettingsAuthenticationUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2090,6 +2101,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthenticationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2108,6 +2120,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> patchAdminSettingsAuthenticationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2128,6 +2141,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminSettingsAuthenticationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
@@ -2148,6 +2162,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminSettingsBrandingUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2208,7 +2223,7 @@ public class AdminSettingsApi {
 
     /**
      * Update branding/login page settings
-     * 
+     * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @param orgId  (required)
      * @return PutAdminSettingsBrandingUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -2217,6 +2232,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
     public PutAdminSettingsBrandingUpdateResponse patchAdminSettingsBrandingUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2226,7 +2242,7 @@ public class AdminSettingsApi {
 
     /**
      * Update branding/login page settings
-     * 
+     * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @param orgId  (required)
      * @return ApiResponse&lt;PutAdminSettingsBrandingUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -2235,6 +2251,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<PutAdminSettingsBrandingUpdateResponse> patchAdminSettingsBrandingUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2245,7 +2262,7 @@ public class AdminSettingsApi {
 
     /**
      * Update branding/login page settings (asynchronously)
-     * 
+     * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -2255,6 +2272,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminSettingsBrandingUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsBrandingUpdateResponse> _callback) throws ApiException {
@@ -2267,6 +2285,7 @@ public class AdminSettingsApi {
     /**
      * Build call for patchAdminSettingsEmailUpdate
      * @param orgId  (required)
+     * @param putAdminSettingsEmailUpdateRequest  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2275,9 +2294,11 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid, a field is not supported, or the organization has no mail provider of its own (details.rejected_keys names the fields). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage and users.delete. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsEmailUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsEmailUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsEmailUpdateRequest putAdminSettingsEmailUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2291,7 +2312,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminSettingsEmailUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/email"
@@ -2312,6 +2333,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2323,20 +2345,21 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminSettingsEmailUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminSettingsEmailUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsEmailUpdateRequest putAdminSettingsEmailUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminSettingsEmailUpdate(Async)");
         }
 
-        return patchAdminSettingsEmailUpdateCall(orgId, _callback);
+        return patchAdminSettingsEmailUpdateCall(orgId, putAdminSettingsEmailUpdateRequest, _callback);
 
     }
 
     /**
      * Update email settings
-     * 
+     * Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
      * @param orgId  (required)
+     * @param putAdminSettingsEmailUpdateRequest  (optional)
      * @return PutAdminSettingsEmailUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2344,17 +2367,20 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid, a field is not supported, or the organization has no mail provider of its own (details.rejected_keys names the fields). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage and users.delete. </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminSettingsEmailUpdateResponse patchAdminSettingsEmailUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminSettingsEmailUpdateResponse> localVarResp = patchAdminSettingsEmailUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsEmailUpdateResponse patchAdminSettingsEmailUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsEmailUpdateRequest putAdminSettingsEmailUpdateRequest) throws ApiException {
+        ApiResponse<PutAdminSettingsEmailUpdateResponse> localVarResp = patchAdminSettingsEmailUpdateWithHttpInfo(orgId, putAdminSettingsEmailUpdateRequest);
         return localVarResp.getData();
     }
 
     /**
      * Update email settings
-     * 
+     * Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
      * @param orgId  (required)
+     * @param putAdminSettingsEmailUpdateRequest  (optional)
      * @return ApiResponse&lt;PutAdminSettingsEmailUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2362,18 +2388,21 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid, a field is not supported, or the organization has no mail provider of its own (details.rejected_keys names the fields). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage and users.delete. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminSettingsEmailUpdateResponse> patchAdminSettingsEmailUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminSettingsEmailUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminSettingsEmailUpdateResponse> patchAdminSettingsEmailUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsEmailUpdateRequest putAdminSettingsEmailUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminSettingsEmailUpdateValidateBeforeCall(orgId, putAdminSettingsEmailUpdateRequest, null);
         Type localVarReturnType = new TypeToken<PutAdminSettingsEmailUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Update email settings (asynchronously)
-     * 
+     * Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
      * @param orgId  (required)
+     * @param putAdminSettingsEmailUpdateRequest  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2382,11 +2411,13 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid, a field is not supported, or the organization has no mail provider of its own (details.rejected_keys names the fields). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage and users.delete. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsEmailUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsEmailUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsEmailUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsEmailUpdateRequest putAdminSettingsEmailUpdateRequest, final ApiCallback<PutAdminSettingsEmailUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminSettingsEmailUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = patchAdminSettingsEmailUpdateValidateBeforeCall(orgId, putAdminSettingsEmailUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<PutAdminSettingsEmailUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2394,6 +2425,7 @@ public class AdminSettingsApi {
     /**
      * Build call for patchAdminSettingsGeneralUpdate
      * @param orgId  (required)
+     * @param putAdminSettingsGeneralUpdateRequest  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2402,9 +2434,11 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid (empty or too long name, unknown language, different values for name and one of its aliases) or is not a setting (timezone). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or locale would change and the caller does not hold branding.edit. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsGeneralUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsGeneralUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsGeneralUpdateRequest putAdminSettingsGeneralUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2418,7 +2452,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminSettingsGeneralUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/general"
@@ -2439,6 +2473,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2450,20 +2485,21 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminSettingsGeneralUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminSettingsGeneralUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsGeneralUpdateRequest putAdminSettingsGeneralUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminSettingsGeneralUpdate(Async)");
         }
 
-        return patchAdminSettingsGeneralUpdateCall(orgId, _callback);
+        return patchAdminSettingsGeneralUpdateCall(orgId, putAdminSettingsGeneralUpdateRequest, _callback);
 
     }
 
     /**
      * Update general settings
-     * 
+     * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
      * @param orgId  (required)
+     * @param putAdminSettingsGeneralUpdateRequest  (optional)
      * @return PutAdminSettingsGeneralUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2471,17 +2507,20 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid (empty or too long name, unknown language, different values for name and one of its aliases) or is not a setting (timezone). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or locale would change and the caller does not hold branding.edit. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminSettingsGeneralUpdateResponse patchAdminSettingsGeneralUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminSettingsGeneralUpdateResponse> localVarResp = patchAdminSettingsGeneralUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsGeneralUpdateResponse patchAdminSettingsGeneralUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsGeneralUpdateRequest putAdminSettingsGeneralUpdateRequest) throws ApiException {
+        ApiResponse<PutAdminSettingsGeneralUpdateResponse> localVarResp = patchAdminSettingsGeneralUpdateWithHttpInfo(orgId, putAdminSettingsGeneralUpdateRequest);
         return localVarResp.getData();
     }
 
     /**
      * Update general settings
-     * 
+     * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
      * @param orgId  (required)
+     * @param putAdminSettingsGeneralUpdateRequest  (optional)
      * @return ApiResponse&lt;PutAdminSettingsGeneralUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2489,18 +2528,21 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid (empty or too long name, unknown language, different values for name and one of its aliases) or is not a setting (timezone). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or locale would change and the caller does not hold branding.edit. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminSettingsGeneralUpdateResponse> patchAdminSettingsGeneralUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminSettingsGeneralUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminSettingsGeneralUpdateResponse> patchAdminSettingsGeneralUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsGeneralUpdateRequest putAdminSettingsGeneralUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminSettingsGeneralUpdateValidateBeforeCall(orgId, putAdminSettingsGeneralUpdateRequest, null);
         Type localVarReturnType = new TypeToken<PutAdminSettingsGeneralUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Update general settings (asynchronously)
-     * 
+     * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
      * @param orgId  (required)
+     * @param putAdminSettingsGeneralUpdateRequest  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2509,11 +2551,13 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid (empty or too long name, unknown language, different values for name and one of its aliases) or is not a setting (timezone). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or locale would change and the caller does not hold branding.edit. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsGeneralUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsGeneralUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsGeneralUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsGeneralUpdateRequest putAdminSettingsGeneralUpdateRequest, final ApiCallback<PutAdminSettingsGeneralUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminSettingsGeneralUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = patchAdminSettingsGeneralUpdateValidateBeforeCall(orgId, putAdminSettingsGeneralUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<PutAdminSettingsGeneralUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2783,6 +2827,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminTenantUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2852,6 +2897,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public PutAdminTenantUpdateResponse patchAdminTenantUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2870,6 +2916,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<PutAdminTenantUpdateResponse> patchAdminTenantUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2890,6 +2937,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminTenantUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
@@ -2910,6 +2958,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminOrganizationUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2979,6 +3028,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public PutAdminTenantUpdateResponse putAdminOrganizationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2997,6 +3047,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<PutAdminTenantUpdateResponse> putAdminOrganizationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -3017,6 +3068,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminOrganizationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
@@ -3037,6 +3089,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminSettingsAuthUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -3106,6 +3159,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -3124,6 +3178,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> putAdminSettingsAuthUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -3144,6 +3199,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminSettingsAuthUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
@@ -3164,6 +3220,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminSettingsAuthenticationUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -3233,6 +3290,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthenticationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -3251,6 +3309,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> putAdminSettingsAuthenticationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -3271,6 +3330,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminSettingsAuthenticationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
@@ -3291,6 +3351,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminSettingsBrandingUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -3351,7 +3412,7 @@ public class AdminSettingsApi {
 
     /**
      * Update branding/login page settings
-     * 
+     * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @param orgId  (required)
      * @return PutAdminSettingsBrandingUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -3360,6 +3421,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
     public PutAdminSettingsBrandingUpdateResponse putAdminSettingsBrandingUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -3369,7 +3431,7 @@ public class AdminSettingsApi {
 
     /**
      * Update branding/login page settings
-     * 
+     * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @param orgId  (required)
      * @return ApiResponse&lt;PutAdminSettingsBrandingUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -3378,6 +3440,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<PutAdminSettingsBrandingUpdateResponse> putAdminSettingsBrandingUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -3388,7 +3451,7 @@ public class AdminSettingsApi {
 
     /**
      * Update branding/login page settings (asynchronously)
-     * 
+     * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -3398,6 +3461,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminSettingsBrandingUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsBrandingUpdateResponse> _callback) throws ApiException {
@@ -3410,6 +3474,7 @@ public class AdminSettingsApi {
     /**
      * Build call for putAdminSettingsEmailUpdate
      * @param orgId  (required)
+     * @param putAdminSettingsEmailUpdateRequest  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3418,9 +3483,11 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid, a field is not supported, or the organization has no mail provider of its own (details.rejected_keys names the fields). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage and users.delete. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsEmailUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsEmailUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsEmailUpdateRequest putAdminSettingsEmailUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -3434,7 +3501,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminSettingsEmailUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/email"
@@ -3455,6 +3522,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3466,20 +3534,21 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminSettingsEmailUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminSettingsEmailUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsEmailUpdateRequest putAdminSettingsEmailUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminSettingsEmailUpdate(Async)");
         }
 
-        return putAdminSettingsEmailUpdateCall(orgId, _callback);
+        return putAdminSettingsEmailUpdateCall(orgId, putAdminSettingsEmailUpdateRequest, _callback);
 
     }
 
     /**
      * Update email settings
-     * 
+     * Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
      * @param orgId  (required)
+     * @param putAdminSettingsEmailUpdateRequest  (optional)
      * @return PutAdminSettingsEmailUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3487,17 +3556,20 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid, a field is not supported, or the organization has no mail provider of its own (details.rejected_keys names the fields). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage and users.delete. </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminSettingsEmailUpdateResponse putAdminSettingsEmailUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminSettingsEmailUpdateResponse> localVarResp = putAdminSettingsEmailUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsEmailUpdateResponse putAdminSettingsEmailUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsEmailUpdateRequest putAdminSettingsEmailUpdateRequest) throws ApiException {
+        ApiResponse<PutAdminSettingsEmailUpdateResponse> localVarResp = putAdminSettingsEmailUpdateWithHttpInfo(orgId, putAdminSettingsEmailUpdateRequest);
         return localVarResp.getData();
     }
 
     /**
      * Update email settings
-     * 
+     * Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
      * @param orgId  (required)
+     * @param putAdminSettingsEmailUpdateRequest  (optional)
      * @return ApiResponse&lt;PutAdminSettingsEmailUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3505,18 +3577,21 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid, a field is not supported, or the organization has no mail provider of its own (details.rejected_keys names the fields). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage and users.delete. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminSettingsEmailUpdateResponse> putAdminSettingsEmailUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminSettingsEmailUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminSettingsEmailUpdateResponse> putAdminSettingsEmailUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsEmailUpdateRequest putAdminSettingsEmailUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = putAdminSettingsEmailUpdateValidateBeforeCall(orgId, putAdminSettingsEmailUpdateRequest, null);
         Type localVarReturnType = new TypeToken<PutAdminSettingsEmailUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Update email settings (asynchronously)
-     * 
+     * Changes the sender of the mail that the organization&#39;s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth&#39;s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
      * @param orgId  (required)
+     * @param putAdminSettingsEmailUpdateRequest  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3525,11 +3600,13 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid, a field is not supported, or the organization has no mail provider of its own (details.rejected_keys names the fields). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage and users.delete. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsEmailUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsEmailUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsEmailUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsEmailUpdateRequest putAdminSettingsEmailUpdateRequest, final ApiCallback<PutAdminSettingsEmailUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminSettingsEmailUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = putAdminSettingsEmailUpdateValidateBeforeCall(orgId, putAdminSettingsEmailUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<PutAdminSettingsEmailUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -3537,6 +3614,7 @@ public class AdminSettingsApi {
     /**
      * Build call for putAdminSettingsGeneralUpdate
      * @param orgId  (required)
+     * @param putAdminSettingsGeneralUpdateRequest  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3545,9 +3623,11 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid (empty or too long name, unknown language, different values for name and one of its aliases) or is not a setting (timezone). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or locale would change and the caller does not hold branding.edit. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsGeneralUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsGeneralUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsGeneralUpdateRequest putAdminSettingsGeneralUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -3561,7 +3641,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminSettingsGeneralUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/general"
@@ -3582,6 +3662,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3593,20 +3674,21 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminSettingsGeneralUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminSettingsGeneralUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsGeneralUpdateRequest putAdminSettingsGeneralUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminSettingsGeneralUpdate(Async)");
         }
 
-        return putAdminSettingsGeneralUpdateCall(orgId, _callback);
+        return putAdminSettingsGeneralUpdateCall(orgId, putAdminSettingsGeneralUpdateRequest, _callback);
 
     }
 
     /**
      * Update general settings
-     * 
+     * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
      * @param orgId  (required)
+     * @param putAdminSettingsGeneralUpdateRequest  (optional)
      * @return PutAdminSettingsGeneralUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3614,17 +3696,20 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid (empty or too long name, unknown language, different values for name and one of its aliases) or is not a setting (timezone). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or locale would change and the caller does not hold branding.edit. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminSettingsGeneralUpdateResponse putAdminSettingsGeneralUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminSettingsGeneralUpdateResponse> localVarResp = putAdminSettingsGeneralUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsGeneralUpdateResponse putAdminSettingsGeneralUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsGeneralUpdateRequest putAdminSettingsGeneralUpdateRequest) throws ApiException {
+        ApiResponse<PutAdminSettingsGeneralUpdateResponse> localVarResp = putAdminSettingsGeneralUpdateWithHttpInfo(orgId, putAdminSettingsGeneralUpdateRequest);
         return localVarResp.getData();
     }
 
     /**
      * Update general settings
-     * 
+     * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
      * @param orgId  (required)
+     * @param putAdminSettingsGeneralUpdateRequest  (optional)
      * @return ApiResponse&lt;PutAdminSettingsGeneralUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3632,18 +3717,21 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid (empty or too long name, unknown language, different values for name and one of its aliases) or is not a setting (timezone). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or locale would change and the caller does not hold branding.edit. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminSettingsGeneralUpdateResponse> putAdminSettingsGeneralUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminSettingsGeneralUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminSettingsGeneralUpdateResponse> putAdminSettingsGeneralUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsGeneralUpdateRequest putAdminSettingsGeneralUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = putAdminSettingsGeneralUpdateValidateBeforeCall(orgId, putAdminSettingsGeneralUpdateRequest, null);
         Type localVarReturnType = new TypeToken<PutAdminSettingsGeneralUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Update general settings (asynchronously)
-     * 
+     * Changes the name of the organization and the default language of the hosted pages. name, tenantName, display_name and displayName are four spellings of the one name: send one of them, or the same text in each. timezone is not a setting (dates are shown in UTC) and is refused with 400. Other keys are ignored. PUT and PATCH behave the same. The caller needs settings.manage, as for PATCH /admin/organization, which changes the same name; changing locale also needs branding.edit.
      * @param orgId  (required)
+     * @param putAdminSettingsGeneralUpdateRequest  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3652,11 +3740,13 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> A value is not valid (empty or too long name, unknown language, different values for name and one of its aliases) or is not a setting (timezone). Nothing is stored. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or locale would change and the caller does not hold branding.edit. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsGeneralUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsGeneralUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsGeneralUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable PutAdminSettingsGeneralUpdateRequest putAdminSettingsGeneralUpdateRequest, final ApiCallback<PutAdminSettingsGeneralUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminSettingsGeneralUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = putAdminSettingsGeneralUpdateValidateBeforeCall(orgId, putAdminSettingsGeneralUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<PutAdminSettingsGeneralUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -3926,6 +4016,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminTenantUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -3995,6 +4086,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public PutAdminTenantUpdateResponse putAdminTenantUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -4013,6 +4105,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<PutAdminTenantUpdateResponse> putAdminTenantUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -4033,6 +4126,7 @@ public class AdminSettingsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminTenantUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {

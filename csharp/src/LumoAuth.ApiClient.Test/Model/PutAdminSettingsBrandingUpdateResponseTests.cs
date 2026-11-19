@@ -65,6 +65,15 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'Rejected'
+        /// </summary>
+        [Fact]
+        public void RejectedTest()
+        {
+            // TODO unit test for the property 'Rejected'
+        }
+
+        /// <summary>
         /// Test the property 'Message'
         /// </summary>
         [Fact]

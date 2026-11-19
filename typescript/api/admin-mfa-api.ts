@@ -44,7 +44,7 @@ import type { UpdateMfaPolicyResponse } from '../models';
 export const AdminMfaApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in.
+         * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
          * @summary Remove one of a user\'s authenticators
          * @param {string} orgId 
          * @param {string} userId 
@@ -93,7 +93,7 @@ export const AdminMfaApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002).
+         * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002). Needs `users.view` and `settings.view`, as the report on the portal\'s authentication settings page does.
          * @summary MFA enrollment coverage
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -328,7 +328,7 @@ export const AdminMfaApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AdminMfaApiAxiosParamCreator(configuration)
     return {
         /**
-         * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in.
+         * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
          * @summary Remove one of a user\'s authenticators
          * @param {string} orgId 
          * @param {string} userId 
@@ -343,7 +343,7 @@ export const AdminMfaApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002).
+         * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002). Needs `users.view` and `settings.view`, as the report on the portal\'s authentication settings page does.
          * @summary MFA enrollment coverage
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -422,7 +422,7 @@ export const AdminMfaApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = AdminMfaApiFp(configuration)
     return {
         /**
-         * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in.
+         * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
          * @summary Remove one of a user\'s authenticators
          * @param {AdminMfaApiDeleteUserAuthenticatorRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -432,7 +432,7 @@ export const AdminMfaApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.deleteUserAuthenticator(requestParameters.orgId, requestParameters.userId, requestParameters.authenticatorId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002).
+         * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002). Needs `users.view` and `settings.view`, as the report on the portal\'s authentication settings page does.
          * @summary MFA enrollment coverage
          * @param {AdminMfaApiGetMfaCoverageReportRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -491,7 +491,7 @@ export const AdminMfaApiFactory = function (configuration?: Configuration, baseP
  */
 export interface AdminMfaApiInterface {
     /**
-     * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in.
+     * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
      * @summary Remove one of a user\'s authenticators
      * @param {AdminMfaApiDeleteUserAuthenticatorRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -501,7 +501,7 @@ export interface AdminMfaApiInterface {
     deleteUserAuthenticator(requestParameters: AdminMfaApiDeleteUserAuthenticatorRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeleteUserAuthenticatorResponse>;
 
     /**
-     * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002).
+     * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002). Needs `users.view` and `settings.view`, as the report on the portal\'s authentication settings page does.
      * @summary MFA enrollment coverage
      * @param {AdminMfaApiGetMfaCoverageReportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -686,7 +686,7 @@ export interface AdminMfaApiUpdateMfaPolicyRequest {
  */
 export class AdminMfaApi extends BaseAPI implements AdminMfaApiInterface {
     /**
-     * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in.
+     * Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
      * @summary Remove one of a user\'s authenticators
      * @param {AdminMfaApiDeleteUserAuthenticatorRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -698,7 +698,7 @@ export class AdminMfaApi extends BaseAPI implements AdminMfaApiInterface {
     }
 
     /**
-     * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002).
+     * Share of users with MFA, by factor type and strongest tier, plus users inside or past the enrollment grace period (POL-002). Needs `users.view` and `settings.view`, as the report on the portal\'s authentication settings page does.
      * @summary MFA enrollment coverage
      * @param {AdminMfaApiGetMfaCoverageReportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

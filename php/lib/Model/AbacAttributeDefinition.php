@@ -68,6 +68,7 @@ class AbacAttributeDefinition implements ModelInterface, ArrayAccess, \JsonSeria
         'defaultValue' => 'mixed',
         'isRequired' => 'bool',
         'isSystem' => 'bool',
+        'builtIn' => 'bool',
         'createdAt' => '\DateTime',
         'updatedAt' => '\DateTime'
     ];
@@ -90,6 +91,7 @@ class AbacAttributeDefinition implements ModelInterface, ArrayAccess, \JsonSeria
         'defaultValue' => null,
         'isRequired' => null,
         'isSystem' => null,
+        'builtIn' => null,
         'createdAt' => 'date-time',
         'updatedAt' => 'date-time'
     ];
@@ -110,6 +112,7 @@ class AbacAttributeDefinition implements ModelInterface, ArrayAccess, \JsonSeria
         'defaultValue' => true,
         'isRequired' => false,
         'isSystem' => false,
+        'builtIn' => false,
         'createdAt' => false,
         'updatedAt' => true
     ];
@@ -210,6 +213,7 @@ class AbacAttributeDefinition implements ModelInterface, ArrayAccess, \JsonSeria
         'defaultValue' => 'defaultValue',
         'isRequired' => 'isRequired',
         'isSystem' => 'isSystem',
+        'builtIn' => 'builtIn',
         'createdAt' => 'createdAt',
         'updatedAt' => 'updatedAt'
     ];
@@ -230,6 +234,7 @@ class AbacAttributeDefinition implements ModelInterface, ArrayAccess, \JsonSeria
         'defaultValue' => 'setDefaultValue',
         'isRequired' => 'setIsRequired',
         'isSystem' => 'setIsSystem',
+        'builtIn' => 'setBuiltIn',
         'createdAt' => 'setCreatedAt',
         'updatedAt' => 'setUpdatedAt'
     ];
@@ -250,6 +255,7 @@ class AbacAttributeDefinition implements ModelInterface, ArrayAccess, \JsonSeria
         'defaultValue' => 'getDefaultValue',
         'isRequired' => 'getIsRequired',
         'isSystem' => 'getIsSystem',
+        'builtIn' => 'getBuiltIn',
         'createdAt' => 'getCreatedAt',
         'updatedAt' => 'getUpdatedAt'
     ];
@@ -338,6 +344,7 @@ class AbacAttributeDefinition implements ModelInterface, ArrayAccess, \JsonSeria
         $this->setIfExists('defaultValue', $data ?? [], null);
         $this->setIfExists('isRequired', $data ?? [], null);
         $this->setIfExists('isSystem', $data ?? [], null);
+        $this->setIfExists('builtIn', $data ?? [], null);
         $this->setIfExists('createdAt', $data ?? [], null);
         $this->setIfExists('updatedAt', $data ?? [], null);
     }
@@ -690,6 +697,33 @@ class AbacAttributeDefinition implements ModelInterface, ArrayAccess, \JsonSeria
             throw new \InvalidArgumentException('non-nullable isSystem cannot be null');
         }
         $this->container['isSystem'] = $isSystem;
+
+        return $this;
+    }
+
+    /**
+     * Gets builtIn
+     *
+     * @return bool|null
+     */
+    public function getBuiltIn()
+    {
+        return $this->container['builtIn'];
+    }
+
+    /**
+     * Sets builtIn
+     *
+     * @param bool|null $builtIn True for a definition that LumoAuth provides to every organization. It can be read, but not changed or deleted (403).
+     *
+     * @return self
+     */
+    public function setBuiltIn($builtIn)
+    {
+        if (is_null($builtIn)) {
+            throw new \InvalidArgumentException('non-nullable builtIn cannot be null');
+        }
+        $this->container['builtIn'] = $builtIn;
 
         return $this;
     }

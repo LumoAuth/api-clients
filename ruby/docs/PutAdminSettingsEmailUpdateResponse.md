@@ -4,7 +4,7 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **data** | **Hash&lt;String, Object&gt;** | Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted. | [optional] |
+| **data** | [**EmailSenderSettings**](EmailSenderSettings.md) |  | [optional] |
 | **message** | **String** |  | [optional] |
 
 ## Example

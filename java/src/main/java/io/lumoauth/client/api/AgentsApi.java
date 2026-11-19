@@ -99,7 +99,7 @@ public class AgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authorization decision for the requested action. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing required field: action. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing required field: action; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
@@ -168,7 +168,7 @@ public class AgentsApi {
 
     /**
      * Agent-friendly permission check (Natural Language style)
-     * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \&quot;action\&quot;: \&quot;document.read\&quot;,   \&quot;context\&quot;: {\&quot;id\&quot;: \&quot;123\&quot;} }
+     * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \&quot;action\&quot;: \&quot;document:read\&quot;,   \&quot;context\&quot;: {\&quot;id\&quot;: \&quot;123\&quot;} }
      * @param orgId  (required)
      * @param askRequest  (required)
      * @return AskResponse
@@ -178,7 +178,7 @@ public class AgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authorization decision for the requested action. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing required field: action. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing required field: action; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
@@ -190,7 +190,7 @@ public class AgentsApi {
 
     /**
      * Agent-friendly permission check (Natural Language style)
-     * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \&quot;action\&quot;: \&quot;document.read\&quot;,   \&quot;context\&quot;: {\&quot;id\&quot;: \&quot;123\&quot;} }
+     * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \&quot;action\&quot;: \&quot;document:read\&quot;,   \&quot;context\&quot;: {\&quot;id\&quot;: \&quot;123\&quot;} }
      * @param orgId  (required)
      * @param askRequest  (required)
      * @return ApiResponse&lt;AskResponse&gt;
@@ -200,7 +200,7 @@ public class AgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authorization decision for the requested action. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing required field: action. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing required field: action; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
@@ -213,7 +213,7 @@ public class AgentsApi {
 
     /**
      * Agent-friendly permission check (Natural Language style) (asynchronously)
-     * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \&quot;action\&quot;: \&quot;document.read\&quot;,   \&quot;context\&quot;: {\&quot;id\&quot;: \&quot;123\&quot;} }
+     * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \&quot;action\&quot;: \&quot;document:read\&quot;,   \&quot;context\&quot;: {\&quot;id\&quot;: \&quot;123\&quot;} }
      * @param orgId  (required)
      * @param askRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -224,7 +224,7 @@ public class AgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authorization decision for the requested action. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing required field: action. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing required field: action; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>

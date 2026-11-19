@@ -36,20 +36,19 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PutAdminSettingsEmailUpdateResponse" /> class.
         /// </summary>
-        /// <param name="data">Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted..</param>
+        /// <param name="data">data.</param>
         /// <param name="message">message.</param>
-        public PutAdminSettingsEmailUpdateResponse(Dictionary<string, Object> data = default, string message = default)
+        public PutAdminSettingsEmailUpdateResponse(EmailSenderSettings data = default, string message = default)
         {
             this.Data = data;
             this.Message = message;
         }
 
         /// <summary>
-        /// Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.
+        /// Gets or Sets Data
         /// </summary>
-        /// <value>Free-form email settings dictionary, stored as sent (keys merge on update); secret-looking keys are redacted.</value>
         [DataMember(Name = "data", EmitDefaultValue = false)]
-        public Dictionary<string, Object> Data { get; set; }
+        public EmailSenderSettings Data { get; set; }
 
         /// <summary>
         /// Gets or Sets Message

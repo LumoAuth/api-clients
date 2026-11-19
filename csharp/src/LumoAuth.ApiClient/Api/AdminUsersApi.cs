@@ -51,6 +51,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Assign a permission to a user
         /// </summary>
+        /// <remarks>
+        /// Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
@@ -61,7 +64,7 @@ namespace LumoAuth.ApiClient.Api
         /// Assign a permission to a user
         /// </summary>
         /// <remarks>
-        /// 
+        /// Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -92,7 +95,7 @@ namespace LumoAuth.ApiClient.Api
         /// Relink legacy SAML users to an IdP
         /// </summary>
         /// <remarks>
-        /// Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+        /// Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends &#x60;\&quot;dry_run\&quot;: true&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -104,7 +107,7 @@ namespace LumoAuth.ApiClient.Api
         /// Relink legacy SAML users to an IdP
         /// </summary>
         /// <remarks>
-        /// Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+        /// Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends &#x60;\&quot;dry_run\&quot;: true&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -207,6 +210,29 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="userId"></param>
         /// <returns>ApiResponse of AdminAgentsGetResponse</returns>
         ApiResponse<AdminAgentsGetResponse> AdminIdentitiesUnlinkWithHttpInfo(string type, string orgId, string userId);
+        /// <summary>
+        /// Restore a deleted user
+        /// </summary>
+        /// <remarks>
+        /// Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted&#x3D;true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="userId"></param>
+        /// <returns>AdminUsersRestoreResponse</returns>
+        AdminUsersRestoreResponse AdminUsersRestore(string orgId, string userId);
+
+        /// <summary>
+        /// Restore a deleted user
+        /// </summary>
+        /// <remarks>
+        /// Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted&#x3D;true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="userId"></param>
+        /// <returns>ApiResponse of AdminUsersRestoreResponse</returns>
+        ApiResponse<AdminUsersRestoreResponse> AdminUsersRestoreWithHttpInfo(string orgId, string userId);
         /// <summary>
         /// Block a user
         /// </summary>
@@ -350,8 +376,20 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page">Page number. (optional, default to 1)</param>
+        /// <param name="limit">Users per page (1 to 100). (optional, default to 25)</param>
+        /// <param name="search">Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)</param>
+        /// <param name="active">Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="blocked">Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="deleted">&#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)</param>
+        /// <param name="emailVerified">Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)</param>
+        /// <param name="mfaEnabled">Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)</param>
+        /// <param name="role">Only users who hold the role with this slug. (optional)</param>
+        /// <param name="group">Only members of the group with this slug. (optional)</param>
+        /// <param name="sortBy">Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)</param>
+        /// <param name="sortDir">Sort direction. Used only together with sortBy. (optional, default to DESC)</param>
         /// <returns>ListUsersResponse</returns>
-        ListUsersResponse ListUsers(string orgId);
+        ListUsersResponse ListUsers(string orgId, int? page = default, int? limit = default, string? search = default, bool? active = default, bool? blocked = default, bool? deleted = default, bool? emailVerified = default, bool? mfaEnabled = default, string? role = default, string? group = default, string? sortBy = default, string? sortDir = default);
 
         /// <summary>
         /// List users
@@ -361,8 +399,20 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page">Page number. (optional, default to 1)</param>
+        /// <param name="limit">Users per page (1 to 100). (optional, default to 25)</param>
+        /// <param name="search">Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)</param>
+        /// <param name="active">Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="blocked">Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="deleted">&#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)</param>
+        /// <param name="emailVerified">Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)</param>
+        /// <param name="mfaEnabled">Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)</param>
+        /// <param name="role">Only users who hold the role with this slug. (optional)</param>
+        /// <param name="group">Only members of the group with this slug. (optional)</param>
+        /// <param name="sortBy">Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)</param>
+        /// <param name="sortDir">Sort direction. Used only together with sortBy. (optional, default to DESC)</param>
         /// <returns>ApiResponse of ListUsersResponse</returns>
-        ApiResponse<ListUsersResponse> ListUsersWithHttpInfo(string orgId);
+        ApiResponse<ListUsersResponse> ListUsersWithHttpInfo(string orgId, int? page = default, int? limit = default, string? search = default, bool? active = default, bool? blocked = default, bool? deleted = default, bool? emailVerified = default, bool? mfaEnabled = default, string? role = default, string? group = default, string? sortBy = default, string? sortDir = default);
         /// <summary>
         /// Mark a user&#39;s email as verified
         /// </summary>
@@ -517,6 +567,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Set a user&#39;s password
         /// </summary>
+        /// <remarks>
+        /// Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
@@ -527,7 +580,7 @@ namespace LumoAuth.ApiClient.Api
         /// Set a user&#39;s password
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -537,6 +590,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Set a user&#39;s password
         /// </summary>
+        /// <remarks>
+        /// Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
@@ -547,7 +603,7 @@ namespace LumoAuth.ApiClient.Api
         /// Set a user&#39;s password
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -692,7 +748,7 @@ namespace LumoAuth.ApiClient.Api
         /// Assign a permission to a user
         /// </summary>
         /// <remarks>
-        /// 
+        /// Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -705,7 +761,7 @@ namespace LumoAuth.ApiClient.Api
         /// Assign a permission to a user
         /// </summary>
         /// <remarks>
-        /// 
+        /// Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -742,7 +798,7 @@ namespace LumoAuth.ApiClient.Api
         /// Relink legacy SAML users to an IdP
         /// </summary>
         /// <remarks>
-        /// Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+        /// Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends &#x60;\&quot;dry_run\&quot;: true&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -755,7 +811,7 @@ namespace LumoAuth.ApiClient.Api
         /// Relink legacy SAML users to an IdP
         /// </summary>
         /// <remarks>
-        /// Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+        /// Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends &#x60;\&quot;dry_run\&quot;: true&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -867,6 +923,31 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminAgentsGetResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AdminAgentsGetResponse>> AdminIdentitiesUnlinkWithHttpInfoAsync(string type, string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Restore a deleted user
+        /// </summary>
+        /// <remarks>
+        /// Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted&#x3D;true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="userId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminUsersRestoreResponse</returns>
+        System.Threading.Tasks.Task<AdminUsersRestoreResponse> AdminUsersRestoreAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Restore a deleted user
+        /// </summary>
+        /// <remarks>
+        /// Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted&#x3D;true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="userId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminUsersRestoreResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminUsersRestoreResponse>> AdminUsersRestoreWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Block a user
         /// </summary>
@@ -1048,9 +1129,21 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page">Page number. (optional, default to 1)</param>
+        /// <param name="limit">Users per page (1 to 100). (optional, default to 25)</param>
+        /// <param name="search">Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)</param>
+        /// <param name="active">Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="blocked">Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="deleted">&#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)</param>
+        /// <param name="emailVerified">Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)</param>
+        /// <param name="mfaEnabled">Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)</param>
+        /// <param name="role">Only users who hold the role with this slug. (optional)</param>
+        /// <param name="group">Only members of the group with this slug. (optional)</param>
+        /// <param name="sortBy">Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)</param>
+        /// <param name="sortDir">Sort direction. Used only together with sortBy. (optional, default to DESC)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ListUsersResponse</returns>
-        System.Threading.Tasks.Task<ListUsersResponse> ListUsersAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ListUsersResponse> ListUsersAsync(string orgId, int? page = default, int? limit = default, string? search = default, bool? active = default, bool? blocked = default, bool? deleted = default, bool? emailVerified = default, bool? mfaEnabled = default, string? role = default, string? group = default, string? sortBy = default, string? sortDir = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List users
@@ -1060,9 +1153,21 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page">Page number. (optional, default to 1)</param>
+        /// <param name="limit">Users per page (1 to 100). (optional, default to 25)</param>
+        /// <param name="search">Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)</param>
+        /// <param name="active">Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="blocked">Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="deleted">&#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)</param>
+        /// <param name="emailVerified">Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)</param>
+        /// <param name="mfaEnabled">Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)</param>
+        /// <param name="role">Only users who hold the role with this slug. (optional)</param>
+        /// <param name="group">Only members of the group with this slug. (optional)</param>
+        /// <param name="sortBy">Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)</param>
+        /// <param name="sortDir">Sort direction. Used only together with sortBy. (optional, default to DESC)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ListUsersResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ListUsersResponse>> ListUsersWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<ListUsersResponse>> ListUsersWithHttpInfoAsync(string orgId, int? page = default, int? limit = default, string? search = default, bool? active = default, bool? blocked = default, bool? deleted = default, bool? emailVerified = default, bool? mfaEnabled = default, string? role = default, string? group = default, string? sortBy = default, string? sortDir = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Mark a user&#39;s email as verified
         /// </summary>
@@ -1250,7 +1355,7 @@ namespace LumoAuth.ApiClient.Api
         /// Set a user&#39;s password
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1263,7 +1368,7 @@ namespace LumoAuth.ApiClient.Api
         /// Set a user&#39;s password
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1275,7 +1380,7 @@ namespace LumoAuth.ApiClient.Api
         /// Set a user&#39;s password
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1288,7 +1393,7 @@ namespace LumoAuth.ApiClient.Api
         /// Set a user&#39;s password
         /// </summary>
         /// <remarks>
-        /// 
+        /// Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1786,7 +1891,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Assign a permission to a user 
+        /// Assign a permission to a user Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1799,7 +1904,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Assign a permission to a user 
+        /// Assign a permission to a user Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1859,7 +1964,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Assign a permission to a user 
+        /// Assign a permission to a user Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1873,7 +1978,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Assign a permission to a user 
+        /// Assign a permission to a user Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2088,7 +2193,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Relink legacy SAML users to an IdP Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+        /// Relink legacy SAML users to an IdP Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends &#x60;\&quot;dry_run\&quot;: true&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2101,7 +2206,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Relink legacy SAML users to an IdP Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+        /// Relink legacy SAML users to an IdP Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends &#x60;\&quot;dry_run\&quot;: true&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2162,7 +2267,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Relink legacy SAML users to an IdP Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+        /// Relink legacy SAML users to an IdP Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends &#x60;\&quot;dry_run\&quot;: true&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2176,7 +2281,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Relink legacy SAML users to an IdP Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+        /// Relink legacy SAML users to an IdP Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends &#x60;\&quot;dry_run\&quot;: true&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2866,6 +2971,157 @@ namespace LumoAuth.ApiClient.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AdminIdentitiesUnlink", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Restore a deleted user Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted&#x3D;true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="userId"></param>
+        /// <returns>AdminUsersRestoreResponse</returns>
+        public AdminUsersRestoreResponse AdminUsersRestore(string orgId, string userId)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminUsersRestoreResponse> localVarResponse = AdminUsersRestoreWithHttpInfo(orgId, userId);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Restore a deleted user Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted&#x3D;true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="userId"></param>
+        /// <returns>ApiResponse of AdminUsersRestoreResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminUsersRestoreResponse> AdminUsersRestoreWithHttpInfo(string orgId, string userId)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminUsersApi->AdminUsersRestore");
+
+            // verify the required parameter 'userId' is set
+            if (userId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->AdminUsersRestore");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<AdminUsersRestoreResponse>("/orgs/{orgId}/api/v1/admin/users/{userId}/restore", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminUsersRestore", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Restore a deleted user Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted&#x3D;true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="userId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminUsersRestoreResponse</returns>
+        public async System.Threading.Tasks.Task<AdminUsersRestoreResponse> AdminUsersRestoreAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminUsersRestoreResponse> localVarResponse = await AdminUsersRestoreWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Restore a deleted user Restores a user that inbound SCIM soft-deleted (list them with GET /users?deleted&#x3D;true). The account keeps the roles, groups and permissions that it still holds, and its active and blocked state. Its sessions and tokens stay revoked: the user signs in again. An erased user cannot be restored.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="userId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminUsersRestoreResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminUsersRestoreResponse>> AdminUsersRestoreWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminUsersApi->AdminUsersRestore");
+
+            // verify the required parameter 'userId' is set
+            if (userId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->AdminUsersRestore");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminUsersRestoreResponse>("/orgs/{orgId}/api/v1/admin/users/{userId}/restore", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminUsersRestore", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 
@@ -3920,10 +4176,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page">Page number. (optional, default to 1)</param>
+        /// <param name="limit">Users per page (1 to 100). (optional, default to 25)</param>
+        /// <param name="search">Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)</param>
+        /// <param name="active">Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="blocked">Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="deleted">&#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)</param>
+        /// <param name="emailVerified">Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)</param>
+        /// <param name="mfaEnabled">Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)</param>
+        /// <param name="role">Only users who hold the role with this slug. (optional)</param>
+        /// <param name="group">Only members of the group with this slug. (optional)</param>
+        /// <param name="sortBy">Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)</param>
+        /// <param name="sortDir">Sort direction. Used only together with sortBy. (optional, default to DESC)</param>
         /// <returns>ListUsersResponse</returns>
-        public ListUsersResponse ListUsers(string orgId)
+        public ListUsersResponse ListUsers(string orgId, int? page = default, int? limit = default, string? search = default, bool? active = default, bool? blocked = default, bool? deleted = default, bool? emailVerified = default, bool? mfaEnabled = default, string? role = default, string? group = default, string? sortBy = default, string? sortDir = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<ListUsersResponse> localVarResponse = ListUsersWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<ListUsersResponse> localVarResponse = ListUsersWithHttpInfo(orgId, page, limit, search, active, blocked, deleted, emailVerified, mfaEnabled, role, group, sortBy, sortDir);
             return localVarResponse.Data;
         }
 
@@ -3932,8 +4200,20 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page">Page number. (optional, default to 1)</param>
+        /// <param name="limit">Users per page (1 to 100). (optional, default to 25)</param>
+        /// <param name="search">Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)</param>
+        /// <param name="active">Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="blocked">Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="deleted">&#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)</param>
+        /// <param name="emailVerified">Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)</param>
+        /// <param name="mfaEnabled">Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)</param>
+        /// <param name="role">Only users who hold the role with this slug. (optional)</param>
+        /// <param name="group">Only members of the group with this slug. (optional)</param>
+        /// <param name="sortBy">Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)</param>
+        /// <param name="sortDir">Sort direction. Used only together with sortBy. (optional, default to DESC)</param>
         /// <returns>ApiResponse of ListUsersResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<ListUsersResponse> ListUsersWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<ListUsersResponse> ListUsersWithHttpInfo(string orgId, int? page = default, int? limit = default, string? search = default, bool? active = default, bool? blocked = default, bool? deleted = default, bool? emailVerified = default, bool? mfaEnabled = default, string? role = default, string? group = default, string? sortBy = default, string? sortDir = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3956,6 +4236,54 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            if (page != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "page", page));
+            }
+            if (limit != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "limit", limit));
+            }
+            if (search != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "search", search));
+            }
+            if (active != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "active", active));
+            }
+            if (blocked != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "blocked", blocked));
+            }
+            if (deleted != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "deleted", deleted));
+            }
+            if (emailVerified != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "emailVerified", emailVerified));
+            }
+            if (mfaEnabled != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "mfaEnabled", mfaEnabled));
+            }
+            if (role != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "role", role));
+            }
+            if (group != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "group", group));
+            }
+            if (sortBy != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "sortBy", sortBy));
+            }
+            if (sortDir != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "sortDir", sortDir));
+            }
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3986,11 +4314,23 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page">Page number. (optional, default to 1)</param>
+        /// <param name="limit">Users per page (1 to 100). (optional, default to 25)</param>
+        /// <param name="search">Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)</param>
+        /// <param name="active">Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="blocked">Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="deleted">&#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)</param>
+        /// <param name="emailVerified">Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)</param>
+        /// <param name="mfaEnabled">Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)</param>
+        /// <param name="role">Only users who hold the role with this slug. (optional)</param>
+        /// <param name="group">Only members of the group with this slug. (optional)</param>
+        /// <param name="sortBy">Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)</param>
+        /// <param name="sortDir">Sort direction. Used only together with sortBy. (optional, default to DESC)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ListUsersResponse</returns>
-        public async System.Threading.Tasks.Task<ListUsersResponse> ListUsersAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<ListUsersResponse> ListUsersAsync(string orgId, int? page = default, int? limit = default, string? search = default, bool? active = default, bool? blocked = default, bool? deleted = default, bool? emailVerified = default, bool? mfaEnabled = default, string? role = default, string? group = default, string? sortBy = default, string? sortDir = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<ListUsersResponse> localVarResponse = await ListUsersWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<ListUsersResponse> localVarResponse = await ListUsersWithHttpInfoAsync(orgId, page, limit, search, active, blocked, deleted, emailVerified, mfaEnabled, role, group, sortBy, sortDir, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -3999,9 +4339,21 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page">Page number. (optional, default to 1)</param>
+        /// <param name="limit">Users per page (1 to 100). (optional, default to 25)</param>
+        /// <param name="search">Users whose email address, name or username contains this text (case-sensitive; the first 100 characters are used). (optional)</param>
+        /// <param name="active">Only active (&#x60;true&#x60;) or inactive (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="blocked">Only blocked (&#x60;true&#x60;) or not blocked (&#x60;false&#x60;) users. (optional)</param>
+        /// <param name="deleted">&#x60;true&#x60; lists only the users that SCIM deleted (soft-deleted). Without it, or with &#x60;false&#x60;, the list leaves them out. (optional, default to false)</param>
+        /// <param name="emailVerified">Only users whose email address is verified (&#x60;true&#x60;) or not (&#x60;false&#x60;). (optional)</param>
+        /// <param name="mfaEnabled">Only users with (&#x60;true&#x60;) or without (&#x60;false&#x60;) multi-factor authentication. (optional)</param>
+        /// <param name="role">Only users who hold the role with this slug. (optional)</param>
+        /// <param name="group">Only members of the group with this slug. (optional)</param>
+        /// <param name="sortBy">Sort field. Without it the list is sorted by createdAt, newest first. Another value sorts by createdAt. (optional)</param>
+        /// <param name="sortDir">Sort direction. Used only together with sortBy. (optional, default to DESC)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ListUsersResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<ListUsersResponse>> ListUsersWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<ListUsersResponse>> ListUsersWithHttpInfoAsync(string orgId, int? page = default, int? limit = default, string? search = default, bool? active = default, bool? blocked = default, bool? deleted = default, bool? emailVerified = default, bool? mfaEnabled = default, string? role = default, string? group = default, string? sortBy = default, string? sortDir = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -4026,6 +4378,54 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            if (page != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "page", page));
+            }
+            if (limit != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "limit", limit));
+            }
+            if (search != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "search", search));
+            }
+            if (active != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "active", active));
+            }
+            if (blocked != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "blocked", blocked));
+            }
+            if (deleted != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "deleted", deleted));
+            }
+            if (emailVerified != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "emailVerified", emailVerified));
+            }
+            if (mfaEnabled != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "mfaEnabled", mfaEnabled));
+            }
+            if (role != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "role", role));
+            }
+            if (group != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "group", group));
+            }
+            if (sortBy != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "sortBy", sortBy));
+            }
+            if (sortDir != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "sortDir", sortDir));
+            }
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5152,7 +5552,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Set a user&#39;s password 
+        /// Set a user&#39;s password Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -5165,7 +5565,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Set a user&#39;s password 
+        /// Set a user&#39;s password Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -5225,7 +5625,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Set a user&#39;s password 
+        /// Set a user&#39;s password Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -5239,7 +5639,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Set a user&#39;s password 
+        /// Set a user&#39;s password Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -5303,7 +5703,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Set a user&#39;s password 
+        /// Set a user&#39;s password Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -5316,7 +5716,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Set a user&#39;s password 
+        /// Set a user&#39;s password Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -5376,7 +5776,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Set a user&#39;s password 
+        /// Set a user&#39;s password Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -5390,7 +5790,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Set a user&#39;s password 
+        /// Set a user&#39;s password Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

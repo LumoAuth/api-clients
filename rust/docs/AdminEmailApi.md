@@ -49,6 +49,8 @@ Name | Type | Description  | Required | Notes
 > models::EmailTemplate admin_email_templates_get(org_id, r#type, locale, client_id)
 Get an email template (custom or built-in default)
 
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
+
 ### Parameters
 
 
@@ -79,6 +81,8 @@ Name | Type | Description  | Required | Notes
 
 > models::AdminEmailTemplatesListResponse admin_email_templates_list(org_id)
 List every email template type with its current (custom or built-in) template
+
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 ### Parameters
 
@@ -167,6 +171,8 @@ Name | Type | Description  | Required | Notes
 
 > models::AdminEmailTemplatesVariablesResponse admin_email_templates_variables(org_id, r#type)
 List the placeholders available to an email template type
+
+Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
 
 ### Parameters
 
