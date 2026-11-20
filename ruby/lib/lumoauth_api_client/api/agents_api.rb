@@ -19,6 +19,80 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
+    # Report the tool calls that the agent's host gated
+    # Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host's own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+    # @param org_id [String] 
+    # @param agents_me_tool_calls_request [AgentsMeToolCallsRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [AgentsMeToolCallsResponse]
+    def agents_me_tool_calls(org_id, agents_me_tool_calls_request, opts = {})
+      data, _status_code, _headers = agents_me_tool_calls_with_http_info(org_id, agents_me_tool_calls_request, opts)
+      data
+    end
+
+    # Report the tool calls that the agent&#39;s host gated
+    # Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host&#39;s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+    # @param org_id [String] 
+    # @param agents_me_tool_calls_request [AgentsMeToolCallsRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(AgentsMeToolCallsResponse, Integer, Hash)>] AgentsMeToolCallsResponse data, response status code and response headers
+    def agents_me_tool_calls_with_http_info(org_id, agents_me_tool_calls_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AgentsApi.agents_me_tool_calls ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AgentsApi.agents_me_tool_calls"
+      end
+      # verify the required parameter 'agents_me_tool_calls_request' is set
+      if @api_client.config.client_side_validation && agents_me_tool_calls_request.nil?
+        fail ArgumentError, "Missing the required parameter 'agents_me_tool_calls_request' when calling AgentsApi.agents_me_tool_calls"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/agents/me/tool-calls'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(agents_me_tool_calls_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'AgentsMeToolCallsResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AgentsApi.agents_me_tool_calls",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AgentsApi#agents_me_tool_calls\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Agent-friendly permission check (Natural Language style)
     # POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
     # @param org_id [String] 
@@ -514,6 +588,80 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Poll an agent enrollment (no credential)
+    # Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+    # @param org_id [String] 
+    # @param poll_agent_enrollment_request [PollAgentEnrollmentRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [PollAgentEnrollmentResponse]
+    def poll_agent_enrollment(org_id, poll_agent_enrollment_request, opts = {})
+      data, _status_code, _headers = poll_agent_enrollment_with_http_info(org_id, poll_agent_enrollment_request, opts)
+      data
+    end
+
+    # Poll an agent enrollment (no credential)
+    # Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+    # @param org_id [String] 
+    # @param poll_agent_enrollment_request [PollAgentEnrollmentRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(PollAgentEnrollmentResponse, Integer, Hash)>] PollAgentEnrollmentResponse data, response status code and response headers
+    def poll_agent_enrollment_with_http_info(org_id, poll_agent_enrollment_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AgentsApi.poll_agent_enrollment ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AgentsApi.poll_agent_enrollment"
+      end
+      # verify the required parameter 'poll_agent_enrollment_request' is set
+      if @api_client.config.client_side_validation && poll_agent_enrollment_request.nil?
+        fail ArgumentError, "Missing the required parameter 'poll_agent_enrollment_request' when calling AgentsApi.poll_agent_enrollment"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/agents/enrollments/token'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(poll_agent_enrollment_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'PollAgentEnrollmentResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"AgentsApi.poll_agent_enrollment",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AgentsApi#poll_agent_enrollment\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Register (or re-register) an agent
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
@@ -645,6 +793,80 @@ module LumoAuthApiClient
       data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AgentsApi#report_agent_usage\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Start an agent enrollment (no credential)
+    # The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; only public keys are accepted. Rate limited per client address and per organization; an organization has at most 20 pending enrollments.
+    # @param org_id [String] 
+    # @param start_agent_enrollment_request [StartAgentEnrollmentRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [StartAgentEnrollmentResponse]
+    def start_agent_enrollment(org_id, start_agent_enrollment_request, opts = {})
+      data, _status_code, _headers = start_agent_enrollment_with_http_info(org_id, start_agent_enrollment_request, opts)
+      data
+    end
+
+    # Start an agent enrollment (no credential)
+    # The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; only public keys are accepted. Rate limited per client address and per organization; an organization has at most 20 pending enrollments.
+    # @param org_id [String] 
+    # @param start_agent_enrollment_request [StartAgentEnrollmentRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(StartAgentEnrollmentResponse, Integer, Hash)>] StartAgentEnrollmentResponse data, response status code and response headers
+    def start_agent_enrollment_with_http_info(org_id, start_agent_enrollment_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AgentsApi.start_agent_enrollment ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AgentsApi.start_agent_enrollment"
+      end
+      # verify the required parameter 'start_agent_enrollment_request' is set
+      if @api_client.config.client_side_validation && start_agent_enrollment_request.nil?
+        fail ArgumentError, "Missing the required parameter 'start_agent_enrollment_request' when calling AgentsApi.start_agent_enrollment"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/agents/enrollments'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(start_agent_enrollment_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'StartAgentEnrollmentResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || []
+
+      new_options = opts.merge(
+        :operation => :"AgentsApi.start_agent_enrollment",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AgentsApi#start_agent_enrollment\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

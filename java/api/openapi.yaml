@@ -1625,8 +1625,10 @@ paths:
                 $ref: "#/components/schemas/PutAdminAgentsUpdateResponse"
           description: Agent updated.
         "400":
-          description: "Invalid budgetPolicy: an unknown key, or a value that is not\
-            \ a number greater than zero."
+          description: "Invalid budgetPolicy (an unknown key, or a value that is not\
+            \ a number greater than zero); canActOnBehalfOfUsers that is not true\
+            \ or false; or, when switching delegation on, an editor who does not hold\
+            \ every capability of the agent."
         "401":
           description: Authentication required.
         "403":
@@ -1671,8 +1673,10 @@ paths:
                 $ref: "#/components/schemas/PutAdminAgentsUpdateResponse"
           description: Agent updated.
         "400":
-          description: "Invalid budgetPolicy: an unknown key, or a value that is not\
-            \ a number greater than zero."
+          description: "Invalid budgetPolicy (an unknown key, or a value that is not\
+            \ a number greater than zero); canActOnBehalfOfUsers that is not true\
+            \ or false; or, when switching delegation on, an editor who does not hold\
+            \ every capability of the agent."
         "401":
           description: Authentication required.
         "403":
@@ -3909,6 +3913,138 @@ paths:
       tags:
       - "Admin: Mcp"
       x-symfony-route: api_admin_mcp_servers_get
+      x-accepts:
+      - application/json
+  /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants:
+    get:
+      operationId: adminMcpServersGrantsList
+      parameters:
+      - description: Only the grants of this agent (agentId or numeric id).
+        explode: true
+        in: query
+        name: agent_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: serverId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminMcpServersGrantsListResponse"
+          description: One entry per agent that holds a grant on the server.
+        "404":
+          description: MCP server or agent not found
+      summary: List the agents allowed to call tools of an MCP server
+      tags:
+      - "Admin: Mcp"
+      x-symfony-route: api_admin_mcp_servers_grants_list
+      x-accepts:
+      - application/json
+  /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}:
+    delete:
+      operationId: adminMcpServersGrantsRemove
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: serverId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: agentId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminMcpServersGrantsRemoveResponse"
+          description: The agent may no longer call tools of the server.
+        "404":
+          description: MCP server or agent not found
+      summary: Remove every grant of an agent on an MCP server
+      tags:
+      - "Admin: Mcp"
+      x-symfony-route: api_admin_mcp_servers_grants_remove
+      x-accepts:
+      - application/json
+    put:
+      operationId: adminMcpServersGrantsSet
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: serverId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: agentId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminMcpServersGrantsSetRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminMcpServersGrantsSetResponse"
+          description: The agent's grants on the server after the change.
+        "400":
+          description: "Neither tools nor all_tools sent, tools is not a list of names,\
+            \ a name contains / : # or *, is empty or too long, or more than 200 names"
+        "403":
+          description: "plan: granting needs the Fine-grained authorization feature"
+        "404":
+          description: MCP server or agent not found
+      summary: Set the tools of an MCP server that an agent may call
+      tags:
+      - "Admin: Mcp"
+      x-symfony-route: api_admin_mcp_servers_grants_set
+      x-content-type: application/json
       x-accepts:
       - application/json
   /orgs/{orgId}/api/v1/admin/users/{userId}/authenticators:
@@ -9200,6 +9336,54 @@ paths:
       x-content-type: application/json
       x-accepts:
       - application/json
+  /orgs/{orgId}/api/v1/agents/me/tool-calls:
+    post:
+      description: "Records each call as an agent.tool_call.reported audit entry,\
+        \ marked as reported by the agent. Send what the host knows after a call:\
+        \ the tool, how the gate decided (allowed or denied by LumoAuth, approved,\
+        \ refused or expired by a person, blocked by the host's own rules) and the\
+        \ outcome. Never send arguments or results: arguments_sha256 identifies the\
+        \ arguments, and an unknown field is refused. Up to 50 calls per report. Agent\
+        \ credentials only; portal test tokens and scope-narrowed tokens are refused.\
+        \ Rate limited per agent."
+      operationId: agentsMeToolCalls
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AgentsMeToolCallsRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgentsMeToolCallsResponse"
+          description: Recorded.
+        "400":
+          description: "invalid_request: calls is missing, empty or longer than 50,\
+            \ or a call has an unknown field or an invalid value (the description\
+            \ names it)."
+        "403":
+          description: "test_token_not_accepted, cross_tenant or insufficient_scope\
+            \ (the token was narrowed with a scope)."
+        "429":
+          description: "rate_limited: too many reports from this agent."
+      summary: Report the tool calls that the agent's host gated
+      tags:
+      - Agents
+      x-symfony-route: api_agents_me_tool_calls
+      x-content-type: application/json
+      x-accepts:
+      - application/json
   /orgs/{orgId}/api/v1/agents/ask:
     post:
       description: |-
@@ -9231,9 +9415,10 @@ paths:
                 $ref: "#/components/schemas/AskResponse"
           description: Authorization decision for the requested action.
         "400":
-          description: "Missing required field: action; or invalid_action: an agent\
-            \ wrote the action in the dot form (invoices.read). Agents write <resource>:<action>\
-            \ (invoices:read); a user's action is a permission slug."
+          description: "Missing required field: action; invalid_request: audit is\
+            \ not denials or always; or invalid_action: an agent wrote the action\
+            \ in the dot form (invoices.read). Agents write <resource>:<action> (invoices:read);\
+            \ a user's action is a permission slug."
         "403":
           description: "plan_limit_reached: the Ask API calls that the plan includes\
             \ for this month are used (plans without overage only)."
@@ -9270,7 +9455,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CreateApprovalResponse"
-          description: Approval request created and push sent.
+          description: Approval request created and delivered (see `delivery`).
         "202":
           content:
             application/json:
@@ -9279,15 +9464,16 @@ paths:
           description: User has no push device; an email sign-in fallback link was
             sent.
         "400":
-          description: "Invalid JSON, task_id, reason, impact, or missing on_behalf_of."
+          description: "Invalid JSON, task_id, reason, impact, expires_in or meta\
+            \ (invalid_meta names the field), or missing on_behalf_of."
         "403":
           description: "Caller is not an agent, is cross-tenant, presents a scope-narrowed\
             \ token (insufficient_scope), or lacks delegation permission."
         "404":
           description: Tenant or target user not found.
         "428":
-          description: User has no enrolled push device and the email fallback could
-            not be sent.
+          description: "User has no enrolled push device, no approval channel receives\
+            \ the request, and the email fallback could not be sent."
         "429":
           description: Rate limited (per tenant/agent/user).
       tags:
@@ -9563,6 +9749,101 @@ paths:
       tags:
       - Token Vault
       x-symfony-route: agent_connection_token
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /orgs/{orgId}/api/v1/agents/enrollments:
+    post:
+      description: "The setup command of a personal agent sends its public key and\
+        \ the capabilities it asks for, and gets a user code to show its owner. A\
+        \ signed-in person with permission to create agents opens verification_uri,\
+        \ types the code, checks the key fingerprint against the one in the terminal,\
+        \ adjusts the checklist and approves; the machine then polls the token endpoint\
+        \ of the enrollment for the agent id. No credential is sent or needed. Text\
+        \ is cleaned like any untrusted text; only public keys are accepted. Rate\
+        \ limited per client address and per organization; an organization has at\
+        \ most 20 pending enrollments."
+      operationId: startAgentEnrollment
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StartAgentEnrollmentRequest"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StartAgentEnrollmentResponse"
+          description: "Enrollment started. Show user_code, verification_uri and key_fingerprint\
+            \ to the person; keep enrollment_code secret and poll with it."
+        "400":
+          description: invalid_request; error_description names the field.
+        "404":
+          description: Unknown organization.
+        "429":
+          description: "too_many_requests: rate limited, or the organization has 20\
+            \ pending enrollments (Retry-After)."
+      security: []
+      summary: Start an agent enrollment (no credential)
+      tags:
+      - Agents
+      x-symfony-route: api_agent_enrollment_start
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /orgs/{orgId}/api/v1/agents/enrollments/token:
+    post:
+      description: "Polled by the setup command with its enrollment code, no faster\
+        \ than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending;\
+        \ polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused:\
+        \ 400 access_denied; after expiry, for an unknown code, or once the result\
+        \ was delivered: 400 expired_token. Approved: 200 with the agent id, once.\
+        \ The enrollment code is not a credential of the agent: the result names the\
+        \ agent, the private key that authenticates it never leaves the machine."
+      operationId: pollAgentEnrollment
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PollAgentEnrollmentRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PollAgentEnrollmentResponse"
+          description: Approved. Delivered once; later polls answer expired_token.
+        "400":
+          description: "authorization_pending, slow_down, access_denied, expired_token\
+            \ or invalid_request."
+        "404":
+          description: Unknown organization.
+        "429":
+          description: "too_many_requests: too many polls from this address (Retry-After)."
+      security: []
+      summary: Poll an agent enrollment (no credential)
+      tags:
+      - Agents
+      x-symfony-route: api_agent_enrollment_token
       x-content-type: application/json
       x-accepts:
       - application/json
@@ -15661,12 +15942,17 @@ components:
         capabilities:
         - capabilities
         - capabilities
+        jwks:
+          key: ""
+        identityType: workload
         name: Invoice bot
         description: description
+        jwksUri: jwksUri
         budgetPolicy:
           max_api_calls_per_hour: 500
           max_tokens_per_day: 100000
           max_cost_per_month_usd: 50
+        canActOnBehalfOfUsers: true
       properties:
         name:
           description: Required. Human-readable agent name.
@@ -15693,6 +15979,32 @@ components:
             max_cost_per_month_usd: 50
           nullable: true
           type: object
+        identityType:
+          description: How the agent authenticates. Default api_key.
+          enum:
+          - workload
+          - aauth
+          - private_key_jwt
+          - client_secret
+          - api_key
+          - custom
+          type: string
+        jwks:
+          additionalProperties: true
+          description: "For private_key_jwt: the public keys of the agent, inline\
+            \ (a JWK Set). Private key members are refused. Send jwks or jwksUri,\
+            \ not both."
+          type: object
+        jwksUri:
+          description: "For private_key_jwt: https URL of the public key set of the\
+            \ agent."
+          type: string
+        canActOnBehalfOfUsers:
+          description: "Whether the agent may act for users of the organization: approval\
+            \ prompts on their phones, Token Vault connections, the on-behalf-of token\
+            \ exchange and JIT requests for a user. Needs the delegation feature of\
+            \ the plan. Default false."
+          type: boolean
       type: object
     AdminAgentsCreateResponse:
       example:
@@ -15718,12 +16030,16 @@ components:
         capabilities:
         - capabilities
         - capabilities
+        jwks:
+          key: ""
         name: name
         description: description
+        jwksUri: jwksUri
         budgetPolicy:
           max_api_calls_per_hour: 500
           max_tokens_per_day: 100000
           max_cost_per_month_usd: 50
+        canActOnBehalfOfUsers: true
       properties:
         name:
           type: string
@@ -15749,6 +16065,19 @@ components:
             max_cost_per_month_usd: 50
           nullable: true
           type: object
+        jwks:
+          additionalProperties: true
+          description: "For private_key_jwt agents: replaces the public keys (inline\
+            \ JWK Set). Removing a key revokes the tokens that the agent holds."
+          type: object
+        jwksUri:
+          description: "For private_key_jwt agents: https URL of the public key set."
+          type: string
+        canActOnBehalfOfUsers:
+          description: Whether the agent may act for users of the organization. Switching
+            it on needs the delegation feature of the plan and an editor who holds
+            every capability of the agent.
+          type: boolean
       type: object
     PutAdminAgentsUpdateResponse:
       example:
@@ -17570,6 +17899,181 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/McpServer"
+      type: object
+    AdminMcpServersGrantsListResponseDataItem:
+      example:
+        agent_id: agt_0123456789abcdef
+        agent_name: agent_name
+        all_tools: true
+        tools:
+        - tools
+        - tools
+      properties:
+        agent_id:
+          example: agt_0123456789abcdef
+          type: string
+        agent_name:
+          nullable: true
+          type: string
+        all_tools:
+          description: The agent may call every tool of the server.
+          type: boolean
+        tools:
+          description: Tools granted one by one.
+          items:
+            type: string
+          type: array
+      type: object
+    AdminMcpServersGrantsListResponse:
+      example:
+        data:
+        - agent_id: agt_0123456789abcdef
+          agent_name: agent_name
+          all_tools: true
+          tools:
+          - tools
+          - tools
+        - agent_id: agt_0123456789abcdef
+          agent_name: agent_name
+          all_tools: true
+          tools:
+          - tools
+          - tools
+        server_id: server_id
+      properties:
+        data:
+          items:
+            $ref: "#/components/schemas/AdminMcpServersGrantsListResponseDataItem"
+          type: array
+        server_id:
+          type: string
+      type: object
+    AdminMcpServersGrantsSetRequest:
+      example:
+        all_tools: true
+        tools:
+        - list_issues
+        - get_issue
+      properties:
+        tools:
+          description: "Tool names, as the server lists them in tools/list. Replaces\
+            \ the tools granted one by one; [] removes them."
+          example:
+          - list_issues
+          - get_issue
+          items:
+            type: string
+          maxItems: 200
+          type: array
+        all_tools:
+          description: "Allow every tool of the server, including tools it adds later.\
+            \ Default false."
+          type: boolean
+      type: object
+    AdminMcpServersGrantsSetResponseData:
+      example:
+        agent_id: agent_id
+        removed:
+        - removed
+        - removed
+        added:
+        - added
+        - added
+        server_id: server_id
+        all_tools: true
+        tools:
+        - tools
+        - tools
+      properties:
+        agent_id:
+          type: string
+        server_id:
+          type: string
+        all_tools:
+          type: boolean
+        tools:
+          items:
+            type: string
+          type: array
+        added:
+          items:
+            type: string
+          type: array
+        removed:
+          items:
+            type: string
+          type: array
+      type: object
+    AdminMcpServersGrantsSetResponse:
+      example:
+        data:
+          agent_id: agent_id
+          removed:
+          - removed
+          - removed
+          added:
+          - added
+          - added
+          server_id: server_id
+          all_tools: true
+          tools:
+          - tools
+          - tools
+      properties:
+        data:
+          $ref: "#/components/schemas/AdminMcpServersGrantsSetResponseData"
+      type: object
+    AdminMcpServersGrantsRemoveResponseData:
+      example:
+        agent_id: agent_id
+        removed:
+        - removed
+        - removed
+        added:
+        - added
+        - added
+        server_id: server_id
+        all_tools: false
+        tools: []
+      properties:
+        agent_id:
+          type: string
+        server_id:
+          type: string
+        all_tools:
+          example: false
+          type: boolean
+        tools:
+          example: []
+          items:
+            type: string
+          type: array
+        added:
+          items:
+            type: string
+          type: array
+        removed:
+          description: The tools that were granted one by one before.
+          items:
+            type: string
+          type: array
+      type: object
+    AdminMcpServersGrantsRemoveResponse:
+      example:
+        data:
+          agent_id: agent_id
+          removed:
+          - removed
+          - removed
+          added:
+          - added
+          - added
+          server_id: server_id
+          all_tools: false
+          tools: []
+      properties:
+        data:
+          $ref: "#/components/schemas/AdminMcpServersGrantsRemoveResponseData"
       type: object
     ListUserAuthenticatorsResponse:
       example:
@@ -21472,8 +21976,134 @@ components:
           additionalProperties: true
           type: object
       type: object
+    AgentsMeToolCallsRequestCallsItem:
+      example:
+        duration_ms: 6919155
+        occurred_at: 2000-01-23T04:56:07.000+00:00
+        arguments_sha256: arguments_sha256
+        audit_id: audit_id
+        decision: allowed
+        error_code: error_code
+        server_id: mcp_0123456789abcdef01234567
+        tool: gmail.send
+        outcome: succeeded
+      properties:
+        tool:
+          example: gmail.send
+          maxLength: 200
+          type: string
+        server_id:
+          description: "The MCP server the tool belongs to, when it has one."
+          example: mcp_0123456789abcdef01234567
+          type: string
+        decision:
+          enum:
+          - allowed
+          - approved
+          - denied
+          - refused
+          - expired
+          - blocked
+          type: string
+        outcome:
+          description: "not_run for a call that was denied, refused, expired or blocked\
+            \ (the default for those)."
+          enum:
+          - succeeded
+          - failed
+          - not_run
+          type: string
+        duration_ms:
+          maximum: 86400000
+          minimum: 0
+          type: integer
+        arguments_sha256:
+          description: SHA-256 of the arguments as the host serialized them. The arguments
+            themselves are never sent.
+          pattern: "^[0-9a-f]{64}$"
+          type: string
+        audit_id:
+          description: audit_id of the Ask API answer that allowed or denied the call.
+          pattern: "^[0-9a-f]{16}$"
+          type: string
+        occurred_at:
+          description: When the call ran; within the last 24 hours.
+          format: date-time
+          type: string
+        error_code:
+          description: "A short code for a failed call, never a message."
+          pattern: "^[A-Za-z0-9_.:-]{1,64}$"
+          type: string
+      required:
+      - decision
+      - tool
+      type: object
+    AgentsMeToolCallsRequest:
+      example:
+        calls:
+        - duration_ms: 6919155
+          occurred_at: 2000-01-23T04:56:07.000+00:00
+          arguments_sha256: arguments_sha256
+          audit_id: audit_id
+          decision: allowed
+          error_code: error_code
+          server_id: mcp_0123456789abcdef01234567
+          tool: gmail.send
+          outcome: succeeded
+        - duration_ms: 6919155
+          occurred_at: 2000-01-23T04:56:07.000+00:00
+          arguments_sha256: arguments_sha256
+          audit_id: audit_id
+          decision: allowed
+          error_code: error_code
+          server_id: mcp_0123456789abcdef01234567
+          tool: gmail.send
+          outcome: succeeded
+        - duration_ms: 6919155
+          occurred_at: 2000-01-23T04:56:07.000+00:00
+          arguments_sha256: arguments_sha256
+          audit_id: audit_id
+          decision: allowed
+          error_code: error_code
+          server_id: mcp_0123456789abcdef01234567
+          tool: gmail.send
+          outcome: succeeded
+        - duration_ms: 6919155
+          occurred_at: 2000-01-23T04:56:07.000+00:00
+          arguments_sha256: arguments_sha256
+          audit_id: audit_id
+          decision: allowed
+          error_code: error_code
+          server_id: mcp_0123456789abcdef01234567
+          tool: gmail.send
+          outcome: succeeded
+        - duration_ms: 6919155
+          occurred_at: 2000-01-23T04:56:07.000+00:00
+          arguments_sha256: arguments_sha256
+          audit_id: audit_id
+          decision: allowed
+          error_code: error_code
+          server_id: mcp_0123456789abcdef01234567
+          tool: gmail.send
+          outcome: succeeded
+      properties:
+        calls:
+          items:
+            $ref: "#/components/schemas/AgentsMeToolCallsRequestCallsItem"
+          maxItems: 50
+          type: array
+      type: object
+    AgentsMeToolCallsResponse:
+      example:
+        recorded: 1
+      properties:
+        recorded:
+          example: 1
+          type: integer
+      type: object
     AskRequest:
       example:
+        audit: denials
         context:
           id: "123"
         action: document:read
@@ -21487,6 +22117,15 @@ components:
           example:
             id: "123"
           type: object
+        audit:
+          default: denials
+          description: "Which decisions go to the audit log. denials (default): refusals\
+            \ only. always: allowed decisions too (agent.capability_check_allowed),\
+            \ for a tool-call hook that wants every decision on record."
+          enum:
+          - denials
+          - always
+          type: string
       type: object
     AskResponse:
       example:
@@ -21517,13 +22156,92 @@ components:
         audit_id:
           type: string
       type: object
+    CreateApprovalRequestMeta:
+      description: Optional structured details shown on the approval card. Only the
+        keys below are kept (others are dropped); every string is cleaned and shortened.
+      example:
+        args:
+        - args
+        - args
+        - args
+        - args
+        - args
+        server: gmail
+        capability: mcp:gmail:external:send_email
+        arguments_sha256: arguments_sha256
+        kind: tool_call
+        host: openclaw
+        why: After the agent read untrusted content
+        risk: external
+        title: Allow send_email on gmail?
+        tool: send_email
+      properties:
+        kind:
+          example: tool_call
+          maxLength: 32
+          type: string
+        host:
+          example: openclaw
+          maxLength: 32
+          type: string
+        tool:
+          example: send_email
+          maxLength: 128
+          type: string
+        server:
+          example: gmail
+          maxLength: 128
+          type: string
+        capability:
+          example: mcp:gmail:external:send_email
+          maxLength: 200
+          type: string
+        risk:
+          example: external
+          maxLength: 32
+          type: string
+        why:
+          example: After the agent read untrusted content
+          maxLength: 240
+          type: string
+        title:
+          example: Allow send_email on gmail?
+          maxLength: 120
+          type: string
+        args:
+          description: "Argument lines; at most 5 are kept, each cut to 240 characters."
+          items:
+            maxLength: 240
+            type: string
+          maxItems: 5
+          type: array
+        arguments_sha256:
+          pattern: "^[0-9a-fA-F]{64}$"
+          type: string
+      type: object
     CreateApprovalRequest:
       example:
         reason: reason
         on_behalf_of: on_behalf_of
-        meta: "{}"
+        meta:
+          args:
+          - args
+          - args
+          - args
+          - args
+          - args
+          server: gmail
+          capability: mcp:gmail:external:send_email
+          arguments_sha256: arguments_sha256
+          kind: tool_call
+          host: openclaw
+          why: After the agent read untrusted content
+          risk: external
+          title: Allow send_email on gmail?
+          tool: send_email
         impact: medium
         task_id: task_abc123
+        expires_in: 103
       properties:
         task_id:
           description: Agent task identifier (<=128 chars).
@@ -21537,14 +22255,26 @@ components:
           example: medium
           type: string
         on_behalf_of:
-          description: User id or email the agent acts for (delegation required).
+          description: "User id or email the agent acts for (delegation required).\
+            \ When it is the agent's owner, the request also goes to the organization's\
+            \ Slack and Discord approval channels that have agent approvals switched\
+            \ on."
           type: string
+        expires_in:
+          default: 120
+          description: "Seconds the person has to answer (60-600, default 120). An\
+            \ integer outside the range is clamped."
+          maximum: 600
+          minimum: 60
+          type: integer
         meta:
-          description: Optional action metadata.
-          type: object
+          $ref: "#/components/schemas/CreateApprovalRequestMeta"
       type: object
     CreateApprovalResponse:
       example:
+        delivery:
+        - push
+        - push
         expires_at: 2000-01-23T04:56:07.000+00:00
         impact: impact
         approval_token: approval_token
@@ -21563,6 +22293,16 @@ components:
           type: string
         impact:
           type: string
+        delivery:
+          description: "Where the request went: `push` (the LumoAuth app), `slack`,\
+            \ `discord`."
+          items:
+            enum:
+            - push
+            - slack
+            - discord
+            type: string
+          type: array
       type: object
     CreateApprovalResponse202:
       example:
@@ -22102,6 +22842,263 @@ components:
       - expires_at
       - scopes
       - token_type
+      type: object
+    StartAgentEnrollmentRequestJwks:
+      description: "The agent's public keys, one or two (private members are refused).\
+        \ A key without \"kid\" gets its RFC 7638 thumbprint as kid."
+      example:
+        keys:
+        - key: ""
+        - key: ""
+      properties:
+        keys:
+          items:
+            additionalProperties: true
+            type: object
+          maxItems: 2
+          minItems: 1
+          type: array
+      type: object
+    StartAgentEnrollmentRequestCapabilitiesItem:
+      example:
+        scope: files:read
+        checked: true
+        risk: read
+        label: Read files
+      properties:
+        scope:
+          description: A capability in canonical <resource>:<action> form (an OAuth
+            scope value; the dot form is refused).
+          example: files:read
+          type: string
+        risk:
+          enum:
+          - read
+          - write
+          - execute
+          - external
+          - destructive
+          - admin
+          type: string
+        label:
+          example: Read files
+          maxLength: 120
+          type: string
+        checked:
+          description: Pre-ticked on the approval page.
+          type: boolean
+      required:
+      - risk
+      - scope
+      type: object
+    StartAgentEnrollmentRequestInventoryMcpServersItem:
+      example:
+        name: name
+      properties:
+        name:
+          maxLength: 64
+          type: string
+      type: object
+    StartAgentEnrollmentRequestInventory:
+      description: Display only.
+      example:
+        mcp_servers:
+        - name: name
+        - name: name
+        - name: name
+        - name: name
+        - name: name
+        tools: 0
+      properties:
+        tools:
+          minimum: 0
+          type: integer
+        mcp_servers:
+          items:
+            $ref: "#/components/schemas/StartAgentEnrollmentRequestInventoryMcpServersItem"
+          maxItems: 100
+          type: array
+      type: object
+    StartAgentEnrollmentRequest:
+      example:
+        capabilities:
+        - scope: files:read
+          checked: true
+          risk: read
+          label: Read files
+        - scope: files:read
+          checked: true
+          risk: read
+          label: Read files
+        - scope: files:read
+          checked: true
+          risk: read
+          label: Read files
+        - scope: files:read
+          checked: true
+          risk: read
+          label: Read files
+        - scope: files:read
+          checked: true
+          risk: read
+          label: Read files
+        jwks:
+          keys:
+          - key: ""
+          - key: ""
+        name: OpenClaw on mac-mini
+        host: openclaw
+        host_label: mac-mini.local
+        delegation: true
+        inventory:
+          mcp_servers:
+          - name: name
+          - name: name
+          - name: name
+          - name: name
+          - name: name
+          tools: 0
+      properties:
+        name:
+          example: OpenClaw on mac-mini
+          maxLength: 100
+          type: string
+        host:
+          enum:
+          - openclaw
+          - hermes
+          - other
+          type: string
+        host_label:
+          example: mac-mini.local
+          maxLength: 100
+          type: string
+        jwks:
+          $ref: "#/components/schemas/StartAgentEnrollmentRequestJwks"
+        capabilities:
+          items:
+            $ref: "#/components/schemas/StartAgentEnrollmentRequestCapabilitiesItem"
+          maxItems: 200
+          minItems: 1
+          type: array
+        delegation:
+          description: The agent asks to act on behalf of the approving person (needed
+            for push approvals).
+          type: boolean
+        inventory:
+          $ref: "#/components/schemas/StartAgentEnrollmentRequestInventory"
+      required:
+      - capabilities
+      - host
+      - jwks
+      - name
+      type: object
+    StartAgentEnrollmentResponse:
+      example:
+        user_code: BCDF-GHJK
+        key_fingerprint: Zx3a-91Kc-p0Qe-7tLm
+        interval: 5
+        verification_uri_complete: https://openapi-generator.tech
+        verification_uri: https://openapi-generator.tech
+        expires_in: 900
+        enrollment_code: enrollment_code
+      properties:
+        enrollment_code:
+          description: "43 characters, secret: only the poll needs it."
+          type: string
+        user_code:
+          example: BCDF-GHJK
+          type: string
+        verification_uri:
+          format: uri
+          type: string
+        verification_uri_complete:
+          format: uri
+          type: string
+        key_fingerprint:
+          description: "First 16 characters of the RFC 7638 thumbprint of the first\
+            \ key, in groups of four."
+          example: Zx3a-91Kc-p0Qe-7tLm
+          type: string
+        expires_in:
+          example: 900
+          type: integer
+        interval:
+          example: 5
+          type: integer
+      required:
+      - enrollment_code
+      - expires_in
+      - interval
+      - key_fingerprint
+      - user_code
+      - verification_uri
+      - verification_uri_complete
+      type: object
+    PollAgentEnrollmentRequest:
+      example:
+        enrollment_code: enrollment_code
+      properties:
+        enrollment_code:
+          type: string
+      required:
+      - enrollment_code
+      type: object
+    PollAgentEnrollmentResponse:
+      example:
+        capabilities:
+        - capabilities
+        - capabilities
+        agent_id: agt_0123456789abcdef
+        agent_url: https://openapi-generator.tech
+        key_id: key_id
+        owner_user_id: owner_user_id
+        client_id: agt_0123456789abcdef
+        issuer: https://openapi-generator.tech
+        can_act_on_behalf_of_users: true
+        token_endpoint: https://openapi-generator.tech
+      properties:
+        agent_id:
+          example: agt_0123456789abcdef
+          type: string
+        client_id:
+          description: "The agent id, as the client_id of its token requests."
+          example: agt_0123456789abcdef
+          type: string
+        issuer:
+          description: The value a client assertion's aud must equal.
+          format: uri
+          type: string
+        token_endpoint:
+          format: uri
+          type: string
+        key_id:
+          description: kid of the registered key (the first one).
+          nullable: true
+          type: string
+        capabilities:
+          description: The capabilities the person granted.
+          items:
+            type: string
+          type: array
+        can_act_on_behalf_of_users:
+          type: boolean
+        owner_user_id:
+          description: "The approving person, the agent's owner."
+          nullable: true
+          type: string
+        agent_url:
+          description: The agent's page in the portal.
+          format: uri
+          type: string
+      required:
+      - agent_id
+      - agent_url
+      - can_act_on_behalf_of_users
+      - capabilities
+      - client_id
+      - issuer
+      - token_endpoint
       type: object
     EvaluateResponseContextReasonAdmin:
       example:

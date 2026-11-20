@@ -63,7 +63,7 @@ import com.google.gson.JsonParseException;
 
 import io.lumoauth.client.JSON;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-19T15:14:32.479877953Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-20T15:10:21.516273261Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class GetProtectedResourceMetadataRoot200Response extends AbstractOpenApiSchema {
     private static final Logger log = Logger.getLogger(GetProtectedResourceMetadataRoot200Response.class.getName());
 

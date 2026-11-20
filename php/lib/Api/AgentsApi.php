@@ -75,6 +75,9 @@ class AgentsApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
+        'agentsMeToolCalls' => [
+            'application/json',
+        ],
         'ask' => [
             'application/json',
         ],
@@ -96,10 +99,16 @@ class AgentsApi
         'getCurrentAgent' => [
             'application/json',
         ],
+        'pollAgentEnrollment' => [
+            'application/json',
+        ],
         'registerAgent' => [
             'application/json',
         ],
         'reportAgentUsage' => [
+            'application/json',
+        ],
+        'startAgentEnrollment' => [
             'application/json',
         ],
         'verifyAgentCard' => [
@@ -151,6 +160,302 @@ class AgentsApi
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Operation agentsMeToolCalls
+     *
+     * Report the tool calls that the agent&#39;s host gated
+     *
+     * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AgentsMeToolCallsRequest $agentsMeToolCallsRequest agentsMeToolCallsRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['agentsMeToolCalls'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \LumoAuth\ApiClient\Model\AgentsMeToolCallsResponse
+     */
+    public function agentsMeToolCalls($orgId, $agentsMeToolCallsRequest, string $contentType = self::contentTypes['agentsMeToolCalls'][0])
+    {
+        list($response) = $this->agentsMeToolCallsWithHttpInfo($orgId, $agentsMeToolCallsRequest, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation agentsMeToolCallsWithHttpInfo
+     *
+     * Report the tool calls that the agent&#39;s host gated
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AgentsMeToolCallsRequest $agentsMeToolCallsRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['agentsMeToolCalls'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \LumoAuth\ApiClient\Model\AgentsMeToolCallsResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function agentsMeToolCallsWithHttpInfo($orgId, $agentsMeToolCallsRequest, string $contentType = self::contentTypes['agentsMeToolCalls'][0])
+    {
+        $request = $this->agentsMeToolCallsRequest($orgId, $agentsMeToolCallsRequest, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\LumoAuth\ApiClient\Model\AgentsMeToolCallsResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\LumoAuth\ApiClient\Model\AgentsMeToolCallsResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\LumoAuth\ApiClient\Model\AgentsMeToolCallsResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation agentsMeToolCallsAsync
+     *
+     * Report the tool calls that the agent&#39;s host gated
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AgentsMeToolCallsRequest $agentsMeToolCallsRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['agentsMeToolCalls'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function agentsMeToolCallsAsync($orgId, $agentsMeToolCallsRequest, string $contentType = self::contentTypes['agentsMeToolCalls'][0])
+    {
+        return $this->agentsMeToolCallsAsyncWithHttpInfo($orgId, $agentsMeToolCallsRequest, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation agentsMeToolCallsAsyncWithHttpInfo
+     *
+     * Report the tool calls that the agent&#39;s host gated
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AgentsMeToolCallsRequest $agentsMeToolCallsRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['agentsMeToolCalls'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function agentsMeToolCallsAsyncWithHttpInfo($orgId, $agentsMeToolCallsRequest, string $contentType = self::contentTypes['agentsMeToolCalls'][0])
+    {
+        $returnType = '\LumoAuth\ApiClient\Model\AgentsMeToolCallsResponse';
+        $request = $this->agentsMeToolCallsRequest($orgId, $agentsMeToolCallsRequest, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'agentsMeToolCalls'
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AgentsMeToolCallsRequest $agentsMeToolCallsRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['agentsMeToolCalls'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function agentsMeToolCallsRequest($orgId, $agentsMeToolCallsRequest, string $contentType = self::contentTypes['agentsMeToolCalls'][0])
+    {
+
+        // verify the required parameter 'orgId' is set
+        if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $orgId when calling agentsMeToolCalls'
+            );
+        }
+
+        // verify the required parameter 'agentsMeToolCallsRequest' is set
+        if ($agentsMeToolCallsRequest === null || (is_array($agentsMeToolCallsRequest) && count($agentsMeToolCallsRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $agentsMeToolCallsRequest when calling agentsMeToolCalls'
+            );
+        }
+
+
+        $resourcePath = '/orgs/{orgId}/api/v1/agents/me/tool-calls';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($orgId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'orgId' . '}',
+                ObjectSerializer::toPathValue($orgId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($agentsMeToolCallsRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($agentsMeToolCallsRequest));
+            } else {
+                $httpBody = $agentsMeToolCallsRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-API-Key');
+        if ($apiKey !== null) {
+            $headers['X-API-Key'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
     }
 
     /**
@@ -2218,6 +2523,293 @@ class AgentsApi
     }
 
     /**
+     * Operation pollAgentEnrollment
+     *
+     * Poll an agent enrollment (no credential)
+     *
+     * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PollAgentEnrollmentRequest $pollAgentEnrollmentRequest pollAgentEnrollmentRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['pollAgentEnrollment'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \LumoAuth\ApiClient\Model\PollAgentEnrollmentResponse
+     */
+    public function pollAgentEnrollment($orgId, $pollAgentEnrollmentRequest, string $contentType = self::contentTypes['pollAgentEnrollment'][0])
+    {
+        list($response) = $this->pollAgentEnrollmentWithHttpInfo($orgId, $pollAgentEnrollmentRequest, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation pollAgentEnrollmentWithHttpInfo
+     *
+     * Poll an agent enrollment (no credential)
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PollAgentEnrollmentRequest $pollAgentEnrollmentRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['pollAgentEnrollment'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \LumoAuth\ApiClient\Model\PollAgentEnrollmentResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function pollAgentEnrollmentWithHttpInfo($orgId, $pollAgentEnrollmentRequest, string $contentType = self::contentTypes['pollAgentEnrollment'][0])
+    {
+        $request = $this->pollAgentEnrollmentRequest($orgId, $pollAgentEnrollmentRequest, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\LumoAuth\ApiClient\Model\PollAgentEnrollmentResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\LumoAuth\ApiClient\Model\PollAgentEnrollmentResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\LumoAuth\ApiClient\Model\PollAgentEnrollmentResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation pollAgentEnrollmentAsync
+     *
+     * Poll an agent enrollment (no credential)
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PollAgentEnrollmentRequest $pollAgentEnrollmentRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['pollAgentEnrollment'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function pollAgentEnrollmentAsync($orgId, $pollAgentEnrollmentRequest, string $contentType = self::contentTypes['pollAgentEnrollment'][0])
+    {
+        return $this->pollAgentEnrollmentAsyncWithHttpInfo($orgId, $pollAgentEnrollmentRequest, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation pollAgentEnrollmentAsyncWithHttpInfo
+     *
+     * Poll an agent enrollment (no credential)
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PollAgentEnrollmentRequest $pollAgentEnrollmentRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['pollAgentEnrollment'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function pollAgentEnrollmentAsyncWithHttpInfo($orgId, $pollAgentEnrollmentRequest, string $contentType = self::contentTypes['pollAgentEnrollment'][0])
+    {
+        $returnType = '\LumoAuth\ApiClient\Model\PollAgentEnrollmentResponse';
+        $request = $this->pollAgentEnrollmentRequest($orgId, $pollAgentEnrollmentRequest, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'pollAgentEnrollment'
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PollAgentEnrollmentRequest $pollAgentEnrollmentRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['pollAgentEnrollment'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function pollAgentEnrollmentRequest($orgId, $pollAgentEnrollmentRequest, string $contentType = self::contentTypes['pollAgentEnrollment'][0])
+    {
+
+        // verify the required parameter 'orgId' is set
+        if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $orgId when calling pollAgentEnrollment'
+            );
+        }
+
+        // verify the required parameter 'pollAgentEnrollmentRequest' is set
+        if ($pollAgentEnrollmentRequest === null || (is_array($pollAgentEnrollmentRequest) && count($pollAgentEnrollmentRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $pollAgentEnrollmentRequest when calling pollAgentEnrollment'
+            );
+        }
+
+
+        $resourcePath = '/orgs/{orgId}/api/v1/agents/enrollments/token';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($orgId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'orgId' . '}',
+                ObjectSerializer::toPathValue($orgId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($pollAgentEnrollmentRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($pollAgentEnrollmentRequest));
+            } else {
+                $httpBody = $pollAgentEnrollmentRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation registerAgent
      *
      * Register (or re-register) an agent
@@ -2768,6 +3360,293 @@ class AgentsApi
         if (!empty($this->config->getAccessToken())) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation startAgentEnrollment
+     *
+     * Start an agent enrollment (no credential)
+     *
+     * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\StartAgentEnrollmentRequest $startAgentEnrollmentRequest startAgentEnrollmentRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['startAgentEnrollment'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \LumoAuth\ApiClient\Model\StartAgentEnrollmentResponse
+     */
+    public function startAgentEnrollment($orgId, $startAgentEnrollmentRequest, string $contentType = self::contentTypes['startAgentEnrollment'][0])
+    {
+        list($response) = $this->startAgentEnrollmentWithHttpInfo($orgId, $startAgentEnrollmentRequest, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation startAgentEnrollmentWithHttpInfo
+     *
+     * Start an agent enrollment (no credential)
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\StartAgentEnrollmentRequest $startAgentEnrollmentRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['startAgentEnrollment'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \LumoAuth\ApiClient\Model\StartAgentEnrollmentResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function startAgentEnrollmentWithHttpInfo($orgId, $startAgentEnrollmentRequest, string $contentType = self::contentTypes['startAgentEnrollment'][0])
+    {
+        $request = $this->startAgentEnrollmentRequest($orgId, $startAgentEnrollmentRequest, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 201:
+                    return $this->handleResponseWithDataType(
+                        '\LumoAuth\ApiClient\Model\StartAgentEnrollmentResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\LumoAuth\ApiClient\Model\StartAgentEnrollmentResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 201:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\LumoAuth\ApiClient\Model\StartAgentEnrollmentResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation startAgentEnrollmentAsync
+     *
+     * Start an agent enrollment (no credential)
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\StartAgentEnrollmentRequest $startAgentEnrollmentRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['startAgentEnrollment'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function startAgentEnrollmentAsync($orgId, $startAgentEnrollmentRequest, string $contentType = self::contentTypes['startAgentEnrollment'][0])
+    {
+        return $this->startAgentEnrollmentAsyncWithHttpInfo($orgId, $startAgentEnrollmentRequest, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation startAgentEnrollmentAsyncWithHttpInfo
+     *
+     * Start an agent enrollment (no credential)
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\StartAgentEnrollmentRequest $startAgentEnrollmentRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['startAgentEnrollment'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function startAgentEnrollmentAsyncWithHttpInfo($orgId, $startAgentEnrollmentRequest, string $contentType = self::contentTypes['startAgentEnrollment'][0])
+    {
+        $returnType = '\LumoAuth\ApiClient\Model\StartAgentEnrollmentResponse';
+        $request = $this->startAgentEnrollmentRequest($orgId, $startAgentEnrollmentRequest, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'startAgentEnrollment'
+     *
+     * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\StartAgentEnrollmentRequest $startAgentEnrollmentRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['startAgentEnrollment'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function startAgentEnrollmentRequest($orgId, $startAgentEnrollmentRequest, string $contentType = self::contentTypes['startAgentEnrollment'][0])
+    {
+
+        // verify the required parameter 'orgId' is set
+        if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $orgId when calling startAgentEnrollment'
+            );
+        }
+
+        // verify the required parameter 'startAgentEnrollmentRequest' is set
+        if ($startAgentEnrollmentRequest === null || (is_array($startAgentEnrollmentRequest) && count($startAgentEnrollmentRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $startAgentEnrollmentRequest when calling startAgentEnrollment'
+            );
+        }
+
+
+        $resourcePath = '/orgs/{orgId}/api/v1/agents/enrollments';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($orgId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'orgId' . '}',
+                ObjectSerializer::toPathValue($orgId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($startAgentEnrollmentRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($startAgentEnrollmentRequest));
+            } else {
+                $httpBody = $startAgentEnrollmentRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

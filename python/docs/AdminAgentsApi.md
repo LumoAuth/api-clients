@@ -1455,7 +1455,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Agent updated. |  -  |
-**400** | Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. |  -  |
+**400** | Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; or, when switching delegation on, an editor who does not hold every capability of the agent. |  -  |
 **401** | Authentication required. |  -  |
 **403** | Admin privileges required. |  -  |
 **404** | Tenant or agent not found. |  -  |
@@ -1547,7 +1547,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Agent updated. |  -  |
-**400** | Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. |  -  |
+**400** | Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; or, when switching delegation on, an editor who does not hold every capability of the agent. |  -  |
 **401** | Authentication required. |  -  |
 **403** | Admin privileges required. |  -  |
 **404** | Tenant or agent not found. |  -  |

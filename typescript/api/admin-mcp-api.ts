@@ -26,6 +26,14 @@ import type { AdminMcpServersCreateResponse } from '../models';
 // @ts-ignore
 import type { AdminMcpServersGetResponse } from '../models';
 // @ts-ignore
+import type { AdminMcpServersGrantsListResponse } from '../models';
+// @ts-ignore
+import type { AdminMcpServersGrantsRemoveResponse } from '../models';
+// @ts-ignore
+import type { AdminMcpServersGrantsSetRequest } from '../models';
+// @ts-ignore
+import type { AdminMcpServersGrantsSetResponse } from '../models';
+// @ts-ignore
 import type { AdminMcpServersListResponse } from '../models';
 // @ts-ignore
 import type { MessageResponse } from '../models';
@@ -168,6 +176,160 @@ export const AdminMcpApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary List the agents allowed to call tools of an MCP server
+         * @param {string} orgId 
+         * @param {string} serverId 
+         * @param {string} [agentId] Only the grants of this agent (agentId or numeric id).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminMcpServersGrantsList: async (orgId: string, serverId: string, agentId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminMcpServersGrantsList', 'orgId', orgId)
+            // verify required parameter 'serverId' is not null or undefined
+            assertParamExists('adminMcpServersGrantsList', 'serverId', serverId)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"serverId"}}`, encodeURIComponent(String(serverId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (agentId !== undefined) {
+                localVarQueryParameter['agent_id'] = agentId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Remove every grant of an agent on an MCP server
+         * @param {string} orgId 
+         * @param {string} serverId 
+         * @param {string} agentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminMcpServersGrantsRemove: async (orgId: string, serverId: string, agentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminMcpServersGrantsRemove', 'orgId', orgId)
+            // verify required parameter 'serverId' is not null or undefined
+            assertParamExists('adminMcpServersGrantsRemove', 'serverId', serverId)
+            // verify required parameter 'agentId' is not null or undefined
+            assertParamExists('adminMcpServersGrantsRemove', 'agentId', agentId)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"serverId"}}`, encodeURIComponent(String(serverId)))
+                .replace(`{${"agentId"}}`, encodeURIComponent(String(agentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Set the tools of an MCP server that an agent may call
+         * @param {string} orgId 
+         * @param {string} serverId 
+         * @param {string} agentId 
+         * @param {AdminMcpServersGrantsSetRequest} adminMcpServersGrantsSetRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminMcpServersGrantsSet: async (orgId: string, serverId: string, agentId: string, adminMcpServersGrantsSetRequest: AdminMcpServersGrantsSetRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminMcpServersGrantsSet', 'orgId', orgId)
+            // verify required parameter 'serverId' is not null or undefined
+            assertParamExists('adminMcpServersGrantsSet', 'serverId', serverId)
+            // verify required parameter 'agentId' is not null or undefined
+            assertParamExists('adminMcpServersGrantsSet', 'agentId', agentId)
+            // verify required parameter 'adminMcpServersGrantsSetRequest' is not null or undefined
+            assertParamExists('adminMcpServersGrantsSet', 'adminMcpServersGrantsSetRequest', adminMcpServersGrantsSetRequest)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"serverId"}}`, encodeURIComponent(String(serverId)))
+                .replace(`{${"agentId"}}`, encodeURIComponent(String(agentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminMcpServersGrantsSetRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List MCP servers
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -260,6 +422,52 @@ export const AdminMcpApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List the agents allowed to call tools of an MCP server
+         * @param {string} orgId 
+         * @param {string} serverId 
+         * @param {string} [agentId] Only the grants of this agent (agentId or numeric id).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminMcpServersGrantsList(orgId: string, serverId: string, agentId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminMcpServersGrantsListResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminMcpServersGrantsList(orgId, serverId, agentId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminMcpApi.adminMcpServersGrantsList']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Remove every grant of an agent on an MCP server
+         * @param {string} orgId 
+         * @param {string} serverId 
+         * @param {string} agentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminMcpServersGrantsRemove(orgId: string, serverId: string, agentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminMcpServersGrantsRemoveResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminMcpServersGrantsRemove(orgId, serverId, agentId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminMcpApi.adminMcpServersGrantsRemove']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Set the tools of an MCP server that an agent may call
+         * @param {string} orgId 
+         * @param {string} serverId 
+         * @param {string} agentId 
+         * @param {AdminMcpServersGrantsSetRequest} adminMcpServersGrantsSetRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminMcpServersGrantsSet(orgId: string, serverId: string, agentId: string, adminMcpServersGrantsSetRequest: AdminMcpServersGrantsSetRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminMcpServersGrantsSetResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminMcpServersGrantsSet(orgId, serverId, agentId, adminMcpServersGrantsSetRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminMcpApi.adminMcpServersGrantsSet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary List MCP servers
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -313,6 +521,36 @@ export const AdminMcpApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary List the agents allowed to call tools of an MCP server
+         * @param {AdminMcpApiAdminMcpServersGrantsListRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminMcpServersGrantsList(requestParameters: AdminMcpApiAdminMcpServersGrantsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersGrantsListResponse> {
+            return localVarFp.adminMcpServersGrantsList(requestParameters.orgId, requestParameters.serverId, requestParameters.agentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Remove every grant of an agent on an MCP server
+         * @param {AdminMcpApiAdminMcpServersGrantsRemoveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminMcpServersGrantsRemove(requestParameters: AdminMcpApiAdminMcpServersGrantsRemoveRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersGrantsRemoveResponse> {
+            return localVarFp.adminMcpServersGrantsRemove(requestParameters.orgId, requestParameters.serverId, requestParameters.agentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Set the tools of an MCP server that an agent may call
+         * @param {AdminMcpApiAdminMcpServersGrantsSetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminMcpServersGrantsSet(requestParameters: AdminMcpApiAdminMcpServersGrantsSetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersGrantsSetResponse> {
+            return localVarFp.adminMcpServersGrantsSet(requestParameters.orgId, requestParameters.serverId, requestParameters.agentId, requestParameters.adminMcpServersGrantsSetRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary List MCP servers
          * @param {AdminMcpApiAdminMcpServersListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -359,6 +597,36 @@ export interface AdminMcpApiInterface {
      * @memberof AdminMcpApiInterface
      */
     adminMcpServersGet(requestParameters: AdminMcpApiAdminMcpServersGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersGetResponse>;
+
+    /**
+     * 
+     * @summary List the agents allowed to call tools of an MCP server
+     * @param {AdminMcpApiAdminMcpServersGrantsListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminMcpApiInterface
+     */
+    adminMcpServersGrantsList(requestParameters: AdminMcpApiAdminMcpServersGrantsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersGrantsListResponse>;
+
+    /**
+     * 
+     * @summary Remove every grant of an agent on an MCP server
+     * @param {AdminMcpApiAdminMcpServersGrantsRemoveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminMcpApiInterface
+     */
+    adminMcpServersGrantsRemove(requestParameters: AdminMcpApiAdminMcpServersGrantsRemoveRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersGrantsRemoveResponse>;
+
+    /**
+     * 
+     * @summary Set the tools of an MCP server that an agent may call
+     * @param {AdminMcpApiAdminMcpServersGrantsSetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminMcpApiInterface
+     */
+    adminMcpServersGrantsSet(requestParameters: AdminMcpApiAdminMcpServersGrantsSetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersGrantsSetResponse>;
 
     /**
      * 
@@ -429,6 +697,97 @@ export interface AdminMcpApiAdminMcpServersGetRequest {
 }
 
 /**
+ * Request parameters for adminMcpServersGrantsList operation in AdminMcpApi.
+ * @export
+ * @interface AdminMcpApiAdminMcpServersGrantsListRequest
+ */
+export interface AdminMcpApiAdminMcpServersGrantsListRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminMcpApiAdminMcpServersGrantsList
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminMcpApiAdminMcpServersGrantsList
+     */
+    readonly serverId: string
+
+    /**
+     * Only the grants of this agent (agentId or numeric id).
+     * @type {string}
+     * @memberof AdminMcpApiAdminMcpServersGrantsList
+     */
+    readonly agentId?: string
+}
+
+/**
+ * Request parameters for adminMcpServersGrantsRemove operation in AdminMcpApi.
+ * @export
+ * @interface AdminMcpApiAdminMcpServersGrantsRemoveRequest
+ */
+export interface AdminMcpApiAdminMcpServersGrantsRemoveRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminMcpApiAdminMcpServersGrantsRemove
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminMcpApiAdminMcpServersGrantsRemove
+     */
+    readonly serverId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminMcpApiAdminMcpServersGrantsRemove
+     */
+    readonly agentId: string
+}
+
+/**
+ * Request parameters for adminMcpServersGrantsSet operation in AdminMcpApi.
+ * @export
+ * @interface AdminMcpApiAdminMcpServersGrantsSetRequest
+ */
+export interface AdminMcpApiAdminMcpServersGrantsSetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminMcpApiAdminMcpServersGrantsSet
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminMcpApiAdminMcpServersGrantsSet
+     */
+    readonly serverId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminMcpApiAdminMcpServersGrantsSet
+     */
+    readonly agentId: string
+
+    /**
+     * 
+     * @type {AdminMcpServersGrantsSetRequest}
+     * @memberof AdminMcpApiAdminMcpServersGrantsSet
+     */
+    readonly adminMcpServersGrantsSetRequest: AdminMcpServersGrantsSetRequest
+}
+
+/**
  * Request parameters for adminMcpServersList operation in AdminMcpApi.
  * @export
  * @interface AdminMcpApiAdminMcpServersListRequest
@@ -483,6 +842,42 @@ export class AdminMcpApi extends BaseAPI implements AdminMcpApiInterface {
      */
     public adminMcpServersGet(requestParameters: AdminMcpApiAdminMcpServersGetRequest, options?: RawAxiosRequestConfig) {
         return AdminMcpApiFp(this.configuration).adminMcpServersGet(requestParameters.orgId, requestParameters.serverId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List the agents allowed to call tools of an MCP server
+     * @param {AdminMcpApiAdminMcpServersGrantsListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminMcpApi
+     */
+    public adminMcpServersGrantsList(requestParameters: AdminMcpApiAdminMcpServersGrantsListRequest, options?: RawAxiosRequestConfig) {
+        return AdminMcpApiFp(this.configuration).adminMcpServersGrantsList(requestParameters.orgId, requestParameters.serverId, requestParameters.agentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Remove every grant of an agent on an MCP server
+     * @param {AdminMcpApiAdminMcpServersGrantsRemoveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminMcpApi
+     */
+    public adminMcpServersGrantsRemove(requestParameters: AdminMcpApiAdminMcpServersGrantsRemoveRequest, options?: RawAxiosRequestConfig) {
+        return AdminMcpApiFp(this.configuration).adminMcpServersGrantsRemove(requestParameters.orgId, requestParameters.serverId, requestParameters.agentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Set the tools of an MCP server that an agent may call
+     * @param {AdminMcpApiAdminMcpServersGrantsSetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminMcpApi
+     */
+    public adminMcpServersGrantsSet(requestParameters: AdminMcpApiAdminMcpServersGrantsSetRequest, options?: RawAxiosRequestConfig) {
+        return AdminMcpApiFp(this.configuration).adminMcpServersGrantsSet(requestParameters.orgId, requestParameters.serverId, requestParameters.agentId, requestParameters.adminMcpServersGrantsSetRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

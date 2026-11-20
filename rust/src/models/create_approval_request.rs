@@ -22,12 +22,14 @@ pub struct CreateApprovalRequest {
     /// One of low, medium, high, critical.
     #[serde(rename = "impact", skip_serializing_if = "Option::is_none")]
     pub impact: Option<String>,
-    /// User id or email the agent acts for (delegation required).
+    /// User id or email the agent acts for (delegation required). When it is the agent's owner, the request also goes to the organization's Slack and Discord approval channels that have agent approvals switched on.
     #[serde(rename = "on_behalf_of", skip_serializing_if = "Option::is_none")]
     pub on_behalf_of: Option<String>,
-    /// Optional action metadata.
+    /// Seconds the person has to answer (60-600, default 120). An integer outside the range is clamped.
+    #[serde(rename = "expires_in", skip_serializing_if = "Option::is_none")]
+    pub expires_in: Option<i32>,
     #[serde(rename = "meta", skip_serializing_if = "Option::is_none")]
-    pub meta: Option<serde_json::Value>,
+    pub meta: Option<Box<models::CreateApprovalRequestMeta>>,
 }
 
 impl CreateApprovalRequest {
@@ -37,6 +39,7 @@ impl CreateApprovalRequest {
             reason: None,
             impact: None,
             on_behalf_of: None,
+            expires_in: None,
             meta: None,
         }
     }

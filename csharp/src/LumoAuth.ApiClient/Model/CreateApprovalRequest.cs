@@ -39,14 +39,16 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="taskId">Agent task identifier (&lt;&#x3D;128 chars)..</param>
         /// <param name="reason">Human-readable action description (&lt;&#x3D;480 chars)..</param>
         /// <param name="impact">One of low, medium, high, critical..</param>
-        /// <param name="onBehalfOf">User id or email the agent acts for (delegation required)..</param>
-        /// <param name="meta">Optional action metadata..</param>
-        public CreateApprovalRequest(string taskId = default, string reason = default, string impact = default, string onBehalfOf = default, Object meta = default)
+        /// <param name="onBehalfOf">User id or email the agent acts for (delegation required). When it is the agent&#39;s owner, the request also goes to the organization&#39;s Slack and Discord approval channels that have agent approvals switched on..</param>
+        /// <param name="expiresIn">Seconds the person has to answer (60-600, default 120). An integer outside the range is clamped. (default to 120).</param>
+        /// <param name="meta">meta.</param>
+        public CreateApprovalRequest(string taskId = default, string reason = default, string impact = default, string onBehalfOf = default, int expiresIn = 120, CreateApprovalRequestMeta meta = default)
         {
             this.TaskId = taskId;
             this.Reason = reason;
             this.Impact = impact;
             this.OnBehalfOf = onBehalfOf;
+            this.ExpiresIn = expiresIn;
             this.Meta = meta;
         }
 
@@ -78,18 +80,24 @@ namespace LumoAuth.ApiClient.Model
         public string Impact { get; set; }
 
         /// <summary>
-        /// User id or email the agent acts for (delegation required).
+        /// User id or email the agent acts for (delegation required). When it is the agent&#39;s owner, the request also goes to the organization&#39;s Slack and Discord approval channels that have agent approvals switched on.
         /// </summary>
-        /// <value>User id or email the agent acts for (delegation required).</value>
+        /// <value>User id or email the agent acts for (delegation required). When it is the agent&#39;s owner, the request also goes to the organization&#39;s Slack and Discord approval channels that have agent approvals switched on.</value>
         [DataMember(Name = "on_behalf_of", EmitDefaultValue = false)]
         public string OnBehalfOf { get; set; }
 
         /// <summary>
-        /// Optional action metadata.
+        /// Seconds the person has to answer (60-600, default 120). An integer outside the range is clamped.
         /// </summary>
-        /// <value>Optional action metadata.</value>
+        /// <value>Seconds the person has to answer (60-600, default 120). An integer outside the range is clamped.</value>
+        [DataMember(Name = "expires_in", EmitDefaultValue = false)]
+        public int ExpiresIn { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Meta
+        /// </summary>
         [DataMember(Name = "meta", EmitDefaultValue = false)]
-        public Object Meta { get; set; }
+        public CreateApprovalRequestMeta Meta { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -103,6 +111,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Reason: ").Append(Reason).Append("\n");
             sb.Append("  Impact: ").Append(Impact).Append("\n");
             sb.Append("  OnBehalfOf: ").Append(OnBehalfOf).Append("\n");
+            sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
             sb.Append("  Meta: ").Append(Meta).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -124,6 +133,18 @@ namespace LumoAuth.ApiClient.Model
         /// <returns>Validation Result</returns>
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // ExpiresIn (int) maximum
+            if (this.ExpiresIn > (int)600)
+            {
+                yield return new ValidationResult("Invalid value for ExpiresIn, must be a value less than or equal to 600.", new [] { "ExpiresIn" });
+            }
+
+            // ExpiresIn (int) minimum
+            if (this.ExpiresIn < (int)60)
+            {
+                yield return new ValidationResult("Invalid value for ExpiresIn, must be a value greater than or equal to 60.", new [] { "ExpiresIn" });
+            }
+
             yield break;
         }
     }

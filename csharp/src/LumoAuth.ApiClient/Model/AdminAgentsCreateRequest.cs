@@ -34,18 +34,77 @@ namespace LumoAuth.ApiClient.Model
     public partial class AdminAgentsCreateRequest : IValidatableObject
     {
         /// <summary>
+        /// How the agent authenticates. Default api_key.
+        /// </summary>
+        /// <value>How the agent authenticates. Default api_key.</value>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum IdentityTypeEnum
+        {
+            /// <summary>
+            /// Enum Workload for value: workload
+            /// </summary>
+            [EnumMember(Value = "workload")]
+            Workload = 1,
+
+            /// <summary>
+            /// Enum Aauth for value: aauth
+            /// </summary>
+            [EnumMember(Value = "aauth")]
+            Aauth = 2,
+
+            /// <summary>
+            /// Enum PrivateKeyJwt for value: private_key_jwt
+            /// </summary>
+            [EnumMember(Value = "private_key_jwt")]
+            PrivateKeyJwt = 3,
+
+            /// <summary>
+            /// Enum ClientSecret for value: client_secret
+            /// </summary>
+            [EnumMember(Value = "client_secret")]
+            ClientSecret = 4,
+
+            /// <summary>
+            /// Enum ApiKey for value: api_key
+            /// </summary>
+            [EnumMember(Value = "api_key")]
+            ApiKey = 5,
+
+            /// <summary>
+            /// Enum Custom for value: custom
+            /// </summary>
+            [EnumMember(Value = "custom")]
+            Custom = 6
+        }
+
+
+        /// <summary>
+        /// How the agent authenticates. Default api_key.
+        /// </summary>
+        /// <value>How the agent authenticates. Default api_key.</value>
+        [DataMember(Name = "identityType", EmitDefaultValue = false)]
+        public IdentityTypeEnum? IdentityType { get; set; }
+        /// <summary>
         /// Initializes a new instance of the <see cref="AdminAgentsCreateRequest" /> class.
         /// </summary>
         /// <param name="name">Required. Human-readable agent name..</param>
         /// <param name="description">description.</param>
         /// <param name="capabilities">capabilities.</param>
         /// <param name="budgetPolicy">The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. Leave it out for an agent without a budget..</param>
-        public AdminAgentsCreateRequest(string name = default, string description = default, List<string> capabilities = default, Dictionary<string, Object> budgetPolicy = default)
+        /// <param name="identityType">How the agent authenticates. Default api_key..</param>
+        /// <param name="jwks">For private_key_jwt: the public keys of the agent, inline (a JWK Set). Private key members are refused. Send jwks or jwksUri, not both..</param>
+        /// <param name="jwksUri">For private_key_jwt: https URL of the public key set of the agent..</param>
+        /// <param name="canActOnBehalfOfUsers">Whether the agent may act for users of the organization: approval prompts on their phones, Token Vault connections, the on-behalf-of token exchange and JIT requests for a user. Needs the delegation feature of the plan. Default false..</param>
+        public AdminAgentsCreateRequest(string name = default, string description = default, List<string> capabilities = default, Dictionary<string, Object> budgetPolicy = default, IdentityTypeEnum? identityType = default, Dictionary<string, Object> jwks = default, string jwksUri = default, bool canActOnBehalfOfUsers = default)
         {
             this.Name = name;
             this.Description = description;
             this.Capabilities = capabilities;
             this.BudgetPolicy = budgetPolicy;
+            this.IdentityType = identityType;
+            this.Jwks = jwks;
+            this.JwksUri = jwksUri;
+            this.CanActOnBehalfOfUsers = canActOnBehalfOfUsers;
         }
 
         /// <summary>
@@ -81,6 +140,27 @@ namespace LumoAuth.ApiClient.Model
         public Dictionary<string, Object> BudgetPolicy { get; set; }
 
         /// <summary>
+        /// For private_key_jwt: the public keys of the agent, inline (a JWK Set). Private key members are refused. Send jwks or jwksUri, not both.
+        /// </summary>
+        /// <value>For private_key_jwt: the public keys of the agent, inline (a JWK Set). Private key members are refused. Send jwks or jwksUri, not both.</value>
+        [DataMember(Name = "jwks", EmitDefaultValue = false)]
+        public Dictionary<string, Object> Jwks { get; set; }
+
+        /// <summary>
+        /// For private_key_jwt: https URL of the public key set of the agent.
+        /// </summary>
+        /// <value>For private_key_jwt: https URL of the public key set of the agent.</value>
+        [DataMember(Name = "jwksUri", EmitDefaultValue = false)]
+        public string JwksUri { get; set; }
+
+        /// <summary>
+        /// Whether the agent may act for users of the organization: approval prompts on their phones, Token Vault connections, the on-behalf-of token exchange and JIT requests for a user. Needs the delegation feature of the plan. Default false.
+        /// </summary>
+        /// <value>Whether the agent may act for users of the organization: approval prompts on their phones, Token Vault connections, the on-behalf-of token exchange and JIT requests for a user. Needs the delegation feature of the plan. Default false.</value>
+        [DataMember(Name = "canActOnBehalfOfUsers", EmitDefaultValue = true)]
+        public bool CanActOnBehalfOfUsers { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -92,6 +172,10 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Capabilities: ").Append(Capabilities).Append("\n");
             sb.Append("  BudgetPolicy: ").Append(BudgetPolicy).Append("\n");
+            sb.Append("  IdentityType: ").Append(IdentityType).Append("\n");
+            sb.Append("  Jwks: ").Append(Jwks).Append("\n");
+            sb.Append("  JwksUri: ").Append(JwksUri).Append("\n");
+            sb.Append("  CanActOnBehalfOfUsers: ").Append(CanActOnBehalfOfUsers).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

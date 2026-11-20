@@ -25,6 +25,31 @@ module LumoAuthApiClient
 
     attr_accessor :impact
 
+    # Where the request went: `push` (the LumoAuth app), `slack`, `discord`.
+    attr_accessor :delivery
+
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -32,7 +57,8 @@ module LumoAuthApiClient
         :'status' => :'status',
         :'expires_at' => :'expires_at',
         :'task_id' => :'task_id',
-        :'impact' => :'impact'
+        :'impact' => :'impact',
+        :'delivery' => :'delivery'
       }
     end
 
@@ -53,7 +79,8 @@ module LumoAuthApiClient
         :'status' => :'String',
         :'expires_at' => :'Time',
         :'task_id' => :'String',
-        :'impact' => :'String'
+        :'impact' => :'String',
+        :'delivery' => :'Array<String>'
       }
     end
 
@@ -98,6 +125,12 @@ module LumoAuthApiClient
       if attributes.key?(:'impact')
         self.impact = attributes[:'impact']
       end
+
+      if attributes.key?(:'delivery')
+        if (value = attributes[:'delivery']).is_a?(Array)
+          self.delivery = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -124,7 +157,8 @@ module LumoAuthApiClient
           status == o.status &&
           expires_at == o.expires_at &&
           task_id == o.task_id &&
-          impact == o.impact
+          impact == o.impact &&
+          delivery == o.delivery
     end
 
     # @see the `==` method
@@ -136,7 +170,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [approval_token, status, expires_at, task_id, impact].hash
+      [approval_token, status, expires_at, task_id, impact, delivery].hash
     end
 
     # Builds the object from hash

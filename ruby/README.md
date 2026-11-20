@@ -185,6 +185,9 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_create**](docs/AdminMcpApi.md#admin_mcp_servers_create) | **POST** /orgs/{orgId}/api/v1/admin/mcp/servers | Register an MCP server
 *LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_delete**](docs/AdminMcpApi.md#admin_mcp_servers_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Delete an MCP server
 *LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_get**](docs/AdminMcpApi.md#admin_mcp_servers_get) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Get an MCP server
+*LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_grants_list**](docs/AdminMcpApi.md#admin_mcp_servers_grants_list) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants | List the agents allowed to call tools of an MCP server
+*LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_grants_remove**](docs/AdminMcpApi.md#admin_mcp_servers_grants_remove) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Remove every grant of an agent on an MCP server
+*LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_grants_set**](docs/AdminMcpApi.md#admin_mcp_servers_grants_set) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Set the tools of an MCP server that an agent may call
 *LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_list**](docs/AdminMcpApi.md#admin_mcp_servers_list) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers
 *LumoAuthApiClient::AdminMfaApi* | [**delete_user_authenticator**](docs/AdminMfaApi.md#delete_user_authenticator) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/authenticators/{authenticatorId} | Remove one of a user's authenticators
 *LumoAuthApiClient::AdminMfaApi* | [**get_mfa_coverage_report**](docs/AdminMfaApi.md#get_mfa_coverage_report) | **GET** /orgs/{orgId}/api/v1/admin/reports/mfa-coverage | MFA enrollment coverage
@@ -345,6 +348,7 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_webhooks_enable**](docs/AdminWebhooksApi.md#admin_webhooks_webhooks_enable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable | Enable a webhook
 *LumoAuthApiClient::AdminWebhooksApi* | [**patch_admin_webhooks_update**](docs/AdminWebhooksApi.md#patch_admin_webhooks_update) | **PATCH** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Partially update a webhook
 *LumoAuthApiClient::AdminWebhooksApi* | [**put_admin_webhooks_update**](docs/AdminWebhooksApi.md#put_admin_webhooks_update) | **PUT** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update a webhook
+*LumoAuthApiClient::AgentsApi* | [**agents_me_tool_calls**](docs/AgentsApi.md#agents_me_tool_calls) | **POST** /orgs/{orgId}/api/v1/agents/me/tool-calls | Report the tool calls that the agent's host gated
 *LumoAuthApiClient::AgentsApi* | [**ask**](docs/AgentsApi.md#ask) | **POST** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style)
 *LumoAuthApiClient::AgentsApi* | [**attest**](docs/AgentsApi.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token
 *LumoAuthApiClient::AgentsApi* | [**authorize_mcp**](docs/AgentsApi.md#authorize_mcp) | **POST** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3).
@@ -352,8 +356,10 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AgentsApi* | [**get_agent_card**](docs/AgentsApi.md#get_agent_card) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card
 *LumoAuthApiClient::AgentsApi* | [**get_approval_status**](docs/AgentsApi.md#get_approval_status) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 *LumoAuthApiClient::AgentsApi* | [**get_current_agent**](docs/AgentsApi.md#get_current_agent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
+*LumoAuthApiClient::AgentsApi* | [**poll_agent_enrollment**](docs/AgentsApi.md#poll_agent_enrollment) | **POST** /orgs/{orgId}/api/v1/agents/enrollments/token | Poll an agent enrollment (no credential)
 *LumoAuthApiClient::AgentsApi* | [**register_agent**](docs/AgentsApi.md#register_agent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
 *LumoAuthApiClient::AgentsApi* | [**report_agent_usage**](docs/AgentsApi.md#report_agent_usage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used
+*LumoAuthApiClient::AgentsApi* | [**start_agent_enrollment**](docs/AgentsApi.md#start_agent_enrollment) | **POST** /orgs/{orgId}/api/v1/agents/enrollments | Start an agent enrollment (no credential)
 *LumoAuthApiClient::AgentsApi* | [**verify_agent_card**](docs/AgentsApi.md#verify_agent_card) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
 *LumoAuthApiClient::AuthorizationApi* | [**check_abac**](docs/AuthorizationApi.md#check_abac) | **POST** /orgs/{orgId}/api/v1/abac/check | Evaluate an ABAC policy decision for the caller
 *LumoAuthApiClient::AuthorizationApi* | [**check_abac_bulk**](docs/AuthorizationApi.md#check_abac_bulk) | **POST** /orgs/{orgId}/api/v1/abac/check-bulk | Evaluate up to 100 ABAC checks for the caller in one call
@@ -528,6 +534,13 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::AdminIdentitiesListResponseDataBindingsItem](docs/AdminIdentitiesListResponseDataBindingsItem.md)
  - [LumoAuthApiClient::AdminMcpServersCreateResponse](docs/AdminMcpServersCreateResponse.md)
  - [LumoAuthApiClient::AdminMcpServersGetResponse](docs/AdminMcpServersGetResponse.md)
+ - [LumoAuthApiClient::AdminMcpServersGrantsListResponse](docs/AdminMcpServersGrantsListResponse.md)
+ - [LumoAuthApiClient::AdminMcpServersGrantsListResponseDataItem](docs/AdminMcpServersGrantsListResponseDataItem.md)
+ - [LumoAuthApiClient::AdminMcpServersGrantsRemoveResponse](docs/AdminMcpServersGrantsRemoveResponse.md)
+ - [LumoAuthApiClient::AdminMcpServersGrantsRemoveResponseData](docs/AdminMcpServersGrantsRemoveResponseData.md)
+ - [LumoAuthApiClient::AdminMcpServersGrantsSetRequest](docs/AdminMcpServersGrantsSetRequest.md)
+ - [LumoAuthApiClient::AdminMcpServersGrantsSetResponse](docs/AdminMcpServersGrantsSetResponse.md)
+ - [LumoAuthApiClient::AdminMcpServersGrantsSetResponseData](docs/AdminMcpServersGrantsSetResponseData.md)
  - [LumoAuthApiClient::AdminMcpServersListResponse](docs/AdminMcpServersListResponse.md)
  - [LumoAuthApiClient::AdminOrgInvitationsCreateResponse](docs/AdminOrgInvitationsCreateResponse.md)
  - [LumoAuthApiClient::AdminOrgInvitationsListResponse](docs/AdminOrgInvitationsListResponse.md)
@@ -611,6 +624,9 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::AdminWebhooksWebhooksDisableResponse](docs/AdminWebhooksWebhooksDisableResponse.md)
  - [LumoAuthApiClient::AdminWebhooksWebhooksEnableResponse](docs/AdminWebhooksWebhooksEnableResponse.md)
  - [LumoAuthApiClient::AgentOutboundConnection](docs/AgentOutboundConnection.md)
+ - [LumoAuthApiClient::AgentsMeToolCallsRequest](docs/AgentsMeToolCallsRequest.md)
+ - [LumoAuthApiClient::AgentsMeToolCallsRequestCallsItem](docs/AgentsMeToolCallsRequestCallsItem.md)
+ - [LumoAuthApiClient::AgentsMeToolCallsResponse](docs/AgentsMeToolCallsResponse.md)
  - [LumoAuthApiClient::ApproveRequestRequest](docs/ApproveRequestRequest.md)
  - [LumoAuthApiClient::ApproveRequestResponse](docs/ApproveRequestResponse.md)
  - [LumoAuthApiClient::AskRequest](docs/AskRequest.md)
@@ -648,6 +664,7 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::CimdCheckResultShadowClient](docs/CimdCheckResultShadowClient.md)
  - [LumoAuthApiClient::CompleteTaskResponse](docs/CompleteTaskResponse.md)
  - [LumoAuthApiClient::CreateApprovalRequest](docs/CreateApprovalRequest.md)
+ - [LumoAuthApiClient::CreateApprovalRequestMeta](docs/CreateApprovalRequestMeta.md)
  - [LumoAuthApiClient::CreateApprovalResponse](docs/CreateApprovalResponse.md)
  - [LumoAuthApiClient::CreateApprovalResponse202](docs/CreateApprovalResponse202.md)
  - [LumoAuthApiClient::CreateClientResponse](docs/CreateClientResponse.md)
@@ -771,6 +788,8 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::PasskeyEnrollmentStarted](docs/PasskeyEnrollmentStarted.md)
  - [LumoAuthApiClient::PatchAdminClientsUpdateBrandingResponse](docs/PatchAdminClientsUpdateBrandingResponse.md)
  - [LumoAuthApiClient::Permission](docs/Permission.md)
+ - [LumoAuthApiClient::PollAgentEnrollmentRequest](docs/PollAgentEnrollmentRequest.md)
+ - [LumoAuthApiClient::PollAgentEnrollmentResponse](docs/PollAgentEnrollmentResponse.md)
  - [LumoAuthApiClient::ProtectedResourceList](docs/ProtectedResourceList.md)
  - [LumoAuthApiClient::ProtectedResourceMetadata](docs/ProtectedResourceMetadata.md)
  - [LumoAuthApiClient::PushEnrollmentStarted](docs/PushEnrollmentStarted.md)
@@ -829,6 +848,12 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::SsfStream](docs/SsfStream.md)
  - [LumoAuthApiClient::SsfStreamDelivery](docs/SsfStreamDelivery.md)
  - [LumoAuthApiClient::SsfStreamList](docs/SsfStreamList.md)
+ - [LumoAuthApiClient::StartAgentEnrollmentRequest](docs/StartAgentEnrollmentRequest.md)
+ - [LumoAuthApiClient::StartAgentEnrollmentRequestCapabilitiesItem](docs/StartAgentEnrollmentRequestCapabilitiesItem.md)
+ - [LumoAuthApiClient::StartAgentEnrollmentRequestInventory](docs/StartAgentEnrollmentRequestInventory.md)
+ - [LumoAuthApiClient::StartAgentEnrollmentRequestInventoryMcpServersItem](docs/StartAgentEnrollmentRequestInventoryMcpServersItem.md)
+ - [LumoAuthApiClient::StartAgentEnrollmentRequestJwks](docs/StartAgentEnrollmentRequestJwks.md)
+ - [LumoAuthApiClient::StartAgentEnrollmentResponse](docs/StartAgentEnrollmentResponse.md)
  - [LumoAuthApiClient::SubmitLoginJsonResponse](docs/SubmitLoginJsonResponse.md)
  - [LumoAuthApiClient::TenantProfile](docs/TenantProfile.md)
  - [LumoAuthApiClient::TokenResponse](docs/TokenResponse.md)

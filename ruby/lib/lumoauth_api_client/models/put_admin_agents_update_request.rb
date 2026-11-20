@@ -24,13 +24,25 @@ module LumoAuthApiClient
     # The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is.
     attr_accessor :budget_policy
 
+    # For private_key_jwt agents: replaces the public keys (inline JWK Set). Removing a key revokes the tokens that the agent holds.
+    attr_accessor :jwks
+
+    # For private_key_jwt agents: https URL of the public key set.
+    attr_accessor :jwks_uri
+
+    # Whether the agent may act for users of the organization. Switching it on needs the delegation feature of the plan and an editor who holds every capability of the agent.
+    attr_accessor :can_act_on_behalf_of_users
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'name' => :'name',
         :'description' => :'description',
         :'capabilities' => :'capabilities',
-        :'budget_policy' => :'budgetPolicy'
+        :'budget_policy' => :'budgetPolicy',
+        :'jwks' => :'jwks',
+        :'jwks_uri' => :'jwksUri',
+        :'can_act_on_behalf_of_users' => :'canActOnBehalfOfUsers'
       }
     end
 
@@ -50,14 +62,17 @@ module LumoAuthApiClient
         :'name' => :'String',
         :'description' => :'String',
         :'capabilities' => :'Array<String>',
-        :'budget_policy' => :'Hash<String, Object>'
+        :'budget_policy' => :'Hash<String, Object>',
+        :'jwks' => :'Hash<String, Object>',
+        :'jwks_uri' => :'String',
+        :'can_act_on_behalf_of_users' => :'Boolean'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'budget_policy'
+        :'budget_policy',
       ])
     end
 
@@ -96,6 +111,20 @@ module LumoAuthApiClient
           self.budget_policy = value
         end
       end
+
+      if attributes.key?(:'jwks')
+        if (value = attributes[:'jwks']).is_a?(Hash)
+          self.jwks = value
+        end
+      end
+
+      if attributes.key?(:'jwks_uri')
+        self.jwks_uri = attributes[:'jwks_uri']
+      end
+
+      if attributes.key?(:'can_act_on_behalf_of_users')
+        self.can_act_on_behalf_of_users = attributes[:'can_act_on_behalf_of_users']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -121,7 +150,10 @@ module LumoAuthApiClient
           name == o.name &&
           description == o.description &&
           capabilities == o.capabilities &&
-          budget_policy == o.budget_policy
+          budget_policy == o.budget_policy &&
+          jwks == o.jwks &&
+          jwks_uri == o.jwks_uri &&
+          can_act_on_behalf_of_users == o.can_act_on_behalf_of_users
     end
 
     # @see the `==` method
@@ -133,7 +165,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, description, capabilities, budget_policy].hash
+      [name, description, capabilities, budget_policy, jwks, jwks_uri, can_act_on_behalf_of_users].hash
     end
 
     # Builds the object from hash

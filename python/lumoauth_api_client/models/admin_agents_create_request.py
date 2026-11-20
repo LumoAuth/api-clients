@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -31,7 +31,21 @@ class AdminAgentsCreateRequest(BaseModel):
     description: Optional[StrictStr] = None
     capabilities: Optional[List[StrictStr]] = None
     budget_policy: Optional[Dict[str, Any]] = Field(default=None, description="The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. Leave it out for an agent without a budget.", alias="budgetPolicy")
-    __properties: ClassVar[List[str]] = ["name", "description", "capabilities", "budgetPolicy"]
+    identity_type: Optional[StrictStr] = Field(default=None, description="How the agent authenticates. Default api_key.", alias="identityType")
+    jwks: Optional[Dict[str, Any]] = Field(default=None, description="For private_key_jwt: the public keys of the agent, inline (a JWK Set). Private key members are refused. Send jwks or jwksUri, not both.")
+    jwks_uri: Optional[StrictStr] = Field(default=None, description="For private_key_jwt: https URL of the public key set of the agent.", alias="jwksUri")
+    can_act_on_behalf_of_users: Optional[StrictBool] = Field(default=None, description="Whether the agent may act for users of the organization: approval prompts on their phones, Token Vault connections, the on-behalf-of token exchange and JIT requests for a user. Needs the delegation feature of the plan. Default false.", alias="canActOnBehalfOfUsers")
+    __properties: ClassVar[List[str]] = ["name", "description", "capabilities", "budgetPolicy", "identityType", "jwks", "jwksUri", "canActOnBehalfOfUsers"]
+
+    @field_validator('identity_type')
+    def identity_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['workload', 'aauth', 'private_key_jwt', 'client_secret', 'api_key', 'custom']):
+            raise ValueError("must be one of enum values ('workload', 'aauth', 'private_key_jwt', 'client_secret', 'api_key', 'custom')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -92,7 +106,11 @@ class AdminAgentsCreateRequest(BaseModel):
             "name": obj.get("name"),
             "description": obj.get("description"),
             "capabilities": obj.get("capabilities"),
-            "budgetPolicy": obj.get("budgetPolicy")
+            "budgetPolicy": obj.get("budgetPolicy"),
+            "identityType": obj.get("identityType"),
+            "jwks": obj.get("jwks"),
+            "jwksUri": obj.get("jwksUri"),
+            "canActOnBehalfOfUsers": obj.get("canActOnBehalfOfUsers")
         })
         return _obj
 

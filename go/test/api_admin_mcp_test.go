@@ -66,6 +66,53 @@ func Test_lumoauthclient_AdminMcpAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test AdminMcpAPIService AdminMcpServersGrantsList", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+		var serverId string
+
+		resp, httpRes, err := apiClient.AdminMcpAPI.AdminMcpServersGrantsList(context.Background(), orgId, serverId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AdminMcpAPIService AdminMcpServersGrantsRemove", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+		var serverId string
+		var agentId string
+
+		resp, httpRes, err := apiClient.AdminMcpAPI.AdminMcpServersGrantsRemove(context.Background(), orgId, serverId, agentId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AdminMcpAPIService AdminMcpServersGrantsSet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+		var serverId string
+		var agentId string
+
+		resp, httpRes, err := apiClient.AdminMcpAPI.AdminMcpServersGrantsSet(context.Background(), orgId, serverId, agentId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AdminMcpAPIService AdminMcpServersList", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

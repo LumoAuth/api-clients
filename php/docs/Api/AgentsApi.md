@@ -4,6 +4,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
+| [**agentsMeToolCalls()**](AgentsApi.md#agentsMeToolCalls) | **POST** /orgs/{orgId}/api/v1/agents/me/tool-calls | Report the tool calls that the agent&#39;s host gated |
 | [**ask()**](AgentsApi.md#ask) | **POST** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style) |
 | [**attest()**](AgentsApi.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token |
 | [**authorizeMcp()**](AgentsApi.md#authorizeMcp) | **POST** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3). |
@@ -11,10 +12,79 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | [**getAgentCard()**](AgentsApi.md#getAgentCard) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card |
 | [**getApprovalStatus()**](AgentsApi.md#getApprovalStatus) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status |  |
 | [**getCurrentAgent()**](AgentsApi.md#getCurrentAgent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent |
+| [**pollAgentEnrollment()**](AgentsApi.md#pollAgentEnrollment) | **POST** /orgs/{orgId}/api/v1/agents/enrollments/token | Poll an agent enrollment (no credential) |
 | [**registerAgent()**](AgentsApi.md#registerAgent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent |
 | [**reportAgentUsage()**](AgentsApi.md#reportAgentUsage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used |
+| [**startAgentEnrollment()**](AgentsApi.md#startAgentEnrollment) | **POST** /orgs/{orgId}/api/v1/agents/enrollments | Start an agent enrollment (no credential) |
 | [**verifyAgentCard()**](AgentsApi.md#verifyAgentCard) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card |
 
+
+## `agentsMeToolCalls()`
+
+```php
+agentsMeToolCalls($orgId, $agentsMeToolCallsRequest): \LumoAuth\ApiClient\Model\AgentsMeToolCallsResponse
+```
+
+Report the tool calls that the agent's host gated
+
+Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host's own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\AgentsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$orgId = 'orgId_example'; // string
+$agentsMeToolCallsRequest = new \LumoAuth\ApiClient\Model\AgentsMeToolCallsRequest(); // \LumoAuth\ApiClient\Model\AgentsMeToolCallsRequest
+
+try {
+    $result = $apiInstance->agentsMeToolCalls($orgId, $agentsMeToolCallsRequest);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AgentsApi->agentsMeToolCalls: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+| **agentsMeToolCallsRequest** | [**\LumoAuth\ApiClient\Model\AgentsMeToolCallsRequest**](../Model/AgentsMeToolCallsRequest.md)|  | |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\AgentsMeToolCallsResponse**](../Model/AgentsMeToolCallsResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
 
 ## `ask()`
 
@@ -472,6 +542,64 @@ try {
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
+## `pollAgentEnrollment()`
+
+```php
+pollAgentEnrollment($orgId, $pollAgentEnrollmentRequest): \LumoAuth\ApiClient\Model\PollAgentEnrollmentResponse
+```
+
+Poll an agent enrollment (no credential)
+
+Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\AgentsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client()
+);
+$orgId = 'orgId_example'; // string
+$pollAgentEnrollmentRequest = new \LumoAuth\ApiClient\Model\PollAgentEnrollmentRequest(); // \LumoAuth\ApiClient\Model\PollAgentEnrollmentRequest
+
+try {
+    $result = $apiInstance->pollAgentEnrollment($orgId, $pollAgentEnrollmentRequest);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AgentsApi->pollAgentEnrollment: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+| **pollAgentEnrollmentRequest** | [**\LumoAuth\ApiClient\Model\PollAgentEnrollmentRequest**](../Model/PollAgentEnrollmentRequest.md)|  | |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\PollAgentEnrollmentResponse**](../Model/PollAgentEnrollmentResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
 ## `registerAgent()`
 
 ```php
@@ -592,6 +720,64 @@ try {
 ### Authorization
 
 [ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `startAgentEnrollment()`
+
+```php
+startAgentEnrollment($orgId, $startAgentEnrollmentRequest): \LumoAuth\ApiClient\Model\StartAgentEnrollmentResponse
+```
+
+Start an agent enrollment (no credential)
+
+The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; only public keys are accepted. Rate limited per client address and per organization; an organization has at most 20 pending enrollments.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\AgentsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client()
+);
+$orgId = 'orgId_example'; // string
+$startAgentEnrollmentRequest = new \LumoAuth\ApiClient\Model\StartAgentEnrollmentRequest(); // \LumoAuth\ApiClient\Model\StartAgentEnrollmentRequest
+
+try {
+    $result = $apiInstance->startAgentEnrollment($orgId, $startAgentEnrollmentRequest);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AgentsApi->startAgentEnrollment: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+| **startAgentEnrollmentRequest** | [**\LumoAuth\ApiClient\Model\StartAgentEnrollmentRequest**](../Model/StartAgentEnrollmentRequest.md)|  | |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\StartAgentEnrollmentResponse**](../Model/StartAgentEnrollmentResponse.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 

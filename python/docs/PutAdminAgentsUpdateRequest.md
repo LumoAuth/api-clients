@@ -9,6 +9,9 @@ Name | Type | Description | Notes
 **description** | **str** |  | [optional] 
 **capabilities** | **List[str]** |  | [optional] 
 **budget_policy** | **Dict[str, object]** | The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is. | [optional] 
+**jwks** | **Dict[str, object]** | For private_key_jwt agents: replaces the public keys (inline JWK Set). Removing a key revokes the tokens that the agent holds. | [optional] 
+**jwks_uri** | **str** | For private_key_jwt agents: https URL of the public key set. | [optional] 
+**can_act_on_behalf_of_users** | **bool** | Whether the agent may act for users of the organization. Switching it on needs the delegation feature of the plan and an editor who holds every capability of the agent. | [optional] 
 
 ## Example
 

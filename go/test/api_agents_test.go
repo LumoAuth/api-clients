@@ -22,6 +22,20 @@ func Test_lumoauthclient_AgentsAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test AgentsAPIService AgentsMeToolCalls", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+
+		resp, httpRes, err := apiClient.AgentsAPI.AgentsMeToolCalls(context.Background(), orgId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AgentsAPIService Ask", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -123,6 +137,20 @@ func Test_lumoauthclient_AgentsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test AgentsAPIService PollAgentEnrollment", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+
+		resp, httpRes, err := apiClient.AgentsAPI.PollAgentEnrollment(context.Background(), orgId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AgentsAPIService RegisterAgent", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -144,6 +172,20 @@ func Test_lumoauthclient_AgentsAPIService(t *testing.T) {
 		var orgId string
 
 		resp, httpRes, err := apiClient.AgentsAPI.ReportAgentUsage(context.Background(), orgId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AgentsAPIService StartAgentEnrollment", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+
+		resp, httpRes, err := apiClient.AgentsAPI.StartAgentEnrollment(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

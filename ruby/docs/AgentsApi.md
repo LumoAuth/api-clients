@@ -4,6 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
+| [**agents_me_tool_calls**](AgentsApi.md#agents_me_tool_calls) | **POST** /orgs/{orgId}/api/v1/agents/me/tool-calls | Report the tool calls that the agent&#39;s host gated |
 | [**ask**](AgentsApi.md#ask) | **POST** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style) |
 | [**attest**](AgentsApi.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token |
 | [**authorize_mcp**](AgentsApi.md#authorize_mcp) | **POST** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3). |
@@ -11,9 +12,87 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**get_agent_card**](AgentsApi.md#get_agent_card) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card |
 | [**get_approval_status**](AgentsApi.md#get_approval_status) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status |  |
 | [**get_current_agent**](AgentsApi.md#get_current_agent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent |
+| [**poll_agent_enrollment**](AgentsApi.md#poll_agent_enrollment) | **POST** /orgs/{orgId}/api/v1/agents/enrollments/token | Poll an agent enrollment (no credential) |
 | [**register_agent**](AgentsApi.md#register_agent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent |
 | [**report_agent_usage**](AgentsApi.md#report_agent_usage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used |
+| [**start_agent_enrollment**](AgentsApi.md#start_agent_enrollment) | **POST** /orgs/{orgId}/api/v1/agents/enrollments | Start an agent enrollment (no credential) |
 | [**verify_agent_card**](AgentsApi.md#verify_agent_card) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card |
+
+
+## agents_me_tool_calls
+
+> <AgentsMeToolCallsResponse> agents_me_tool_calls(org_id, agents_me_tool_calls_request)
+
+Report the tool calls that the agent's host gated
+
+Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host's own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AgentsApi.new
+org_id = 'org_id_example' # String | 
+agents_me_tool_calls_request = LumoAuthApiClient::AgentsMeToolCallsRequest.new # AgentsMeToolCallsRequest | 
+
+begin
+  # Report the tool calls that the agent's host gated
+  result = api_instance.agents_me_tool_calls(org_id, agents_me_tool_calls_request)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AgentsApi->agents_me_tool_calls: #{e}"
+end
+```
+
+#### Using the agents_me_tool_calls_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AgentsMeToolCallsResponse>, Integer, Hash)> agents_me_tool_calls_with_http_info(org_id, agents_me_tool_calls_request)
+
+```ruby
+begin
+  # Report the tool calls that the agent's host gated
+  data, status_code, headers = api_instance.agents_me_tool_calls_with_http_info(org_id, agents_me_tool_calls_request)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AgentsMeToolCallsResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AgentsApi->agents_me_tool_calls_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **agents_me_tool_calls_request** | [**AgentsMeToolCallsRequest**](AgentsMeToolCallsRequest.md) |  |  |
+
+### Return type
+
+[**AgentsMeToolCallsResponse**](AgentsMeToolCallsResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 
 ## ask
@@ -534,6 +613,72 @@ end
 - **Accept**: application/json
 
 
+## poll_agent_enrollment
+
+> <PollAgentEnrollmentResponse> poll_agent_enrollment(org_id, poll_agent_enrollment_request)
+
+Poll an agent enrollment (no credential)
+
+Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+
+api_instance = LumoAuthApiClient::AgentsApi.new
+org_id = 'org_id_example' # String | 
+poll_agent_enrollment_request = LumoAuthApiClient::PollAgentEnrollmentRequest.new({enrollment_code: 'enrollment_code_example'}) # PollAgentEnrollmentRequest | 
+
+begin
+  # Poll an agent enrollment (no credential)
+  result = api_instance.poll_agent_enrollment(org_id, poll_agent_enrollment_request)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AgentsApi->poll_agent_enrollment: #{e}"
+end
+```
+
+#### Using the poll_agent_enrollment_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<PollAgentEnrollmentResponse>, Integer, Hash)> poll_agent_enrollment_with_http_info(org_id, poll_agent_enrollment_request)
+
+```ruby
+begin
+  # Poll an agent enrollment (no credential)
+  data, status_code, headers = api_instance.poll_agent_enrollment_with_http_info(org_id, poll_agent_enrollment_request)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <PollAgentEnrollmentResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AgentsApi->poll_agent_enrollment_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **poll_agent_enrollment_request** | [**PollAgentEnrollmentRequest**](PollAgentEnrollmentRequest.md) |  |  |
+
+### Return type
+
+[**PollAgentEnrollmentResponse**](PollAgentEnrollmentResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
 ## register_agent
 
 > <RegisterAgentResponse> register_agent(org_id)
@@ -675,6 +820,72 @@ end
 ### Authorization
 
 [ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## start_agent_enrollment
+
+> <StartAgentEnrollmentResponse> start_agent_enrollment(org_id, start_agent_enrollment_request)
+
+Start an agent enrollment (no credential)
+
+The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; only public keys are accepted. Rate limited per client address and per organization; an organization has at most 20 pending enrollments.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+
+api_instance = LumoAuthApiClient::AgentsApi.new
+org_id = 'org_id_example' # String | 
+start_agent_enrollment_request = LumoAuthApiClient::StartAgentEnrollmentRequest.new({name: 'OpenClaw on mac-mini', host: 'openclaw', jwks: LumoAuthApiClient::StartAgentEnrollmentRequestJwks.new, capabilities: [LumoAuthApiClient::StartAgentEnrollmentRequestCapabilitiesItem.new({scope: 'files:read', risk: 'read'})]}) # StartAgentEnrollmentRequest | 
+
+begin
+  # Start an agent enrollment (no credential)
+  result = api_instance.start_agent_enrollment(org_id, start_agent_enrollment_request)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AgentsApi->start_agent_enrollment: #{e}"
+end
+```
+
+#### Using the start_agent_enrollment_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<StartAgentEnrollmentResponse>, Integer, Hash)> start_agent_enrollment_with_http_info(org_id, start_agent_enrollment_request)
+
+```ruby
+begin
+  # Start an agent enrollment (no credential)
+  data, status_code, headers = api_instance.start_agent_enrollment_with_http_info(org_id, start_agent_enrollment_request)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <StartAgentEnrollmentResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AgentsApi->start_agent_enrollment_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **start_agent_enrollment_request** | [**StartAgentEnrollmentRequest**](StartAgentEnrollmentRequest.md) |  |  |
+
+### Return type
+
+[**StartAgentEnrollmentResponse**](StartAgentEnrollmentResponse.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 

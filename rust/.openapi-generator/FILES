@@ -96,6 +96,13 @@ docs/AdminIdentityProvidersApi.md
 docs/AdminMcpApi.md
 docs/AdminMcpServersCreateResponse.md
 docs/AdminMcpServersGetResponse.md
+docs/AdminMcpServersGrantsListResponse.md
+docs/AdminMcpServersGrantsListResponseDataItem.md
+docs/AdminMcpServersGrantsRemoveResponse.md
+docs/AdminMcpServersGrantsRemoveResponseData.md
+docs/AdminMcpServersGrantsSetRequest.md
+docs/AdminMcpServersGrantsSetResponse.md
+docs/AdminMcpServersGrantsSetResponseData.md
 docs/AdminMcpServersListResponse.md
 docs/AdminMfaApi.md
 docs/AdminOAuthClientsApi.md
@@ -190,6 +197,9 @@ docs/AdminWebhooksWebhooksDisableResponse.md
 docs/AdminWebhooksWebhooksEnableResponse.md
 docs/AgentOutboundConnection.md
 docs/AgentsApi.md
+docs/AgentsMeToolCallsRequest.md
+docs/AgentsMeToolCallsRequestCallsItem.md
+docs/AgentsMeToolCallsResponse.md
 docs/ApproveRequestRequest.md
 docs/ApproveRequestResponse.md
 docs/AskRequest.md
@@ -228,6 +238,7 @@ docs/CimdCheckResultEffective.md
 docs/CimdCheckResultShadowClient.md
 docs/CompleteTaskResponse.md
 docs/CreateApprovalRequest.md
+docs/CreateApprovalRequestMeta.md
 docs/CreateApprovalResponse.md
 docs/CreateApprovalResponse202.md
 docs/CreateClientResponse.md
@@ -357,6 +368,8 @@ docs/ParResponse.md
 docs/PasskeyEnrollmentStarted.md
 docs/PatchAdminClientsUpdateBrandingResponse.md
 docs/Permission.md
+docs/PollAgentEnrollmentRequest.md
+docs/PollAgentEnrollmentResponse.md
 docs/ProtectedResourceList.md
 docs/ProtectedResourceMetadata.md
 docs/PushEnrollmentStarted.md
@@ -416,6 +429,12 @@ docs/SsfApi.md
 docs/SsfStream.md
 docs/SsfStreamDelivery.md
 docs/SsfStreamList.md
+docs/StartAgentEnrollmentRequest.md
+docs/StartAgentEnrollmentRequestCapabilitiesItem.md
+docs/StartAgentEnrollmentRequestInventory.md
+docs/StartAgentEnrollmentRequestInventoryMcpServersItem.md
+docs/StartAgentEnrollmentRequestJwks.md
+docs/StartAgentEnrollmentResponse.md
 docs/SubmitLoginJsonResponse.md
 docs/TenantProfile.md
 docs/TokenResponse.md
@@ -565,6 +584,13 @@ src/models/admin_identities_list_response_data.rs
 src/models/admin_identities_list_response_data_bindings_item.rs
 src/models/admin_mcp_servers_create_response.rs
 src/models/admin_mcp_servers_get_response.rs
+src/models/admin_mcp_servers_grants_list_response.rs
+src/models/admin_mcp_servers_grants_list_response_data_item.rs
+src/models/admin_mcp_servers_grants_remove_response.rs
+src/models/admin_mcp_servers_grants_remove_response_data.rs
+src/models/admin_mcp_servers_grants_set_request.rs
+src/models/admin_mcp_servers_grants_set_response.rs
+src/models/admin_mcp_servers_grants_set_response_data.rs
 src/models/admin_mcp_servers_list_response.rs
 src/models/admin_org_invitations_create_response.rs
 src/models/admin_org_invitations_list_response.rs
@@ -648,6 +674,9 @@ src/models/admin_webhooks_tunnel_start_response_data.rs
 src/models/admin_webhooks_webhooks_disable_response.rs
 src/models/admin_webhooks_webhooks_enable_response.rs
 src/models/agent_outbound_connection.rs
+src/models/agents_me_tool_calls_request.rs
+src/models/agents_me_tool_calls_request_calls_item.rs
+src/models/agents_me_tool_calls_response.rs
 src/models/approve_request_request.rs
 src/models/approve_request_response.rs
 src/models/ask_request.rs
@@ -685,6 +714,7 @@ src/models/cimd_check_result_effective.rs
 src/models/cimd_check_result_shadow_client.rs
 src/models/complete_task_response.rs
 src/models/create_approval_request.rs
+src/models/create_approval_request_meta.rs
 src/models/create_approval_response.rs
 src/models/create_approval_response202.rs
 src/models/create_client_response.rs
@@ -809,6 +839,8 @@ src/models/par_response.rs
 src/models/passkey_enrollment_started.rs
 src/models/patch_admin_clients_update_branding_response.rs
 src/models/permission.rs
+src/models/poll_agent_enrollment_request.rs
+src/models/poll_agent_enrollment_response.rs
 src/models/protected_resource_list.rs
 src/models/protected_resource_metadata.rs
 src/models/push_enrollment_started.rs
@@ -867,6 +899,12 @@ src/models/social_login_provider.rs
 src/models/ssf_stream.rs
 src/models/ssf_stream_delivery.rs
 src/models/ssf_stream_list.rs
+src/models/start_agent_enrollment_request.rs
+src/models/start_agent_enrollment_request_capabilities_item.rs
+src/models/start_agent_enrollment_request_inventory.rs
+src/models/start_agent_enrollment_request_inventory_mcp_servers_item.rs
+src/models/start_agent_enrollment_request_jwks.rs
+src/models/start_agent_enrollment_response.rs
 src/models/submit_login_json_response.rs
 src/models/tenant_profile.rs
 src/models/token_response.rs

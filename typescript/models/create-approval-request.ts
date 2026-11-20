@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { CreateApprovalRequestMeta } from './create-approval-request-meta';
 
 /**
  * 
@@ -39,16 +42,22 @@ export interface CreateApprovalRequest {
      */
     'impact'?: string;
     /**
-     * User id or email the agent acts for (delegation required).
+     * User id or email the agent acts for (delegation required). When it is the agent\'s owner, the request also goes to the organization\'s Slack and Discord approval channels that have agent approvals switched on.
      * @type {string}
      * @memberof CreateApprovalRequest
      */
     'on_behalf_of'?: string;
     /**
-     * Optional action metadata.
-     * @type {object}
+     * Seconds the person has to answer (60-600, default 120). An integer outside the range is clamped.
+     * @type {number}
      * @memberof CreateApprovalRequest
      */
-    'meta'?: object;
+    'expires_in'?: number;
+    /**
+     * 
+     * @type {CreateApprovalRequestMeta}
+     * @memberof CreateApprovalRequest
+     */
+    'meta'?: CreateApprovalRequestMeta;
 }
 

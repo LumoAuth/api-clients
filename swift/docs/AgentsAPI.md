@@ -4,6 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**agentsMeToolCalls**](AgentsAPI.md#agentsmetoolcalls) | **POST** /orgs/{orgId}/api/v1/agents/me/tool-calls | Report the tool calls that the agent&#39;s host gated
 [**ask**](AgentsAPI.md#ask) | **POST** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style)
 [**attest**](AgentsAPI.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token
 [**authorizeMcp**](AgentsAPI.md#authorizemcp) | **POST** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3).
@@ -11,10 +12,64 @@ Method | HTTP request | Description
 [**getAgentCard**](AgentsAPI.md#getagentcard) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card
 [**getApprovalStatus**](AgentsAPI.md#getapprovalstatus) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 [**getCurrentAgent**](AgentsAPI.md#getcurrentagent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
+[**pollAgentEnrollment**](AgentsAPI.md#pollagentenrollment) | **POST** /orgs/{orgId}/api/v1/agents/enrollments/token | Poll an agent enrollment (no credential)
 [**registerAgent**](AgentsAPI.md#registeragent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
 [**reportAgentUsage**](AgentsAPI.md#reportagentusage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used
+[**startAgentEnrollment**](AgentsAPI.md#startagentenrollment) | **POST** /orgs/{orgId}/api/v1/agents/enrollments | Start an agent enrollment (no credential)
 [**verifyAgentCard**](AgentsAPI.md#verifyagentcard) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
 
+
+# **agentsMeToolCalls**
+```swift
+    open class func agentsMeToolCalls(orgId: String, agentsMeToolCallsRequest: AgentsMeToolCallsRequest, completion: @escaping (_ data: AgentsMeToolCallsResponse?, _ error: Error?) -> Void)
+```
+
+Report the tool calls that the agent's host gated
+
+Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host's own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import LumoAuthAPIClient
+
+let orgId = "orgId_example" // String | 
+let agentsMeToolCallsRequest = AgentsMeToolCallsRequest(calls: [AgentsMeToolCallsRequestCallsItem(tool: "tool_example", serverId: "serverId_example", decision: "decision_example", outcome: "outcome_example", durationMs: 123, argumentsSha256: "argumentsSha256_example", auditId: "auditId_example", occurredAt: Date(), errorCode: "errorCode_example")]) // AgentsMeToolCallsRequest | 
+
+// Report the tool calls that the agent's host gated
+AgentsAPI.agentsMeToolCalls(orgId: orgId, agentsMeToolCallsRequest: agentsMeToolCallsRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **String** |  | 
+ **agentsMeToolCallsRequest** | [**AgentsMeToolCallsRequest**](AgentsMeToolCallsRequest.md) |  | 
+
+### Return type
+
+[**AgentsMeToolCallsResponse**](AgentsMeToolCallsResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ask**
 ```swift
@@ -31,7 +86,7 @@ POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
-let askRequest = AskRequest(action: "action_example", context: 123) // AskRequest | 
+let askRequest = AskRequest(action: "action_example", context: 123, audit: "audit_example") // AskRequest | 
 
 // Agent-friendly permission check (Natural Language style)
 AgentsAPI.ask(orgId: orgId, askRequest: askRequest) { (response, error) in
@@ -187,7 +242,7 @@ Name | Type | Description  | Notes
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
-let createApprovalRequest = CreateApprovalRequest(taskId: "taskId_example", reason: "reason_example", impact: "impact_example", onBehalfOf: "onBehalfOf_example", meta: 123) // CreateApprovalRequest | 
+let createApprovalRequest = CreateApprovalRequest(taskId: "taskId_example", reason: "reason_example", impact: "impact_example", onBehalfOf: "onBehalfOf_example", expiresIn: 123, meta: CreateApprovalRequestMeta(kind: "kind_example", host: "host_example", tool: "tool_example", server: "server_example", capability: "capability_example", risk: "risk_example", why: "why_example", title: "title_example", args: ["args_example"], argumentsSha256: "argumentsSha256_example")) // CreateApprovalRequest | 
 
 AgentsAPI.createApproval(orgId: orgId, createApprovalRequest: createApprovalRequest) { (response, error) in
     guard error == nil else {
@@ -374,6 +429,58 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **pollAgentEnrollment**
+```swift
+    open class func pollAgentEnrollment(orgId: String, pollAgentEnrollmentRequest: PollAgentEnrollmentRequest, completion: @escaping (_ data: PollAgentEnrollmentResponse?, _ error: Error?) -> Void)
+```
+
+Poll an agent enrollment (no credential)
+
+Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import LumoAuthAPIClient
+
+let orgId = "orgId_example" // String | 
+let pollAgentEnrollmentRequest = PollAgentEnrollmentRequest(enrollmentCode: "enrollmentCode_example") // PollAgentEnrollmentRequest | 
+
+// Poll an agent enrollment (no credential)
+AgentsAPI.pollAgentEnrollment(orgId: orgId, pollAgentEnrollmentRequest: pollAgentEnrollmentRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **String** |  | 
+ **pollAgentEnrollmentRequest** | [**PollAgentEnrollmentRequest**](PollAgentEnrollmentRequest.md) |  | 
+
+### Return type
+
+[**PollAgentEnrollmentResponse**](PollAgentEnrollmentResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **registerAgent**
 ```swift
     open class func registerAgent(orgId: String, completion: @escaping (_ data: RegisterAgentResponse?, _ error: Error?) -> Void)
@@ -466,6 +573,58 @@ Name | Type | Description  | Notes
 ### Authorization
 
 [ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **startAgentEnrollment**
+```swift
+    open class func startAgentEnrollment(orgId: String, startAgentEnrollmentRequest: StartAgentEnrollmentRequest, completion: @escaping (_ data: StartAgentEnrollmentResponse?, _ error: Error?) -> Void)
+```
+
+Start an agent enrollment (no credential)
+
+The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; only public keys are accepted. Rate limited per client address and per organization; an organization has at most 20 pending enrollments.
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import LumoAuthAPIClient
+
+let orgId = "orgId_example" // String | 
+let startAgentEnrollmentRequest = StartAgentEnrollmentRequest(name: "name_example", host: "host_example", hostLabel: "hostLabel_example", jwks: StartAgentEnrollmentRequestJwks(keys: ["TODO"]), capabilities: [StartAgentEnrollmentRequestCapabilitiesItem(scope: "scope_example", risk: "risk_example", label: "label_example", checked: false)], delegation: false, inventory: StartAgentEnrollmentRequestInventory(tools: 123, mcpServers: [StartAgentEnrollmentRequestInventoryMcpServersItem(name: "name_example")])) // StartAgentEnrollmentRequest | 
+
+// Start an agent enrollment (no credential)
+AgentsAPI.startAgentEnrollment(orgId: orgId, startAgentEnrollmentRequest: startAgentEnrollmentRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **String** |  | 
+ **startAgentEnrollmentRequest** | [**StartAgentEnrollmentRequest**](StartAgentEnrollmentRequest.md) |  | 
+
+### Return type
+
+[**StartAgentEnrollmentResponse**](StartAgentEnrollmentResponse.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 

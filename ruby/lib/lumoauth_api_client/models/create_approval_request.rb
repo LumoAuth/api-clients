@@ -24,10 +24,12 @@ module LumoAuthApiClient
     # One of low, medium, high, critical.
     attr_accessor :impact
 
-    # User id or email the agent acts for (delegation required).
+    # User id or email the agent acts for (delegation required). When it is the agent's owner, the request also goes to the organization's Slack and Discord approval channels that have agent approvals switched on.
     attr_accessor :on_behalf_of
 
-    # Optional action metadata.
+    # Seconds the person has to answer (60-600, default 120). An integer outside the range is clamped.
+    attr_accessor :expires_in
+
     attr_accessor :meta
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -37,6 +39,7 @@ module LumoAuthApiClient
         :'reason' => :'reason',
         :'impact' => :'impact',
         :'on_behalf_of' => :'on_behalf_of',
+        :'expires_in' => :'expires_in',
         :'meta' => :'meta'
       }
     end
@@ -58,7 +61,8 @@ module LumoAuthApiClient
         :'reason' => :'String',
         :'impact' => :'String',
         :'on_behalf_of' => :'String',
-        :'meta' => :'Object'
+        :'expires_in' => :'Integer',
+        :'meta' => :'CreateApprovalRequestMeta'
       }
     end
 
@@ -100,6 +104,12 @@ module LumoAuthApiClient
         self.on_behalf_of = attributes[:'on_behalf_of']
       end
 
+      if attributes.key?(:'expires_in')
+        self.expires_in = attributes[:'expires_in']
+      else
+        self.expires_in = 120
+      end
+
       if attributes.key?(:'meta')
         self.meta = attributes[:'meta']
       end
@@ -110,6 +120,14 @@ module LumoAuthApiClient
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if !@expires_in.nil? && @expires_in > 600
+        invalid_properties.push('invalid value for "expires_in", must be smaller than or equal to 600.')
+      end
+
+      if !@expires_in.nil? && @expires_in < 60
+        invalid_properties.push('invalid value for "expires_in", must be greater than or equal to 60.')
+      end
+
       invalid_properties
     end
 
@@ -117,7 +135,27 @@ module LumoAuthApiClient
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if !@expires_in.nil? && @expires_in > 600
+      return false if !@expires_in.nil? && @expires_in < 60
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] expires_in Value to be assigned
+    def expires_in=(expires_in)
+      if expires_in.nil?
+        fail ArgumentError, 'expires_in cannot be nil'
+      end
+
+      if expires_in > 600
+        fail ArgumentError, 'invalid value for "expires_in", must be smaller than or equal to 600.'
+      end
+
+      if expires_in < 60
+        fail ArgumentError, 'invalid value for "expires_in", must be greater than or equal to 60.'
+      end
+
+      @expires_in = expires_in
     end
 
     # Checks equality by comparing each attribute.
@@ -129,6 +167,7 @@ module LumoAuthApiClient
           reason == o.reason &&
           impact == o.impact &&
           on_behalf_of == o.on_behalf_of &&
+          expires_in == o.expires_in &&
           meta == o.meta
     end
 
@@ -141,7 +180,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [task_id, reason, impact, on_behalf_of, meta].hash
+      [task_id, reason, impact, on_behalf_of, expires_in, meta].hash
     end
 
     # Builds the object from hash

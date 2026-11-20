@@ -9,6 +9,9 @@ Name | Type | Description | Notes
 **description** | **string** |  | [optional] [default to undefined]
 **capabilities** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **budgetPolicy** | **{ [key: string]: any; }** | The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is. | [optional] [default to undefined]
+**jwks** | **{ [key: string]: any; }** | For private_key_jwt agents: replaces the public keys (inline JWK Set). Removing a key revokes the tokens that the agent holds. | [optional] [default to undefined]
+**jwksUri** | **string** | For private_key_jwt agents: https URL of the public key set. | [optional] [default to undefined]
+**canActOnBehalfOfUsers** | **boolean** | Whether the agent may act for users of the organization. Switching it on needs the delegation feature of the plan and an editor who holds every capability of the agent. | [optional] [default to undefined]
 
 ## Example
 
@@ -20,6 +23,9 @@ const instance: PutAdminAgentsUpdateRequest = {
     description,
     capabilities,
     budgetPolicy,
+    jwks,
+    jwksUri,
+    canActOnBehalfOfUsers,
 };
 ```
 
