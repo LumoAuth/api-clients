@@ -61,7 +61,11 @@ class AdminAgentsCreateRequest implements ModelInterface, ArrayAccess, \JsonSeri
         'name' => 'string',
         'description' => 'string',
         'capabilities' => 'string[]',
-        'budgetPolicy' => 'array<string,mixed>'
+        'budgetPolicy' => 'array<string,mixed>',
+        'identityType' => 'string',
+        'jwks' => 'array<string,mixed>',
+        'jwksUri' => 'string',
+        'canActOnBehalfOfUsers' => 'bool'
     ];
 
     /**
@@ -75,7 +79,11 @@ class AdminAgentsCreateRequest implements ModelInterface, ArrayAccess, \JsonSeri
         'name' => null,
         'description' => null,
         'capabilities' => null,
-        'budgetPolicy' => null
+        'budgetPolicy' => null,
+        'identityType' => null,
+        'jwks' => null,
+        'jwksUri' => null,
+        'canActOnBehalfOfUsers' => null
     ];
 
     /**
@@ -87,7 +95,11 @@ class AdminAgentsCreateRequest implements ModelInterface, ArrayAccess, \JsonSeri
         'name' => false,
         'description' => false,
         'capabilities' => false,
-        'budgetPolicy' => true
+        'budgetPolicy' => true,
+        'identityType' => false,
+        'jwks' => false,
+        'jwksUri' => false,
+        'canActOnBehalfOfUsers' => false
     ];
 
     /**
@@ -179,7 +191,11 @@ class AdminAgentsCreateRequest implements ModelInterface, ArrayAccess, \JsonSeri
         'name' => 'name',
         'description' => 'description',
         'capabilities' => 'capabilities',
-        'budgetPolicy' => 'budgetPolicy'
+        'budgetPolicy' => 'budgetPolicy',
+        'identityType' => 'identityType',
+        'jwks' => 'jwks',
+        'jwksUri' => 'jwksUri',
+        'canActOnBehalfOfUsers' => 'canActOnBehalfOfUsers'
     ];
 
     /**
@@ -191,7 +207,11 @@ class AdminAgentsCreateRequest implements ModelInterface, ArrayAccess, \JsonSeri
         'name' => 'setName',
         'description' => 'setDescription',
         'capabilities' => 'setCapabilities',
-        'budgetPolicy' => 'setBudgetPolicy'
+        'budgetPolicy' => 'setBudgetPolicy',
+        'identityType' => 'setIdentityType',
+        'jwks' => 'setJwks',
+        'jwksUri' => 'setJwksUri',
+        'canActOnBehalfOfUsers' => 'setCanActOnBehalfOfUsers'
     ];
 
     /**
@@ -203,7 +223,11 @@ class AdminAgentsCreateRequest implements ModelInterface, ArrayAccess, \JsonSeri
         'name' => 'getName',
         'description' => 'getDescription',
         'capabilities' => 'getCapabilities',
-        'budgetPolicy' => 'getBudgetPolicy'
+        'budgetPolicy' => 'getBudgetPolicy',
+        'identityType' => 'getIdentityType',
+        'jwks' => 'getJwks',
+        'jwksUri' => 'getJwksUri',
+        'canActOnBehalfOfUsers' => 'getCanActOnBehalfOfUsers'
     ];
 
     /**
@@ -247,6 +271,29 @@ class AdminAgentsCreateRequest implements ModelInterface, ArrayAccess, \JsonSeri
         return self::$openAPIModelName;
     }
 
+    public const IDENTITY_TYPE_WORKLOAD = 'workload';
+    public const IDENTITY_TYPE_AAUTH = 'aauth';
+    public const IDENTITY_TYPE_PRIVATE_KEY_JWT = 'private_key_jwt';
+    public const IDENTITY_TYPE_CLIENT_SECRET = 'client_secret';
+    public const IDENTITY_TYPE_API_KEY = 'api_key';
+    public const IDENTITY_TYPE_CUSTOM = 'custom';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getIdentityTypeAllowableValues()
+    {
+        return [
+            self::IDENTITY_TYPE_WORKLOAD,
+            self::IDENTITY_TYPE_AAUTH,
+            self::IDENTITY_TYPE_PRIVATE_KEY_JWT,
+            self::IDENTITY_TYPE_CLIENT_SECRET,
+            self::IDENTITY_TYPE_API_KEY,
+            self::IDENTITY_TYPE_CUSTOM,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -267,6 +314,10 @@ class AdminAgentsCreateRequest implements ModelInterface, ArrayAccess, \JsonSeri
         $this->setIfExists('description', $data ?? [], null);
         $this->setIfExists('capabilities', $data ?? [], null);
         $this->setIfExists('budgetPolicy', $data ?? [], null);
+        $this->setIfExists('identityType', $data ?? [], null);
+        $this->setIfExists('jwks', $data ?? [], null);
+        $this->setIfExists('jwksUri', $data ?? [], null);
+        $this->setIfExists('canActOnBehalfOfUsers', $data ?? [], null);
     }
 
     /**
@@ -295,6 +346,15 @@ class AdminAgentsCreateRequest implements ModelInterface, ArrayAccess, \JsonSeri
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        $allowedValues = $this->getIdentityTypeAllowableValues();
+        if (!is_null($this->container['identityType']) && !in_array($this->container['identityType'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'identityType', must be one of '%s'",
+                $this->container['identityType'],
+                implode("', '", $allowedValues)
+            );
+        }
 
         return $invalidProperties;
     }
@@ -422,6 +482,124 @@ class AdminAgentsCreateRequest implements ModelInterface, ArrayAccess, \JsonSeri
             }
         }
         $this->container['budgetPolicy'] = $budgetPolicy;
+
+        return $this;
+    }
+
+    /**
+     * Gets identityType
+     *
+     * @return string|null
+     */
+    public function getIdentityType()
+    {
+        return $this->container['identityType'];
+    }
+
+    /**
+     * Sets identityType
+     *
+     * @param string|null $identityType How the agent authenticates. Default api_key.
+     *
+     * @return self
+     */
+    public function setIdentityType($identityType)
+    {
+        if (is_null($identityType)) {
+            throw new \InvalidArgumentException('non-nullable identityType cannot be null');
+        }
+        $allowedValues = $this->getIdentityTypeAllowableValues();
+        if (!in_array($identityType, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'identityType', must be one of '%s'",
+                    $identityType,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['identityType'] = $identityType;
+
+        return $this;
+    }
+
+    /**
+     * Gets jwks
+     *
+     * @return array<string,mixed>|null
+     */
+    public function getJwks()
+    {
+        return $this->container['jwks'];
+    }
+
+    /**
+     * Sets jwks
+     *
+     * @param array<string,mixed>|null $jwks For private_key_jwt: the public keys of the agent, inline (a JWK Set). Private key members are refused. Send jwks or jwksUri, not both.
+     *
+     * @return self
+     */
+    public function setJwks($jwks)
+    {
+        if (is_null($jwks)) {
+            throw new \InvalidArgumentException('non-nullable jwks cannot be null');
+        }
+        $this->container['jwks'] = $jwks;
+
+        return $this;
+    }
+
+    /**
+     * Gets jwksUri
+     *
+     * @return string|null
+     */
+    public function getJwksUri()
+    {
+        return $this->container['jwksUri'];
+    }
+
+    /**
+     * Sets jwksUri
+     *
+     * @param string|null $jwksUri For private_key_jwt: https URL of the public key set of the agent.
+     *
+     * @return self
+     */
+    public function setJwksUri($jwksUri)
+    {
+        if (is_null($jwksUri)) {
+            throw new \InvalidArgumentException('non-nullable jwksUri cannot be null');
+        }
+        $this->container['jwksUri'] = $jwksUri;
+
+        return $this;
+    }
+
+    /**
+     * Gets canActOnBehalfOfUsers
+     *
+     * @return bool|null
+     */
+    public function getCanActOnBehalfOfUsers()
+    {
+        return $this->container['canActOnBehalfOfUsers'];
+    }
+
+    /**
+     * Sets canActOnBehalfOfUsers
+     *
+     * @param bool|null $canActOnBehalfOfUsers Whether the agent may act for users of the organization: approval prompts on their phones, Token Vault connections, the on-behalf-of token exchange and JIT requests for a user. Needs the delegation feature of the plan. Default false.
+     *
+     * @return self
+     */
+    public function setCanActOnBehalfOfUsers($canActOnBehalfOfUsers)
+    {
+        if (is_null($canActOnBehalfOfUsers)) {
+            throw new \InvalidArgumentException('non-nullable canActOnBehalfOfUsers cannot be null');
+        }
+        $this->container['canActOnBehalfOfUsers'] = $canActOnBehalfOfUsers;
 
         return $this;
     }

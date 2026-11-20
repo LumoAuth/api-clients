@@ -9,6 +9,7 @@
 | **expires_at** | **Time** |  | [optional] |
 | **task_id** | **String** |  | [optional] |
 | **impact** | **String** |  | [optional] |
+| **delivery** | **Array&lt;String&gt;** | Where the request went: &#x60;push&#x60; (the LumoAuth app), &#x60;slack&#x60;, &#x60;discord&#x60;. | [optional] |
 
 ## Example
 
@@ -20,7 +21,8 @@ instance = LumoAuthApiClient::CreateApprovalResponse.new(
   status: pending,
   expires_at: null,
   task_id: null,
-  impact: null
+  impact: null,
+  delivery: null
 )
 ```
 

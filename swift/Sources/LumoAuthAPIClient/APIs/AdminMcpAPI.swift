@@ -156,6 +156,170 @@ open class AdminMcpAPI {
     }
 
     /**
+     List the agents allowed to call tools of an MCP server
+     
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter agentId: (query) Only the grants of this agent (agentId or numeric id). (optional)
+     - returns: AdminMcpServersGrantsListResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func adminMcpServersGrantsList(orgId: String, serverId: String, agentId: String? = nil) async throws -> AdminMcpServersGrantsListResponse {
+        return try await adminMcpServersGrantsListWithRequestBuilder(orgId: orgId, serverId: serverId, agentId: agentId).execute().body
+    }
+
+    /**
+     List the agents allowed to call tools of an MCP server
+     - GET /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter agentId: (query) Only the grants of this agent (agentId or numeric id). (optional)
+     - returns: RequestBuilder<AdminMcpServersGrantsListResponse> 
+     */
+    open class func adminMcpServersGrantsListWithRequestBuilder(orgId: String, serverId: String, agentId: String? = nil) -> RequestBuilder<AdminMcpServersGrantsListResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let serverIdPreEscape = "\(APIHelper.mapValueToPathItem(serverId))"
+        let serverIdPostEscape = serverIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{serverId}", with: serverIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "agent_id": (wrappedValue: agentId?.encodeToJSON(), isExplode: true),
+        ])
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AdminMcpServersGrantsListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Remove every grant of an agent on an MCP server
+     
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter agentId: (path)  
+     - returns: AdminMcpServersGrantsRemoveResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func adminMcpServersGrantsRemove(orgId: String, serverId: String, agentId: String) async throws -> AdminMcpServersGrantsRemoveResponse {
+        return try await adminMcpServersGrantsRemoveWithRequestBuilder(orgId: orgId, serverId: serverId, agentId: agentId).execute().body
+    }
+
+    /**
+     Remove every grant of an agent on an MCP server
+     - DELETE /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter agentId: (path)  
+     - returns: RequestBuilder<AdminMcpServersGrantsRemoveResponse> 
+     */
+    open class func adminMcpServersGrantsRemoveWithRequestBuilder(orgId: String, serverId: String, agentId: String) -> RequestBuilder<AdminMcpServersGrantsRemoveResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let serverIdPreEscape = "\(APIHelper.mapValueToPathItem(serverId))"
+        let serverIdPostEscape = serverIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{serverId}", with: serverIdPostEscape, options: .literal, range: nil)
+        let agentIdPreEscape = "\(APIHelper.mapValueToPathItem(agentId))"
+        let agentIdPostEscape = agentIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{agentId}", with: agentIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AdminMcpServersGrantsRemoveResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Set the tools of an MCP server that an agent may call
+     
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter agentId: (path)  
+     - parameter adminMcpServersGrantsSetRequest: (body)  
+     - returns: AdminMcpServersGrantsSetResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func adminMcpServersGrantsSet(orgId: String, serverId: String, agentId: String, adminMcpServersGrantsSetRequest: AdminMcpServersGrantsSetRequest) async throws -> AdminMcpServersGrantsSetResponse {
+        return try await adminMcpServersGrantsSetWithRequestBuilder(orgId: orgId, serverId: serverId, agentId: agentId, adminMcpServersGrantsSetRequest: adminMcpServersGrantsSetRequest).execute().body
+    }
+
+    /**
+     Set the tools of an MCP server that an agent may call
+     - PUT /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter agentId: (path)  
+     - parameter adminMcpServersGrantsSetRequest: (body)  
+     - returns: RequestBuilder<AdminMcpServersGrantsSetResponse> 
+     */
+    open class func adminMcpServersGrantsSetWithRequestBuilder(orgId: String, serverId: String, agentId: String, adminMcpServersGrantsSetRequest: AdminMcpServersGrantsSetRequest) -> RequestBuilder<AdminMcpServersGrantsSetResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let serverIdPreEscape = "\(APIHelper.mapValueToPathItem(serverId))"
+        let serverIdPostEscape = serverIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{serverId}", with: serverIdPostEscape, options: .literal, range: nil)
+        let agentIdPreEscape = "\(APIHelper.mapValueToPathItem(agentId))"
+        let agentIdPostEscape = agentIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{agentId}", with: agentIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminMcpServersGrantsSetRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AdminMcpServersGrantsSetResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      List MCP servers
      
      - parameter orgId: (path)  

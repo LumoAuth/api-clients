@@ -24,6 +24,10 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { AdminAgentsReportUsageRequest } from '../models';
 // @ts-ignore
+import type { AgentsMeToolCallsRequest } from '../models';
+// @ts-ignore
+import type { AgentsMeToolCallsResponse } from '../models';
+// @ts-ignore
 import type { AskRequest } from '../models';
 // @ts-ignore
 import type { AskResponse } from '../models';
@@ -46,11 +50,19 @@ import type { GetApprovalStatusResponse } from '../models';
 // @ts-ignore
 import type { GetCurrentAgentResponse } from '../models';
 // @ts-ignore
+import type { PollAgentEnrollmentRequest } from '../models';
+// @ts-ignore
+import type { PollAgentEnrollmentResponse } from '../models';
+// @ts-ignore
 import type { RegisterAgentResponse } from '../models';
 // @ts-ignore
 import type { ReportAgentUsageResponse } from '../models';
 // @ts-ignore
 import type { SignedAgentCard } from '../models';
+// @ts-ignore
+import type { StartAgentEnrollmentRequest } from '../models';
+// @ts-ignore
+import type { StartAgentEnrollmentResponse } from '../models';
 // @ts-ignore
 import type { VerifyAgentCardResponse } from '../models';
 /**
@@ -59,6 +71,53 @@ import type { VerifyAgentCardResponse } from '../models';
  */
 export const AgentsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host\'s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+         * @summary Report the tool calls that the agent\'s host gated
+         * @param {string} orgId 
+         * @param {AgentsMeToolCallsRequest} agentsMeToolCallsRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        agentsMeToolCalls: async (orgId: string, agentsMeToolCallsRequest: AgentsMeToolCallsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('agentsMeToolCalls', 'orgId', orgId)
+            // verify required parameter 'agentsMeToolCallsRequest' is not null or undefined
+            assertParamExists('agentsMeToolCalls', 'agentsMeToolCallsRequest', agentsMeToolCallsRequest)
+            const localVarPath = `/orgs/{orgId}/api/v1/agents/me/tool-calls`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentsMeToolCallsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
          * @summary Agent-friendly permission check (Natural Language style)
@@ -374,6 +433,46 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+         * @summary Poll an agent enrollment (no credential)
+         * @param {string} orgId 
+         * @param {PollAgentEnrollmentRequest} pollAgentEnrollmentRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pollAgentEnrollment: async (orgId: string, pollAgentEnrollmentRequest: PollAgentEnrollmentRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('pollAgentEnrollment', 'orgId', orgId)
+            // verify required parameter 'pollAgentEnrollmentRequest' is not null or undefined
+            assertParamExists('pollAgentEnrollment', 'pollAgentEnrollmentRequest', pollAgentEnrollmentRequest)
+            const localVarPath = `/orgs/{orgId}/api/v1/agents/enrollments/token`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pollAgentEnrollmentRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Register (or re-register) an agent
          * @param {string} orgId 
@@ -462,6 +561,46 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; only public keys are accepted. Rate limited per client address and per organization; an organization has at most 20 pending enrollments.
+         * @summary Start an agent enrollment (no credential)
+         * @param {string} orgId 
+         * @param {StartAgentEnrollmentRequest} startAgentEnrollmentRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startAgentEnrollment: async (orgId: string, startAgentEnrollmentRequest: StartAgentEnrollmentRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('startAgentEnrollment', 'orgId', orgId)
+            // verify required parameter 'startAgentEnrollmentRequest' is not null or undefined
+            assertParamExists('startAgentEnrollment', 'startAgentEnrollmentRequest', startAgentEnrollmentRequest)
+            const localVarPath = `/orgs/{orgId}/api/v1/agents/enrollments`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(startAgentEnrollmentRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer\'s key set (SSRF-guarded); by default the organization\'s own JWKS is used.
          * @summary Verify a signed A2A agent card
          * @param {string} orgId 
@@ -518,6 +657,20 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
 export const AgentsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AgentsApiAxiosParamCreator(configuration)
     return {
+        /**
+         * Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host\'s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+         * @summary Report the tool calls that the agent\'s host gated
+         * @param {string} orgId 
+         * @param {AgentsMeToolCallsRequest} agentsMeToolCallsRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async agentsMeToolCalls(orgId: string, agentsMeToolCallsRequest: AgentsMeToolCallsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentsMeToolCallsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.agentsMeToolCalls(orgId, agentsMeToolCallsRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.agentsMeToolCalls']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
         /**
          * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
          * @summary Agent-friendly permission check (Natural Language style)
@@ -615,6 +768,20 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+         * @summary Poll an agent enrollment (no credential)
+         * @param {string} orgId 
+         * @param {PollAgentEnrollmentRequest} pollAgentEnrollmentRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pollAgentEnrollment(orgId: string, pollAgentEnrollmentRequest: PollAgentEnrollmentRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PollAgentEnrollmentResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pollAgentEnrollment(orgId, pollAgentEnrollmentRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.pollAgentEnrollment']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Register (or re-register) an agent
          * @param {string} orgId 
@@ -642,6 +809,20 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; only public keys are accepted. Rate limited per client address and per organization; an organization has at most 20 pending enrollments.
+         * @summary Start an agent enrollment (no credential)
+         * @param {string} orgId 
+         * @param {StartAgentEnrollmentRequest} startAgentEnrollmentRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async startAgentEnrollment(orgId: string, startAgentEnrollmentRequest: StartAgentEnrollmentRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StartAgentEnrollmentResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.startAgentEnrollment(orgId, startAgentEnrollmentRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.startAgentEnrollment']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer\'s key set (SSRF-guarded); by default the organization\'s own JWKS is used.
          * @summary Verify a signed A2A agent card
          * @param {string} orgId 
@@ -665,6 +846,16 @@ export const AgentsApiFp = function(configuration?: Configuration) {
 export const AgentsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = AgentsApiFp(configuration)
     return {
+        /**
+         * Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host\'s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+         * @summary Report the tool calls that the agent\'s host gated
+         * @param {AgentsApiAgentsMeToolCallsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        agentsMeToolCalls(requestParameters: AgentsApiAgentsMeToolCallsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentsMeToolCallsResponse> {
+            return localVarFp.agentsMeToolCalls(requestParameters.orgId, requestParameters.agentsMeToolCallsRequest, options).then((request) => request(axios, basePath));
+        },
         /**
          * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
          * @summary Agent-friendly permission check (Natural Language style)
@@ -734,6 +925,16 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getCurrentAgent(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+         * @summary Poll an agent enrollment (no credential)
+         * @param {AgentsApiPollAgentEnrollmentRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pollAgentEnrollment(requestParameters: AgentsApiPollAgentEnrollmentRequest, options?: RawAxiosRequestConfig): AxiosPromise<PollAgentEnrollmentResponse> {
+            return localVarFp.pollAgentEnrollment(requestParameters.orgId, requestParameters.pollAgentEnrollmentRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Register (or re-register) an agent
          * @param {AgentsApiRegisterAgentRequest} requestParameters Request parameters.
@@ -754,6 +955,16 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.reportAgentUsage(requestParameters.orgId, requestParameters.adminAgentsReportUsageRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; only public keys are accepted. Rate limited per client address and per organization; an organization has at most 20 pending enrollments.
+         * @summary Start an agent enrollment (no credential)
+         * @param {AgentsApiStartAgentEnrollmentRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startAgentEnrollment(requestParameters: AgentsApiStartAgentEnrollmentRequest, options?: RawAxiosRequestConfig): AxiosPromise<StartAgentEnrollmentResponse> {
+            return localVarFp.startAgentEnrollment(requestParameters.orgId, requestParameters.startAgentEnrollmentRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer\'s key set (SSRF-guarded); by default the organization\'s own JWKS is used.
          * @summary Verify a signed A2A agent card
          * @param {AgentsApiVerifyAgentCardRequest} requestParameters Request parameters.
@@ -772,6 +983,16 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
  * @interface AgentsApi
  */
 export interface AgentsApiInterface {
+    /**
+     * Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host\'s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+     * @summary Report the tool calls that the agent\'s host gated
+     * @param {AgentsApiAgentsMeToolCallsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApiInterface
+     */
+    agentsMeToolCalls(requestParameters: AgentsApiAgentsMeToolCallsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentsMeToolCallsResponse>;
+
     /**
      * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
      * @summary Agent-friendly permission check (Natural Language style)
@@ -841,6 +1062,16 @@ export interface AgentsApiInterface {
     getCurrentAgent(requestParameters: AgentsApiGetCurrentAgentRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetCurrentAgentResponse>;
 
     /**
+     * Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+     * @summary Poll an agent enrollment (no credential)
+     * @param {AgentsApiPollAgentEnrollmentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApiInterface
+     */
+    pollAgentEnrollment(requestParameters: AgentsApiPollAgentEnrollmentRequest, options?: RawAxiosRequestConfig): AxiosPromise<PollAgentEnrollmentResponse>;
+
+    /**
      * 
      * @summary Register (or re-register) an agent
      * @param {AgentsApiRegisterAgentRequest} requestParameters Request parameters.
@@ -861,6 +1092,16 @@ export interface AgentsApiInterface {
     reportAgentUsage(requestParameters: AgentsApiReportAgentUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReportAgentUsageResponse>;
 
     /**
+     * The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; only public keys are accepted. Rate limited per client address and per organization; an organization has at most 20 pending enrollments.
+     * @summary Start an agent enrollment (no credential)
+     * @param {AgentsApiStartAgentEnrollmentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApiInterface
+     */
+    startAgentEnrollment(requestParameters: AgentsApiStartAgentEnrollmentRequest, options?: RawAxiosRequestConfig): AxiosPromise<StartAgentEnrollmentResponse>;
+
+    /**
      * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer\'s key set (SSRF-guarded); by default the organization\'s own JWKS is used.
      * @summary Verify a signed A2A agent card
      * @param {AgentsApiVerifyAgentCardRequest} requestParameters Request parameters.
@@ -870,6 +1111,27 @@ export interface AgentsApiInterface {
      */
     verifyAgentCard(requestParameters: AgentsApiVerifyAgentCardRequest, options?: RawAxiosRequestConfig): AxiosPromise<VerifyAgentCardResponse>;
 
+}
+
+/**
+ * Request parameters for agentsMeToolCalls operation in AgentsApi.
+ * @export
+ * @interface AgentsApiAgentsMeToolCallsRequest
+ */
+export interface AgentsApiAgentsMeToolCallsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentsApiAgentsMeToolCalls
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {AgentsMeToolCallsRequest}
+     * @memberof AgentsApiAgentsMeToolCalls
+     */
+    readonly agentsMeToolCallsRequest: AgentsMeToolCallsRequest
 }
 
 /**
@@ -1020,6 +1282,27 @@ export interface AgentsApiGetCurrentAgentRequest {
 }
 
 /**
+ * Request parameters for pollAgentEnrollment operation in AgentsApi.
+ * @export
+ * @interface AgentsApiPollAgentEnrollmentRequest
+ */
+export interface AgentsApiPollAgentEnrollmentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentsApiPollAgentEnrollment
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {PollAgentEnrollmentRequest}
+     * @memberof AgentsApiPollAgentEnrollment
+     */
+    readonly pollAgentEnrollmentRequest: PollAgentEnrollmentRequest
+}
+
+/**
  * Request parameters for registerAgent operation in AgentsApi.
  * @export
  * @interface AgentsApiRegisterAgentRequest
@@ -1055,6 +1338,27 @@ export interface AgentsApiReportAgentUsageRequest {
 }
 
 /**
+ * Request parameters for startAgentEnrollment operation in AgentsApi.
+ * @export
+ * @interface AgentsApiStartAgentEnrollmentRequest
+ */
+export interface AgentsApiStartAgentEnrollmentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentsApiStartAgentEnrollment
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {StartAgentEnrollmentRequest}
+     * @memberof AgentsApiStartAgentEnrollment
+     */
+    readonly startAgentEnrollmentRequest: StartAgentEnrollmentRequest
+}
+
+/**
  * Request parameters for verifyAgentCard operation in AgentsApi.
  * @export
  * @interface AgentsApiVerifyAgentCardRequest
@@ -1082,6 +1386,18 @@ export interface AgentsApiVerifyAgentCardRequest {
  * @extends {BaseAPI}
  */
 export class AgentsApi extends BaseAPI implements AgentsApiInterface {
+    /**
+     * Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host\'s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+     * @summary Report the tool calls that the agent\'s host gated
+     * @param {AgentsApiAgentsMeToolCallsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public agentsMeToolCalls(requestParameters: AgentsApiAgentsMeToolCallsRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).agentsMeToolCalls(requestParameters.orgId, requestParameters.agentsMeToolCallsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * POST /orgs/{orgId}/api/v1/agents/ask Body: {   \"action\": \"document:read\",   \"context\": {\"id\": \"123\"} }
      * @summary Agent-friendly permission check (Natural Language style)
@@ -1165,6 +1481,18 @@ export class AgentsApi extends BaseAPI implements AgentsApiInterface {
     }
 
     /**
+     * Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+     * @summary Poll an agent enrollment (no credential)
+     * @param {AgentsApiPollAgentEnrollmentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public pollAgentEnrollment(requestParameters: AgentsApiPollAgentEnrollmentRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).pollAgentEnrollment(requestParameters.orgId, requestParameters.pollAgentEnrollmentRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 
      * @summary Register (or re-register) an agent
      * @param {AgentsApiRegisterAgentRequest} requestParameters Request parameters.
@@ -1186,6 +1514,18 @@ export class AgentsApi extends BaseAPI implements AgentsApiInterface {
      */
     public reportAgentUsage(requestParameters: AgentsApiReportAgentUsageRequest, options?: RawAxiosRequestConfig) {
         return AgentsApiFp(this.configuration).reportAgentUsage(requestParameters.orgId, requestParameters.adminAgentsReportUsageRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; only public keys are accepted. Rate limited per client address and per organization; an organization has at most 20 pending enrollments.
+     * @summary Start an agent enrollment (no credential)
+     * @param {AgentsApiStartAgentEnrollmentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public startAgentEnrollment(requestParameters: AgentsApiStartAgentEnrollmentRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).startAgentEnrollment(requestParameters.orgId, requestParameters.startAgentEnrollmentRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

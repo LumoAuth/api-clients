@@ -24,6 +24,8 @@ type AskRequest struct {
 	Action *string `json:"action,omitempty"`
 	// Optional resource/attribute context for the decision.
 	Context map[string]interface{} `json:"context,omitempty"`
+	// Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record.
+	Audit *string `json:"audit,omitempty"`
 }
 
 // NewAskRequest instantiates a new AskRequest object
@@ -32,6 +34,8 @@ type AskRequest struct {
 // will change when the set of required properties is changed
 func NewAskRequest() *AskRequest {
 	this := AskRequest{}
+	var audit string = "denials"
+	this.Audit = &audit
 	return &this
 }
 
@@ -40,6 +44,8 @@ func NewAskRequest() *AskRequest {
 // but it doesn't guarantee that properties required by API are set
 func NewAskRequestWithDefaults() *AskRequest {
 	this := AskRequest{}
+	var audit string = "denials"
+	this.Audit = &audit
 	return &this
 }
 
@@ -107,6 +113,38 @@ func (o *AskRequest) SetContext(v map[string]interface{}) {
 	o.Context = v
 }
 
+// GetAudit returns the Audit field value if set, zero value otherwise.
+func (o *AskRequest) GetAudit() string {
+	if o == nil || IsNil(o.Audit) {
+		var ret string
+		return ret
+	}
+	return *o.Audit
+}
+
+// GetAuditOk returns a tuple with the Audit field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AskRequest) GetAuditOk() (*string, bool) {
+	if o == nil || IsNil(o.Audit) {
+		return nil, false
+	}
+	return o.Audit, true
+}
+
+// HasAudit returns a boolean if a field has been set.
+func (o *AskRequest) HasAudit() bool {
+	if o != nil && !IsNil(o.Audit) {
+		return true
+	}
+
+	return false
+}
+
+// SetAudit gets a reference to the given string and assigns it to the Audit field.
+func (o *AskRequest) SetAudit(v string) {
+	o.Audit = &v
+}
+
 func (o AskRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -122,6 +160,9 @@ func (o AskRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Context) {
 		toSerialize["context"] = o.Context
+	}
+	if !IsNil(o.Audit) {
+		toSerialize["audit"] = o.Audit
 	}
 	return toSerialize, nil
 }

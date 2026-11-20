@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **expires_at** | **datetime** |  | [optional] 
 **task_id** | **str** |  | [optional] 
 **impact** | **str** |  | [optional] 
+**delivery** | **List[str]** | Where the request went: &#x60;push&#x60; (the LumoAuth app), &#x60;slack&#x60;, &#x60;discord&#x60;. | [optional] 
 
 ## Example
 

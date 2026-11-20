@@ -16,6 +16,10 @@ package io.lumoauth.client.api;
 import io.lumoauth.client.ApiException;
 import io.lumoauth.client.model.AdminMcpServersCreateResponse;
 import io.lumoauth.client.model.AdminMcpServersGetResponse;
+import io.lumoauth.client.model.AdminMcpServersGrantsListResponse;
+import io.lumoauth.client.model.AdminMcpServersGrantsRemoveResponse;
+import io.lumoauth.client.model.AdminMcpServersGrantsSetRequest;
+import io.lumoauth.client.model.AdminMcpServersGrantsSetResponse;
 import io.lumoauth.client.model.AdminMcpServersListResponse;
 import io.lumoauth.client.model.MessageResponse;
 import org.junit.jupiter.api.Disabled;
@@ -71,6 +75,49 @@ public class AdminMcpApiTest {
         String orgId = null;
         String serverId = null;
         AdminMcpServersGetResponse response = api.adminMcpServersGet(orgId, serverId);
+        // TODO: test validations
+    }
+
+    /**
+     * List the agents allowed to call tools of an MCP server
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminMcpServersGrantsListTest() throws ApiException {
+        String orgId = null;
+        String serverId = null;
+        String agentId = null;
+        AdminMcpServersGrantsListResponse response = api.adminMcpServersGrantsList(orgId, serverId, agentId);
+        // TODO: test validations
+    }
+
+    /**
+     * Remove every grant of an agent on an MCP server
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminMcpServersGrantsRemoveTest() throws ApiException {
+        String orgId = null;
+        String serverId = null;
+        String agentId = null;
+        AdminMcpServersGrantsRemoveResponse response = api.adminMcpServersGrantsRemove(orgId, serverId, agentId);
+        // TODO: test validations
+    }
+
+    /**
+     * Set the tools of an MCP server that an agent may call
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminMcpServersGrantsSetTest() throws ApiException {
+        String orgId = null;
+        String serverId = null;
+        String agentId = null;
+        AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest = null;
+        AdminMcpServersGrantsSetResponse response = api.adminMcpServersGrantsSet(orgId, serverId, agentId, adminMcpServersGrantsSetRequest);
         // TODO: test validations
     }
 

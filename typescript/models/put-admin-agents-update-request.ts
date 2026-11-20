@@ -44,5 +44,23 @@ export interface PutAdminAgentsUpdateRequest {
      * @memberof PutAdminAgentsUpdateRequest
      */
     'budgetPolicy'?: { [key: string]: any; } | null;
+    /**
+     * For private_key_jwt agents: replaces the public keys (inline JWK Set). Removing a key revokes the tokens that the agent holds.
+     * @type {{ [key: string]: any; }}
+     * @memberof PutAdminAgentsUpdateRequest
+     */
+    'jwks'?: { [key: string]: any; };
+    /**
+     * For private_key_jwt agents: https URL of the public key set.
+     * @type {string}
+     * @memberof PutAdminAgentsUpdateRequest
+     */
+    'jwksUri'?: string;
+    /**
+     * Whether the agent may act for users of the organization. Switching it on needs the delegation feature of the plan and an editor who holds every capability of the agent.
+     * @type {boolean}
+     * @memberof PutAdminAgentsUpdateRequest
+     */
+    'canActOnBehalfOfUsers'?: boolean;
 }
 

@@ -34,6 +34,31 @@ namespace LumoAuth.ApiClient.Model
     public partial class CreateApprovalResponse : IValidatableObject
     {
         /// <summary>
+        /// Defines Delivery
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum DeliveryEnum
+        {
+            /// <summary>
+            /// Enum Push for value: push
+            /// </summary>
+            [EnumMember(Value = "push")]
+            Push = 1,
+
+            /// <summary>
+            /// Enum Slack for value: slack
+            /// </summary>
+            [EnumMember(Value = "slack")]
+            Slack = 2,
+
+            /// <summary>
+            /// Enum Discord for value: discord
+            /// </summary>
+            [EnumMember(Value = "discord")]
+            Discord = 3
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CreateApprovalResponse" /> class.
         /// </summary>
         /// <param name="approvalToken">approvalToken.</param>
@@ -41,13 +66,15 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="expiresAt">expiresAt.</param>
         /// <param name="taskId">taskId.</param>
         /// <param name="impact">impact.</param>
-        public CreateApprovalResponse(string approvalToken = default, string status = default, DateTime expiresAt = default, string taskId = default, string impact = default)
+        /// <param name="delivery">Where the request went: &#x60;push&#x60; (the LumoAuth app), &#x60;slack&#x60;, &#x60;discord&#x60;..</param>
+        public CreateApprovalResponse(string approvalToken = default, string status = default, DateTime expiresAt = default, string taskId = default, string impact = default, List<DeliveryEnum> delivery = default)
         {
             this.ApprovalToken = approvalToken;
             this.Status = status;
             this.ExpiresAt = expiresAt;
             this.TaskId = taskId;
             this.Impact = impact;
+            this.Delivery = delivery;
         }
 
         /// <summary>
@@ -84,6 +111,13 @@ namespace LumoAuth.ApiClient.Model
         public string Impact { get; set; }
 
         /// <summary>
+        /// Where the request went: &#x60;push&#x60; (the LumoAuth app), &#x60;slack&#x60;, &#x60;discord&#x60;.
+        /// </summary>
+        /// <value>Where the request went: &#x60;push&#x60; (the LumoAuth app), &#x60;slack&#x60;, &#x60;discord&#x60;.</value>
+        [DataMember(Name = "delivery", EmitDefaultValue = false)]
+        public List<CreateApprovalResponse.DeliveryEnum> Delivery { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -96,6 +130,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  ExpiresAt: ").Append(ExpiresAt).Append("\n");
             sb.Append("  TaskId: ").Append(TaskId).Append("\n");
             sb.Append("  Impact: ").Append(Impact).Append("\n");
+            sb.Append("  Delivery: ").Append(Delivery).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

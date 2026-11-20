@@ -238,7 +238,7 @@ Create a new agent
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
-let adminAgentsCreateRequest = AdminAgentsCreateRequest(name: "name_example", description: "description_example", capabilities: ["capabilities_example"], budgetPolicy: "TODO") // AdminAgentsCreateRequest | 
+let adminAgentsCreateRequest = AdminAgentsCreateRequest(name: "name_example", description: "description_example", capabilities: ["capabilities_example"], budgetPolicy: "TODO", identityType: "identityType_example", jwks: "TODO", jwksUri: "jwksUri_example", canActOnBehalfOfUsers: false) // AdminAgentsCreateRequest | 
 
 // Create a new agent
 AdminAgentsAPI.adminAgentsCreate(orgId: orgId, adminAgentsCreateRequest: adminAgentsCreateRequest) { (response, error) in
@@ -801,7 +801,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let agentId = "agentId_example" // String | 
-let putAdminAgentsUpdateRequest = PutAdminAgentsUpdateRequest(name: "name_example", description: "description_example", capabilities: ["capabilities_example"], budgetPolicy: "TODO") // PutAdminAgentsUpdateRequest | 
+let putAdminAgentsUpdateRequest = PutAdminAgentsUpdateRequest(name: "name_example", description: "description_example", capabilities: ["capabilities_example"], budgetPolicy: "TODO", jwks: "TODO", jwksUri: "jwksUri_example", canActOnBehalfOfUsers: false) // PutAdminAgentsUpdateRequest | 
 
 // Update an existing agent
 AdminAgentsAPI.patchAdminAgentsUpdate(orgId: orgId, agentId: agentId, putAdminAgentsUpdateRequest: putAdminAgentsUpdateRequest) { (response, error) in
@@ -853,7 +853,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let agentId = "agentId_example" // String | 
-let putAdminAgentsUpdateRequest = PutAdminAgentsUpdateRequest(name: "name_example", description: "description_example", capabilities: ["capabilities_example"], budgetPolicy: "TODO") // PutAdminAgentsUpdateRequest | 
+let putAdminAgentsUpdateRequest = PutAdminAgentsUpdateRequest(name: "name_example", description: "description_example", capabilities: ["capabilities_example"], budgetPolicy: "TODO", jwks: "TODO", jwksUri: "jwksUri_example", canActOnBehalfOfUsers: false) // PutAdminAgentsUpdateRequest | 
 
 // Update an existing agent
 AdminAgentsAPI.putAdminAgentsUpdate(orgId: orgId, agentId: agentId, putAdminAgentsUpdateRequest: putAdminAgentsUpdateRequest) { (response, error) in

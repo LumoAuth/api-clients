@@ -40,12 +40,18 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="description">description.</param>
         /// <param name="capabilities">capabilities.</param>
         /// <param name="budgetPolicy">The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is..</param>
-        public PutAdminAgentsUpdateRequest(string name = default, string description = default, List<string> capabilities = default, Dictionary<string, Object> budgetPolicy = default)
+        /// <param name="jwks">For private_key_jwt agents: replaces the public keys (inline JWK Set). Removing a key revokes the tokens that the agent holds..</param>
+        /// <param name="jwksUri">For private_key_jwt agents: https URL of the public key set..</param>
+        /// <param name="canActOnBehalfOfUsers">Whether the agent may act for users of the organization. Switching it on needs the delegation feature of the plan and an editor who holds every capability of the agent..</param>
+        public PutAdminAgentsUpdateRequest(string name = default, string description = default, List<string> capabilities = default, Dictionary<string, Object> budgetPolicy = default, Dictionary<string, Object> jwks = default, string jwksUri = default, bool canActOnBehalfOfUsers = default)
         {
             this.Name = name;
             this.Description = description;
             this.Capabilities = capabilities;
             this.BudgetPolicy = budgetPolicy;
+            this.Jwks = jwks;
+            this.JwksUri = jwksUri;
+            this.CanActOnBehalfOfUsers = canActOnBehalfOfUsers;
         }
 
         /// <summary>
@@ -77,6 +83,27 @@ namespace LumoAuth.ApiClient.Model
         public Dictionary<string, Object> BudgetPolicy { get; set; }
 
         /// <summary>
+        /// For private_key_jwt agents: replaces the public keys (inline JWK Set). Removing a key revokes the tokens that the agent holds.
+        /// </summary>
+        /// <value>For private_key_jwt agents: replaces the public keys (inline JWK Set). Removing a key revokes the tokens that the agent holds.</value>
+        [DataMember(Name = "jwks", EmitDefaultValue = false)]
+        public Dictionary<string, Object> Jwks { get; set; }
+
+        /// <summary>
+        /// For private_key_jwt agents: https URL of the public key set.
+        /// </summary>
+        /// <value>For private_key_jwt agents: https URL of the public key set.</value>
+        [DataMember(Name = "jwksUri", EmitDefaultValue = false)]
+        public string JwksUri { get; set; }
+
+        /// <summary>
+        /// Whether the agent may act for users of the organization. Switching it on needs the delegation feature of the plan and an editor who holds every capability of the agent.
+        /// </summary>
+        /// <value>Whether the agent may act for users of the organization. Switching it on needs the delegation feature of the plan and an editor who holds every capability of the agent.</value>
+        [DataMember(Name = "canActOnBehalfOfUsers", EmitDefaultValue = true)]
+        public bool CanActOnBehalfOfUsers { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -88,6 +115,9 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Capabilities: ").Append(Capabilities).Append("\n");
             sb.Append("  BudgetPolicy: ").Append(BudgetPolicy).Append("\n");
+            sb.Append("  Jwks: ").Append(Jwks).Append("\n");
+            sb.Append("  JwksUri: ").Append(JwksUri).Append("\n");
+            sb.Append("  CanActOnBehalfOfUsers: ").Append(CanActOnBehalfOfUsers).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

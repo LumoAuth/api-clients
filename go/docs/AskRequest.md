@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Action** | Pointer to **string** | The action to authorize. | [optional] 
 **Context** | Pointer to **map[string]interface{}** | Optional resource/attribute context for the decision. | [optional] 
+**Audit** | Pointer to **string** | Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record. | [optional] [default to "denials"]
 
 ## Methods
 
@@ -75,6 +76,31 @@ SetContext sets Context field to given value.
 `func (o *AskRequest) HasContext() bool`
 
 HasContext returns a boolean if a field has been set.
+
+### GetAudit
+
+`func (o *AskRequest) GetAudit() string`
+
+GetAudit returns the Audit field if non-nil, zero value otherwise.
+
+### GetAuditOk
+
+`func (o *AskRequest) GetAuditOk() (*string, bool)`
+
+GetAuditOk returns a tuple with the Audit field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAudit
+
+`func (o *AskRequest) SetAudit(v string)`
+
+SetAudit sets Audit field to given value.
+
+### HasAudit
+
+`func (o *AskRequest) HasAudit() bool`
+
+HasAudit returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

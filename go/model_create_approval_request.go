@@ -26,10 +26,11 @@ type CreateApprovalRequest struct {
 	Reason *string `json:"reason,omitempty"`
 	// One of low, medium, high, critical.
 	Impact *string `json:"impact,omitempty"`
-	// User id or email the agent acts for (delegation required).
+	// User id or email the agent acts for (delegation required). When it is the agent's owner, the request also goes to the organization's Slack and Discord approval channels that have agent approvals switched on.
 	OnBehalfOf *string `json:"on_behalf_of,omitempty"`
-	// Optional action metadata.
-	Meta map[string]interface{} `json:"meta,omitempty"`
+	// Seconds the person has to answer (60-600, default 120). An integer outside the range is clamped.
+	ExpiresIn *int32 `json:"expires_in,omitempty"`
+	Meta *CreateApprovalRequestMeta `json:"meta,omitempty"`
 }
 
 // NewCreateApprovalRequest instantiates a new CreateApprovalRequest object
@@ -38,6 +39,8 @@ type CreateApprovalRequest struct {
 // will change when the set of required properties is changed
 func NewCreateApprovalRequest() *CreateApprovalRequest {
 	this := CreateApprovalRequest{}
+	var expiresIn int32 = 120
+	this.ExpiresIn = &expiresIn
 	return &this
 }
 
@@ -46,6 +49,8 @@ func NewCreateApprovalRequest() *CreateApprovalRequest {
 // but it doesn't guarantee that properties required by API are set
 func NewCreateApprovalRequestWithDefaults() *CreateApprovalRequest {
 	this := CreateApprovalRequest{}
+	var expiresIn int32 = 120
+	this.ExpiresIn = &expiresIn
 	return &this
 }
 
@@ -177,20 +182,52 @@ func (o *CreateApprovalRequest) SetOnBehalfOf(v string) {
 	o.OnBehalfOf = &v
 }
 
-// GetMeta returns the Meta field value if set, zero value otherwise.
-func (o *CreateApprovalRequest) GetMeta() map[string]interface{} {
-	if o == nil || IsNil(o.Meta) {
-		var ret map[string]interface{}
+// GetExpiresIn returns the ExpiresIn field value if set, zero value otherwise.
+func (o *CreateApprovalRequest) GetExpiresIn() int32 {
+	if o == nil || IsNil(o.ExpiresIn) {
+		var ret int32
 		return ret
 	}
-	return o.Meta
+	return *o.ExpiresIn
+}
+
+// GetExpiresInOk returns a tuple with the ExpiresIn field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateApprovalRequest) GetExpiresInOk() (*int32, bool) {
+	if o == nil || IsNil(o.ExpiresIn) {
+		return nil, false
+	}
+	return o.ExpiresIn, true
+}
+
+// HasExpiresIn returns a boolean if a field has been set.
+func (o *CreateApprovalRequest) HasExpiresIn() bool {
+	if o != nil && !IsNil(o.ExpiresIn) {
+		return true
+	}
+
+	return false
+}
+
+// SetExpiresIn gets a reference to the given int32 and assigns it to the ExpiresIn field.
+func (o *CreateApprovalRequest) SetExpiresIn(v int32) {
+	o.ExpiresIn = &v
+}
+
+// GetMeta returns the Meta field value if set, zero value otherwise.
+func (o *CreateApprovalRequest) GetMeta() CreateApprovalRequestMeta {
+	if o == nil || IsNil(o.Meta) {
+		var ret CreateApprovalRequestMeta
+		return ret
+	}
+	return *o.Meta
 }
 
 // GetMetaOk returns a tuple with the Meta field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateApprovalRequest) GetMetaOk() (map[string]interface{}, bool) {
+func (o *CreateApprovalRequest) GetMetaOk() (*CreateApprovalRequestMeta, bool) {
 	if o == nil || IsNil(o.Meta) {
-		return map[string]interface{}{}, false
+		return nil, false
 	}
 	return o.Meta, true
 }
@@ -204,9 +241,9 @@ func (o *CreateApprovalRequest) HasMeta() bool {
 	return false
 }
 
-// SetMeta gets a reference to the given map[string]interface{} and assigns it to the Meta field.
-func (o *CreateApprovalRequest) SetMeta(v map[string]interface{}) {
-	o.Meta = v
+// SetMeta gets a reference to the given CreateApprovalRequestMeta and assigns it to the Meta field.
+func (o *CreateApprovalRequest) SetMeta(v CreateApprovalRequestMeta) {
+	o.Meta = &v
 }
 
 func (o CreateApprovalRequest) MarshalJSON() ([]byte, error) {
@@ -230,6 +267,9 @@ func (o CreateApprovalRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OnBehalfOf) {
 		toSerialize["on_behalf_of"] = o.OnBehalfOf
+	}
+	if !IsNil(o.ExpiresIn) {
+		toSerialize["expires_in"] = o.ExpiresIn
 	}
 	if !IsNil(o.Meta) {
 		toSerialize["meta"] = o.Meta

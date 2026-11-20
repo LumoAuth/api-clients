@@ -129,6 +129,13 @@ docs/AdminIdentityProvidersApi.md
 docs/AdminMcpApi.md
 docs/AdminMcpServersCreateResponse.md
 docs/AdminMcpServersGetResponse.md
+docs/AdminMcpServersGrantsListResponse.md
+docs/AdminMcpServersGrantsListResponseDataItem.md
+docs/AdminMcpServersGrantsRemoveResponse.md
+docs/AdminMcpServersGrantsRemoveResponseData.md
+docs/AdminMcpServersGrantsSetRequest.md
+docs/AdminMcpServersGrantsSetResponse.md
+docs/AdminMcpServersGrantsSetResponseData.md
 docs/AdminMcpServersListResponse.md
 docs/AdminMfaApi.md
 docs/AdminOAuthClientsApi.md
@@ -223,6 +230,9 @@ docs/AdminWebhooksWebhooksDisableResponse.md
 docs/AdminWebhooksWebhooksEnableResponse.md
 docs/AgentOutboundConnection.md
 docs/AgentsApi.md
+docs/AgentsMeToolCallsRequest.md
+docs/AgentsMeToolCallsRequestCallsItem.md
+docs/AgentsMeToolCallsResponse.md
 docs/ApproveRequestRequest.md
 docs/ApproveRequestResponse.md
 docs/AskRequest.md
@@ -261,6 +271,7 @@ docs/CimdCheckResultEffective.md
 docs/CimdCheckResultShadowClient.md
 docs/CompleteTaskResponse.md
 docs/CreateApprovalRequest.md
+docs/CreateApprovalRequestMeta.md
 docs/CreateApprovalResponse.md
 docs/CreateApprovalResponse202.md
 docs/CreateClientResponse.md
@@ -390,6 +401,8 @@ docs/ParResponse.md
 docs/PasskeyEnrollmentStarted.md
 docs/PatchAdminClientsUpdateBrandingResponse.md
 docs/Permission.md
+docs/PollAgentEnrollmentRequest.md
+docs/PollAgentEnrollmentResponse.md
 docs/ProtectedResourceList.md
 docs/ProtectedResourceMetadata.md
 docs/PushEnrollmentStarted.md
@@ -449,6 +462,12 @@ docs/SsfApi.md
 docs/SsfStream.md
 docs/SsfStreamDelivery.md
 docs/SsfStreamList.md
+docs/StartAgentEnrollmentRequest.md
+docs/StartAgentEnrollmentRequestCapabilitiesItem.md
+docs/StartAgentEnrollmentRequestInventory.md
+docs/StartAgentEnrollmentRequestInventoryMcpServersItem.md
+docs/StartAgentEnrollmentRequestJwks.md
+docs/StartAgentEnrollmentResponse.md
 docs/SubmitLoginJsonResponse.md
 docs/TenantProfile.md
 docs/TokenResponse.md
@@ -567,6 +586,13 @@ models/admin-identities-list-response-data.ts
 models/admin-identities-list-response.ts
 models/admin-mcp-servers-create-response.ts
 models/admin-mcp-servers-get-response.ts
+models/admin-mcp-servers-grants-list-response-data-item.ts
+models/admin-mcp-servers-grants-list-response.ts
+models/admin-mcp-servers-grants-remove-response-data.ts
+models/admin-mcp-servers-grants-remove-response.ts
+models/admin-mcp-servers-grants-set-request.ts
+models/admin-mcp-servers-grants-set-response-data.ts
+models/admin-mcp-servers-grants-set-response.ts
 models/admin-mcp-servers-list-response.ts
 models/admin-org-invitations-create-response.ts
 models/admin-org-invitations-list-response.ts
@@ -650,6 +676,9 @@ models/admin-webhooks-tunnel-start-response.ts
 models/admin-webhooks-webhooks-disable-response.ts
 models/admin-webhooks-webhooks-enable-response.ts
 models/agent-outbound-connection.ts
+models/agents-me-tool-calls-request-calls-item.ts
+models/agents-me-tool-calls-request.ts
+models/agents-me-tool-calls-response.ts
 models/approve-request-request.ts
 models/approve-request-response.ts
 models/ask-request.ts
@@ -686,6 +715,7 @@ models/cimd-check-result-effective.ts
 models/cimd-check-result-shadow-client.ts
 models/cimd-check-result.ts
 models/complete-task-response.ts
+models/create-approval-request-meta.ts
 models/create-approval-request.ts
 models/create-approval-response.ts
 models/create-approval-response202.ts
@@ -811,6 +841,8 @@ models/par-response.ts
 models/passkey-enrollment-started.ts
 models/patch-admin-clients-update-branding-response.ts
 models/permission.ts
+models/poll-agent-enrollment-request.ts
+models/poll-agent-enrollment-response.ts
 models/protected-resource-list.ts
 models/protected-resource-metadata.ts
 models/push-enrollment-started.ts
@@ -869,6 +901,12 @@ models/social-login-provider.ts
 models/ssf-stream-delivery.ts
 models/ssf-stream-list.ts
 models/ssf-stream.ts
+models/start-agent-enrollment-request-capabilities-item.ts
+models/start-agent-enrollment-request-inventory-mcp-servers-item.ts
+models/start-agent-enrollment-request-inventory.ts
+models/start-agent-enrollment-request-jwks.ts
+models/start-agent-enrollment-request.ts
+models/start-agent-enrollment-response.ts
 models/submit-login-json-response.ts
 models/tenant-profile.ts
 models/token-response.ts

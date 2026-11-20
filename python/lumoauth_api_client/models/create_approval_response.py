@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -33,7 +33,19 @@ class CreateApprovalResponse(BaseModel):
     expires_at: Optional[datetime] = None
     task_id: Optional[StrictStr] = None
     impact: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["approval_token", "status", "expires_at", "task_id", "impact"]
+    delivery: Optional[List[StrictStr]] = Field(default=None, description="Where the request went: `push` (the LumoAuth app), `slack`, `discord`.")
+    __properties: ClassVar[List[str]] = ["approval_token", "status", "expires_at", "task_id", "impact", "delivery"]
+
+    @field_validator('delivery')
+    def delivery_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        for i in value:
+            if i not in set(['push', 'slack', 'discord']):
+                raise ValueError("each list item must be one of ('push', 'slack', 'discord')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -90,7 +102,8 @@ class CreateApprovalResponse(BaseModel):
             "status": obj.get("status"),
             "expires_at": obj.get("expires_at"),
             "task_id": obj.get("task_id"),
-            "impact": obj.get("impact")
+            "impact": obj.get("impact"),
+            "delivery": obj.get("delivery")
         })
         return _obj
 

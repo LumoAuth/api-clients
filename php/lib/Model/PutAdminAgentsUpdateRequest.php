@@ -61,7 +61,10 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
         'name' => 'string',
         'description' => 'string',
         'capabilities' => 'string[]',
-        'budgetPolicy' => 'array<string,mixed>'
+        'budgetPolicy' => 'array<string,mixed>',
+        'jwks' => 'array<string,mixed>',
+        'jwksUri' => 'string',
+        'canActOnBehalfOfUsers' => 'bool'
     ];
 
     /**
@@ -75,7 +78,10 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
         'name' => null,
         'description' => null,
         'capabilities' => null,
-        'budgetPolicy' => null
+        'budgetPolicy' => null,
+        'jwks' => null,
+        'jwksUri' => null,
+        'canActOnBehalfOfUsers' => null
     ];
 
     /**
@@ -87,7 +93,10 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
         'name' => false,
         'description' => false,
         'capabilities' => false,
-        'budgetPolicy' => true
+        'budgetPolicy' => true,
+        'jwks' => false,
+        'jwksUri' => false,
+        'canActOnBehalfOfUsers' => false
     ];
 
     /**
@@ -179,7 +188,10 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
         'name' => 'name',
         'description' => 'description',
         'capabilities' => 'capabilities',
-        'budgetPolicy' => 'budgetPolicy'
+        'budgetPolicy' => 'budgetPolicy',
+        'jwks' => 'jwks',
+        'jwksUri' => 'jwksUri',
+        'canActOnBehalfOfUsers' => 'canActOnBehalfOfUsers'
     ];
 
     /**
@@ -191,7 +203,10 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
         'name' => 'setName',
         'description' => 'setDescription',
         'capabilities' => 'setCapabilities',
-        'budgetPolicy' => 'setBudgetPolicy'
+        'budgetPolicy' => 'setBudgetPolicy',
+        'jwks' => 'setJwks',
+        'jwksUri' => 'setJwksUri',
+        'canActOnBehalfOfUsers' => 'setCanActOnBehalfOfUsers'
     ];
 
     /**
@@ -203,7 +218,10 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
         'name' => 'getName',
         'description' => 'getDescription',
         'capabilities' => 'getCapabilities',
-        'budgetPolicy' => 'getBudgetPolicy'
+        'budgetPolicy' => 'getBudgetPolicy',
+        'jwks' => 'getJwks',
+        'jwksUri' => 'getJwksUri',
+        'canActOnBehalfOfUsers' => 'getCanActOnBehalfOfUsers'
     ];
 
     /**
@@ -267,6 +285,9 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
         $this->setIfExists('description', $data ?? [], null);
         $this->setIfExists('capabilities', $data ?? [], null);
         $this->setIfExists('budgetPolicy', $data ?? [], null);
+        $this->setIfExists('jwks', $data ?? [], null);
+        $this->setIfExists('jwksUri', $data ?? [], null);
+        $this->setIfExists('canActOnBehalfOfUsers', $data ?? [], null);
     }
 
     /**
@@ -422,6 +443,87 @@ class PutAdminAgentsUpdateRequest implements ModelInterface, ArrayAccess, \JsonS
             }
         }
         $this->container['budgetPolicy'] = $budgetPolicy;
+
+        return $this;
+    }
+
+    /**
+     * Gets jwks
+     *
+     * @return array<string,mixed>|null
+     */
+    public function getJwks()
+    {
+        return $this->container['jwks'];
+    }
+
+    /**
+     * Sets jwks
+     *
+     * @param array<string,mixed>|null $jwks For private_key_jwt agents: replaces the public keys (inline JWK Set). Removing a key revokes the tokens that the agent holds.
+     *
+     * @return self
+     */
+    public function setJwks($jwks)
+    {
+        if (is_null($jwks)) {
+            throw new \InvalidArgumentException('non-nullable jwks cannot be null');
+        }
+        $this->container['jwks'] = $jwks;
+
+        return $this;
+    }
+
+    /**
+     * Gets jwksUri
+     *
+     * @return string|null
+     */
+    public function getJwksUri()
+    {
+        return $this->container['jwksUri'];
+    }
+
+    /**
+     * Sets jwksUri
+     *
+     * @param string|null $jwksUri For private_key_jwt agents: https URL of the public key set.
+     *
+     * @return self
+     */
+    public function setJwksUri($jwksUri)
+    {
+        if (is_null($jwksUri)) {
+            throw new \InvalidArgumentException('non-nullable jwksUri cannot be null');
+        }
+        $this->container['jwksUri'] = $jwksUri;
+
+        return $this;
+    }
+
+    /**
+     * Gets canActOnBehalfOfUsers
+     *
+     * @return bool|null
+     */
+    public function getCanActOnBehalfOfUsers()
+    {
+        return $this->container['canActOnBehalfOfUsers'];
+    }
+
+    /**
+     * Sets canActOnBehalfOfUsers
+     *
+     * @param bool|null $canActOnBehalfOfUsers Whether the agent may act for users of the organization. Switching it on needs the delegation feature of the plan and an editor who holds every capability of the agent.
+     *
+     * @return self
+     */
+    public function setCanActOnBehalfOfUsers($canActOnBehalfOfUsers)
+    {
+        if (is_null($canActOnBehalfOfUsers)) {
+            throw new \InvalidArgumentException('non-nullable canActOnBehalfOfUsers cannot be null');
+        }
+        $this->container['canActOnBehalfOfUsers'] = $canActOnBehalfOfUsers;
 
         return $this;
     }

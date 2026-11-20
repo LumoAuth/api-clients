@@ -13,6 +13,53 @@ import AnyCodable
 open class AgentsAPI {
 
     /**
+     Report the tool calls that the agent's host gated
+     
+     - parameter orgId: (path)  
+     - parameter agentsMeToolCallsRequest: (body)  
+     - returns: AgentsMeToolCallsResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func agentsMeToolCalls(orgId: String, agentsMeToolCallsRequest: AgentsMeToolCallsRequest) async throws -> AgentsMeToolCallsResponse {
+        return try await agentsMeToolCallsWithRequestBuilder(orgId: orgId, agentsMeToolCallsRequest: agentsMeToolCallsRequest).execute().body
+    }
+
+    /**
+     Report the tool calls that the agent's host gated
+     - POST /orgs/{orgId}/api/v1/agents/me/tool-calls
+     - Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host's own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter agentsMeToolCallsRequest: (body)  
+     - returns: RequestBuilder<AgentsMeToolCallsResponse> 
+     */
+    open class func agentsMeToolCallsWithRequestBuilder(orgId: String, agentsMeToolCallsRequest: AgentsMeToolCallsRequest) -> RequestBuilder<AgentsMeToolCallsResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/agents/me/tool-calls"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: agentsMeToolCallsRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AgentsMeToolCallsResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      Agent-friendly permission check (Natural Language style)
      
      - parameter orgId: (path)  
@@ -339,6 +386,47 @@ open class AgentsAPI {
     }
 
     /**
+     Poll an agent enrollment (no credential)
+     
+     - parameter orgId: (path)  
+     - parameter pollAgentEnrollmentRequest: (body)  
+     - returns: PollAgentEnrollmentResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func pollAgentEnrollment(orgId: String, pollAgentEnrollmentRequest: PollAgentEnrollmentRequest) async throws -> PollAgentEnrollmentResponse {
+        return try await pollAgentEnrollmentWithRequestBuilder(orgId: orgId, pollAgentEnrollmentRequest: pollAgentEnrollmentRequest).execute().body
+    }
+
+    /**
+     Poll an agent enrollment (no credential)
+     - POST /orgs/{orgId}/api/v1/agents/enrollments/token
+     - Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+     - parameter orgId: (path)  
+     - parameter pollAgentEnrollmentRequest: (body)  
+     - returns: RequestBuilder<PollAgentEnrollmentResponse> 
+     */
+    open class func pollAgentEnrollmentWithRequestBuilder(orgId: String, pollAgentEnrollmentRequest: PollAgentEnrollmentRequest) -> RequestBuilder<PollAgentEnrollmentResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/agents/enrollments/token"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: pollAgentEnrollmentRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<PollAgentEnrollmentResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
      Register (or re-register) an agent
      
      - parameter orgId: (path)  
@@ -427,6 +515,47 @@ open class AgentsAPI {
         let localVariableRequestBuilder: RequestBuilder<ReportAgentUsageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Start an agent enrollment (no credential)
+     
+     - parameter orgId: (path)  
+     - parameter startAgentEnrollmentRequest: (body)  
+     - returns: StartAgentEnrollmentResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func startAgentEnrollment(orgId: String, startAgentEnrollmentRequest: StartAgentEnrollmentRequest) async throws -> StartAgentEnrollmentResponse {
+        return try await startAgentEnrollmentWithRequestBuilder(orgId: orgId, startAgentEnrollmentRequest: startAgentEnrollmentRequest).execute().body
+    }
+
+    /**
+     Start an agent enrollment (no credential)
+     - POST /orgs/{orgId}/api/v1/agents/enrollments
+     - The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; only public keys are accepted. Rate limited per client address and per organization; an organization has at most 20 pending enrollments.
+     - parameter orgId: (path)  
+     - parameter startAgentEnrollmentRequest: (body)  
+     - returns: RequestBuilder<StartAgentEnrollmentResponse> 
+     */
+    open class func startAgentEnrollmentWithRequestBuilder(orgId: String, startAgentEnrollmentRequest: StartAgentEnrollmentRequest) -> RequestBuilder<StartAgentEnrollmentResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/agents/enrollments"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: startAgentEnrollmentRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<StartAgentEnrollmentResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**

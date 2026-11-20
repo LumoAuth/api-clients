@@ -216,6 +216,233 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # List the agents allowed to call tools of an MCP server
+    # @param org_id [String] 
+    # @param server_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :agent_id Only the grants of this agent (agentId or numeric id).
+    # @return [AdminMcpServersGrantsListResponse]
+    def admin_mcp_servers_grants_list(org_id, server_id, opts = {})
+      data, _status_code, _headers = admin_mcp_servers_grants_list_with_http_info(org_id, server_id, opts)
+      data
+    end
+
+    # List the agents allowed to call tools of an MCP server
+    # @param org_id [String] 
+    # @param server_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :agent_id Only the grants of this agent (agentId or numeric id).
+    # @return [Array<(AdminMcpServersGrantsListResponse, Integer, Hash)>] AdminMcpServersGrantsListResponse data, response status code and response headers
+    def admin_mcp_servers_grants_list_with_http_info(org_id, server_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AdminMcpApi.admin_mcp_servers_grants_list ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminMcpApi.admin_mcp_servers_grants_list"
+      end
+      # verify the required parameter 'server_id' is set
+      if @api_client.config.client_side_validation && server_id.nil?
+        fail ArgumentError, "Missing the required parameter 'server_id' when calling AdminMcpApi.admin_mcp_servers_grants_list"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'serverId' + '}', CGI.escape(server_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'agent_id'] = opts[:'agent_id'] if !opts[:'agent_id'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'AdminMcpServersGrantsListResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AdminMcpApi.admin_mcp_servers_grants_list",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AdminMcpApi#admin_mcp_servers_grants_list\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Remove every grant of an agent on an MCP server
+    # @param org_id [String] 
+    # @param server_id [String] 
+    # @param agent_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [AdminMcpServersGrantsRemoveResponse]
+    def admin_mcp_servers_grants_remove(org_id, server_id, agent_id, opts = {})
+      data, _status_code, _headers = admin_mcp_servers_grants_remove_with_http_info(org_id, server_id, agent_id, opts)
+      data
+    end
+
+    # Remove every grant of an agent on an MCP server
+    # @param org_id [String] 
+    # @param server_id [String] 
+    # @param agent_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(AdminMcpServersGrantsRemoveResponse, Integer, Hash)>] AdminMcpServersGrantsRemoveResponse data, response status code and response headers
+    def admin_mcp_servers_grants_remove_with_http_info(org_id, server_id, agent_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AdminMcpApi.admin_mcp_servers_grants_remove ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminMcpApi.admin_mcp_servers_grants_remove"
+      end
+      # verify the required parameter 'server_id' is set
+      if @api_client.config.client_side_validation && server_id.nil?
+        fail ArgumentError, "Missing the required parameter 'server_id' when calling AdminMcpApi.admin_mcp_servers_grants_remove"
+      end
+      # verify the required parameter 'agent_id' is set
+      if @api_client.config.client_side_validation && agent_id.nil?
+        fail ArgumentError, "Missing the required parameter 'agent_id' when calling AdminMcpApi.admin_mcp_servers_grants_remove"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'serverId' + '}', CGI.escape(server_id.to_s)).sub('{' + 'agentId' + '}', CGI.escape(agent_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'AdminMcpServersGrantsRemoveResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AdminMcpApi.admin_mcp_servers_grants_remove",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AdminMcpApi#admin_mcp_servers_grants_remove\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Set the tools of an MCP server that an agent may call
+    # @param org_id [String] 
+    # @param server_id [String] 
+    # @param agent_id [String] 
+    # @param admin_mcp_servers_grants_set_request [AdminMcpServersGrantsSetRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [AdminMcpServersGrantsSetResponse]
+    def admin_mcp_servers_grants_set(org_id, server_id, agent_id, admin_mcp_servers_grants_set_request, opts = {})
+      data, _status_code, _headers = admin_mcp_servers_grants_set_with_http_info(org_id, server_id, agent_id, admin_mcp_servers_grants_set_request, opts)
+      data
+    end
+
+    # Set the tools of an MCP server that an agent may call
+    # @param org_id [String] 
+    # @param server_id [String] 
+    # @param agent_id [String] 
+    # @param admin_mcp_servers_grants_set_request [AdminMcpServersGrantsSetRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(AdminMcpServersGrantsSetResponse, Integer, Hash)>] AdminMcpServersGrantsSetResponse data, response status code and response headers
+    def admin_mcp_servers_grants_set_with_http_info(org_id, server_id, agent_id, admin_mcp_servers_grants_set_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AdminMcpApi.admin_mcp_servers_grants_set ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminMcpApi.admin_mcp_servers_grants_set"
+      end
+      # verify the required parameter 'server_id' is set
+      if @api_client.config.client_side_validation && server_id.nil?
+        fail ArgumentError, "Missing the required parameter 'server_id' when calling AdminMcpApi.admin_mcp_servers_grants_set"
+      end
+      # verify the required parameter 'agent_id' is set
+      if @api_client.config.client_side_validation && agent_id.nil?
+        fail ArgumentError, "Missing the required parameter 'agent_id' when calling AdminMcpApi.admin_mcp_servers_grants_set"
+      end
+      # verify the required parameter 'admin_mcp_servers_grants_set_request' is set
+      if @api_client.config.client_side_validation && admin_mcp_servers_grants_set_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_mcp_servers_grants_set_request' when calling AdminMcpApi.admin_mcp_servers_grants_set"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'serverId' + '}', CGI.escape(server_id.to_s)).sub('{' + 'agentId' + '}', CGI.escape(agent_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_mcp_servers_grants_set_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'AdminMcpServersGrantsSetResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AdminMcpApi.admin_mcp_servers_grants_set",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AdminMcpApi#admin_mcp_servers_grants_set\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # List MCP servers
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters

@@ -93,6 +93,49 @@ namespace LumoAuth.ApiClient.Test.Api
         }
 
         /// <summary>
+        /// Test AdminMcpServersGrantsList
+        /// </summary>
+        [Fact]
+        public void AdminMcpServersGrantsListTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //string serverId = null;
+            //string? agentId = null;
+            //var response = instance.AdminMcpServersGrantsList(orgId, serverId, agentId);
+            //Assert.IsType<AdminMcpServersGrantsListResponse>(response);
+        }
+
+        /// <summary>
+        /// Test AdminMcpServersGrantsRemove
+        /// </summary>
+        [Fact]
+        public void AdminMcpServersGrantsRemoveTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //string serverId = null;
+            //string agentId = null;
+            //var response = instance.AdminMcpServersGrantsRemove(orgId, serverId, agentId);
+            //Assert.IsType<AdminMcpServersGrantsRemoveResponse>(response);
+        }
+
+        /// <summary>
+        /// Test AdminMcpServersGrantsSet
+        /// </summary>
+        [Fact]
+        public void AdminMcpServersGrantsSetTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //string serverId = null;
+            //string agentId = null;
+            //AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest = null;
+            //var response = instance.AdminMcpServersGrantsSet(orgId, serverId, agentId, adminMcpServersGrantsSetRequest);
+            //Assert.IsType<AdminMcpServersGrantsSetResponse>(response);
+        }
+
+        /// <summary>
         /// Test AdminMcpServersList
         /// </summary>
         [Fact]

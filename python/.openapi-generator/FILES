@@ -95,6 +95,13 @@ docs/AdminIdentityProvidersApi.md
 docs/AdminMcpApi.md
 docs/AdminMcpServersCreateResponse.md
 docs/AdminMcpServersGetResponse.md
+docs/AdminMcpServersGrantsListResponse.md
+docs/AdminMcpServersGrantsListResponseDataItem.md
+docs/AdminMcpServersGrantsRemoveResponse.md
+docs/AdminMcpServersGrantsRemoveResponseData.md
+docs/AdminMcpServersGrantsSetRequest.md
+docs/AdminMcpServersGrantsSetResponse.md
+docs/AdminMcpServersGrantsSetResponseData.md
 docs/AdminMcpServersListResponse.md
 docs/AdminMfaApi.md
 docs/AdminOAuthClientsApi.md
@@ -189,6 +196,9 @@ docs/AdminWebhooksWebhooksDisableResponse.md
 docs/AdminWebhooksWebhooksEnableResponse.md
 docs/AgentOutboundConnection.md
 docs/AgentsApi.md
+docs/AgentsMeToolCallsRequest.md
+docs/AgentsMeToolCallsRequestCallsItem.md
+docs/AgentsMeToolCallsResponse.md
 docs/ApproveRequestRequest.md
 docs/ApproveRequestResponse.md
 docs/AskRequest.md
@@ -227,6 +237,7 @@ docs/CimdCheckResultEffective.md
 docs/CimdCheckResultShadowClient.md
 docs/CompleteTaskResponse.md
 docs/CreateApprovalRequest.md
+docs/CreateApprovalRequestMeta.md
 docs/CreateApprovalResponse.md
 docs/CreateApprovalResponse202.md
 docs/CreateClientResponse.md
@@ -356,6 +367,8 @@ docs/ParResponse.md
 docs/PasskeyEnrollmentStarted.md
 docs/PatchAdminClientsUpdateBrandingResponse.md
 docs/Permission.md
+docs/PollAgentEnrollmentRequest.md
+docs/PollAgentEnrollmentResponse.md
 docs/ProtectedResourceList.md
 docs/ProtectedResourceMetadata.md
 docs/PushEnrollmentStarted.md
@@ -415,6 +428,12 @@ docs/SsfApi.md
 docs/SsfStream.md
 docs/SsfStreamDelivery.md
 docs/SsfStreamList.md
+docs/StartAgentEnrollmentRequest.md
+docs/StartAgentEnrollmentRequestCapabilitiesItem.md
+docs/StartAgentEnrollmentRequestInventory.md
+docs/StartAgentEnrollmentRequestInventoryMcpServersItem.md
+docs/StartAgentEnrollmentRequestJwks.md
+docs/StartAgentEnrollmentResponse.md
 docs/SubmitLoginJsonResponse.md
 docs/TenantProfile.md
 docs/TokenResponse.md
@@ -568,6 +587,13 @@ lumoauth_api_client/models/admin_identities_list_response_data.py
 lumoauth_api_client/models/admin_identities_list_response_data_bindings_item.py
 lumoauth_api_client/models/admin_mcp_servers_create_response.py
 lumoauth_api_client/models/admin_mcp_servers_get_response.py
+lumoauth_api_client/models/admin_mcp_servers_grants_list_response.py
+lumoauth_api_client/models/admin_mcp_servers_grants_list_response_data_item.py
+lumoauth_api_client/models/admin_mcp_servers_grants_remove_response.py
+lumoauth_api_client/models/admin_mcp_servers_grants_remove_response_data.py
+lumoauth_api_client/models/admin_mcp_servers_grants_set_request.py
+lumoauth_api_client/models/admin_mcp_servers_grants_set_response.py
+lumoauth_api_client/models/admin_mcp_servers_grants_set_response_data.py
 lumoauth_api_client/models/admin_mcp_servers_list_response.py
 lumoauth_api_client/models/admin_org_invitations_create_response.py
 lumoauth_api_client/models/admin_org_invitations_list_response.py
@@ -651,6 +677,9 @@ lumoauth_api_client/models/admin_webhooks_tunnel_start_response_data.py
 lumoauth_api_client/models/admin_webhooks_webhooks_disable_response.py
 lumoauth_api_client/models/admin_webhooks_webhooks_enable_response.py
 lumoauth_api_client/models/agent_outbound_connection.py
+lumoauth_api_client/models/agents_me_tool_calls_request.py
+lumoauth_api_client/models/agents_me_tool_calls_request_calls_item.py
+lumoauth_api_client/models/agents_me_tool_calls_response.py
 lumoauth_api_client/models/approve_request_request.py
 lumoauth_api_client/models/approve_request_response.py
 lumoauth_api_client/models/ask_request.py
@@ -688,6 +717,7 @@ lumoauth_api_client/models/cimd_check_result_effective.py
 lumoauth_api_client/models/cimd_check_result_shadow_client.py
 lumoauth_api_client/models/complete_task_response.py
 lumoauth_api_client/models/create_approval_request.py
+lumoauth_api_client/models/create_approval_request_meta.py
 lumoauth_api_client/models/create_approval_response.py
 lumoauth_api_client/models/create_approval_response202.py
 lumoauth_api_client/models/create_client_response.py
@@ -811,6 +841,8 @@ lumoauth_api_client/models/par_response.py
 lumoauth_api_client/models/passkey_enrollment_started.py
 lumoauth_api_client/models/patch_admin_clients_update_branding_response.py
 lumoauth_api_client/models/permission.py
+lumoauth_api_client/models/poll_agent_enrollment_request.py
+lumoauth_api_client/models/poll_agent_enrollment_response.py
 lumoauth_api_client/models/protected_resource_list.py
 lumoauth_api_client/models/protected_resource_metadata.py
 lumoauth_api_client/models/push_enrollment_started.py
@@ -869,6 +901,12 @@ lumoauth_api_client/models/social_login_provider.py
 lumoauth_api_client/models/ssf_stream.py
 lumoauth_api_client/models/ssf_stream_delivery.py
 lumoauth_api_client/models/ssf_stream_list.py
+lumoauth_api_client/models/start_agent_enrollment_request.py
+lumoauth_api_client/models/start_agent_enrollment_request_capabilities_item.py
+lumoauth_api_client/models/start_agent_enrollment_request_inventory.py
+lumoauth_api_client/models/start_agent_enrollment_request_inventory_mcp_servers_item.py
+lumoauth_api_client/models/start_agent_enrollment_request_jwks.py
+lumoauth_api_client/models/start_agent_enrollment_response.py
 lumoauth_api_client/models/submit_login_json_response.py
 lumoauth_api_client/models/tenant_profile.py
 lumoauth_api_client/models/token_response.py

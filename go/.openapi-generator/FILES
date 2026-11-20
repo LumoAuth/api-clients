@@ -127,6 +127,13 @@ docs/AdminIdentityProvidersAPI.md
 docs/AdminMcpAPI.md
 docs/AdminMcpServersCreateResponse.md
 docs/AdminMcpServersGetResponse.md
+docs/AdminMcpServersGrantsListResponse.md
+docs/AdminMcpServersGrantsListResponseDataItem.md
+docs/AdminMcpServersGrantsRemoveResponse.md
+docs/AdminMcpServersGrantsRemoveResponseData.md
+docs/AdminMcpServersGrantsSetRequest.md
+docs/AdminMcpServersGrantsSetResponse.md
+docs/AdminMcpServersGrantsSetResponseData.md
 docs/AdminMcpServersListResponse.md
 docs/AdminMfaAPI.md
 docs/AdminOAuthClientsAPI.md
@@ -221,6 +228,9 @@ docs/AdminWebhooksWebhooksDisableResponse.md
 docs/AdminWebhooksWebhooksEnableResponse.md
 docs/AgentOutboundConnection.md
 docs/AgentsAPI.md
+docs/AgentsMeToolCallsRequest.md
+docs/AgentsMeToolCallsRequestCallsItem.md
+docs/AgentsMeToolCallsResponse.md
 docs/ApproveRequestRequest.md
 docs/ApproveRequestResponse.md
 docs/AskRequest.md
@@ -259,6 +269,7 @@ docs/CimdCheckResultEffective.md
 docs/CimdCheckResultShadowClient.md
 docs/CompleteTaskResponse.md
 docs/CreateApprovalRequest.md
+docs/CreateApprovalRequestMeta.md
 docs/CreateApprovalResponse.md
 docs/CreateApprovalResponse202.md
 docs/CreateClientResponse.md
@@ -388,6 +399,8 @@ docs/ParResponse.md
 docs/PasskeyEnrollmentStarted.md
 docs/PatchAdminClientsUpdateBrandingResponse.md
 docs/Permission.md
+docs/PollAgentEnrollmentRequest.md
+docs/PollAgentEnrollmentResponse.md
 docs/ProtectedResourceList.md
 docs/ProtectedResourceMetadata.md
 docs/PushEnrollmentStarted.md
@@ -447,6 +460,12 @@ docs/SsfAPI.md
 docs/SsfStream.md
 docs/SsfStreamDelivery.md
 docs/SsfStreamList.md
+docs/StartAgentEnrollmentRequest.md
+docs/StartAgentEnrollmentRequestCapabilitiesItem.md
+docs/StartAgentEnrollmentRequestInventory.md
+docs/StartAgentEnrollmentRequestInventoryMcpServersItem.md
+docs/StartAgentEnrollmentRequestJwks.md
+docs/StartAgentEnrollmentResponse.md
 docs/SubmitLoginJsonResponse.md
 docs/TenantProfile.md
 docs/TokenResponse.md
@@ -566,6 +585,13 @@ model_admin_identities_list_response_data.go
 model_admin_identities_list_response_data_bindings_item.go
 model_admin_mcp_servers_create_response.go
 model_admin_mcp_servers_get_response.go
+model_admin_mcp_servers_grants_list_response.go
+model_admin_mcp_servers_grants_list_response_data_item.go
+model_admin_mcp_servers_grants_remove_response.go
+model_admin_mcp_servers_grants_remove_response_data.go
+model_admin_mcp_servers_grants_set_request.go
+model_admin_mcp_servers_grants_set_response.go
+model_admin_mcp_servers_grants_set_response_data.go
 model_admin_mcp_servers_list_response.go
 model_admin_org_invitations_create_response.go
 model_admin_org_invitations_list_response.go
@@ -649,6 +675,9 @@ model_admin_webhooks_tunnel_start_response_data.go
 model_admin_webhooks_webhooks_disable_response.go
 model_admin_webhooks_webhooks_enable_response.go
 model_agent_outbound_connection.go
+model_agents_me_tool_calls_request.go
+model_agents_me_tool_calls_request_calls_item.go
+model_agents_me_tool_calls_response.go
 model_approve_request_request.go
 model_approve_request_response.go
 model_ask_request.go
@@ -686,6 +715,7 @@ model_cimd_check_result_effective.go
 model_cimd_check_result_shadow_client.go
 model_complete_task_response.go
 model_create_approval_request.go
+model_create_approval_request_meta.go
 model_create_approval_response.go
 model_create_approval_response202.go
 model_create_client_response.go
@@ -809,6 +839,8 @@ model_par_response.go
 model_passkey_enrollment_started.go
 model_patch_admin_clients_update_branding_response.go
 model_permission.go
+model_poll_agent_enrollment_request.go
+model_poll_agent_enrollment_response.go
 model_protected_resource_list.go
 model_protected_resource_metadata.go
 model_push_enrollment_started.go
@@ -867,6 +899,12 @@ model_social_login_provider.go
 model_ssf_stream.go
 model_ssf_stream_delivery.go
 model_ssf_stream_list.go
+model_start_agent_enrollment_request.go
+model_start_agent_enrollment_request_capabilities_item.go
+model_start_agent_enrollment_request_inventory.go
+model_start_agent_enrollment_request_inventory_mcp_servers_item.go
+model_start_agent_enrollment_request_jwks.go
+model_start_agent_enrollment_response.go
 model_submit_login_json_response.go
 model_tenant_profile.go
 model_token_response.go

@@ -26,6 +26,8 @@ type CreateApprovalResponse struct {
 	ExpiresAt *time.Time `json:"expires_at,omitempty"`
 	TaskId *string `json:"task_id,omitempty"`
 	Impact *string `json:"impact,omitempty"`
+	// Where the request went: `push` (the LumoAuth app), `slack`, `discord`.
+	Delivery []string `json:"delivery,omitempty"`
 }
 
 // NewCreateApprovalResponse instantiates a new CreateApprovalResponse object
@@ -205,6 +207,38 @@ func (o *CreateApprovalResponse) SetImpact(v string) {
 	o.Impact = &v
 }
 
+// GetDelivery returns the Delivery field value if set, zero value otherwise.
+func (o *CreateApprovalResponse) GetDelivery() []string {
+	if o == nil || IsNil(o.Delivery) {
+		var ret []string
+		return ret
+	}
+	return o.Delivery
+}
+
+// GetDeliveryOk returns a tuple with the Delivery field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateApprovalResponse) GetDeliveryOk() ([]string, bool) {
+	if o == nil || IsNil(o.Delivery) {
+		return nil, false
+	}
+	return o.Delivery, true
+}
+
+// HasDelivery returns a boolean if a field has been set.
+func (o *CreateApprovalResponse) HasDelivery() bool {
+	if o != nil && !IsNil(o.Delivery) {
+		return true
+	}
+
+	return false
+}
+
+// SetDelivery gets a reference to the given []string and assigns it to the Delivery field.
+func (o *CreateApprovalResponse) SetDelivery(v []string) {
+	o.Delivery = v
+}
+
 func (o CreateApprovalResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -229,6 +263,9 @@ func (o CreateApprovalResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Impact) {
 		toSerialize["impact"] = o.Impact
+	}
+	if !IsNil(o.Delivery) {
+		toSerialize["delivery"] = o.Delivery
 	}
 	return toSerialize, nil
 }

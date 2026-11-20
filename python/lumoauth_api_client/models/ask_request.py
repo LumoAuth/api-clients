@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,7 +29,18 @@ class AskRequest(BaseModel):
     """ # noqa: E501
     action: Optional[StrictStr] = Field(default=None, description="The action to authorize.")
     context: Optional[Dict[str, Any]] = Field(default=None, description="Optional resource/attribute context for the decision.")
-    __properties: ClassVar[List[str]] = ["action", "context"]
+    audit: Optional[StrictStr] = Field(default='denials', description="Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record.")
+    __properties: ClassVar[List[str]] = ["action", "context", "audit"]
+
+    @field_validator('audit')
+    def audit_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['denials', 'always']):
+            raise ValueError("must be one of enum values ('denials', 'always')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -83,7 +94,8 @@ class AskRequest(BaseModel):
 
         _obj = cls.model_validate({
             "action": obj.get("action"),
-            "context": obj.get("context")
+            "context": obj.get("context"),
+            "audit": obj.get("audit") if obj.get("audit") is not None else 'denials'
         })
         return _obj
 

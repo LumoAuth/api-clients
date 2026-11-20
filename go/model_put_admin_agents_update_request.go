@@ -25,6 +25,12 @@ type PutAdminAgentsUpdateRequest struct {
 	Capabilities []string `json:"capabilities,omitempty"`
 	// The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is.
 	BudgetPolicy map[string]interface{} `json:"budgetPolicy,omitempty"`
+	// For private_key_jwt agents: replaces the public keys (inline JWK Set). Removing a key revokes the tokens that the agent holds.
+	Jwks map[string]interface{} `json:"jwks,omitempty"`
+	// For private_key_jwt agents: https URL of the public key set.
+	JwksUri *string `json:"jwksUri,omitempty"`
+	// Whether the agent may act for users of the organization. Switching it on needs the delegation feature of the plan and an editor who holds every capability of the agent.
+	CanActOnBehalfOfUsers *bool `json:"canActOnBehalfOfUsers,omitempty"`
 }
 
 // NewPutAdminAgentsUpdateRequest instantiates a new PutAdminAgentsUpdateRequest object
@@ -173,6 +179,102 @@ func (o *PutAdminAgentsUpdateRequest) SetBudgetPolicy(v map[string]interface{}) 
 	o.BudgetPolicy = v
 }
 
+// GetJwks returns the Jwks field value if set, zero value otherwise.
+func (o *PutAdminAgentsUpdateRequest) GetJwks() map[string]interface{} {
+	if o == nil || IsNil(o.Jwks) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Jwks
+}
+
+// GetJwksOk returns a tuple with the Jwks field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PutAdminAgentsUpdateRequest) GetJwksOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Jwks) {
+		return map[string]interface{}{}, false
+	}
+	return o.Jwks, true
+}
+
+// HasJwks returns a boolean if a field has been set.
+func (o *PutAdminAgentsUpdateRequest) HasJwks() bool {
+	if o != nil && !IsNil(o.Jwks) {
+		return true
+	}
+
+	return false
+}
+
+// SetJwks gets a reference to the given map[string]interface{} and assigns it to the Jwks field.
+func (o *PutAdminAgentsUpdateRequest) SetJwks(v map[string]interface{}) {
+	o.Jwks = v
+}
+
+// GetJwksUri returns the JwksUri field value if set, zero value otherwise.
+func (o *PutAdminAgentsUpdateRequest) GetJwksUri() string {
+	if o == nil || IsNil(o.JwksUri) {
+		var ret string
+		return ret
+	}
+	return *o.JwksUri
+}
+
+// GetJwksUriOk returns a tuple with the JwksUri field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PutAdminAgentsUpdateRequest) GetJwksUriOk() (*string, bool) {
+	if o == nil || IsNil(o.JwksUri) {
+		return nil, false
+	}
+	return o.JwksUri, true
+}
+
+// HasJwksUri returns a boolean if a field has been set.
+func (o *PutAdminAgentsUpdateRequest) HasJwksUri() bool {
+	if o != nil && !IsNil(o.JwksUri) {
+		return true
+	}
+
+	return false
+}
+
+// SetJwksUri gets a reference to the given string and assigns it to the JwksUri field.
+func (o *PutAdminAgentsUpdateRequest) SetJwksUri(v string) {
+	o.JwksUri = &v
+}
+
+// GetCanActOnBehalfOfUsers returns the CanActOnBehalfOfUsers field value if set, zero value otherwise.
+func (o *PutAdminAgentsUpdateRequest) GetCanActOnBehalfOfUsers() bool {
+	if o == nil || IsNil(o.CanActOnBehalfOfUsers) {
+		var ret bool
+		return ret
+	}
+	return *o.CanActOnBehalfOfUsers
+}
+
+// GetCanActOnBehalfOfUsersOk returns a tuple with the CanActOnBehalfOfUsers field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PutAdminAgentsUpdateRequest) GetCanActOnBehalfOfUsersOk() (*bool, bool) {
+	if o == nil || IsNil(o.CanActOnBehalfOfUsers) {
+		return nil, false
+	}
+	return o.CanActOnBehalfOfUsers, true
+}
+
+// HasCanActOnBehalfOfUsers returns a boolean if a field has been set.
+func (o *PutAdminAgentsUpdateRequest) HasCanActOnBehalfOfUsers() bool {
+	if o != nil && !IsNil(o.CanActOnBehalfOfUsers) {
+		return true
+	}
+
+	return false
+}
+
+// SetCanActOnBehalfOfUsers gets a reference to the given bool and assigns it to the CanActOnBehalfOfUsers field.
+func (o *PutAdminAgentsUpdateRequest) SetCanActOnBehalfOfUsers(v bool) {
+	o.CanActOnBehalfOfUsers = &v
+}
+
 func (o PutAdminAgentsUpdateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -194,6 +296,15 @@ func (o PutAdminAgentsUpdateRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if o.BudgetPolicy != nil {
 		toSerialize["budgetPolicy"] = o.BudgetPolicy
+	}
+	if !IsNil(o.Jwks) {
+		toSerialize["jwks"] = o.Jwks
+	}
+	if !IsNil(o.JwksUri) {
+		toSerialize["jwksUri"] = o.JwksUri
+	}
+	if !IsNil(o.CanActOnBehalfOfUsers) {
+		toSerialize["canActOnBehalfOfUsers"] = o.CanActOnBehalfOfUsers
 	}
 	return toSerialize, nil
 }

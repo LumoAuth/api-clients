@@ -25,13 +25,51 @@ module LumoAuthApiClient
     # The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. Leave it out for an agent without a budget.
     attr_accessor :budget_policy
 
+    # How the agent authenticates. Default api_key.
+    attr_accessor :identity_type
+
+    # For private_key_jwt: the public keys of the agent, inline (a JWK Set). Private key members are refused. Send jwks or jwksUri, not both.
+    attr_accessor :jwks
+
+    # For private_key_jwt: https URL of the public key set of the agent.
+    attr_accessor :jwks_uri
+
+    # Whether the agent may act for users of the organization: approval prompts on their phones, Token Vault connections, the on-behalf-of token exchange and JIT requests for a user. Needs the delegation feature of the plan. Default false.
+    attr_accessor :can_act_on_behalf_of_users
+
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'name' => :'name',
         :'description' => :'description',
         :'capabilities' => :'capabilities',
-        :'budget_policy' => :'budgetPolicy'
+        :'budget_policy' => :'budgetPolicy',
+        :'identity_type' => :'identityType',
+        :'jwks' => :'jwks',
+        :'jwks_uri' => :'jwksUri',
+        :'can_act_on_behalf_of_users' => :'canActOnBehalfOfUsers'
       }
     end
 
@@ -51,14 +89,18 @@ module LumoAuthApiClient
         :'name' => :'String',
         :'description' => :'String',
         :'capabilities' => :'Array<String>',
-        :'budget_policy' => :'Hash<String, Object>'
+        :'budget_policy' => :'Hash<String, Object>',
+        :'identity_type' => :'String',
+        :'jwks' => :'Hash<String, Object>',
+        :'jwks_uri' => :'String',
+        :'can_act_on_behalf_of_users' => :'Boolean'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'budget_policy'
+        :'budget_policy',
       ])
     end
 
@@ -97,6 +139,24 @@ module LumoAuthApiClient
           self.budget_policy = value
         end
       end
+
+      if attributes.key?(:'identity_type')
+        self.identity_type = attributes[:'identity_type']
+      end
+
+      if attributes.key?(:'jwks')
+        if (value = attributes[:'jwks']).is_a?(Hash)
+          self.jwks = value
+        end
+      end
+
+      if attributes.key?(:'jwks_uri')
+        self.jwks_uri = attributes[:'jwks_uri']
+      end
+
+      if attributes.key?(:'can_act_on_behalf_of_users')
+        self.can_act_on_behalf_of_users = attributes[:'can_act_on_behalf_of_users']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -111,7 +171,19 @@ module LumoAuthApiClient
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      identity_type_validator = EnumAttributeValidator.new('String', ["workload", "aauth", "private_key_jwt", "client_secret", "api_key", "custom"])
+      return false unless identity_type_validator.valid?(@identity_type)
       true
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] identity_type Object to be assigned
+    def identity_type=(identity_type)
+      validator = EnumAttributeValidator.new('String', ["workload", "aauth", "private_key_jwt", "client_secret", "api_key", "custom"])
+      unless validator.valid?(identity_type)
+        fail ArgumentError, "invalid value for \"identity_type\", must be one of #{validator.allowable_values}."
+      end
+      @identity_type = identity_type
     end
 
     # Checks equality by comparing each attribute.
@@ -122,7 +194,11 @@ module LumoAuthApiClient
           name == o.name &&
           description == o.description &&
           capabilities == o.capabilities &&
-          budget_policy == o.budget_policy
+          budget_policy == o.budget_policy &&
+          identity_type == o.identity_type &&
+          jwks == o.jwks &&
+          jwks_uri == o.jwks_uri &&
+          can_act_on_behalf_of_users == o.can_act_on_behalf_of_users
     end
 
     # @see the `==` method
@@ -134,7 +210,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, description, capabilities, budget_policy].hash
+      [name, description, capabilities, budget_policy, identity_type, jwks, jwks_uri, can_act_on_behalf_of_users].hash
     end
 
     # Builds the object from hash

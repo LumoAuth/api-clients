@@ -62,7 +62,8 @@ class CreateApprovalRequest implements ModelInterface, ArrayAccess, \JsonSeriali
         'reason' => 'string',
         'impact' => 'string',
         'onBehalfOf' => 'string',
-        'meta' => 'object'
+        'expiresIn' => 'int',
+        'meta' => '\LumoAuth\ApiClient\Model\CreateApprovalRequestMeta'
     ];
 
     /**
@@ -77,6 +78,7 @@ class CreateApprovalRequest implements ModelInterface, ArrayAccess, \JsonSeriali
         'reason' => null,
         'impact' => null,
         'onBehalfOf' => null,
+        'expiresIn' => null,
         'meta' => null
     ];
 
@@ -90,6 +92,7 @@ class CreateApprovalRequest implements ModelInterface, ArrayAccess, \JsonSeriali
         'reason' => false,
         'impact' => false,
         'onBehalfOf' => false,
+        'expiresIn' => false,
         'meta' => false
     ];
 
@@ -183,6 +186,7 @@ class CreateApprovalRequest implements ModelInterface, ArrayAccess, \JsonSeriali
         'reason' => 'reason',
         'impact' => 'impact',
         'onBehalfOf' => 'on_behalf_of',
+        'expiresIn' => 'expires_in',
         'meta' => 'meta'
     ];
 
@@ -196,6 +200,7 @@ class CreateApprovalRequest implements ModelInterface, ArrayAccess, \JsonSeriali
         'reason' => 'setReason',
         'impact' => 'setImpact',
         'onBehalfOf' => 'setOnBehalfOf',
+        'expiresIn' => 'setExpiresIn',
         'meta' => 'setMeta'
     ];
 
@@ -209,6 +214,7 @@ class CreateApprovalRequest implements ModelInterface, ArrayAccess, \JsonSeriali
         'reason' => 'getReason',
         'impact' => 'getImpact',
         'onBehalfOf' => 'getOnBehalfOf',
+        'expiresIn' => 'getExpiresIn',
         'meta' => 'getMeta'
     ];
 
@@ -273,6 +279,7 @@ class CreateApprovalRequest implements ModelInterface, ArrayAccess, \JsonSeriali
         $this->setIfExists('reason', $data ?? [], null);
         $this->setIfExists('impact', $data ?? [], null);
         $this->setIfExists('onBehalfOf', $data ?? [], null);
+        $this->setIfExists('expiresIn', $data ?? [], 120);
         $this->setIfExists('meta', $data ?? [], null);
     }
 
@@ -302,6 +309,14 @@ class CreateApprovalRequest implements ModelInterface, ArrayAccess, \JsonSeriali
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        if (!is_null($this->container['expiresIn']) && ($this->container['expiresIn'] > 600)) {
+            $invalidProperties[] = "invalid value for 'expiresIn', must be smaller than or equal to 600.";
+        }
+
+        if (!is_null($this->container['expiresIn']) && ($this->container['expiresIn'] < 60)) {
+            $invalidProperties[] = "invalid value for 'expiresIn', must be bigger than or equal to 60.";
+        }
 
         return $invalidProperties;
     }
@@ -412,7 +427,7 @@ class CreateApprovalRequest implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets onBehalfOf
      *
-     * @param string|null $onBehalfOf User id or email the agent acts for (delegation required).
+     * @param string|null $onBehalfOf User id or email the agent acts for (delegation required). When it is the agent's owner, the request also goes to the organization's Slack and Discord approval channels that have agent approvals switched on.
      *
      * @return self
      */
@@ -427,9 +442,44 @@ class CreateApprovalRequest implements ModelInterface, ArrayAccess, \JsonSeriali
     }
 
     /**
+     * Gets expiresIn
+     *
+     * @return int|null
+     */
+    public function getExpiresIn()
+    {
+        return $this->container['expiresIn'];
+    }
+
+    /**
+     * Sets expiresIn
+     *
+     * @param int|null $expiresIn Seconds the person has to answer (60-600, default 120). An integer outside the range is clamped.
+     *
+     * @return self
+     */
+    public function setExpiresIn($expiresIn)
+    {
+        if (is_null($expiresIn)) {
+            throw new \InvalidArgumentException('non-nullable expiresIn cannot be null');
+        }
+
+        if (($expiresIn > 600)) {
+            throw new \InvalidArgumentException('invalid value for $expiresIn when calling CreateApprovalRequest., must be smaller than or equal to 600.');
+        }
+        if (($expiresIn < 60)) {
+            throw new \InvalidArgumentException('invalid value for $expiresIn when calling CreateApprovalRequest., must be bigger than or equal to 60.');
+        }
+
+        $this->container['expiresIn'] = $expiresIn;
+
+        return $this;
+    }
+
+    /**
      * Gets meta
      *
-     * @return object|null
+     * @return \LumoAuth\ApiClient\Model\CreateApprovalRequestMeta|null
      */
     public function getMeta()
     {
@@ -439,7 +489,7 @@ class CreateApprovalRequest implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets meta
      *
-     * @param object|null $meta Optional action metadata.
+     * @param \LumoAuth\ApiClient\Model\CreateApprovalRequestMeta|null $meta meta
      *
      * @return self
      */

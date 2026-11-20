@@ -19,6 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.lumoauth.client.model.CreateApprovalRequestMeta;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -48,7 +49,7 @@ import io.lumoauth.client.JSON;
 /**
  * CreateApprovalRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-19T15:14:32.479877953Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-20T15:10:21.516273261Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class CreateApprovalRequest {
   public static final String SERIALIZED_NAME_TASK_ID = "task_id";
   @SerializedName(SERIALIZED_NAME_TASK_ID)
@@ -70,10 +71,15 @@ public class CreateApprovalRequest {
   @javax.annotation.Nullable
   private String onBehalfOf;
 
+  public static final String SERIALIZED_NAME_EXPIRES_IN = "expires_in";
+  @SerializedName(SERIALIZED_NAME_EXPIRES_IN)
+  @javax.annotation.Nullable
+  private Integer expiresIn = 120;
+
   public static final String SERIALIZED_NAME_META = "meta";
   @SerializedName(SERIALIZED_NAME_META)
   @javax.annotation.Nullable
-  private Object meta;
+  private CreateApprovalRequestMeta meta;
 
   public CreateApprovalRequest() {
   }
@@ -141,7 +147,7 @@ public class CreateApprovalRequest {
   }
 
   /**
-   * User id or email the agent acts for (delegation required).
+   * User id or email the agent acts for (delegation required). When it is the agent&#39;s owner, the request also goes to the organization&#39;s Slack and Discord approval channels that have agent approvals switched on.
    * @return onBehalfOf
    */
   @javax.annotation.Nullable
@@ -154,21 +160,42 @@ public class CreateApprovalRequest {
   }
 
 
-  public CreateApprovalRequest meta(@javax.annotation.Nullable Object meta) {
+  public CreateApprovalRequest expiresIn(@javax.annotation.Nullable Integer expiresIn) {
+    this.expiresIn = expiresIn;
+    return this;
+  }
+
+  /**
+   * Seconds the person has to answer (60-600, default 120). An integer outside the range is clamped.
+   * minimum: 60
+   * maximum: 600
+   * @return expiresIn
+   */
+  @javax.annotation.Nullable
+  public Integer getExpiresIn() {
+    return expiresIn;
+  }
+
+  public void setExpiresIn(@javax.annotation.Nullable Integer expiresIn) {
+    this.expiresIn = expiresIn;
+  }
+
+
+  public CreateApprovalRequest meta(@javax.annotation.Nullable CreateApprovalRequestMeta meta) {
     this.meta = meta;
     return this;
   }
 
   /**
-   * Optional action metadata.
+   * Get meta
    * @return meta
    */
   @javax.annotation.Nullable
-  public Object getMeta() {
+  public CreateApprovalRequestMeta getMeta() {
     return meta;
   }
 
-  public void setMeta(@javax.annotation.Nullable Object meta) {
+  public void setMeta(@javax.annotation.Nullable CreateApprovalRequestMeta meta) {
     this.meta = meta;
   }
 
@@ -187,12 +214,13 @@ public class CreateApprovalRequest {
         Objects.equals(this.reason, createApprovalRequest.reason) &&
         Objects.equals(this.impact, createApprovalRequest.impact) &&
         Objects.equals(this.onBehalfOf, createApprovalRequest.onBehalfOf) &&
+        Objects.equals(this.expiresIn, createApprovalRequest.expiresIn) &&
         Objects.equals(this.meta, createApprovalRequest.meta);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(taskId, reason, impact, onBehalfOf, meta);
+    return Objects.hash(taskId, reason, impact, onBehalfOf, expiresIn, meta);
   }
 
   @Override
@@ -203,6 +231,7 @@ public class CreateApprovalRequest {
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
     sb.append("    impact: ").append(toIndentedString(impact)).append("\n");
     sb.append("    onBehalfOf: ").append(toIndentedString(onBehalfOf)).append("\n");
+    sb.append("    expiresIn: ").append(toIndentedString(expiresIn)).append("\n");
     sb.append("    meta: ").append(toIndentedString(meta)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -225,7 +254,7 @@ public class CreateApprovalRequest {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("task_id", "reason", "impact", "on_behalf_of", "meta"));
+    openapiFields = new HashSet<String>(Arrays.asList("task_id", "reason", "impact", "on_behalf_of", "expires_in", "meta"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -263,6 +292,10 @@ public class CreateApprovalRequest {
       }
       if ((jsonObj.get("on_behalf_of") != null && !jsonObj.get("on_behalf_of").isJsonNull()) && !jsonObj.get("on_behalf_of").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `on_behalf_of` to be a primitive type in the JSON string but got `%s`", jsonObj.get("on_behalf_of").toString()));
+      }
+      // validate the optional field `meta`
+      if (jsonObj.get("meta") != null && !jsonObj.get("meta").isJsonNull()) {
+        CreateApprovalRequestMeta.validateJsonElement(jsonObj.get("meta"));
       }
   }
 
