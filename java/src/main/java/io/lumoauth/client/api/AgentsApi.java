@@ -28,6 +28,8 @@ import java.io.IOException;
 
 
 import io.lumoauth.client.model.AdminAgentsReportUsageRequest;
+import io.lumoauth.client.model.AgentsMeToolCallsRequest;
+import io.lumoauth.client.model.AgentsMeToolCallsResponse;
 import io.lumoauth.client.model.AskRequest;
 import io.lumoauth.client.model.AskResponse;
 import io.lumoauth.client.model.AttestRequest;
@@ -39,9 +41,13 @@ import io.lumoauth.client.model.CreateApprovalResponse;
 import io.lumoauth.client.model.CreateApprovalResponse202;
 import io.lumoauth.client.model.GetApprovalStatusResponse;
 import io.lumoauth.client.model.GetCurrentAgentResponse;
+import io.lumoauth.client.model.PollAgentEnrollmentRequest;
+import io.lumoauth.client.model.PollAgentEnrollmentResponse;
 import io.lumoauth.client.model.RegisterAgentResponse;
 import io.lumoauth.client.model.ReportAgentUsageResponse;
 import io.lumoauth.client.model.SignedAgentCard;
+import io.lumoauth.client.model.StartAgentEnrollmentRequest;
+import io.lumoauth.client.model.StartAgentEnrollmentResponse;
 import io.lumoauth.client.model.VerifyAgentCardResponse;
 
 import java.lang.reflect.Type;
@@ -88,6 +94,155 @@ public class AgentsApi {
     }
 
     /**
+     * Build call for agentsMeToolCalls
+     * @param orgId  (required)
+     * @param agentsMeToolCallsRequest  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Recorded. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request: calls is missing, empty or longer than 50, or a call has an unknown field or an invalid value (the description names it). </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> test_token_not_accepted, cross_tenant or insufficient_scope (the token was narrowed with a scope). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited: too many reports from this agent. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call agentsMeToolCallsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AgentsMeToolCallsRequest agentsMeToolCallsRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = agentsMeToolCallsRequest;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/agents/me/tool-calls"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call agentsMeToolCallsValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AgentsMeToolCallsRequest agentsMeToolCallsRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling agentsMeToolCalls(Async)");
+        }
+
+        // verify the required parameter 'agentsMeToolCallsRequest' is set
+        if (agentsMeToolCallsRequest == null) {
+            throw new ApiException("Missing the required parameter 'agentsMeToolCallsRequest' when calling agentsMeToolCalls(Async)");
+        }
+
+        return agentsMeToolCallsCall(orgId, agentsMeToolCallsRequest, _callback);
+
+    }
+
+    /**
+     * Report the tool calls that the agent&#39;s host gated
+     * Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host&#39;s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+     * @param orgId  (required)
+     * @param agentsMeToolCallsRequest  (required)
+     * @return AgentsMeToolCallsResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Recorded. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request: calls is missing, empty or longer than 50, or a call has an unknown field or an invalid value (the description names it). </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> test_token_not_accepted, cross_tenant or insufficient_scope (the token was narrowed with a scope). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited: too many reports from this agent. </td><td>  -  </td></tr>
+     </table>
+     */
+    public AgentsMeToolCallsResponse agentsMeToolCalls(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AgentsMeToolCallsRequest agentsMeToolCallsRequest) throws ApiException {
+        ApiResponse<AgentsMeToolCallsResponse> localVarResp = agentsMeToolCallsWithHttpInfo(orgId, agentsMeToolCallsRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Report the tool calls that the agent&#39;s host gated
+     * Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host&#39;s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+     * @param orgId  (required)
+     * @param agentsMeToolCallsRequest  (required)
+     * @return ApiResponse&lt;AgentsMeToolCallsResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Recorded. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request: calls is missing, empty or longer than 50, or a call has an unknown field or an invalid value (the description names it). </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> test_token_not_accepted, cross_tenant or insufficient_scope (the token was narrowed with a scope). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited: too many reports from this agent. </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AgentsMeToolCallsResponse> agentsMeToolCallsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AgentsMeToolCallsRequest agentsMeToolCallsRequest) throws ApiException {
+        okhttp3.Call localVarCall = agentsMeToolCallsValidateBeforeCall(orgId, agentsMeToolCallsRequest, null);
+        Type localVarReturnType = new TypeToken<AgentsMeToolCallsResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Report the tool calls that the agent&#39;s host gated (asynchronously)
+     * Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host&#39;s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+     * @param orgId  (required)
+     * @param agentsMeToolCallsRequest  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Recorded. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request: calls is missing, empty or longer than 50, or a call has an unknown field or an invalid value (the description names it). </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> test_token_not_accepted, cross_tenant or insufficient_scope (the token was narrowed with a scope). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited: too many reports from this agent. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call agentsMeToolCallsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AgentsMeToolCallsRequest agentsMeToolCallsRequest, final ApiCallback<AgentsMeToolCallsResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = agentsMeToolCallsValidateBeforeCall(orgId, agentsMeToolCallsRequest, _callback);
+        Type localVarReturnType = new TypeToken<AgentsMeToolCallsResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for ask
      * @param orgId  (required)
      * @param askRequest  (required)
@@ -99,7 +254,7 @@ public class AgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authorization decision for the requested action. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing required field: action; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing required field: action; invalid_request: audit is not denials or always; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
@@ -178,7 +333,7 @@ public class AgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authorization decision for the requested action. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing required field: action; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing required field: action; invalid_request: audit is not denials or always; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
@@ -200,7 +355,7 @@ public class AgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authorization decision for the requested action. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing required field: action; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing required field: action; invalid_request: audit is not denials or always; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
@@ -224,7 +379,7 @@ public class AgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authorization decision for the requested action. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing required field: action; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing required field: action; invalid_request: audit is not denials or always; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
@@ -567,12 +722,12 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> Approval request created and push sent. </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Approval request created and delivered (see &#x60;delivery&#x60;). </td><td>  -  </td></tr>
         <tr><td> 202 </td><td> User has no push device; an email sign-in fallback link was sent. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, or missing on_behalf_of. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, expires_in or meta (invalid_meta names the field), or missing on_behalf_of. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or target user not found. </td><td>  -  </td></tr>
-        <tr><td> 428 </td><td> User has no enrolled push device and the email fallback could not be sent. </td><td>  -  </td></tr>
+        <tr><td> 428 </td><td> User has no enrolled push device, no approval channel receives the request, and the email fallback could not be sent. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limited (per tenant/agent/user). </td><td>  -  </td></tr>
      </table>
      */
@@ -649,12 +804,12 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> Approval request created and push sent. </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Approval request created and delivered (see &#x60;delivery&#x60;). </td><td>  -  </td></tr>
         <tr><td> 202 </td><td> User has no push device; an email sign-in fallback link was sent. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, or missing on_behalf_of. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, expires_in or meta (invalid_meta names the field), or missing on_behalf_of. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or target user not found. </td><td>  -  </td></tr>
-        <tr><td> 428 </td><td> User has no enrolled push device and the email fallback could not be sent. </td><td>  -  </td></tr>
+        <tr><td> 428 </td><td> User has no enrolled push device, no approval channel receives the request, and the email fallback could not be sent. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limited (per tenant/agent/user). </td><td>  -  </td></tr>
      </table>
      */
@@ -674,12 +829,12 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> Approval request created and push sent. </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Approval request created and delivered (see &#x60;delivery&#x60;). </td><td>  -  </td></tr>
         <tr><td> 202 </td><td> User has no push device; an email sign-in fallback link was sent. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, or missing on_behalf_of. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, expires_in or meta (invalid_meta names the field), or missing on_behalf_of. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or target user not found. </td><td>  -  </td></tr>
-        <tr><td> 428 </td><td> User has no enrolled push device and the email fallback could not be sent. </td><td>  -  </td></tr>
+        <tr><td> 428 </td><td> User has no enrolled push device, no approval channel receives the request, and the email fallback could not be sent. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limited (per tenant/agent/user). </td><td>  -  </td></tr>
      </table>
      */
@@ -701,12 +856,12 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> Approval request created and push sent. </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Approval request created and delivered (see &#x60;delivery&#x60;). </td><td>  -  </td></tr>
         <tr><td> 202 </td><td> User has no push device; an email sign-in fallback link was sent. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, or missing on_behalf_of. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, expires_in or meta (invalid_meta names the field), or missing on_behalf_of. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or target user not found. </td><td>  -  </td></tr>
-        <tr><td> 428 </td><td> User has no enrolled push device and the email fallback could not be sent. </td><td>  -  </td></tr>
+        <tr><td> 428 </td><td> User has no enrolled push device, no approval channel receives the request, and the email fallback could not be sent. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limited (per tenant/agent/user). </td><td>  -  </td></tr>
      </table>
      */
@@ -1139,6 +1294,155 @@ public class AgentsApi {
         return localVarCall;
     }
     /**
+     * Build call for pollAgentEnrollment
+     * @param orgId  (required)
+     * @param pollAgentEnrollmentRequest  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Approved. Delivered once; later polls answer expired_token. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> authorization_pending, slow_down, access_denied, expired_token or invalid_request. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests: too many polls from this address (Retry-After). </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call pollAgentEnrollmentCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PollAgentEnrollmentRequest pollAgentEnrollmentRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = pollAgentEnrollmentRequest;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/agents/enrollments/token"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call pollAgentEnrollmentValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PollAgentEnrollmentRequest pollAgentEnrollmentRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling pollAgentEnrollment(Async)");
+        }
+
+        // verify the required parameter 'pollAgentEnrollmentRequest' is set
+        if (pollAgentEnrollmentRequest == null) {
+            throw new ApiException("Missing the required parameter 'pollAgentEnrollmentRequest' when calling pollAgentEnrollment(Async)");
+        }
+
+        return pollAgentEnrollmentCall(orgId, pollAgentEnrollmentRequest, _callback);
+
+    }
+
+    /**
+     * Poll an agent enrollment (no credential)
+     * Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+     * @param orgId  (required)
+     * @param pollAgentEnrollmentRequest  (required)
+     * @return PollAgentEnrollmentResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Approved. Delivered once; later polls answer expired_token. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> authorization_pending, slow_down, access_denied, expired_token or invalid_request. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests: too many polls from this address (Retry-After). </td><td>  -  </td></tr>
+     </table>
+     */
+    public PollAgentEnrollmentResponse pollAgentEnrollment(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PollAgentEnrollmentRequest pollAgentEnrollmentRequest) throws ApiException {
+        ApiResponse<PollAgentEnrollmentResponse> localVarResp = pollAgentEnrollmentWithHttpInfo(orgId, pollAgentEnrollmentRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Poll an agent enrollment (no credential)
+     * Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+     * @param orgId  (required)
+     * @param pollAgentEnrollmentRequest  (required)
+     * @return ApiResponse&lt;PollAgentEnrollmentResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Approved. Delivered once; later polls answer expired_token. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> authorization_pending, slow_down, access_denied, expired_token or invalid_request. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests: too many polls from this address (Retry-After). </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<PollAgentEnrollmentResponse> pollAgentEnrollmentWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PollAgentEnrollmentRequest pollAgentEnrollmentRequest) throws ApiException {
+        okhttp3.Call localVarCall = pollAgentEnrollmentValidateBeforeCall(orgId, pollAgentEnrollmentRequest, null);
+        Type localVarReturnType = new TypeToken<PollAgentEnrollmentResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Poll an agent enrollment (no credential) (asynchronously)
+     * Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+     * @param orgId  (required)
+     * @param pollAgentEnrollmentRequest  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Approved. Delivered once; later polls answer expired_token. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> authorization_pending, slow_down, access_denied, expired_token or invalid_request. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests: too many polls from this address (Retry-After). </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call pollAgentEnrollmentAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PollAgentEnrollmentRequest pollAgentEnrollmentRequest, final ApiCallback<PollAgentEnrollmentResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = pollAgentEnrollmentValidateBeforeCall(orgId, pollAgentEnrollmentRequest, _callback);
+        Type localVarReturnType = new TypeToken<PollAgentEnrollmentResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for registerAgent
      * @param orgId  (required)
      * @param _callback Callback for upload/download progress
@@ -1411,6 +1715,155 @@ public class AgentsApi {
 
         okhttp3.Call localVarCall = reportAgentUsageValidateBeforeCall(orgId, adminAgentsReportUsageRequest, _callback);
         Type localVarReturnType = new TypeToken<ReportAgentUsageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for startAgentEnrollment
+     * @param orgId  (required)
+     * @param startAgentEnrollmentRequest  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 201 </td><td> Enrollment started. Show user_code, verification_uri and key_fingerprint to the person; keep enrollment_code secret and poll with it. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request; error_description names the field. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests: rate limited, or every waiting request that could give way is open on the approval page (Retry-After). </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call startAgentEnrollmentCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull StartAgentEnrollmentRequest startAgentEnrollmentRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = startAgentEnrollmentRequest;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/agents/enrollments"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call startAgentEnrollmentValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull StartAgentEnrollmentRequest startAgentEnrollmentRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling startAgentEnrollment(Async)");
+        }
+
+        // verify the required parameter 'startAgentEnrollmentRequest' is set
+        if (startAgentEnrollmentRequest == null) {
+            throw new ApiException("Missing the required parameter 'startAgentEnrollmentRequest' when calling startAgentEnrollment(Async)");
+        }
+
+        return startAgentEnrollmentCall(orgId, startAgentEnrollmentRequest, _callback);
+
+    }
+
+    /**
+     * Start an agent enrollment (no credential)
+     * The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine&#39;s own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+     * @param orgId  (required)
+     * @param startAgentEnrollmentRequest  (required)
+     * @return StartAgentEnrollmentResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 201 </td><td> Enrollment started. Show user_code, verification_uri and key_fingerprint to the person; keep enrollment_code secret and poll with it. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request; error_description names the field. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests: rate limited, or every waiting request that could give way is open on the approval page (Retry-After). </td><td>  -  </td></tr>
+     </table>
+     */
+    public StartAgentEnrollmentResponse startAgentEnrollment(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull StartAgentEnrollmentRequest startAgentEnrollmentRequest) throws ApiException {
+        ApiResponse<StartAgentEnrollmentResponse> localVarResp = startAgentEnrollmentWithHttpInfo(orgId, startAgentEnrollmentRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Start an agent enrollment (no credential)
+     * The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine&#39;s own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+     * @param orgId  (required)
+     * @param startAgentEnrollmentRequest  (required)
+     * @return ApiResponse&lt;StartAgentEnrollmentResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 201 </td><td> Enrollment started. Show user_code, verification_uri and key_fingerprint to the person; keep enrollment_code secret and poll with it. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request; error_description names the field. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests: rate limited, or every waiting request that could give way is open on the approval page (Retry-After). </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<StartAgentEnrollmentResponse> startAgentEnrollmentWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull StartAgentEnrollmentRequest startAgentEnrollmentRequest) throws ApiException {
+        okhttp3.Call localVarCall = startAgentEnrollmentValidateBeforeCall(orgId, startAgentEnrollmentRequest, null);
+        Type localVarReturnType = new TypeToken<StartAgentEnrollmentResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Start an agent enrollment (no credential) (asynchronously)
+     * The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine&#39;s own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+     * @param orgId  (required)
+     * @param startAgentEnrollmentRequest  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 201 </td><td> Enrollment started. Show user_code, verification_uri and key_fingerprint to the person; keep enrollment_code secret and poll with it. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request; error_description names the field. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests: rate limited, or every waiting request that could give way is open on the approval page (Retry-After). </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call startAgentEnrollmentAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull StartAgentEnrollmentRequest startAgentEnrollmentRequest, final ApiCallback<StartAgentEnrollmentResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = startAgentEnrollmentValidateBeforeCall(orgId, startAgentEnrollmentRequest, _callback);
+        Type localVarReturnType = new TypeToken<StartAgentEnrollmentResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

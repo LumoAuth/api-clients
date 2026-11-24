@@ -53,7 +53,7 @@ import io.lumoauth.client.JSON;
 /**
  * RegisteredClientMetadata
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-19T15:14:32.479877953Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T20:12:48.846738323Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class RegisteredClientMetadata {
   public static final String SERIALIZED_NAME_CLIENT_ID = "client_id";
   @SerializedName(SERIALIZED_NAME_CLIENT_ID)
@@ -905,7 +905,7 @@ public class RegisteredClientMetadata {
   }
 
   /**
-   * RFC 8707 resource indicators the client may request.
+   * RFC 8707 resource indicators the client may request: at most 20 absolute https URLs without a fragment (http only for localhost). A registration with any other value is refused with invalid_client_metadata.
    * @return audienceUris
    */
   @javax.annotation.Nullable

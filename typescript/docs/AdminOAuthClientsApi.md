@@ -184,6 +184,7 @@ const { status, data } = await apiInstance.createClient(
 # **deleteClient**
 > MessageResponse deleteClient()
 
+Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
 
 ### Example
 
@@ -231,7 +232,9 @@ const { status, data } = await apiInstance.deleteClient(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Deleted |  -  |
+|**403** | The client holds a privilege that the caller may not hand out |  -  |
 |**404** | OAuth client not found |  -  |
+|**409** | The client registered itself and cannot be deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -292,6 +295,7 @@ const { status, data } = await apiInstance.disableClient(
 # **enableClient**
 > UpdateClientResponse enableClient()
 
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
 ### Example
 
@@ -339,6 +343,7 @@ const { status, data } = await apiInstance.enableClient(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Client enabled (summary fields only) |  -  |
+|**403** | The client holds a privilege that the caller may not hand out |  -  |
 |**404** | Client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -563,6 +568,7 @@ const { status, data } = await apiInstance.patchAdminClientsUpdateBranding(
 # **patchClient**
 > UpdateClientResponse patchClient()
 
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
 ### Example
 
@@ -610,6 +616,7 @@ const { status, data } = await apiInstance.patchClient(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Updated OAuth client (detailed) |  -  |
+|**403** | The client holds a privilege that the caller may not hand out, or the change itself is not allowed |  -  |
 |**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -676,6 +683,7 @@ const { status, data } = await apiInstance.putAdminClientsUpdateBranding(
 # **rotateClientSecret**
 > RotateClientSecretResponse rotateClientSecret()
 
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
 ### Example
 
@@ -723,6 +731,7 @@ const { status, data } = await apiInstance.rotateClientSecret(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Rotated — the new plaintext secret is included once and never shown again |  -  |
+|**403** | The client holds a privilege that the caller may not hand out |  -  |
 |**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -730,6 +739,7 @@ const { status, data } = await apiInstance.rotateClientSecret(
 # **setClientScopes**
 > SetClientScopesResponse setClientScopes()
 
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
 
 ### Example
 
@@ -776,6 +786,7 @@ const { status, data } = await apiInstance.setClientScopes(
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+|**403** | A privileged scope is added, or the client holds one, and the caller may not hand it out |  -  |
 |**200** | Updated scope names |  -  |
 |**404** | OAuth client not found |  -  |
 
@@ -784,6 +795,7 @@ const { status, data } = await apiInstance.setClientScopes(
 # **updateClient**
 > UpdateClientResponse updateClient()
 
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
 ### Example
 
@@ -831,6 +843,7 @@ const { status, data } = await apiInstance.updateClient(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Updated OAuth client (detailed) |  -  |
+|**403** | The client holds a privilege that the caller may not hand out, or the change itself is not allowed |  -  |
 |**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

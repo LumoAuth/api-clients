@@ -314,7 +314,7 @@ class PutAdminSettingsGeneralUpdateRequest implements ModelInterface, ArrayAcces
     /**
      * Sets name
      *
-     * @param string|null $name Name of the organization: one line, 1 to 255 characters. Aliases: tenantName, display_name, displayName.
+     * @param string|null $name Name of the organization: one line, 1 to 255 characters, without \"<\" or \">\". Aliases: tenantName, display_name, displayName.
      *
      * @return self
      */

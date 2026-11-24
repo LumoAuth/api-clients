@@ -250,6 +250,8 @@ public class Example {
 
 Delete an OAuth client
 
+Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
+
 ### Example
 ```java
 // Import classes:
@@ -316,7 +318,9 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Deleted |  -  |
+| **403** | The client holds a privilege that the caller may not hand out |  -  |
 | **404** | OAuth client not found |  -  |
+| **409** | The client registered itself and cannot be deleted |  -  |
 
 <a id="disableClient"></a>
 # **disableClient**
@@ -398,6 +402,8 @@ public class Example {
 
 Enable an OAuth client
 
+A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
+
 ### Example
 ```java
 // Import classes:
@@ -464,6 +470,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Client enabled (summary fields only) |  -  |
+| **403** | The client holds a privilege that the caller may not hand out |  -  |
 | **404** | Client not found |  -  |
 
 <a id="getClient"></a>
@@ -769,6 +776,8 @@ public class Example {
 
 Update an OAuth client
 
+A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
+
 ### Example
 ```java
 // Import classes:
@@ -835,6 +844,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated OAuth client (detailed) |  -  |
+| **403** | The client holds a privilege that the caller may not hand out, or the change itself is not allowed |  -  |
 | **404** | OAuth client not found |  -  |
 
 <a id="putAdminClientsUpdateBranding"></a>
@@ -921,6 +931,8 @@ public class Example {
 
 Rotate an OAuth client secret
 
+A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
+
 ### Example
 ```java
 // Import classes:
@@ -987,6 +999,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Rotated — the new plaintext secret is included once and never shown again |  -  |
+| **403** | The client holds a privilege that the caller may not hand out |  -  |
 | **404** | OAuth client not found |  -  |
 
 <a id="setClientScopes"></a>
@@ -994,6 +1007,8 @@ public class Example {
 > SetClientScopesResponse setClientScopes(orgId, clientId)
 
 Replace the scopes granted to an OAuth client
+
+A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
 
 ### Example
 ```java
@@ -1060,6 +1075,7 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **403** | A privileged scope is added, or the client holds one, and the caller may not hand it out |  -  |
 | **200** | Updated scope names |  -  |
 | **404** | OAuth client not found |  -  |
 
@@ -1068,6 +1084,8 @@ public class Example {
 > UpdateClientResponse updateClient(orgId, clientId)
 
 Update an OAuth client (same as PATCH: only the fields that are sent change)
+
+A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
 
 ### Example
 ```java
@@ -1135,5 +1153,6 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated OAuth client (detailed) |  -  |
+| **403** | The client holds a privilege that the caller may not hand out, or the change itself is not allowed |  -  |
 | **404** | OAuth client not found |  -  |
 

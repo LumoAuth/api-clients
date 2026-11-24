@@ -94,7 +94,7 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :x_mfa_challenge Approved step_up challenge id
+    # @option opts [String] :x_mfa_challenge Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)
     # @return [nil]
     def delete_authenticator(org_id, id, opts = {})
       delete_authenticator_with_http_info(org_id, id, opts)
@@ -106,7 +106,7 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :x_mfa_challenge Approved step_up challenge id
+    # @option opts [String] :x_mfa_challenge Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
     def delete_authenticator_with_http_info(org_id, id, opts = {})
       if @api_client.config.debugging

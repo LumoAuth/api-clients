@@ -21,11 +21,37 @@ module LumoAuthApiClient
     # Optional resource/attribute context for the decision.
     attr_accessor :context
 
+    # Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record.
+    attr_accessor :audit
+
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'action' => :'action',
-        :'context' => :'context'
+        :'context' => :'context',
+        :'audit' => :'audit'
       }
     end
 
@@ -43,7 +69,8 @@ module LumoAuthApiClient
     def self.openapi_types
       {
         :'action' => :'String',
-        :'context' => :'Object'
+        :'context' => :'Object',
+        :'audit' => :'String'
       }
     end
 
@@ -76,6 +103,12 @@ module LumoAuthApiClient
       if attributes.key?(:'context')
         self.context = attributes[:'context']
       end
+
+      if attributes.key?(:'audit')
+        self.audit = attributes[:'audit']
+      else
+        self.audit = 'denials'
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -90,7 +123,19 @@ module LumoAuthApiClient
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      audit_validator = EnumAttributeValidator.new('String', ["denials", "always"])
+      return false unless audit_validator.valid?(@audit)
       true
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] audit Object to be assigned
+    def audit=(audit)
+      validator = EnumAttributeValidator.new('String', ["denials", "always"])
+      unless validator.valid?(audit)
+        fail ArgumentError, "invalid value for \"audit\", must be one of #{validator.allowable_values}."
+      end
+      @audit = audit
     end
 
     # Checks equality by comparing each attribute.
@@ -99,7 +144,8 @@ module LumoAuthApiClient
       return true if self.equal?(o)
       self.class == o.class &&
           action == o.action &&
-          context == o.context
+          context == o.context &&
+          audit == o.audit
     end
 
     # @see the `==` method
@@ -111,7 +157,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [action, context].hash
+      [action, context, audit].hash
     end
 
     # Builds the object from hash

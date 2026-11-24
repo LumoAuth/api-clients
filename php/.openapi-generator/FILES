@@ -117,6 +117,13 @@ docs/Model/AdminIdentitiesListResponseData.md
 docs/Model/AdminIdentitiesListResponseDataBindingsItem.md
 docs/Model/AdminMcpServersCreateResponse.md
 docs/Model/AdminMcpServersGetResponse.md
+docs/Model/AdminMcpServersGrantsListResponse.md
+docs/Model/AdminMcpServersGrantsListResponseDataItem.md
+docs/Model/AdminMcpServersGrantsRemoveResponse.md
+docs/Model/AdminMcpServersGrantsRemoveResponseData.md
+docs/Model/AdminMcpServersGrantsSetRequest.md
+docs/Model/AdminMcpServersGrantsSetResponse.md
+docs/Model/AdminMcpServersGrantsSetResponseData.md
 docs/Model/AdminMcpServersListResponse.md
 docs/Model/AdminOrgInvitationsCreateResponse.md
 docs/Model/AdminOrgInvitationsListResponse.md
@@ -200,6 +207,9 @@ docs/Model/AdminWebhooksTunnelStartResponseData.md
 docs/Model/AdminWebhooksWebhooksDisableResponse.md
 docs/Model/AdminWebhooksWebhooksEnableResponse.md
 docs/Model/AgentOutboundConnection.md
+docs/Model/AgentsMeToolCallsRequest.md
+docs/Model/AgentsMeToolCallsRequestCallsItem.md
+docs/Model/AgentsMeToolCallsResponse.md
 docs/Model/ApproveRequestRequest.md
 docs/Model/ApproveRequestResponse.md
 docs/Model/AskRequest.md
@@ -237,6 +247,7 @@ docs/Model/CimdCheckResultEffective.md
 docs/Model/CimdCheckResultShadowClient.md
 docs/Model/CompleteTaskResponse.md
 docs/Model/CreateApprovalRequest.md
+docs/Model/CreateApprovalRequestMeta.md
 docs/Model/CreateApprovalResponse.md
 docs/Model/CreateApprovalResponse202.md
 docs/Model/CreateClientResponse.md
@@ -360,6 +371,8 @@ docs/Model/ParResponse.md
 docs/Model/PasskeyEnrollmentStarted.md
 docs/Model/PatchAdminClientsUpdateBrandingResponse.md
 docs/Model/Permission.md
+docs/Model/PollAgentEnrollmentRequest.md
+docs/Model/PollAgentEnrollmentResponse.md
 docs/Model/ProtectedResourceList.md
 docs/Model/ProtectedResourceMetadata.md
 docs/Model/PushEnrollmentStarted.md
@@ -418,6 +431,12 @@ docs/Model/SocialLoginProvider.md
 docs/Model/SsfStream.md
 docs/Model/SsfStreamDelivery.md
 docs/Model/SsfStreamList.md
+docs/Model/StartAgentEnrollmentRequest.md
+docs/Model/StartAgentEnrollmentRequestCapabilitiesItem.md
+docs/Model/StartAgentEnrollmentRequestInventory.md
+docs/Model/StartAgentEnrollmentRequestInventoryMcpServersItem.md
+docs/Model/StartAgentEnrollmentRequestJwks.md
+docs/Model/StartAgentEnrollmentResponse.md
 docs/Model/SubmitLoginJsonResponse.md
 docs/Model/TenantProfile.md
 docs/Model/TokenResponse.md
@@ -566,6 +585,13 @@ lib/Model/AdminIdentitiesListResponseData.php
 lib/Model/AdminIdentitiesListResponseDataBindingsItem.php
 lib/Model/AdminMcpServersCreateResponse.php
 lib/Model/AdminMcpServersGetResponse.php
+lib/Model/AdminMcpServersGrantsListResponse.php
+lib/Model/AdminMcpServersGrantsListResponseDataItem.php
+lib/Model/AdminMcpServersGrantsRemoveResponse.php
+lib/Model/AdminMcpServersGrantsRemoveResponseData.php
+lib/Model/AdminMcpServersGrantsSetRequest.php
+lib/Model/AdminMcpServersGrantsSetResponse.php
+lib/Model/AdminMcpServersGrantsSetResponseData.php
 lib/Model/AdminMcpServersListResponse.php
 lib/Model/AdminOrgInvitationsCreateResponse.php
 lib/Model/AdminOrgInvitationsListResponse.php
@@ -649,6 +675,9 @@ lib/Model/AdminWebhooksTunnelStartResponseData.php
 lib/Model/AdminWebhooksWebhooksDisableResponse.php
 lib/Model/AdminWebhooksWebhooksEnableResponse.php
 lib/Model/AgentOutboundConnection.php
+lib/Model/AgentsMeToolCallsRequest.php
+lib/Model/AgentsMeToolCallsRequestCallsItem.php
+lib/Model/AgentsMeToolCallsResponse.php
 lib/Model/ApproveRequestRequest.php
 lib/Model/ApproveRequestResponse.php
 lib/Model/AskRequest.php
@@ -686,6 +715,7 @@ lib/Model/CimdCheckResultEffective.php
 lib/Model/CimdCheckResultShadowClient.php
 lib/Model/CompleteTaskResponse.php
 lib/Model/CreateApprovalRequest.php
+lib/Model/CreateApprovalRequestMeta.php
 lib/Model/CreateApprovalResponse.php
 lib/Model/CreateApprovalResponse202.php
 lib/Model/CreateClientResponse.php
@@ -810,6 +840,8 @@ lib/Model/ParResponse.php
 lib/Model/PasskeyEnrollmentStarted.php
 lib/Model/PatchAdminClientsUpdateBrandingResponse.php
 lib/Model/Permission.php
+lib/Model/PollAgentEnrollmentRequest.php
+lib/Model/PollAgentEnrollmentResponse.php
 lib/Model/ProtectedResourceList.php
 lib/Model/ProtectedResourceMetadata.php
 lib/Model/PushEnrollmentStarted.php
@@ -868,6 +900,12 @@ lib/Model/SocialLoginProvider.php
 lib/Model/SsfStream.php
 lib/Model/SsfStreamDelivery.php
 lib/Model/SsfStreamList.php
+lib/Model/StartAgentEnrollmentRequest.php
+lib/Model/StartAgentEnrollmentRequestCapabilitiesItem.php
+lib/Model/StartAgentEnrollmentRequestInventory.php
+lib/Model/StartAgentEnrollmentRequestInventoryMcpServersItem.php
+lib/Model/StartAgentEnrollmentRequestJwks.php
+lib/Model/StartAgentEnrollmentResponse.php
 lib/Model/SubmitLoginJsonResponse.php
 lib/Model/TenantProfile.php
 lib/Model/TokenResponse.php

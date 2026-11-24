@@ -507,7 +507,8 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 400 </td><td> invalid_scope — the &#x60;scope&#x60; parameter holds a value that is not a scope token (RFC 6749 section 3.3). The value is not repeated. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). A token is also invalid when the account, agent or application it was issued to is no longer active. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
@@ -587,7 +588,8 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 400 </td><td> invalid_scope — the &#x60;scope&#x60; parameter holds a value that is not a scope token (RFC 6749 section 3.3). The value is not repeated. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). A token is also invalid when the account, agent or application it was issued to is no longer active. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
@@ -610,7 +612,8 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 400 </td><td> invalid_scope — the &#x60;scope&#x60; parameter holds a value that is not a scope token (RFC 6749 section 3.3). The value is not repeated. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). A token is also invalid when the account, agent or application it was issued to is no longer active. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
@@ -635,7 +638,8 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 400 </td><td> invalid_scope — the &#x60;scope&#x60; parameter holds a value that is not a scope token (RFC 6749 section 3.3). The value is not repeated. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). A token is also invalid when the account, agent or application it was issued to is no longer active. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
@@ -962,7 +966,8 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 400 </td><td> invalid_scope — the &#x60;scope&#x60; parameter holds a value that is not a scope token (RFC 6749 section 3.3). The value is not repeated. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). A token is also invalid when the account, agent or application it was issued to is no longer active. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
@@ -1042,7 +1047,8 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 400 </td><td> invalid_scope — the &#x60;scope&#x60; parameter holds a value that is not a scope token (RFC 6749 section 3.3). The value is not repeated. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). A token is also invalid when the account, agent or application it was issued to is no longer active. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
@@ -1065,7 +1071,8 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 400 </td><td> invalid_scope — the &#x60;scope&#x60; parameter holds a value that is not a scope token (RFC 6749 section 3.3). The value is not repeated. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). A token is also invalid when the account, agent or application it was issued to is no longer active. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
@@ -1090,7 +1097,8 @@ public class McpApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> The access token is valid for this MCP server, or the server checks no token. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 400 </td><td> invalid_scope — the &#x60;scope&#x60; parameter holds a value that is not a scope token (RFC 6749 section 3.3). The value is not repeated. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). A token is also invalid when the account, agent or application it was issued to is no longer active. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>

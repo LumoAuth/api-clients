@@ -90,5 +90,41 @@ namespace LumoAuth.ApiClient.Test.Model
         {
             // TODO unit test for the property 'BudgetPolicy'
         }
+
+        /// <summary>
+        /// Test the property 'IdentityType'
+        /// </summary>
+        [Fact]
+        public void IdentityTypeTest()
+        {
+            // TODO unit test for the property 'IdentityType'
+        }
+
+        /// <summary>
+        /// Test the property 'Jwks'
+        /// </summary>
+        [Fact]
+        public void JwksTest()
+        {
+            // TODO unit test for the property 'Jwks'
+        }
+
+        /// <summary>
+        /// Test the property 'JwksUri'
+        /// </summary>
+        [Fact]
+        public void JwksUriTest()
+        {
+            // TODO unit test for the property 'JwksUri'
+        }
+
+        /// <summary>
+        /// Test the property 'CanActOnBehalfOfUsers'
+        /// </summary>
+        [Fact]
+        public void CanActOnBehalfOfUsersTest()
+        {
+            // TODO unit test for the property 'CanActOnBehalfOfUsers'
+        }
     }
 }

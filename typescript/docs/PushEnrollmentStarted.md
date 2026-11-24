@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **string** |  | [optional] [default to undefined]
+**id** | **string** | Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret. | [optional] [default to undefined]
 **state** | **string** |  | [optional] [default to undefined]
 **qr_data_uri** | **string** |  | [optional] [default to undefined]
 **deep_link** | **string** | https://&lt;server&gt;/push-auth/enroll?d&#x3D;… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it). | [optional] [default to undefined]

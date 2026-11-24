@@ -55,6 +55,19 @@ namespace LumoAuth.ApiClient.Test.Api
         }
 
         /// <summary>
+        /// Test AgentsMeToolCalls
+        /// </summary>
+        [Fact]
+        public void AgentsMeToolCallsTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //AgentsMeToolCallsRequest agentsMeToolCallsRequest = null;
+            //var response = instance.AgentsMeToolCalls(orgId, agentsMeToolCallsRequest);
+            //Assert.IsType<AgentsMeToolCallsResponse>(response);
+        }
+
+        /// <summary>
         /// Test Ask
         /// </summary>
         [Fact]
@@ -146,6 +159,19 @@ namespace LumoAuth.ApiClient.Test.Api
         }
 
         /// <summary>
+        /// Test PollAgentEnrollment
+        /// </summary>
+        [Fact]
+        public void PollAgentEnrollmentTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //PollAgentEnrollmentRequest pollAgentEnrollmentRequest = null;
+            //var response = instance.PollAgentEnrollment(orgId, pollAgentEnrollmentRequest);
+            //Assert.IsType<PollAgentEnrollmentResponse>(response);
+        }
+
+        /// <summary>
         /// Test RegisterAgent
         /// </summary>
         [Fact]
@@ -168,6 +194,19 @@ namespace LumoAuth.ApiClient.Test.Api
             //AdminAgentsReportUsageRequest adminAgentsReportUsageRequest = null;
             //var response = instance.ReportAgentUsage(orgId, adminAgentsReportUsageRequest);
             //Assert.IsType<ReportAgentUsageResponse>(response);
+        }
+
+        /// <summary>
+        /// Test StartAgentEnrollment
+        /// </summary>
+        [Fact]
+        public void StartAgentEnrollmentTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //StartAgentEnrollmentRequest startAgentEnrollmentRequest = null;
+            //var response = instance.StartAgentEnrollment(orgId, startAgentEnrollmentRequest);
+            //Assert.IsType<StartAgentEnrollmentResponse>(response);
         }
 
         /// <summary>

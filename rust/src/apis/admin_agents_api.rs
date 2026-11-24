@@ -19,6 +19,7 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminAgentsActivateError {
+    Status400(),
     Status401(),
     Status403(),
     Status404(),
@@ -39,6 +40,7 @@ pub enum AdminAgentsAgentsDisableError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminAgentsAgentsEnableError {
+    Status400(),
     Status401(),
     Status403(),
     Status404(),

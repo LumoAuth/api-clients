@@ -7,8 +7,9 @@ Name | Type | Description | Notes
 **TaskId** | Pointer to **string** | Agent task identifier (&lt;&#x3D;128 chars). | [optional] 
 **Reason** | Pointer to **string** | Human-readable action description (&lt;&#x3D;480 chars). | [optional] 
 **Impact** | Pointer to **string** | One of low, medium, high, critical. | [optional] 
-**OnBehalfOf** | Pointer to **string** | User id or email the agent acts for (delegation required). | [optional] 
-**Meta** | Pointer to **map[string]interface{}** | Optional action metadata. | [optional] 
+**OnBehalfOf** | Pointer to **string** | User id or email the agent acts for (delegation required). When it is the agent&#39;s owner, the request also goes to the organization&#39;s Slack and Discord approval channels that have agent approvals switched on. | [optional] 
+**ExpiresIn** | Pointer to **int32** | Seconds the person has to answer (60-600, default 120). An integer outside the range is clamped. | [optional] [default to 120]
+**Meta** | Pointer to [**CreateApprovalRequestMeta**](CreateApprovalRequestMeta.md) |  | [optional] 
 
 ## Methods
 
@@ -129,22 +130,47 @@ SetOnBehalfOf sets OnBehalfOf field to given value.
 
 HasOnBehalfOf returns a boolean if a field has been set.
 
+### GetExpiresIn
+
+`func (o *CreateApprovalRequest) GetExpiresIn() int32`
+
+GetExpiresIn returns the ExpiresIn field if non-nil, zero value otherwise.
+
+### GetExpiresInOk
+
+`func (o *CreateApprovalRequest) GetExpiresInOk() (*int32, bool)`
+
+GetExpiresInOk returns a tuple with the ExpiresIn field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExpiresIn
+
+`func (o *CreateApprovalRequest) SetExpiresIn(v int32)`
+
+SetExpiresIn sets ExpiresIn field to given value.
+
+### HasExpiresIn
+
+`func (o *CreateApprovalRequest) HasExpiresIn() bool`
+
+HasExpiresIn returns a boolean if a field has been set.
+
 ### GetMeta
 
-`func (o *CreateApprovalRequest) GetMeta() map[string]interface{}`
+`func (o *CreateApprovalRequest) GetMeta() CreateApprovalRequestMeta`
 
 GetMeta returns the Meta field if non-nil, zero value otherwise.
 
 ### GetMetaOk
 
-`func (o *CreateApprovalRequest) GetMetaOk() (*map[string]interface{}, bool)`
+`func (o *CreateApprovalRequest) GetMetaOk() (*CreateApprovalRequestMeta, bool)`
 
 GetMetaOk returns a tuple with the Meta field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMeta
 
-`func (o *CreateApprovalRequest) SetMeta(v map[string]interface{})`
+`func (o *CreateApprovalRequest) SetMeta(v CreateApprovalRequestMeta)`
 
 SetMeta sets Meta field to given value.
 

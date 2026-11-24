@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * The password rules that apply. A write is merged with the stored object. A named template sets its own rules; rules sent without a template make the policy custom.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-19T15:14:32.479877953Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T20:12:48.846738323Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AuthenticationSettingsPasswordPolicy {
   /**
    * Gets or Sets template

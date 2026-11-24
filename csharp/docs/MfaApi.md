@@ -161,7 +161,7 @@ namespace Example
             var apiInstance = new MfaApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var id = "id_example";  // string | 
-            var xMFAChallenge = "xMFAChallenge_example";  // string? | Approved step_up challenge id (optional) 
+            var xMFAChallenge = "xMFAChallenge_example";  // string? | Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional) 
 
             try
             {
@@ -202,7 +202,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **id** | **string** |  |  |
-| **xMFAChallenge** | **string?** | Approved step_up challenge id | [optional]  |
+| **xMFAChallenge** | **string?** | Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) | [optional]  |
 
 ### Return type
 

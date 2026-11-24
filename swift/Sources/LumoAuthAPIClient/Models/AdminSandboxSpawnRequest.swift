@@ -12,6 +12,8 @@ import AnyCodable
 
 public struct AdminSandboxSpawnRequest: Codable, JSONEncodable, Hashable {
 
+    public static let nameRule = StringRule(minLength: nil, maxLength: 246, pattern: nil)
+    /** A label for the sandbox: one line of text, without control characters and without \"<\" or \">\". */
     public var name: String?
     public var ttlHours: Int?
 

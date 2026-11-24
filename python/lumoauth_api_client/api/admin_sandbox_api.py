@@ -637,6 +637,7 @@ class AdminSandboxApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "AdminSandboxSpawnResponse",
+            '400': None,
             '403': None,
             '429': None,
         }
@@ -710,6 +711,7 @@ class AdminSandboxApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "AdminSandboxSpawnResponse",
+            '400': None,
             '403': None,
             '429': None,
         }
@@ -783,6 +785,7 @@ class AdminSandboxApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "AdminSandboxSpawnResponse",
+            '400': None,
             '403': None,
             '429': None,
         }

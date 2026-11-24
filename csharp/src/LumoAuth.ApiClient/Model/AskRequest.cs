@@ -34,14 +34,43 @@ namespace LumoAuth.ApiClient.Model
     public partial class AskRequest : IValidatableObject
     {
         /// <summary>
+        /// Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record.
+        /// </summary>
+        /// <value>Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record.</value>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum AuditEnum
+        {
+            /// <summary>
+            /// Enum Denials for value: denials
+            /// </summary>
+            [EnumMember(Value = "denials")]
+            Denials = 1,
+
+            /// <summary>
+            /// Enum Always for value: always
+            /// </summary>
+            [EnumMember(Value = "always")]
+            Always = 2
+        }
+
+
+        /// <summary>
+        /// Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record.
+        /// </summary>
+        /// <value>Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record.</value>
+        [DataMember(Name = "audit", EmitDefaultValue = false)]
+        public AuditEnum? Audit { get; set; }
+        /// <summary>
         /// Initializes a new instance of the <see cref="AskRequest" /> class.
         /// </summary>
         /// <param name="action">The action to authorize..</param>
         /// <param name="context">Optional resource/attribute context for the decision..</param>
-        public AskRequest(string action = default, Object context = default)
+        /// <param name="audit">Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record. (default to AuditEnum.Denials).</param>
+        public AskRequest(string action = default, Object context = default, AuditEnum? audit = AuditEnum.Denials)
         {
             this.Action = action;
             this.Context = context;
+            this.Audit = audit;
         }
 
         /// <summary>
@@ -74,6 +103,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("class AskRequest {\n");
             sb.Append("  Action: ").Append(Action).Append("\n");
             sb.Append("  Context: ").Append(Context).Append("\n");
+            sb.Append("  Audit: ").Append(Audit).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

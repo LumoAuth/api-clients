@@ -524,9 +524,10 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Continuous access evaluation (CAEP) result for the task. |  -  |
-| **401** | Authentication required. |  -  |
-| **403** | The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission. |  -  |
+| **401** | Authentication required. Agent, JIT and delegated credentials are not accepted. |  -  |
+| **403** | The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission, or the access token lacks the &#x60;jit:approve&#x60; scope. |  -  |
 | **404** | Tenant or task not found. |  -  |
+| **415** | A session caller must send Content-Type: application/json or an X-CSRF-Token / X-Requested-With header. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

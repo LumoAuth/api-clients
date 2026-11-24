@@ -15,6 +15,7 @@ require 'time'
 
 module LumoAuthApiClient
   class PushEnrollmentStarted
+    # Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret.
     attr_accessor :id
 
     attr_accessor :state

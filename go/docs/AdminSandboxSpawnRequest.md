@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | Pointer to **string** |  | [optional] 
+**Name** | Pointer to **string** | A label for the sandbox: one line of text, without control characters and without \&quot;&lt;\&quot; or \&quot;&gt;\&quot;. | [optional] 
 **TtlHours** | Pointer to **int32** |  | [optional] 
 
 ## Methods

@@ -20,7 +20,7 @@ var _ MappedNullable = &PutAdminSettingsGeneralUpdateRequest{}
 
 // PutAdminSettingsGeneralUpdateRequest struct for PutAdminSettingsGeneralUpdateRequest
 type PutAdminSettingsGeneralUpdateRequest struct {
-	// Name of the organization: one line, 1 to 255 characters. Aliases: tenantName, display_name, displayName.
+	// Name of the organization: one line, 1 to 255 characters, without \"<\" or \">\". Aliases: tenantName, display_name, displayName.
 	Name *string `json:"name,omitempty"`
 	// Default language of the hosted pages: en, es, fr, de, pt_BR (pt-BR is accepted too), it, nl, ja or ar. A change also needs the branding.edit permission.
 	Locale *string `json:"locale,omitempty"`

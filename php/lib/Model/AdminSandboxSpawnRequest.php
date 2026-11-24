@@ -282,6 +282,10 @@ class AdminSandboxSpawnRequest implements ModelInterface, ArrayAccess, \JsonSeri
     {
         $invalidProperties = [];
 
+        if (!is_null($this->container['name']) && (mb_strlen($this->container['name']) > 246)) {
+            $invalidProperties[] = "invalid value for 'name', the character length must be smaller than or equal to 246.";
+        }
+
         return $invalidProperties;
     }
 
@@ -310,7 +314,7 @@ class AdminSandboxSpawnRequest implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets name
      *
-     * @param string|null $name name
+     * @param string|null $name A label for the sandbox: one line of text, without control characters and without \"<\" or \">\".
      *
      * @return self
      */
@@ -319,6 +323,10 @@ class AdminSandboxSpawnRequest implements ModelInterface, ArrayAccess, \JsonSeri
         if (is_null($name)) {
             throw new \InvalidArgumentException('non-nullable name cannot be null');
         }
+        if ((mb_strlen($name) > 246)) {
+            throw new \InvalidArgumentException('invalid length for $name when calling AdminSandboxSpawnRequest., must be smaller than or equal to 246.');
+        }
+
         $this->container['name'] = $name;
 
         return $this;

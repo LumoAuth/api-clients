@@ -355,6 +355,7 @@ public class AdminSandboxApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Sandbox created. &#x60;data.api_key&#x60; is shown only once. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> &#x60;name&#x60; is not a valid label </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> The organization lacks the Developer sandboxes add-on (&#x60;feature_not_in_plan&#x60;), or it is itself a sandbox </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Per-owner active-sandbox cap reached </td><td>  -  </td></tr>
      </table>
@@ -428,6 +429,7 @@ public class AdminSandboxApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Sandbox created. &#x60;data.api_key&#x60; is shown only once. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> &#x60;name&#x60; is not a valid label </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> The organization lacks the Developer sandboxes add-on (&#x60;feature_not_in_plan&#x60;), or it is itself a sandbox </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Per-owner active-sandbox cap reached </td><td>  -  </td></tr>
      </table>
@@ -449,6 +451,7 @@ public class AdminSandboxApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Sandbox created. &#x60;data.api_key&#x60; is shown only once. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> &#x60;name&#x60; is not a valid label </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> The organization lacks the Developer sandboxes add-on (&#x60;feature_not_in_plan&#x60;), or it is itself a sandbox </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Per-owner active-sandbox cap reached </td><td>  -  </td></tr>
      </table>
@@ -472,6 +475,7 @@ public class AdminSandboxApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Sandbox created. &#x60;data.api_key&#x60; is shown only once. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> &#x60;name&#x60; is not a valid label </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> The organization lacks the Developer sandboxes add-on (&#x60;feature_not_in_plan&#x60;), or it is itself a sandbox </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Per-owner active-sandbox cap reached </td><td>  -  </td></tr>
      </table>

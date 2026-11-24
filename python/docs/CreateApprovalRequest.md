@@ -8,8 +8,9 @@ Name | Type | Description | Notes
 **task_id** | **str** | Agent task identifier (&lt;&#x3D;128 chars). | [optional] 
 **reason** | **str** | Human-readable action description (&lt;&#x3D;480 chars). | [optional] 
 **impact** | **str** | One of low, medium, high, critical. | [optional] 
-**on_behalf_of** | **str** | User id or email the agent acts for (delegation required). | [optional] 
-**meta** | **object** | Optional action metadata. | [optional] 
+**on_behalf_of** | **str** | User id or email the agent acts for (delegation required). When it is the agent&#39;s owner, the request also goes to the organization&#39;s Slack and Discord approval channels that have agent approvals switched on. | [optional] 
+**expires_in** | **int** | Seconds the person has to answer (60-600, default 120). An integer outside the range is clamped. | [optional] [default to 120]
+**meta** | [**CreateApprovalRequestMeta**](CreateApprovalRequestMeta.md) |  | [optional] 
 
 ## Example
 

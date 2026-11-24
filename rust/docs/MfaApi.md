@@ -64,7 +64,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **id** | **String** |  | [required] |
-**x_mfa_challenge** | Option<**String**> | Approved step_up challenge id |  |
+**x_mfa_challenge** | Option<**String**> | Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) |  |
 
 ### Return type
 

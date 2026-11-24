@@ -29,6 +29,29 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
+        /// Report the tool calls that the agent&#39;s host gated
+        /// </summary>
+        /// <remarks>
+        /// Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host&#39;s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentsMeToolCallsRequest"></param>
+        /// <returns>AgentsMeToolCallsResponse</returns>
+        AgentsMeToolCallsResponse AgentsMeToolCalls(string orgId, AgentsMeToolCallsRequest agentsMeToolCallsRequest);
+
+        /// <summary>
+        /// Report the tool calls that the agent&#39;s host gated
+        /// </summary>
+        /// <remarks>
+        /// Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host&#39;s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentsMeToolCallsRequest"></param>
+        /// <returns>ApiResponse of AgentsMeToolCallsResponse</returns>
+        ApiResponse<AgentsMeToolCallsResponse> AgentsMeToolCallsWithHttpInfo(string orgId, AgentsMeToolCallsRequest agentsMeToolCallsRequest);
+        /// <summary>
         /// Agent-friendly permission check (Natural Language style)
         /// </summary>
         /// <remarks>
@@ -184,6 +207,29 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of GetCurrentAgentResponse</returns>
         ApiResponse<GetCurrentAgentResponse> GetCurrentAgentWithHttpInfo(string orgId);
         /// <summary>
+        /// Poll an agent enrollment (no credential)
+        /// </summary>
+        /// <remarks>
+        /// Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="pollAgentEnrollmentRequest"></param>
+        /// <returns>PollAgentEnrollmentResponse</returns>
+        PollAgentEnrollmentResponse PollAgentEnrollment(string orgId, PollAgentEnrollmentRequest pollAgentEnrollmentRequest);
+
+        /// <summary>
+        /// Poll an agent enrollment (no credential)
+        /// </summary>
+        /// <remarks>
+        /// Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="pollAgentEnrollmentRequest"></param>
+        /// <returns>ApiResponse of PollAgentEnrollmentResponse</returns>
+        ApiResponse<PollAgentEnrollmentResponse> PollAgentEnrollmentWithHttpInfo(string orgId, PollAgentEnrollmentRequest pollAgentEnrollmentRequest);
+        /// <summary>
         /// Register (or re-register) an agent
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
@@ -225,6 +271,29 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of ReportAgentUsageResponse</returns>
         ApiResponse<ReportAgentUsageResponse> ReportAgentUsageWithHttpInfo(string orgId, AdminAgentsReportUsageRequest adminAgentsReportUsageRequest);
         /// <summary>
+        /// Start an agent enrollment (no credential)
+        /// </summary>
+        /// <remarks>
+        /// The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine&#39;s own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="startAgentEnrollmentRequest"></param>
+        /// <returns>StartAgentEnrollmentResponse</returns>
+        StartAgentEnrollmentResponse StartAgentEnrollment(string orgId, StartAgentEnrollmentRequest startAgentEnrollmentRequest);
+
+        /// <summary>
+        /// Start an agent enrollment (no credential)
+        /// </summary>
+        /// <remarks>
+        /// The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine&#39;s own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="startAgentEnrollmentRequest"></param>
+        /// <returns>ApiResponse of StartAgentEnrollmentResponse</returns>
+        ApiResponse<StartAgentEnrollmentResponse> StartAgentEnrollmentWithHttpInfo(string orgId, StartAgentEnrollmentRequest startAgentEnrollmentRequest);
+        /// <summary>
         /// Verify a signed A2A agent card
         /// </summary>
         /// <remarks>
@@ -256,6 +325,31 @@ namespace LumoAuth.ApiClient.Api
     public interface IAgentsApiAsync : IApiAccessor
     {
         #region Asynchronous Operations
+        /// <summary>
+        /// Report the tool calls that the agent&#39;s host gated
+        /// </summary>
+        /// <remarks>
+        /// Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host&#39;s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentsMeToolCallsRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AgentsMeToolCallsResponse</returns>
+        System.Threading.Tasks.Task<AgentsMeToolCallsResponse> AgentsMeToolCallsAsync(string orgId, AgentsMeToolCallsRequest agentsMeToolCallsRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Report the tool calls that the agent&#39;s host gated
+        /// </summary>
+        /// <remarks>
+        /// Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host&#39;s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentsMeToolCallsRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AgentsMeToolCallsResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AgentsMeToolCallsResponse>> AgentsMeToolCallsWithHttpInfoAsync(string orgId, AgentsMeToolCallsRequest agentsMeToolCallsRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Agent-friendly permission check (Natural Language style)
         /// </summary>
@@ -432,6 +526,31 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (GetCurrentAgentResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<GetCurrentAgentResponse>> GetCurrentAgentWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
+        /// Poll an agent enrollment (no credential)
+        /// </summary>
+        /// <remarks>
+        /// Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="pollAgentEnrollmentRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of PollAgentEnrollmentResponse</returns>
+        System.Threading.Tasks.Task<PollAgentEnrollmentResponse> PollAgentEnrollmentAsync(string orgId, PollAgentEnrollmentRequest pollAgentEnrollmentRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Poll an agent enrollment (no credential)
+        /// </summary>
+        /// <remarks>
+        /// Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="pollAgentEnrollmentRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (PollAgentEnrollmentResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PollAgentEnrollmentResponse>> PollAgentEnrollmentWithHttpInfoAsync(string orgId, PollAgentEnrollmentRequest pollAgentEnrollmentRequest, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
         /// Register (or re-register) an agent
         /// </summary>
         /// <remarks>
@@ -479,6 +598,31 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ReportAgentUsageResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<ReportAgentUsageResponse>> ReportAgentUsageWithHttpInfoAsync(string orgId, AdminAgentsReportUsageRequest adminAgentsReportUsageRequest, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Start an agent enrollment (no credential)
+        /// </summary>
+        /// <remarks>
+        /// The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine&#39;s own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="startAgentEnrollmentRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of StartAgentEnrollmentResponse</returns>
+        System.Threading.Tasks.Task<StartAgentEnrollmentResponse> StartAgentEnrollmentAsync(string orgId, StartAgentEnrollmentRequest startAgentEnrollmentRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Start an agent enrollment (no credential)
+        /// </summary>
+        /// <remarks>
+        /// The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine&#39;s own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="startAgentEnrollmentRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (StartAgentEnrollmentResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<StartAgentEnrollmentResponse>> StartAgentEnrollmentWithHttpInfoAsync(string orgId, StartAgentEnrollmentRequest startAgentEnrollmentRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Verify a signed A2A agent card
         /// </summary>
@@ -715,6 +859,159 @@ namespace LumoAuth.ApiClient.Api
                 return _exceptionFactory;
             }
             set { _exceptionFactory = value; }
+        }
+
+        /// <summary>
+        /// Report the tool calls that the agent&#39;s host gated Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host&#39;s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentsMeToolCallsRequest"></param>
+        /// <returns>AgentsMeToolCallsResponse</returns>
+        public AgentsMeToolCallsResponse AgentsMeToolCalls(string orgId, AgentsMeToolCallsRequest agentsMeToolCallsRequest)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AgentsMeToolCallsResponse> localVarResponse = AgentsMeToolCallsWithHttpInfo(orgId, agentsMeToolCallsRequest);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Report the tool calls that the agent&#39;s host gated Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host&#39;s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentsMeToolCallsRequest"></param>
+        /// <returns>ApiResponse of AgentsMeToolCallsResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AgentsMeToolCallsResponse> AgentsMeToolCallsWithHttpInfo(string orgId, AgentsMeToolCallsRequest agentsMeToolCallsRequest)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AgentsApi->AgentsMeToolCalls");
+
+            // verify the required parameter 'agentsMeToolCallsRequest' is set
+            if (agentsMeToolCallsRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'agentsMeToolCallsRequest' when calling AgentsApi->AgentsMeToolCalls");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = agentsMeToolCallsRequest;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<AgentsMeToolCallsResponse>("/orgs/{orgId}/api/v1/agents/me/tool-calls", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AgentsMeToolCalls", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Report the tool calls that the agent&#39;s host gated Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host&#39;s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentsMeToolCallsRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AgentsMeToolCallsResponse</returns>
+        public async System.Threading.Tasks.Task<AgentsMeToolCallsResponse> AgentsMeToolCallsAsync(string orgId, AgentsMeToolCallsRequest agentsMeToolCallsRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AgentsMeToolCallsResponse> localVarResponse = await AgentsMeToolCallsWithHttpInfoAsync(orgId, agentsMeToolCallsRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Report the tool calls that the agent&#39;s host gated Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host&#39;s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentsMeToolCallsRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AgentsMeToolCallsResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AgentsMeToolCallsResponse>> AgentsMeToolCallsWithHttpInfoAsync(string orgId, AgentsMeToolCallsRequest agentsMeToolCallsRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AgentsApi->AgentsMeToolCalls");
+
+            // verify the required parameter 'agentsMeToolCallsRequest' is set
+            if (agentsMeToolCallsRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'agentsMeToolCallsRequest' when calling AgentsApi->AgentsMeToolCalls");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = agentsMeToolCallsRequest;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AgentsMeToolCallsResponse>("/orgs/{orgId}/api/v1/agents/me/tool-calls", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AgentsMeToolCalls", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
         }
 
         /// <summary>
@@ -1761,6 +2058,137 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
+        /// Poll an agent enrollment (no credential) Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="pollAgentEnrollmentRequest"></param>
+        /// <returns>PollAgentEnrollmentResponse</returns>
+        public PollAgentEnrollmentResponse PollAgentEnrollment(string orgId, PollAgentEnrollmentRequest pollAgentEnrollmentRequest)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<PollAgentEnrollmentResponse> localVarResponse = PollAgentEnrollmentWithHttpInfo(orgId, pollAgentEnrollmentRequest);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Poll an agent enrollment (no credential) Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="pollAgentEnrollmentRequest"></param>
+        /// <returns>ApiResponse of PollAgentEnrollmentResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<PollAgentEnrollmentResponse> PollAgentEnrollmentWithHttpInfo(string orgId, PollAgentEnrollmentRequest pollAgentEnrollmentRequest)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AgentsApi->PollAgentEnrollment");
+
+            // verify the required parameter 'pollAgentEnrollmentRequest' is set
+            if (pollAgentEnrollmentRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'pollAgentEnrollmentRequest' when calling AgentsApi->PollAgentEnrollment");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = pollAgentEnrollmentRequest;
+
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<PollAgentEnrollmentResponse>("/orgs/{orgId}/api/v1/agents/enrollments/token", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("PollAgentEnrollment", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Poll an agent enrollment (no credential) Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="pollAgentEnrollmentRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of PollAgentEnrollmentResponse</returns>
+        public async System.Threading.Tasks.Task<PollAgentEnrollmentResponse> PollAgentEnrollmentAsync(string orgId, PollAgentEnrollmentRequest pollAgentEnrollmentRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<PollAgentEnrollmentResponse> localVarResponse = await PollAgentEnrollmentWithHttpInfoAsync(orgId, pollAgentEnrollmentRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Poll an agent enrollment (no credential) Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="pollAgentEnrollmentRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (PollAgentEnrollmentResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PollAgentEnrollmentResponse>> PollAgentEnrollmentWithHttpInfoAsync(string orgId, PollAgentEnrollmentRequest pollAgentEnrollmentRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AgentsApi->PollAgentEnrollment");
+
+            // verify the required parameter 'pollAgentEnrollmentRequest' is set
+            if (pollAgentEnrollmentRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'pollAgentEnrollmentRequest' when calling AgentsApi->PollAgentEnrollment");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = pollAgentEnrollmentRequest;
+
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<PollAgentEnrollmentResponse>("/orgs/{orgId}/api/v1/agents/enrollments/token", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("PollAgentEnrollment", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
         /// Register (or re-register) an agent 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
@@ -2044,6 +2472,137 @@ namespace LumoAuth.ApiClient.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("ReportAgentUsage", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Start an agent enrollment (no credential) The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine&#39;s own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="startAgentEnrollmentRequest"></param>
+        /// <returns>StartAgentEnrollmentResponse</returns>
+        public StartAgentEnrollmentResponse StartAgentEnrollment(string orgId, StartAgentEnrollmentRequest startAgentEnrollmentRequest)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<StartAgentEnrollmentResponse> localVarResponse = StartAgentEnrollmentWithHttpInfo(orgId, startAgentEnrollmentRequest);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Start an agent enrollment (no credential) The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine&#39;s own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="startAgentEnrollmentRequest"></param>
+        /// <returns>ApiResponse of StartAgentEnrollmentResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<StartAgentEnrollmentResponse> StartAgentEnrollmentWithHttpInfo(string orgId, StartAgentEnrollmentRequest startAgentEnrollmentRequest)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AgentsApi->StartAgentEnrollment");
+
+            // verify the required parameter 'startAgentEnrollmentRequest' is set
+            if (startAgentEnrollmentRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'startAgentEnrollmentRequest' when calling AgentsApi->StartAgentEnrollment");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = startAgentEnrollmentRequest;
+
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<StartAgentEnrollmentResponse>("/orgs/{orgId}/api/v1/agents/enrollments", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("StartAgentEnrollment", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Start an agent enrollment (no credential) The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine&#39;s own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="startAgentEnrollmentRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of StartAgentEnrollmentResponse</returns>
+        public async System.Threading.Tasks.Task<StartAgentEnrollmentResponse> StartAgentEnrollmentAsync(string orgId, StartAgentEnrollmentRequest startAgentEnrollmentRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<StartAgentEnrollmentResponse> localVarResponse = await StartAgentEnrollmentWithHttpInfoAsync(orgId, startAgentEnrollmentRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Start an agent enrollment (no credential) The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine&#39;s own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="startAgentEnrollmentRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (StartAgentEnrollmentResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<StartAgentEnrollmentResponse>> StartAgentEnrollmentWithHttpInfoAsync(string orgId, StartAgentEnrollmentRequest startAgentEnrollmentRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AgentsApi->StartAgentEnrollment");
+
+            // verify the required parameter 'startAgentEnrollmentRequest' is set
+            if (startAgentEnrollmentRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'startAgentEnrollmentRequest' when calling AgentsApi->StartAgentEnrollment");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = startAgentEnrollmentRequest;
+
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<StartAgentEnrollmentResponse>("/orgs/{orgId}/api/v1/agents/enrollments", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("StartAgentEnrollment", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 

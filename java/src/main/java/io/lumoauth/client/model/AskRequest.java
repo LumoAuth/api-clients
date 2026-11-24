@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * AskRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-19T15:14:32.479877953Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T20:12:48.846738323Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AskRequest {
   public static final String SERIALIZED_NAME_ACTION = "action";
   @SerializedName(SERIALIZED_NAME_ACTION)
@@ -59,6 +59,63 @@ public class AskRequest {
   @SerializedName(SERIALIZED_NAME_CONTEXT)
   @javax.annotation.Nullable
   private Object context;
+
+  /**
+   * Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record.
+   */
+  @JsonAdapter(AuditEnum.Adapter.class)
+  public enum AuditEnum {
+    DENIALS("denials"),
+    
+    ALWAYS("always");
+
+    private String value;
+
+    AuditEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static AuditEnum fromValue(String value) {
+      for (AuditEnum b : AuditEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<AuditEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final AuditEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public AuditEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return AuditEnum.fromValue(value);
+      }
+    }
+
+    public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      String value = jsonElement.getAsString();
+      AuditEnum.fromValue(value);
+    }
+  }
+
+  public static final String SERIALIZED_NAME_AUDIT = "audit";
+  @SerializedName(SERIALIZED_NAME_AUDIT)
+  @javax.annotation.Nullable
+  private AuditEnum audit = AuditEnum.DENIALS;
 
   public AskRequest() {
   }
@@ -101,6 +158,25 @@ public class AskRequest {
   }
 
 
+  public AskRequest audit(@javax.annotation.Nullable AuditEnum audit) {
+    this.audit = audit;
+    return this;
+  }
+
+  /**
+   * Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record.
+   * @return audit
+   */
+  @javax.annotation.Nullable
+  public AuditEnum getAudit() {
+    return audit;
+  }
+
+  public void setAudit(@javax.annotation.Nullable AuditEnum audit) {
+    this.audit = audit;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -112,12 +188,13 @@ public class AskRequest {
     }
     AskRequest askRequest = (AskRequest) o;
     return Objects.equals(this.action, askRequest.action) &&
-        Objects.equals(this.context, askRequest.context);
+        Objects.equals(this.context, askRequest.context) &&
+        Objects.equals(this.audit, askRequest.audit);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(action, context);
+    return Objects.hash(action, context, audit);
   }
 
   @Override
@@ -126,6 +203,7 @@ public class AskRequest {
     sb.append("class AskRequest {\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
     sb.append("    context: ").append(toIndentedString(context)).append("\n");
+    sb.append("    audit: ").append(toIndentedString(audit)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -147,7 +225,7 @@ public class AskRequest {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("action", "context"));
+    openapiFields = new HashSet<String>(Arrays.asList("action", "context", "audit"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -176,6 +254,13 @@ public class AskRequest {
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("action") != null && !jsonObj.get("action").isJsonNull()) && !jsonObj.get("action").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `action` to be a primitive type in the JSON string but got `%s`", jsonObj.get("action").toString()));
+      }
+      if ((jsonObj.get("audit") != null && !jsonObj.get("audit").isJsonNull()) && !jsonObj.get("audit").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `audit` to be a primitive type in the JSON string but got `%s`", jsonObj.get("audit").toString()));
+      }
+      // validate the optional field `audit`
+      if (jsonObj.get("audit") != null && !jsonObj.get("audit").isJsonNull()) {
+        AuditEnum.validateJsonElement(jsonObj.get("audit"));
       }
   }
 

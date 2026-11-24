@@ -60,7 +60,7 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <param name="xMFAChallenge">Approved step_up challenge id (optional)</param>
+        /// <param name="xMFAChallenge">Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)</param>
         /// <returns></returns>
         void DeleteAuthenticator(string orgId, string id, string? xMFAChallenge = default);
 
@@ -73,7 +73,7 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <param name="xMFAChallenge">Approved step_up challenge id (optional)</param>
+        /// <param name="xMFAChallenge">Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
         ApiResponse<Object> DeleteAuthenticatorWithHttpInfo(string orgId, string id, string? xMFAChallenge = default);
         /// <summary>
@@ -337,7 +337,7 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <param name="xMFAChallenge">Approved step_up challenge id (optional)</param>
+        /// <param name="xMFAChallenge">Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of void</returns>
         System.Threading.Tasks.Task DeleteAuthenticatorAsync(string orgId, string id, string? xMFAChallenge = default, System.Threading.CancellationToken cancellationToken = default);
@@ -351,7 +351,7 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <param name="xMFAChallenge">Approved step_up challenge id (optional)</param>
+        /// <param name="xMFAChallenge">Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> DeleteAuthenticatorWithHttpInfoAsync(string orgId, string id, string? xMFAChallenge = default, System.Threading.CancellationToken cancellationToken = default);
@@ -969,7 +969,7 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <param name="xMFAChallenge">Approved step_up challenge id (optional)</param>
+        /// <param name="xMFAChallenge">Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)</param>
         /// <returns></returns>
         public void DeleteAuthenticator(string orgId, string id, string? xMFAChallenge = default)
         {
@@ -982,7 +982,7 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <param name="xMFAChallenge">Approved step_up challenge id (optional)</param>
+        /// <param name="xMFAChallenge">Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
         public LumoAuth.ApiClient.Client.ApiResponse<Object> DeleteAuthenticatorWithHttpInfo(string orgId, string id, string? xMFAChallenge = default)
         {
@@ -1046,7 +1046,7 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <param name="xMFAChallenge">Approved step_up challenge id (optional)</param>
+        /// <param name="xMFAChallenge">Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task DeleteAuthenticatorAsync(string orgId, string id, string? xMFAChallenge = default, System.Threading.CancellationToken cancellationToken = default)
@@ -1060,7 +1060,7 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <param name="xMFAChallenge">Approved step_up challenge id (optional)</param>
+        /// <param name="xMFAChallenge">Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> DeleteAuthenticatorWithHttpInfoAsync(string orgId, string id, string? xMFAChallenge = default, System.Threading.CancellationToken cancellationToken = default)

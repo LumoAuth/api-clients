@@ -44,5 +44,29 @@ export interface PutAdminAgentsUpdateRequest {
      * @memberof PutAdminAgentsUpdateRequest
      */
     'budgetPolicy'?: { [key: string]: any; } | null;
+    /**
+     * For private_key_jwt agents: replaces the public keys (inline JWK Set). Removing a key revokes the tokens that the agent holds.
+     * @type {{ [key: string]: any; }}
+     * @memberof PutAdminAgentsUpdateRequest
+     */
+    'jwks'?: { [key: string]: any; };
+    /**
+     * For private_key_jwt agents: https URL of the public key set.
+     * @type {string}
+     * @memberof PutAdminAgentsUpdateRequest
+     */
+    'jwksUri'?: string;
+    /**
+     * Whether the agent may act for users of the organization. Switching it on needs the delegation feature of the plan and an editor who holds every capability of the agent.
+     * @type {boolean}
+     * @memberof PutAdminAgentsUpdateRequest
+     */
+    'canActOnBehalfOfUsers'?: boolean;
+    /**
+     * Gives the agent a new owner: the id or the email address of an active account of the organization. The owner is the person in whose name the agent asks for just-in-time access and who receives its approval requests. The caller must hold every capability of the agent and every permission of the new owner (naming yourself always works). An agent whose owner was deleted, blocked or switched off (`needsNewOwner` in the agent object) needs a new owner before it can be activated.
+     * @type {string}
+     * @memberof PutAdminAgentsUpdateRequest
+     */
+    'ownerId'?: string;
 }
 

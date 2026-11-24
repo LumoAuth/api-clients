@@ -15,6 +15,7 @@ require 'time'
 
 module LumoAuthApiClient
   class AdminSandboxSpawnRequest
+    # A label for the sandbox: one line of text, without control characters and without \"<\" or \">\".
     attr_accessor :name
 
     attr_accessor :ttl_hours
@@ -81,6 +82,10 @@ module LumoAuthApiClient
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if !@name.nil? && @name.to_s.length > 246
+        invalid_properties.push('invalid value for "name", the character length must be smaller than or equal to 246.')
+      end
+
       invalid_properties
     end
 
@@ -88,7 +93,22 @@ module LumoAuthApiClient
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if !@name.nil? && @name.to_s.length > 246
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] name Value to be assigned
+    def name=(name)
+      if name.nil?
+        fail ArgumentError, 'name cannot be nil'
+      end
+
+      if name.to_s.length > 246
+        fail ArgumentError, 'invalid value for "name", the character length must be smaller than or equal to 246.'
+      end
+
+      @name = name
     end
 
     # Checks equality by comparing each attribute.

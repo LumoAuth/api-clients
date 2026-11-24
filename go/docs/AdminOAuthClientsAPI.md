@@ -241,6 +241,8 @@ Name | Type | Description  | Notes
 
 Delete an OAuth client
 
+
+
 ### Example
 
 ```go
@@ -382,6 +384,8 @@ Name | Type | Description  | Notes
 > UpdateClientResponse EnableClient(ctx, orgId, clientId).Execute()
 
 Enable an OAuth client
+
+
 
 ### Example
 
@@ -739,6 +743,8 @@ Name | Type | Description  | Notes
 
 Update an OAuth client
 
+
+
 ### Example
 
 ```go
@@ -885,6 +891,8 @@ Name | Type | Description  | Notes
 
 Rotate an OAuth client secret
 
+
+
 ### Example
 
 ```go
@@ -956,6 +964,8 @@ Name | Type | Description  | Notes
 
 Replace the scopes granted to an OAuth client
 
+
+
 ### Example
 
 ```go
@@ -1026,6 +1036,8 @@ Name | Type | Description  | Notes
 > UpdateClientResponse UpdateClient(ctx, orgId, clientId).Execute()
 
 Update an OAuth client (same as PATCH: only the fields that are sent change)
+
+
 
 ### Example
 

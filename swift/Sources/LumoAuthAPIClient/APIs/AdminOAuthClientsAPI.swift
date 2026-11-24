@@ -168,6 +168,7 @@ open class AdminOAuthClientsAPI {
     /**
      Delete an OAuth client
      - DELETE /orgs/{orgId}/api/v1/admin/clients/{clientId}
+     - Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -266,6 +267,7 @@ open class AdminOAuthClientsAPI {
     /**
      Enable an OAuth client
      - POST /orgs/{orgId}/api/v1/admin/clients/{clientId}/enable
+     - A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -509,6 +511,7 @@ open class AdminOAuthClientsAPI {
     /**
      Update an OAuth client
      - PATCH /orgs/{orgId}/api/v1/admin/clients/{clientId}
+     - A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -610,6 +613,7 @@ open class AdminOAuthClientsAPI {
     /**
      Rotate an OAuth client secret
      - POST /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret
+     - A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -659,6 +663,7 @@ open class AdminOAuthClientsAPI {
     /**
      Replace the scopes granted to an OAuth client
      - PUT /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes
+     - A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -708,6 +713,7 @@ open class AdminOAuthClientsAPI {
     /**
      Update an OAuth client (same as PATCH: only the fields that are sent change)
      - PUT /orgs/{orgId}/api/v1/admin/clients/{clientId}
+     - A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth

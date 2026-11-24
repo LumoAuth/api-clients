@@ -21,7 +21,7 @@
  */
 export interface AdminSandboxSpawnRequest {
     /**
-     * 
+     * A label for the sandbox: one line of text, without control characters and without \"<\" or \">\".
      * @type {string}
      * @memberof AdminSandboxSpawnRequest
      */

@@ -42,7 +42,9 @@ pub enum CreateClientError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteClientError {
+    Status403(),
     Status404(),
+    Status409(),
     UnknownValue(serde_json::Value),
 }
 
@@ -58,6 +60,7 @@ pub enum DisableClientError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EnableClientError {
+    Status403(),
     Status404(),
     UnknownValue(serde_json::Value),
 }
@@ -97,6 +100,7 @@ pub enum PatchAdminClientsUpdateBrandingError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchClientError {
+    Status403(),
     Status404(),
     UnknownValue(serde_json::Value),
 }
@@ -113,6 +117,7 @@ pub enum PutAdminClientsUpdateBrandingError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RotateClientSecretError {
+    Status403(),
     Status404(),
     UnknownValue(serde_json::Value),
 }
@@ -121,6 +126,7 @@ pub enum RotateClientSecretError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SetClientScopesError {
+    Status403(),
     Status404(),
     UnknownValue(serde_json::Value),
 }
@@ -129,6 +135,7 @@ pub enum SetClientScopesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateClientError {
+    Status403(),
     Status404(),
     UnknownValue(serde_json::Value),
 }
@@ -280,6 +287,7 @@ pub async fn create_client(configuration: &configuration::Configuration, org_id:
     }
 }
 
+/// Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
 pub async fn delete_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::MessageResponse, Error<DeleteClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -376,6 +384,7 @@ pub async fn disable_client(configuration: &configuration::Configuration, org_id
     }
 }
 
+/// A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 pub async fn enable_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::UpdateClientResponse, Error<EnableClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -618,6 +627,7 @@ pub async fn patch_admin_clients_update_branding(configuration: &configuration::
     }
 }
 
+/// A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 pub async fn patch_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::UpdateClientResponse, Error<PatchClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -717,6 +727,7 @@ pub async fn put_admin_clients_update_branding(configuration: &configuration::Co
     }
 }
 
+/// A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 pub async fn rotate_client_secret(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::RotateClientSecretResponse, Error<RotateClientSecretError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -765,6 +776,7 @@ pub async fn rotate_client_secret(configuration: &configuration::Configuration, 
     }
 }
 
+/// A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
 pub async fn set_client_scopes(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::SetClientScopesResponse, Error<SetClientScopesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -813,6 +825,7 @@ pub async fn set_client_scopes(configuration: &configuration::Configuration, org
     }
 }
 
+/// A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 pub async fn update_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::UpdateClientResponse, Error<UpdateClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **action** | **str** | The action to authorize. | [optional] 
 **context** | **object** | Optional resource/attribute context for the decision. | [optional] 
+**audit** | **str** | Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record. | [optional] [default to 'denials']
 
 ## Example
 

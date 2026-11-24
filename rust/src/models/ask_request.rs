@@ -19,6 +19,9 @@ pub struct AskRequest {
     /// Optional resource/attribute context for the decision.
     #[serde(rename = "context", skip_serializing_if = "Option::is_none")]
     pub context: Option<serde_json::Value>,
+    /// Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record.
+    #[serde(rename = "audit", skip_serializing_if = "Option::is_none")]
+    pub audit: Option<Audit>,
 }
 
 impl AskRequest {
@@ -26,7 +29,22 @@ impl AskRequest {
         AskRequest {
             action: None,
             context: None,
+            audit: None,
         }
+    }
+}
+/// Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Audit {
+    #[serde(rename = "denials")]
+    Denials,
+    #[serde(rename = "always")]
+    Always,
+}
+
+impl Default for Audit {
+    fn default() -> Audit {
+        Self::Denials
     }
 }
 
