@@ -32,5 +32,21 @@ export interface AskRequest {
      * @memberof AskRequest
      */
     'context'?: object;
+    /**
+     * Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record.
+     * @type {string}
+     * @memberof AskRequest
+     */
+    'audit'?: AskRequestAudit;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AskRequestAudit {
+    DENIALS = 'denials',
+    ALWAYS = 'always'
+}
+
 

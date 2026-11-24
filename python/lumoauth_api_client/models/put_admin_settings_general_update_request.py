@@ -28,7 +28,7 @@ class PutAdminSettingsGeneralUpdateRequest(BaseModel):
     """
     PutAdminSettingsGeneralUpdateRequest
     """ # noqa: E501
-    name: Optional[Annotated[str, Field(strict=True, max_length=255)]] = Field(default=None, description="Name of the organization: one line, 1 to 255 characters. Aliases: tenantName, display_name, displayName.")
+    name: Optional[Annotated[str, Field(strict=True, max_length=255)]] = Field(default=None, description="Name of the organization: one line, 1 to 255 characters, without \"<\" or \">\". Aliases: tenantName, display_name, displayName.")
     locale: Optional[StrictStr] = Field(default=None, description="Default language of the hosted pages: en, es, fr, de, pt_BR (pt-BR is accepted too), it, nl, ja or ar. A change also needs the branding.edit permission.")
     __properties: ClassVar[List[str]] = ["name", "locale"]
 

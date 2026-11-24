@@ -905,6 +905,7 @@ class AdminOAuthClientsApi:
     ) -> MessageResponse:
         """Delete an OAuth client
 
+        Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
 
         :param org_id: (required)
         :type org_id: str
@@ -943,7 +944,9 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MessageResponse",
+            '403': None,
             '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -976,6 +979,7 @@ class AdminOAuthClientsApi:
     ) -> ApiResponse[MessageResponse]:
         """Delete an OAuth client
 
+        Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
 
         :param org_id: (required)
         :type org_id: str
@@ -1014,7 +1018,9 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MessageResponse",
+            '403': None,
             '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1047,6 +1053,7 @@ class AdminOAuthClientsApi:
     ) -> RESTResponseType:
         """Delete an OAuth client
 
+        Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
 
         :param org_id: (required)
         :type org_id: str
@@ -1085,7 +1092,9 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MessageResponse",
+            '403': None,
             '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1459,6 +1468,7 @@ class AdminOAuthClientsApi:
     ) -> UpdateClientResponse:
         """Enable an OAuth client
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
         :param org_id: (required)
         :type org_id: str
@@ -1497,6 +1507,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateClientResponse",
+            '403': None,
             '404': None,
         }
         response_data = self.api_client.call_api(
@@ -1530,6 +1541,7 @@ class AdminOAuthClientsApi:
     ) -> ApiResponse[UpdateClientResponse]:
         """Enable an OAuth client
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
         :param org_id: (required)
         :type org_id: str
@@ -1568,6 +1580,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateClientResponse",
+            '403': None,
             '404': None,
         }
         response_data = self.api_client.call_api(
@@ -1601,6 +1614,7 @@ class AdminOAuthClientsApi:
     ) -> RESTResponseType:
         """Enable an OAuth client
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
         :param org_id: (required)
         :type org_id: str
@@ -1639,6 +1653,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateClientResponse",
+            '403': None,
             '404': None,
         }
         response_data = self.api_client.call_api(
@@ -2857,6 +2872,7 @@ class AdminOAuthClientsApi:
     ) -> UpdateClientResponse:
         """Update an OAuth client
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
         :param org_id: (required)
         :type org_id: str
@@ -2895,6 +2911,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateClientResponse",
+            '403': None,
             '404': None,
         }
         response_data = self.api_client.call_api(
@@ -2928,6 +2945,7 @@ class AdminOAuthClientsApi:
     ) -> ApiResponse[UpdateClientResponse]:
         """Update an OAuth client
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
         :param org_id: (required)
         :type org_id: str
@@ -2966,6 +2984,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateClientResponse",
+            '403': None,
             '404': None,
         }
         response_data = self.api_client.call_api(
@@ -2999,6 +3018,7 @@ class AdminOAuthClientsApi:
     ) -> RESTResponseType:
         """Update an OAuth client
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
         :param org_id: (required)
         :type org_id: str
@@ -3037,6 +3057,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateClientResponse",
+            '403': None,
             '404': None,
         }
         response_data = self.api_client.call_api(
@@ -3442,6 +3463,7 @@ class AdminOAuthClientsApi:
     ) -> RotateClientSecretResponse:
         """Rotate an OAuth client secret
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
         :param org_id: (required)
         :type org_id: str
@@ -3480,6 +3502,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "RotateClientSecretResponse",
+            '403': None,
             '404': None,
         }
         response_data = self.api_client.call_api(
@@ -3513,6 +3536,7 @@ class AdminOAuthClientsApi:
     ) -> ApiResponse[RotateClientSecretResponse]:
         """Rotate an OAuth client secret
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
         :param org_id: (required)
         :type org_id: str
@@ -3551,6 +3575,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "RotateClientSecretResponse",
+            '403': None,
             '404': None,
         }
         response_data = self.api_client.call_api(
@@ -3584,6 +3609,7 @@ class AdminOAuthClientsApi:
     ) -> RESTResponseType:
         """Rotate an OAuth client secret
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
         :param org_id: (required)
         :type org_id: str
@@ -3622,6 +3648,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "RotateClientSecretResponse",
+            '403': None,
             '404': None,
         }
         response_data = self.api_client.call_api(
@@ -3719,6 +3746,7 @@ class AdminOAuthClientsApi:
     ) -> SetClientScopesResponse:
         """Replace the scopes granted to an OAuth client
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
 
         :param org_id: (required)
         :type org_id: str
@@ -3756,6 +3784,7 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '403': None,
             '200': "SetClientScopesResponse",
             '404': None,
         }
@@ -3790,6 +3819,7 @@ class AdminOAuthClientsApi:
     ) -> ApiResponse[SetClientScopesResponse]:
         """Replace the scopes granted to an OAuth client
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
 
         :param org_id: (required)
         :type org_id: str
@@ -3827,6 +3857,7 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '403': None,
             '200': "SetClientScopesResponse",
             '404': None,
         }
@@ -3861,6 +3892,7 @@ class AdminOAuthClientsApi:
     ) -> RESTResponseType:
         """Replace the scopes granted to an OAuth client
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
 
         :param org_id: (required)
         :type org_id: str
@@ -3898,6 +3930,7 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '403': None,
             '200': "SetClientScopesResponse",
             '404': None,
         }
@@ -3996,6 +4029,7 @@ class AdminOAuthClientsApi:
     ) -> UpdateClientResponse:
         """Update an OAuth client (same as PATCH: only the fields that are sent change)
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
         :param org_id: (required)
         :type org_id: str
@@ -4034,6 +4068,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateClientResponse",
+            '403': None,
             '404': None,
         }
         response_data = self.api_client.call_api(
@@ -4067,6 +4102,7 @@ class AdminOAuthClientsApi:
     ) -> ApiResponse[UpdateClientResponse]:
         """Update an OAuth client (same as PATCH: only the fields that are sent change)
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
         :param org_id: (required)
         :type org_id: str
@@ -4105,6 +4141,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateClientResponse",
+            '403': None,
             '404': None,
         }
         response_data = self.api_client.call_api(
@@ -4138,6 +4175,7 @@ class AdminOAuthClientsApi:
     ) -> RESTResponseType:
         """Update an OAuth client (same as PATCH: only the fields that are sent change)
 
+        A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
         :param org_id: (required)
         :type org_id: str
@@ -4176,6 +4214,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateClientResponse",
+            '403': None,
             '404': None,
         }
         response_data = self.api_client.call_api(

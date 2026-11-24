@@ -226,7 +226,8 @@ const { status, data } = await apiInstance.getServerChallenge(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | The access token is valid for this MCP server, or the server checks no token. |  -  |
-|**401** | unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). |  * WWW-Authenticate -  <br>  |
+|**400** | invalid_scope — the &#x60;scope&#x60; parameter holds a value that is not a scope token (RFC 6749 section 3.3). The value is not repeated. |  -  |
+|**401** | unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). A token is also invalid when the account, agent or application it was issued to is no longer active. |  * WWW-Authenticate -  <br>  |
 |**403** | insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). |  * WWW-Authenticate -  <br>  |
 |**404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
 |**429** | too_many_requests (Retry-After header). |  -  |
@@ -400,7 +401,8 @@ const { status, data } = await apiInstance.postServerChallenge(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | The access token is valid for this MCP server, or the server checks no token. |  -  |
-|**401** | unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). |  * WWW-Authenticate -  <br>  |
+|**400** | invalid_scope — the &#x60;scope&#x60; parameter holds a value that is not a scope token (RFC 6749 section 3.3). The value is not repeated. |  -  |
+|**401** | unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). A token is also invalid when the account, agent or application it was issued to is no longer active. |  * WWW-Authenticate -  <br>  |
 |**403** | insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). |  * WWW-Authenticate -  <br>  |
 |**404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
 |**429** | too_many_requests (Retry-After header). |  -  |

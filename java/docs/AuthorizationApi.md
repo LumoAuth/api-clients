@@ -1212,6 +1212,7 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Stored attribute |  -  |
+| **403** | The caller lacks abac.manage, or an active policy for this resource type (or for &#x60;*&#x60;) reads the attribute and covers permissions that the caller does not hold: then only a full administrator, or an administrator who holds &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for each action of that policy, can set the value. |  -  |
 
 <a id="setUserAttribute"></a>
 # **setUserAttribute**
@@ -1283,4 +1284,5 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Stored attribute |  -  |
+| **403** | The caller lacks abac.manage or users.edit, sets an attribute on their own account without being a full administrator, does not hold every permission of the target account, or an active policy reads the attribute and covers permissions that the caller does not hold. |  -  |
 

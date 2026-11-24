@@ -119,7 +119,7 @@ $apiInstance = new LumoAuth\ApiClient\Api\MfaApi(
 );
 $orgId = 'orgId_example'; // string
 $id = 'id_example'; // string
-$xMFAChallenge = 'xMFAChallenge_example'; // string | Approved step_up challenge id
+$xMFAChallenge = 'xMFAChallenge_example'; // string | Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)
 
 try {
     $apiInstance->deleteAuthenticator($orgId, $id, $xMFAChallenge);
@@ -134,7 +134,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **id** | **string**|  | |
-| **xMFAChallenge** | **string**| Approved step_up challenge id | [optional] |
+| **xMFAChallenge** | **string**| Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) | [optional] |
 
 ### Return type
 

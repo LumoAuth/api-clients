@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **expires_at** | **string** |  | [optional] [default to undefined]
 **task_id** | **string** |  | [optional] [default to undefined]
 **impact** | **string** |  | [optional] [default to undefined]
+**delivery** | **Array&lt;string&gt;** | Where the request went: &#x60;push&#x60; (the LumoAuth app), &#x60;slack&#x60;, &#x60;discord&#x60;. | [optional] [default to undefined]
 
 ## Example
 
@@ -22,6 +23,7 @@ const instance: CreateApprovalResponse = {
     expires_at,
     task_id,
     impact,
+    delivery,
 };
 ```
 

@@ -63,7 +63,7 @@ type RegisterClientResponse struct {
 	BackchannelLogoutUri *string `json:"backchannel_logout_uri,omitempty"`
 	// Only when true.
 	BackchannelLogoutSessionRequired *bool `json:"backchannel_logout_session_required,omitempty"`
-	// RFC 8707 resource indicators the client may request.
+	// RFC 8707 resource indicators the client may request: at most 20 absolute https URLs without a fragment (http only for localhost). A registration with any other value is refused with invalid_client_metadata.
 	AudienceUris []string `json:"audience_uris,omitempty"`
 }
 

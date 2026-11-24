@@ -312,6 +312,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Sandbox created. &#x60;data.api_key&#x60; is shown only once. |  -  |
+| **400** | &#x60;name&#x60; is not a valid label |  -  |
 | **403** | The organization lacks the Developer sandboxes add-on (&#x60;feature_not_in_plan&#x60;), or it is itself a sandbox |  -  |
 | **429** | Per-owner active-sandbox cap reached |  -  |
 

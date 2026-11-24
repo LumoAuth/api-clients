@@ -8,6 +8,10 @@ Name | Type | Description | Notes
 **Description** | Pointer to **string** |  | [optional] 
 **Capabilities** | Pointer to **[]string** |  | [optional] 
 **BudgetPolicy** | Pointer to **map[string]interface{}** | The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is. | [optional] 
+**Jwks** | Pointer to **map[string]interface{}** | For private_key_jwt agents: replaces the public keys (inline JWK Set). Removing a key revokes the tokens that the agent holds. | [optional] 
+**JwksUri** | Pointer to **string** | For private_key_jwt agents: https URL of the public key set. | [optional] 
+**CanActOnBehalfOfUsers** | Pointer to **bool** | Whether the agent may act for users of the organization. Switching it on needs the delegation feature of the plan and an editor who holds every capability of the agent. | [optional] 
+**OwnerId** | Pointer to **string** | Gives the agent a new owner: the id or the email address of an active account of the organization. The owner is the person in whose name the agent asks for just-in-time access and who receives its approval requests. The caller must hold every capability of the agent and every permission of the new owner (naming yourself always works). An agent whose owner was deleted, blocked or switched off (&#x60;needsNewOwner&#x60; in the agent object) needs a new owner before it can be activated. | [optional] 
 
 ## Methods
 
@@ -138,6 +142,106 @@ HasBudgetPolicy returns a boolean if a field has been set.
 `func (o *PutAdminAgentsUpdateRequest) UnsetBudgetPolicy()`
 
 UnsetBudgetPolicy ensures that no value is present for BudgetPolicy, not even an explicit nil
+### GetJwks
+
+`func (o *PutAdminAgentsUpdateRequest) GetJwks() map[string]interface{}`
+
+GetJwks returns the Jwks field if non-nil, zero value otherwise.
+
+### GetJwksOk
+
+`func (o *PutAdminAgentsUpdateRequest) GetJwksOk() (*map[string]interface{}, bool)`
+
+GetJwksOk returns a tuple with the Jwks field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetJwks
+
+`func (o *PutAdminAgentsUpdateRequest) SetJwks(v map[string]interface{})`
+
+SetJwks sets Jwks field to given value.
+
+### HasJwks
+
+`func (o *PutAdminAgentsUpdateRequest) HasJwks() bool`
+
+HasJwks returns a boolean if a field has been set.
+
+### GetJwksUri
+
+`func (o *PutAdminAgentsUpdateRequest) GetJwksUri() string`
+
+GetJwksUri returns the JwksUri field if non-nil, zero value otherwise.
+
+### GetJwksUriOk
+
+`func (o *PutAdminAgentsUpdateRequest) GetJwksUriOk() (*string, bool)`
+
+GetJwksUriOk returns a tuple with the JwksUri field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetJwksUri
+
+`func (o *PutAdminAgentsUpdateRequest) SetJwksUri(v string)`
+
+SetJwksUri sets JwksUri field to given value.
+
+### HasJwksUri
+
+`func (o *PutAdminAgentsUpdateRequest) HasJwksUri() bool`
+
+HasJwksUri returns a boolean if a field has been set.
+
+### GetCanActOnBehalfOfUsers
+
+`func (o *PutAdminAgentsUpdateRequest) GetCanActOnBehalfOfUsers() bool`
+
+GetCanActOnBehalfOfUsers returns the CanActOnBehalfOfUsers field if non-nil, zero value otherwise.
+
+### GetCanActOnBehalfOfUsersOk
+
+`func (o *PutAdminAgentsUpdateRequest) GetCanActOnBehalfOfUsersOk() (*bool, bool)`
+
+GetCanActOnBehalfOfUsersOk returns a tuple with the CanActOnBehalfOfUsers field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCanActOnBehalfOfUsers
+
+`func (o *PutAdminAgentsUpdateRequest) SetCanActOnBehalfOfUsers(v bool)`
+
+SetCanActOnBehalfOfUsers sets CanActOnBehalfOfUsers field to given value.
+
+### HasCanActOnBehalfOfUsers
+
+`func (o *PutAdminAgentsUpdateRequest) HasCanActOnBehalfOfUsers() bool`
+
+HasCanActOnBehalfOfUsers returns a boolean if a field has been set.
+
+### GetOwnerId
+
+`func (o *PutAdminAgentsUpdateRequest) GetOwnerId() string`
+
+GetOwnerId returns the OwnerId field if non-nil, zero value otherwise.
+
+### GetOwnerIdOk
+
+`func (o *PutAdminAgentsUpdateRequest) GetOwnerIdOk() (*string, bool)`
+
+GetOwnerIdOk returns a tuple with the OwnerId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwnerId
+
+`func (o *PutAdminAgentsUpdateRequest) SetOwnerId(v string)`
+
+SetOwnerId sets OwnerId field to given value.
+
+### HasOwnerId
+
+`func (o *PutAdminAgentsUpdateRequest) HasOwnerId() bool`
+
+HasOwnerId returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

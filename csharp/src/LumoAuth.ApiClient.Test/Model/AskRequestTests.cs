@@ -72,5 +72,14 @@ namespace LumoAuth.ApiClient.Test.Model
         {
             // TODO unit test for the property 'Context'
         }
+
+        /// <summary>
+        /// Test the property 'Audit'
+        /// </summary>
+        [Fact]
+        public void AuditTest()
+        {
+            // TODO unit test for the property 'Audit'
+        }
     }
 }

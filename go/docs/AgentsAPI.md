@@ -4,6 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**AgentsMeToolCalls**](AgentsAPI.md#AgentsMeToolCalls) | **Post** /orgs/{orgId}/api/v1/agents/me/tool-calls | Report the tool calls that the agent&#39;s host gated
 [**Ask**](AgentsAPI.md#Ask) | **Post** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style)
 [**Attest**](AgentsAPI.md#Attest) | **Post** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token
 [**AuthorizeMcp**](AgentsAPI.md#AuthorizeMcp) | **Post** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3).
@@ -11,10 +12,84 @@ Method | HTTP request | Description
 [**GetAgentCard**](AgentsAPI.md#GetAgentCard) | **Get** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card
 [**GetApprovalStatus**](AgentsAPI.md#GetApprovalStatus) | **Get** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 [**GetCurrentAgent**](AgentsAPI.md#GetCurrentAgent) | **Get** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
+[**PollAgentEnrollment**](AgentsAPI.md#PollAgentEnrollment) | **Post** /orgs/{orgId}/api/v1/agents/enrollments/token | Poll an agent enrollment (no credential)
 [**RegisterAgent**](AgentsAPI.md#RegisterAgent) | **Post** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
 [**ReportAgentUsage**](AgentsAPI.md#ReportAgentUsage) | **Post** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used
+[**StartAgentEnrollment**](AgentsAPI.md#StartAgentEnrollment) | **Post** /orgs/{orgId}/api/v1/agents/enrollments | Start an agent enrollment (no credential)
 [**VerifyAgentCard**](AgentsAPI.md#VerifyAgentCard) | **Post** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
 
+
+
+## AgentsMeToolCalls
+
+> AgentsMeToolCallsResponse AgentsMeToolCalls(ctx, orgId).AgentsMeToolCallsRequest(agentsMeToolCallsRequest).Execute()
+
+Report the tool calls that the agent's host gated
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	agentsMeToolCallsRequest := *openapiclient.NewAgentsMeToolCallsRequest() // AgentsMeToolCallsRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AgentsAPI.AgentsMeToolCalls(context.Background(), orgId).AgentsMeToolCallsRequest(agentsMeToolCallsRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AgentsAPI.AgentsMeToolCalls``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AgentsMeToolCalls`: AgentsMeToolCallsResponse
+	fmt.Fprintf(os.Stdout, "Response from `AgentsAPI.AgentsMeToolCalls`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAgentsMeToolCallsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **agentsMeToolCallsRequest** | [**AgentsMeToolCallsRequest**](AgentsMeToolCallsRequest.md) |  | 
+
+### Return type
+
+[**AgentsMeToolCallsResponse**](AgentsMeToolCallsResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## Ask
@@ -520,6 +595,78 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## PollAgentEnrollment
+
+> PollAgentEnrollmentResponse PollAgentEnrollment(ctx, orgId).PollAgentEnrollmentRequest(pollAgentEnrollmentRequest).Execute()
+
+Poll an agent enrollment (no credential)
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	pollAgentEnrollmentRequest := *openapiclient.NewPollAgentEnrollmentRequest("EnrollmentCode_example") // PollAgentEnrollmentRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AgentsAPI.PollAgentEnrollment(context.Background(), orgId).PollAgentEnrollmentRequest(pollAgentEnrollmentRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AgentsAPI.PollAgentEnrollment``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PollAgentEnrollment`: PollAgentEnrollmentResponse
+	fmt.Fprintf(os.Stdout, "Response from `AgentsAPI.PollAgentEnrollment`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPollAgentEnrollmentRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **pollAgentEnrollmentRequest** | [**PollAgentEnrollmentRequest**](PollAgentEnrollmentRequest.md) |  | 
+
+### Return type
+
+[**PollAgentEnrollmentResponse**](PollAgentEnrollmentResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## RegisterAgent
 
 > RegisterAgentResponse RegisterAgent(ctx, orgId).Execute()
@@ -649,6 +796,78 @@ Name | Type | Description  | Notes
 ### Authorization
 
 [ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## StartAgentEnrollment
+
+> StartAgentEnrollmentResponse StartAgentEnrollment(ctx, orgId).StartAgentEnrollmentRequest(startAgentEnrollmentRequest).Execute()
+
+Start an agent enrollment (no credential)
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	startAgentEnrollmentRequest := *openapiclient.NewStartAgentEnrollmentRequest("OpenClaw on mac-mini", "Host_example", *openapiclient.NewStartAgentEnrollmentRequestJwks(), []openapiclient.StartAgentEnrollmentRequestCapabilitiesItem{*openapiclient.NewStartAgentEnrollmentRequestCapabilitiesItem("files:read", "Risk_example")}) // StartAgentEnrollmentRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AgentsAPI.StartAgentEnrollment(context.Background(), orgId).StartAgentEnrollmentRequest(startAgentEnrollmentRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AgentsAPI.StartAgentEnrollment``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `StartAgentEnrollment`: StartAgentEnrollmentResponse
+	fmt.Fprintf(os.Stdout, "Response from `AgentsAPI.StartAgentEnrollment`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiStartAgentEnrollmentRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **startAgentEnrollmentRequest** | [**StartAgentEnrollmentRequest**](StartAgentEnrollmentRequest.md) |  | 
+
+### Return type
+
+[**StartAgentEnrollmentResponse**](StartAgentEnrollmentResponse.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 

@@ -19,6 +19,7 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AbacAttributesCreateError {
+    Status403(),
     Status409(),
     UnknownValue(serde_json::Value),
 }

@@ -4,6 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
+|[**agentsMeToolCalls**](#agentsmetoolcalls) | **POST** /orgs/{orgId}/api/v1/agents/me/tool-calls | Report the tool calls that the agent\&#39;s host gated|
 |[**ask**](#ask) | **POST** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style)|
 |[**attest**](#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token|
 |[**authorizeMcp**](#authorizemcp) | **POST** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3).|
@@ -11,9 +12,69 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**getAgentCard**](#getagentcard) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card|
 |[**getApprovalStatus**](#getapprovalstatus) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | |
 |[**getCurrentAgent**](#getcurrentagent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent|
+|[**pollAgentEnrollment**](#pollagentenrollment) | **POST** /orgs/{orgId}/api/v1/agents/enrollments/token | Poll an agent enrollment (no credential)|
 |[**registerAgent**](#registeragent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent|
 |[**reportAgentUsage**](#reportagentusage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used|
+|[**startAgentEnrollment**](#startagentenrollment) | **POST** /orgs/{orgId}/api/v1/agents/enrollments | Start an agent enrollment (no credential)|
 |[**verifyAgentCard**](#verifyagentcard) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card|
+
+# **agentsMeToolCalls**
+> AgentsMeToolCallsResponse agentsMeToolCalls(agentsMeToolCallsRequest)
+
+Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host\'s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+
+### Example
+
+```typescript
+import {
+    AgentsApi,
+    Configuration,
+    AgentsMeToolCallsRequest
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AgentsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let agentsMeToolCallsRequest: AgentsMeToolCallsRequest; //
+
+const { status, data } = await apiInstance.agentsMeToolCalls(
+    orgId,
+    agentsMeToolCallsRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **agentsMeToolCallsRequest** | **AgentsMeToolCallsRequest**|  | |
+| **orgId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AgentsMeToolCallsResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Recorded. |  -  |
+|**400** | invalid_request: calls is missing, empty or longer than 50, or a call has an unknown field or an invalid value (the description names it). |  -  |
+|**403** | test_token_not_accepted, cross_tenant or insufficient_scope (the token was narrowed with a scope). |  -  |
+|**429** | rate_limited: too many reports from this agent. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ask**
 > AskResponse ask(askRequest)
@@ -67,7 +128,7 @@ const { status, data } = await apiInstance.ask(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Authorization decision for the requested action. |  -  |
-|**400** | Missing required field: action; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user\&#39;s action is a permission slug. |  -  |
+|**400** | Missing required field: action; invalid_request: audit is not denials or always; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user\&#39;s action is a permission slug. |  -  |
 |**403** | plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). |  -  |
 |**429** | budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. |  -  |
 
@@ -245,12 +306,12 @@ const { status, data } = await apiInstance.createApproval(
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**201** | Approval request created and push sent. |  -  |
+|**201** | Approval request created and delivered (see &#x60;delivery&#x60;). |  -  |
 |**202** | User has no push device; an email sign-in fallback link was sent. |  -  |
-|**400** | Invalid JSON, task_id, reason, impact, or missing on_behalf_of. |  -  |
+|**400** | Invalid JSON, task_id, reason, impact, expires_in or meta (invalid_meta names the field), or missing on_behalf_of. |  -  |
 |**403** | Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. |  -  |
 |**404** | Tenant or target user not found. |  -  |
-|**428** | User has no enrolled push device and the email fallback could not be sent. |  -  |
+|**428** | User has no enrolled push device, no approval channel receives the request, and the email fallback could not be sent. |  -  |
 |**429** | Rate limited (per tenant/agent/user). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -418,6 +479,64 @@ const { status, data } = await apiInstance.getCurrentAgent(
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **pollAgentEnrollment**
+> PollAgentEnrollmentResponse pollAgentEnrollment(pollAgentEnrollmentRequest)
+
+Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+
+### Example
+
+```typescript
+import {
+    AgentsApi,
+    Configuration,
+    PollAgentEnrollmentRequest
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AgentsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let pollAgentEnrollmentRequest: PollAgentEnrollmentRequest; //
+
+const { status, data } = await apiInstance.pollAgentEnrollment(
+    orgId,
+    pollAgentEnrollmentRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **pollAgentEnrollmentRequest** | **PollAgentEnrollmentRequest**|  | |
+| **orgId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**PollAgentEnrollmentResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Approved. Delivered once; later polls answer expired_token. |  -  |
+|**400** | authorization_pending, slow_down, access_denied, expired_token or invalid_request. |  -  |
+|**404** | Unknown organization. |  -  |
+|**429** | too_many_requests: too many polls from this address (Retry-After). |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **registerAgent**
 > RegisterAgentResponse registerAgent()
 
@@ -523,6 +642,64 @@ const { status, data } = await apiInstance.reportAgentUsage(
 |**400** | invalid_request: tokens or cost_usd is missing, negative, too large or not a number. |  -  |
 |**403** | test_token_not_accepted, cross_tenant or insufficient_scope (the token was narrowed with a scope). |  -  |
 |**429** | rate_limited: too many reports from this agent. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **startAgentEnrollment**
+> StartAgentEnrollmentResponse startAgentEnrollment(startAgentEnrollmentRequest)
+
+The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine\'s own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+
+### Example
+
+```typescript
+import {
+    AgentsApi,
+    Configuration,
+    StartAgentEnrollmentRequest
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AgentsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let startAgentEnrollmentRequest: StartAgentEnrollmentRequest; //
+
+const { status, data } = await apiInstance.startAgentEnrollment(
+    orgId,
+    startAgentEnrollmentRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **startAgentEnrollmentRequest** | **StartAgentEnrollmentRequest**|  | |
+| **orgId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**StartAgentEnrollmentResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**201** | Enrollment started. Show user_code, verification_uri and key_fingerprint to the person; keep enrollment_code secret and poll with it. |  -  |
+|**400** | invalid_request; error_description names the field. |  -  |
+|**404** | Unknown organization. |  -  |
+|**429** | too_many_requests: rate limited, or every waiting request that could give way is open on the approval page (Retry-After). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

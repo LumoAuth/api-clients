@@ -41,6 +41,32 @@ pub enum AdminMcpServersGetError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`admin_mcp_servers_grants_list`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AdminMcpServersGrantsListError {
+    Status404(),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`admin_mcp_servers_grants_remove`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AdminMcpServersGrantsRemoveError {
+    Status404(),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`admin_mcp_servers_grants_set`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AdminMcpServersGrantsSetError {
+    Status400(),
+    Status403(),
+    Status404(),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`admin_mcp_servers_list`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -49,7 +75,7 @@ pub enum AdminMcpServersListError {
 }
 
 
-/// Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \"http_streamable\" (\"http_sse\" is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \"oauth\"   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server's own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization's OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope => text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \"none\" or transport \"stdio\") is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+/// The `resource_uri` is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
 pub async fn admin_mcp_servers_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminMcpServersCreateResponse, Error<AdminMcpServersCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -189,6 +215,158 @@ pub async fn admin_mcp_servers_get(configuration: &configuration::Configuration,
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminMcpServersGetError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn admin_mcp_servers_grants_list(configuration: &configuration::Configuration, org_id: &str, server_id: &str, agent_id: Option<&str>) -> Result<models::AdminMcpServersGrantsListResponse, Error<AdminMcpServersGrantsListError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_server_id = server_id;
+    let p_agent_id = agent_id;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), serverId=crate::apis::urlencode(p_server_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_agent_id {
+        req_builder = req_builder.query(&[("agent_id", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminMcpServersGrantsListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminMcpServersGrantsListResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<AdminMcpServersGrantsListError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn admin_mcp_servers_grants_remove(configuration: &configuration::Configuration, org_id: &str, server_id: &str, agent_id: &str) -> Result<models::AdminMcpServersGrantsRemoveResponse, Error<AdminMcpServersGrantsRemoveError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_server_id = server_id;
+    let p_agent_id = agent_id;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), serverId=crate::apis::urlencode(p_server_id), agentId=crate::apis::urlencode(p_agent_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::DELETE, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminMcpServersGrantsRemoveResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminMcpServersGrantsRemoveResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<AdminMcpServersGrantsRemoveError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn admin_mcp_servers_grants_set(configuration: &configuration::Configuration, org_id: &str, server_id: &str, agent_id: &str, admin_mcp_servers_grants_set_request: models::AdminMcpServersGrantsSetRequest) -> Result<models::AdminMcpServersGrantsSetResponse, Error<AdminMcpServersGrantsSetError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_server_id = server_id;
+    let p_agent_id = agent_id;
+    let p_admin_mcp_servers_grants_set_request = admin_mcp_servers_grants_set_request;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), serverId=crate::apis::urlencode(p_server_id), agentId=crate::apis::urlencode(p_agent_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+    req_builder = req_builder.json(&p_admin_mcp_servers_grants_set_request);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminMcpServersGrantsSetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminMcpServersGrantsSetResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<AdminMcpServersGrantsSetError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

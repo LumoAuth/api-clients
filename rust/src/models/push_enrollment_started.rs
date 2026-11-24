@@ -13,6 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PushEnrollmentStarted {
+    /// Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret.
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<String>,
     #[serde(rename = "state", skip_serializing_if = "Option::is_none")]

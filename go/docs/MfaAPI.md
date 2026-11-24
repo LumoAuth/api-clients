@@ -114,7 +114,7 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	id := "id_example" // string | 
-	xMFAChallenge := "xMFAChallenge_example" // string | Approved step_up challenge id (optional)
+	xMFAChallenge := "xMFAChallenge_example" // string | Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -144,7 +144,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
- **xMFAChallenge** | **string** | Approved step_up challenge id | 
+ **xMFAChallenge** | **string** | Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) | 
 
 ### Return type
 

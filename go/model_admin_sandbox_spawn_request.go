@@ -20,6 +20,7 @@ var _ MappedNullable = &AdminSandboxSpawnRequest{}
 
 // AdminSandboxSpawnRequest struct for AdminSandboxSpawnRequest
 type AdminSandboxSpawnRequest struct {
+	// A label for the sandbox: one line of text, without control characters and without \"<\" or \">\".
 	Name *string `json:"name,omitempty"`
 	TtlHours *int32 `json:"ttl_hours,omitempty"`
 }

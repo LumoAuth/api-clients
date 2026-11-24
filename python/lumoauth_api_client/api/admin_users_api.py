@@ -5320,6 +5320,7 @@ class AdminUsersApi:
     ) -> UpdateUserResponse:
         """Update a user
 
+        Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive` or `emailVerified` needs a caller who holds every permission of the user. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
 
         :param org_id: (required)
         :type org_id: str
@@ -5358,6 +5359,9 @@ class AdminUsersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateUserResponse",
+            '400': None,
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5390,6 +5394,7 @@ class AdminUsersApi:
     ) -> ApiResponse[UpdateUserResponse]:
         """Update a user
 
+        Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive` or `emailVerified` needs a caller who holds every permission of the user. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
 
         :param org_id: (required)
         :type org_id: str
@@ -5428,6 +5433,9 @@ class AdminUsersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateUserResponse",
+            '400': None,
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5460,6 +5468,7 @@ class AdminUsersApi:
     ) -> RESTResponseType:
         """Update a user
 
+        Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive` or `emailVerified` needs a caller who holds every permission of the user. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
 
         :param org_id: (required)
         :type org_id: str
@@ -5498,6 +5507,9 @@ class AdminUsersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateUserResponse",
+            '400': None,
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8122,6 +8134,7 @@ class AdminUsersApi:
     ) -> UpdateUserResponse:
         """Update a user
 
+        Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive` or `emailVerified` needs a caller who holds every permission of the user. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
 
         :param org_id: (required)
         :type org_id: str
@@ -8160,6 +8173,9 @@ class AdminUsersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateUserResponse",
+            '400': None,
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8192,6 +8208,7 @@ class AdminUsersApi:
     ) -> ApiResponse[UpdateUserResponse]:
         """Update a user
 
+        Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive` or `emailVerified` needs a caller who holds every permission of the user. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
 
         :param org_id: (required)
         :type org_id: str
@@ -8230,6 +8247,9 @@ class AdminUsersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateUserResponse",
+            '400': None,
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8262,6 +8282,7 @@ class AdminUsersApi:
     ) -> RESTResponseType:
         """Update a user
 
+        Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive` or `emailVerified` needs a caller who holds every permission of the user. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
 
         :param org_id: (required)
         :type org_id: str
@@ -8300,6 +8321,9 @@ class AdminUsersApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateUserResponse",
+            '400': None,
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,

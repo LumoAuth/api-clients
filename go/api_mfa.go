@@ -337,7 +337,7 @@ type ApiDeleteAuthenticatorRequest struct {
 	xMFAChallenge *string
 }
 
-// Approved step_up challenge id
+// Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)
 func (r ApiDeleteAuthenticatorRequest) XMFAChallenge(xMFAChallenge string) ApiDeleteAuthenticatorRequest {
 	r.xMFAChallenge = &xMFAChallenge
 	return r

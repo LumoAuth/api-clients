@@ -86,7 +86,7 @@ pub struct RegisterClientResponse {
     /// Only when true.
     #[serde(rename = "backchannel_logout_session_required", skip_serializing_if = "Option::is_none")]
     pub backchannel_logout_session_required: Option<bool>,
-    /// RFC 8707 resource indicators the client may request.
+    /// RFC 8707 resource indicators the client may request: at most 20 absolute https URLs without a fragment (http only for localhost). A registration with any other value is refused with invalid_client_metadata.
     #[serde(rename = "audience_uris", skip_serializing_if = "Option::is_none")]
     pub audience_uris: Option<Vec<String>>,
 }

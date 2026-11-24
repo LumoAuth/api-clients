@@ -59,7 +59,8 @@ class AskRequest implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPITypes = [
         'action' => 'string',
-        'context' => 'object'
+        'context' => 'object',
+        'audit' => 'string'
     ];
 
     /**
@@ -71,7 +72,8 @@ class AskRequest implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPIFormats = [
         'action' => null,
-        'context' => null
+        'context' => null,
+        'audit' => null
     ];
 
     /**
@@ -81,7 +83,8 @@ class AskRequest implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static array $openAPINullables = [
         'action' => false,
-        'context' => false
+        'context' => false,
+        'audit' => false
     ];
 
     /**
@@ -171,7 +174,8 @@ class AskRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $attributeMap = [
         'action' => 'action',
-        'context' => 'context'
+        'context' => 'context',
+        'audit' => 'audit'
     ];
 
     /**
@@ -181,7 +185,8 @@ class AskRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $setters = [
         'action' => 'setAction',
-        'context' => 'setContext'
+        'context' => 'setContext',
+        'audit' => 'setAudit'
     ];
 
     /**
@@ -191,7 +196,8 @@ class AskRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $getters = [
         'action' => 'getAction',
-        'context' => 'getContext'
+        'context' => 'getContext',
+        'audit' => 'getAudit'
     ];
 
     /**
@@ -235,6 +241,21 @@ class AskRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+    public const AUDIT_DENIALS = 'denials';
+    public const AUDIT_ALWAYS = 'always';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getAuditAllowableValues()
+    {
+        return [
+            self::AUDIT_DENIALS,
+            self::AUDIT_ALWAYS,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -253,6 +274,7 @@ class AskRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $this->setIfExists('action', $data ?? [], null);
         $this->setIfExists('context', $data ?? [], null);
+        $this->setIfExists('audit', $data ?? [], 'denials');
     }
 
     /**
@@ -281,6 +303,15 @@ class AskRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        $allowedValues = $this->getAuditAllowableValues();
+        if (!is_null($this->container['audit']) && !in_array($this->container['audit'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'audit', must be one of '%s'",
+                $this->container['audit'],
+                implode("', '", $allowedValues)
+            );
+        }
 
         return $invalidProperties;
     }
@@ -347,6 +378,43 @@ class AskRequest implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable context cannot be null');
         }
         $this->container['context'] = $context;
+
+        return $this;
+    }
+
+    /**
+     * Gets audit
+     *
+     * @return string|null
+     */
+    public function getAudit()
+    {
+        return $this->container['audit'];
+    }
+
+    /**
+     * Sets audit
+     *
+     * @param string|null $audit Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record.
+     *
+     * @return self
+     */
+    public function setAudit($audit)
+    {
+        if (is_null($audit)) {
+            throw new \InvalidArgumentException('non-nullable audit cannot be null');
+        }
+        $allowedValues = $this->getAuditAllowableValues();
+        if (!in_array($audit, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'audit', must be one of '%s'",
+                    $audit,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['audit'] = $audit;
 
         return $this;
     }

@@ -15,6 +15,8 @@ package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
 import io.lumoauth.client.model.AdminAgentsReportUsageRequest;
+import io.lumoauth.client.model.AgentsMeToolCallsRequest;
+import io.lumoauth.client.model.AgentsMeToolCallsResponse;
 import io.lumoauth.client.model.AskRequest;
 import io.lumoauth.client.model.AskResponse;
 import io.lumoauth.client.model.AttestRequest;
@@ -26,9 +28,13 @@ import io.lumoauth.client.model.CreateApprovalResponse;
 import io.lumoauth.client.model.CreateApprovalResponse202;
 import io.lumoauth.client.model.GetApprovalStatusResponse;
 import io.lumoauth.client.model.GetCurrentAgentResponse;
+import io.lumoauth.client.model.PollAgentEnrollmentRequest;
+import io.lumoauth.client.model.PollAgentEnrollmentResponse;
 import io.lumoauth.client.model.RegisterAgentResponse;
 import io.lumoauth.client.model.ReportAgentUsageResponse;
 import io.lumoauth.client.model.SignedAgentCard;
+import io.lumoauth.client.model.StartAgentEnrollmentRequest;
+import io.lumoauth.client.model.StartAgentEnrollmentResponse;
 import io.lumoauth.client.model.VerifyAgentCardResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -45,6 +51,21 @@ import java.util.Map;
 public class AgentsApiTest {
 
     private final AgentsApi api = new AgentsApi();
+
+    /**
+     * Report the tool calls that the agent&#39;s host gated
+     *
+     * Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host&#39;s own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void agentsMeToolCallsTest() throws ApiException {
+        String orgId = null;
+        AgentsMeToolCallsRequest agentsMeToolCallsRequest = null;
+        AgentsMeToolCallsResponse response = api.agentsMeToolCalls(orgId, agentsMeToolCallsRequest);
+        // TODO: test validations
+    }
 
     /**
      * Agent-friendly permission check (Natural Language style)
@@ -144,6 +165,21 @@ public class AgentsApiTest {
     }
 
     /**
+     * Poll an agent enrollment (no credential)
+     *
+     * Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void pollAgentEnrollmentTest() throws ApiException {
+        String orgId = null;
+        PollAgentEnrollmentRequest pollAgentEnrollmentRequest = null;
+        PollAgentEnrollmentResponse response = api.pollAgentEnrollment(orgId, pollAgentEnrollmentRequest);
+        // TODO: test validations
+    }
+
+    /**
      * Register (or re-register) an agent
      *
      * @throws ApiException if the Api call fails
@@ -167,6 +203,21 @@ public class AgentsApiTest {
         String orgId = null;
         AdminAgentsReportUsageRequest adminAgentsReportUsageRequest = null;
         ReportAgentUsageResponse response = api.reportAgentUsage(orgId, adminAgentsReportUsageRequest);
+        // TODO: test validations
+    }
+
+    /**
+     * Start an agent enrollment (no credential)
+     *
+     * The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine&#39;s own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void startAgentEnrollmentTest() throws ApiException {
+        String orgId = null;
+        StartAgentEnrollmentRequest startAgentEnrollmentRequest = null;
+        StartAgentEnrollmentResponse response = api.startAgentEnrollment(orgId, startAgentEnrollmentRequest);
         // TODO: test validations
     }
 

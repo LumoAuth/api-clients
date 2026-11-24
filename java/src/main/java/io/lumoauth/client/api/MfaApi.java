@@ -226,7 +226,7 @@ public class MfaApi {
      * Build call for deleteAuthenticator
      * @param orgId  (required)
      * @param id  (required)
-     * @param xMFAChallenge Approved step_up challenge id (optional)
+     * @param xMFAChallenge Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -310,7 +310,7 @@ public class MfaApi {
      * Needs fresh MFA with a different factor where one exists (MGT-004). Blocked with 409 last_factor_required when the organization requires MFA and this is the last factor.
      * @param orgId  (required)
      * @param id  (required)
-     * @param xMFAChallenge Approved step_up challenge id (optional)
+     * @param xMFAChallenge Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
@@ -330,7 +330,7 @@ public class MfaApi {
      * Needs fresh MFA with a different factor where one exists (MGT-004). Blocked with 409 last_factor_required when the organization requires MFA and this is the last factor.
      * @param orgId  (required)
      * @param id  (required)
-     * @param xMFAChallenge Approved step_up challenge id (optional)
+     * @param xMFAChallenge Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -352,7 +352,7 @@ public class MfaApi {
      * Needs fresh MFA with a different factor where one exists (MGT-004). Blocked with 409 last_factor_required when the organization requires MFA and this is the last factor.
      * @param orgId  (required)
      * @param id  (required)
-     * @param xMFAChallenge Approved step_up challenge id (optional)
+     * @param xMFAChallenge Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object

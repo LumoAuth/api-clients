@@ -105,6 +105,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent activated. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -184,6 +185,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent activated. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -206,6 +208,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent activated. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -230,6 +233,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent activated. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -403,6 +407,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent enabled. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -482,6 +487,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent enabled. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -504,6 +510,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent enabled. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -528,6 +535,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent enabled. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2410,7 +2418,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2497,7 +2505,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2521,7 +2529,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2547,7 +2555,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2573,7 +2581,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2660,7 +2668,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2684,7 +2692,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -2710,7 +2718,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Agent updated. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>

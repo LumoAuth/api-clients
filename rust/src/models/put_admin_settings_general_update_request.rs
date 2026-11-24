@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PutAdminSettingsGeneralUpdateRequest {
-    /// Name of the organization: one line, 1 to 255 characters. Aliases: tenantName, display_name, displayName.
+    /// Name of the organization: one line, 1 to 255 characters, without \"<\" or \">\". Aliases: tenantName, display_name, displayName.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
     /// Default language of the hosted pages: en, es, fr, de, pt_BR (pt-BR is accepted too), it, nl, ja or ar. A change also needs the branding.edit permission.

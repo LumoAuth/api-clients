@@ -12,22 +12,25 @@ import AnyCodable
 
 public struct CreateApprovalRequest: Codable, JSONEncodable, Hashable {
 
+    public static let expiresInRule = NumericRule<Int>(minimum: 60, exclusiveMinimum: false, maximum: 600, exclusiveMaximum: false, multipleOf: nil)
     /** Agent task identifier (<=128 chars). */
     public var taskId: String?
     /** Human-readable action description (<=480 chars). */
     public var reason: String?
     /** One of low, medium, high, critical. */
     public var impact: String?
-    /** User id or email the agent acts for (delegation required). */
+    /** User id or email the agent acts for (delegation required). When it is the agent's owner, the request also goes to the organization's Slack and Discord approval channels that have agent approvals switched on. */
     public var onBehalfOf: String?
-    /** Optional action metadata. */
-    public var meta: AnyCodable?
+    /** Seconds the person has to answer (60-600, default 120). An integer outside the range is clamped. */
+    public var expiresIn: Int? = 120
+    public var meta: CreateApprovalRequestMeta?
 
-    public init(taskId: String? = nil, reason: String? = nil, impact: String? = nil, onBehalfOf: String? = nil, meta: AnyCodable? = nil) {
+    public init(taskId: String? = nil, reason: String? = nil, impact: String? = nil, onBehalfOf: String? = nil, expiresIn: Int? = 120, meta: CreateApprovalRequestMeta? = nil) {
         self.taskId = taskId
         self.reason = reason
         self.impact = impact
         self.onBehalfOf = onBehalfOf
+        self.expiresIn = expiresIn
         self.meta = meta
     }
 
@@ -36,6 +39,7 @@ public struct CreateApprovalRequest: Codable, JSONEncodable, Hashable {
         case reason
         case impact
         case onBehalfOf = "on_behalf_of"
+        case expiresIn = "expires_in"
         case meta
     }
 
@@ -47,6 +51,7 @@ public struct CreateApprovalRequest: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(reason, forKey: .reason)
         try container.encodeIfPresent(impact, forKey: .impact)
         try container.encodeIfPresent(onBehalfOf, forKey: .onBehalfOf)
+        try container.encodeIfPresent(expiresIn, forKey: .expiresIn)
         try container.encodeIfPresent(meta, forKey: .meta)
     }
 }

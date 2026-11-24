@@ -4,6 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**agents_me_tool_calls**](AgentsApi.md#agents_me_tool_calls) | **POST** /orgs/{orgId}/api/v1/agents/me/tool-calls | Report the tool calls that the agent&#39;s host gated
 [**ask**](AgentsApi.md#ask) | **POST** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style)
 [**attest**](AgentsApi.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token
 [**authorize_mcp**](AgentsApi.md#authorize_mcp) | **POST** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3).
@@ -11,10 +12,103 @@ Method | HTTP request | Description
 [**get_agent_card**](AgentsApi.md#get_agent_card) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card
 [**get_approval_status**](AgentsApi.md#get_approval_status) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 [**get_current_agent**](AgentsApi.md#get_current_agent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
+[**poll_agent_enrollment**](AgentsApi.md#poll_agent_enrollment) | **POST** /orgs/{orgId}/api/v1/agents/enrollments/token | Poll an agent enrollment (no credential)
 [**register_agent**](AgentsApi.md#register_agent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
 [**report_agent_usage**](AgentsApi.md#report_agent_usage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used
+[**start_agent_enrollment**](AgentsApi.md#start_agent_enrollment) | **POST** /orgs/{orgId}/api/v1/agents/enrollments | Start an agent enrollment (no credential)
 [**verify_agent_card**](AgentsApi.md#verify_agent_card) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
 
+
+# **agents_me_tool_calls**
+> AgentsMeToolCallsResponse agents_me_tool_calls(org_id, agents_me_tool_calls_request)
+
+Report the tool calls that the agent's host gated
+
+Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host's own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
+
+```python
+import lumoauth_api_client
+from lumoauth_api_client.models.agents_me_tool_calls_request import AgentsMeToolCallsRequest
+from lumoauth_api_client.models.agents_me_tool_calls_response import AgentsMeToolCallsResponse
+from lumoauth_api_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.lumoauth.dev
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lumoauth_api_client.Configuration(
+    host = "https://app.lumoauth.dev"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = lumoauth_api_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with lumoauth_api_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lumoauth_api_client.AgentsApi(api_client)
+    org_id = 'org_id_example' # str | 
+    agents_me_tool_calls_request = lumoauth_api_client.AgentsMeToolCallsRequest() # AgentsMeToolCallsRequest | 
+
+    try:
+        # Report the tool calls that the agent's host gated
+        api_response = api_instance.agents_me_tool_calls(org_id, agents_me_tool_calls_request)
+        print("The response of AgentsApi->agents_me_tool_calls:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AgentsApi->agents_me_tool_calls: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**|  | 
+ **agents_me_tool_calls_request** | [**AgentsMeToolCallsRequest**](AgentsMeToolCallsRequest.md)|  | 
+
+### Return type
+
+[**AgentsMeToolCallsResponse**](AgentsMeToolCallsResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Recorded. |  -  |
+**400** | invalid_request: calls is missing, empty or longer than 50, or a call has an unknown field or an invalid value (the description names it). |  -  |
+**403** | test_token_not_accepted, cross_tenant or insufficient_scope (the token was narrowed with a scope). |  -  |
+**429** | rate_limited: too many reports from this agent. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **ask**
 > AskResponse ask(org_id, ask_request)
@@ -105,7 +199,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Authorization decision for the requested action. |  -  |
-**400** | Missing required field: action; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. |  -  |
+**400** | Missing required field: action; invalid_request: audit is not denials or always; or invalid_action: an agent wrote the action in the dot form (invoices.read). Agents write &lt;resource&gt;:&lt;action&gt; (invoices:read); a user&#39;s action is a permission slug. |  -  |
 **403** | plan_limit_reached: the Ask API calls that the plan includes for this month are used (plans without overage only). |  -  |
 **429** | budget_exceeded: the agent budget is spent. Retry-After holds the seconds until the spent window starts again. |  -  |
 
@@ -388,12 +482,12 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | Approval request created and push sent. |  -  |
+**201** | Approval request created and delivered (see &#x60;delivery&#x60;). |  -  |
 **202** | User has no push device; an email sign-in fallback link was sent. |  -  |
-**400** | Invalid JSON, task_id, reason, impact, or missing on_behalf_of. |  -  |
+**400** | Invalid JSON, task_id, reason, impact, expires_in or meta (invalid_meta names the field), or missing on_behalf_of. |  -  |
 **403** | Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. |  -  |
 **404** | Tenant or target user not found. |  -  |
-**428** | User has no enrolled push device and the email fallback could not be sent. |  -  |
+**428** | User has no enrolled push device, no approval channel receives the request, and the email fallback could not be sent. |  -  |
 **429** | Rate limited (per tenant/agent/user). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -640,6 +734,80 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **poll_agent_enrollment**
+> PollAgentEnrollmentResponse poll_agent_enrollment(org_id, poll_agent_enrollment_request)
+
+Poll an agent enrollment (no credential)
+
+Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+
+### Example
+
+
+```python
+import lumoauth_api_client
+from lumoauth_api_client.models.poll_agent_enrollment_request import PollAgentEnrollmentRequest
+from lumoauth_api_client.models.poll_agent_enrollment_response import PollAgentEnrollmentResponse
+from lumoauth_api_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.lumoauth.dev
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lumoauth_api_client.Configuration(
+    host = "https://app.lumoauth.dev"
+)
+
+
+# Enter a context with an instance of the API client
+with lumoauth_api_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lumoauth_api_client.AgentsApi(api_client)
+    org_id = 'org_id_example' # str | 
+    poll_agent_enrollment_request = lumoauth_api_client.PollAgentEnrollmentRequest() # PollAgentEnrollmentRequest | 
+
+    try:
+        # Poll an agent enrollment (no credential)
+        api_response = api_instance.poll_agent_enrollment(org_id, poll_agent_enrollment_request)
+        print("The response of AgentsApi->poll_agent_enrollment:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AgentsApi->poll_agent_enrollment: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**|  | 
+ **poll_agent_enrollment_request** | [**PollAgentEnrollmentRequest**](PollAgentEnrollmentRequest.md)|  | 
+
+### Return type
+
+[**PollAgentEnrollmentResponse**](PollAgentEnrollmentResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Approved. Delivered once; later polls answer expired_token. |  -  |
+**400** | authorization_pending, slow_down, access_denied, expired_token or invalid_request. |  -  |
+**404** | Unknown organization. |  -  |
+**429** | too_many_requests: too many polls from this address (Retry-After). |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **register_agent**
 > RegisterAgentResponse register_agent(org_id)
 
@@ -811,6 +979,80 @@ Name | Type | Description  | Notes
 **400** | invalid_request: tokens or cost_usd is missing, negative, too large or not a number. |  -  |
 **403** | test_token_not_accepted, cross_tenant or insufficient_scope (the token was narrowed with a scope). |  -  |
 **429** | rate_limited: too many reports from this agent. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **start_agent_enrollment**
+> StartAgentEnrollmentResponse start_agent_enrollment(org_id, start_agent_enrollment_request)
+
+Start an agent enrollment (no credential)
+
+The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine's own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+
+### Example
+
+
+```python
+import lumoauth_api_client
+from lumoauth_api_client.models.start_agent_enrollment_request import StartAgentEnrollmentRequest
+from lumoauth_api_client.models.start_agent_enrollment_response import StartAgentEnrollmentResponse
+from lumoauth_api_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.lumoauth.dev
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lumoauth_api_client.Configuration(
+    host = "https://app.lumoauth.dev"
+)
+
+
+# Enter a context with an instance of the API client
+with lumoauth_api_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lumoauth_api_client.AgentsApi(api_client)
+    org_id = 'org_id_example' # str | 
+    start_agent_enrollment_request = lumoauth_api_client.StartAgentEnrollmentRequest() # StartAgentEnrollmentRequest | 
+
+    try:
+        # Start an agent enrollment (no credential)
+        api_response = api_instance.start_agent_enrollment(org_id, start_agent_enrollment_request)
+        print("The response of AgentsApi->start_agent_enrollment:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AgentsApi->start_agent_enrollment: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**|  | 
+ **start_agent_enrollment_request** | [**StartAgentEnrollmentRequest**](StartAgentEnrollmentRequest.md)|  | 
+
+### Return type
+
+[**StartAgentEnrollmentResponse**](StartAgentEnrollmentResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Enrollment started. Show user_code, verification_uri and key_fingerprint to the person; keep enrollment_code secret and poll with it. |  -  |
+**400** | invalid_request; error_description names the field. |  -  |
+**404** | Unknown organization. |  -  |
+**429** | too_many_requests: rate limited, or every waiting request that could give way is open on the approval page (Retry-After). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

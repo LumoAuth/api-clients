@@ -26,7 +26,7 @@ open class AdminMcpAPI {
     /**
      Register an MCP server
      - POST /orgs/{orgId}/api/v1/admin/mcp/servers
-     - Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \"http_streamable\" (\"http_sse\" is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \"oauth\"   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server's own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization's OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope => text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \"none\" or transport \"stdio\") is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+     - The `resource_uri` is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -153,6 +153,170 @@ open class AdminMcpAPI {
         let localVariableRequestBuilder: RequestBuilder<AdminMcpServersGetResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     List the agents allowed to call tools of an MCP server
+     
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter agentId: (query) Only the grants of this agent (agentId or numeric id). (optional)
+     - returns: AdminMcpServersGrantsListResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func adminMcpServersGrantsList(orgId: String, serverId: String, agentId: String? = nil) async throws -> AdminMcpServersGrantsListResponse {
+        return try await adminMcpServersGrantsListWithRequestBuilder(orgId: orgId, serverId: serverId, agentId: agentId).execute().body
+    }
+
+    /**
+     List the agents allowed to call tools of an MCP server
+     - GET /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter agentId: (query) Only the grants of this agent (agentId or numeric id). (optional)
+     - returns: RequestBuilder<AdminMcpServersGrantsListResponse> 
+     */
+    open class func adminMcpServersGrantsListWithRequestBuilder(orgId: String, serverId: String, agentId: String? = nil) -> RequestBuilder<AdminMcpServersGrantsListResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let serverIdPreEscape = "\(APIHelper.mapValueToPathItem(serverId))"
+        let serverIdPostEscape = serverIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{serverId}", with: serverIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "agent_id": (wrappedValue: agentId?.encodeToJSON(), isExplode: true),
+        ])
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AdminMcpServersGrantsListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Remove every grant of an agent on an MCP server
+     
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter agentId: (path)  
+     - returns: AdminMcpServersGrantsRemoveResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func adminMcpServersGrantsRemove(orgId: String, serverId: String, agentId: String) async throws -> AdminMcpServersGrantsRemoveResponse {
+        return try await adminMcpServersGrantsRemoveWithRequestBuilder(orgId: orgId, serverId: serverId, agentId: agentId).execute().body
+    }
+
+    /**
+     Remove every grant of an agent on an MCP server
+     - DELETE /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter agentId: (path)  
+     - returns: RequestBuilder<AdminMcpServersGrantsRemoveResponse> 
+     */
+    open class func adminMcpServersGrantsRemoveWithRequestBuilder(orgId: String, serverId: String, agentId: String) -> RequestBuilder<AdminMcpServersGrantsRemoveResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let serverIdPreEscape = "\(APIHelper.mapValueToPathItem(serverId))"
+        let serverIdPostEscape = serverIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{serverId}", with: serverIdPostEscape, options: .literal, range: nil)
+        let agentIdPreEscape = "\(APIHelper.mapValueToPathItem(agentId))"
+        let agentIdPostEscape = agentIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{agentId}", with: agentIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AdminMcpServersGrantsRemoveResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Set the tools of an MCP server that an agent may call
+     
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter agentId: (path)  
+     - parameter adminMcpServersGrantsSetRequest: (body)  
+     - returns: AdminMcpServersGrantsSetResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func adminMcpServersGrantsSet(orgId: String, serverId: String, agentId: String, adminMcpServersGrantsSetRequest: AdminMcpServersGrantsSetRequest) async throws -> AdminMcpServersGrantsSetResponse {
+        return try await adminMcpServersGrantsSetWithRequestBuilder(orgId: orgId, serverId: serverId, agentId: agentId, adminMcpServersGrantsSetRequest: adminMcpServersGrantsSetRequest).execute().body
+    }
+
+    /**
+     Set the tools of an MCP server that an agent may call
+     - PUT /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter agentId: (path)  
+     - parameter adminMcpServersGrantsSetRequest: (body)  
+     - returns: RequestBuilder<AdminMcpServersGrantsSetResponse> 
+     */
+    open class func adminMcpServersGrantsSetWithRequestBuilder(orgId: String, serverId: String, agentId: String, adminMcpServersGrantsSetRequest: AdminMcpServersGrantsSetRequest) -> RequestBuilder<AdminMcpServersGrantsSetResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let serverIdPreEscape = "\(APIHelper.mapValueToPathItem(serverId))"
+        let serverIdPostEscape = serverIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{serverId}", with: serverIdPostEscape, options: .literal, range: nil)
+        let agentIdPreEscape = "\(APIHelper.mapValueToPathItem(agentId))"
+        let agentIdPostEscape = agentIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{agentId}", with: agentIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminMcpServersGrantsSetRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AdminMcpServersGrantsSetResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**

@@ -286,6 +286,8 @@ Name | Type | Description  | Notes
 
 Delete an OAuth client
 
+Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
+
 ### Example
 
 * Api Key Authentication (ApiKeyAuth):
@@ -363,7 +365,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Deleted |  -  |
+**403** | The client holds a privilege that the caller may not hand out |  -  |
 **404** | OAuth client not found |  -  |
+**409** | The client registered itself and cannot be deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -458,6 +462,8 @@ Name | Type | Description  | Notes
 
 Enable an OAuth client
 
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
+
 ### Example
 
 * Api Key Authentication (ApiKeyAuth):
@@ -535,6 +541,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Client enabled (summary fields only) |  -  |
+**403** | The client holds a privilege that the caller may not hand out |  -  |
 **404** | Client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -890,6 +897,8 @@ Name | Type | Description  | Notes
 
 Update an OAuth client
 
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
+
 ### Example
 
 * Api Key Authentication (ApiKeyAuth):
@@ -967,6 +976,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated OAuth client (detailed) |  -  |
+**403** | The client holds a privilege that the caller may not hand out, or the change itself is not allowed |  -  |
 **404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1067,6 +1077,8 @@ Name | Type | Description  | Notes
 
 Rotate an OAuth client secret
 
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
+
 ### Example
 
 * Api Key Authentication (ApiKeyAuth):
@@ -1144,6 +1156,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Rotated — the new plaintext secret is included once and never shown again |  -  |
+**403** | The client holds a privilege that the caller may not hand out |  -  |
 **404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1152,6 +1165,8 @@ Name | Type | Description  | Notes
 > SetClientScopesResponse set_client_scopes(org_id, client_id)
 
 Replace the scopes granted to an OAuth client
+
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
 
 ### Example
 
@@ -1229,6 +1244,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**403** | A privileged scope is added, or the client holds one, and the caller may not hand it out |  -  |
 **200** | Updated scope names |  -  |
 **404** | OAuth client not found |  -  |
 
@@ -1238,6 +1254,8 @@ Name | Type | Description  | Notes
 > UpdateClientResponse update_client(org_id, client_id)
 
 Update an OAuth client (same as PATCH: only the fields that are sent change)
+
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
 ### Example
 
@@ -1316,6 +1334,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updated OAuth client (detailed) |  -  |
+**403** | The client holds a privilege that the caller may not hand out, or the change itself is not allowed |  -  |
 **404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

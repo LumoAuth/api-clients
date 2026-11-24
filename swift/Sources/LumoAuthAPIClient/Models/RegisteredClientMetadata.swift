@@ -53,7 +53,7 @@ public struct RegisteredClientMetadata: Codable, JSONEncodable, Hashable {
     public var backchannelLogoutUri: String?
     /** Only when true. */
     public var backchannelLogoutSessionRequired: Bool?
-    /** RFC 8707 resource indicators the client may request. */
+    /** RFC 8707 resource indicators the client may request: at most 20 absolute https URLs without a fragment (http only for localhost). A registration with any other value is refused with invalid_client_metadata. */
     public var audienceUris: [String]?
 
     public init(clientId: String, clientSecretExpiresAt: Int? = nil, clientIdIssuedAt: Int, registrationClientUri: String? = nil, clientName: String?, redirectUris: [String], responseTypes: [String], grantTypes: [String], applicationType: ApplicationType, tokenEndpointAuthMethod: String, contacts: [String]? = nil, clientUri: String? = nil, logoUri: String? = nil, policyUri: String? = nil, tosUri: String? = nil, jwksUri: String? = nil, jwks: [String: AnyCodable]? = nil, postLogoutRedirectUris: [String]? = nil, initiateLoginUri: String? = nil, scope: String? = nil, idTokenSignedResponseAlg: String? = nil, requestObjectSigningAlg: String? = nil, tokenEndpointAuthSigningAlg: String? = nil, defaultMaxAge: Int? = nil, requireAuthTime: Bool? = nil, defaultAcrValues: [String]? = nil, frontchannelLogoutUri: String? = nil, frontchannelLogoutSessionRequired: Bool? = nil, backchannelLogoutUri: String? = nil, backchannelLogoutSessionRequired: Bool? = nil, audienceUris: [String]? = nil) {

@@ -23,6 +23,18 @@ pub struct AdminAgentsCreateRequest {
     /// The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. Leave it out for an agent without a budget.
     #[serde(rename = "budgetPolicy", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub budget_policy: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
+    /// How the agent authenticates. Default api_key.
+    #[serde(rename = "identityType", skip_serializing_if = "Option::is_none")]
+    pub identity_type: Option<IdentityType>,
+    /// For private_key_jwt: the public keys of the agent, inline (a JWK Set). Private key members are refused. Send jwks or jwksUri, not both.
+    #[serde(rename = "jwks", skip_serializing_if = "Option::is_none")]
+    pub jwks: Option<std::collections::HashMap<String, serde_json::Value>>,
+    /// For private_key_jwt: https URL of the public key set of the agent.
+    #[serde(rename = "jwksUri", skip_serializing_if = "Option::is_none")]
+    pub jwks_uri: Option<String>,
+    /// Whether the agent may act for users of the organization: approval prompts on their phones, Token Vault connections, the on-behalf-of token exchange and JIT requests for a user. Needs the delegation feature of the plan. Default false.
+    #[serde(rename = "canActOnBehalfOfUsers", skip_serializing_if = "Option::is_none")]
+    pub can_act_on_behalf_of_users: Option<bool>,
 }
 
 impl AdminAgentsCreateRequest {
@@ -32,7 +44,33 @@ impl AdminAgentsCreateRequest {
             description: None,
             capabilities: None,
             budget_policy: None,
+            identity_type: None,
+            jwks: None,
+            jwks_uri: None,
+            can_act_on_behalf_of_users: None,
         }
+    }
+}
+/// How the agent authenticates. Default api_key.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum IdentityType {
+    #[serde(rename = "workload")]
+    Workload,
+    #[serde(rename = "aauth")]
+    Aauth,
+    #[serde(rename = "private_key_jwt")]
+    PrivateKeyJwt,
+    #[serde(rename = "client_secret")]
+    ClientSecret,
+    #[serde(rename = "api_key")]
+    ApiKey,
+    #[serde(rename = "custom")]
+    Custom,
+}
+
+impl Default for IdentityType {
+    fn default() -> IdentityType {
+        Self::Workload
     }
 }
 

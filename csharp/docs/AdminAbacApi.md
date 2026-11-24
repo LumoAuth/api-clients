@@ -115,6 +115,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Created |  -  |
+| **403** | An active policy already reads an attribute of this name and covers permissions that the caller does not hold. |  -  |
 | **409** | An attribute with this slug already exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -218,7 +219,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Deleted |  -  |
-| **403** | System and built-in attribute definitions cannot be deleted |  -  |
+| **403** | System and built-in attribute definitions cannot be deleted. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. |  -  |
 | **404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -627,7 +628,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Deleted |  -  |
-| **403** | System and built-in policies cannot be deleted |  -  |
+| **403** | System and built-in policies cannot be deleted. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. |  -  |
 | **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -936,7 +937,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Toggled policy |  -  |
-| **403** | System and built-in policies cannot be modified |  -  |
+| **403** | System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. |  -  |
 | **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1040,7 +1041,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated |  -  |
-| **403** | System and built-in attribute definitions cannot be modified |  -  |
+| **403** | System and built-in attribute definitions cannot be modified. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. |  -  |
 | **404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1145,7 +1146,7 @@ catch (ApiException e)
 |-------------|-------------|------------------|
 | **200** | Updated |  -  |
 | **400** | Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions |  -  |
-| **403** | System and built-in policies cannot be modified |  -  |
+| **403** | System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. |  -  |
 | **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1249,7 +1250,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Updated |  -  |
-| **403** | System and built-in attribute definitions cannot be modified |  -  |
+| **403** | System and built-in attribute definitions cannot be modified. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. |  -  |
 | **404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1354,7 +1355,7 @@ catch (ApiException e)
 |-------------|-------------|------------------|
 | **200** | Updated |  -  |
 | **400** | Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions |  -  |
-| **403** | System and built-in policies cannot be modified |  -  |
+| **403** | System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. |  -  |
 | **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

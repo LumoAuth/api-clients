@@ -36,7 +36,7 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="AdminSandboxSpawnRequest" /> class.
         /// </summary>
-        /// <param name="name">name.</param>
+        /// <param name="name">A label for the sandbox: one line of text, without control characters and without \&quot;&lt;\&quot; or \&quot;&gt;\&quot;..</param>
         /// <param name="ttlHours">ttlHours.</param>
         public AdminSandboxSpawnRequest(string name = default, int ttlHours = default)
         {
@@ -45,8 +45,9 @@ namespace LumoAuth.ApiClient.Model
         }
 
         /// <summary>
-        /// Gets or Sets Name
+        /// A label for the sandbox: one line of text, without control characters and without \&quot;&lt;\&quot; or \&quot;&gt;\&quot;.
         /// </summary>
+        /// <value>A label for the sandbox: one line of text, without control characters and without \&quot;&lt;\&quot; or \&quot;&gt;\&quot;.</value>
         /*
         <example>feature-foo</example>
         */
@@ -92,6 +93,12 @@ namespace LumoAuth.ApiClient.Model
         /// <returns>Validation Result</returns>
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            // Name (string) maxLength
+            if (this.Name != null && this.Name.Length > 246)
+            {
+                yield return new ValidationResult("Invalid value for Name, length must be less than 246.", new [] { "Name" });
+            }
+
             yield break;
         }
     }

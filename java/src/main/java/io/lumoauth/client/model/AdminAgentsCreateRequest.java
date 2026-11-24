@@ -53,7 +53,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminAgentsCreateRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-19T15:14:32.479877953Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T12:46:14.617672415-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class AdminAgentsCreateRequest {
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
@@ -74,6 +74,86 @@ public class AdminAgentsCreateRequest {
   @SerializedName(SERIALIZED_NAME_BUDGET_POLICY)
   @javax.annotation.Nullable
   private Map<String, Object> budgetPolicy;
+
+  /**
+   * How the agent authenticates. Default api_key.
+   */
+  @JsonAdapter(IdentityTypeEnum.Adapter.class)
+  public enum IdentityTypeEnum {
+    WORKLOAD("workload"),
+    
+    AAUTH("aauth"),
+    
+    PRIVATE_KEY_JWT("private_key_jwt"),
+    
+    CLIENT_SECRET("client_secret"),
+    
+    API_KEY("api_key"),
+    
+    CUSTOM("custom");
+
+    private String value;
+
+    IdentityTypeEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static IdentityTypeEnum fromValue(String value) {
+      for (IdentityTypeEnum b : IdentityTypeEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<IdentityTypeEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final IdentityTypeEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public IdentityTypeEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return IdentityTypeEnum.fromValue(value);
+      }
+    }
+
+    public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      String value = jsonElement.getAsString();
+      IdentityTypeEnum.fromValue(value);
+    }
+  }
+
+  public static final String SERIALIZED_NAME_IDENTITY_TYPE = "identityType";
+  @SerializedName(SERIALIZED_NAME_IDENTITY_TYPE)
+  @javax.annotation.Nullable
+  private IdentityTypeEnum identityType;
+
+  public static final String SERIALIZED_NAME_JWKS = "jwks";
+  @SerializedName(SERIALIZED_NAME_JWKS)
+  @javax.annotation.Nullable
+  private Map<String, Object> jwks = new HashMap<>();
+
+  public static final String SERIALIZED_NAME_JWKS_URI = "jwksUri";
+  @SerializedName(SERIALIZED_NAME_JWKS_URI)
+  @javax.annotation.Nullable
+  private String jwksUri;
+
+  public static final String SERIALIZED_NAME_CAN_ACT_ON_BEHALF_OF_USERS = "canActOnBehalfOfUsers";
+  @SerializedName(SERIALIZED_NAME_CAN_ACT_ON_BEHALF_OF_USERS)
+  @javax.annotation.Nullable
+  private Boolean canActOnBehalfOfUsers;
 
   public AdminAgentsCreateRequest() {
   }
@@ -170,6 +250,90 @@ public class AdminAgentsCreateRequest {
   }
 
 
+  public AdminAgentsCreateRequest identityType(@javax.annotation.Nullable IdentityTypeEnum identityType) {
+    this.identityType = identityType;
+    return this;
+  }
+
+  /**
+   * How the agent authenticates. Default api_key.
+   * @return identityType
+   */
+  @javax.annotation.Nullable
+  public IdentityTypeEnum getIdentityType() {
+    return identityType;
+  }
+
+  public void setIdentityType(@javax.annotation.Nullable IdentityTypeEnum identityType) {
+    this.identityType = identityType;
+  }
+
+
+  public AdminAgentsCreateRequest jwks(@javax.annotation.Nullable Map<String, Object> jwks) {
+    this.jwks = jwks;
+    return this;
+  }
+
+  public AdminAgentsCreateRequest putJwksItem(String key, Object jwksItem) {
+    if (this.jwks == null) {
+      this.jwks = new HashMap<>();
+    }
+    this.jwks.put(key, jwksItem);
+    return this;
+  }
+
+  /**
+   * For private_key_jwt: the public keys of the agent, inline (a JWK Set). Private key members are refused. Send jwks or jwksUri, not both.
+   * @return jwks
+   */
+  @javax.annotation.Nullable
+  public Map<String, Object> getJwks() {
+    return jwks;
+  }
+
+  public void setJwks(@javax.annotation.Nullable Map<String, Object> jwks) {
+    this.jwks = jwks;
+  }
+
+
+  public AdminAgentsCreateRequest jwksUri(@javax.annotation.Nullable String jwksUri) {
+    this.jwksUri = jwksUri;
+    return this;
+  }
+
+  /**
+   * For private_key_jwt: https URL of the public key set of the agent.
+   * @return jwksUri
+   */
+  @javax.annotation.Nullable
+  public String getJwksUri() {
+    return jwksUri;
+  }
+
+  public void setJwksUri(@javax.annotation.Nullable String jwksUri) {
+    this.jwksUri = jwksUri;
+  }
+
+
+  public AdminAgentsCreateRequest canActOnBehalfOfUsers(@javax.annotation.Nullable Boolean canActOnBehalfOfUsers) {
+    this.canActOnBehalfOfUsers = canActOnBehalfOfUsers;
+    return this;
+  }
+
+  /**
+   * Whether the agent may act for users of the organization: approval prompts on their phones, Token Vault connections, the on-behalf-of token exchange and JIT requests for a user. Needs the delegation feature of the plan. Default false.
+   * @return canActOnBehalfOfUsers
+   */
+  @javax.annotation.Nullable
+  public Boolean getCanActOnBehalfOfUsers() {
+    return canActOnBehalfOfUsers;
+  }
+
+  public void setCanActOnBehalfOfUsers(@javax.annotation.Nullable Boolean canActOnBehalfOfUsers) {
+    this.canActOnBehalfOfUsers = canActOnBehalfOfUsers;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -183,7 +347,11 @@ public class AdminAgentsCreateRequest {
     return Objects.equals(this.name, adminAgentsCreateRequest.name) &&
         Objects.equals(this.description, adminAgentsCreateRequest.description) &&
         Objects.equals(this.capabilities, adminAgentsCreateRequest.capabilities) &&
-        Objects.equals(this.budgetPolicy, adminAgentsCreateRequest.budgetPolicy);
+        Objects.equals(this.budgetPolicy, adminAgentsCreateRequest.budgetPolicy) &&
+        Objects.equals(this.identityType, adminAgentsCreateRequest.identityType) &&
+        Objects.equals(this.jwks, adminAgentsCreateRequest.jwks) &&
+        Objects.equals(this.jwksUri, adminAgentsCreateRequest.jwksUri) &&
+        Objects.equals(this.canActOnBehalfOfUsers, adminAgentsCreateRequest.canActOnBehalfOfUsers);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -192,7 +360,7 @@ public class AdminAgentsCreateRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, description, capabilities, budgetPolicy);
+    return Objects.hash(name, description, capabilities, budgetPolicy, identityType, jwks, jwksUri, canActOnBehalfOfUsers);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -210,6 +378,10 @@ public class AdminAgentsCreateRequest {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    capabilities: ").append(toIndentedString(capabilities)).append("\n");
     sb.append("    budgetPolicy: ").append(toIndentedString(budgetPolicy)).append("\n");
+    sb.append("    identityType: ").append(toIndentedString(identityType)).append("\n");
+    sb.append("    jwks: ").append(toIndentedString(jwks)).append("\n");
+    sb.append("    jwksUri: ").append(toIndentedString(jwksUri)).append("\n");
+    sb.append("    canActOnBehalfOfUsers: ").append(toIndentedString(canActOnBehalfOfUsers)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -231,7 +403,7 @@ public class AdminAgentsCreateRequest {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("name", "description", "capabilities", "budgetPolicy"));
+    openapiFields = new HashSet<String>(Arrays.asList("name", "description", "capabilities", "budgetPolicy", "identityType", "jwks", "jwksUri", "canActOnBehalfOfUsers"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -267,6 +439,16 @@ public class AdminAgentsCreateRequest {
       // ensure the optional json data is an array if present
       if (jsonObj.get("capabilities") != null && !jsonObj.get("capabilities").isJsonNull() && !jsonObj.get("capabilities").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `capabilities` to be an array in the JSON string but got `%s`", jsonObj.get("capabilities").toString()));
+      }
+      if ((jsonObj.get("identityType") != null && !jsonObj.get("identityType").isJsonNull()) && !jsonObj.get("identityType").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `identityType` to be a primitive type in the JSON string but got `%s`", jsonObj.get("identityType").toString()));
+      }
+      // validate the optional field `identityType`
+      if (jsonObj.get("identityType") != null && !jsonObj.get("identityType").isJsonNull()) {
+        IdentityTypeEnum.validateJsonElement(jsonObj.get("identityType"));
+      }
+      if ((jsonObj.get("jwksUri") != null && !jsonObj.get("jwksUri").isJsonNull()) && !jsonObj.get("jwksUri").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `jwksUri` to be a primitive type in the JSON string but got `%s`", jsonObj.get("jwksUri").toString()));
       }
   }
 

@@ -55,7 +55,7 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PushEnrollmentStarted" /> class.
         /// </summary>
-        /// <param name="id">id.</param>
+        /// <param name="id">Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret..</param>
         /// <param name="state">state.</param>
         /// <param name="qrDataUri">qrDataUri.</param>
         /// <param name="deepLink">https://&lt;server&gt;/push-auth/enroll?d&#x3D;… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it)..</param>
@@ -74,10 +74,11 @@ namespace LumoAuth.ApiClient.Model
         }
 
         /// <summary>
-        /// Gets or Sets Id
+        /// Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret.
         /// </summary>
+        /// <value>Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret.</value>
         /*
-        <example>push_enrollment:&lt;token&gt;</example>
+        <example>push_enrollment:42</example>
         */
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }

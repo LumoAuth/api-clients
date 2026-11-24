@@ -44,5 +44,43 @@ export interface AdminAgentsCreateRequest {
      * @memberof AdminAgentsCreateRequest
      */
     'budgetPolicy'?: { [key: string]: any; } | null;
+    /**
+     * How the agent authenticates. Default api_key.
+     * @type {string}
+     * @memberof AdminAgentsCreateRequest
+     */
+    'identityType'?: AdminAgentsCreateRequestIdentityType;
+    /**
+     * For private_key_jwt: the public keys of the agent, inline (a JWK Set). Private key members are refused. Send jwks or jwksUri, not both.
+     * @type {{ [key: string]: any; }}
+     * @memberof AdminAgentsCreateRequest
+     */
+    'jwks'?: { [key: string]: any; };
+    /**
+     * For private_key_jwt: https URL of the public key set of the agent.
+     * @type {string}
+     * @memberof AdminAgentsCreateRequest
+     */
+    'jwksUri'?: string;
+    /**
+     * Whether the agent may act for users of the organization: approval prompts on their phones, Token Vault connections, the on-behalf-of token exchange and JIT requests for a user. Needs the delegation feature of the plan. Default false.
+     * @type {boolean}
+     * @memberof AdminAgentsCreateRequest
+     */
+    'canActOnBehalfOfUsers'?: boolean;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AdminAgentsCreateRequestIdentityType {
+    WORKLOAD = 'workload',
+    AAUTH = 'aauth',
+    PRIVATE_KEY_JWT = 'private_key_jwt',
+    CLIENT_SECRET = 'client_secret',
+    API_KEY = 'api_key',
+    CUSTOM = 'custom'
+}
+
 

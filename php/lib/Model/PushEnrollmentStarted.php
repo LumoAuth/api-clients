@@ -367,7 +367,7 @@ class PushEnrollmentStarted implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets id
      *
-     * @param string|null $id id
+     * @param string|null $id Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret.
      *
      * @return self
      */

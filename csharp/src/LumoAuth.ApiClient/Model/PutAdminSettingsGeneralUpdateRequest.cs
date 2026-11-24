@@ -36,7 +36,7 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PutAdminSettingsGeneralUpdateRequest" /> class.
         /// </summary>
-        /// <param name="name">Name of the organization: one line, 1 to 255 characters. Aliases: tenantName, display_name, displayName..</param>
+        /// <param name="name">Name of the organization: one line, 1 to 255 characters, without \&quot;&lt;\&quot; or \&quot;&gt;\&quot;. Aliases: tenantName, display_name, displayName..</param>
         /// <param name="locale">Default language of the hosted pages: en, es, fr, de, pt_BR (pt-BR is accepted too), it, nl, ja or ar. A change also needs the branding.edit permission..</param>
         public PutAdminSettingsGeneralUpdateRequest(string name = default, string locale = default)
         {
@@ -45,9 +45,9 @@ namespace LumoAuth.ApiClient.Model
         }
 
         /// <summary>
-        /// Name of the organization: one line, 1 to 255 characters. Aliases: tenantName, display_name, displayName.
+        /// Name of the organization: one line, 1 to 255 characters, without \&quot;&lt;\&quot; or \&quot;&gt;\&quot;. Aliases: tenantName, display_name, displayName.
         /// </summary>
-        /// <value>Name of the organization: one line, 1 to 255 characters. Aliases: tenantName, display_name, displayName.</value>
+        /// <value>Name of the organization: one line, 1 to 255 characters, without \&quot;&lt;\&quot; or \&quot;&gt;\&quot;. Aliases: tenantName, display_name, displayName.</value>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; }
 

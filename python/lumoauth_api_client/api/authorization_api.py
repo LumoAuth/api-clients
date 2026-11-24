@@ -4286,6 +4286,7 @@ class AuthorizationApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SetResourceAttributeResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4365,6 +4366,7 @@ class AuthorizationApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SetResourceAttributeResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4444,6 +4446,7 @@ class AuthorizationApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SetResourceAttributeResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4588,6 +4591,7 @@ class AuthorizationApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SetUserAttributeResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4663,6 +4667,7 @@ class AuthorizationApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SetUserAttributeResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4738,6 +4743,7 @@ class AuthorizationApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SetUserAttributeResponse",
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,

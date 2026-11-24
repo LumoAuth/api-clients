@@ -96,7 +96,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="frontchannelLogoutSessionRequired">Only when true..</param>
         /// <param name="backchannelLogoutUri">backchannelLogoutUri.</param>
         /// <param name="backchannelLogoutSessionRequired">Only when true..</param>
-        /// <param name="audienceUris">RFC 8707 resource indicators the client may request..</param>
+        /// <param name="audienceUris">RFC 8707 resource indicators the client may request: at most 20 absolute https URLs without a fragment (http only for localhost). A registration with any other value is refused with invalid_client_metadata..</param>
         public RegisteredClientMetadata(string clientId = default, int clientSecretExpiresAt = default, int clientIdIssuedAt = default, string registrationClientUri = default, string clientName = default, List<string> redirectUris = default, List<string> responseTypes = default, List<string> grantTypes = default, ApplicationTypeEnum applicationType = default, string tokenEndpointAuthMethod = default, List<string> contacts = default, string clientUri = default, string logoUri = default, string policyUri = default, string tosUri = default, string jwksUri = default, Dictionary<string, Object> jwks = default, List<string> postLogoutRedirectUris = default, string initiateLoginUri = default, string scope = default, string idTokenSignedResponseAlg = default, string requestObjectSigningAlg = default, string tokenEndpointAuthSigningAlg = default, int defaultMaxAge = default, bool requireAuthTime = default, List<string> defaultAcrValues = default, string frontchannelLogoutUri = default, bool frontchannelLogoutSessionRequired = default, string backchannelLogoutUri = default, bool backchannelLogoutSessionRequired = default, List<string> audienceUris = default)
         {
             // to ensure "clientId" is required (not null)
@@ -344,9 +344,9 @@ namespace LumoAuth.ApiClient.Model
         public bool BackchannelLogoutSessionRequired { get; set; }
 
         /// <summary>
-        /// RFC 8707 resource indicators the client may request.
+        /// RFC 8707 resource indicators the client may request: at most 20 absolute https URLs without a fragment (http only for localhost). A registration with any other value is refused with invalid_client_metadata.
         /// </summary>
-        /// <value>RFC 8707 resource indicators the client may request.</value>
+        /// <value>RFC 8707 resource indicators the client may request: at most 20 absolute https URLs without a fragment (http only for localhost). A registration with any other value is refused with invalid_client_metadata.</value>
         [DataMember(Name = "audience_uris", EmitDefaultValue = false)]
         public List<string> AudienceUris { get; set; }
 

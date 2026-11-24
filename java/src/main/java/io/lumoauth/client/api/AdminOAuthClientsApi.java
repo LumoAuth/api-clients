@@ -507,7 +507,9 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The client registered itself and cannot be deleted </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call deleteClientCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
@@ -574,7 +576,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Delete an OAuth client
-     * 
+     * Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
      * @param orgId  (required)
      * @param clientId  (required)
      * @return MessageResponse
@@ -584,7 +586,9 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The client registered itself and cannot be deleted </td><td>  -  </td></tr>
      </table>
      */
     public MessageResponse deleteClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
@@ -594,7 +598,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Delete an OAuth client
-     * 
+     * Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
      * @param orgId  (required)
      * @param clientId  (required)
      * @return ApiResponse&lt;MessageResponse&gt;
@@ -604,7 +608,9 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The client registered itself and cannot be deleted </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<MessageResponse> deleteClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
@@ -615,7 +621,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Delete an OAuth client (asynchronously)
-     * 
+     * Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
      * @param orgId  (required)
      * @param clientId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -626,7 +632,9 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> The client registered itself and cannot be deleted </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call deleteClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<MessageResponse> _callback) throws ApiException {
@@ -789,6 +797,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Client enabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -856,7 +865,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Enable an OAuth client
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
      * @return UpdateClientResponse
@@ -866,6 +875,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Client enabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -876,7 +886,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Enable an OAuth client
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
      * @return ApiResponse&lt;UpdateClientResponse&gt;
@@ -886,6 +896,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Client enabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -897,7 +908,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Enable an OAuth client (asynchronously)
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -908,6 +919,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Client enabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1485,6 +1497,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out, or the change itself is not allowed </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1552,7 +1565,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Update an OAuth client
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
      * @return UpdateClientResponse
@@ -1562,6 +1575,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out, or the change itself is not allowed </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1572,7 +1586,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Update an OAuth client
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
      * @return ApiResponse&lt;UpdateClientResponse&gt;
@@ -1582,6 +1596,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out, or the change itself is not allowed </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1593,7 +1608,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Update an OAuth client (asynchronously)
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1604,6 +1619,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out, or the change itself is not allowed </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1772,6 +1788,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Rotated — the new plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1839,7 +1856,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Rotate an OAuth client secret
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
      * @return RotateClientSecretResponse
@@ -1849,6 +1866,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Rotated — the new plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1859,7 +1877,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Rotate an OAuth client secret
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
      * @return ApiResponse&lt;RotateClientSecretResponse&gt;
@@ -1869,6 +1887,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Rotated — the new plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1880,7 +1899,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Rotate an OAuth client secret (asynchronously)
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1891,6 +1910,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Rotated — the new plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1912,6 +1932,7 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 403 </td><td> A privileged scope is added, or the client holds one, and the caller may not hand it out </td><td>  -  </td></tr>
         <tr><td> 200 </td><td> Updated scope names </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
@@ -1980,7 +2001,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Replace the scopes granted to an OAuth client
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
      * @param orgId  (required)
      * @param clientId  (required)
      * @return SetClientScopesResponse
@@ -1989,6 +2010,7 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 403 </td><td> A privileged scope is added, or the client holds one, and the caller may not hand it out </td><td>  -  </td></tr>
         <tr><td> 200 </td><td> Updated scope names </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
@@ -2000,7 +2022,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Replace the scopes granted to an OAuth client
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
      * @param orgId  (required)
      * @param clientId  (required)
      * @return ApiResponse&lt;SetClientScopesResponse&gt;
@@ -2009,6 +2031,7 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 403 </td><td> A privileged scope is added, or the client holds one, and the caller may not hand it out </td><td>  -  </td></tr>
         <tr><td> 200 </td><td> Updated scope names </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
@@ -2021,7 +2044,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Replace the scopes granted to an OAuth client (asynchronously)
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
      * @param orgId  (required)
      * @param clientId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -2031,6 +2054,7 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 403 </td><td> A privileged scope is added, or the client holds one, and the caller may not hand it out </td><td>  -  </td></tr>
         <tr><td> 200 </td><td> Updated scope names </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
@@ -2054,6 +2078,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out, or the change itself is not allowed </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -2121,7 +2146,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Update an OAuth client (same as PATCH: only the fields that are sent change)
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
      * @return UpdateClientResponse
@@ -2131,6 +2156,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out, or the change itself is not allowed </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -2141,7 +2167,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Update an OAuth client (same as PATCH: only the fields that are sent change)
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
      * @return ApiResponse&lt;UpdateClientResponse&gt;
@@ -2151,6 +2177,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out, or the change itself is not allowed </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
@@ -2162,7 +2189,7 @@ public class AdminOAuthClientsApi {
 
     /**
      * Update an OAuth client (same as PATCH: only the fields that are sent change) (asynchronously)
-     * 
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -2173,6 +2200,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out, or the change itself is not allowed </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */

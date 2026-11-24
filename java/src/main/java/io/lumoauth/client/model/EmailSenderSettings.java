@@ -49,7 +49,7 @@ import io.lumoauth.client.JSON;
 /**
  * Who sends the organization&#39;s mail. The values are those of the organization&#39;s own mail provider (set up in the portal). Without a provider, or while it is switched off, mail is sent by LumoAuth with LumoAuth&#39;s sender.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-19T15:14:32.479877953Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T12:46:14.617672415-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class EmailSenderSettings {
   /**
    * Who sends the mail now: &#x60;provider&#x60; while the organization&#39;s own mail provider is switched on, else &#x60;platform&#x60;.

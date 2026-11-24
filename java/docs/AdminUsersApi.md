@@ -1411,6 +1411,8 @@ public class Example {
 
 Update a user
 
+Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
+
 ### Example
 ```java
 // Import classes:
@@ -1477,6 +1479,9 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | User updated |  -  |
+| **400** | An invalid value, or a field that is not accepted here (&#x60;password&#x60;, &#x60;metadata&#x60;) |  -  |
+| **401** | insufficient_user_authentication: &#x60;email&#x60; changes and the access token comes from a sign-in older than 10 minutes |  -  |
+| **403** | The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; |  -  |
 
 <a id="removeUserGroup"></a>
 # **removeUserGroup**
@@ -2156,6 +2161,8 @@ public class Example {
 
 Update a user
 
+Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
+
 ### Example
 ```java
 // Import classes:
@@ -2222,6 +2229,9 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | User updated |  -  |
+| **400** | An invalid value, or a field that is not accepted here (&#x60;password&#x60;, &#x60;metadata&#x60;) |  -  |
+| **401** | insufficient_user_authentication: &#x60;email&#x60; changes and the access token comes from a sign-in older than 10 minutes |  -  |
+| **403** | The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; |  -  |
 
 <a id="updateUserGroups"></a>
 # **updateUserGroups**

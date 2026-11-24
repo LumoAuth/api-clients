@@ -105,6 +105,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Agent activated. |  -  |
+**400** | The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. |  -  |
 **401** | Authentication required. |  -  |
 **403** | Admin privileges required. |  -  |
 **404** | Tenant or agent not found. |  -  |
@@ -281,6 +282,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Agent enabled. |  -  |
+**400** | The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. |  -  |
 **401** | Authentication required. |  -  |
 **403** | Admin privileges required. |  -  |
 **404** | Tenant or agent not found. |  -  |
@@ -1455,7 +1457,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Agent updated. |  -  |
-**400** | Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. |  -  |
+**400** | Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. |  -  |
 **401** | Authentication required. |  -  |
 **403** | Admin privileges required. |  -  |
 **404** | Tenant or agent not found. |  -  |
@@ -1547,7 +1549,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Agent updated. |  -  |
-**400** | Invalid budgetPolicy: an unknown key, or a value that is not a number greater than zero. |  -  |
+**400** | Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. |  -  |
 **401** | Authentication required. |  -  |
 **403** | Admin privileges required. |  -  |
 **404** | Tenant or agent not found. |  -  |

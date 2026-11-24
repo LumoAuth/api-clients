@@ -24,6 +24,21 @@ import (
 type AgentsAPI interface {
 
 	/*
+	AgentsMeToolCalls Report the tool calls that the agent's host gated
+
+	Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host's own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@return ApiAgentsMeToolCallsRequest
+	*/
+	AgentsMeToolCalls(ctx context.Context, orgId string) ApiAgentsMeToolCallsRequest
+
+	// AgentsMeToolCallsExecute executes the request
+	//  @return AgentsMeToolCallsResponse
+	AgentsMeToolCallsExecute(r ApiAgentsMeToolCallsRequest) (*AgentsMeToolCallsResponse, *http.Response, error)
+
+	/*
 	Ask Agent-friendly permission check (Natural Language style)
 
 	POST /orgs/{orgId}/api/v1/agents/ask
@@ -143,6 +158,21 @@ Body: { "server_id": "mcp_0123…", "tool": "send_payment_reminder" }
 	GetCurrentAgentExecute(r ApiGetCurrentAgentRequest) (*GetCurrentAgentResponse, *http.Response, error)
 
 	/*
+	PollAgentEnrollment Poll an agent enrollment (no credential)
+
+	Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@return ApiPollAgentEnrollmentRequest
+	*/
+	PollAgentEnrollment(ctx context.Context, orgId string) ApiPollAgentEnrollmentRequest
+
+	// PollAgentEnrollmentExecute executes the request
+	//  @return PollAgentEnrollmentResponse
+	PollAgentEnrollmentExecute(r ApiPollAgentEnrollmentRequest) (*PollAgentEnrollmentResponse, *http.Response, error)
+
+	/*
 	RegisterAgent Register (or re-register) an agent
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -171,6 +201,21 @@ Body: { "server_id": "mcp_0123…", "tool": "send_payment_reminder" }
 	ReportAgentUsageExecute(r ApiReportAgentUsageRequest) (*ReportAgentUsageResponse, *http.Response, error)
 
 	/*
+	StartAgentEnrollment Start an agent enrollment (no credential)
+
+	The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine's own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@return ApiStartAgentEnrollmentRequest
+	*/
+	StartAgentEnrollment(ctx context.Context, orgId string) ApiStartAgentEnrollmentRequest
+
+	// StartAgentEnrollmentExecute executes the request
+	//  @return StartAgentEnrollmentResponse
+	StartAgentEnrollmentExecute(r ApiStartAgentEnrollmentRequest) (*StartAgentEnrollmentResponse, *http.Response, error)
+
+	/*
 	VerifyAgentCard Verify a signed A2A agent card
 
 	Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {"card": {...}, "jwks_uri": "https://..."} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
@@ -188,6 +233,134 @@ Body: { "server_id": "mcp_0123…", "tool": "send_payment_reminder" }
 
 // AgentsAPIService AgentsAPI service
 type AgentsAPIService service
+
+type ApiAgentsMeToolCallsRequest struct {
+	ctx context.Context
+	ApiService AgentsAPI
+	orgId string
+	agentsMeToolCallsRequest *AgentsMeToolCallsRequest
+}
+
+func (r ApiAgentsMeToolCallsRequest) AgentsMeToolCallsRequest(agentsMeToolCallsRequest AgentsMeToolCallsRequest) ApiAgentsMeToolCallsRequest {
+	r.agentsMeToolCallsRequest = &agentsMeToolCallsRequest
+	return r
+}
+
+func (r ApiAgentsMeToolCallsRequest) Execute() (*AgentsMeToolCallsResponse, *http.Response, error) {
+	return r.ApiService.AgentsMeToolCallsExecute(r)
+}
+
+/*
+AgentsMeToolCalls Report the tool calls that the agent's host gated
+
+Records each call as an agent.tool_call.reported audit entry, marked as reported by the agent. Send what the host knows after a call: the tool, how the gate decided (allowed or denied by LumoAuth, approved, refused or expired by a person, blocked by the host's own rules) and the outcome. Never send arguments or results: arguments_sha256 identifies the arguments, and an unknown field is refused. Up to 50 calls per report. Agent credentials only; portal test tokens and scope-narrowed tokens are refused. Rate limited per agent.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @return ApiAgentsMeToolCallsRequest
+*/
+func (a *AgentsAPIService) AgentsMeToolCalls(ctx context.Context, orgId string) ApiAgentsMeToolCallsRequest {
+	return ApiAgentsMeToolCallsRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+	}
+}
+
+// Execute executes the request
+//  @return AgentsMeToolCallsResponse
+func (a *AgentsAPIService) AgentsMeToolCallsExecute(r ApiAgentsMeToolCallsRequest) (*AgentsMeToolCallsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AgentsMeToolCallsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AgentsAPIService.AgentsMeToolCalls")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/agents/me/tool-calls"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.agentsMeToolCallsRequest == nil {
+		return localVarReturnValue, nil, reportError("agentsMeToolCallsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.agentsMeToolCallsRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
 
 type ApiAskRequest struct {
 	ctx context.Context
@@ -1061,6 +1234,120 @@ func (a *AgentsAPIService) GetCurrentAgentExecute(r ApiGetCurrentAgentRequest) (
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiPollAgentEnrollmentRequest struct {
+	ctx context.Context
+	ApiService AgentsAPI
+	orgId string
+	pollAgentEnrollmentRequest *PollAgentEnrollmentRequest
+}
+
+func (r ApiPollAgentEnrollmentRequest) PollAgentEnrollmentRequest(pollAgentEnrollmentRequest PollAgentEnrollmentRequest) ApiPollAgentEnrollmentRequest {
+	r.pollAgentEnrollmentRequest = &pollAgentEnrollmentRequest
+	return r
+}
+
+func (r ApiPollAgentEnrollmentRequest) Execute() (*PollAgentEnrollmentResponse, *http.Response, error) {
+	return r.ApiService.PollAgentEnrollmentExecute(r)
+}
+
+/*
+PollAgentEnrollment Poll an agent enrollment (no credential)
+
+Polled by the setup command with its enrollment code, no faster than the interval (RFC 8628 §3.4 style). While nobody has decided: 400 authorization_pending; polled too fast: 400 slow_down (and the interval grows by 5 seconds); refused: 400 access_denied; after expiry, for an unknown code, or once the result was delivered: 400 expired_token. Approved: 200 with the agent id, once. The enrollment code is not a credential of the agent: the result names the agent, the private key that authenticates it never leaves the machine.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @return ApiPollAgentEnrollmentRequest
+*/
+func (a *AgentsAPIService) PollAgentEnrollment(ctx context.Context, orgId string) ApiPollAgentEnrollmentRequest {
+	return ApiPollAgentEnrollmentRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+	}
+}
+
+// Execute executes the request
+//  @return PollAgentEnrollmentResponse
+func (a *AgentsAPIService) PollAgentEnrollmentExecute(r ApiPollAgentEnrollmentRequest) (*PollAgentEnrollmentResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PollAgentEnrollmentResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AgentsAPIService.PollAgentEnrollment")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/agents/enrollments/token"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.pollAgentEnrollmentRequest == nil {
+		return localVarReturnValue, nil, reportError("pollAgentEnrollmentRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.pollAgentEnrollmentRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiRegisterAgentRequest struct {
 	ctx context.Context
 	ApiService AgentsAPI
@@ -1267,6 +1554,120 @@ func (a *AgentsAPIService) ReportAgentUsageExecute(r ApiReportAgentUsageRequest)
 			}
 		}
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiStartAgentEnrollmentRequest struct {
+	ctx context.Context
+	ApiService AgentsAPI
+	orgId string
+	startAgentEnrollmentRequest *StartAgentEnrollmentRequest
+}
+
+func (r ApiStartAgentEnrollmentRequest) StartAgentEnrollmentRequest(startAgentEnrollmentRequest StartAgentEnrollmentRequest) ApiStartAgentEnrollmentRequest {
+	r.startAgentEnrollmentRequest = &startAgentEnrollmentRequest
+	return r
+}
+
+func (r ApiStartAgentEnrollmentRequest) Execute() (*StartAgentEnrollmentResponse, *http.Response, error) {
+	return r.ApiService.StartAgentEnrollmentExecute(r)
+}
+
+/*
+StartAgentEnrollment Start an agent enrollment (no credential)
+
+The setup command of a personal agent sends its public key and the capabilities it asks for, and gets a user code to show its owner. A signed-in person with permission to create agents opens verification_uri, types the code, checks the key fingerprint against the one in the terminal, adjusts the checklist and approves; the machine then polls the token endpoint of the enrollment for the agent id. No credential is sent or needed. Text is cleaned like any untrusted text; exactly one public key is accepted. The risk, label and checked members of a capability are the machine's own description: the approval page shows the scope itself, grades it from the scope, and pre-ticks only capabilities that it reads as plain reads. Rate limited per client address and per organization. An organization holds at most 20 waiting requests and one client address at most 3; when a queue is full, a new request replaces a waiting one that nobody has opened on the approval page, and that one then answers expired_token.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @return ApiStartAgentEnrollmentRequest
+*/
+func (a *AgentsAPIService) StartAgentEnrollment(ctx context.Context, orgId string) ApiStartAgentEnrollmentRequest {
+	return ApiStartAgentEnrollmentRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+	}
+}
+
+// Execute executes the request
+//  @return StartAgentEnrollmentResponse
+func (a *AgentsAPIService) StartAgentEnrollmentExecute(r ApiStartAgentEnrollmentRequest) (*StartAgentEnrollmentResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *StartAgentEnrollmentResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AgentsAPIService.StartAgentEnrollment")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/agents/enrollments"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.startAgentEnrollmentRequest == nil {
+		return localVarReturnValue, nil, reportError("startAgentEnrollmentRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.startAgentEnrollmentRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

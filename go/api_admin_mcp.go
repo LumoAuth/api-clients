@@ -26,35 +26,7 @@ type AdminMcpAPI interface {
 	/*
 	AdminMcpServersCreate Register an MCP server
 
-	Body:
-  name (required) — display name
-  resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for
-      loopback), no fragment, no user info, not a LumoAuth host, unique
-      per organization after normalisation (same rules as the portal)
-  endpoint_url (optional) — actual MCP endpoint
-  description (optional)
-  scopes_supported (optional) — array OR space/comma-separated string; omnibus
-      scopes, offline_access and admin/scim scopes are refused (422)
-  basic_scopes (optional) — subset of scopes_supported advertised in the
-      401 challenge and Protected Resource Metadata; no wildcards
-  transport (optional) — defaults to "http_streamable" ("http_sse" is
-      deprecated in MCP 2026-07-28)
-  auth_mode (optional) — defaults to "oauth"
-  token_lifetime (optional, default 3600) — 60..86400, else 422
-  tool_authorizer_client_ids (optional) — the MCP server's own OAuth clients
-      that may call the per-tool authorization endpoint
-  allowed_client_ids (optional) — array of this organization's OAuth client ids;
-      unknown ids are a 422 (never persisted as policy)
-  require_pkce (optional, default true)
-  require_resource_param (optional, default true)
-  require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
-  scope_descriptions (optional) — object scope => text for scopes in
-      scopes_supported (portal and consent page only), 200 characters each
-
-A server that is not OAuth-protected (auth_mode "none" or transport
-"stdio") is stored with the three require_* switches off. Fields that
-cannot be configured (include_scope_in_challenge, bearer_methods_supported)
-are refused with 400 so that a caller is never told a value was stored.
+	The `resource_uri` is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -95,6 +67,50 @@ are refused with 400 so that a caller is never told a value was stored.
 	AdminMcpServersGetExecute(r ApiAdminMcpServersGetRequest) (*AdminMcpServersGetResponse, *http.Response, error)
 
 	/*
+	AdminMcpServersGrantsList List the agents allowed to call tools of an MCP server
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@param serverId
+	@return ApiAdminMcpServersGrantsListRequest
+	*/
+	AdminMcpServersGrantsList(ctx context.Context, orgId string, serverId string) ApiAdminMcpServersGrantsListRequest
+
+	// AdminMcpServersGrantsListExecute executes the request
+	//  @return AdminMcpServersGrantsListResponse
+	AdminMcpServersGrantsListExecute(r ApiAdminMcpServersGrantsListRequest) (*AdminMcpServersGrantsListResponse, *http.Response, error)
+
+	/*
+	AdminMcpServersGrantsRemove Remove every grant of an agent on an MCP server
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@param serverId
+	@param agentId
+	@return ApiAdminMcpServersGrantsRemoveRequest
+	*/
+	AdminMcpServersGrantsRemove(ctx context.Context, orgId string, serverId string, agentId string) ApiAdminMcpServersGrantsRemoveRequest
+
+	// AdminMcpServersGrantsRemoveExecute executes the request
+	//  @return AdminMcpServersGrantsRemoveResponse
+	AdminMcpServersGrantsRemoveExecute(r ApiAdminMcpServersGrantsRemoveRequest) (*AdminMcpServersGrantsRemoveResponse, *http.Response, error)
+
+	/*
+	AdminMcpServersGrantsSet Set the tools of an MCP server that an agent may call
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@param serverId
+	@param agentId
+	@return ApiAdminMcpServersGrantsSetRequest
+	*/
+	AdminMcpServersGrantsSet(ctx context.Context, orgId string, serverId string, agentId string) ApiAdminMcpServersGrantsSetRequest
+
+	// AdminMcpServersGrantsSetExecute executes the request
+	//  @return AdminMcpServersGrantsSetResponse
+	AdminMcpServersGrantsSetExecute(r ApiAdminMcpServersGrantsSetRequest) (*AdminMcpServersGrantsSetResponse, *http.Response, error)
+
+	/*
 	AdminMcpServersList List MCP servers
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -124,35 +140,7 @@ func (r ApiAdminMcpServersCreateRequest) Execute() (*AdminMcpServersCreateRespon
 /*
 AdminMcpServersCreate Register an MCP server
 
-Body:
-  name (required) — display name
-  resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for
-      loopback), no fragment, no user info, not a LumoAuth host, unique
-      per organization after normalisation (same rules as the portal)
-  endpoint_url (optional) — actual MCP endpoint
-  description (optional)
-  scopes_supported (optional) — array OR space/comma-separated string; omnibus
-      scopes, offline_access and admin/scim scopes are refused (422)
-  basic_scopes (optional) — subset of scopes_supported advertised in the
-      401 challenge and Protected Resource Metadata; no wildcards
-  transport (optional) — defaults to "http_streamable" ("http_sse" is
-      deprecated in MCP 2026-07-28)
-  auth_mode (optional) — defaults to "oauth"
-  token_lifetime (optional, default 3600) — 60..86400, else 422
-  tool_authorizer_client_ids (optional) — the MCP server's own OAuth clients
-      that may call the per-tool authorization endpoint
-  allowed_client_ids (optional) — array of this organization's OAuth client ids;
-      unknown ids are a 422 (never persisted as policy)
-  require_pkce (optional, default true)
-  require_resource_param (optional, default true)
-  require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
-  scope_descriptions (optional) — object scope => text for scopes in
-      scopes_supported (portal and consent page only), 200 characters each
-
-A server that is not OAuth-protected (auth_mode "none" or transport
-"stdio") is stored with the three require_* switches off. Fields that
-cannot be configured (include_scope_in_challenge, bearer_methods_supported)
-are refused with 400 so that a caller is never told a value was stored.
+The `resource_uri` is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -443,6 +431,392 @@ func (a *AdminMcpAPIService) AdminMcpServersGetExecute(r ApiAdminMcpServersGetRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiAdminMcpServersGrantsListRequest struct {
+	ctx context.Context
+	ApiService AdminMcpAPI
+	orgId string
+	serverId string
+	agentId *string
+}
+
+// Only the grants of this agent (agentId or numeric id).
+func (r ApiAdminMcpServersGrantsListRequest) AgentId(agentId string) ApiAdminMcpServersGrantsListRequest {
+	r.agentId = &agentId
+	return r
+}
+
+func (r ApiAdminMcpServersGrantsListRequest) Execute() (*AdminMcpServersGrantsListResponse, *http.Response, error) {
+	return r.ApiService.AdminMcpServersGrantsListExecute(r)
+}
+
+/*
+AdminMcpServersGrantsList List the agents allowed to call tools of an MCP server
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @param serverId
+ @return ApiAdminMcpServersGrantsListRequest
+*/
+func (a *AdminMcpAPIService) AdminMcpServersGrantsList(ctx context.Context, orgId string, serverId string) ApiAdminMcpServersGrantsListRequest {
+	return ApiAdminMcpServersGrantsListRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+		serverId: serverId,
+	}
+}
+
+// Execute executes the request
+//  @return AdminMcpServersGrantsListResponse
+func (a *AdminMcpAPIService) AdminMcpServersGrantsListExecute(r ApiAdminMcpServersGrantsListRequest) (*AdminMcpServersGrantsListResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AdminMcpServersGrantsListResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMcpAPIService.AdminMcpServersGrantsList")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"serverId"+"}", url.PathEscape(parameterValueToString(r.serverId, "serverId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.agentId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "agent_id", r.agentId, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiAdminMcpServersGrantsRemoveRequest struct {
+	ctx context.Context
+	ApiService AdminMcpAPI
+	orgId string
+	serverId string
+	agentId string
+}
+
+func (r ApiAdminMcpServersGrantsRemoveRequest) Execute() (*AdminMcpServersGrantsRemoveResponse, *http.Response, error) {
+	return r.ApiService.AdminMcpServersGrantsRemoveExecute(r)
+}
+
+/*
+AdminMcpServersGrantsRemove Remove every grant of an agent on an MCP server
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @param serverId
+ @param agentId
+ @return ApiAdminMcpServersGrantsRemoveRequest
+*/
+func (a *AdminMcpAPIService) AdminMcpServersGrantsRemove(ctx context.Context, orgId string, serverId string, agentId string) ApiAdminMcpServersGrantsRemoveRequest {
+	return ApiAdminMcpServersGrantsRemoveRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+		serverId: serverId,
+		agentId: agentId,
+	}
+}
+
+// Execute executes the request
+//  @return AdminMcpServersGrantsRemoveResponse
+func (a *AdminMcpAPIService) AdminMcpServersGrantsRemoveExecute(r ApiAdminMcpServersGrantsRemoveRequest) (*AdminMcpServersGrantsRemoveResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AdminMcpServersGrantsRemoveResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMcpAPIService.AdminMcpServersGrantsRemove")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"serverId"+"}", url.PathEscape(parameterValueToString(r.serverId, "serverId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"agentId"+"}", url.PathEscape(parameterValueToString(r.agentId, "agentId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiAdminMcpServersGrantsSetRequest struct {
+	ctx context.Context
+	ApiService AdminMcpAPI
+	orgId string
+	serverId string
+	agentId string
+	adminMcpServersGrantsSetRequest *AdminMcpServersGrantsSetRequest
+}
+
+func (r ApiAdminMcpServersGrantsSetRequest) AdminMcpServersGrantsSetRequest(adminMcpServersGrantsSetRequest AdminMcpServersGrantsSetRequest) ApiAdminMcpServersGrantsSetRequest {
+	r.adminMcpServersGrantsSetRequest = &adminMcpServersGrantsSetRequest
+	return r
+}
+
+func (r ApiAdminMcpServersGrantsSetRequest) Execute() (*AdminMcpServersGrantsSetResponse, *http.Response, error) {
+	return r.ApiService.AdminMcpServersGrantsSetExecute(r)
+}
+
+/*
+AdminMcpServersGrantsSet Set the tools of an MCP server that an agent may call
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @param serverId
+ @param agentId
+ @return ApiAdminMcpServersGrantsSetRequest
+*/
+func (a *AdminMcpAPIService) AdminMcpServersGrantsSet(ctx context.Context, orgId string, serverId string, agentId string) ApiAdminMcpServersGrantsSetRequest {
+	return ApiAdminMcpServersGrantsSetRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+		serverId: serverId,
+		agentId: agentId,
+	}
+}
+
+// Execute executes the request
+//  @return AdminMcpServersGrantsSetResponse
+func (a *AdminMcpAPIService) AdminMcpServersGrantsSetExecute(r ApiAdminMcpServersGrantsSetRequest) (*AdminMcpServersGrantsSetResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AdminMcpServersGrantsSetResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMcpAPIService.AdminMcpServersGrantsSet")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"serverId"+"}", url.PathEscape(parameterValueToString(r.serverId, "serverId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"agentId"+"}", url.PathEscape(parameterValueToString(r.agentId, "agentId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.adminMcpServersGrantsSetRequest == nil {
+		return localVarReturnValue, nil, reportError("adminMcpServersGrantsSetRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.adminMcpServersGrantsSetRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

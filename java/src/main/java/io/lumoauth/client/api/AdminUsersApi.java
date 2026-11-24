@@ -2735,6 +2735,9 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> An invalid value, or a field that is not accepted here (&#x60;password&#x60;, &#x60;metadata&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: &#x60;email&#x60; changes and the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -2801,7 +2804,7 @@ public class AdminUsersApi {
 
     /**
      * Update a user
-     * 
+     * Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
      * @param orgId  (required)
      * @param userId  (required)
      * @return UpdateUserResponse
@@ -2811,6 +2814,9 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> An invalid value, or a field that is not accepted here (&#x60;password&#x60;, &#x60;metadata&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: &#x60;email&#x60; changes and the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
     public UpdateUserResponse patchUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
@@ -2820,7 +2826,7 @@ public class AdminUsersApi {
 
     /**
      * Update a user
-     * 
+     * Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
      * @param orgId  (required)
      * @param userId  (required)
      * @return ApiResponse&lt;UpdateUserResponse&gt;
@@ -2830,6 +2836,9 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> An invalid value, or a field that is not accepted here (&#x60;password&#x60;, &#x60;metadata&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: &#x60;email&#x60; changes and the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<UpdateUserResponse> patchUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
@@ -2840,7 +2849,7 @@ public class AdminUsersApi {
 
     /**
      * Update a user (asynchronously)
-     * 
+     * Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
      * @param orgId  (required)
      * @param userId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -2851,6 +2860,9 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> An invalid value, or a field that is not accepted here (&#x60;password&#x60;, &#x60;metadata&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: &#x60;email&#x60; changes and the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<UpdateUserResponse> _callback) throws ApiException {
@@ -4155,6 +4167,9 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> An invalid value, or a field that is not accepted here (&#x60;password&#x60;, &#x60;metadata&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: &#x60;email&#x60; changes and the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call updateUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -4221,7 +4236,7 @@ public class AdminUsersApi {
 
     /**
      * Update a user
-     * 
+     * Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
      * @param orgId  (required)
      * @param userId  (required)
      * @return UpdateUserResponse
@@ -4231,6 +4246,9 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> An invalid value, or a field that is not accepted here (&#x60;password&#x60;, &#x60;metadata&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: &#x60;email&#x60; changes and the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
     public UpdateUserResponse updateUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
@@ -4240,7 +4258,7 @@ public class AdminUsersApi {
 
     /**
      * Update a user
-     * 
+     * Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
      * @param orgId  (required)
      * @param userId  (required)
      * @return ApiResponse&lt;UpdateUserResponse&gt;
@@ -4250,6 +4268,9 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> An invalid value, or a field that is not accepted here (&#x60;password&#x60;, &#x60;metadata&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: &#x60;email&#x60; changes and the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<UpdateUserResponse> updateUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
@@ -4260,7 +4281,7 @@ public class AdminUsersApi {
 
     /**
      * Update a user (asynchronously)
-     * 
+     * Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
      * @param orgId  (required)
      * @param userId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -4271,6 +4292,9 @@ public class AdminUsersApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> An invalid value, or a field that is not accepted here (&#x60;password&#x60;, &#x60;metadata&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> insufficient_user_authentication: &#x60;email&#x60; changes and the access token comes from a sign-in older than 10 minutes </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call updateUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<UpdateUserResponse> _callback) throws ApiException {

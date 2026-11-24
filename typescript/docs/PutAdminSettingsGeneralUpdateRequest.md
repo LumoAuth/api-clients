@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **string** | Name of the organization: one line, 1 to 255 characters. Aliases: tenantName, display_name, displayName. | [optional] [default to undefined]
+**name** | **string** | Name of the organization: one line, 1 to 255 characters, without \&quot;&lt;\&quot; or \&quot;&gt;\&quot;. Aliases: tenantName, display_name, displayName. | [optional] [default to undefined]
 **locale** | **string** | Default language of the hosted pages: en, es, fr, de, pt_BR (pt-BR is accepted too), it, nl, ja or ar. A change also needs the branding.edit permission. | [optional] [default to undefined]
 
 ## Example

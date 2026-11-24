@@ -74,4 +74,36 @@ public class PutAdminAgentsUpdateRequestTest {
         // TODO: test budgetPolicy
     }
 
+    /**
+     * Test the property 'jwks'
+     */
+    @Test
+    public void jwksTest() {
+        // TODO: test jwks
+    }
+
+    /**
+     * Test the property 'jwksUri'
+     */
+    @Test
+    public void jwksUriTest() {
+        // TODO: test jwksUri
+    }
+
+    /**
+     * Test the property 'canActOnBehalfOfUsers'
+     */
+    @Test
+    public void canActOnBehalfOfUsersTest() {
+        // TODO: test canActOnBehalfOfUsers
+    }
+
+    /**
+     * Test the property 'ownerId'
+     */
+    @Test
+    public void ownerIdTest() {
+        // TODO: test ownerId
+    }
+
 }

@@ -32,7 +32,7 @@ namespace LumoAuth.ApiClient.Api
         /// Register an MCP server
         /// </summary>
         /// <remarks>
-        /// Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \&quot;http_streamable\&quot; (\&quot;http_sse\&quot; is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \&quot;oauth\&quot;   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server&#39;s own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope &#x3D;&gt; text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \&quot;none\&quot; or transport \&quot;stdio\&quot;) is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+        /// The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -43,7 +43,7 @@ namespace LumoAuth.ApiClient.Api
         /// Register an MCP server
         /// </summary>
         /// <remarks>
-        /// Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \&quot;http_streamable\&quot; (\&quot;http_sse\&quot; is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \&quot;oauth\&quot;   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server&#39;s own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope &#x3D;&gt; text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \&quot;none\&quot; or transport \&quot;stdio\&quot;) is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+        /// The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -90,6 +90,74 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of AdminMcpServersGetResponse</returns>
         ApiResponse<AdminMcpServersGetResponse> AdminMcpServersGetWithHttpInfo(string orgId, string serverId);
         /// <summary>
+        /// List the agents allowed to call tools of an MCP server
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId">Only the grants of this agent (agentId or numeric id). (optional)</param>
+        /// <returns>AdminMcpServersGrantsListResponse</returns>
+        AdminMcpServersGrantsListResponse AdminMcpServersGrantsList(string orgId, string serverId, string? agentId = default);
+
+        /// <summary>
+        /// List the agents allowed to call tools of an MCP server
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId">Only the grants of this agent (agentId or numeric id). (optional)</param>
+        /// <returns>ApiResponse of AdminMcpServersGrantsListResponse</returns>
+        ApiResponse<AdminMcpServersGrantsListResponse> AdminMcpServersGrantsListWithHttpInfo(string orgId, string serverId, string? agentId = default);
+        /// <summary>
+        /// Remove every grant of an agent on an MCP server
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <returns>AdminMcpServersGrantsRemoveResponse</returns>
+        AdminMcpServersGrantsRemoveResponse AdminMcpServersGrantsRemove(string orgId, string serverId, string agentId);
+
+        /// <summary>
+        /// Remove every grant of an agent on an MCP server
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <returns>ApiResponse of AdminMcpServersGrantsRemoveResponse</returns>
+        ApiResponse<AdminMcpServersGrantsRemoveResponse> AdminMcpServersGrantsRemoveWithHttpInfo(string orgId, string serverId, string agentId);
+        /// <summary>
+        /// Set the tools of an MCP server that an agent may call
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminMcpServersGrantsSetRequest"></param>
+        /// <returns>AdminMcpServersGrantsSetResponse</returns>
+        AdminMcpServersGrantsSetResponse AdminMcpServersGrantsSet(string orgId, string serverId, string agentId, AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest);
+
+        /// <summary>
+        /// Set the tools of an MCP server that an agent may call
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminMcpServersGrantsSetRequest"></param>
+        /// <returns>ApiResponse of AdminMcpServersGrantsSetResponse</returns>
+        ApiResponse<AdminMcpServersGrantsSetResponse> AdminMcpServersGrantsSetWithHttpInfo(string orgId, string serverId, string agentId, AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest);
+        /// <summary>
         /// List MCP servers
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
@@ -120,7 +188,7 @@ namespace LumoAuth.ApiClient.Api
         /// Register an MCP server
         /// </summary>
         /// <remarks>
-        /// Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \&quot;http_streamable\&quot; (\&quot;http_sse\&quot; is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \&quot;oauth\&quot;   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server&#39;s own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope &#x3D;&gt; text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \&quot;none\&quot; or transport \&quot;stdio\&quot;) is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+        /// The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -132,7 +200,7 @@ namespace LumoAuth.ApiClient.Api
         /// Register an MCP server
         /// </summary>
         /// <remarks>
-        /// Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \&quot;http_streamable\&quot; (\&quot;http_sse\&quot; is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \&quot;oauth\&quot;   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server&#39;s own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope &#x3D;&gt; text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \&quot;none\&quot; or transport \&quot;stdio\&quot;) is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+        /// The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -189,6 +257,89 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminMcpServersGetResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AdminMcpServersGetResponse>> AdminMcpServersGetWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// List the agents allowed to call tools of an MCP server
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId">Only the grants of this agent (agentId or numeric id). (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminMcpServersGrantsListResponse</returns>
+        System.Threading.Tasks.Task<AdminMcpServersGrantsListResponse> AdminMcpServersGrantsListAsync(string orgId, string serverId, string? agentId = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// List the agents allowed to call tools of an MCP server
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId">Only the grants of this agent (agentId or numeric id). (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminMcpServersGrantsListResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminMcpServersGrantsListResponse>> AdminMcpServersGrantsListWithHttpInfoAsync(string orgId, string serverId, string? agentId = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Remove every grant of an agent on an MCP server
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminMcpServersGrantsRemoveResponse</returns>
+        System.Threading.Tasks.Task<AdminMcpServersGrantsRemoveResponse> AdminMcpServersGrantsRemoveAsync(string orgId, string serverId, string agentId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Remove every grant of an agent on an MCP server
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminMcpServersGrantsRemoveResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminMcpServersGrantsRemoveResponse>> AdminMcpServersGrantsRemoveWithHttpInfoAsync(string orgId, string serverId, string agentId, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Set the tools of an MCP server that an agent may call
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminMcpServersGrantsSetRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminMcpServersGrantsSetResponse</returns>
+        System.Threading.Tasks.Task<AdminMcpServersGrantsSetResponse> AdminMcpServersGrantsSetAsync(string orgId, string serverId, string agentId, AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Set the tools of an MCP server that an agent may call
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminMcpServersGrantsSetRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminMcpServersGrantsSetResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminMcpServersGrantsSetResponse>> AdminMcpServersGrantsSetWithHttpInfoAsync(string orgId, string serverId, string agentId, AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// List MCP servers
         /// </summary>
@@ -426,7 +577,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Register an MCP server Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \&quot;http_streamable\&quot; (\&quot;http_sse\&quot; is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \&quot;oauth\&quot;   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server&#39;s own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope &#x3D;&gt; text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \&quot;none\&quot; or transport \&quot;stdio\&quot;) is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+        /// Register an MCP server The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -438,7 +589,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Register an MCP server Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \&quot;http_streamable\&quot; (\&quot;http_sse\&quot; is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \&quot;oauth\&quot;   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server&#39;s own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope &#x3D;&gt; text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \&quot;none\&quot; or transport \&quot;stdio\&quot;) is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+        /// Register an MCP server The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -492,7 +643,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Register an MCP server Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \&quot;http_streamable\&quot; (\&quot;http_sse\&quot; is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \&quot;oauth\&quot;   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server&#39;s own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope &#x3D;&gt; text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \&quot;none\&quot; or transport \&quot;stdio\&quot;) is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+        /// Register an MCP server The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -505,7 +656,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Register an MCP server Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \&quot;http_streamable\&quot; (\&quot;http_sse\&quot; is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \&quot;oauth\&quot;   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server&#39;s own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope &#x3D;&gt; text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \&quot;none\&quot; or transport \&quot;stdio\&quot;) is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+        /// Register an MCP server The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -858,6 +1009,515 @@ namespace LumoAuth.ApiClient.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AdminMcpServersGet", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// List the agents allowed to call tools of an MCP server 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId">Only the grants of this agent (agentId or numeric id). (optional)</param>
+        /// <returns>AdminMcpServersGrantsListResponse</returns>
+        public AdminMcpServersGrantsListResponse AdminMcpServersGrantsList(string orgId, string serverId, string? agentId = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGrantsListResponse> localVarResponse = AdminMcpServersGrantsListWithHttpInfo(orgId, serverId, agentId);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// List the agents allowed to call tools of an MCP server 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId">Only the grants of this agent (agentId or numeric id). (optional)</param>
+        /// <returns>ApiResponse of AdminMcpServersGrantsListResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGrantsListResponse> AdminMcpServersGrantsListWithHttpInfo(string orgId, string serverId, string? agentId = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminMcpApi->AdminMcpServersGrantsList");
+
+            // verify the required parameter 'serverId' is set
+            if (serverId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'serverId' when calling AdminMcpApi->AdminMcpServersGrantsList");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("serverId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(serverId)); // path parameter
+            if (agentId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "agent_id", agentId));
+            }
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Get<AdminMcpServersGrantsListResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminMcpServersGrantsList", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// List the agents allowed to call tools of an MCP server 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId">Only the grants of this agent (agentId or numeric id). (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminMcpServersGrantsListResponse</returns>
+        public async System.Threading.Tasks.Task<AdminMcpServersGrantsListResponse> AdminMcpServersGrantsListAsync(string orgId, string serverId, string? agentId = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGrantsListResponse> localVarResponse = await AdminMcpServersGrantsListWithHttpInfoAsync(orgId, serverId, agentId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// List the agents allowed to call tools of an MCP server 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId">Only the grants of this agent (agentId or numeric id). (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminMcpServersGrantsListResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGrantsListResponse>> AdminMcpServersGrantsListWithHttpInfoAsync(string orgId, string serverId, string? agentId = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminMcpApi->AdminMcpServersGrantsList");
+
+            // verify the required parameter 'serverId' is set
+            if (serverId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'serverId' when calling AdminMcpApi->AdminMcpServersGrantsList");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("serverId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(serverId)); // path parameter
+            if (agentId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "agent_id", agentId));
+            }
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminMcpServersGrantsListResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminMcpServersGrantsList", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Remove every grant of an agent on an MCP server 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <returns>AdminMcpServersGrantsRemoveResponse</returns>
+        public AdminMcpServersGrantsRemoveResponse AdminMcpServersGrantsRemove(string orgId, string serverId, string agentId)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGrantsRemoveResponse> localVarResponse = AdminMcpServersGrantsRemoveWithHttpInfo(orgId, serverId, agentId);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Remove every grant of an agent on an MCP server 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <returns>ApiResponse of AdminMcpServersGrantsRemoveResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGrantsRemoveResponse> AdminMcpServersGrantsRemoveWithHttpInfo(string orgId, string serverId, string agentId)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminMcpApi->AdminMcpServersGrantsRemove");
+
+            // verify the required parameter 'serverId' is set
+            if (serverId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'serverId' when calling AdminMcpApi->AdminMcpServersGrantsRemove");
+
+            // verify the required parameter 'agentId' is set
+            if (agentId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'agentId' when calling AdminMcpApi->AdminMcpServersGrantsRemove");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("serverId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(serverId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("agentId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(agentId)); // path parameter
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Delete<AdminMcpServersGrantsRemoveResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminMcpServersGrantsRemove", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Remove every grant of an agent on an MCP server 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminMcpServersGrantsRemoveResponse</returns>
+        public async System.Threading.Tasks.Task<AdminMcpServersGrantsRemoveResponse> AdminMcpServersGrantsRemoveAsync(string orgId, string serverId, string agentId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGrantsRemoveResponse> localVarResponse = await AdminMcpServersGrantsRemoveWithHttpInfoAsync(orgId, serverId, agentId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Remove every grant of an agent on an MCP server 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminMcpServersGrantsRemoveResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGrantsRemoveResponse>> AdminMcpServersGrantsRemoveWithHttpInfoAsync(string orgId, string serverId, string agentId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminMcpApi->AdminMcpServersGrantsRemove");
+
+            // verify the required parameter 'serverId' is set
+            if (serverId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'serverId' when calling AdminMcpApi->AdminMcpServersGrantsRemove");
+
+            // verify the required parameter 'agentId' is set
+            if (agentId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'agentId' when calling AdminMcpApi->AdminMcpServersGrantsRemove");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("serverId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(serverId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("agentId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(agentId)); // path parameter
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<AdminMcpServersGrantsRemoveResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminMcpServersGrantsRemove", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Set the tools of an MCP server that an agent may call 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminMcpServersGrantsSetRequest"></param>
+        /// <returns>AdminMcpServersGrantsSetResponse</returns>
+        public AdminMcpServersGrantsSetResponse AdminMcpServersGrantsSet(string orgId, string serverId, string agentId, AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGrantsSetResponse> localVarResponse = AdminMcpServersGrantsSetWithHttpInfo(orgId, serverId, agentId, adminMcpServersGrantsSetRequest);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Set the tools of an MCP server that an agent may call 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminMcpServersGrantsSetRequest"></param>
+        /// <returns>ApiResponse of AdminMcpServersGrantsSetResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGrantsSetResponse> AdminMcpServersGrantsSetWithHttpInfo(string orgId, string serverId, string agentId, AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminMcpApi->AdminMcpServersGrantsSet");
+
+            // verify the required parameter 'serverId' is set
+            if (serverId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'serverId' when calling AdminMcpApi->AdminMcpServersGrantsSet");
+
+            // verify the required parameter 'agentId' is set
+            if (agentId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'agentId' when calling AdminMcpApi->AdminMcpServersGrantsSet");
+
+            // verify the required parameter 'adminMcpServersGrantsSetRequest' is set
+            if (adminMcpServersGrantsSetRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminMcpServersGrantsSetRequest' when calling AdminMcpApi->AdminMcpServersGrantsSet");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("serverId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(serverId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("agentId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(agentId)); // path parameter
+            localVarRequestOptions.Data = adminMcpServersGrantsSetRequest;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Put<AdminMcpServersGrantsSetResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminMcpServersGrantsSet", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Set the tools of an MCP server that an agent may call 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminMcpServersGrantsSetRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminMcpServersGrantsSetResponse</returns>
+        public async System.Threading.Tasks.Task<AdminMcpServersGrantsSetResponse> AdminMcpServersGrantsSetAsync(string orgId, string serverId, string agentId, AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGrantsSetResponse> localVarResponse = await AdminMcpServersGrantsSetWithHttpInfoAsync(orgId, serverId, agentId, adminMcpServersGrantsSetRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Set the tools of an MCP server that an agent may call 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="adminMcpServersGrantsSetRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminMcpServersGrantsSetResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGrantsSetResponse>> AdminMcpServersGrantsSetWithHttpInfoAsync(string orgId, string serverId, string agentId, AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminMcpApi->AdminMcpServersGrantsSet");
+
+            // verify the required parameter 'serverId' is set
+            if (serverId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'serverId' when calling AdminMcpApi->AdminMcpServersGrantsSet");
+
+            // verify the required parameter 'agentId' is set
+            if (agentId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'agentId' when calling AdminMcpApi->AdminMcpServersGrantsSet");
+
+            // verify the required parameter 'adminMcpServersGrantsSetRequest' is set
+            if (adminMcpServersGrantsSetRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminMcpServersGrantsSetRequest' when calling AdminMcpApi->AdminMcpServersGrantsSet");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("serverId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(serverId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("agentId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(agentId)); // path parameter
+            localVarRequestOptions.Data = adminMcpServersGrantsSetRequest;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PutAsync<AdminMcpServersGrantsSetResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminMcpServersGrantsSet", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 

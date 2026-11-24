@@ -34,6 +34,7 @@ pub enum AdminSandboxListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSandboxSpawnError {
+    Status400(),
     Status403(),
     Status429(),
     UnknownValue(serde_json::Value),

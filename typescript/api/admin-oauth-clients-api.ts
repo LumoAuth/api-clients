@@ -191,7 +191,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * 
+         * Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
          * @summary Delete an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
@@ -281,7 +281,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
          * @summary Enable an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
@@ -506,7 +506,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
          * @summary Update an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
@@ -600,7 +600,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
          * @summary Rotate an OAuth client secret
          * @param {string} orgId 
          * @param {string} clientId 
@@ -645,7 +645,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
          * @summary Replace the scopes granted to an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
@@ -690,7 +690,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
          * @summary Update an OAuth client (same as PATCH: only the fields that are sent change)
          * @param {string} orgId 
          * @param {string} clientId 
@@ -786,7 +786,7 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
          * @summary Delete an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
@@ -814,7 +814,7 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
          * @summary Enable an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
@@ -884,7 +884,7 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
          * @summary Update an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
@@ -913,7 +913,7 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
          * @summary Rotate an OAuth client secret
          * @param {string} orgId 
          * @param {string} clientId 
@@ -927,7 +927,7 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
          * @summary Replace the scopes granted to an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
@@ -941,7 +941,7 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
          * @summary Update an OAuth client (same as PATCH: only the fields that are sent change)
          * @param {string} orgId 
          * @param {string} clientId 
@@ -995,7 +995,7 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
             return localVarFp.createClient(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
          * @summary Delete an OAuth client
          * @param {AdminOAuthClientsApiDeleteClientRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1015,7 +1015,7 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
             return localVarFp.disableClient(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
          * @summary Enable an OAuth client
          * @param {AdminOAuthClientsApiEnableClientRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1065,7 +1065,7 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
             return localVarFp.patchAdminClientsUpdateBranding(requestParameters.orgId, requestParameters.clientId, requestParameters.adminClientsGetBrandingResponseData, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
          * @summary Update an OAuth client
          * @param {AdminOAuthClientsApiPatchClientRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1085,7 +1085,7 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
             return localVarFp.putAdminClientsUpdateBranding(requestParameters.orgId, requestParameters.clientId, requestParameters.putAdminClientsUpdateBrandingRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
          * @summary Rotate an OAuth client secret
          * @param {AdminOAuthClientsApiRotateClientSecretRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1095,7 +1095,7 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
             return localVarFp.rotateClientSecret(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
          * @summary Replace the scopes granted to an OAuth client
          * @param {AdminOAuthClientsApiSetClientScopesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1105,7 +1105,7 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
             return localVarFp.setClientScopes(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
          * @summary Update an OAuth client (same as PATCH: only the fields that are sent change)
          * @param {AdminOAuthClientsApiUpdateClientRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1154,7 +1154,7 @@ export interface AdminOAuthClientsApiInterface {
     createClient(requestParameters: AdminOAuthClientsApiCreateClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreateClientResponse>;
 
     /**
-     * 
+     * Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
      * @summary Delete an OAuth client
      * @param {AdminOAuthClientsApiDeleteClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1174,7 +1174,7 @@ export interface AdminOAuthClientsApiInterface {
     disableClient(requestParameters: AdminOAuthClientsApiDisableClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse>;
 
     /**
-     * 
+     * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
      * @summary Enable an OAuth client
      * @param {AdminOAuthClientsApiEnableClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1224,7 +1224,7 @@ export interface AdminOAuthClientsApiInterface {
     patchAdminClientsUpdateBranding(requestParameters: AdminOAuthClientsApiPatchAdminClientsUpdateBrandingRequest, options?: RawAxiosRequestConfig): AxiosPromise<PatchAdminClientsUpdateBrandingResponse>;
 
     /**
-     * 
+     * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
      * @summary Update an OAuth client
      * @param {AdminOAuthClientsApiPatchClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1244,7 +1244,7 @@ export interface AdminOAuthClientsApiInterface {
     putAdminClientsUpdateBranding(requestParameters: AdminOAuthClientsApiPutAdminClientsUpdateBrandingRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminClientsUpdateBrandingResponse>;
 
     /**
-     * 
+     * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
      * @summary Rotate an OAuth client secret
      * @param {AdminOAuthClientsApiRotateClientSecretRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1254,7 +1254,7 @@ export interface AdminOAuthClientsApiInterface {
     rotateClientSecret(requestParameters: AdminOAuthClientsApiRotateClientSecretRequest, options?: RawAxiosRequestConfig): AxiosPromise<RotateClientSecretResponse>;
 
     /**
-     * 
+     * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
      * @summary Replace the scopes granted to an OAuth client
      * @param {AdminOAuthClientsApiSetClientScopesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1264,7 +1264,7 @@ export interface AdminOAuthClientsApiInterface {
     setClientScopes(requestParameters: AdminOAuthClientsApiSetClientScopesRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetClientScopesResponse>;
 
     /**
-     * 
+     * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
      * @summary Update an OAuth client (same as PATCH: only the fields that are sent change)
      * @param {AdminOAuthClientsApiUpdateClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1634,7 +1634,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
     }
 
     /**
-     * 
+     * Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
      * @summary Delete an OAuth client
      * @param {AdminOAuthClientsApiDeleteClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1658,7 +1658,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
     }
 
     /**
-     * 
+     * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
      * @summary Enable an OAuth client
      * @param {AdminOAuthClientsApiEnableClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1718,7 +1718,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
     }
 
     /**
-     * 
+     * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
      * @summary Update an OAuth client
      * @param {AdminOAuthClientsApiPatchClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1742,7 +1742,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
     }
 
     /**
-     * 
+     * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
      * @summary Rotate an OAuth client secret
      * @param {AdminOAuthClientsApiRotateClientSecretRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1754,7 +1754,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
     }
 
     /**
-     * 
+     * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
      * @summary Replace the scopes granted to an OAuth client
      * @param {AdminOAuthClientsApiSetClientScopesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1766,7 +1766,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
     }
 
     /**
-     * 
+     * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
      * @summary Update an OAuth client (same as PATCH: only the fields that are sent change)
      * @param {AdminOAuthClientsApiUpdateClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

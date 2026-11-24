@@ -90,6 +90,8 @@ public class AdminOAuthClientsApiTest {
     /**
      * Delete an OAuth client
      *
+     * Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -115,6 +117,8 @@ public class AdminOAuthClientsApiTest {
 
     /**
      * Enable an OAuth client
+     *
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      *
      * @throws ApiException if the Api call fails
      */
@@ -183,6 +187,8 @@ public class AdminOAuthClientsApiTest {
     /**
      * Update an OAuth client
      *
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -212,6 +218,8 @@ public class AdminOAuthClientsApiTest {
     /**
      * Rotate an OAuth client secret
      *
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -225,6 +233,8 @@ public class AdminOAuthClientsApiTest {
     /**
      * Replace the scopes granted to an OAuth client
      *
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -237,6 +247,8 @@ public class AdminOAuthClientsApiTest {
 
     /**
      * Update an OAuth client (same as PATCH: only the fields that are sent change)
+     *
+     * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      *
      * @throws ApiException if the Api call fails
      */

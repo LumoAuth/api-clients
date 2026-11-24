@@ -1357,6 +1357,8 @@ Name | Type | Description  | Notes
 
 Update a user
 
+
+
 ### Example
 
 ```go
@@ -2079,6 +2081,8 @@ Name | Type | Description  | Notes
 > UpdateUserResponse UpdateUser(ctx, orgId, userId).Execute()
 
 Update a user
+
+
 
 ### Example
 

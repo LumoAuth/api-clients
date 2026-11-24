@@ -456,7 +456,7 @@ class MfaApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $id id (required)
-     * @param  string|null $xMFAChallenge Approved step_up challenge id (optional)
+     * @param  string|null $xMFAChallenge Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAuthenticator'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
@@ -475,7 +475,7 @@ class MfaApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
-     * @param  string|null $xMFAChallenge Approved step_up challenge id (optional)
+     * @param  string|null $xMFAChallenge Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAuthenticator'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
@@ -526,7 +526,7 @@ class MfaApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
-     * @param  string|null $xMFAChallenge Approved step_up challenge id (optional)
+     * @param  string|null $xMFAChallenge Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAuthenticator'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -549,7 +549,7 @@ class MfaApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
-     * @param  string|null $xMFAChallenge Approved step_up challenge id (optional)
+     * @param  string|null $xMFAChallenge Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAuthenticator'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -588,7 +588,7 @@ class MfaApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
-     * @param  string|null $xMFAChallenge Approved step_up challenge id (optional)
+     * @param  string|null $xMFAChallenge Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAuthenticator'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

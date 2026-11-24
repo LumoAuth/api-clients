@@ -135,6 +135,7 @@ pub enum ListPermissionsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SetResourceAttributeError {
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -142,6 +143,7 @@ pub enum SetResourceAttributeError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SetUserAttributeError {
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 

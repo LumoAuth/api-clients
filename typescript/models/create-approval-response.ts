@@ -50,5 +50,22 @@ export interface CreateApprovalResponse {
      * @memberof CreateApprovalResponse
      */
     'impact'?: string;
+    /**
+     * Where the request went: `push` (the LumoAuth app), `slack`, `discord`.
+     * @type {Array<string>}
+     * @memberof CreateApprovalResponse
+     */
+    'delivery'?: Array<CreateApprovalResponseDelivery>;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreateApprovalResponseDelivery {
+    PUSH = 'push',
+    SLACK = 'slack',
+    DISCORD = 'discord'
+}
+
 

@@ -92,6 +92,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> An active policy already reads an attribute of this name and covers permissions that the caller does not hold. </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> An attribute with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
@@ -162,6 +163,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> An active policy already reads an attribute of this name and covers permissions that the caller does not hold. </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> An attribute with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
@@ -181,6 +183,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> An active policy already reads an attribute of this name and covers permissions that the caller does not hold. </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> An attribute with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
@@ -202,6 +205,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> An active policy already reads an attribute of this name and covers permissions that the caller does not hold. </td><td>  -  </td></tr>
         <tr><td> 409 </td><td> An attribute with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
@@ -224,7 +228,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be deleted. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -302,7 +306,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be deleted. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -323,7 +327,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be deleted. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -346,7 +350,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be deleted. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -772,7 +776,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be deleted. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -850,7 +854,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be deleted. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -871,7 +875,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be deleted. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -894,7 +898,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be deleted. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1193,7 +1197,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Toggled policy </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1271,7 +1275,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Toggled policy </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1292,7 +1296,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Toggled policy </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1315,7 +1319,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Toggled policy </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1338,7 +1342,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1416,7 +1420,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1437,7 +1441,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1460,7 +1464,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1484,7 +1488,7 @@ public class AdminAbacApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1563,7 +1567,7 @@ public class AdminAbacApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1585,7 +1589,7 @@ public class AdminAbacApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1609,7 +1613,7 @@ public class AdminAbacApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1632,7 +1636,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1710,7 +1714,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1731,7 +1735,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1754,7 +1758,7 @@ public class AdminAbacApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in attribute definitions cannot be modified. Also refused when an active policy reads the attribute and covers permissions that the caller does not hold: only a full administrator, or an administrator who holds those permissions, can create, delete or change the kind, data type or default value of such an attribute. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1778,7 +1782,7 @@ public class AdminAbacApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1857,7 +1861,7 @@ public class AdminAbacApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1879,7 +1883,7 @@ public class AdminAbacApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
@@ -1903,7 +1907,7 @@ public class AdminAbacApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid effect, priority, resourceType or action (empty, longer than 100 characters, or naming no action), or policy conditions </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> System and built-in policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System and built-in policies cannot be modified. Also refused when the change removes, switches off or narrows an active deny policy and the caller could not allow what it denies: that needs a full administrator, or the permission &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for every action of the policy. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */

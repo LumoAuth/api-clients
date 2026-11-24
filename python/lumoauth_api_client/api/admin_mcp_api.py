@@ -17,9 +17,15 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import Field, StrictStr
+from typing import Optional
+from typing_extensions import Annotated
 from lumoauth_api_client.models.admin_mcp_servers_create_response import AdminMcpServersCreateResponse
 from lumoauth_api_client.models.admin_mcp_servers_get_response import AdminMcpServersGetResponse
+from lumoauth_api_client.models.admin_mcp_servers_grants_list_response import AdminMcpServersGrantsListResponse
+from lumoauth_api_client.models.admin_mcp_servers_grants_remove_response import AdminMcpServersGrantsRemoveResponse
+from lumoauth_api_client.models.admin_mcp_servers_grants_set_request import AdminMcpServersGrantsSetRequest
+from lumoauth_api_client.models.admin_mcp_servers_grants_set_response import AdminMcpServersGrantsSetResponse
 from lumoauth_api_client.models.admin_mcp_servers_list_response import AdminMcpServersListResponse
 from lumoauth_api_client.models.message_response import MessageResponse
 
@@ -60,7 +66,7 @@ class AdminMcpApi:
     ) -> AdminMcpServersCreateResponse:
         """Register an MCP server
 
-        Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \"http_streamable\" (\"http_sse\" is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \"oauth\"   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server's own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization's OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope => text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \"none\" or transport \"stdio\") is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+        The `resource_uri` is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
 
         :param org_id: (required)
         :type org_id: str
@@ -130,7 +136,7 @@ class AdminMcpApi:
     ) -> ApiResponse[AdminMcpServersCreateResponse]:
         """Register an MCP server
 
-        Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \"http_streamable\" (\"http_sse\" is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \"oauth\"   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server's own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization's OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope => text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \"none\" or transport \"stdio\") is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+        The `resource_uri` is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
 
         :param org_id: (required)
         :type org_id: str
@@ -200,7 +206,7 @@ class AdminMcpApi:
     ) -> RESTResponseType:
         """Register an MCP server
 
-        Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \"http_streamable\" (\"http_sse\" is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \"oauth\"   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server's own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization's OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope => text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \"none\" or transport \"stdio\") is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+        The `resource_uri` is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
 
         :param org_id: (required)
         :type org_id: str
@@ -851,6 +857,918 @@ class AdminMcpApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def admin_mcp_servers_grants_list(
+        self,
+        org_id: StrictStr,
+        server_id: StrictStr,
+        agent_id: Annotated[Optional[StrictStr], Field(description="Only the grants of this agent (agentId or numeric id).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AdminMcpServersGrantsListResponse:
+        """List the agents allowed to call tools of an MCP server
+
+
+        :param org_id: (required)
+        :type org_id: str
+        :param server_id: (required)
+        :type server_id: str
+        :param agent_id: Only the grants of this agent (agentId or numeric id).
+        :type agent_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_mcp_servers_grants_list_serialize(
+            org_id=org_id,
+            server_id=server_id,
+            agent_id=agent_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersGrantsListResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def admin_mcp_servers_grants_list_with_http_info(
+        self,
+        org_id: StrictStr,
+        server_id: StrictStr,
+        agent_id: Annotated[Optional[StrictStr], Field(description="Only the grants of this agent (agentId or numeric id).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AdminMcpServersGrantsListResponse]:
+        """List the agents allowed to call tools of an MCP server
+
+
+        :param org_id: (required)
+        :type org_id: str
+        :param server_id: (required)
+        :type server_id: str
+        :param agent_id: Only the grants of this agent (agentId or numeric id).
+        :type agent_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_mcp_servers_grants_list_serialize(
+            org_id=org_id,
+            server_id=server_id,
+            agent_id=agent_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersGrantsListResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def admin_mcp_servers_grants_list_without_preload_content(
+        self,
+        org_id: StrictStr,
+        server_id: StrictStr,
+        agent_id: Annotated[Optional[StrictStr], Field(description="Only the grants of this agent (agentId or numeric id).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List the agents allowed to call tools of an MCP server
+
+
+        :param org_id: (required)
+        :type org_id: str
+        :param server_id: (required)
+        :type server_id: str
+        :param agent_id: Only the grants of this agent (agentId or numeric id).
+        :type agent_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_mcp_servers_grants_list_serialize(
+            org_id=org_id,
+            server_id=server_id,
+            agent_id=agent_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersGrantsListResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _admin_mcp_servers_grants_list_serialize(
+        self,
+        org_id,
+        server_id,
+        agent_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if org_id is not None:
+            _path_params['orgId'] = org_id
+        if server_id is not None:
+            _path_params['serverId'] = server_id
+        # process the query parameters
+        if agent_id is not None:
+            
+            _query_params.append(('agent_id', agent_id))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth', 
+            'BearerAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def admin_mcp_servers_grants_remove(
+        self,
+        org_id: StrictStr,
+        server_id: StrictStr,
+        agent_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AdminMcpServersGrantsRemoveResponse:
+        """Remove every grant of an agent on an MCP server
+
+
+        :param org_id: (required)
+        :type org_id: str
+        :param server_id: (required)
+        :type server_id: str
+        :param agent_id: (required)
+        :type agent_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_mcp_servers_grants_remove_serialize(
+            org_id=org_id,
+            server_id=server_id,
+            agent_id=agent_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersGrantsRemoveResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def admin_mcp_servers_grants_remove_with_http_info(
+        self,
+        org_id: StrictStr,
+        server_id: StrictStr,
+        agent_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AdminMcpServersGrantsRemoveResponse]:
+        """Remove every grant of an agent on an MCP server
+
+
+        :param org_id: (required)
+        :type org_id: str
+        :param server_id: (required)
+        :type server_id: str
+        :param agent_id: (required)
+        :type agent_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_mcp_servers_grants_remove_serialize(
+            org_id=org_id,
+            server_id=server_id,
+            agent_id=agent_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersGrantsRemoveResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def admin_mcp_servers_grants_remove_without_preload_content(
+        self,
+        org_id: StrictStr,
+        server_id: StrictStr,
+        agent_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Remove every grant of an agent on an MCP server
+
+
+        :param org_id: (required)
+        :type org_id: str
+        :param server_id: (required)
+        :type server_id: str
+        :param agent_id: (required)
+        :type agent_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_mcp_servers_grants_remove_serialize(
+            org_id=org_id,
+            server_id=server_id,
+            agent_id=agent_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersGrantsRemoveResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _admin_mcp_servers_grants_remove_serialize(
+        self,
+        org_id,
+        server_id,
+        agent_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if org_id is not None:
+            _path_params['orgId'] = org_id
+        if server_id is not None:
+            _path_params['serverId'] = server_id
+        if agent_id is not None:
+            _path_params['agentId'] = agent_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth', 
+            'BearerAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def admin_mcp_servers_grants_set(
+        self,
+        org_id: StrictStr,
+        server_id: StrictStr,
+        agent_id: StrictStr,
+        admin_mcp_servers_grants_set_request: AdminMcpServersGrantsSetRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AdminMcpServersGrantsSetResponse:
+        """Set the tools of an MCP server that an agent may call
+
+
+        :param org_id: (required)
+        :type org_id: str
+        :param server_id: (required)
+        :type server_id: str
+        :param agent_id: (required)
+        :type agent_id: str
+        :param admin_mcp_servers_grants_set_request: (required)
+        :type admin_mcp_servers_grants_set_request: AdminMcpServersGrantsSetRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_mcp_servers_grants_set_serialize(
+            org_id=org_id,
+            server_id=server_id,
+            agent_id=agent_id,
+            admin_mcp_servers_grants_set_request=admin_mcp_servers_grants_set_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersGrantsSetResponse",
+            '400': None,
+            '403': None,
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def admin_mcp_servers_grants_set_with_http_info(
+        self,
+        org_id: StrictStr,
+        server_id: StrictStr,
+        agent_id: StrictStr,
+        admin_mcp_servers_grants_set_request: AdminMcpServersGrantsSetRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AdminMcpServersGrantsSetResponse]:
+        """Set the tools of an MCP server that an agent may call
+
+
+        :param org_id: (required)
+        :type org_id: str
+        :param server_id: (required)
+        :type server_id: str
+        :param agent_id: (required)
+        :type agent_id: str
+        :param admin_mcp_servers_grants_set_request: (required)
+        :type admin_mcp_servers_grants_set_request: AdminMcpServersGrantsSetRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_mcp_servers_grants_set_serialize(
+            org_id=org_id,
+            server_id=server_id,
+            agent_id=agent_id,
+            admin_mcp_servers_grants_set_request=admin_mcp_servers_grants_set_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersGrantsSetResponse",
+            '400': None,
+            '403': None,
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def admin_mcp_servers_grants_set_without_preload_content(
+        self,
+        org_id: StrictStr,
+        server_id: StrictStr,
+        agent_id: StrictStr,
+        admin_mcp_servers_grants_set_request: AdminMcpServersGrantsSetRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Set the tools of an MCP server that an agent may call
+
+
+        :param org_id: (required)
+        :type org_id: str
+        :param server_id: (required)
+        :type server_id: str
+        :param agent_id: (required)
+        :type agent_id: str
+        :param admin_mcp_servers_grants_set_request: (required)
+        :type admin_mcp_servers_grants_set_request: AdminMcpServersGrantsSetRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_mcp_servers_grants_set_serialize(
+            org_id=org_id,
+            server_id=server_id,
+            agent_id=agent_id,
+            admin_mcp_servers_grants_set_request=admin_mcp_servers_grants_set_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersGrantsSetResponse",
+            '400': None,
+            '403': None,
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _admin_mcp_servers_grants_set_serialize(
+        self,
+        org_id,
+        server_id,
+        agent_id,
+        admin_mcp_servers_grants_set_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if org_id is not None:
+            _path_params['orgId'] = org_id
+        if server_id is not None:
+            _path_params['serverId'] = server_id
+        if agent_id is not None:
+            _path_params['agentId'] = agent_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if admin_mcp_servers_grants_set_request is not None:
+            _body_params = admin_mcp_servers_grants_set_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth', 
+            'BearerAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='PUT',
+            resource_path='/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
