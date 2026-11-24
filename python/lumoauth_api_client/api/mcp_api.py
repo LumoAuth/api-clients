@@ -927,6 +927,7 @@ class McpApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetServerChallengeResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,
@@ -1002,6 +1003,7 @@ class McpApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetServerChallengeResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,
@@ -1077,6 +1079,7 @@ class McpApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetServerChallengeResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,
@@ -1803,6 +1806,7 @@ class McpApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetServerChallengeResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,
@@ -1878,6 +1882,7 @@ class McpApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetServerChallengeResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,
@@ -1953,6 +1958,7 @@ class McpApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetServerChallengeResponse",
+            '400': None,
             '401': None,
             '403': None,
             '404': None,

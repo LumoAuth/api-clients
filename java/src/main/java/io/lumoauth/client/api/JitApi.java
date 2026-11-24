@@ -716,9 +716,10 @@ public class JitApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Continuous access evaluation (CAEP) result for the task. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Authentication required. Agent, JIT and delegated credentials are not accepted. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission, or the access token lacks the &#x60;jit:approve&#x60; scope. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 415 </td><td> A session caller must send Content-Type: application/json or an X-CSRF-Token / X-Requested-With header. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call evaluateTaskCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String taskId, final ApiCallback _callback) throws ApiException {
@@ -795,9 +796,10 @@ public class JitApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Continuous access evaluation (CAEP) result for the task. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Authentication required. Agent, JIT and delegated credentials are not accepted. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission, or the access token lacks the &#x60;jit:approve&#x60; scope. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 415 </td><td> A session caller must send Content-Type: application/json or an X-CSRF-Token / X-Requested-With header. </td><td>  -  </td></tr>
      </table>
      */
     public Object evaluateTask(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String taskId) throws ApiException {
@@ -817,9 +819,10 @@ public class JitApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Continuous access evaluation (CAEP) result for the task. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Authentication required. Agent, JIT and delegated credentials are not accepted. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission, or the access token lacks the &#x60;jit:approve&#x60; scope. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 415 </td><td> A session caller must send Content-Type: application/json or an X-CSRF-Token / X-Requested-With header. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<Object> evaluateTaskWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String taskId) throws ApiException {
@@ -841,9 +844,10 @@ public class JitApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Continuous access evaluation (CAEP) result for the task. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Authentication required. Agent, JIT and delegated credentials are not accepted. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission, or the access token lacks the &#x60;jit:approve&#x60; scope. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 415 </td><td> A session caller must send Content-Type: application/json or an X-CSRF-Token / X-Requested-With header. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call evaluateTaskAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String taskId, final ApiCallback<Object> _callback) throws ApiException {

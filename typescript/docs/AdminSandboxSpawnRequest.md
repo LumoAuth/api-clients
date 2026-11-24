@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **string** |  | [optional] [default to undefined]
+**name** | **string** | A label for the sandbox: one line of text, without control characters and without \&quot;&lt;\&quot; or \&quot;&gt;\&quot;. | [optional] [default to undefined]
 **ttl_hours** | **number** |  | [optional] [default to undefined]
 
 ## Example

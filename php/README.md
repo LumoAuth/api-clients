@@ -169,6 +169,9 @@ Class | Method | HTTP request | Description
 *AdminMcpApi* | [**adminMcpServersCreate**](docs/Api/AdminMcpApi.md#adminmcpserverscreate) | **POST** /orgs/{orgId}/api/v1/admin/mcp/servers | Register an MCP server
 *AdminMcpApi* | [**adminMcpServersDelete**](docs/Api/AdminMcpApi.md#adminmcpserversdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Delete an MCP server
 *AdminMcpApi* | [**adminMcpServersGet**](docs/Api/AdminMcpApi.md#adminmcpserversget) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Get an MCP server
+*AdminMcpApi* | [**adminMcpServersGrantsList**](docs/Api/AdminMcpApi.md#adminmcpserversgrantslist) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants | List the agents allowed to call tools of an MCP server
+*AdminMcpApi* | [**adminMcpServersGrantsRemove**](docs/Api/AdminMcpApi.md#adminmcpserversgrantsremove) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Remove every grant of an agent on an MCP server
+*AdminMcpApi* | [**adminMcpServersGrantsSet**](docs/Api/AdminMcpApi.md#adminmcpserversgrantsset) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Set the tools of an MCP server that an agent may call
 *AdminMcpApi* | [**adminMcpServersList**](docs/Api/AdminMcpApi.md#adminmcpserverslist) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers
 *AdminMfaApi* | [**deleteUserAuthenticator**](docs/Api/AdminMfaApi.md#deleteuserauthenticator) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/authenticators/{authenticatorId} | Remove one of a user&#39;s authenticators
 *AdminMfaApi* | [**getMfaCoverageReport**](docs/Api/AdminMfaApi.md#getmfacoveragereport) | **GET** /orgs/{orgId}/api/v1/admin/reports/mfa-coverage | MFA enrollment coverage
@@ -329,6 +332,7 @@ Class | Method | HTTP request | Description
 *AdminWebhooksApi* | [**adminWebhooksWebhooksEnable**](docs/Api/AdminWebhooksApi.md#adminwebhookswebhooksenable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable | Enable a webhook
 *AdminWebhooksApi* | [**patchAdminWebhooksUpdate**](docs/Api/AdminWebhooksApi.md#patchadminwebhooksupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Partially update a webhook
 *AdminWebhooksApi* | [**putAdminWebhooksUpdate**](docs/Api/AdminWebhooksApi.md#putadminwebhooksupdate) | **PUT** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update a webhook
+*AgentsApi* | [**agentsMeToolCalls**](docs/Api/AgentsApi.md#agentsmetoolcalls) | **POST** /orgs/{orgId}/api/v1/agents/me/tool-calls | Report the tool calls that the agent&#39;s host gated
 *AgentsApi* | [**ask**](docs/Api/AgentsApi.md#ask) | **POST** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style)
 *AgentsApi* | [**attest**](docs/Api/AgentsApi.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token
 *AgentsApi* | [**authorizeMcp**](docs/Api/AgentsApi.md#authorizemcp) | **POST** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3).
@@ -336,8 +340,10 @@ Class | Method | HTTP request | Description
 *AgentsApi* | [**getAgentCard**](docs/Api/AgentsApi.md#getagentcard) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card
 *AgentsApi* | [**getApprovalStatus**](docs/Api/AgentsApi.md#getapprovalstatus) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 *AgentsApi* | [**getCurrentAgent**](docs/Api/AgentsApi.md#getcurrentagent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
+*AgentsApi* | [**pollAgentEnrollment**](docs/Api/AgentsApi.md#pollagentenrollment) | **POST** /orgs/{orgId}/api/v1/agents/enrollments/token | Poll an agent enrollment (no credential)
 *AgentsApi* | [**registerAgent**](docs/Api/AgentsApi.md#registeragent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
 *AgentsApi* | [**reportAgentUsage**](docs/Api/AgentsApi.md#reportagentusage) | **POST** /orgs/{orgId}/api/v1/agents/me/usage | Report the model tokens and cost that the agent used
+*AgentsApi* | [**startAgentEnrollment**](docs/Api/AgentsApi.md#startagentenrollment) | **POST** /orgs/{orgId}/api/v1/agents/enrollments | Start an agent enrollment (no credential)
 *AgentsApi* | [**verifyAgentCard**](docs/Api/AgentsApi.md#verifyagentcard) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
 *AuthorizationApi* | [**checkAbac**](docs/Api/AuthorizationApi.md#checkabac) | **POST** /orgs/{orgId}/api/v1/abac/check | Evaluate an ABAC policy decision for the caller
 *AuthorizationApi* | [**checkAbacBulk**](docs/Api/AuthorizationApi.md#checkabacbulk) | **POST** /orgs/{orgId}/api/v1/abac/check-bulk | Evaluate up to 100 ABAC checks for the caller in one call
@@ -511,6 +517,13 @@ Class | Method | HTTP request | Description
 - [AdminIdentitiesListResponseDataBindingsItem](docs/Model/AdminIdentitiesListResponseDataBindingsItem.md)
 - [AdminMcpServersCreateResponse](docs/Model/AdminMcpServersCreateResponse.md)
 - [AdminMcpServersGetResponse](docs/Model/AdminMcpServersGetResponse.md)
+- [AdminMcpServersGrantsListResponse](docs/Model/AdminMcpServersGrantsListResponse.md)
+- [AdminMcpServersGrantsListResponseDataItem](docs/Model/AdminMcpServersGrantsListResponseDataItem.md)
+- [AdminMcpServersGrantsRemoveResponse](docs/Model/AdminMcpServersGrantsRemoveResponse.md)
+- [AdminMcpServersGrantsRemoveResponseData](docs/Model/AdminMcpServersGrantsRemoveResponseData.md)
+- [AdminMcpServersGrantsSetRequest](docs/Model/AdminMcpServersGrantsSetRequest.md)
+- [AdminMcpServersGrantsSetResponse](docs/Model/AdminMcpServersGrantsSetResponse.md)
+- [AdminMcpServersGrantsSetResponseData](docs/Model/AdminMcpServersGrantsSetResponseData.md)
 - [AdminMcpServersListResponse](docs/Model/AdminMcpServersListResponse.md)
 - [AdminOrgInvitationsCreateResponse](docs/Model/AdminOrgInvitationsCreateResponse.md)
 - [AdminOrgInvitationsListResponse](docs/Model/AdminOrgInvitationsListResponse.md)
@@ -594,6 +607,9 @@ Class | Method | HTTP request | Description
 - [AdminWebhooksWebhooksDisableResponse](docs/Model/AdminWebhooksWebhooksDisableResponse.md)
 - [AdminWebhooksWebhooksEnableResponse](docs/Model/AdminWebhooksWebhooksEnableResponse.md)
 - [AgentOutboundConnection](docs/Model/AgentOutboundConnection.md)
+- [AgentsMeToolCallsRequest](docs/Model/AgentsMeToolCallsRequest.md)
+- [AgentsMeToolCallsRequestCallsItem](docs/Model/AgentsMeToolCallsRequestCallsItem.md)
+- [AgentsMeToolCallsResponse](docs/Model/AgentsMeToolCallsResponse.md)
 - [ApproveRequestRequest](docs/Model/ApproveRequestRequest.md)
 - [ApproveRequestResponse](docs/Model/ApproveRequestResponse.md)
 - [AskRequest](docs/Model/AskRequest.md)
@@ -631,6 +647,7 @@ Class | Method | HTTP request | Description
 - [CimdCheckResultShadowClient](docs/Model/CimdCheckResultShadowClient.md)
 - [CompleteTaskResponse](docs/Model/CompleteTaskResponse.md)
 - [CreateApprovalRequest](docs/Model/CreateApprovalRequest.md)
+- [CreateApprovalRequestMeta](docs/Model/CreateApprovalRequestMeta.md)
 - [CreateApprovalResponse](docs/Model/CreateApprovalResponse.md)
 - [CreateApprovalResponse202](docs/Model/CreateApprovalResponse202.md)
 - [CreateClientResponse](docs/Model/CreateClientResponse.md)
@@ -754,6 +771,8 @@ Class | Method | HTTP request | Description
 - [PasskeyEnrollmentStarted](docs/Model/PasskeyEnrollmentStarted.md)
 - [PatchAdminClientsUpdateBrandingResponse](docs/Model/PatchAdminClientsUpdateBrandingResponse.md)
 - [Permission](docs/Model/Permission.md)
+- [PollAgentEnrollmentRequest](docs/Model/PollAgentEnrollmentRequest.md)
+- [PollAgentEnrollmentResponse](docs/Model/PollAgentEnrollmentResponse.md)
 - [ProtectedResourceList](docs/Model/ProtectedResourceList.md)
 - [ProtectedResourceMetadata](docs/Model/ProtectedResourceMetadata.md)
 - [PushEnrollmentStarted](docs/Model/PushEnrollmentStarted.md)
@@ -812,6 +831,12 @@ Class | Method | HTTP request | Description
 - [SsfStream](docs/Model/SsfStream.md)
 - [SsfStreamDelivery](docs/Model/SsfStreamDelivery.md)
 - [SsfStreamList](docs/Model/SsfStreamList.md)
+- [StartAgentEnrollmentRequest](docs/Model/StartAgentEnrollmentRequest.md)
+- [StartAgentEnrollmentRequestCapabilitiesItem](docs/Model/StartAgentEnrollmentRequestCapabilitiesItem.md)
+- [StartAgentEnrollmentRequestInventory](docs/Model/StartAgentEnrollmentRequestInventory.md)
+- [StartAgentEnrollmentRequestInventoryMcpServersItem](docs/Model/StartAgentEnrollmentRequestInventoryMcpServersItem.md)
+- [StartAgentEnrollmentRequestJwks](docs/Model/StartAgentEnrollmentRequestJwks.md)
+- [StartAgentEnrollmentResponse](docs/Model/StartAgentEnrollmentResponse.md)
 - [SubmitLoginJsonResponse](docs/Model/SubmitLoginJsonResponse.md)
 - [TenantProfile](docs/Model/TenantProfile.md)
 - [TokenResponse](docs/Model/TokenResponse.md)

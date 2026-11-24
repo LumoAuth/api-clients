@@ -62,7 +62,8 @@ class CreateApprovalResponse implements ModelInterface, ArrayAccess, \JsonSerial
         'status' => 'string',
         'expiresAt' => '\DateTime',
         'taskId' => 'string',
-        'impact' => 'string'
+        'impact' => 'string',
+        'delivery' => 'string[]'
     ];
 
     /**
@@ -77,7 +78,8 @@ class CreateApprovalResponse implements ModelInterface, ArrayAccess, \JsonSerial
         'status' => null,
         'expiresAt' => 'date-time',
         'taskId' => null,
-        'impact' => null
+        'impact' => null,
+        'delivery' => null
     ];
 
     /**
@@ -90,7 +92,8 @@ class CreateApprovalResponse implements ModelInterface, ArrayAccess, \JsonSerial
         'status' => false,
         'expiresAt' => false,
         'taskId' => false,
-        'impact' => false
+        'impact' => false,
+        'delivery' => false
     ];
 
     /**
@@ -183,7 +186,8 @@ class CreateApprovalResponse implements ModelInterface, ArrayAccess, \JsonSerial
         'status' => 'status',
         'expiresAt' => 'expires_at',
         'taskId' => 'task_id',
-        'impact' => 'impact'
+        'impact' => 'impact',
+        'delivery' => 'delivery'
     ];
 
     /**
@@ -196,7 +200,8 @@ class CreateApprovalResponse implements ModelInterface, ArrayAccess, \JsonSerial
         'status' => 'setStatus',
         'expiresAt' => 'setExpiresAt',
         'taskId' => 'setTaskId',
-        'impact' => 'setImpact'
+        'impact' => 'setImpact',
+        'delivery' => 'setDelivery'
     ];
 
     /**
@@ -209,7 +214,8 @@ class CreateApprovalResponse implements ModelInterface, ArrayAccess, \JsonSerial
         'status' => 'getStatus',
         'expiresAt' => 'getExpiresAt',
         'taskId' => 'getTaskId',
-        'impact' => 'getImpact'
+        'impact' => 'getImpact',
+        'delivery' => 'getDelivery'
     ];
 
     /**
@@ -253,6 +259,23 @@ class CreateApprovalResponse implements ModelInterface, ArrayAccess, \JsonSerial
         return self::$openAPIModelName;
     }
 
+    public const DELIVERY_PUSH = 'push';
+    public const DELIVERY_SLACK = 'slack';
+    public const DELIVERY_DISCORD = 'discord';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getDeliveryAllowableValues()
+    {
+        return [
+            self::DELIVERY_PUSH,
+            self::DELIVERY_SLACK,
+            self::DELIVERY_DISCORD,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -274,6 +297,7 @@ class CreateApprovalResponse implements ModelInterface, ArrayAccess, \JsonSerial
         $this->setIfExists('expiresAt', $data ?? [], null);
         $this->setIfExists('taskId', $data ?? [], null);
         $this->setIfExists('impact', $data ?? [], null);
+        $this->setIfExists('delivery', $data ?? [], null);
     }
 
     /**
@@ -449,6 +473,42 @@ class CreateApprovalResponse implements ModelInterface, ArrayAccess, \JsonSerial
             throw new \InvalidArgumentException('non-nullable impact cannot be null');
         }
         $this->container['impact'] = $impact;
+
+        return $this;
+    }
+
+    /**
+     * Gets delivery
+     *
+     * @return string[]|null
+     */
+    public function getDelivery()
+    {
+        return $this->container['delivery'];
+    }
+
+    /**
+     * Sets delivery
+     *
+     * @param string[]|null $delivery Where the request went: `push` (the LumoAuth app), `slack`, `discord`.
+     *
+     * @return self
+     */
+    public function setDelivery($delivery)
+    {
+        if (is_null($delivery)) {
+            throw new \InvalidArgumentException('non-nullable delivery cannot be null');
+        }
+        $allowedValues = $this->getDeliveryAllowableValues();
+        if (array_diff($delivery, $allowedValues)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'delivery', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['delivery'] = $delivery;
 
         return $this;
     }

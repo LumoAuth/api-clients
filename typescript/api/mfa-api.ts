@@ -99,7 +99,7 @@ export const MfaApiAxiosParamCreator = function (configuration?: Configuration) 
          * @summary Remove an authenticator
          * @param {string} orgId 
          * @param {string} id 
-         * @param {string} [xMFAChallenge] Approved step_up challenge id
+         * @param {string} [xMFAChallenge] Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -626,7 +626,7 @@ export const MfaApiFp = function(configuration?: Configuration) {
          * @summary Remove an authenticator
          * @param {string} orgId 
          * @param {string} id 
-         * @param {string} [xMFAChallenge] Approved step_up challenge id
+         * @param {string} [xMFAChallenge] Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1079,7 +1079,7 @@ export interface MfaApiDeleteAuthenticatorRequest {
     readonly id: string
 
     /**
-     * Approved step_up challenge id
+     * Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)
      * @type {string}
      * @memberof MfaApiDeleteAuthenticator
      */

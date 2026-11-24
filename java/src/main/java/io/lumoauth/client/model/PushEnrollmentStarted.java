@@ -50,7 +50,7 @@ import io.lumoauth.client.JSON;
 /**
  * PushEnrollmentStarted
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-19T15:14:32.479877953Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T20:12:48.846738323Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class PushEnrollmentStarted {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -146,7 +146,7 @@ public class PushEnrollmentStarted {
   }
 
   /**
-   * Get id
+   * Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret.
    * @return id
    */
   @javax.annotation.Nullable

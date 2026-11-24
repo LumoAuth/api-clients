@@ -4,7 +4,7 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **id** | **String** |  | [optional] |
+| **id** | **String** | Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret. | [optional] |
 | **state** | **String** |  | [optional] |
 | **qr_data_uri** | **String** |  | [optional] |
 | **deep_link** | **String** | https://&lt;server&gt;/push-auth/enroll?d&#x3D;… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it). | [optional] |
@@ -18,7 +18,7 @@
 require 'lumoauth_api_client'
 
 instance = LumoAuthApiClient::PushEnrollmentStarted.new(
-  id: push_enrollment:&lt;token&gt;,
+  id: push_enrollment:42,
   state: null,
   qr_data_uri: null,
   deep_link: null,

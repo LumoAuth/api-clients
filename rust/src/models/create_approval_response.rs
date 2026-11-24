@@ -23,6 +23,9 @@ pub struct CreateApprovalResponse {
     pub task_id: Option<String>,
     #[serde(rename = "impact", skip_serializing_if = "Option::is_none")]
     pub impact: Option<String>,
+    /// Where the request went: `push` (the LumoAuth app), `slack`, `discord`.
+    #[serde(rename = "delivery", skip_serializing_if = "Option::is_none")]
+    pub delivery: Option<Vec<Delivery>>,
 }
 
 impl CreateApprovalResponse {
@@ -33,7 +36,24 @@ impl CreateApprovalResponse {
             expires_at: None,
             task_id: None,
             impact: None,
+            delivery: None,
         }
+    }
+}
+/// Where the request went: `push` (the LumoAuth app), `slack`, `discord`.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Delivery {
+    #[serde(rename = "push")]
+    Push,
+    #[serde(rename = "slack")]
+    Slack,
+    #[serde(rename = "discord")]
+    Discord,
+}
+
+impl Default for Delivery {
+    fn default() -> Delivery {
+        Self::Push
     }
 }
 

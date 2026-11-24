@@ -59,7 +59,7 @@ class RegisterClientResponse(BaseModel):
     frontchannel_logout_session_required: Optional[StrictBool] = Field(default=None, description="Only when true.")
     backchannel_logout_uri: Optional[StrictStr] = None
     backchannel_logout_session_required: Optional[StrictBool] = Field(default=None, description="Only when true.")
-    audience_uris: Optional[List[StrictStr]] = Field(default=None, description="RFC 8707 resource indicators the client may request.")
+    audience_uris: Optional[List[StrictStr]] = Field(default=None, description="RFC 8707 resource indicators the client may request: at most 20 absolute https URLs without a fragment (http only for localhost). A registration with any other value is refused with invalid_client_metadata.")
     __properties: ClassVar[List[str]] = ["client_id", "client_secret", "client_secret_expires_at", "client_id_issued_at", "registration_access_token", "registration_client_uri", "client_name", "redirect_uris", "response_types", "grant_types", "application_type", "token_endpoint_auth_method", "contacts", "client_uri", "logo_uri", "policy_uri", "tos_uri", "jwks_uri", "jwks", "post_logout_redirect_uris", "initiate_login_uri", "scope", "id_token_signed_response_alg", "request_object_signing_alg", "token_endpoint_auth_signing_alg", "default_max_age", "require_auth_time", "default_acr_values", "frontchannel_logout_uri", "frontchannel_logout_session_required", "backchannel_logout_uri", "backchannel_logout_session_required", "audience_uris"]
 
     @field_validator('application_type')

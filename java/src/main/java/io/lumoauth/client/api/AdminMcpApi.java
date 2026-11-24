@@ -29,6 +29,10 @@ import java.io.IOException;
 
 import io.lumoauth.client.model.AdminMcpServersCreateResponse;
 import io.lumoauth.client.model.AdminMcpServersGetResponse;
+import io.lumoauth.client.model.AdminMcpServersGrantsListResponse;
+import io.lumoauth.client.model.AdminMcpServersGrantsRemoveResponse;
+import io.lumoauth.client.model.AdminMcpServersGrantsSetRequest;
+import io.lumoauth.client.model.AdminMcpServersGrantsSetResponse;
 import io.lumoauth.client.model.AdminMcpServersListResponse;
 import io.lumoauth.client.model.MessageResponse;
 
@@ -149,7 +153,7 @@ public class AdminMcpApi {
 
     /**
      * Register an MCP server
-     * Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \&quot;http_streamable\&quot; (\&quot;http_sse\&quot; is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \&quot;oauth\&quot;   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server&#39;s own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope &#x3D;&gt; text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \&quot;none\&quot; or transport \&quot;stdio\&quot;) is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+     * The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
      * @param orgId  (required)
      * @return AdminMcpServersCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -170,7 +174,7 @@ public class AdminMcpApi {
 
     /**
      * Register an MCP server
-     * Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \&quot;http_streamable\&quot; (\&quot;http_sse\&quot; is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \&quot;oauth\&quot;   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server&#39;s own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope &#x3D;&gt; text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \&quot;none\&quot; or transport \&quot;stdio\&quot;) is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+     * The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminMcpServersCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -192,7 +196,7 @@ public class AdminMcpApi {
 
     /**
      * Register an MCP server (asynchronously)
-     * Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \&quot;http_streamable\&quot; (\&quot;http_sse\&quot; is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \&quot;oauth\&quot;   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server&#39;s own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope &#x3D;&gt; text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \&quot;none\&quot; or transport \&quot;stdio\&quot;) is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+     * The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -493,6 +497,475 @@ public class AdminMcpApi {
 
         okhttp3.Call localVarCall = adminMcpServersGetValidateBeforeCall(orgId, serverId, _callback);
         Type localVarReturnType = new TypeToken<AdminMcpServersGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for adminMcpServersGrantsList
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param agentId Only the grants of this agent (agentId or numeric id). (optional)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> One entry per agent that holds a grant on the server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server or agent not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminMcpServersGrantsListCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nullable String agentId, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "serverId" + "}", localVarApiClient.escapeString(serverId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (agentId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("agent_id", agentId));
+        }
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminMcpServersGrantsListValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nullable String agentId, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminMcpServersGrantsList(Async)");
+        }
+
+        // verify the required parameter 'serverId' is set
+        if (serverId == null) {
+            throw new ApiException("Missing the required parameter 'serverId' when calling adminMcpServersGrantsList(Async)");
+        }
+
+        return adminMcpServersGrantsListCall(orgId, serverId, agentId, _callback);
+
+    }
+
+    /**
+     * List the agents allowed to call tools of an MCP server
+     * 
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param agentId Only the grants of this agent (agentId or numeric id). (optional)
+     * @return AdminMcpServersGrantsListResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> One entry per agent that holds a grant on the server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server or agent not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminMcpServersGrantsListResponse adminMcpServersGrantsList(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nullable String agentId) throws ApiException {
+        ApiResponse<AdminMcpServersGrantsListResponse> localVarResp = adminMcpServersGrantsListWithHttpInfo(orgId, serverId, agentId);
+        return localVarResp.getData();
+    }
+
+    /**
+     * List the agents allowed to call tools of an MCP server
+     * 
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param agentId Only the grants of this agent (agentId or numeric id). (optional)
+     * @return ApiResponse&lt;AdminMcpServersGrantsListResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> One entry per agent that holds a grant on the server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server or agent not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminMcpServersGrantsListResponse> adminMcpServersGrantsListWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nullable String agentId) throws ApiException {
+        okhttp3.Call localVarCall = adminMcpServersGrantsListValidateBeforeCall(orgId, serverId, agentId, null);
+        Type localVarReturnType = new TypeToken<AdminMcpServersGrantsListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * List the agents allowed to call tools of an MCP server (asynchronously)
+     * 
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param agentId Only the grants of this agent (agentId or numeric id). (optional)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> One entry per agent that holds a grant on the server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server or agent not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminMcpServersGrantsListAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nullable String agentId, final ApiCallback<AdminMcpServersGrantsListResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminMcpServersGrantsListValidateBeforeCall(orgId, serverId, agentId, _callback);
+        Type localVarReturnType = new TypeToken<AdminMcpServersGrantsListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for adminMcpServersGrantsRemove
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param agentId  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The agent may no longer call tools of the server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server or agent not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminMcpServersGrantsRemoveCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "serverId" + "}", localVarApiClient.escapeString(serverId.toString()))
+            .replace("{" + "agentId" + "}", localVarApiClient.escapeString(agentId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminMcpServersGrantsRemoveValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminMcpServersGrantsRemove(Async)");
+        }
+
+        // verify the required parameter 'serverId' is set
+        if (serverId == null) {
+            throw new ApiException("Missing the required parameter 'serverId' when calling adminMcpServersGrantsRemove(Async)");
+        }
+
+        // verify the required parameter 'agentId' is set
+        if (agentId == null) {
+            throw new ApiException("Missing the required parameter 'agentId' when calling adminMcpServersGrantsRemove(Async)");
+        }
+
+        return adminMcpServersGrantsRemoveCall(orgId, serverId, agentId, _callback);
+
+    }
+
+    /**
+     * Remove every grant of an agent on an MCP server
+     * 
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param agentId  (required)
+     * @return AdminMcpServersGrantsRemoveResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The agent may no longer call tools of the server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server or agent not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminMcpServersGrantsRemoveResponse adminMcpServersGrantsRemove(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull String agentId) throws ApiException {
+        ApiResponse<AdminMcpServersGrantsRemoveResponse> localVarResp = adminMcpServersGrantsRemoveWithHttpInfo(orgId, serverId, agentId);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Remove every grant of an agent on an MCP server
+     * 
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param agentId  (required)
+     * @return ApiResponse&lt;AdminMcpServersGrantsRemoveResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The agent may no longer call tools of the server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server or agent not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminMcpServersGrantsRemoveResponse> adminMcpServersGrantsRemoveWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull String agentId) throws ApiException {
+        okhttp3.Call localVarCall = adminMcpServersGrantsRemoveValidateBeforeCall(orgId, serverId, agentId, null);
+        Type localVarReturnType = new TypeToken<AdminMcpServersGrantsRemoveResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Remove every grant of an agent on an MCP server (asynchronously)
+     * 
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param agentId  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The agent may no longer call tools of the server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server or agent not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminMcpServersGrantsRemoveAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull String agentId, final ApiCallback<AdminMcpServersGrantsRemoveResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminMcpServersGrantsRemoveValidateBeforeCall(orgId, serverId, agentId, _callback);
+        Type localVarReturnType = new TypeToken<AdminMcpServersGrantsRemoveResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for adminMcpServersGrantsSet
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param agentId  (required)
+     * @param adminMcpServersGrantsSetRequest  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The agent&#39;s grants on the server after the change. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Neither tools nor all_tools sent, tools is not a list of names, a name contains / : # or *, is empty or too long, or more than 200 names </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan: granting needs the Fine-grained authorization feature </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server or agent not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminMcpServersGrantsSetCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = adminMcpServersGrantsSetRequest;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "serverId" + "}", localVarApiClient.escapeString(serverId.toString()))
+            .replace("{" + "agentId" + "}", localVarApiClient.escapeString(agentId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminMcpServersGrantsSetValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminMcpServersGrantsSet(Async)");
+        }
+
+        // verify the required parameter 'serverId' is set
+        if (serverId == null) {
+            throw new ApiException("Missing the required parameter 'serverId' when calling adminMcpServersGrantsSet(Async)");
+        }
+
+        // verify the required parameter 'agentId' is set
+        if (agentId == null) {
+            throw new ApiException("Missing the required parameter 'agentId' when calling adminMcpServersGrantsSet(Async)");
+        }
+
+        // verify the required parameter 'adminMcpServersGrantsSetRequest' is set
+        if (adminMcpServersGrantsSetRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminMcpServersGrantsSetRequest' when calling adminMcpServersGrantsSet(Async)");
+        }
+
+        return adminMcpServersGrantsSetCall(orgId, serverId, agentId, adminMcpServersGrantsSetRequest, _callback);
+
+    }
+
+    /**
+     * Set the tools of an MCP server that an agent may call
+     * 
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param agentId  (required)
+     * @param adminMcpServersGrantsSetRequest  (required)
+     * @return AdminMcpServersGrantsSetResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The agent&#39;s grants on the server after the change. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Neither tools nor all_tools sent, tools is not a list of names, a name contains / : # or *, is empty or too long, or more than 200 names </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan: granting needs the Fine-grained authorization feature </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server or agent not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminMcpServersGrantsSetResponse adminMcpServersGrantsSet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest) throws ApiException {
+        ApiResponse<AdminMcpServersGrantsSetResponse> localVarResp = adminMcpServersGrantsSetWithHttpInfo(orgId, serverId, agentId, adminMcpServersGrantsSetRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Set the tools of an MCP server that an agent may call
+     * 
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param agentId  (required)
+     * @param adminMcpServersGrantsSetRequest  (required)
+     * @return ApiResponse&lt;AdminMcpServersGrantsSetResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The agent&#39;s grants on the server after the change. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Neither tools nor all_tools sent, tools is not a list of names, a name contains / : # or *, is empty or too long, or more than 200 names </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan: granting needs the Fine-grained authorization feature </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server or agent not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminMcpServersGrantsSetResponse> adminMcpServersGrantsSetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminMcpServersGrantsSetValidateBeforeCall(orgId, serverId, agentId, adminMcpServersGrantsSetRequest, null);
+        Type localVarReturnType = new TypeToken<AdminMcpServersGrantsSetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Set the tools of an MCP server that an agent may call (asynchronously)
+     * 
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param agentId  (required)
+     * @param adminMcpServersGrantsSetRequest  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The agent&#39;s grants on the server after the change. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Neither tools nor all_tools sent, tools is not a list of names, a name contains / : # or *, is empty or too long, or more than 200 names </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> plan: granting needs the Fine-grained authorization feature </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server or agent not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminMcpServersGrantsSetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest, final ApiCallback<AdminMcpServersGrantsSetResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminMcpServersGrantsSetValidateBeforeCall(orgId, serverId, agentId, adminMcpServersGrantsSetRequest, _callback);
+        Type localVarReturnType = new TypeToken<AdminMcpServersGrantsSetResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

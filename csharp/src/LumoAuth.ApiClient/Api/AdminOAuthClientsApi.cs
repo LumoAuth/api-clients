@@ -95,6 +95,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Delete an OAuth client
         /// </summary>
+        /// <remarks>
+        /// Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
@@ -105,7 +108,7 @@ namespace LumoAuth.ApiClient.Api
         /// Delete an OAuth client
         /// </summary>
         /// <remarks>
-        /// 
+        /// Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -135,6 +138,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Enable an OAuth client
         /// </summary>
+        /// <remarks>
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
@@ -145,7 +151,7 @@ namespace LumoAuth.ApiClient.Api
         /// Enable an OAuth client
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -238,6 +244,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Update an OAuth client
         /// </summary>
+        /// <remarks>
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
@@ -248,7 +257,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update an OAuth client
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -283,6 +292,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Rotate an OAuth client secret
         /// </summary>
+        /// <remarks>
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
@@ -293,7 +305,7 @@ namespace LumoAuth.ApiClient.Api
         /// Rotate an OAuth client secret
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -303,6 +315,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Replace the scopes granted to an OAuth client
         /// </summary>
+        /// <remarks>
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
@@ -313,7 +328,7 @@ namespace LumoAuth.ApiClient.Api
         /// Replace the scopes granted to an OAuth client
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -323,6 +338,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Update an OAuth client (same as PATCH: only the fields that are sent change)
         /// </summary>
+        /// <remarks>
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
@@ -333,7 +351,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update an OAuth client (same as PATCH: only the fields that are sent change)
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -426,7 +444,7 @@ namespace LumoAuth.ApiClient.Api
         /// Delete an OAuth client
         /// </summary>
         /// <remarks>
-        /// 
+        /// Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -439,7 +457,7 @@ namespace LumoAuth.ApiClient.Api
         /// Delete an OAuth client
         /// </summary>
         /// <remarks>
-        /// 
+        /// Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -476,7 +494,7 @@ namespace LumoAuth.ApiClient.Api
         /// Enable an OAuth client
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -489,7 +507,7 @@ namespace LumoAuth.ApiClient.Api
         /// Enable an OAuth client
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -601,7 +619,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update an OAuth client
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -614,7 +632,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update an OAuth client
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -653,7 +671,7 @@ namespace LumoAuth.ApiClient.Api
         /// Rotate an OAuth client secret
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -666,7 +684,7 @@ namespace LumoAuth.ApiClient.Api
         /// Rotate an OAuth client secret
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -678,7 +696,7 @@ namespace LumoAuth.ApiClient.Api
         /// Replace the scopes granted to an OAuth client
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -691,7 +709,7 @@ namespace LumoAuth.ApiClient.Api
         /// Replace the scopes granted to an OAuth client
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -703,7 +721,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update an OAuth client (same as PATCH: only the fields that are sent change)
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -716,7 +734,7 @@ namespace LumoAuth.ApiClient.Api
         /// Update an OAuth client (same as PATCH: only the fields that are sent change)
         /// </summary>
         /// <remarks>
-        /// 
+        /// A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1379,7 +1397,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Delete an OAuth client 
+        /// Delete an OAuth client Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1392,7 +1410,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Delete an OAuth client 
+        /// Delete an OAuth client Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1452,7 +1470,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Delete an OAuth client 
+        /// Delete an OAuth client Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1466,7 +1484,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Delete an OAuth client 
+        /// Delete an OAuth client Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1681,7 +1699,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Enable an OAuth client 
+        /// Enable an OAuth client A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1694,7 +1712,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Enable an OAuth client 
+        /// Enable an OAuth client A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1754,7 +1772,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Enable an OAuth client 
+        /// Enable an OAuth client A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1768,7 +1786,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Enable an OAuth client 
+        /// Enable an OAuth client A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2430,7 +2448,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an OAuth client 
+        /// Update an OAuth client A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2443,7 +2461,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an OAuth client 
+        /// Update an OAuth client A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2503,7 +2521,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an OAuth client 
+        /// Update an OAuth client A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2517,7 +2535,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an OAuth client 
+        /// Update an OAuth client A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2740,7 +2758,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Rotate an OAuth client secret 
+        /// Rotate an OAuth client secret A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2753,7 +2771,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Rotate an OAuth client secret 
+        /// Rotate an OAuth client secret A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2813,7 +2831,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Rotate an OAuth client secret 
+        /// Rotate an OAuth client secret A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2827,7 +2845,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Rotate an OAuth client secret 
+        /// Rotate an OAuth client secret A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2891,7 +2909,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replace the scopes granted to an OAuth client 
+        /// Replace the scopes granted to an OAuth client A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2904,7 +2922,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replace the scopes granted to an OAuth client 
+        /// Replace the scopes granted to an OAuth client A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2964,7 +2982,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replace the scopes granted to an OAuth client 
+        /// Replace the scopes granted to an OAuth client A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2978,7 +2996,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Replace the scopes granted to an OAuth client 
+        /// Replace the scopes granted to an OAuth client A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3042,7 +3060,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an OAuth client (same as PATCH: only the fields that are sent change) 
+        /// Update an OAuth client (same as PATCH: only the fields that are sent change) A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3055,7 +3073,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an OAuth client (same as PATCH: only the fields that are sent change) 
+        /// Update an OAuth client (same as PATCH: only the fields that are sent change) A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3115,7 +3133,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an OAuth client (same as PATCH: only the fields that are sent change) 
+        /// Update an OAuth client (same as PATCH: only the fields that are sent change) A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3129,7 +3147,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an OAuth client (same as PATCH: only the fields that are sent change) 
+        /// Update an OAuth client (same as PATCH: only the fields that are sent change) A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

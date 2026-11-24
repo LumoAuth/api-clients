@@ -53,7 +53,7 @@ import io.lumoauth.client.JSON;
 /**
  * PutAdminAgentsUpdateRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-19T15:14:32.479877953Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T20:12:48.846738323Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class PutAdminAgentsUpdateRequest {
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
@@ -74,6 +74,26 @@ public class PutAdminAgentsUpdateRequest {
   @SerializedName(SERIALIZED_NAME_BUDGET_POLICY)
   @javax.annotation.Nullable
   private Map<String, Object> budgetPolicy;
+
+  public static final String SERIALIZED_NAME_JWKS = "jwks";
+  @SerializedName(SERIALIZED_NAME_JWKS)
+  @javax.annotation.Nullable
+  private Map<String, Object> jwks = new HashMap<>();
+
+  public static final String SERIALIZED_NAME_JWKS_URI = "jwksUri";
+  @SerializedName(SERIALIZED_NAME_JWKS_URI)
+  @javax.annotation.Nullable
+  private String jwksUri;
+
+  public static final String SERIALIZED_NAME_CAN_ACT_ON_BEHALF_OF_USERS = "canActOnBehalfOfUsers";
+  @SerializedName(SERIALIZED_NAME_CAN_ACT_ON_BEHALF_OF_USERS)
+  @javax.annotation.Nullable
+  private Boolean canActOnBehalfOfUsers;
+
+  public static final String SERIALIZED_NAME_OWNER_ID = "ownerId";
+  @SerializedName(SERIALIZED_NAME_OWNER_ID)
+  @javax.annotation.Nullable
+  private String ownerId;
 
   public PutAdminAgentsUpdateRequest() {
   }
@@ -170,6 +190,90 @@ public class PutAdminAgentsUpdateRequest {
   }
 
 
+  public PutAdminAgentsUpdateRequest jwks(@javax.annotation.Nullable Map<String, Object> jwks) {
+    this.jwks = jwks;
+    return this;
+  }
+
+  public PutAdminAgentsUpdateRequest putJwksItem(String key, Object jwksItem) {
+    if (this.jwks == null) {
+      this.jwks = new HashMap<>();
+    }
+    this.jwks.put(key, jwksItem);
+    return this;
+  }
+
+  /**
+   * For private_key_jwt agents: replaces the public keys (inline JWK Set). Removing a key revokes the tokens that the agent holds.
+   * @return jwks
+   */
+  @javax.annotation.Nullable
+  public Map<String, Object> getJwks() {
+    return jwks;
+  }
+
+  public void setJwks(@javax.annotation.Nullable Map<String, Object> jwks) {
+    this.jwks = jwks;
+  }
+
+
+  public PutAdminAgentsUpdateRequest jwksUri(@javax.annotation.Nullable String jwksUri) {
+    this.jwksUri = jwksUri;
+    return this;
+  }
+
+  /**
+   * For private_key_jwt agents: https URL of the public key set.
+   * @return jwksUri
+   */
+  @javax.annotation.Nullable
+  public String getJwksUri() {
+    return jwksUri;
+  }
+
+  public void setJwksUri(@javax.annotation.Nullable String jwksUri) {
+    this.jwksUri = jwksUri;
+  }
+
+
+  public PutAdminAgentsUpdateRequest canActOnBehalfOfUsers(@javax.annotation.Nullable Boolean canActOnBehalfOfUsers) {
+    this.canActOnBehalfOfUsers = canActOnBehalfOfUsers;
+    return this;
+  }
+
+  /**
+   * Whether the agent may act for users of the organization. Switching it on needs the delegation feature of the plan and an editor who holds every capability of the agent.
+   * @return canActOnBehalfOfUsers
+   */
+  @javax.annotation.Nullable
+  public Boolean getCanActOnBehalfOfUsers() {
+    return canActOnBehalfOfUsers;
+  }
+
+  public void setCanActOnBehalfOfUsers(@javax.annotation.Nullable Boolean canActOnBehalfOfUsers) {
+    this.canActOnBehalfOfUsers = canActOnBehalfOfUsers;
+  }
+
+
+  public PutAdminAgentsUpdateRequest ownerId(@javax.annotation.Nullable String ownerId) {
+    this.ownerId = ownerId;
+    return this;
+  }
+
+  /**
+   * Gives the agent a new owner: the id or the email address of an active account of the organization. The owner is the person in whose name the agent asks for just-in-time access and who receives its approval requests. The caller must hold every capability of the agent and every permission of the new owner (naming yourself always works). An agent whose owner was deleted, blocked or switched off (&#x60;needsNewOwner&#x60; in the agent object) needs a new owner before it can be activated.
+   * @return ownerId
+   */
+  @javax.annotation.Nullable
+  public String getOwnerId() {
+    return ownerId;
+  }
+
+  public void setOwnerId(@javax.annotation.Nullable String ownerId) {
+    this.ownerId = ownerId;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -183,7 +287,11 @@ public class PutAdminAgentsUpdateRequest {
     return Objects.equals(this.name, putAdminAgentsUpdateRequest.name) &&
         Objects.equals(this.description, putAdminAgentsUpdateRequest.description) &&
         Objects.equals(this.capabilities, putAdminAgentsUpdateRequest.capabilities) &&
-        Objects.equals(this.budgetPolicy, putAdminAgentsUpdateRequest.budgetPolicy);
+        Objects.equals(this.budgetPolicy, putAdminAgentsUpdateRequest.budgetPolicy) &&
+        Objects.equals(this.jwks, putAdminAgentsUpdateRequest.jwks) &&
+        Objects.equals(this.jwksUri, putAdminAgentsUpdateRequest.jwksUri) &&
+        Objects.equals(this.canActOnBehalfOfUsers, putAdminAgentsUpdateRequest.canActOnBehalfOfUsers) &&
+        Objects.equals(this.ownerId, putAdminAgentsUpdateRequest.ownerId);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -192,7 +300,7 @@ public class PutAdminAgentsUpdateRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, description, capabilities, budgetPolicy);
+    return Objects.hash(name, description, capabilities, budgetPolicy, jwks, jwksUri, canActOnBehalfOfUsers, ownerId);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -210,6 +318,10 @@ public class PutAdminAgentsUpdateRequest {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    capabilities: ").append(toIndentedString(capabilities)).append("\n");
     sb.append("    budgetPolicy: ").append(toIndentedString(budgetPolicy)).append("\n");
+    sb.append("    jwks: ").append(toIndentedString(jwks)).append("\n");
+    sb.append("    jwksUri: ").append(toIndentedString(jwksUri)).append("\n");
+    sb.append("    canActOnBehalfOfUsers: ").append(toIndentedString(canActOnBehalfOfUsers)).append("\n");
+    sb.append("    ownerId: ").append(toIndentedString(ownerId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -231,7 +343,7 @@ public class PutAdminAgentsUpdateRequest {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("name", "description", "capabilities", "budgetPolicy"));
+    openapiFields = new HashSet<String>(Arrays.asList("name", "description", "capabilities", "budgetPolicy", "jwks", "jwksUri", "canActOnBehalfOfUsers", "ownerId"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -267,6 +379,12 @@ public class PutAdminAgentsUpdateRequest {
       // ensure the optional json data is an array if present
       if (jsonObj.get("capabilities") != null && !jsonObj.get("capabilities").isJsonNull() && !jsonObj.get("capabilities").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `capabilities` to be an array in the JSON string but got `%s`", jsonObj.get("capabilities").toString()));
+      }
+      if ((jsonObj.get("jwksUri") != null && !jsonObj.get("jwksUri").isJsonNull()) && !jsonObj.get("jwksUri").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `jwksUri` to be a primitive type in the JSON string but got `%s`", jsonObj.get("jwksUri").toString()));
+      }
+      if ((jsonObj.get("ownerId") != null && !jsonObj.get("ownerId").isJsonNull()) && !jsonObj.get("ownerId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ownerId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ownerId").toString()));
       }
   }
 

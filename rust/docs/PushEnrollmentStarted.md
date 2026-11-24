@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | Option<**String**> |  | [optional]
+**id** | Option<**String**> | Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret. | [optional]
 **state** | Option<**String**> |  | [optional]
 **qr_data_uri** | Option<**String**> |  | [optional]
 **deep_link** | Option<**String**> | https://<server>/push-auth/enroll?d=… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it). | [optional]

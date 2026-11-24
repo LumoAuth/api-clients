@@ -15,6 +15,7 @@ public struct PushEnrollmentStarted: Codable, JSONEncodable, Hashable {
     public enum State: String, Codable, CaseIterable {
         case pending = "pending"
     }
+    /** Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret. */
     public var id: String?
     public var state: State?
     public var qrDataUri: String?

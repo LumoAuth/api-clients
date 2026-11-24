@@ -1326,6 +1326,7 @@ class JitApi:
             '401': None,
             '403': None,
             '404': None,
+            '415': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1399,6 +1400,7 @@ class JitApi:
             '401': None,
             '403': None,
             '404': None,
+            '415': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1472,6 +1474,7 @@ class JitApi:
             '401': None,
             '403': None,
             '404': None,
+            '415': None,
         }
         response_data = self.api_client.call_api(
             *_param,

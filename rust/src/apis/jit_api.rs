@@ -67,6 +67,7 @@ pub enum EvaluateTaskError {
     Status401(),
     Status403(),
     Status404(),
+    Status415(),
     UnknownValue(serde_json::Value),
 }
 

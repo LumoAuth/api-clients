@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * PutAdminSettingsGeneralUpdateRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-19T15:14:32.479877953Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T20:12:48.846738323Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class PutAdminSettingsGeneralUpdateRequest {
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
@@ -69,7 +69,7 @@ public class PutAdminSettingsGeneralUpdateRequest {
   }
 
   /**
-   * Name of the organization: one line, 1 to 255 characters. Aliases: tenantName, display_name, displayName.
+   * Name of the organization: one line, 1 to 255 characters, without \&quot;&lt;\&quot; or \&quot;&gt;\&quot;. Aliases: tenantName, display_name, displayName.
    * @return name
    */
   @javax.annotation.Nullable

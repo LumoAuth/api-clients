@@ -16,6 +16,10 @@ package io.lumoauth.client.api;
 import io.lumoauth.client.ApiException;
 import io.lumoauth.client.model.AdminMcpServersCreateResponse;
 import io.lumoauth.client.model.AdminMcpServersGetResponse;
+import io.lumoauth.client.model.AdminMcpServersGrantsListResponse;
+import io.lumoauth.client.model.AdminMcpServersGrantsRemoveResponse;
+import io.lumoauth.client.model.AdminMcpServersGrantsSetRequest;
+import io.lumoauth.client.model.AdminMcpServersGrantsSetResponse;
 import io.lumoauth.client.model.AdminMcpServersListResponse;
 import io.lumoauth.client.model.MessageResponse;
 import org.junit.jupiter.api.Disabled;
@@ -37,7 +41,7 @@ public class AdminMcpApiTest {
     /**
      * Register an MCP server
      *
-     * Body:   name (required) — display name   resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for       loopback), no fragment, no user info, not a LumoAuth host, unique       per organization after normalisation (same rules as the portal)   endpoint_url (optional) — actual MCP endpoint   description (optional)   scopes_supported (optional) — array OR space/comma-separated string; omnibus       scopes, offline_access and admin/scim scopes are refused (422)   basic_scopes (optional) — subset of scopes_supported advertised in the       401 challenge and Protected Resource Metadata; no wildcards   transport (optional) — defaults to \&quot;http_streamable\&quot; (\&quot;http_sse\&quot; is       deprecated in MCP 2026-07-28)   auth_mode (optional) — defaults to \&quot;oauth\&quot;   token_lifetime (optional, default 3600) — 60..86400, else 422   tool_authorizer_client_ids (optional) — the MCP server&#39;s own OAuth clients       that may call the per-tool authorization endpoint   allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;       unknown ids are a 422 (never persisted as policy)   require_pkce (optional, default true)   require_resource_param (optional, default true)   require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only   scope_descriptions (optional) — object scope &#x3D;&gt; text for scopes in       scopes_supported (portal and consent page only), 200 characters each  A server that is not OAuth-protected (auth_mode \&quot;none\&quot; or transport \&quot;stdio\&quot;) is stored with the three require_* switches off. Fields that cannot be configured (include_scope_in_challenge, bearer_methods_supported) are refused with 400 so that a caller is never told a value was stored.
+     * The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
      *
      * @throws ApiException if the Api call fails
      */
@@ -71,6 +75,49 @@ public class AdminMcpApiTest {
         String orgId = null;
         String serverId = null;
         AdminMcpServersGetResponse response = api.adminMcpServersGet(orgId, serverId);
+        // TODO: test validations
+    }
+
+    /**
+     * List the agents allowed to call tools of an MCP server
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminMcpServersGrantsListTest() throws ApiException {
+        String orgId = null;
+        String serverId = null;
+        String agentId = null;
+        AdminMcpServersGrantsListResponse response = api.adminMcpServersGrantsList(orgId, serverId, agentId);
+        // TODO: test validations
+    }
+
+    /**
+     * Remove every grant of an agent on an MCP server
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminMcpServersGrantsRemoveTest() throws ApiException {
+        String orgId = null;
+        String serverId = null;
+        String agentId = null;
+        AdminMcpServersGrantsRemoveResponse response = api.adminMcpServersGrantsRemove(orgId, serverId, agentId);
+        // TODO: test validations
+    }
+
+    /**
+     * Set the tools of an MCP server that an agent may call
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminMcpServersGrantsSetTest() throws ApiException {
+        String orgId = null;
+        String serverId = null;
+        String agentId = null;
+        AdminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest = null;
+        AdminMcpServersGrantsSetResponse response = api.adminMcpServersGrantsSet(orgId, serverId, agentId, adminMcpServersGrantsSetRequest);
         // TODO: test validations
     }
 

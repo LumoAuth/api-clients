@@ -28,7 +28,7 @@ class PushEnrollmentStarted(BaseModel):
     """
     PushEnrollmentStarted
     """ # noqa: E501
-    id: Optional[StrictStr] = None
+    id: Optional[StrictStr] = Field(default=None, description="Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret.")
     state: Optional[StrictStr] = None
     qr_data_uri: Optional[StrictStr] = None
     deep_link: Optional[StrictStr] = Field(default=None, description="https://<server>/push-auth/enroll?d=… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it).")

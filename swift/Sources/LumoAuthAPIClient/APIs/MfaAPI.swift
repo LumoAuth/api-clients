@@ -64,7 +64,7 @@ open class MfaAPI {
      
      - parameter orgId: (path)  
      - parameter id: (path)  
-     - parameter xMFAChallenge: (header) Approved step_up challenge id (optional)
+     - parameter xMFAChallenge: (header) Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)
      - returns: Void
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -84,7 +84,7 @@ open class MfaAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter id: (path)  
-     - parameter xMFAChallenge: (header) Approved step_up challenge id (optional)
+     - parameter xMFAChallenge: (header) Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)
      - returns: RequestBuilder<Void> 
      */
     open class func deleteAuthenticatorWithRequestBuilder(orgId: String, id: String, xMFAChallenge: String? = nil) -> RequestBuilder<Void> {

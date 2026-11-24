@@ -351,7 +351,7 @@ class MfaApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
-        x_mfa_challenge: Annotated[Optional[StrictStr], Field(description="Approved step_up challenge id")] = None,
+        x_mfa_challenge: Annotated[Optional[StrictStr], Field(description="Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -373,7 +373,7 @@ class MfaApi:
         :type org_id: str
         :param id: (required)
         :type id: str
-        :param x_mfa_challenge: Approved step_up challenge id
+        :param x_mfa_challenge: Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)
         :type x_mfa_challenge: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -428,7 +428,7 @@ class MfaApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
-        x_mfa_challenge: Annotated[Optional[StrictStr], Field(description="Approved step_up challenge id")] = None,
+        x_mfa_challenge: Annotated[Optional[StrictStr], Field(description="Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -450,7 +450,7 @@ class MfaApi:
         :type org_id: str
         :param id: (required)
         :type id: str
-        :param x_mfa_challenge: Approved step_up challenge id
+        :param x_mfa_challenge: Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)
         :type x_mfa_challenge: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -505,7 +505,7 @@ class MfaApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
-        x_mfa_challenge: Annotated[Optional[StrictStr], Field(description="Approved step_up challenge id")] = None,
+        x_mfa_challenge: Annotated[Optional[StrictStr], Field(description="Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -527,7 +527,7 @@ class MfaApi:
         :type org_id: str
         :param id: (required)
         :type id: str
-        :param x_mfa_challenge: Approved step_up challenge id
+        :param x_mfa_challenge: Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)
         :type x_mfa_challenge: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

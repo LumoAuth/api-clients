@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** |  | [optional] 
+**Id** | Pointer to **string** | Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret. | [optional] 
 **State** | Pointer to **string** |  | [optional] 
 **QrDataUri** | Pointer to **string** |  | [optional] 
 **DeepLink** | Pointer to **string** | https://&lt;server&gt;/push-auth/enroll?d&#x3D;… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it). | [optional] 

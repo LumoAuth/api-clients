@@ -4025,7 +4025,7 @@ class AdminOAuthClientsApi
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \LumoAuth\ApiClient\Model\SetClientScopesResponse
+     * @return |\LumoAuth\ApiClient\Model\SetClientScopesResponse
      */
     public function setClientScopes($orgId, $clientId, string $contentType = self::contentTypes['setClientScopes'][0])
     {
@@ -4044,7 +4044,7 @@ class AdminOAuthClientsApi
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \LumoAuth\ApiClient\Model\SetClientScopesResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of |\LumoAuth\ApiClient\Model\SetClientScopesResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function setClientScopesWithHttpInfo($orgId, $clientId, string $contentType = self::contentTypes['setClientScopes'][0])
     {

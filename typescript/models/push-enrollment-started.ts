@@ -21,7 +21,7 @@
  */
 export interface PushEnrollmentStarted {
     /**
-     * 
+     * Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret.
      * @type {string}
      * @memberof PushEnrollmentStarted
      */

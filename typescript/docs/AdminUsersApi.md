@@ -1054,6 +1054,7 @@ const { status, data } = await apiInstance.markUserVerified(
 # **patchUser**
 > UpdateUserResponse patchUser()
 
+Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive` or `emailVerified` needs a caller who holds every permission of the user. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
 
 ### Example
 
@@ -1101,6 +1102,9 @@ const { status, data } = await apiInstance.patchUser(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | User updated |  -  |
+|**400** | An invalid value, or a field that is not accepted here (&#x60;password&#x60;, &#x60;metadata&#x60;) |  -  |
+|**401** | insufficient_user_authentication: &#x60;email&#x60; changes and the access token comes from a sign-in older than 10 minutes |  -  |
+|**403** | The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1600,6 +1604,7 @@ const { status, data } = await apiInstance.unblockUser(
 # **updateUser**
 > UpdateUserResponse updateUser()
 
+Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive` or `emailVerified` needs a caller who holds every permission of the user. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
 
 ### Example
 
@@ -1647,6 +1652,9 @@ const { status, data } = await apiInstance.updateUser(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | User updated |  -  |
+|**400** | An invalid value, or a field that is not accepted here (&#x60;password&#x60;, &#x60;metadata&#x60;) |  -  |
+|**401** | insufficient_user_authentication: &#x60;email&#x60; changes and the access token comes from a sign-in older than 10 minutes |  -  |
+|**403** | The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

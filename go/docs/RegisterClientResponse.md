@@ -36,7 +36,7 @@ Name | Type | Description | Notes
 **FrontchannelLogoutSessionRequired** | Pointer to **bool** | Only when true. | [optional] 
 **BackchannelLogoutUri** | Pointer to **string** |  | [optional] 
 **BackchannelLogoutSessionRequired** | Pointer to **bool** | Only when true. | [optional] 
-**AudienceUris** | Pointer to **[]string** | RFC 8707 resource indicators the client may request. | [optional] 
+**AudienceUris** | Pointer to **[]string** | RFC 8707 resource indicators the client may request: at most 20 absolute https URLs without a fragment (http only for localhost). A registration with any other value is refused with invalid_client_metadata. | [optional] 
 
 ## Methods
 

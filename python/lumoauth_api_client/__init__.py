@@ -144,6 +144,13 @@ __all__ = [
     "AdminIdentitiesListResponseDataBindingsItem",
     "AdminMcpServersCreateResponse",
     "AdminMcpServersGetResponse",
+    "AdminMcpServersGrantsListResponse",
+    "AdminMcpServersGrantsListResponseDataItem",
+    "AdminMcpServersGrantsRemoveResponse",
+    "AdminMcpServersGrantsRemoveResponseData",
+    "AdminMcpServersGrantsSetRequest",
+    "AdminMcpServersGrantsSetResponse",
+    "AdminMcpServersGrantsSetResponseData",
     "AdminMcpServersListResponse",
     "AdminOrgInvitationsCreateResponse",
     "AdminOrgInvitationsListResponse",
@@ -227,6 +234,9 @@ __all__ = [
     "AdminWebhooksWebhooksDisableResponse",
     "AdminWebhooksWebhooksEnableResponse",
     "AgentOutboundConnection",
+    "AgentsMeToolCallsRequest",
+    "AgentsMeToolCallsRequestCallsItem",
+    "AgentsMeToolCallsResponse",
     "ApproveRequestRequest",
     "ApproveRequestResponse",
     "AskRequest",
@@ -264,6 +274,7 @@ __all__ = [
     "CimdCheckResultShadowClient",
     "CompleteTaskResponse",
     "CreateApprovalRequest",
+    "CreateApprovalRequestMeta",
     "CreateApprovalResponse",
     "CreateApprovalResponse202",
     "CreateClientResponse",
@@ -387,6 +398,8 @@ __all__ = [
     "PasskeyEnrollmentStarted",
     "PatchAdminClientsUpdateBrandingResponse",
     "Permission",
+    "PollAgentEnrollmentRequest",
+    "PollAgentEnrollmentResponse",
     "ProtectedResourceList",
     "ProtectedResourceMetadata",
     "PushEnrollmentStarted",
@@ -445,6 +458,12 @@ __all__ = [
     "SsfStream",
     "SsfStreamDelivery",
     "SsfStreamList",
+    "StartAgentEnrollmentRequest",
+    "StartAgentEnrollmentRequestCapabilitiesItem",
+    "StartAgentEnrollmentRequestInventory",
+    "StartAgentEnrollmentRequestInventoryMcpServersItem",
+    "StartAgentEnrollmentRequestJwks",
+    "StartAgentEnrollmentResponse",
     "SubmitLoginJsonResponse",
     "TenantProfile",
     "TokenResponse",
@@ -605,6 +624,13 @@ from lumoauth_api_client.models.admin_identities_list_response_data import Admin
 from lumoauth_api_client.models.admin_identities_list_response_data_bindings_item import AdminIdentitiesListResponseDataBindingsItem as AdminIdentitiesListResponseDataBindingsItem
 from lumoauth_api_client.models.admin_mcp_servers_create_response import AdminMcpServersCreateResponse as AdminMcpServersCreateResponse
 from lumoauth_api_client.models.admin_mcp_servers_get_response import AdminMcpServersGetResponse as AdminMcpServersGetResponse
+from lumoauth_api_client.models.admin_mcp_servers_grants_list_response import AdminMcpServersGrantsListResponse as AdminMcpServersGrantsListResponse
+from lumoauth_api_client.models.admin_mcp_servers_grants_list_response_data_item import AdminMcpServersGrantsListResponseDataItem as AdminMcpServersGrantsListResponseDataItem
+from lumoauth_api_client.models.admin_mcp_servers_grants_remove_response import AdminMcpServersGrantsRemoveResponse as AdminMcpServersGrantsRemoveResponse
+from lumoauth_api_client.models.admin_mcp_servers_grants_remove_response_data import AdminMcpServersGrantsRemoveResponseData as AdminMcpServersGrantsRemoveResponseData
+from lumoauth_api_client.models.admin_mcp_servers_grants_set_request import AdminMcpServersGrantsSetRequest as AdminMcpServersGrantsSetRequest
+from lumoauth_api_client.models.admin_mcp_servers_grants_set_response import AdminMcpServersGrantsSetResponse as AdminMcpServersGrantsSetResponse
+from lumoauth_api_client.models.admin_mcp_servers_grants_set_response_data import AdminMcpServersGrantsSetResponseData as AdminMcpServersGrantsSetResponseData
 from lumoauth_api_client.models.admin_mcp_servers_list_response import AdminMcpServersListResponse as AdminMcpServersListResponse
 from lumoauth_api_client.models.admin_org_invitations_create_response import AdminOrgInvitationsCreateResponse as AdminOrgInvitationsCreateResponse
 from lumoauth_api_client.models.admin_org_invitations_list_response import AdminOrgInvitationsListResponse as AdminOrgInvitationsListResponse
@@ -688,6 +714,9 @@ from lumoauth_api_client.models.admin_webhooks_tunnel_start_response_data import
 from lumoauth_api_client.models.admin_webhooks_webhooks_disable_response import AdminWebhooksWebhooksDisableResponse as AdminWebhooksWebhooksDisableResponse
 from lumoauth_api_client.models.admin_webhooks_webhooks_enable_response import AdminWebhooksWebhooksEnableResponse as AdminWebhooksWebhooksEnableResponse
 from lumoauth_api_client.models.agent_outbound_connection import AgentOutboundConnection as AgentOutboundConnection
+from lumoauth_api_client.models.agents_me_tool_calls_request import AgentsMeToolCallsRequest as AgentsMeToolCallsRequest
+from lumoauth_api_client.models.agents_me_tool_calls_request_calls_item import AgentsMeToolCallsRequestCallsItem as AgentsMeToolCallsRequestCallsItem
+from lumoauth_api_client.models.agents_me_tool_calls_response import AgentsMeToolCallsResponse as AgentsMeToolCallsResponse
 from lumoauth_api_client.models.approve_request_request import ApproveRequestRequest as ApproveRequestRequest
 from lumoauth_api_client.models.approve_request_response import ApproveRequestResponse as ApproveRequestResponse
 from lumoauth_api_client.models.ask_request import AskRequest as AskRequest
@@ -725,6 +754,7 @@ from lumoauth_api_client.models.cimd_check_result_effective import CimdCheckResu
 from lumoauth_api_client.models.cimd_check_result_shadow_client import CimdCheckResultShadowClient as CimdCheckResultShadowClient
 from lumoauth_api_client.models.complete_task_response import CompleteTaskResponse as CompleteTaskResponse
 from lumoauth_api_client.models.create_approval_request import CreateApprovalRequest as CreateApprovalRequest
+from lumoauth_api_client.models.create_approval_request_meta import CreateApprovalRequestMeta as CreateApprovalRequestMeta
 from lumoauth_api_client.models.create_approval_response import CreateApprovalResponse as CreateApprovalResponse
 from lumoauth_api_client.models.create_approval_response202 import CreateApprovalResponse202 as CreateApprovalResponse202
 from lumoauth_api_client.models.create_client_response import CreateClientResponse as CreateClientResponse
@@ -848,6 +878,8 @@ from lumoauth_api_client.models.par_response import ParResponse as ParResponse
 from lumoauth_api_client.models.passkey_enrollment_started import PasskeyEnrollmentStarted as PasskeyEnrollmentStarted
 from lumoauth_api_client.models.patch_admin_clients_update_branding_response import PatchAdminClientsUpdateBrandingResponse as PatchAdminClientsUpdateBrandingResponse
 from lumoauth_api_client.models.permission import Permission as Permission
+from lumoauth_api_client.models.poll_agent_enrollment_request import PollAgentEnrollmentRequest as PollAgentEnrollmentRequest
+from lumoauth_api_client.models.poll_agent_enrollment_response import PollAgentEnrollmentResponse as PollAgentEnrollmentResponse
 from lumoauth_api_client.models.protected_resource_list import ProtectedResourceList as ProtectedResourceList
 from lumoauth_api_client.models.protected_resource_metadata import ProtectedResourceMetadata as ProtectedResourceMetadata
 from lumoauth_api_client.models.push_enrollment_started import PushEnrollmentStarted as PushEnrollmentStarted
@@ -906,6 +938,12 @@ from lumoauth_api_client.models.social_login_provider import SocialLoginProvider
 from lumoauth_api_client.models.ssf_stream import SsfStream as SsfStream
 from lumoauth_api_client.models.ssf_stream_delivery import SsfStreamDelivery as SsfStreamDelivery
 from lumoauth_api_client.models.ssf_stream_list import SsfStreamList as SsfStreamList
+from lumoauth_api_client.models.start_agent_enrollment_request import StartAgentEnrollmentRequest as StartAgentEnrollmentRequest
+from lumoauth_api_client.models.start_agent_enrollment_request_capabilities_item import StartAgentEnrollmentRequestCapabilitiesItem as StartAgentEnrollmentRequestCapabilitiesItem
+from lumoauth_api_client.models.start_agent_enrollment_request_inventory import StartAgentEnrollmentRequestInventory as StartAgentEnrollmentRequestInventory
+from lumoauth_api_client.models.start_agent_enrollment_request_inventory_mcp_servers_item import StartAgentEnrollmentRequestInventoryMcpServersItem as StartAgentEnrollmentRequestInventoryMcpServersItem
+from lumoauth_api_client.models.start_agent_enrollment_request_jwks import StartAgentEnrollmentRequestJwks as StartAgentEnrollmentRequestJwks
+from lumoauth_api_client.models.start_agent_enrollment_response import StartAgentEnrollmentResponse as StartAgentEnrollmentResponse
 from lumoauth_api_client.models.submit_login_json_response import SubmitLoginJsonResponse as SubmitLoginJsonResponse
 from lumoauth_api_client.models.tenant_profile import TenantProfile as TenantProfile
 from lumoauth_api_client.models.token_response import TokenResponse as TokenResponse

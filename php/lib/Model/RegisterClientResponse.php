@@ -1456,7 +1456,7 @@ class RegisterClientResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets audienceUris
      *
-     * @param string[]|null $audienceUris RFC 8707 resource indicators the client may request.
+     * @param string[]|null $audienceUris RFC 8707 resource indicators the client may request: at most 20 absolute https URLs without a fragment (http only for localhost). A registration with any other value is refused with invalid_client_metadata.
      *
      * @return self
      */

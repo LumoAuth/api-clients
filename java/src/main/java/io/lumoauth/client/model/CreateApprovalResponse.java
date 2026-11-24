@@ -21,7 +21,9 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * CreateApprovalResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-19T15:14:32.479877953Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T20:12:48.846738323Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class CreateApprovalResponse {
   public static final String SERIALIZED_NAME_APPROVAL_TOKEN = "approval_token";
   @SerializedName(SERIALIZED_NAME_APPROVAL_TOKEN)
@@ -75,6 +77,65 @@ public class CreateApprovalResponse {
   @SerializedName(SERIALIZED_NAME_IMPACT)
   @javax.annotation.Nullable
   private String impact;
+
+  /**
+   * Gets or Sets delivery
+   */
+  @JsonAdapter(DeliveryEnum.Adapter.class)
+  public enum DeliveryEnum {
+    PUSH("push"),
+    
+    SLACK("slack"),
+    
+    DISCORD("discord");
+
+    private String value;
+
+    DeliveryEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static DeliveryEnum fromValue(String value) {
+      for (DeliveryEnum b : DeliveryEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<DeliveryEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final DeliveryEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public DeliveryEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return DeliveryEnum.fromValue(value);
+      }
+    }
+
+    public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      String value = jsonElement.getAsString();
+      DeliveryEnum.fromValue(value);
+    }
+  }
+
+  public static final String SERIALIZED_NAME_DELIVERY = "delivery";
+  @SerializedName(SERIALIZED_NAME_DELIVERY)
+  @javax.annotation.Nullable
+  private List<DeliveryEnum> delivery = new ArrayList<>();
 
   public CreateApprovalResponse() {
   }
@@ -174,6 +235,33 @@ public class CreateApprovalResponse {
   }
 
 
+  public CreateApprovalResponse delivery(@javax.annotation.Nullable List<DeliveryEnum> delivery) {
+    this.delivery = delivery;
+    return this;
+  }
+
+  public CreateApprovalResponse addDeliveryItem(DeliveryEnum deliveryItem) {
+    if (this.delivery == null) {
+      this.delivery = new ArrayList<>();
+    }
+    this.delivery.add(deliveryItem);
+    return this;
+  }
+
+  /**
+   * Where the request went: &#x60;push&#x60; (the LumoAuth app), &#x60;slack&#x60;, &#x60;discord&#x60;.
+   * @return delivery
+   */
+  @javax.annotation.Nullable
+  public List<DeliveryEnum> getDelivery() {
+    return delivery;
+  }
+
+  public void setDelivery(@javax.annotation.Nullable List<DeliveryEnum> delivery) {
+    this.delivery = delivery;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -188,12 +276,13 @@ public class CreateApprovalResponse {
         Objects.equals(this.status, createApprovalResponse.status) &&
         Objects.equals(this.expiresAt, createApprovalResponse.expiresAt) &&
         Objects.equals(this.taskId, createApprovalResponse.taskId) &&
-        Objects.equals(this.impact, createApprovalResponse.impact);
+        Objects.equals(this.impact, createApprovalResponse.impact) &&
+        Objects.equals(this.delivery, createApprovalResponse.delivery);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(approvalToken, status, expiresAt, taskId, impact);
+    return Objects.hash(approvalToken, status, expiresAt, taskId, impact, delivery);
   }
 
   @Override
@@ -205,6 +294,7 @@ public class CreateApprovalResponse {
     sb.append("    expiresAt: ").append(toIndentedString(expiresAt)).append("\n");
     sb.append("    taskId: ").append(toIndentedString(taskId)).append("\n");
     sb.append("    impact: ").append(toIndentedString(impact)).append("\n");
+    sb.append("    delivery: ").append(toIndentedString(delivery)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -226,7 +316,7 @@ public class CreateApprovalResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("approval_token", "status", "expires_at", "task_id", "impact"));
+    openapiFields = new HashSet<String>(Arrays.asList("approval_token", "status", "expires_at", "task_id", "impact", "delivery"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -264,6 +354,10 @@ public class CreateApprovalResponse {
       }
       if ((jsonObj.get("impact") != null && !jsonObj.get("impact").isJsonNull()) && !jsonObj.get("impact").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `impact` to be a primitive type in the JSON string but got `%s`", jsonObj.get("impact").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("delivery") != null && !jsonObj.get("delivery").isJsonNull() && !jsonObj.get("delivery").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `delivery` to be an array in the JSON string but got `%s`", jsonObj.get("delivery").toString()));
       }
   }
 

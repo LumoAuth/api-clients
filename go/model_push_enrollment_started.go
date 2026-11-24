@@ -21,6 +21,7 @@ var _ MappedNullable = &PushEnrollmentStarted{}
 
 // PushEnrollmentStarted struct for PushEnrollmentStarted
 type PushEnrollmentStarted struct {
+	// Send it back as {id} of …/verify to poll the enrollment. It is not the enrollment secret.
 	Id *string `json:"id,omitempty"`
 	State *string `json:"state,omitempty"`
 	QrDataUri *string `json:"qr_data_uri,omitempty"`

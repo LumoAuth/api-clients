@@ -153,7 +153,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.MfaApi(api_client)
     org_id = 'org_id_example' # str | 
     id = 'id_example' # str | 
-    x_mfa_challenge = 'x_mfa_challenge_example' # str | Approved step_up challenge id (optional)
+    x_mfa_challenge = 'x_mfa_challenge_example' # str | Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)
 
     try:
         # Remove an authenticator
@@ -171,7 +171,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **id** | **str**|  | 
- **x_mfa_challenge** | **str**| Approved step_up challenge id | [optional] 
+ **x_mfa_challenge** | **str**| Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) | [optional] 
 
 ### Return type
 

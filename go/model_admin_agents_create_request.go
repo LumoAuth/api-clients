@@ -26,6 +26,14 @@ type AdminAgentsCreateRequest struct {
 	Capabilities []string `json:"capabilities,omitempty"`
 	// The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. Leave it out for an agent without a budget.
 	BudgetPolicy map[string]interface{} `json:"budgetPolicy,omitempty"`
+	// How the agent authenticates. Default api_key.
+	IdentityType *string `json:"identityType,omitempty"`
+	// For private_key_jwt: the public keys of the agent, inline (a JWK Set). Private key members are refused. Send jwks or jwksUri, not both.
+	Jwks map[string]interface{} `json:"jwks,omitempty"`
+	// For private_key_jwt: https URL of the public key set of the agent.
+	JwksUri *string `json:"jwksUri,omitempty"`
+	// Whether the agent may act for users of the organization: approval prompts on their phones, Token Vault connections, the on-behalf-of token exchange and JIT requests for a user. Needs the delegation feature of the plan. Default false.
+	CanActOnBehalfOfUsers *bool `json:"canActOnBehalfOfUsers,omitempty"`
 }
 
 // NewAdminAgentsCreateRequest instantiates a new AdminAgentsCreateRequest object
@@ -174,6 +182,134 @@ func (o *AdminAgentsCreateRequest) SetBudgetPolicy(v map[string]interface{}) {
 	o.BudgetPolicy = v
 }
 
+// GetIdentityType returns the IdentityType field value if set, zero value otherwise.
+func (o *AdminAgentsCreateRequest) GetIdentityType() string {
+	if o == nil || IsNil(o.IdentityType) {
+		var ret string
+		return ret
+	}
+	return *o.IdentityType
+}
+
+// GetIdentityTypeOk returns a tuple with the IdentityType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminAgentsCreateRequest) GetIdentityTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.IdentityType) {
+		return nil, false
+	}
+	return o.IdentityType, true
+}
+
+// HasIdentityType returns a boolean if a field has been set.
+func (o *AdminAgentsCreateRequest) HasIdentityType() bool {
+	if o != nil && !IsNil(o.IdentityType) {
+		return true
+	}
+
+	return false
+}
+
+// SetIdentityType gets a reference to the given string and assigns it to the IdentityType field.
+func (o *AdminAgentsCreateRequest) SetIdentityType(v string) {
+	o.IdentityType = &v
+}
+
+// GetJwks returns the Jwks field value if set, zero value otherwise.
+func (o *AdminAgentsCreateRequest) GetJwks() map[string]interface{} {
+	if o == nil || IsNil(o.Jwks) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Jwks
+}
+
+// GetJwksOk returns a tuple with the Jwks field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminAgentsCreateRequest) GetJwksOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Jwks) {
+		return map[string]interface{}{}, false
+	}
+	return o.Jwks, true
+}
+
+// HasJwks returns a boolean if a field has been set.
+func (o *AdminAgentsCreateRequest) HasJwks() bool {
+	if o != nil && !IsNil(o.Jwks) {
+		return true
+	}
+
+	return false
+}
+
+// SetJwks gets a reference to the given map[string]interface{} and assigns it to the Jwks field.
+func (o *AdminAgentsCreateRequest) SetJwks(v map[string]interface{}) {
+	o.Jwks = v
+}
+
+// GetJwksUri returns the JwksUri field value if set, zero value otherwise.
+func (o *AdminAgentsCreateRequest) GetJwksUri() string {
+	if o == nil || IsNil(o.JwksUri) {
+		var ret string
+		return ret
+	}
+	return *o.JwksUri
+}
+
+// GetJwksUriOk returns a tuple with the JwksUri field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminAgentsCreateRequest) GetJwksUriOk() (*string, bool) {
+	if o == nil || IsNil(o.JwksUri) {
+		return nil, false
+	}
+	return o.JwksUri, true
+}
+
+// HasJwksUri returns a boolean if a field has been set.
+func (o *AdminAgentsCreateRequest) HasJwksUri() bool {
+	if o != nil && !IsNil(o.JwksUri) {
+		return true
+	}
+
+	return false
+}
+
+// SetJwksUri gets a reference to the given string and assigns it to the JwksUri field.
+func (o *AdminAgentsCreateRequest) SetJwksUri(v string) {
+	o.JwksUri = &v
+}
+
+// GetCanActOnBehalfOfUsers returns the CanActOnBehalfOfUsers field value if set, zero value otherwise.
+func (o *AdminAgentsCreateRequest) GetCanActOnBehalfOfUsers() bool {
+	if o == nil || IsNil(o.CanActOnBehalfOfUsers) {
+		var ret bool
+		return ret
+	}
+	return *o.CanActOnBehalfOfUsers
+}
+
+// GetCanActOnBehalfOfUsersOk returns a tuple with the CanActOnBehalfOfUsers field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminAgentsCreateRequest) GetCanActOnBehalfOfUsersOk() (*bool, bool) {
+	if o == nil || IsNil(o.CanActOnBehalfOfUsers) {
+		return nil, false
+	}
+	return o.CanActOnBehalfOfUsers, true
+}
+
+// HasCanActOnBehalfOfUsers returns a boolean if a field has been set.
+func (o *AdminAgentsCreateRequest) HasCanActOnBehalfOfUsers() bool {
+	if o != nil && !IsNil(o.CanActOnBehalfOfUsers) {
+		return true
+	}
+
+	return false
+}
+
+// SetCanActOnBehalfOfUsers gets a reference to the given bool and assigns it to the CanActOnBehalfOfUsers field.
+func (o *AdminAgentsCreateRequest) SetCanActOnBehalfOfUsers(v bool) {
+	o.CanActOnBehalfOfUsers = &v
+}
+
 func (o AdminAgentsCreateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -195,6 +331,18 @@ func (o AdminAgentsCreateRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if o.BudgetPolicy != nil {
 		toSerialize["budgetPolicy"] = o.BudgetPolicy
+	}
+	if !IsNil(o.IdentityType) {
+		toSerialize["identityType"] = o.IdentityType
+	}
+	if !IsNil(o.Jwks) {
+		toSerialize["jwks"] = o.Jwks
+	}
+	if !IsNil(o.JwksUri) {
+		toSerialize["jwksUri"] = o.JwksUri
+	}
+	if !IsNil(o.CanActOnBehalfOfUsers) {
+		toSerialize["canActOnBehalfOfUsers"] = o.CanActOnBehalfOfUsers
 	}
 	return toSerialize, nil
 }

@@ -86,7 +86,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let id = "id_example" // String | 
-let xMFAChallenge = "xMFAChallenge_example" // String | Approved step_up challenge id (optional)
+let xMFAChallenge = "xMFAChallenge_example" // String | Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional)
 
 // Remove an authenticator
 MfaAPI.deleteAuthenticator(orgId: orgId, id: id, xMFAChallenge: xMFAChallenge) { (response, error) in
@@ -107,7 +107,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **id** | **String** |  | 
- **xMFAChallenge** | **String** | Approved step_up challenge id | [optional] 
+ **xMFAChallenge** | **String** | Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) | [optional] 
 
 ### Return type
 

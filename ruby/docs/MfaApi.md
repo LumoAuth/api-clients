@@ -124,7 +124,7 @@ api_instance = LumoAuthApiClient::MfaApi.new
 org_id = 'org_id_example' # String | 
 id = 'id_example' # String | 
 opts = {
-  x_mfa_challenge: 'x_mfa_challenge_example' # String | Approved step_up challenge id
+  x_mfa_challenge: 'x_mfa_challenge_example' # String | Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)
 }
 
 begin
@@ -159,7 +159,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **id** | **String** |  |  |
-| **x_mfa_challenge** | **String** | Approved step_up challenge id | [optional] |
+| **x_mfa_challenge** | **String** | Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) | [optional] |
 
 ### Return type
 

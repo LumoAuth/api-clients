@@ -103,6 +103,7 @@ class AdminAbacApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "AbacAttributesCreateResponse",
+            '403': None,
             '409': None,
         }
         response_data = self.api_client.call_api(
@@ -170,6 +171,7 @@ class AdminAbacApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "AbacAttributesCreateResponse",
+            '403': None,
             '409': None,
         }
         response_data = self.api_client.call_api(
@@ -237,6 +239,7 @@ class AdminAbacApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "AbacAttributesCreateResponse",
+            '403': None,
             '409': None,
         }
         response_data = self.api_client.call_api(

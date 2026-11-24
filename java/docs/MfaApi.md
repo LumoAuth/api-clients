@@ -131,7 +131,7 @@ public class Example {
     MfaApi apiInstance = new MfaApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String id = "id_example"; // String | 
-    String xMFAChallenge = "xMFAChallenge_example"; // String | Approved step_up challenge id
+    String xMFAChallenge = "xMFAChallenge_example"; // String | Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key)
     try {
       apiInstance.deleteAuthenticator(orgId, id, xMFAChallenge);
     } catch (ApiException e) {
@@ -151,7 +151,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **id** | **String**|  | |
-| **xMFAChallenge** | **String**| Approved step_up challenge id | [optional] |
+| **xMFAChallenge** | **String**| Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) | [optional] |
 
 ### Return type
 

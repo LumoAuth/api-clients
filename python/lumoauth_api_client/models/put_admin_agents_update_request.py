@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -31,7 +31,11 @@ class PutAdminAgentsUpdateRequest(BaseModel):
     description: Optional[StrictStr] = None
     capabilities: Optional[List[StrictStr]] = None
     budget_policy: Optional[Dict[str, Any]] = Field(default=None, description="The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is.", alias="budgetPolicy")
-    __properties: ClassVar[List[str]] = ["name", "description", "capabilities", "budgetPolicy"]
+    jwks: Optional[Dict[str, Any]] = Field(default=None, description="For private_key_jwt agents: replaces the public keys (inline JWK Set). Removing a key revokes the tokens that the agent holds.")
+    jwks_uri: Optional[StrictStr] = Field(default=None, description="For private_key_jwt agents: https URL of the public key set.", alias="jwksUri")
+    can_act_on_behalf_of_users: Optional[StrictBool] = Field(default=None, description="Whether the agent may act for users of the organization. Switching it on needs the delegation feature of the plan and an editor who holds every capability of the agent.", alias="canActOnBehalfOfUsers")
+    owner_id: Optional[StrictStr] = Field(default=None, description="Gives the agent a new owner: the id or the email address of an active account of the organization. The owner is the person in whose name the agent asks for just-in-time access and who receives its approval requests. The caller must hold every capability of the agent and every permission of the new owner (naming yourself always works). An agent whose owner was deleted, blocked or switched off (`needsNewOwner` in the agent object) needs a new owner before it can be activated.", alias="ownerId")
+    __properties: ClassVar[List[str]] = ["name", "description", "capabilities", "budgetPolicy", "jwks", "jwksUri", "canActOnBehalfOfUsers", "ownerId"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -92,7 +96,11 @@ class PutAdminAgentsUpdateRequest(BaseModel):
             "name": obj.get("name"),
             "description": obj.get("description"),
             "capabilities": obj.get("capabilities"),
-            "budgetPolicy": obj.get("budgetPolicy")
+            "budgetPolicy": obj.get("budgetPolicy"),
+            "jwks": obj.get("jwks"),
+            "jwksUri": obj.get("jwksUri"),
+            "canActOnBehalfOfUsers": obj.get("canActOnBehalfOfUsers"),
+            "ownerId": obj.get("ownerId")
         })
         return _obj
 

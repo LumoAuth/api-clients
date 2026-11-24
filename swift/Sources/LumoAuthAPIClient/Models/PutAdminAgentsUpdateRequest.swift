@@ -17,12 +17,24 @@ public struct PutAdminAgentsUpdateRequest: Codable, JSONEncodable, Hashable {
     public var capabilities: [String]?
     /** The agent budget. Keys: max_api_calls_per_hour, max_api_calls_per_day, max_tokens_per_hour, max_tokens_per_day (whole numbers), max_cost_per_day_usd, max_cost_per_month_usd, hard_limit (USD), max_steps, timeout_seconds (whole numbers, read by the agent from UserInfo), and the gateway-only max_cost_usd, monthly_usd, max_budget (USD). Each value must be greater than zero; an unknown key or an invalid value is refused with 400. An update replaces the whole policy; {} or null removes the budget, and a request without the field leaves it as it is. */
     public var budgetPolicy: [String: AnyCodable]?
+    /** For private_key_jwt agents: replaces the public keys (inline JWK Set). Removing a key revokes the tokens that the agent holds. */
+    public var jwks: [String: AnyCodable]?
+    /** For private_key_jwt agents: https URL of the public key set. */
+    public var jwksUri: String?
+    /** Whether the agent may act for users of the organization. Switching it on needs the delegation feature of the plan and an editor who holds every capability of the agent. */
+    public var canActOnBehalfOfUsers: Bool?
+    /** Gives the agent a new owner: the id or the email address of an active account of the organization. The owner is the person in whose name the agent asks for just-in-time access and who receives its approval requests. The caller must hold every capability of the agent and every permission of the new owner (naming yourself always works). An agent whose owner was deleted, blocked or switched off (`needsNewOwner` in the agent object) needs a new owner before it can be activated. */
+    public var ownerId: String?
 
-    public init(name: String? = nil, description: String? = nil, capabilities: [String]? = nil, budgetPolicy: [String: AnyCodable]? = nil) {
+    public init(name: String? = nil, description: String? = nil, capabilities: [String]? = nil, budgetPolicy: [String: AnyCodable]? = nil, jwks: [String: AnyCodable]? = nil, jwksUri: String? = nil, canActOnBehalfOfUsers: Bool? = nil, ownerId: String? = nil) {
         self.name = name
         self.description = description
         self.capabilities = capabilities
         self.budgetPolicy = budgetPolicy
+        self.jwks = jwks
+        self.jwksUri = jwksUri
+        self.canActOnBehalfOfUsers = canActOnBehalfOfUsers
+        self.ownerId = ownerId
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -30,6 +42,10 @@ public struct PutAdminAgentsUpdateRequest: Codable, JSONEncodable, Hashable {
         case description
         case capabilities
         case budgetPolicy
+        case jwks
+        case jwksUri
+        case canActOnBehalfOfUsers
+        case ownerId
     }
 
     // Encodable protocol methods
@@ -40,6 +56,10 @@ public struct PutAdminAgentsUpdateRequest: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(description, forKey: .description)
         try container.encodeIfPresent(capabilities, forKey: .capabilities)
         try container.encodeIfPresent(budgetPolicy, forKey: .budgetPolicy)
+        try container.encodeIfPresent(jwks, forKey: .jwks)
+        try container.encodeIfPresent(jwksUri, forKey: .jwksUri)
+        try container.encodeIfPresent(canActOnBehalfOfUsers, forKey: .canActOnBehalfOfUsers)
+        try container.encodeIfPresent(ownerId, forKey: .ownerId)
     }
 }
 

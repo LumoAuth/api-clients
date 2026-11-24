@@ -21,7 +21,7 @@
  */
 export interface PutAdminSettingsGeneralUpdateRequest {
     /**
-     * Name of the organization: one line, 1 to 255 characters. Aliases: tenantName, display_name, displayName.
+     * Name of the organization: one line, 1 to 255 characters, without \"<\" or \">\". Aliases: tenantName, display_name, displayName.
      * @type {string}
      * @memberof PutAdminSettingsGeneralUpdateRequest
      */

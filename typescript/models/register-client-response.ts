@@ -213,7 +213,7 @@ export interface RegisterClientResponse {
      */
     'backchannel_logout_session_required'?: boolean;
     /**
-     * RFC 8707 resource indicators the client may request.
+     * RFC 8707 resource indicators the client may request: at most 20 absolute https URLs without a fragment (http only for localhost). A registration with any other value is refused with invalid_client_metadata.
      * @type {Array<string>}
      * @memberof RegisterClientResponse
      */

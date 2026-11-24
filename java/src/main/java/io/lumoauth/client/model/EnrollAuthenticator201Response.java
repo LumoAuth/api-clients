@@ -64,7 +64,7 @@ import com.google.gson.JsonParseException;
 
 import io.lumoauth.client.JSON;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-19T15:14:32.479877953Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T20:12:48.846738323Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class EnrollAuthenticator201Response extends AbstractOpenApiSchema {
     private static final Logger log = Logger.getLogger(EnrollAuthenticator201Response.class.getName());
 

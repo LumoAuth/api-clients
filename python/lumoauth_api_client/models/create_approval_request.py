@@ -20,6 +20,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
+from lumoauth_api_client.models.create_approval_request_meta import CreateApprovalRequestMeta
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,9 +32,10 @@ class CreateApprovalRequest(BaseModel):
     task_id: Optional[StrictStr] = Field(default=None, description="Agent task identifier (<=128 chars).")
     reason: Optional[StrictStr] = Field(default=None, description="Human-readable action description (<=480 chars).")
     impact: Optional[StrictStr] = Field(default=None, description="One of low, medium, high, critical.")
-    on_behalf_of: Optional[StrictStr] = Field(default=None, description="User id or email the agent acts for (delegation required).")
-    meta: Optional[Dict[str, Any]] = Field(default=None, description="Optional action metadata.")
-    __properties: ClassVar[List[str]] = ["task_id", "reason", "impact", "on_behalf_of", "meta"]
+    on_behalf_of: Optional[StrictStr] = Field(default=None, description="User id or email the agent acts for (delegation required). When it is the agent's owner, the request also goes to the organization's Slack and Discord approval channels that have agent approvals switched on.")
+    expires_in: Optional[Annotated[int, Field(le=600, strict=True, ge=60)]] = Field(default=120, description="Seconds the person has to answer (60-600, default 120). An integer outside the range is clamped.")
+    meta: Optional[CreateApprovalRequestMeta] = None
+    __properties: ClassVar[List[str]] = ["task_id", "reason", "impact", "on_behalf_of", "expires_in", "meta"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -73,6 +76,9 @@ class CreateApprovalRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of meta
+        if self.meta:
+            _dict['meta'] = self.meta.to_dict()
         return _dict
 
     @classmethod
@@ -89,7 +95,8 @@ class CreateApprovalRequest(BaseModel):
             "reason": obj.get("reason"),
             "impact": obj.get("impact"),
             "on_behalf_of": obj.get("on_behalf_of"),
-            "meta": obj.get("meta")
+            "expires_in": obj.get("expires_in") if obj.get("expires_in") is not None else 120,
+            "meta": CreateApprovalRequestMeta.from_dict(obj["meta"]) if obj.get("meta") is not None else None
         })
         return _obj
 

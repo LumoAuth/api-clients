@@ -12,19 +12,27 @@ import AnyCodable
 
 public struct AskRequest: Codable, JSONEncodable, Hashable {
 
+    public enum Audit: String, Codable, CaseIterable {
+        case denials = "denials"
+        case always = "always"
+    }
     /** The action to authorize. */
     public var action: String?
     /** Optional resource/attribute context for the decision. */
     public var context: AnyCodable?
+    /** Which decisions go to the audit log. denials (default): refusals only. always: allowed decisions too (agent.capability_check_allowed), for a tool-call hook that wants every decision on record. */
+    public var audit: Audit? = .denials
 
-    public init(action: String? = nil, context: AnyCodable? = nil) {
+    public init(action: String? = nil, context: AnyCodable? = nil, audit: Audit? = .denials) {
         self.action = action
         self.context = context
+        self.audit = audit
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case action
         case context
+        case audit
     }
 
     // Encodable protocol methods
@@ -33,6 +41,7 @@ public struct AskRequest: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(action, forKey: .action)
         try container.encodeIfPresent(context, forKey: .context)
+        try container.encodeIfPresent(audit, forKey: .audit)
     }
 }
 

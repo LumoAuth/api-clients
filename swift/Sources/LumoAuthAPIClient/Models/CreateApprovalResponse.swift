@@ -12,18 +12,26 @@ import AnyCodable
 
 public struct CreateApprovalResponse: Codable, JSONEncodable, Hashable {
 
+    public enum Delivery: String, Codable, CaseIterable {
+        case push = "push"
+        case slack = "slack"
+        case discord = "discord"
+    }
     public var approvalToken: String?
     public var status: String?
     public var expiresAt: Date?
     public var taskId: String?
     public var impact: String?
+    /** Where the request went: `push` (the LumoAuth app), `slack`, `discord`. */
+    public var delivery: [Delivery]?
 
-    public init(approvalToken: String? = nil, status: String? = nil, expiresAt: Date? = nil, taskId: String? = nil, impact: String? = nil) {
+    public init(approvalToken: String? = nil, status: String? = nil, expiresAt: Date? = nil, taskId: String? = nil, impact: String? = nil, delivery: [Delivery]? = nil) {
         self.approvalToken = approvalToken
         self.status = status
         self.expiresAt = expiresAt
         self.taskId = taskId
         self.impact = impact
+        self.delivery = delivery
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -32,6 +40,7 @@ public struct CreateApprovalResponse: Codable, JSONEncodable, Hashable {
         case expiresAt = "expires_at"
         case taskId = "task_id"
         case impact
+        case delivery
     }
 
     // Encodable protocol methods
@@ -43,6 +52,7 @@ public struct CreateApprovalResponse: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(expiresAt, forKey: .expiresAt)
         try container.encodeIfPresent(taskId, forKey: .taskId)
         try container.encodeIfPresent(impact, forKey: .impact)
+        try container.encodeIfPresent(delivery, forKey: .delivery)
     }
 }
 

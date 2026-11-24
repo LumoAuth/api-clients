@@ -44,6 +44,7 @@ pub enum GetServerError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetServerChallengeError {
+    Status400(),
     Status401(),
     Status403(),
     Status404(),
@@ -76,6 +77,7 @@ pub enum McpServerToolAuthorizeError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PostServerChallengeError {
+    Status400(),
     Status401(),
     Status403(),
     Status404(),

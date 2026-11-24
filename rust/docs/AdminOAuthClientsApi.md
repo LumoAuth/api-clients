@@ -117,6 +117,8 @@ Name | Type | Description  | Required | Notes
 > models::MessageResponse delete_client(org_id, client_id)
 Delete an OAuth client
 
+Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
+
 ### Parameters
 
 
@@ -174,6 +176,8 @@ Name | Type | Description  | Required | Notes
 
 > models::UpdateClientResponse enable_client(org_id, client_id)
 Enable an OAuth client
+
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
 ### Parameters
 
@@ -322,6 +326,8 @@ Name | Type | Description  | Required | Notes
 > models::UpdateClientResponse patch_client(org_id, client_id)
 Update an OAuth client
 
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
+
 ### Parameters
 
 
@@ -383,6 +389,8 @@ Name | Type | Description  | Required | Notes
 > models::RotateClientSecretResponse rotate_client_secret(org_id, client_id)
 Rotate an OAuth client secret
 
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
+
 ### Parameters
 
 
@@ -412,6 +420,8 @@ Name | Type | Description  | Required | Notes
 > models::SetClientScopesResponse set_client_scopes(org_id, client_id)
 Replace the scopes granted to an OAuth client
 
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
+
 ### Parameters
 
 
@@ -440,6 +450,8 @@ Name | Type | Description  | Required | Notes
 
 > models::UpdateClientResponse update_client(org_id, client_id)
 Update an OAuth client (same as PATCH: only the fields that are sent change)
+
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
 ### Parameters
 

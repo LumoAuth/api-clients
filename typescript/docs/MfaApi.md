@@ -92,7 +92,7 @@ const apiInstance = new MfaApi(configuration);
 
 let orgId: string; // (default to undefined)
 let id: string; // (default to undefined)
-let xMFAChallenge: string; //Approved step_up challenge id (optional) (default to undefined)
+let xMFAChallenge: string; //Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) (optional) (default to undefined)
 
 const { status, data } = await apiInstance.deleteAuthenticator(
     orgId,
@@ -107,7 +107,7 @@ const { status, data } = await apiInstance.deleteAuthenticator(
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
 | **id** | [**string**] |  | defaults to undefined|
-| **xMFAChallenge** | [**string**] | Approved step_up challenge id | (optional) defaults to undefined|
+| **xMFAChallenge** | [**string**] | Id of an approved step_up challenge that this same client started (same session, same sign-in and application for an access token, or same API key) | (optional) defaults to undefined|
 
 
 ### Return type

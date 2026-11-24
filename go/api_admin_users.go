@@ -289,6 +289,8 @@ type AdminUsersAPI interface {
 	/*
 	PatchUser Update a user
 
+	Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive` or `emailVerified` needs a caller who holds every permission of the user. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@param userId
@@ -439,6 +441,8 @@ type AdminUsersAPI interface {
 
 	/*
 	UpdateUser Update a user
+
+	Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive` or `emailVerified` needs a caller who holds every permission of the user. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -2804,6 +2808,8 @@ func (r ApiPatchUserRequest) Execute() (*UpdateUserResponse, *http.Response, err
 /*
 PatchUser Update a user
 
+Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive` or `emailVerified` needs a caller who holds every permission of the user. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
  @param userId
@@ -4003,6 +4009,8 @@ func (r ApiUpdateUserRequest) Execute() (*UpdateUserResponse, *http.Response, er
 
 /*
 UpdateUser Update a user
+
+Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive` or `emailVerified` needs a caller who holds every permission of the user. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId

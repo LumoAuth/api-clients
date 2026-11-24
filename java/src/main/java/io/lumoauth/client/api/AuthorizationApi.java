@@ -2108,6 +2108,7 @@ public class AuthorizationApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Stored attribute </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller lacks abac.manage, or an active policy for this resource type (or for &#x60;*&#x60;) reads the attribute and covers permissions that the caller does not hold: then only a full administrator, or an administrator who holds &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for each action of that policy, can set the value. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call setResourceAttributeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String resourceType, @javax.annotation.Nonnull String resourceId, @javax.annotation.Nonnull String attributeSlug, final ApiCallback _callback) throws ApiException {
@@ -2198,6 +2199,7 @@ public class AuthorizationApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Stored attribute </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller lacks abac.manage, or an active policy for this resource type (or for &#x60;*&#x60;) reads the attribute and covers permissions that the caller does not hold: then only a full administrator, or an administrator who holds &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for each action of that policy, can set the value. </td><td>  -  </td></tr>
      </table>
      */
     public SetResourceAttributeResponse setResourceAttribute(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String resourceType, @javax.annotation.Nonnull String resourceId, @javax.annotation.Nonnull String attributeSlug) throws ApiException {
@@ -2219,6 +2221,7 @@ public class AuthorizationApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Stored attribute </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller lacks abac.manage, or an active policy for this resource type (or for &#x60;*&#x60;) reads the attribute and covers permissions that the caller does not hold: then only a full administrator, or an administrator who holds &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for each action of that policy, can set the value. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<SetResourceAttributeResponse> setResourceAttributeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String resourceType, @javax.annotation.Nonnull String resourceId, @javax.annotation.Nonnull String attributeSlug) throws ApiException {
@@ -2242,6 +2245,7 @@ public class AuthorizationApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Stored attribute </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller lacks abac.manage, or an active policy for this resource type (or for &#x60;*&#x60;) reads the attribute and covers permissions that the caller does not hold: then only a full administrator, or an administrator who holds &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for each action of that policy, can set the value. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call setResourceAttributeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String resourceType, @javax.annotation.Nonnull String resourceId, @javax.annotation.Nonnull String attributeSlug, final ApiCallback<SetResourceAttributeResponse> _callback) throws ApiException {
@@ -2264,6 +2268,7 @@ public class AuthorizationApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Stored attribute </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller lacks abac.manage or users.edit, sets an attribute on their own account without being a full administrator, does not hold every permission of the target account, or an active policy reads the attribute and covers permissions that the caller does not hold. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call setUserAttributeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String attributeSlug, final ApiCallback _callback) throws ApiException {
@@ -2347,6 +2352,7 @@ public class AuthorizationApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Stored attribute </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller lacks abac.manage or users.edit, sets an attribute on their own account without being a full administrator, does not hold every permission of the target account, or an active policy reads the attribute and covers permissions that the caller does not hold. </td><td>  -  </td></tr>
      </table>
      */
     public SetUserAttributeResponse setUserAttribute(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String attributeSlug) throws ApiException {
@@ -2367,6 +2373,7 @@ public class AuthorizationApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Stored attribute </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller lacks abac.manage or users.edit, sets an attribute on their own account without being a full administrator, does not hold every permission of the target account, or an active policy reads the attribute and covers permissions that the caller does not hold. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<SetUserAttributeResponse> setUserAttributeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String attributeSlug) throws ApiException {
@@ -2389,6 +2396,7 @@ public class AuthorizationApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Stored attribute </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller lacks abac.manage or users.edit, sets an attribute on their own account without being a full administrator, does not hold every permission of the target account, or an active policy reads the attribute and covers permissions that the caller does not hold. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call setUserAttributeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String attributeSlug, final ApiCallback<SetUserAttributeResponse> _callback) throws ApiException {

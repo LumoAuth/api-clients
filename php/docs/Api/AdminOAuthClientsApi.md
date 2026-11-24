@@ -226,6 +226,8 @@ deleteClient($orgId, $clientId): \LumoAuth\ApiClient\Model\MessageResponse
 
 Delete an OAuth client
 
+Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
+
 ### Example
 
 ```php
@@ -355,6 +357,8 @@ enableClient($orgId, $clientId): \LumoAuth\ApiClient\Model\UpdateClientResponse
 ```
 
 Enable an OAuth client
+
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
 ### Example
 
@@ -683,6 +687,8 @@ patchClient($orgId, $clientId): \LumoAuth\ApiClient\Model\UpdateClientResponse
 
 Update an OAuth client
 
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
+
 ### Example
 
 ```php
@@ -817,6 +823,8 @@ rotateClientSecret($orgId, $clientId): \LumoAuth\ApiClient\Model\RotateClientSec
 
 Rotate an OAuth client secret
 
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
+
 ### Example
 
 ```php
@@ -882,6 +890,8 @@ setClientScopes($orgId, $clientId): \LumoAuth\ApiClient\Model\SetClientScopesRes
 
 Replace the scopes granted to an OAuth client
 
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
+
 ### Example
 
 ```php
@@ -946,6 +956,8 @@ updateClient($orgId, $clientId): \LumoAuth\ApiClient\Model\UpdateClientResponse
 ```
 
 Update an OAuth client (same as PATCH: only the fields that are sent change)
+
+A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
 ### Example
 

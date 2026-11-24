@@ -13,6 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AdminSandboxSpawnRequest {
+    /// A label for the sandbox: one line of text, without control characters and without \"<\" or \">\".
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
     #[serde(rename = "ttl_hours", skip_serializing_if = "Option::is_none")]

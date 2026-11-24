@@ -18,8 +18,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +28,7 @@ class AdminSandboxSpawnRequest(BaseModel):
     """
     AdminSandboxSpawnRequest
     """ # noqa: E501
-    name: Optional[StrictStr] = None
+    name: Optional[Annotated[str, Field(strict=True, max_length=246)]] = Field(default=None, description="A label for the sandbox: one line of text, without control characters and without \"<\" or \">\".")
     ttl_hours: Optional[StrictInt] = None
     __properties: ClassVar[List[str]] = ["name", "ttl_hours"]
 

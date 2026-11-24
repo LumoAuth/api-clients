@@ -84,6 +84,15 @@ class AdminMcpApi
         'adminMcpServersGet' => [
             'application/json',
         ],
+        'adminMcpServersGrantsList' => [
+            'application/json',
+        ],
+        'adminMcpServersGrantsRemove' => [
+            'application/json',
+        ],
+        'adminMcpServersGrantsSet' => [
+            'application/json',
+        ],
         'adminMcpServersList' => [
             'application/json',
         ],
@@ -1000,6 +1009,971 @@ class AdminMcpApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation adminMcpServersGrantsList
+     *
+     * List the agents allowed to call tools of an MCP server
+     *
+     * @param  string $orgId orgId (required)
+     * @param  string $serverId serverId (required)
+     * @param  string|null $agentId Only the grants of this agent (agentId or numeric id). (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsList'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \LumoAuth\ApiClient\Model\AdminMcpServersGrantsListResponse
+     */
+    public function adminMcpServersGrantsList($orgId, $serverId, $agentId = null, string $contentType = self::contentTypes['adminMcpServersGrantsList'][0])
+    {
+        list($response) = $this->adminMcpServersGrantsListWithHttpInfo($orgId, $serverId, $agentId, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation adminMcpServersGrantsListWithHttpInfo
+     *
+     * List the agents allowed to call tools of an MCP server
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  string|null $agentId Only the grants of this agent (agentId or numeric id). (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsList'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \LumoAuth\ApiClient\Model\AdminMcpServersGrantsListResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function adminMcpServersGrantsListWithHttpInfo($orgId, $serverId, $agentId = null, string $contentType = self::contentTypes['adminMcpServersGrantsList'][0])
+    {
+        $request = $this->adminMcpServersGrantsListRequest($orgId, $serverId, $agentId, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\LumoAuth\ApiClient\Model\AdminMcpServersGrantsListResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\LumoAuth\ApiClient\Model\AdminMcpServersGrantsListResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\LumoAuth\ApiClient\Model\AdminMcpServersGrantsListResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation adminMcpServersGrantsListAsync
+     *
+     * List the agents allowed to call tools of an MCP server
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  string|null $agentId Only the grants of this agent (agentId or numeric id). (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsList'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function adminMcpServersGrantsListAsync($orgId, $serverId, $agentId = null, string $contentType = self::contentTypes['adminMcpServersGrantsList'][0])
+    {
+        return $this->adminMcpServersGrantsListAsyncWithHttpInfo($orgId, $serverId, $agentId, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation adminMcpServersGrantsListAsyncWithHttpInfo
+     *
+     * List the agents allowed to call tools of an MCP server
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  string|null $agentId Only the grants of this agent (agentId or numeric id). (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsList'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function adminMcpServersGrantsListAsyncWithHttpInfo($orgId, $serverId, $agentId = null, string $contentType = self::contentTypes['adminMcpServersGrantsList'][0])
+    {
+        $returnType = '\LumoAuth\ApiClient\Model\AdminMcpServersGrantsListResponse';
+        $request = $this->adminMcpServersGrantsListRequest($orgId, $serverId, $agentId, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'adminMcpServersGrantsList'
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  string|null $agentId Only the grants of this agent (agentId or numeric id). (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsList'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function adminMcpServersGrantsListRequest($orgId, $serverId, $agentId = null, string $contentType = self::contentTypes['adminMcpServersGrantsList'][0])
+    {
+
+        // verify the required parameter 'orgId' is set
+        if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $orgId when calling adminMcpServersGrantsList'
+            );
+        }
+
+        // verify the required parameter 'serverId' is set
+        if ($serverId === null || (is_array($serverId) && count($serverId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $serverId when calling adminMcpServersGrantsList'
+            );
+        }
+
+
+
+        $resourcePath = '/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $agentId,
+            'agent_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+
+        // path params
+        if ($orgId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'orgId' . '}',
+                ObjectSerializer::toPathValue($orgId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($serverId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'serverId' . '}',
+                ObjectSerializer::toPathValue($serverId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-API-Key');
+        if ($apiKey !== null) {
+            $headers['X-API-Key'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation adminMcpServersGrantsRemove
+     *
+     * Remove every grant of an agent on an MCP server
+     *
+     * @param  string $orgId orgId (required)
+     * @param  string $serverId serverId (required)
+     * @param  string $agentId agentId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsRemove'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \LumoAuth\ApiClient\Model\AdminMcpServersGrantsRemoveResponse
+     */
+    public function adminMcpServersGrantsRemove($orgId, $serverId, $agentId, string $contentType = self::contentTypes['adminMcpServersGrantsRemove'][0])
+    {
+        list($response) = $this->adminMcpServersGrantsRemoveWithHttpInfo($orgId, $serverId, $agentId, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation adminMcpServersGrantsRemoveWithHttpInfo
+     *
+     * Remove every grant of an agent on an MCP server
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  string $agentId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsRemove'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \LumoAuth\ApiClient\Model\AdminMcpServersGrantsRemoveResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function adminMcpServersGrantsRemoveWithHttpInfo($orgId, $serverId, $agentId, string $contentType = self::contentTypes['adminMcpServersGrantsRemove'][0])
+    {
+        $request = $this->adminMcpServersGrantsRemoveRequest($orgId, $serverId, $agentId, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\LumoAuth\ApiClient\Model\AdminMcpServersGrantsRemoveResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\LumoAuth\ApiClient\Model\AdminMcpServersGrantsRemoveResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\LumoAuth\ApiClient\Model\AdminMcpServersGrantsRemoveResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation adminMcpServersGrantsRemoveAsync
+     *
+     * Remove every grant of an agent on an MCP server
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  string $agentId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsRemove'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function adminMcpServersGrantsRemoveAsync($orgId, $serverId, $agentId, string $contentType = self::contentTypes['adminMcpServersGrantsRemove'][0])
+    {
+        return $this->adminMcpServersGrantsRemoveAsyncWithHttpInfo($orgId, $serverId, $agentId, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation adminMcpServersGrantsRemoveAsyncWithHttpInfo
+     *
+     * Remove every grant of an agent on an MCP server
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  string $agentId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsRemove'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function adminMcpServersGrantsRemoveAsyncWithHttpInfo($orgId, $serverId, $agentId, string $contentType = self::contentTypes['adminMcpServersGrantsRemove'][0])
+    {
+        $returnType = '\LumoAuth\ApiClient\Model\AdminMcpServersGrantsRemoveResponse';
+        $request = $this->adminMcpServersGrantsRemoveRequest($orgId, $serverId, $agentId, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'adminMcpServersGrantsRemove'
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  string $agentId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsRemove'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function adminMcpServersGrantsRemoveRequest($orgId, $serverId, $agentId, string $contentType = self::contentTypes['adminMcpServersGrantsRemove'][0])
+    {
+
+        // verify the required parameter 'orgId' is set
+        if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $orgId when calling adminMcpServersGrantsRemove'
+            );
+        }
+
+        // verify the required parameter 'serverId' is set
+        if ($serverId === null || (is_array($serverId) && count($serverId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $serverId when calling adminMcpServersGrantsRemove'
+            );
+        }
+
+        // verify the required parameter 'agentId' is set
+        if ($agentId === null || (is_array($agentId) && count($agentId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $agentId when calling adminMcpServersGrantsRemove'
+            );
+        }
+
+
+        $resourcePath = '/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($orgId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'orgId' . '}',
+                ObjectSerializer::toPathValue($orgId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($serverId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'serverId' . '}',
+                ObjectSerializer::toPathValue($serverId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($agentId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'agentId' . '}',
+                ObjectSerializer::toPathValue($agentId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-API-Key');
+        if ($apiKey !== null) {
+            $headers['X-API-Key'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'DELETE',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation adminMcpServersGrantsSet
+     *
+     * Set the tools of an MCP server that an agent may call
+     *
+     * @param  string $orgId orgId (required)
+     * @param  string $serverId serverId (required)
+     * @param  string $agentId agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminMcpServersGrantsSetRequest $adminMcpServersGrantsSetRequest adminMcpServersGrantsSetRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsSet'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \LumoAuth\ApiClient\Model\AdminMcpServersGrantsSetResponse
+     */
+    public function adminMcpServersGrantsSet($orgId, $serverId, $agentId, $adminMcpServersGrantsSetRequest, string $contentType = self::contentTypes['adminMcpServersGrantsSet'][0])
+    {
+        list($response) = $this->adminMcpServersGrantsSetWithHttpInfo($orgId, $serverId, $agentId, $adminMcpServersGrantsSetRequest, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation adminMcpServersGrantsSetWithHttpInfo
+     *
+     * Set the tools of an MCP server that an agent may call
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  string $agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminMcpServersGrantsSetRequest $adminMcpServersGrantsSetRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsSet'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \LumoAuth\ApiClient\Model\AdminMcpServersGrantsSetResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function adminMcpServersGrantsSetWithHttpInfo($orgId, $serverId, $agentId, $adminMcpServersGrantsSetRequest, string $contentType = self::contentTypes['adminMcpServersGrantsSet'][0])
+    {
+        $request = $this->adminMcpServersGrantsSetRequest($orgId, $serverId, $agentId, $adminMcpServersGrantsSetRequest, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\LumoAuth\ApiClient\Model\AdminMcpServersGrantsSetResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\LumoAuth\ApiClient\Model\AdminMcpServersGrantsSetResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\LumoAuth\ApiClient\Model\AdminMcpServersGrantsSetResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation adminMcpServersGrantsSetAsync
+     *
+     * Set the tools of an MCP server that an agent may call
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  string $agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminMcpServersGrantsSetRequest $adminMcpServersGrantsSetRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsSet'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function adminMcpServersGrantsSetAsync($orgId, $serverId, $agentId, $adminMcpServersGrantsSetRequest, string $contentType = self::contentTypes['adminMcpServersGrantsSet'][0])
+    {
+        return $this->adminMcpServersGrantsSetAsyncWithHttpInfo($orgId, $serverId, $agentId, $adminMcpServersGrantsSetRequest, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation adminMcpServersGrantsSetAsyncWithHttpInfo
+     *
+     * Set the tools of an MCP server that an agent may call
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  string $agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminMcpServersGrantsSetRequest $adminMcpServersGrantsSetRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsSet'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function adminMcpServersGrantsSetAsyncWithHttpInfo($orgId, $serverId, $agentId, $adminMcpServersGrantsSetRequest, string $contentType = self::contentTypes['adminMcpServersGrantsSet'][0])
+    {
+        $returnType = '\LumoAuth\ApiClient\Model\AdminMcpServersGrantsSetResponse';
+        $request = $this->adminMcpServersGrantsSetRequest($orgId, $serverId, $agentId, $adminMcpServersGrantsSetRequest, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'adminMcpServersGrantsSet'
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  string $agentId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminMcpServersGrantsSetRequest $adminMcpServersGrantsSetRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersGrantsSet'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function adminMcpServersGrantsSetRequest($orgId, $serverId, $agentId, $adminMcpServersGrantsSetRequest, string $contentType = self::contentTypes['adminMcpServersGrantsSet'][0])
+    {
+
+        // verify the required parameter 'orgId' is set
+        if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $orgId when calling adminMcpServersGrantsSet'
+            );
+        }
+
+        // verify the required parameter 'serverId' is set
+        if ($serverId === null || (is_array($serverId) && count($serverId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $serverId when calling adminMcpServersGrantsSet'
+            );
+        }
+
+        // verify the required parameter 'agentId' is set
+        if ($agentId === null || (is_array($agentId) && count($agentId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $agentId when calling adminMcpServersGrantsSet'
+            );
+        }
+
+        // verify the required parameter 'adminMcpServersGrantsSetRequest' is set
+        if ($adminMcpServersGrantsSetRequest === null || (is_array($adminMcpServersGrantsSetRequest) && count($adminMcpServersGrantsSetRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $adminMcpServersGrantsSetRequest when calling adminMcpServersGrantsSet'
+            );
+        }
+
+
+        $resourcePath = '/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($orgId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'orgId' . '}',
+                ObjectSerializer::toPathValue($orgId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($serverId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'serverId' . '}',
+                ObjectSerializer::toPathValue($serverId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($agentId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'agentId' . '}',
+                ObjectSerializer::toPathValue($agentId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($adminMcpServersGrantsSetRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminMcpServersGrantsSetRequest));
+            } else {
+                $httpBody = $adminMcpServersGrantsSetRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-API-Key');
+        if ($apiKey !== null) {
+            $headers['X-API-Key'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PUT',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
