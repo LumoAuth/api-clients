@@ -51,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * ReportAgentUsageResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T12:46:14.617672415-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-25T00:24:37.671496695Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class ReportAgentUsageResponse {
   public static final String SERIALIZED_NAME_RECORDED = "recorded";
   @SerializedName(SERIALIZED_NAME_RECORDED)
