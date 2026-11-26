@@ -52,6 +52,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="phoneNumber">phoneNumber.</param>
         /// <param name="phoneNumberVerified">phoneNumberVerified.</param>
         /// <param name="isActive">isActive (required).</param>
+        /// <param name="staff">Staff account: one of the organization&#39;s own users, not a person of a customer organization. Only staff accounts pass the \&quot;Organization users only\&quot; setting of applications and agents. Switched off when the account joins a customer organization; the end of the membership does not switch it on again. Set it with PUT or PATCH /users/{userId}..</param>
         /// <param name="blocked">blocked (required).</param>
         /// <param name="deleted">Soft-deleted by inbound SCIM. Left out of the list unless deleted&#x3D;true is asked; POST /users/{userId}/restore brings the user back..</param>
         /// <param name="deletedAt">deletedAt.</param>
@@ -69,7 +70,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="isJitProvisioned">Detailed responses only.</param>
         /// <param name="jitProvisionedBy">Detailed responses only.</param>
         /// <param name="socialProvider">Detailed responses only.</param>
-        public User(Guid id = default, string email = default, string username = default, string name = default, string givenName = default, string familyName = default, string picture = default, bool emailVerified = default, string phoneNumber = default, bool phoneNumberVerified = default, bool isActive = default, bool blocked = default, bool deleted = default, DateTime? deletedAt = default, bool mfaEnabled = default, bool isAdmin = default, DateTime createdAt = default, DateTime? lastLoginAt = default, int loginCount = default, List<RoleRef> roles = default, List<GroupRef> groups = default, string locale = default, string zoneinfo = default, DateTime? updatedAt = default, DateTime? blockedAt = default, bool isJitProvisioned = default, string jitProvisionedBy = default, string socialProvider = default)
+        public User(Guid id = default, string email = default, string username = default, string name = default, string givenName = default, string familyName = default, string picture = default, bool emailVerified = default, string phoneNumber = default, bool phoneNumberVerified = default, bool isActive = default, bool staff = default, bool blocked = default, bool deleted = default, DateTime? deletedAt = default, bool mfaEnabled = default, bool isAdmin = default, DateTime createdAt = default, DateTime? lastLoginAt = default, int loginCount = default, List<RoleRef> roles = default, List<GroupRef> groups = default, string locale = default, string zoneinfo = default, DateTime? updatedAt = default, DateTime? blockedAt = default, bool isJitProvisioned = default, string jitProvisionedBy = default, string socialProvider = default)
         {
             this.Id = id;
             // to ensure "email" is required (not null)
@@ -92,6 +93,7 @@ namespace LumoAuth.ApiClient.Model
             this.Picture = picture;
             this.PhoneNumber = phoneNumber;
             this.PhoneNumberVerified = phoneNumberVerified;
+            this.Staff = staff;
             this.Deleted = deleted;
             this.DeletedAt = deletedAt;
             this.LastLoginAt = lastLoginAt;
@@ -171,6 +173,13 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         [DataMember(Name = "isActive", IsRequired = true, EmitDefaultValue = true)]
         public bool IsActive { get; set; }
+
+        /// <summary>
+        /// Staff account: one of the organization&#39;s own users, not a person of a customer organization. Only staff accounts pass the \&quot;Organization users only\&quot; setting of applications and agents. Switched off when the account joins a customer organization; the end of the membership does not switch it on again. Set it with PUT or PATCH /users/{userId}.
+        /// </summary>
+        /// <value>Staff account: one of the organization&#39;s own users, not a person of a customer organization. Only staff accounts pass the \&quot;Organization users only\&quot; setting of applications and agents. Switched off when the account joins a customer organization; the end of the membership does not switch it on again. Set it with PUT or PATCH /users/{userId}.</value>
+        [DataMember(Name = "staff", EmitDefaultValue = true)]
+        public bool Staff { get; set; }
 
         /// <summary>
         /// Gets or Sets Blocked
@@ -303,6 +312,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  PhoneNumber: ").Append(PhoneNumber).Append("\n");
             sb.Append("  PhoneNumberVerified: ").Append(PhoneNumberVerified).Append("\n");
             sb.Append("  IsActive: ").Append(IsActive).Append("\n");
+            sb.Append("  Staff: ").Append(Staff).Append("\n");
             sb.Append("  Blocked: ").Append(Blocked).Append("\n");
             sb.Append("  Deleted: ").Append(Deleted).Append("\n");
             sb.Append("  DeletedAt: ").Append(DeletedAt).Append("\n");

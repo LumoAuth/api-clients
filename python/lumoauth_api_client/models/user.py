@@ -41,6 +41,7 @@ class User(BaseModel):
     phone_number: Optional[StrictStr] = Field(default=None, alias="phoneNumber")
     phone_number_verified: Optional[StrictBool] = Field(default=None, alias="phoneNumberVerified")
     is_active: StrictBool = Field(alias="isActive")
+    staff: Optional[StrictBool] = Field(default=None, description="Staff account: one of the organization's own users, not a person of a customer organization. Only staff accounts pass the \"Organization users only\" setting of applications and agents. Switched off when the account joins a customer organization; the end of the membership does not switch it on again. Set it with PUT or PATCH /users/{userId}.")
     blocked: StrictBool
     deleted: Optional[StrictBool] = Field(default=None, description="Soft-deleted by inbound SCIM. Left out of the list unless deleted=true is asked; POST /users/{userId}/restore brings the user back.")
     deleted_at: Optional[datetime] = Field(default=None, alias="deletedAt")
@@ -58,7 +59,7 @@ class User(BaseModel):
     is_jit_provisioned: Optional[StrictBool] = Field(default=None, description="Detailed responses only", alias="isJitProvisioned")
     jit_provisioned_by: Optional[StrictStr] = Field(default=None, description="Detailed responses only", alias="jitProvisionedBy")
     social_provider: Optional[StrictStr] = Field(default=None, description="Detailed responses only", alias="socialProvider")
-    __properties: ClassVar[List[str]] = ["id", "email", "username", "name", "givenName", "familyName", "picture", "emailVerified", "phoneNumber", "phoneNumberVerified", "isActive", "blocked", "deleted", "deletedAt", "mfaEnabled", "isAdmin", "createdAt", "lastLoginAt", "loginCount", "roles", "groups", "locale", "zoneinfo", "updatedAt", "blockedAt", "isJitProvisioned", "jitProvisionedBy", "socialProvider"]
+    __properties: ClassVar[List[str]] = ["id", "email", "username", "name", "givenName", "familyName", "picture", "emailVerified", "phoneNumber", "phoneNumberVerified", "isActive", "staff", "blocked", "deleted", "deletedAt", "mfaEnabled", "isAdmin", "createdAt", "lastLoginAt", "loginCount", "roles", "groups", "locale", "zoneinfo", "updatedAt", "blockedAt", "isJitProvisioned", "jitProvisionedBy", "socialProvider"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -206,6 +207,7 @@ class User(BaseModel):
             "phoneNumber": obj.get("phoneNumber"),
             "phoneNumberVerified": obj.get("phoneNumberVerified"),
             "isActive": obj.get("isActive"),
+            "staff": obj.get("staff"),
             "blocked": obj.get("blocked"),
             "deleted": obj.get("deleted"),
             "deletedAt": obj.get("deletedAt"),

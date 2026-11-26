@@ -34,6 +34,8 @@ type User struct {
 	PhoneNumber NullableString `json:"phoneNumber,omitempty"`
 	PhoneNumberVerified *bool `json:"phoneNumberVerified,omitempty"`
 	IsActive bool `json:"isActive"`
+	// Staff account: one of the organization's own users, not a person of a customer organization. Only staff accounts pass the \"Organization users only\" setting of applications and agents. Switched off when the account joins a customer organization; the end of the membership does not switch it on again. Set it with PUT or PATCH /users/{userId}.
+	Staff *bool `json:"staff,omitempty"`
 	Blocked bool `json:"blocked"`
 	// Soft-deleted by inbound SCIM. Left out of the list unless deleted=true is asked; POST /users/{userId}/restore brings the user back.
 	Deleted *bool `json:"deleted,omitempty"`
@@ -469,6 +471,38 @@ func (o *User) GetIsActiveOk() (*bool, bool) {
 // SetIsActive sets field value
 func (o *User) SetIsActive(v bool) {
 	o.IsActive = v
+}
+
+// GetStaff returns the Staff field value if set, zero value otherwise.
+func (o *User) GetStaff() bool {
+	if o == nil || IsNil(o.Staff) {
+		var ret bool
+		return ret
+	}
+	return *o.Staff
+}
+
+// GetStaffOk returns a tuple with the Staff field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *User) GetStaffOk() (*bool, bool) {
+	if o == nil || IsNil(o.Staff) {
+		return nil, false
+	}
+	return o.Staff, true
+}
+
+// HasStaff returns a boolean if a field has been set.
+func (o *User) HasStaff() bool {
+	if o != nil && !IsNil(o.Staff) {
+		return true
+	}
+
+	return false
+}
+
+// SetStaff gets a reference to the given bool and assigns it to the Staff field.
+func (o *User) SetStaff(v bool) {
+	o.Staff = &v
 }
 
 // GetBlocked returns the Blocked field value
@@ -1090,6 +1124,9 @@ func (o User) ToMap() (map[string]interface{}, error) {
 		toSerialize["phoneNumberVerified"] = o.PhoneNumberVerified
 	}
 	toSerialize["isActive"] = o.IsActive
+	if !IsNil(o.Staff) {
+		toSerialize["staff"] = o.Staff
+	}
 	toSerialize["blocked"] = o.Blocked
 	if !IsNil(o.Deleted) {
 		toSerialize["deleted"] = o.Deleted

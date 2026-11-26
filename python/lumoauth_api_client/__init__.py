@@ -31,6 +31,7 @@ __all__ = [
     "AdminOAuthClientsApi",
     "AdminOrganizationsApi",
     "AdminPermissionsApi",
+    "AdminPersonalAgentProtocolApi",
     "AdminRolesApi",
     "AdminSandboxApi",
     "AdminSessionsApi",
@@ -45,6 +46,7 @@ __all__ = [
     "MfaApi",
     "OAuthApi",
     "OIDCApi",
+    "PersonalAgentProtocolApi",
     "SsfApi",
     "TokenVaultApi",
     "WellKnownApi",
@@ -166,6 +168,31 @@ __all__ = [
     "AdminPermissionsListResponse",
     "AdminPermissionsUsageResponse",
     "AdminPermissionsUsageResponseData",
+    "AdminPoppyDomainCheckRequest",
+    "AdminPoppyDomainCheckResponse",
+    "AdminPoppyDomainCheckResponseData",
+    "AdminPoppyDomainCheckResponseDataChecksItem",
+    "AdminPoppyFeedbackListResponse",
+    "AdminPoppyFeedbackListResponseDataItem",
+    "AdminPoppyGetResponse",
+    "AdminPoppyGetResponseData",
+    "AdminPoppyGetResponseDataDocumentsItem",
+    "AdminPoppyGetResponseDataDocumentsItemHosted",
+    "AdminPoppyGetResponseDataDocumentsItemServeAt",
+    "AdminPoppyGetResponseDataIssuerChoicesItem",
+    "AdminPoppySessionEndResponse",
+    "AdminPoppySessionsListResponse",
+    "AdminPoppySessionsListResponseDataItem",
+    "AdminPoppyUpdateRequest",
+    "AdminPoppyUpdateRequestAgentItem",
+    "AdminPoppyUpdateRequestApisItem",
+    "AdminPoppyUpdateRequestOrganization",
+    "AdminPoppyUpdateRequestScopesValue",
+    "AdminPoppyUpdateRequestSessions",
+    "AdminPoppyUpdateRequestSignIn",
+    "AdminPoppyUpdateRequestTasks",
+    "AdminPoppyUpdateRequestWeb",
+    "AdminPoppyUpdateResponse",
     "AdminRolesCreateResponse",
     "AdminRolesGetPermissionsResponse",
     "AdminRolesGetPermissionsResponseDataItem",
@@ -291,6 +318,8 @@ __all__ = [
     "EmailEnrollmentStarted",
     "EmailSenderSettings",
     "EmailTemplate",
+    "EndPoppySessionRequest",
+    "EndPoppySessionResponse",
     "EnrollAuthenticator201Response",
     "EnrollAuthenticatorRequest",
     "EvaluateBatchResponse",
@@ -319,6 +348,7 @@ __all__ = [
     "GetMfaPolicyResponse",
     "GetMyAttributesResponse",
     "GetMyAttributesResponseAttributes",
+    "GetPoppySessionStatusResponse",
     "GetProtectedResourceMetadataRoot200Response",
     "GetProtectedResourceMetadataRootResponse1ResourcesItem",
     "GetRecoveryCodeStatusResponse",
@@ -400,6 +430,26 @@ __all__ = [
     "Permission",
     "PollAgentEnrollmentRequest",
     "PollAgentEnrollmentResponse",
+    "PoppyDocument",
+    "PoppyDocumentAgent",
+    "PoppyDocumentAgentProtocolsInner",
+    "PoppyDocumentApisInner",
+    "PoppyDocumentAuth",
+    "PoppyDocumentAuthScopeHintsValue",
+    "PoppyDocumentOrganization",
+    "PoppyDocumentTasks",
+    "PoppyDocumentWeb",
+    "PoppyError",
+    "PoppyProtectedResourceMetadata",
+    "PoppyTasksResponse",
+    "PoppyTasksResponseExcludedTasksInner",
+    "PoppyTasksResponseExcludedTasksInnerAlternative",
+    "PoppyVerifyRequest",
+    "PoppyVerifyRequestRequiredScope",
+    "PoppyVerifyResult",
+    "PoppyVerifyResultAccount",
+    "PoppyVerifyResultResponse",
+    "PoppyVerifyResultSession",
     "ProtectedResourceList",
     "ProtectedResourceMetadata",
     "PushEnrollmentStarted",
@@ -445,6 +495,7 @@ __all__ = [
     "ScimSettingsInbound",
     "ScimSettingsInboundProtectedAttributes",
     "ScimSettingsOutbound",
+    "SendPoppyFeedbackRequest",
     "SendUserVerificationEmailResponse",
     "SetClientScopesResponse",
     "SetResourceAttributeResponse",
@@ -507,6 +558,7 @@ from lumoauth_api_client.api.admin_mfa_api import AdminMfaApi as AdminMfaApi
 from lumoauth_api_client.api.admin_o_auth_clients_api import AdminOAuthClientsApi as AdminOAuthClientsApi
 from lumoauth_api_client.api.admin_organizations_api import AdminOrganizationsApi as AdminOrganizationsApi
 from lumoauth_api_client.api.admin_permissions_api import AdminPermissionsApi as AdminPermissionsApi
+from lumoauth_api_client.api.admin_personal_agent_protocol_api import AdminPersonalAgentProtocolApi as AdminPersonalAgentProtocolApi
 from lumoauth_api_client.api.admin_roles_api import AdminRolesApi as AdminRolesApi
 from lumoauth_api_client.api.admin_sandbox_api import AdminSandboxApi as AdminSandboxApi
 from lumoauth_api_client.api.admin_sessions_api import AdminSessionsApi as AdminSessionsApi
@@ -521,6 +573,7 @@ from lumoauth_api_client.api.mcp_api import McpApi as McpApi
 from lumoauth_api_client.api.mfa_api import MfaApi as MfaApi
 from lumoauth_api_client.api.o_auth_api import OAuthApi as OAuthApi
 from lumoauth_api_client.api.oidc_api import OIDCApi as OIDCApi
+from lumoauth_api_client.api.personal_agent_protocol_api import PersonalAgentProtocolApi as PersonalAgentProtocolApi
 from lumoauth_api_client.api.ssf_api import SsfApi as SsfApi
 from lumoauth_api_client.api.token_vault_api import TokenVaultApi as TokenVaultApi
 from lumoauth_api_client.api.well_known_api import WellKnownApi as WellKnownApi
@@ -646,6 +699,31 @@ from lumoauth_api_client.models.admin_permissions_get_response import AdminPermi
 from lumoauth_api_client.models.admin_permissions_list_response import AdminPermissionsListResponse as AdminPermissionsListResponse
 from lumoauth_api_client.models.admin_permissions_usage_response import AdminPermissionsUsageResponse as AdminPermissionsUsageResponse
 from lumoauth_api_client.models.admin_permissions_usage_response_data import AdminPermissionsUsageResponseData as AdminPermissionsUsageResponseData
+from lumoauth_api_client.models.admin_poppy_domain_check_request import AdminPoppyDomainCheckRequest as AdminPoppyDomainCheckRequest
+from lumoauth_api_client.models.admin_poppy_domain_check_response import AdminPoppyDomainCheckResponse as AdminPoppyDomainCheckResponse
+from lumoauth_api_client.models.admin_poppy_domain_check_response_data import AdminPoppyDomainCheckResponseData as AdminPoppyDomainCheckResponseData
+from lumoauth_api_client.models.admin_poppy_domain_check_response_data_checks_item import AdminPoppyDomainCheckResponseDataChecksItem as AdminPoppyDomainCheckResponseDataChecksItem
+from lumoauth_api_client.models.admin_poppy_feedback_list_response import AdminPoppyFeedbackListResponse as AdminPoppyFeedbackListResponse
+from lumoauth_api_client.models.admin_poppy_feedback_list_response_data_item import AdminPoppyFeedbackListResponseDataItem as AdminPoppyFeedbackListResponseDataItem
+from lumoauth_api_client.models.admin_poppy_get_response import AdminPoppyGetResponse as AdminPoppyGetResponse
+from lumoauth_api_client.models.admin_poppy_get_response_data import AdminPoppyGetResponseData as AdminPoppyGetResponseData
+from lumoauth_api_client.models.admin_poppy_get_response_data_documents_item import AdminPoppyGetResponseDataDocumentsItem as AdminPoppyGetResponseDataDocumentsItem
+from lumoauth_api_client.models.admin_poppy_get_response_data_documents_item_hosted import AdminPoppyGetResponseDataDocumentsItemHosted as AdminPoppyGetResponseDataDocumentsItemHosted
+from lumoauth_api_client.models.admin_poppy_get_response_data_documents_item_serve_at import AdminPoppyGetResponseDataDocumentsItemServeAt as AdminPoppyGetResponseDataDocumentsItemServeAt
+from lumoauth_api_client.models.admin_poppy_get_response_data_issuer_choices_item import AdminPoppyGetResponseDataIssuerChoicesItem as AdminPoppyGetResponseDataIssuerChoicesItem
+from lumoauth_api_client.models.admin_poppy_session_end_response import AdminPoppySessionEndResponse as AdminPoppySessionEndResponse
+from lumoauth_api_client.models.admin_poppy_sessions_list_response import AdminPoppySessionsListResponse as AdminPoppySessionsListResponse
+from lumoauth_api_client.models.admin_poppy_sessions_list_response_data_item import AdminPoppySessionsListResponseDataItem as AdminPoppySessionsListResponseDataItem
+from lumoauth_api_client.models.admin_poppy_update_request import AdminPoppyUpdateRequest as AdminPoppyUpdateRequest
+from lumoauth_api_client.models.admin_poppy_update_request_agent_item import AdminPoppyUpdateRequestAgentItem as AdminPoppyUpdateRequestAgentItem
+from lumoauth_api_client.models.admin_poppy_update_request_apis_item import AdminPoppyUpdateRequestApisItem as AdminPoppyUpdateRequestApisItem
+from lumoauth_api_client.models.admin_poppy_update_request_organization import AdminPoppyUpdateRequestOrganization as AdminPoppyUpdateRequestOrganization
+from lumoauth_api_client.models.admin_poppy_update_request_scopes_value import AdminPoppyUpdateRequestScopesValue as AdminPoppyUpdateRequestScopesValue
+from lumoauth_api_client.models.admin_poppy_update_request_sessions import AdminPoppyUpdateRequestSessions as AdminPoppyUpdateRequestSessions
+from lumoauth_api_client.models.admin_poppy_update_request_sign_in import AdminPoppyUpdateRequestSignIn as AdminPoppyUpdateRequestSignIn
+from lumoauth_api_client.models.admin_poppy_update_request_tasks import AdminPoppyUpdateRequestTasks as AdminPoppyUpdateRequestTasks
+from lumoauth_api_client.models.admin_poppy_update_request_web import AdminPoppyUpdateRequestWeb as AdminPoppyUpdateRequestWeb
+from lumoauth_api_client.models.admin_poppy_update_response import AdminPoppyUpdateResponse as AdminPoppyUpdateResponse
 from lumoauth_api_client.models.admin_roles_create_response import AdminRolesCreateResponse as AdminRolesCreateResponse
 from lumoauth_api_client.models.admin_roles_get_permissions_response import AdminRolesGetPermissionsResponse as AdminRolesGetPermissionsResponse
 from lumoauth_api_client.models.admin_roles_get_permissions_response_data_item import AdminRolesGetPermissionsResponseDataItem as AdminRolesGetPermissionsResponseDataItem
@@ -771,6 +849,8 @@ from lumoauth_api_client.models.device_authorization_response import DeviceAutho
 from lumoauth_api_client.models.email_enrollment_started import EmailEnrollmentStarted as EmailEnrollmentStarted
 from lumoauth_api_client.models.email_sender_settings import EmailSenderSettings as EmailSenderSettings
 from lumoauth_api_client.models.email_template import EmailTemplate as EmailTemplate
+from lumoauth_api_client.models.end_poppy_session_request import EndPoppySessionRequest as EndPoppySessionRequest
+from lumoauth_api_client.models.end_poppy_session_response import EndPoppySessionResponse as EndPoppySessionResponse
 from lumoauth_api_client.models.enroll_authenticator201_response import EnrollAuthenticator201Response as EnrollAuthenticator201Response
 from lumoauth_api_client.models.enroll_authenticator_request import EnrollAuthenticatorRequest as EnrollAuthenticatorRequest
 from lumoauth_api_client.models.evaluate_batch_response import EvaluateBatchResponse as EvaluateBatchResponse
@@ -799,6 +879,7 @@ from lumoauth_api_client.models.get_mfa_coverage_report_response import GetMfaCo
 from lumoauth_api_client.models.get_mfa_policy_response import GetMfaPolicyResponse as GetMfaPolicyResponse
 from lumoauth_api_client.models.get_my_attributes_response import GetMyAttributesResponse as GetMyAttributesResponse
 from lumoauth_api_client.models.get_my_attributes_response_attributes import GetMyAttributesResponseAttributes as GetMyAttributesResponseAttributes
+from lumoauth_api_client.models.get_poppy_session_status_response import GetPoppySessionStatusResponse as GetPoppySessionStatusResponse
 from lumoauth_api_client.models.get_protected_resource_metadata_root200_response import GetProtectedResourceMetadataRoot200Response as GetProtectedResourceMetadataRoot200Response
 from lumoauth_api_client.models.get_protected_resource_metadata_root_response1_resources_item import GetProtectedResourceMetadataRootResponse1ResourcesItem as GetProtectedResourceMetadataRootResponse1ResourcesItem
 from lumoauth_api_client.models.get_recovery_code_status_response import GetRecoveryCodeStatusResponse as GetRecoveryCodeStatusResponse
@@ -880,6 +961,26 @@ from lumoauth_api_client.models.patch_admin_clients_update_branding_response imp
 from lumoauth_api_client.models.permission import Permission as Permission
 from lumoauth_api_client.models.poll_agent_enrollment_request import PollAgentEnrollmentRequest as PollAgentEnrollmentRequest
 from lumoauth_api_client.models.poll_agent_enrollment_response import PollAgentEnrollmentResponse as PollAgentEnrollmentResponse
+from lumoauth_api_client.models.poppy_document import PoppyDocument as PoppyDocument
+from lumoauth_api_client.models.poppy_document_agent import PoppyDocumentAgent as PoppyDocumentAgent
+from lumoauth_api_client.models.poppy_document_agent_protocols_inner import PoppyDocumentAgentProtocolsInner as PoppyDocumentAgentProtocolsInner
+from lumoauth_api_client.models.poppy_document_apis_inner import PoppyDocumentApisInner as PoppyDocumentApisInner
+from lumoauth_api_client.models.poppy_document_auth import PoppyDocumentAuth as PoppyDocumentAuth
+from lumoauth_api_client.models.poppy_document_auth_scope_hints_value import PoppyDocumentAuthScopeHintsValue as PoppyDocumentAuthScopeHintsValue
+from lumoauth_api_client.models.poppy_document_organization import PoppyDocumentOrganization as PoppyDocumentOrganization
+from lumoauth_api_client.models.poppy_document_tasks import PoppyDocumentTasks as PoppyDocumentTasks
+from lumoauth_api_client.models.poppy_document_web import PoppyDocumentWeb as PoppyDocumentWeb
+from lumoauth_api_client.models.poppy_error import PoppyError as PoppyError
+from lumoauth_api_client.models.poppy_protected_resource_metadata import PoppyProtectedResourceMetadata as PoppyProtectedResourceMetadata
+from lumoauth_api_client.models.poppy_tasks_response import PoppyTasksResponse as PoppyTasksResponse
+from lumoauth_api_client.models.poppy_tasks_response_excluded_tasks_inner import PoppyTasksResponseExcludedTasksInner as PoppyTasksResponseExcludedTasksInner
+from lumoauth_api_client.models.poppy_tasks_response_excluded_tasks_inner_alternative import PoppyTasksResponseExcludedTasksInnerAlternative as PoppyTasksResponseExcludedTasksInnerAlternative
+from lumoauth_api_client.models.poppy_verify_request import PoppyVerifyRequest as PoppyVerifyRequest
+from lumoauth_api_client.models.poppy_verify_request_required_scope import PoppyVerifyRequestRequiredScope as PoppyVerifyRequestRequiredScope
+from lumoauth_api_client.models.poppy_verify_result import PoppyVerifyResult as PoppyVerifyResult
+from lumoauth_api_client.models.poppy_verify_result_account import PoppyVerifyResultAccount as PoppyVerifyResultAccount
+from lumoauth_api_client.models.poppy_verify_result_response import PoppyVerifyResultResponse as PoppyVerifyResultResponse
+from lumoauth_api_client.models.poppy_verify_result_session import PoppyVerifyResultSession as PoppyVerifyResultSession
 from lumoauth_api_client.models.protected_resource_list import ProtectedResourceList as ProtectedResourceList
 from lumoauth_api_client.models.protected_resource_metadata import ProtectedResourceMetadata as ProtectedResourceMetadata
 from lumoauth_api_client.models.push_enrollment_started import PushEnrollmentStarted as PushEnrollmentStarted
@@ -925,6 +1026,7 @@ from lumoauth_api_client.models.scim_settings import ScimSettings as ScimSetting
 from lumoauth_api_client.models.scim_settings_inbound import ScimSettingsInbound as ScimSettingsInbound
 from lumoauth_api_client.models.scim_settings_inbound_protected_attributes import ScimSettingsInboundProtectedAttributes as ScimSettingsInboundProtectedAttributes
 from lumoauth_api_client.models.scim_settings_outbound import ScimSettingsOutbound as ScimSettingsOutbound
+from lumoauth_api_client.models.send_poppy_feedback_request import SendPoppyFeedbackRequest as SendPoppyFeedbackRequest
 from lumoauth_api_client.models.send_user_verification_email_response import SendUserVerificationEmailResponse as SendUserVerificationEmailResponse
 from lumoauth_api_client.models.set_client_scopes_response import SetClientScopesResponse as SetClientScopesResponse
 from lumoauth_api_client.models.set_resource_attribute_response import SetResourceAttributeResponse as SetResourceAttributeResponse

@@ -50,6 +50,8 @@ public struct AuthorizationServerMetadata: Codable, JSONEncodable, Hashable {
     public var entityProfilesSupported: [String]?
     /** Present (true) unless the organization switched Client ID Metadata Documents off. */
     public var clientIdMetadataDocumentSupported: Bool?
+    /** Personal Agent Protocol: https://{domain} for each of the organization's Company domains, then the other resources that it offers personal agents. Only while the protocol is switched on, and only in the document of the issuer that the organization chose as its Company identifier. */
+    public var protectedResources: [String]?
     /** Only when the organization accepts ID-JAGs. */
     public var authorizationGrantProfilesSupported: [String]?
     /** The Privacy policy URL of the organization's login page settings. Only when it is set. */
@@ -57,7 +59,7 @@ public struct AuthorizationServerMetadata: Codable, JSONEncodable, Hashable {
     /** The Terms of service URL of the organization's login page settings. Only when it is set. */
     public var opTosUri: String?
 
-    public init(issuer: String, authorizationEndpoint: String, tokenEndpoint: String, responseTypesSupported: [String], jwksUri: String, registrationEndpoint: String? = nil, scopesSupported: [String]? = nil, responseModesSupported: [String]? = nil, authorizationSigningAlgValuesSupported: [String]? = nil, grantTypesSupported: [String]? = nil, tokenEndpointAuthMethodsSupported: [String]? = nil, tokenEndpointAuthSigningAlgValuesSupported: [String]? = nil, serviceDocumentation: String? = nil, uiLocalesSupported: [String]? = nil, revocationEndpoint: String? = nil, revocationEndpointAuthMethodsSupported: [String]? = nil, introspectionEndpoint: String? = nil, introspectionEndpointAuthMethodsSupported: [String]? = nil, codeChallengeMethodsSupported: [String]? = nil, authorizationResponseIssParameterSupported: Bool? = nil, requestParameterSupported: Bool? = nil, requestUriParameterSupported: Bool? = nil, requireRequestUriRegistration: Bool? = nil, requireSignedRequestObject: Bool? = nil, requestObjectSigningAlgValuesSupported: [String]? = nil, deviceAuthorizationEndpoint: String? = nil, pushedAuthorizationRequestEndpoint: String? = nil, requirePushedAuthorizationRequests: Bool? = nil, dpopSigningAlgValuesSupported: [String]? = nil, backchannelAuthenticationEndpoint: String? = nil, backchannelTokenDeliveryModesSupported: [String]? = nil, backchannelUserCodeParameterSupported: Bool? = nil, resourceIndicatorsSupported: Bool? = nil, entityProfilesSupported: [String]? = nil, clientIdMetadataDocumentSupported: Bool? = nil, authorizationGrantProfilesSupported: [String]? = nil, opPolicyUri: String? = nil, opTosUri: String? = nil) {
+    public init(issuer: String, authorizationEndpoint: String, tokenEndpoint: String, responseTypesSupported: [String], jwksUri: String, registrationEndpoint: String? = nil, scopesSupported: [String]? = nil, responseModesSupported: [String]? = nil, authorizationSigningAlgValuesSupported: [String]? = nil, grantTypesSupported: [String]? = nil, tokenEndpointAuthMethodsSupported: [String]? = nil, tokenEndpointAuthSigningAlgValuesSupported: [String]? = nil, serviceDocumentation: String? = nil, uiLocalesSupported: [String]? = nil, revocationEndpoint: String? = nil, revocationEndpointAuthMethodsSupported: [String]? = nil, introspectionEndpoint: String? = nil, introspectionEndpointAuthMethodsSupported: [String]? = nil, codeChallengeMethodsSupported: [String]? = nil, authorizationResponseIssParameterSupported: Bool? = nil, requestParameterSupported: Bool? = nil, requestUriParameterSupported: Bool? = nil, requireRequestUriRegistration: Bool? = nil, requireSignedRequestObject: Bool? = nil, requestObjectSigningAlgValuesSupported: [String]? = nil, deviceAuthorizationEndpoint: String? = nil, pushedAuthorizationRequestEndpoint: String? = nil, requirePushedAuthorizationRequests: Bool? = nil, dpopSigningAlgValuesSupported: [String]? = nil, backchannelAuthenticationEndpoint: String? = nil, backchannelTokenDeliveryModesSupported: [String]? = nil, backchannelUserCodeParameterSupported: Bool? = nil, resourceIndicatorsSupported: Bool? = nil, entityProfilesSupported: [String]? = nil, clientIdMetadataDocumentSupported: Bool? = nil, protectedResources: [String]? = nil, authorizationGrantProfilesSupported: [String]? = nil, opPolicyUri: String? = nil, opTosUri: String? = nil) {
         self.issuer = issuer
         self.authorizationEndpoint = authorizationEndpoint
         self.tokenEndpoint = tokenEndpoint
@@ -93,6 +95,7 @@ public struct AuthorizationServerMetadata: Codable, JSONEncodable, Hashable {
         self.resourceIndicatorsSupported = resourceIndicatorsSupported
         self.entityProfilesSupported = entityProfilesSupported
         self.clientIdMetadataDocumentSupported = clientIdMetadataDocumentSupported
+        self.protectedResources = protectedResources
         self.authorizationGrantProfilesSupported = authorizationGrantProfilesSupported
         self.opPolicyUri = opPolicyUri
         self.opTosUri = opTosUri
@@ -134,6 +137,7 @@ public struct AuthorizationServerMetadata: Codable, JSONEncodable, Hashable {
         case resourceIndicatorsSupported = "resource_indicators_supported"
         case entityProfilesSupported = "entity_profiles_supported"
         case clientIdMetadataDocumentSupported = "client_id_metadata_document_supported"
+        case protectedResources = "protected_resources"
         case authorizationGrantProfilesSupported = "authorization_grant_profiles_supported"
         case opPolicyUri = "op_policy_uri"
         case opTosUri = "op_tos_uri"
@@ -178,6 +182,7 @@ public struct AuthorizationServerMetadata: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(resourceIndicatorsSupported, forKey: .resourceIndicatorsSupported)
         try container.encodeIfPresent(entityProfilesSupported, forKey: .entityProfilesSupported)
         try container.encodeIfPresent(clientIdMetadataDocumentSupported, forKey: .clientIdMetadataDocumentSupported)
+        try container.encodeIfPresent(protectedResources, forKey: .protectedResources)
         try container.encodeIfPresent(authorizationGrantProfilesSupported, forKey: .authorizationGrantProfilesSupported)
         try container.encodeIfPresent(opPolicyUri, forKey: .opPolicyUri)
         try container.encodeIfPresent(opTosUri, forKey: .opTosUri)

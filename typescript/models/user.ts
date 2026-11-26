@@ -93,6 +93,12 @@ export interface User {
      */
     'isActive': boolean;
     /**
+     * Staff account: one of the organization\'s own users, not a person of a customer organization. Only staff accounts pass the \"Organization users only\" setting of applications and agents. Switched off when the account joins a customer organization; the end of the membership does not switch it on again. Set it with PUT or PATCH /users/{userId}.
+     * @type {boolean}
+     * @memberof User
+     */
+    'staff'?: boolean;
+    /**
      * 
      * @type {boolean}
      * @memberof User

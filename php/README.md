@@ -223,6 +223,12 @@ Class | Method | HTTP request | Description
 *AdminPermissionsApi* | [**adminScopesCreate**](docs/Api/AdminPermissionsApi.md#adminscopescreate) | **POST** /orgs/{orgId}/api/v1/admin/scopes | Create a custom OAuth scope
 *AdminPermissionsApi* | [**adminScopesDelete**](docs/Api/AdminPermissionsApi.md#adminscopesdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/scopes/{scopeId} | Delete a custom OAuth scope
 *AdminPermissionsApi* | [**adminScopesList**](docs/Api/AdminPermissionsApi.md#adminscopeslist) | **GET** /orgs/{orgId}/api/v1/admin/scopes | List OAuth scopes
+*AdminPersonalAgentProtocolApi* | [**adminPoppyDomainCheck**](docs/Api/AdminPersonalAgentProtocolApi.md#adminpoppydomaincheck) | **POST** /orgs/{orgId}/api/v1/admin/personal-agent-protocol/domains/check | Check a Company domain
+*AdminPersonalAgentProtocolApi* | [**adminPoppyFeedbackList**](docs/Api/AdminPersonalAgentProtocolApi.md#adminpoppyfeedbacklist) | **GET** /orgs/{orgId}/api/v1/admin/personal-agent-protocol/feedback | List feedback from personal agents
+*AdminPersonalAgentProtocolApi* | [**adminPoppyGet**](docs/Api/AdminPersonalAgentProtocolApi.md#adminpoppyget) | **GET** /orgs/{orgId}/api/v1/admin/personal-agent-protocol | Get the Personal Agent Protocol settings
+*AdminPersonalAgentProtocolApi* | [**adminPoppySessionEnd**](docs/Api/AdminPersonalAgentProtocolApi.md#adminpoppysessionend) | **POST** /orgs/{orgId}/api/v1/admin/personal-agent-protocol/sessions/{id}/end | End a Personal Agent Protocol Session
+*AdminPersonalAgentProtocolApi* | [**adminPoppySessionsList**](docs/Api/AdminPersonalAgentProtocolApi.md#adminpoppysessionslist) | **GET** /orgs/{orgId}/api/v1/admin/personal-agent-protocol/sessions | List Personal Agent Protocol Sessions
+*AdminPersonalAgentProtocolApi* | [**adminPoppyUpdate**](docs/Api/AdminPersonalAgentProtocolApi.md#adminpoppyupdate) | **PUT** /orgs/{orgId}/api/v1/admin/personal-agent-protocol | Update the Personal Agent Protocol settings
 *AdminRolesApi* | [**adminRolesAddPermissions**](docs/Api/AdminRolesApi.md#adminrolesaddpermissions) | **POST** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Add permission(s) to a role
 *AdminRolesApi* | [**adminRolesAddUser**](docs/Api/AdminRolesApi.md#adminrolesadduser) | **POST** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users | Assign a user to a role
 *AdminRolesApi* | [**adminRolesCreate**](docs/Api/AdminRolesApi.md#adminrolescreate) | **POST** /orgs/{orgId}/api/v1/admin/roles | Create a new role
@@ -417,6 +423,13 @@ Class | Method | HTTP request | Description
 *OIDCApi* | [**logoutPost**](docs/Api/OIDCApi.md#logoutpost) | **POST** /orgs/{orgId}/api/v1/oauth/logout | RP-initiated logout (confirmation submission)
 *OIDCApi* | [**userinfo**](docs/Api/OIDCApi.md#userinfo) | **GET** /orgs/{orgId}/api/v1/oauth/userinfo | OpenID Connect UserInfo endpoint
 *OIDCApi* | [**userinfoPost**](docs/Api/OIDCApi.md#userinfopost) | **POST** /orgs/{orgId}/api/v1/oauth/userinfo | OpenID Connect UserInfo endpoint (POST)
+*PersonalAgentProtocolApi* | [**endPoppySession**](docs/Api/PersonalAgentProtocolApi.md#endpoppysession) | **POST** /orgs/{orgId}/api/v1/poppy/sessions/end | End a Session
+*PersonalAgentProtocolApi* | [**getPoppyDocument**](docs/Api/PersonalAgentProtocolApi.md#getpoppydocument) | **GET** /orgs/{orgId}/api/v1/poppy/documents/{domain}/poppy.json | poppy.json of a Company domain
+*PersonalAgentProtocolApi* | [**getPoppyProtectedResourceMetadata**](docs/Api/PersonalAgentProtocolApi.md#getpoppyprotectedresourcemetadata) | **GET** /orgs/{orgId}/api/v1/poppy/documents/{domain}/oauth-protected-resource | Protected resource metadata of a Company domain
+*PersonalAgentProtocolApi* | [**getPoppySessionStatus**](docs/Api/PersonalAgentProtocolApi.md#getpoppysessionstatus) | **POST** /orgs/{orgId}/api/v1/poppy/sessions/status | Look up a Session
+*PersonalAgentProtocolApi* | [**getPoppyTasks**](docs/Api/PersonalAgentProtocolApi.md#getpoppytasks) | **GET** /orgs/{orgId}/api/v1/poppy/tasks | Tasks endpoint (Personal Agent Protocol, section 9)
+*PersonalAgentProtocolApi* | [**sendPoppyFeedback**](docs/Api/PersonalAgentProtocolApi.md#sendpoppyfeedback) | **POST** /orgs/{orgId}/api/v1/poppy/feedback | Feedback endpoint (Personal Agent Protocol 9.3)
+*PersonalAgentProtocolApi* | [**verifyPoppySession**](docs/Api/PersonalAgentProtocolApi.md#verifypoppysession) | **POST** /orgs/{orgId}/api/v1/poppy/sessions/verify | Verify a Personal Agent&#39;s request
 *SsfApi* | [**createStreamConfig**](docs/Api/SsfApi.md#createstreamconfig) | **POST** /orgs/{orgId}/api/v1/ssf/stream | Create an SSF stream
 *SsfApi* | [**deleteStreamConfig**](docs/Api/SsfApi.md#deletestreamconfig) | **DELETE** /orgs/{orgId}/api/v1/ssf/stream | Delete an SSF stream
 *SsfApi* | [**getStreamConfig**](docs/Api/SsfApi.md#getstreamconfig) | **GET** /orgs/{orgId}/api/v1/ssf/stream | Read SSF stream configuration(s)
@@ -539,6 +552,31 @@ Class | Method | HTTP request | Description
 - [AdminPermissionsListResponse](docs/Model/AdminPermissionsListResponse.md)
 - [AdminPermissionsUsageResponse](docs/Model/AdminPermissionsUsageResponse.md)
 - [AdminPermissionsUsageResponseData](docs/Model/AdminPermissionsUsageResponseData.md)
+- [AdminPoppyDomainCheckRequest](docs/Model/AdminPoppyDomainCheckRequest.md)
+- [AdminPoppyDomainCheckResponse](docs/Model/AdminPoppyDomainCheckResponse.md)
+- [AdminPoppyDomainCheckResponseData](docs/Model/AdminPoppyDomainCheckResponseData.md)
+- [AdminPoppyDomainCheckResponseDataChecksItem](docs/Model/AdminPoppyDomainCheckResponseDataChecksItem.md)
+- [AdminPoppyFeedbackListResponse](docs/Model/AdminPoppyFeedbackListResponse.md)
+- [AdminPoppyFeedbackListResponseDataItem](docs/Model/AdminPoppyFeedbackListResponseDataItem.md)
+- [AdminPoppyGetResponse](docs/Model/AdminPoppyGetResponse.md)
+- [AdminPoppyGetResponseData](docs/Model/AdminPoppyGetResponseData.md)
+- [AdminPoppyGetResponseDataDocumentsItem](docs/Model/AdminPoppyGetResponseDataDocumentsItem.md)
+- [AdminPoppyGetResponseDataDocumentsItemHosted](docs/Model/AdminPoppyGetResponseDataDocumentsItemHosted.md)
+- [AdminPoppyGetResponseDataDocumentsItemServeAt](docs/Model/AdminPoppyGetResponseDataDocumentsItemServeAt.md)
+- [AdminPoppyGetResponseDataIssuerChoicesItem](docs/Model/AdminPoppyGetResponseDataIssuerChoicesItem.md)
+- [AdminPoppySessionEndResponse](docs/Model/AdminPoppySessionEndResponse.md)
+- [AdminPoppySessionsListResponse](docs/Model/AdminPoppySessionsListResponse.md)
+- [AdminPoppySessionsListResponseDataItem](docs/Model/AdminPoppySessionsListResponseDataItem.md)
+- [AdminPoppyUpdateRequest](docs/Model/AdminPoppyUpdateRequest.md)
+- [AdminPoppyUpdateRequestAgentItem](docs/Model/AdminPoppyUpdateRequestAgentItem.md)
+- [AdminPoppyUpdateRequestApisItem](docs/Model/AdminPoppyUpdateRequestApisItem.md)
+- [AdminPoppyUpdateRequestOrganization](docs/Model/AdminPoppyUpdateRequestOrganization.md)
+- [AdminPoppyUpdateRequestScopesValue](docs/Model/AdminPoppyUpdateRequestScopesValue.md)
+- [AdminPoppyUpdateRequestSessions](docs/Model/AdminPoppyUpdateRequestSessions.md)
+- [AdminPoppyUpdateRequestSignIn](docs/Model/AdminPoppyUpdateRequestSignIn.md)
+- [AdminPoppyUpdateRequestTasks](docs/Model/AdminPoppyUpdateRequestTasks.md)
+- [AdminPoppyUpdateRequestWeb](docs/Model/AdminPoppyUpdateRequestWeb.md)
+- [AdminPoppyUpdateResponse](docs/Model/AdminPoppyUpdateResponse.md)
 - [AdminRolesCreateResponse](docs/Model/AdminRolesCreateResponse.md)
 - [AdminRolesGetPermissionsResponse](docs/Model/AdminRolesGetPermissionsResponse.md)
 - [AdminRolesGetPermissionsResponseDataItem](docs/Model/AdminRolesGetPermissionsResponseDataItem.md)
@@ -664,6 +702,8 @@ Class | Method | HTTP request | Description
 - [EmailEnrollmentStarted](docs/Model/EmailEnrollmentStarted.md)
 - [EmailSenderSettings](docs/Model/EmailSenderSettings.md)
 - [EmailTemplate](docs/Model/EmailTemplate.md)
+- [EndPoppySessionRequest](docs/Model/EndPoppySessionRequest.md)
+- [EndPoppySessionResponse](docs/Model/EndPoppySessionResponse.md)
 - [EnrollAuthenticator201Response](docs/Model/EnrollAuthenticator201Response.md)
 - [EnrollAuthenticatorRequest](docs/Model/EnrollAuthenticatorRequest.md)
 - [EvaluateBatchResponse](docs/Model/EvaluateBatchResponse.md)
@@ -692,6 +732,7 @@ Class | Method | HTTP request | Description
 - [GetMfaPolicyResponse](docs/Model/GetMfaPolicyResponse.md)
 - [GetMyAttributesResponse](docs/Model/GetMyAttributesResponse.md)
 - [GetMyAttributesResponseAttributes](docs/Model/GetMyAttributesResponseAttributes.md)
+- [GetPoppySessionStatusResponse](docs/Model/GetPoppySessionStatusResponse.md)
 - [GetProtectedResourceMetadataRoot200Response](docs/Model/GetProtectedResourceMetadataRoot200Response.md)
 - [GetProtectedResourceMetadataRootResponse1ResourcesItem](docs/Model/GetProtectedResourceMetadataRootResponse1ResourcesItem.md)
 - [GetRecoveryCodeStatusResponse](docs/Model/GetRecoveryCodeStatusResponse.md)
@@ -773,6 +814,26 @@ Class | Method | HTTP request | Description
 - [Permission](docs/Model/Permission.md)
 - [PollAgentEnrollmentRequest](docs/Model/PollAgentEnrollmentRequest.md)
 - [PollAgentEnrollmentResponse](docs/Model/PollAgentEnrollmentResponse.md)
+- [PoppyDocument](docs/Model/PoppyDocument.md)
+- [PoppyDocumentAgent](docs/Model/PoppyDocumentAgent.md)
+- [PoppyDocumentAgentProtocolsInner](docs/Model/PoppyDocumentAgentProtocolsInner.md)
+- [PoppyDocumentApisInner](docs/Model/PoppyDocumentApisInner.md)
+- [PoppyDocumentAuth](docs/Model/PoppyDocumentAuth.md)
+- [PoppyDocumentAuthScopeHintsValue](docs/Model/PoppyDocumentAuthScopeHintsValue.md)
+- [PoppyDocumentOrganization](docs/Model/PoppyDocumentOrganization.md)
+- [PoppyDocumentTasks](docs/Model/PoppyDocumentTasks.md)
+- [PoppyDocumentWeb](docs/Model/PoppyDocumentWeb.md)
+- [PoppyError](docs/Model/PoppyError.md)
+- [PoppyProtectedResourceMetadata](docs/Model/PoppyProtectedResourceMetadata.md)
+- [PoppyTasksResponse](docs/Model/PoppyTasksResponse.md)
+- [PoppyTasksResponseExcludedTasksInner](docs/Model/PoppyTasksResponseExcludedTasksInner.md)
+- [PoppyTasksResponseExcludedTasksInnerAlternative](docs/Model/PoppyTasksResponseExcludedTasksInnerAlternative.md)
+- [PoppyVerifyRequest](docs/Model/PoppyVerifyRequest.md)
+- [PoppyVerifyRequestRequiredScope](docs/Model/PoppyVerifyRequestRequiredScope.md)
+- [PoppyVerifyResult](docs/Model/PoppyVerifyResult.md)
+- [PoppyVerifyResultAccount](docs/Model/PoppyVerifyResultAccount.md)
+- [PoppyVerifyResultResponse](docs/Model/PoppyVerifyResultResponse.md)
+- [PoppyVerifyResultSession](docs/Model/PoppyVerifyResultSession.md)
 - [ProtectedResourceList](docs/Model/ProtectedResourceList.md)
 - [ProtectedResourceMetadata](docs/Model/ProtectedResourceMetadata.md)
 - [PushEnrollmentStarted](docs/Model/PushEnrollmentStarted.md)
@@ -818,6 +879,7 @@ Class | Method | HTTP request | Description
 - [ScimSettingsInbound](docs/Model/ScimSettingsInbound.md)
 - [ScimSettingsInboundProtectedAttributes](docs/Model/ScimSettingsInboundProtectedAttributes.md)
 - [ScimSettingsOutbound](docs/Model/ScimSettingsOutbound.md)
+- [SendPoppyFeedbackRequest](docs/Model/SendPoppyFeedbackRequest.md)
 - [SendUserVerificationEmailResponse](docs/Model/SendUserVerificationEmailResponse.md)
 - [SetClientScopesResponse](docs/Model/SetClientScopesResponse.md)
 - [SetResourceAttributeResponse](docs/Model/SetResourceAttributeResponse.md)

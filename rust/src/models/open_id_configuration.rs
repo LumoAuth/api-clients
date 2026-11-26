@@ -115,6 +115,9 @@ pub struct OpenIdConfiguration {
     /// Present (true) unless the organization switched Client ID Metadata Documents off.
     #[serde(rename = "client_id_metadata_document_supported", skip_serializing_if = "Option::is_none")]
     pub client_id_metadata_document_supported: Option<bool>,
+    /// Personal Agent Protocol: https://{domain} for each of the organization's Company domains, then the other resources that it offers personal agents. Only while the protocol is switched on, and only in the document of the issuer that the organization chose as its Company identifier.
+    #[serde(rename = "protected_resources", skip_serializing_if = "Option::is_none")]
+    pub protected_resources: Option<Vec<String>>,
     /// Only when the organization accepts ID-JAGs.
     #[serde(rename = "authorization_grant_profiles_supported", skip_serializing_if = "Option::is_none")]
     pub authorization_grant_profiles_supported: Option<Vec<String>>,
@@ -178,6 +181,7 @@ impl OpenIdConfiguration {
             service_documentation: None,
             entity_profiles_supported: None,
             client_id_metadata_document_supported: None,
+            protected_resources: None,
             authorization_grant_profiles_supported: None,
             op_policy_uri: None,
             op_tos_uri: None,

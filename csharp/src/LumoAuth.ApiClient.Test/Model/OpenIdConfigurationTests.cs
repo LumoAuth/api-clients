@@ -497,6 +497,15 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'ProtectedResources'
+        /// </summary>
+        [Fact]
+        public void ProtectedResourcesTest()
+        {
+            // TODO unit test for the property 'ProtectedResources'
+        }
+
+        /// <summary>
         /// Test the property 'AuthorizationGrantProfilesSupported'
         /// </summary>
         [Fact]
