@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **PhoneNumber** | Pointer to **NullableString** |  | [optional] 
 **PhoneNumberVerified** | Pointer to **bool** |  | [optional] 
 **IsActive** | **bool** |  | 
+**Staff** | Pointer to **bool** | Staff account: one of the organization&#39;s own users, not a person of a customer organization. Only staff accounts pass the \&quot;Organization users only\&quot; setting of applications and agents. Switched off when the account joins a customer organization; the end of the membership does not switch it on again. Set it with PUT or PATCH /users/{userId}. | [optional] 
 **Blocked** | **bool** |  | 
 **Deleted** | Pointer to **bool** | Soft-deleted by inbound SCIM. Left out of the list unless deleted&#x3D;true is asked; POST /users/{userId}/restore brings the user back. | [optional] 
 **DeletedAt** | Pointer to **NullableTime** |  | [optional] 
@@ -366,6 +367,31 @@ and a boolean to check if the value has been set.
 
 SetIsActive sets IsActive field to given value.
 
+
+### GetStaff
+
+`func (o *User) GetStaff() bool`
+
+GetStaff returns the Staff field if non-nil, zero value otherwise.
+
+### GetStaffOk
+
+`func (o *User) GetStaffOk() (*bool, bool)`
+
+GetStaffOk returns a tuple with the Staff field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStaff
+
+`func (o *User) SetStaff(v bool)`
+
+SetStaff sets Staff field to given value.
+
+### HasStaff
+
+`func (o *User) HasStaff() bool`
+
+HasStaff returns a boolean if a field has been set.
 
 ### GetBlocked
 

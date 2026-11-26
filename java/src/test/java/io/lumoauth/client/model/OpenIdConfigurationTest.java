@@ -433,6 +433,14 @@ public class OpenIdConfigurationTest {
     }
 
     /**
+     * Test the property 'protectedResources'
+     */
+    @Test
+    public void protectedResourcesTest() {
+        // TODO: test protectedResources
+    }
+
+    /**
      * Test the property 'authorizationGrantProfilesSupported'
      */
     @Test

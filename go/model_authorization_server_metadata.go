@@ -60,6 +60,8 @@ type AuthorizationServerMetadata struct {
 	EntityProfilesSupported []string `json:"entity_profiles_supported,omitempty"`
 	// Present (true) unless the organization switched Client ID Metadata Documents off.
 	ClientIdMetadataDocumentSupported *bool `json:"client_id_metadata_document_supported,omitempty"`
+	// Personal Agent Protocol: https://{domain} for each of the organization's Company domains, then the other resources that it offers personal agents. Only while the protocol is switched on, and only in the document of the issuer that the organization chose as its Company identifier.
+	ProtectedResources []string `json:"protected_resources,omitempty"`
 	// Only when the organization accepts ID-JAGs.
 	AuthorizationGrantProfilesSupported []string `json:"authorization_grant_profiles_supported,omitempty"`
 	// The Privacy policy URL of the organization's login page settings. Only when it is set.
@@ -1172,6 +1174,38 @@ func (o *AuthorizationServerMetadata) SetClientIdMetadataDocumentSupported(v boo
 	o.ClientIdMetadataDocumentSupported = &v
 }
 
+// GetProtectedResources returns the ProtectedResources field value if set, zero value otherwise.
+func (o *AuthorizationServerMetadata) GetProtectedResources() []string {
+	if o == nil || IsNil(o.ProtectedResources) {
+		var ret []string
+		return ret
+	}
+	return o.ProtectedResources
+}
+
+// GetProtectedResourcesOk returns a tuple with the ProtectedResources field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AuthorizationServerMetadata) GetProtectedResourcesOk() ([]string, bool) {
+	if o == nil || IsNil(o.ProtectedResources) {
+		return nil, false
+	}
+	return o.ProtectedResources, true
+}
+
+// HasProtectedResources returns a boolean if a field has been set.
+func (o *AuthorizationServerMetadata) HasProtectedResources() bool {
+	if o != nil && !IsNil(o.ProtectedResources) {
+		return true
+	}
+
+	return false
+}
+
+// SetProtectedResources gets a reference to the given []string and assigns it to the ProtectedResources field.
+func (o *AuthorizationServerMetadata) SetProtectedResources(v []string) {
+	o.ProtectedResources = v
+}
+
 // GetAuthorizationGrantProfilesSupported returns the AuthorizationGrantProfilesSupported field value if set, zero value otherwise.
 func (o *AuthorizationServerMetadata) GetAuthorizationGrantProfilesSupported() []string {
 	if o == nil || IsNil(o.AuthorizationGrantProfilesSupported) {
@@ -1372,6 +1406,9 @@ func (o AuthorizationServerMetadata) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ClientIdMetadataDocumentSupported) {
 		toSerialize["client_id_metadata_document_supported"] = o.ClientIdMetadataDocumentSupported
+	}
+	if !IsNil(o.ProtectedResources) {
+		toSerialize["protected_resources"] = o.ProtectedResources
 	}
 	if !IsNil(o.AuthorizationGrantProfilesSupported) {
 		toSerialize["authorization_grant_profiles_supported"] = o.AuthorizationGrantProfilesSupported

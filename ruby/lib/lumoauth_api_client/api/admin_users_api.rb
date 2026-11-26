@@ -1308,7 +1308,7 @@ module LumoAuthApiClient
     end
 
     # Update a user
-    # Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive` or `emailVerified` needs a caller who holds every permission of the user. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
+    # Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive`, `staff` or `emailVerified` needs a caller who holds every permission of the user. `staff: true` is refused with 409 for an account that is a member of a customer organization. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
@@ -1319,7 +1319,7 @@ module LumoAuthApiClient
     end
 
     # Update a user
-    # Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
+    # Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60;, &#x60;staff&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. &#x60;staff: true&#x60; is refused with 409 for an account that is a member of a customer organization. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
@@ -2017,7 +2017,7 @@ module LumoAuthApiClient
     end
 
     # Update a user
-    # Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive` or `emailVerified` needs a caller who holds every permission of the user. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
+    # Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive`, `staff` or `emailVerified` needs a caller who holds every permission of the user. `staff: true` is refused with 409 for an account that is a member of a customer organization. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
@@ -2028,7 +2028,7 @@ module LumoAuthApiClient
     end
 
     # Update a user
-    # Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
+    # Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60;, &#x60;staff&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. &#x60;staff: true&#x60; is refused with 409 for an account that is a member of a customer organization. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters

@@ -53,6 +53,7 @@ Name | Type | Description | Notes
 **ServiceDocumentation** | Pointer to **string** |  | [optional] 
 **EntityProfilesSupported** | Pointer to **[]string** |  | [optional] 
 **ClientIdMetadataDocumentSupported** | Pointer to **bool** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] 
+**ProtectedResources** | Pointer to **[]string** | Personal Agent Protocol: https://{domain} for each of the organization&#39;s Company domains, then the other resources that it offers personal agents. Only while the protocol is switched on, and only in the document of the issuer that the organization chose as its Company identifier. | [optional] 
 **AuthorizationGrantProfilesSupported** | Pointer to **[]string** | Only when the organization accepts ID-JAGs. | [optional] 
 **OpPolicyUri** | Pointer to **string** | The Privacy policy URL of the organization&#39;s login page settings. Only when it is set. | [optional] 
 **OpTosUri** | Pointer to **string** | The Terms of service URL of the organization&#39;s login page settings. Only when it is set. | [optional] 
@@ -1265,6 +1266,31 @@ SetClientIdMetadataDocumentSupported sets ClientIdMetadataDocumentSupported fiel
 `func (o *OpenIdConfiguration) HasClientIdMetadataDocumentSupported() bool`
 
 HasClientIdMetadataDocumentSupported returns a boolean if a field has been set.
+
+### GetProtectedResources
+
+`func (o *OpenIdConfiguration) GetProtectedResources() []string`
+
+GetProtectedResources returns the ProtectedResources field if non-nil, zero value otherwise.
+
+### GetProtectedResourcesOk
+
+`func (o *OpenIdConfiguration) GetProtectedResourcesOk() (*[]string, bool)`
+
+GetProtectedResourcesOk returns a tuple with the ProtectedResources field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProtectedResources
+
+`func (o *OpenIdConfiguration) SetProtectedResources(v []string)`
+
+SetProtectedResources sets ProtectedResources field to given value.
+
+### HasProtectedResources
+
+`func (o *OpenIdConfiguration) HasProtectedResources() bool`
+
+HasProtectedResources returns a boolean if a field has been set.
 
 ### GetAuthorizationGrantProfilesSupported
 

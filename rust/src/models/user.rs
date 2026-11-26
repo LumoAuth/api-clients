@@ -35,6 +35,9 @@ pub struct User {
     pub phone_number_verified: Option<bool>,
     #[serde(rename = "isActive")]
     pub is_active: bool,
+    /// Staff account: one of the organization's own users, not a person of a customer organization. Only staff accounts pass the \"Organization users only\" setting of applications and agents. Switched off when the account joins a customer organization; the end of the membership does not switch it on again. Set it with PUT or PATCH /users/{userId}.
+    #[serde(rename = "staff", skip_serializing_if = "Option::is_none")]
+    pub staff: Option<bool>,
     #[serde(rename = "blocked")]
     pub blocked: bool,
     /// Soft-deleted by inbound SCIM. Left out of the list unless deleted=true is asked; POST /users/{userId}/restore brings the user back.
@@ -95,6 +98,7 @@ impl User {
             phone_number: None,
             phone_number_verified: None,
             is_active,
+            staff: None,
             blocked,
             deleted: None,
             deleted_at: None,

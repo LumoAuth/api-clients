@@ -53,6 +53,7 @@ Name | Type | Description | Notes
 **service_documentation** | Option<**String**> |  | [optional]
 **entity_profiles_supported** | Option<**Vec<String>**> |  | [optional]
 **client_id_metadata_document_supported** | Option<**bool**> | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional]
+**protected_resources** | Option<**Vec<String>**> | Personal Agent Protocol: https://{domain} for each of the organization's Company domains, then the other resources that it offers personal agents. Only while the protocol is switched on, and only in the document of the issuer that the organization chose as its Company identifier. | [optional]
 **authorization_grant_profiles_supported** | Option<**Vec<String>**> | Only when the organization accepts ID-JAGs. | [optional]
 **op_policy_uri** | Option<**String**> | The Privacy policy URL of the organization's login page settings. Only when it is set. | [optional]
 **op_tos_uri** | Option<**String**> | The Terms of service URL of the organization's login page settings. Only when it is set. | [optional]

@@ -93,6 +93,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'resourceIndicatorsSupported' => 'bool',
         'entityProfilesSupported' => 'string[]',
         'clientIdMetadataDocumentSupported' => 'bool',
+        'protectedResources' => 'string[]',
         'authorizationGrantProfilesSupported' => 'string[]',
         'opPolicyUri' => 'string',
         'opTosUri' => 'string'
@@ -141,6 +142,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'resourceIndicatorsSupported' => null,
         'entityProfilesSupported' => null,
         'clientIdMetadataDocumentSupported' => null,
+        'protectedResources' => 'uri',
         'authorizationGrantProfilesSupported' => null,
         'opPolicyUri' => 'uri',
         'opTosUri' => 'uri'
@@ -187,6 +189,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'resourceIndicatorsSupported' => false,
         'entityProfilesSupported' => false,
         'clientIdMetadataDocumentSupported' => false,
+        'protectedResources' => false,
         'authorizationGrantProfilesSupported' => false,
         'opPolicyUri' => false,
         'opTosUri' => false
@@ -313,6 +316,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'resourceIndicatorsSupported' => 'resource_indicators_supported',
         'entityProfilesSupported' => 'entity_profiles_supported',
         'clientIdMetadataDocumentSupported' => 'client_id_metadata_document_supported',
+        'protectedResources' => 'protected_resources',
         'authorizationGrantProfilesSupported' => 'authorization_grant_profiles_supported',
         'opPolicyUri' => 'op_policy_uri',
         'opTosUri' => 'op_tos_uri'
@@ -359,6 +363,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'resourceIndicatorsSupported' => 'setResourceIndicatorsSupported',
         'entityProfilesSupported' => 'setEntityProfilesSupported',
         'clientIdMetadataDocumentSupported' => 'setClientIdMetadataDocumentSupported',
+        'protectedResources' => 'setProtectedResources',
         'authorizationGrantProfilesSupported' => 'setAuthorizationGrantProfilesSupported',
         'opPolicyUri' => 'setOpPolicyUri',
         'opTosUri' => 'setOpTosUri'
@@ -405,6 +410,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         'resourceIndicatorsSupported' => 'getResourceIndicatorsSupported',
         'entityProfilesSupported' => 'getEntityProfilesSupported',
         'clientIdMetadataDocumentSupported' => 'getClientIdMetadataDocumentSupported',
+        'protectedResources' => 'getProtectedResources',
         'authorizationGrantProfilesSupported' => 'getAuthorizationGrantProfilesSupported',
         'opPolicyUri' => 'getOpPolicyUri',
         'opTosUri' => 'getOpTosUri'
@@ -502,6 +508,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
         $this->setIfExists('resourceIndicatorsSupported', $data ?? [], null);
         $this->setIfExists('entityProfilesSupported', $data ?? [], null);
         $this->setIfExists('clientIdMetadataDocumentSupported', $data ?? [], null);
+        $this->setIfExists('protectedResources', $data ?? [], null);
         $this->setIfExists('authorizationGrantProfilesSupported', $data ?? [], null);
         $this->setIfExists('opPolicyUri', $data ?? [], null);
         $this->setIfExists('opTosUri', $data ?? [], null);
@@ -1505,6 +1512,33 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
             throw new \InvalidArgumentException('non-nullable clientIdMetadataDocumentSupported cannot be null');
         }
         $this->container['clientIdMetadataDocumentSupported'] = $clientIdMetadataDocumentSupported;
+
+        return $this;
+    }
+
+    /**
+     * Gets protectedResources
+     *
+     * @return string[]|null
+     */
+    public function getProtectedResources()
+    {
+        return $this->container['protectedResources'];
+    }
+
+    /**
+     * Sets protectedResources
+     *
+     * @param string[]|null $protectedResources Personal Agent Protocol: https://{domain} for each of the organization's Company domains, then the other resources that it offers personal agents. Only while the protocol is switched on, and only in the document of the issuer that the organization chose as its Company identifier.
+     *
+     * @return self
+     */
+    public function setProtectedResources($protectedResources)
+    {
+        if (is_null($protectedResources)) {
+            throw new \InvalidArgumentException('non-nullable protectedResources cannot be null');
+        }
+        $this->container['protectedResources'] = $protectedResources;
 
         return $this;
     }

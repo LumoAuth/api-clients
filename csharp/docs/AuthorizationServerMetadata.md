@@ -39,6 +39,7 @@ Name | Type | Description | Notes
 **ResourceIndicatorsSupported** | **bool** |  | [optional] 
 **EntityProfilesSupported** | **List&lt;string&gt;** |  | [optional] 
 **ClientIdMetadataDocumentSupported** | **bool** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] 
+**ProtectedResources** | **List&lt;string&gt;** | Personal Agent Protocol: https://{domain} for each of the organization&#39;s Company domains, then the other resources that it offers personal agents. Only while the protocol is switched on, and only in the document of the issuer that the organization chose as its Company identifier. | [optional] 
 **AuthorizationGrantProfilesSupported** | **List&lt;string&gt;** | Only when the organization accepts ID-JAGs. | [optional] 
 **OpPolicyUri** | **string** | The Privacy policy URL of the organization&#39;s login page settings. Only when it is set. | [optional] 
 **OpTosUri** | **string** | The Terms of service URL of the organization&#39;s login page settings. Only when it is set. | [optional] 

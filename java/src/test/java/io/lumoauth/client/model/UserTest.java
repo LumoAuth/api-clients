@@ -133,6 +133,14 @@ public class UserTest {
     }
 
     /**
+     * Test the property 'staff'
+     */
+    @Test
+    public void staffTest() {
+        // TODO: test staff
+    }
+
+    /**
      * Test the property 'blocked'
      */
     @Test

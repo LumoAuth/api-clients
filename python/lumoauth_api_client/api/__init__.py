@@ -13,6 +13,7 @@ from lumoauth_api_client.api.admin_mfa_api import AdminMfaApi
 from lumoauth_api_client.api.admin_o_auth_clients_api import AdminOAuthClientsApi
 from lumoauth_api_client.api.admin_organizations_api import AdminOrganizationsApi
 from lumoauth_api_client.api.admin_permissions_api import AdminPermissionsApi
+from lumoauth_api_client.api.admin_personal_agent_protocol_api import AdminPersonalAgentProtocolApi
 from lumoauth_api_client.api.admin_roles_api import AdminRolesApi
 from lumoauth_api_client.api.admin_sandbox_api import AdminSandboxApi
 from lumoauth_api_client.api.admin_sessions_api import AdminSessionsApi
@@ -27,6 +28,7 @@ from lumoauth_api_client.api.mcp_api import McpApi
 from lumoauth_api_client.api.mfa_api import MfaApi
 from lumoauth_api_client.api.o_auth_api import OAuthApi
 from lumoauth_api_client.api.oidc_api import OIDCApi
+from lumoauth_api_client.api.personal_agent_protocol_api import PersonalAgentProtocolApi
 from lumoauth_api_client.api.ssf_api import SsfApi
 from lumoauth_api_client.api.token_vault_api import TokenVaultApi
 from lumoauth_api_client.api.well_known_api import WellKnownApi

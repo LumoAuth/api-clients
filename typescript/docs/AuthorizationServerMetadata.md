@@ -40,6 +40,7 @@ Name | Type | Description | Notes
 **resource_indicators_supported** | **boolean** |  | [optional] [default to undefined]
 **entity_profiles_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **client_id_metadata_document_supported** | **boolean** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] [default to undefined]
+**protected_resources** | **Array&lt;string&gt;** | Personal Agent Protocol: https://{domain} for each of the organization\&#39;s Company domains, then the other resources that it offers personal agents. Only while the protocol is switched on, and only in the document of the issuer that the organization chose as its Company identifier. | [optional] [default to undefined]
 **authorization_grant_profiles_supported** | **Array&lt;string&gt;** | Only when the organization accepts ID-JAGs. | [optional] [default to undefined]
 **op_policy_uri** | **string** | The Privacy policy URL of the organization\&#39;s login page settings. Only when it is set. | [optional] [default to undefined]
 **op_tos_uri** | **string** | The Terms of service URL of the organization\&#39;s login page settings. Only when it is set. | [optional] [default to undefined]
@@ -85,6 +86,7 @@ const instance: AuthorizationServerMetadata = {
     resource_indicators_supported,
     entity_profiles_supported,
     client_id_metadata_document_supported,
+    protected_resources,
     authorization_grant_profiles_supported,
     op_policy_uri,
     op_tos_uri,
