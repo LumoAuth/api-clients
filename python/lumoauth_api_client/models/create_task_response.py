@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,12 +29,13 @@ class CreateTaskResponse(BaseModel):
     CreateTaskResponse
     """ # noqa: E501
     task_id: Optional[StrictStr] = None
+    parent_task_id: Optional[StrictStr] = Field(default=None, description="The parent task, or null for a task without one.")
     caep_session_id: Optional[StrictStr] = None
     expires_at: Optional[datetime] = None
     agent_id: Optional[StrictStr] = None
     agent: Optional[Dict[str, Any]] = None
     on_behalf_of: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["task_id", "caep_session_id", "expires_at", "agent_id", "agent", "on_behalf_of"]
+    __properties: ClassVar[List[str]] = ["task_id", "parent_task_id", "caep_session_id", "expires_at", "agent_id", "agent", "on_behalf_of"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -75,6 +76,11 @@ class CreateTaskResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if parent_task_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.parent_task_id is None and "parent_task_id" in self.model_fields_set:
+            _dict['parent_task_id'] = None
+
         return _dict
 
     @classmethod
@@ -88,6 +94,7 @@ class CreateTaskResponse(BaseModel):
 
         _obj = cls.model_validate({
             "task_id": obj.get("task_id"),
+            "parent_task_id": obj.get("parent_task_id"),
             "caep_session_id": obj.get("caep_session_id"),
             "expires_at": obj.get("expires_at"),
             "agent_id": obj.get("agent_id"),

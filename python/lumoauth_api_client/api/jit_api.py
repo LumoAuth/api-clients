@@ -668,7 +668,7 @@ class JitApi:
     ) -> CreateTaskResponse:
         """Create a new ephemeral task/persona for an agent.
 
-        Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: for nested agent chains   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
+        Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: an open task of this organization that the new task is a step of   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
 
         :param org_id: (required)
         :type org_id: str
@@ -744,7 +744,7 @@ class JitApi:
     ) -> ApiResponse[CreateTaskResponse]:
         """Create a new ephemeral task/persona for an agent.
 
-        Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: for nested agent chains   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
+        Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: an open task of this organization that the new task is a step of   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
 
         :param org_id: (required)
         :type org_id: str
@@ -820,7 +820,7 @@ class JitApi:
     ) -> RESTResponseType:
         """Create a new ephemeral task/persona for an agent.
 
-        Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: for nested agent chains   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
+        Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: an open task of this organization that the new task is a step of   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
 
         :param org_id: (required)
         :type org_id: str

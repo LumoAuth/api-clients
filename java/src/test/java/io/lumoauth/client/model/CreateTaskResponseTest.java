@@ -21,6 +21,7 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -44,6 +45,14 @@ public class CreateTaskResponseTest {
     @Test
     public void taskIdTest() {
         // TODO: test taskId
+    }
+
+    /**
+     * Test the property 'parentTaskId'
+     */
+    @Test
+    public void parentTaskIdTest() {
+        // TODO: test parentTaskId
     }
 
     /**

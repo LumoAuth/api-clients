@@ -49,7 +49,7 @@ import io.lumoauth.client.JSON;
 /**
  * AbacAttributesGetResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T09:17:26.252888759-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T23:54:58.744713573Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AbacAttributesGetResponse {
   public static final String SERIALIZED_NAME_DATA = "data";
   @SerializedName(SERIALIZED_NAME_DATA)

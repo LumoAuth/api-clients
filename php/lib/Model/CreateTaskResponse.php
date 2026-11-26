@@ -59,6 +59,7 @@ class CreateTaskResponse implements ModelInterface, ArrayAccess, \JsonSerializab
       */
     protected static $openAPITypes = [
         'taskId' => 'string',
+        'parentTaskId' => 'string',
         'caepSessionId' => 'string',
         'expiresAt' => '\DateTime',
         'agentId' => 'string',
@@ -75,6 +76,7 @@ class CreateTaskResponse implements ModelInterface, ArrayAccess, \JsonSerializab
       */
     protected static $openAPIFormats = [
         'taskId' => null,
+        'parentTaskId' => null,
         'caepSessionId' => null,
         'expiresAt' => 'date-time',
         'agentId' => null,
@@ -89,6 +91,7 @@ class CreateTaskResponse implements ModelInterface, ArrayAccess, \JsonSerializab
       */
     protected static array $openAPINullables = [
         'taskId' => false,
+        'parentTaskId' => true,
         'caepSessionId' => false,
         'expiresAt' => false,
         'agentId' => false,
@@ -183,6 +186,7 @@ class CreateTaskResponse implements ModelInterface, ArrayAccess, \JsonSerializab
      */
     protected static $attributeMap = [
         'taskId' => 'task_id',
+        'parentTaskId' => 'parent_task_id',
         'caepSessionId' => 'caep_session_id',
         'expiresAt' => 'expires_at',
         'agentId' => 'agent_id',
@@ -197,6 +201,7 @@ class CreateTaskResponse implements ModelInterface, ArrayAccess, \JsonSerializab
      */
     protected static $setters = [
         'taskId' => 'setTaskId',
+        'parentTaskId' => 'setParentTaskId',
         'caepSessionId' => 'setCaepSessionId',
         'expiresAt' => 'setExpiresAt',
         'agentId' => 'setAgentId',
@@ -211,6 +216,7 @@ class CreateTaskResponse implements ModelInterface, ArrayAccess, \JsonSerializab
      */
     protected static $getters = [
         'taskId' => 'getTaskId',
+        'parentTaskId' => 'getParentTaskId',
         'caepSessionId' => 'getCaepSessionId',
         'expiresAt' => 'getExpiresAt',
         'agentId' => 'getAgentId',
@@ -276,6 +282,7 @@ class CreateTaskResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     public function __construct(?array $data = null)
     {
         $this->setIfExists('taskId', $data ?? [], null);
+        $this->setIfExists('parentTaskId', $data ?? [], null);
         $this->setIfExists('caepSessionId', $data ?? [], null);
         $this->setIfExists('expiresAt', $data ?? [], null);
         $this->setIfExists('agentId', $data ?? [], null);
@@ -348,6 +355,40 @@ class CreateTaskResponse implements ModelInterface, ArrayAccess, \JsonSerializab
             throw new \InvalidArgumentException('non-nullable taskId cannot be null');
         }
         $this->container['taskId'] = $taskId;
+
+        return $this;
+    }
+
+    /**
+     * Gets parentTaskId
+     *
+     * @return string|null
+     */
+    public function getParentTaskId()
+    {
+        return $this->container['parentTaskId'];
+    }
+
+    /**
+     * Sets parentTaskId
+     *
+     * @param string|null $parentTaskId The parent task, or null for a task without one.
+     *
+     * @return self
+     */
+    public function setParentTaskId($parentTaskId)
+    {
+        if (is_null($parentTaskId)) {
+            array_push($this->openAPINullablesSetToNull, 'parentTaskId');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('parentTaskId', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['parentTaskId'] = $parentTaskId;
 
         return $this;
     }

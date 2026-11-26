@@ -61,7 +61,7 @@ Request body:
 {
   "name": "Research Task #123",           // Optional: human-readable name
   "type": "research",                     // Optional: task type for categorization
-  "parent_task_id": "task_abc123",        // Optional: for nested agent chains
+  "parent_task_id": "task_abc123",        // Optional: an open task of this organization that the new task is a step of
   "on_behalf_of": "user@example.com"      // Optional: delegation context
 }
 
@@ -426,7 +426,7 @@ Request body:
 {
   "name": "Research Task #123",           // Optional: human-readable name
   "type": "research",                     // Optional: task type for categorization
-  "parent_task_id": "task_abc123",        // Optional: for nested agent chains
+  "parent_task_id": "task_abc123",        // Optional: an open task of this organization that the new task is a step of
   "on_behalf_of": "user@example.com"      // Optional: delegation context
 }
 

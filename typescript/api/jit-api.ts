@@ -140,7 +140,7 @@ export const JitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: for nested agent chains   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
+         * Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: an open task of this organization that the new task is a step of   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
          * @summary Create a new ephemeral task/persona for an agent.
          * @param {string} orgId 
          * @param {CreateTaskRequest} [createTaskRequest] 
@@ -475,7 +475,7 @@ export const JitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: for nested agent chains   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
+         * Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: an open task of this organization that the new task is a step of   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
          * @summary Create a new ephemeral task/persona for an agent.
          * @param {string} orgId 
          * @param {CreateTaskRequest} [createTaskRequest] 
@@ -603,7 +603,7 @@ export const JitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.completeTask(requestParameters.orgId, requestParameters.taskId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: for nested agent chains   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
+         * Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: an open task of this organization that the new task is a step of   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
          * @summary Create a new ephemeral task/persona for an agent.
          * @param {JitApiCreateTaskRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -702,7 +702,7 @@ export interface JitApiInterface {
     completeTask(requestParameters: JitApiCompleteTaskRequest, options?: RawAxiosRequestConfig): AxiosPromise<CompleteTaskResponse>;
 
     /**
-     * Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: for nested agent chains   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
+     * Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: an open task of this organization that the new task is a step of   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
      * @summary Create a new ephemeral task/persona for an agent.
      * @param {JitApiCreateTaskRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1001,7 +1001,7 @@ export class JitApi extends BaseAPI implements JitApiInterface {
     }
 
     /**
-     * Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: for nested agent chains   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
+     * Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: an open task of this organization that the new task is a step of   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
      * @summary Create a new ephemeral task/persona for an agent.
      * @param {JitApiCreateTaskRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

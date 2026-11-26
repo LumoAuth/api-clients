@@ -51,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * Computed security posture checklist (src/Service/McpPosture).
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T09:17:26.252888759-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T23:54:58.744713573Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class McpServerPosture {
   /**
    * Gets or Sets level

@@ -51,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * What the personal agent must get — relay it unchanged.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T09:17:26.252888759-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T23:54:58.744713573Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class PoppyVerifyResultResponse {
   public static final String SERIALIZED_NAME_STATUS = "status";
   @SerializedName(SERIALIZED_NAME_STATUS)

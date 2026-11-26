@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TaskId** | Pointer to **string** |  | [optional] 
+**ParentTaskId** | Pointer to **NullableString** | The parent task, or null for a task without one. | [optional] 
 **CaepSessionId** | Pointer to **string** |  | [optional] 
 **ExpiresAt** | Pointer to **time.Time** |  | [optional] 
 **AgentId** | Pointer to **string** |  | [optional] 
@@ -55,6 +56,41 @@ SetTaskId sets TaskId field to given value.
 
 HasTaskId returns a boolean if a field has been set.
 
+### GetParentTaskId
+
+`func (o *CreateTaskResponse) GetParentTaskId() string`
+
+GetParentTaskId returns the ParentTaskId field if non-nil, zero value otherwise.
+
+### GetParentTaskIdOk
+
+`func (o *CreateTaskResponse) GetParentTaskIdOk() (*string, bool)`
+
+GetParentTaskIdOk returns a tuple with the ParentTaskId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentTaskId
+
+`func (o *CreateTaskResponse) SetParentTaskId(v string)`
+
+SetParentTaskId sets ParentTaskId field to given value.
+
+### HasParentTaskId
+
+`func (o *CreateTaskResponse) HasParentTaskId() bool`
+
+HasParentTaskId returns a boolean if a field has been set.
+
+### SetParentTaskIdNil
+
+`func (o *CreateTaskResponse) SetParentTaskIdNil(b bool)`
+
+ SetParentTaskIdNil sets the value for ParentTaskId to be an explicit nil
+
+### UnsetParentTaskId
+`func (o *CreateTaskResponse) UnsetParentTaskId()`
+
+UnsetParentTaskId ensures that no value is present for ParentTaskId, not even an explicit nil
 ### GetCaepSessionId
 
 `func (o *CreateTaskResponse) GetCaepSessionId() string`

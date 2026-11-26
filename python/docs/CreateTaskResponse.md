@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **task_id** | **str** |  | [optional] 
+**parent_task_id** | **str** | The parent task, or null for a task without one. | [optional] 
 **caep_session_id** | **str** |  | [optional] 
 **expires_at** | **datetime** |  | [optional] 
 **agent_id** | **str** |  | [optional] 
