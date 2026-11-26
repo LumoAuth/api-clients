@@ -74,6 +74,8 @@ type APIClient struct {
 
 	AdminPermissionsAPI AdminPermissionsAPI
 
+	AdminPersonalAgentProtocolAPI AdminPersonalAgentProtocolAPI
+
 	AdminRolesAPI AdminRolesAPI
 
 	AdminSandboxAPI AdminSandboxAPI
@@ -101,6 +103,8 @@ type APIClient struct {
 	OAuthAPI OAuthAPI
 
 	OIDCAPI OIDCAPI
+
+	PersonalAgentProtocolAPI PersonalAgentProtocolAPI
 
 	SsfAPI SsfAPI
 
@@ -137,6 +141,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.AdminOAuthClientsAPI = (*AdminOAuthClientsAPIService)(&c.common)
 	c.AdminOrganizationsAPI = (*AdminOrganizationsAPIService)(&c.common)
 	c.AdminPermissionsAPI = (*AdminPermissionsAPIService)(&c.common)
+	c.AdminPersonalAgentProtocolAPI = (*AdminPersonalAgentProtocolAPIService)(&c.common)
 	c.AdminRolesAPI = (*AdminRolesAPIService)(&c.common)
 	c.AdminSandboxAPI = (*AdminSandboxAPIService)(&c.common)
 	c.AdminSessionsAPI = (*AdminSessionsAPIService)(&c.common)
@@ -151,6 +156,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.MfaAPI = (*MfaAPIService)(&c.common)
 	c.OAuthAPI = (*OAuthAPIService)(&c.common)
 	c.OIDCAPI = (*OIDCAPIService)(&c.common)
+	c.PersonalAgentProtocolAPI = (*PersonalAgentProtocolAPIService)(&c.common)
 	c.SsfAPI = (*SsfAPIService)(&c.common)
 	c.TokenVaultAPI = (*TokenVaultAPIService)(&c.common)
 	c.WellKnownAPI = (*WellKnownAPIService)(&c.common)

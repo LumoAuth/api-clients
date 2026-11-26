@@ -37,6 +37,9 @@ module LumoAuthApiClient
 
     attr_accessor :is_active
 
+    # Staff account: one of the organization's own users, not a person of a customer organization. Only staff accounts pass the \"Organization users only\" setting of applications and agents. Switched off when the account joins a customer organization; the end of the membership does not switch it on again. Set it with PUT or PATCH /users/{userId}.
+    attr_accessor :staff
+
     attr_accessor :blocked
 
     # Soft-deleted by inbound SCIM. Left out of the list unless deleted=true is asked; POST /users/{userId}/restore brings the user back.
@@ -95,6 +98,7 @@ module LumoAuthApiClient
         :'phone_number' => :'phoneNumber',
         :'phone_number_verified' => :'phoneNumberVerified',
         :'is_active' => :'isActive',
+        :'staff' => :'staff',
         :'blocked' => :'blocked',
         :'deleted' => :'deleted',
         :'deleted_at' => :'deletedAt',
@@ -139,6 +143,7 @@ module LumoAuthApiClient
         :'phone_number' => :'String',
         :'phone_number_verified' => :'Boolean',
         :'is_active' => :'Boolean',
+        :'staff' => :'Boolean',
         :'blocked' => :'Boolean',
         :'deleted' => :'Boolean',
         :'deleted_at' => :'Time',
@@ -245,6 +250,10 @@ module LumoAuthApiClient
         self.is_active = attributes[:'is_active']
       else
         self.is_active = nil
+      end
+
+      if attributes.key?(:'staff')
+        self.staff = attributes[:'staff']
       end
 
       if attributes.key?(:'blocked')
@@ -496,6 +505,7 @@ module LumoAuthApiClient
           phone_number == o.phone_number &&
           phone_number_verified == o.phone_number_verified &&
           is_active == o.is_active &&
+          staff == o.staff &&
           blocked == o.blocked &&
           deleted == o.deleted &&
           deleted_at == o.deleted_at &&
@@ -524,7 +534,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, email, username, name, given_name, family_name, picture, email_verified, phone_number, phone_number_verified, is_active, blocked, deleted, deleted_at, mfa_enabled, is_admin, created_at, last_login_at, login_count, roles, groups, locale, zoneinfo, updated_at, blocked_at, is_jit_provisioned, jit_provisioned_by, social_provider].hash
+      [id, email, username, name, given_name, family_name, picture, email_verified, phone_number, phone_number_verified, is_active, staff, blocked, deleted, deleted_at, mfa_enabled, is_admin, created_at, last_login_at, login_count, roles, groups, locale, zoneinfo, updated_at, blocked_at, is_jit_provisioned, jit_provisioned_by, social_provider].hash
     end
 
     # Builds the object from hash

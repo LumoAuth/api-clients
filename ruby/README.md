@@ -239,6 +239,12 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AdminPermissionsApi* | [**admin_scopes_create**](docs/AdminPermissionsApi.md#admin_scopes_create) | **POST** /orgs/{orgId}/api/v1/admin/scopes | Create a custom OAuth scope
 *LumoAuthApiClient::AdminPermissionsApi* | [**admin_scopes_delete**](docs/AdminPermissionsApi.md#admin_scopes_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/scopes/{scopeId} | Delete a custom OAuth scope
 *LumoAuthApiClient::AdminPermissionsApi* | [**admin_scopes_list**](docs/AdminPermissionsApi.md#admin_scopes_list) | **GET** /orgs/{orgId}/api/v1/admin/scopes | List OAuth scopes
+*LumoAuthApiClient::AdminPersonalAgentProtocolApi* | [**admin_poppy_domain_check**](docs/AdminPersonalAgentProtocolApi.md#admin_poppy_domain_check) | **POST** /orgs/{orgId}/api/v1/admin/personal-agent-protocol/domains/check | Check a Company domain
+*LumoAuthApiClient::AdminPersonalAgentProtocolApi* | [**admin_poppy_feedback_list**](docs/AdminPersonalAgentProtocolApi.md#admin_poppy_feedback_list) | **GET** /orgs/{orgId}/api/v1/admin/personal-agent-protocol/feedback | List feedback from personal agents
+*LumoAuthApiClient::AdminPersonalAgentProtocolApi* | [**admin_poppy_get**](docs/AdminPersonalAgentProtocolApi.md#admin_poppy_get) | **GET** /orgs/{orgId}/api/v1/admin/personal-agent-protocol | Get the Personal Agent Protocol settings
+*LumoAuthApiClient::AdminPersonalAgentProtocolApi* | [**admin_poppy_session_end**](docs/AdminPersonalAgentProtocolApi.md#admin_poppy_session_end) | **POST** /orgs/{orgId}/api/v1/admin/personal-agent-protocol/sessions/{id}/end | End a Personal Agent Protocol Session
+*LumoAuthApiClient::AdminPersonalAgentProtocolApi* | [**admin_poppy_sessions_list**](docs/AdminPersonalAgentProtocolApi.md#admin_poppy_sessions_list) | **GET** /orgs/{orgId}/api/v1/admin/personal-agent-protocol/sessions | List Personal Agent Protocol Sessions
+*LumoAuthApiClient::AdminPersonalAgentProtocolApi* | [**admin_poppy_update**](docs/AdminPersonalAgentProtocolApi.md#admin_poppy_update) | **PUT** /orgs/{orgId}/api/v1/admin/personal-agent-protocol | Update the Personal Agent Protocol settings
 *LumoAuthApiClient::AdminRolesApi* | [**admin_roles_add_permissions**](docs/AdminRolesApi.md#admin_roles_add_permissions) | **POST** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Add permission(s) to a role
 *LumoAuthApiClient::AdminRolesApi* | [**admin_roles_add_user**](docs/AdminRolesApi.md#admin_roles_add_user) | **POST** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users | Assign a user to a role
 *LumoAuthApiClient::AdminRolesApi* | [**admin_roles_create**](docs/AdminRolesApi.md#admin_roles_create) | **POST** /orgs/{orgId}/api/v1/admin/roles | Create a new role
@@ -433,6 +439,13 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::OIDCApi* | [**logout_post**](docs/OIDCApi.md#logout_post) | **POST** /orgs/{orgId}/api/v1/oauth/logout | RP-initiated logout (confirmation submission)
 *LumoAuthApiClient::OIDCApi* | [**userinfo**](docs/OIDCApi.md#userinfo) | **GET** /orgs/{orgId}/api/v1/oauth/userinfo | OpenID Connect UserInfo endpoint
 *LumoAuthApiClient::OIDCApi* | [**userinfo_post**](docs/OIDCApi.md#userinfo_post) | **POST** /orgs/{orgId}/api/v1/oauth/userinfo | OpenID Connect UserInfo endpoint (POST)
+*LumoAuthApiClient::PersonalAgentProtocolApi* | [**end_poppy_session**](docs/PersonalAgentProtocolApi.md#end_poppy_session) | **POST** /orgs/{orgId}/api/v1/poppy/sessions/end | End a Session
+*LumoAuthApiClient::PersonalAgentProtocolApi* | [**get_poppy_document**](docs/PersonalAgentProtocolApi.md#get_poppy_document) | **GET** /orgs/{orgId}/api/v1/poppy/documents/{domain}/poppy.json | poppy.json of a Company domain
+*LumoAuthApiClient::PersonalAgentProtocolApi* | [**get_poppy_protected_resource_metadata**](docs/PersonalAgentProtocolApi.md#get_poppy_protected_resource_metadata) | **GET** /orgs/{orgId}/api/v1/poppy/documents/{domain}/oauth-protected-resource | Protected resource metadata of a Company domain
+*LumoAuthApiClient::PersonalAgentProtocolApi* | [**get_poppy_session_status**](docs/PersonalAgentProtocolApi.md#get_poppy_session_status) | **POST** /orgs/{orgId}/api/v1/poppy/sessions/status | Look up a Session
+*LumoAuthApiClient::PersonalAgentProtocolApi* | [**get_poppy_tasks**](docs/PersonalAgentProtocolApi.md#get_poppy_tasks) | **GET** /orgs/{orgId}/api/v1/poppy/tasks | Tasks endpoint (Personal Agent Protocol, section 9)
+*LumoAuthApiClient::PersonalAgentProtocolApi* | [**send_poppy_feedback**](docs/PersonalAgentProtocolApi.md#send_poppy_feedback) | **POST** /orgs/{orgId}/api/v1/poppy/feedback | Feedback endpoint (Personal Agent Protocol 9.3)
+*LumoAuthApiClient::PersonalAgentProtocolApi* | [**verify_poppy_session**](docs/PersonalAgentProtocolApi.md#verify_poppy_session) | **POST** /orgs/{orgId}/api/v1/poppy/sessions/verify | Verify a Personal Agent's request
 *LumoAuthApiClient::SsfApi* | [**create_stream_config**](docs/SsfApi.md#create_stream_config) | **POST** /orgs/{orgId}/api/v1/ssf/stream | Create an SSF stream
 *LumoAuthApiClient::SsfApi* | [**delete_stream_config**](docs/SsfApi.md#delete_stream_config) | **DELETE** /orgs/{orgId}/api/v1/ssf/stream | Delete an SSF stream
 *LumoAuthApiClient::SsfApi* | [**get_stream_config**](docs/SsfApi.md#get_stream_config) | **GET** /orgs/{orgId}/api/v1/ssf/stream | Read SSF stream configuration(s)
@@ -556,6 +569,31 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::AdminPermissionsListResponse](docs/AdminPermissionsListResponse.md)
  - [LumoAuthApiClient::AdminPermissionsUsageResponse](docs/AdminPermissionsUsageResponse.md)
  - [LumoAuthApiClient::AdminPermissionsUsageResponseData](docs/AdminPermissionsUsageResponseData.md)
+ - [LumoAuthApiClient::AdminPoppyDomainCheckRequest](docs/AdminPoppyDomainCheckRequest.md)
+ - [LumoAuthApiClient::AdminPoppyDomainCheckResponse](docs/AdminPoppyDomainCheckResponse.md)
+ - [LumoAuthApiClient::AdminPoppyDomainCheckResponseData](docs/AdminPoppyDomainCheckResponseData.md)
+ - [LumoAuthApiClient::AdminPoppyDomainCheckResponseDataChecksItem](docs/AdminPoppyDomainCheckResponseDataChecksItem.md)
+ - [LumoAuthApiClient::AdminPoppyFeedbackListResponse](docs/AdminPoppyFeedbackListResponse.md)
+ - [LumoAuthApiClient::AdminPoppyFeedbackListResponseDataItem](docs/AdminPoppyFeedbackListResponseDataItem.md)
+ - [LumoAuthApiClient::AdminPoppyGetResponse](docs/AdminPoppyGetResponse.md)
+ - [LumoAuthApiClient::AdminPoppyGetResponseData](docs/AdminPoppyGetResponseData.md)
+ - [LumoAuthApiClient::AdminPoppyGetResponseDataDocumentsItem](docs/AdminPoppyGetResponseDataDocumentsItem.md)
+ - [LumoAuthApiClient::AdminPoppyGetResponseDataDocumentsItemHosted](docs/AdminPoppyGetResponseDataDocumentsItemHosted.md)
+ - [LumoAuthApiClient::AdminPoppyGetResponseDataDocumentsItemServeAt](docs/AdminPoppyGetResponseDataDocumentsItemServeAt.md)
+ - [LumoAuthApiClient::AdminPoppyGetResponseDataIssuerChoicesItem](docs/AdminPoppyGetResponseDataIssuerChoicesItem.md)
+ - [LumoAuthApiClient::AdminPoppySessionEndResponse](docs/AdminPoppySessionEndResponse.md)
+ - [LumoAuthApiClient::AdminPoppySessionsListResponse](docs/AdminPoppySessionsListResponse.md)
+ - [LumoAuthApiClient::AdminPoppySessionsListResponseDataItem](docs/AdminPoppySessionsListResponseDataItem.md)
+ - [LumoAuthApiClient::AdminPoppyUpdateRequest](docs/AdminPoppyUpdateRequest.md)
+ - [LumoAuthApiClient::AdminPoppyUpdateRequestAgentItem](docs/AdminPoppyUpdateRequestAgentItem.md)
+ - [LumoAuthApiClient::AdminPoppyUpdateRequestApisItem](docs/AdminPoppyUpdateRequestApisItem.md)
+ - [LumoAuthApiClient::AdminPoppyUpdateRequestOrganization](docs/AdminPoppyUpdateRequestOrganization.md)
+ - [LumoAuthApiClient::AdminPoppyUpdateRequestScopesValue](docs/AdminPoppyUpdateRequestScopesValue.md)
+ - [LumoAuthApiClient::AdminPoppyUpdateRequestSessions](docs/AdminPoppyUpdateRequestSessions.md)
+ - [LumoAuthApiClient::AdminPoppyUpdateRequestSignIn](docs/AdminPoppyUpdateRequestSignIn.md)
+ - [LumoAuthApiClient::AdminPoppyUpdateRequestTasks](docs/AdminPoppyUpdateRequestTasks.md)
+ - [LumoAuthApiClient::AdminPoppyUpdateRequestWeb](docs/AdminPoppyUpdateRequestWeb.md)
+ - [LumoAuthApiClient::AdminPoppyUpdateResponse](docs/AdminPoppyUpdateResponse.md)
  - [LumoAuthApiClient::AdminRolesCreateResponse](docs/AdminRolesCreateResponse.md)
  - [LumoAuthApiClient::AdminRolesGetPermissionsResponse](docs/AdminRolesGetPermissionsResponse.md)
  - [LumoAuthApiClient::AdminRolesGetPermissionsResponseDataItem](docs/AdminRolesGetPermissionsResponseDataItem.md)
@@ -681,6 +719,8 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::EmailEnrollmentStarted](docs/EmailEnrollmentStarted.md)
  - [LumoAuthApiClient::EmailSenderSettings](docs/EmailSenderSettings.md)
  - [LumoAuthApiClient::EmailTemplate](docs/EmailTemplate.md)
+ - [LumoAuthApiClient::EndPoppySessionRequest](docs/EndPoppySessionRequest.md)
+ - [LumoAuthApiClient::EndPoppySessionResponse](docs/EndPoppySessionResponse.md)
  - [LumoAuthApiClient::EnrollAuthenticator201Response](docs/EnrollAuthenticator201Response.md)
  - [LumoAuthApiClient::EnrollAuthenticatorRequest](docs/EnrollAuthenticatorRequest.md)
  - [LumoAuthApiClient::EvaluateBatchResponse](docs/EvaluateBatchResponse.md)
@@ -709,6 +749,7 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::GetMfaPolicyResponse](docs/GetMfaPolicyResponse.md)
  - [LumoAuthApiClient::GetMyAttributesResponse](docs/GetMyAttributesResponse.md)
  - [LumoAuthApiClient::GetMyAttributesResponseAttributes](docs/GetMyAttributesResponseAttributes.md)
+ - [LumoAuthApiClient::GetPoppySessionStatusResponse](docs/GetPoppySessionStatusResponse.md)
  - [LumoAuthApiClient::GetProtectedResourceMetadataRoot200Response](docs/GetProtectedResourceMetadataRoot200Response.md)
  - [LumoAuthApiClient::GetProtectedResourceMetadataRootResponse1ResourcesItem](docs/GetProtectedResourceMetadataRootResponse1ResourcesItem.md)
  - [LumoAuthApiClient::GetRecoveryCodeStatusResponse](docs/GetRecoveryCodeStatusResponse.md)
@@ -790,6 +831,26 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::Permission](docs/Permission.md)
  - [LumoAuthApiClient::PollAgentEnrollmentRequest](docs/PollAgentEnrollmentRequest.md)
  - [LumoAuthApiClient::PollAgentEnrollmentResponse](docs/PollAgentEnrollmentResponse.md)
+ - [LumoAuthApiClient::PoppyDocument](docs/PoppyDocument.md)
+ - [LumoAuthApiClient::PoppyDocumentAgent](docs/PoppyDocumentAgent.md)
+ - [LumoAuthApiClient::PoppyDocumentAgentProtocolsInner](docs/PoppyDocumentAgentProtocolsInner.md)
+ - [LumoAuthApiClient::PoppyDocumentApisInner](docs/PoppyDocumentApisInner.md)
+ - [LumoAuthApiClient::PoppyDocumentAuth](docs/PoppyDocumentAuth.md)
+ - [LumoAuthApiClient::PoppyDocumentAuthScopeHintsValue](docs/PoppyDocumentAuthScopeHintsValue.md)
+ - [LumoAuthApiClient::PoppyDocumentOrganization](docs/PoppyDocumentOrganization.md)
+ - [LumoAuthApiClient::PoppyDocumentTasks](docs/PoppyDocumentTasks.md)
+ - [LumoAuthApiClient::PoppyDocumentWeb](docs/PoppyDocumentWeb.md)
+ - [LumoAuthApiClient::PoppyError](docs/PoppyError.md)
+ - [LumoAuthApiClient::PoppyProtectedResourceMetadata](docs/PoppyProtectedResourceMetadata.md)
+ - [LumoAuthApiClient::PoppyTasksResponse](docs/PoppyTasksResponse.md)
+ - [LumoAuthApiClient::PoppyTasksResponseExcludedTasksInner](docs/PoppyTasksResponseExcludedTasksInner.md)
+ - [LumoAuthApiClient::PoppyTasksResponseExcludedTasksInnerAlternative](docs/PoppyTasksResponseExcludedTasksInnerAlternative.md)
+ - [LumoAuthApiClient::PoppyVerifyRequest](docs/PoppyVerifyRequest.md)
+ - [LumoAuthApiClient::PoppyVerifyRequestRequiredScope](docs/PoppyVerifyRequestRequiredScope.md)
+ - [LumoAuthApiClient::PoppyVerifyResult](docs/PoppyVerifyResult.md)
+ - [LumoAuthApiClient::PoppyVerifyResultAccount](docs/PoppyVerifyResultAccount.md)
+ - [LumoAuthApiClient::PoppyVerifyResultResponse](docs/PoppyVerifyResultResponse.md)
+ - [LumoAuthApiClient::PoppyVerifyResultSession](docs/PoppyVerifyResultSession.md)
  - [LumoAuthApiClient::ProtectedResourceList](docs/ProtectedResourceList.md)
  - [LumoAuthApiClient::ProtectedResourceMetadata](docs/ProtectedResourceMetadata.md)
  - [LumoAuthApiClient::PushEnrollmentStarted](docs/PushEnrollmentStarted.md)
@@ -835,6 +896,7 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::ScimSettingsInbound](docs/ScimSettingsInbound.md)
  - [LumoAuthApiClient::ScimSettingsInboundProtectedAttributes](docs/ScimSettingsInboundProtectedAttributes.md)
  - [LumoAuthApiClient::ScimSettingsOutbound](docs/ScimSettingsOutbound.md)
+ - [LumoAuthApiClient::SendPoppyFeedbackRequest](docs/SendPoppyFeedbackRequest.md)
  - [LumoAuthApiClient::SendUserVerificationEmailResponse](docs/SendUserVerificationEmailResponse.md)
  - [LumoAuthApiClient::SetClientScopesResponse](docs/SetClientScopesResponse.md)
  - [LumoAuthApiClient::SetResourceAttributeResponse](docs/SetResourceAttributeResponse.md)

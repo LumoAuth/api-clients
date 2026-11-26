@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **phone_number** | Option<**String**> |  | [optional]
 **phone_number_verified** | Option<**bool**> |  | [optional]
 **is_active** | **bool** |  | 
+**staff** | Option<**bool**> | Staff account: one of the organization's own users, not a person of a customer organization. Only staff accounts pass the \"Organization users only\" setting of applications and agents. Switched off when the account joins a customer organization; the end of the membership does not switch it on again. Set it with PUT or PATCH /users/{userId}. | [optional]
 **blocked** | **bool** |  | 
 **deleted** | Option<**bool**> | Soft-deleted by inbound SCIM. Left out of the list unless deleted=true is asked; POST /users/{userId}/restore brings the user back. | [optional]
 **deleted_at** | Option<**String**> |  | [optional]

@@ -23,6 +23,8 @@ public struct User: Codable, JSONEncodable, Hashable {
     public var phoneNumber: String?
     public var phoneNumberVerified: Bool?
     public var isActive: Bool
+    /** Staff account: one of the organization's own users, not a person of a customer organization. Only staff accounts pass the \"Organization users only\" setting of applications and agents. Switched off when the account joins a customer organization; the end of the membership does not switch it on again. Set it with PUT or PATCH /users/{userId}. */
+    public var staff: Bool?
     public var blocked: Bool
     /** Soft-deleted by inbound SCIM. Left out of the list unless deleted=true is asked; POST /users/{userId}/restore brings the user back. */
     public var deleted: Bool?
@@ -51,7 +53,7 @@ public struct User: Codable, JSONEncodable, Hashable {
     /** Detailed responses only */
     public var socialProvider: String?
 
-    public init(id: UUID, email: String, username: String? = nil, name: String? = nil, givenName: String? = nil, familyName: String? = nil, picture: String? = nil, emailVerified: Bool, phoneNumber: String? = nil, phoneNumberVerified: Bool? = nil, isActive: Bool, blocked: Bool, deleted: Bool? = nil, deletedAt: Date? = nil, mfaEnabled: Bool, isAdmin: Bool, createdAt: Date, lastLoginAt: Date? = nil, loginCount: Int, roles: [RoleRef]? = nil, groups: [GroupRef]? = nil, locale: String? = nil, zoneinfo: String? = nil, updatedAt: Date? = nil, blockedAt: Date? = nil, isJitProvisioned: Bool? = nil, jitProvisionedBy: String? = nil, socialProvider: String? = nil) {
+    public init(id: UUID, email: String, username: String? = nil, name: String? = nil, givenName: String? = nil, familyName: String? = nil, picture: String? = nil, emailVerified: Bool, phoneNumber: String? = nil, phoneNumberVerified: Bool? = nil, isActive: Bool, staff: Bool? = nil, blocked: Bool, deleted: Bool? = nil, deletedAt: Date? = nil, mfaEnabled: Bool, isAdmin: Bool, createdAt: Date, lastLoginAt: Date? = nil, loginCount: Int, roles: [RoleRef]? = nil, groups: [GroupRef]? = nil, locale: String? = nil, zoneinfo: String? = nil, updatedAt: Date? = nil, blockedAt: Date? = nil, isJitProvisioned: Bool? = nil, jitProvisionedBy: String? = nil, socialProvider: String? = nil) {
         self.id = id
         self.email = email
         self.username = username
@@ -63,6 +65,7 @@ public struct User: Codable, JSONEncodable, Hashable {
         self.phoneNumber = phoneNumber
         self.phoneNumberVerified = phoneNumberVerified
         self.isActive = isActive
+        self.staff = staff
         self.blocked = blocked
         self.deleted = deleted
         self.deletedAt = deletedAt
@@ -94,6 +97,7 @@ public struct User: Codable, JSONEncodable, Hashable {
         case phoneNumber
         case phoneNumberVerified
         case isActive
+        case staff
         case blocked
         case deleted
         case deletedAt
@@ -128,6 +132,7 @@ public struct User: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(phoneNumber, forKey: .phoneNumber)
         try container.encodeIfPresent(phoneNumberVerified, forKey: .phoneNumberVerified)
         try container.encode(isActive, forKey: .isActive)
+        try container.encodeIfPresent(staff, forKey: .staff)
         try container.encode(blocked, forKey: .blocked)
         try container.encodeIfPresent(deleted, forKey: .deleted)
         try container.encodeIfPresent(deletedAt, forKey: .deletedAt)

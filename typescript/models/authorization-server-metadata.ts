@@ -231,6 +231,12 @@ export interface AuthorizationServerMetadata {
      */
     'client_id_metadata_document_supported'?: boolean;
     /**
+     * Personal Agent Protocol: https://{domain} for each of the organization\'s Company domains, then the other resources that it offers personal agents. Only while the protocol is switched on, and only in the document of the issuer that the organization chose as its Company identifier.
+     * @type {Array<string>}
+     * @memberof AuthorizationServerMetadata
+     */
+    'protected_resources'?: Array<string>;
+    /**
      * Only when the organization accepts ID-JAGs.
      * @type {Array<string>}
      * @memberof AuthorizationServerMetadata

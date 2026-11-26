@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **phoneNumber** | **string** |  | [optional] [default to undefined]
 **phoneNumberVerified** | **boolean** |  | [optional] [default to undefined]
 **isActive** | **boolean** |  | [default to undefined]
+**staff** | **boolean** | Staff account: one of the organization\&#39;s own users, not a person of a customer organization. Only staff accounts pass the \&quot;Organization users only\&quot; setting of applications and agents. Switched off when the account joins a customer organization; the end of the membership does not switch it on again. Set it with PUT or PATCH /users/{userId}. | [optional] [default to undefined]
 **blocked** | **boolean** |  | [default to undefined]
 **deleted** | **boolean** | Soft-deleted by inbound SCIM. Left out of the list unless deleted&#x3D;true is asked; POST /users/{userId}/restore brings the user back. | [optional] [default to undefined]
 **deletedAt** | **string** |  | [optional] [default to undefined]
@@ -51,6 +52,7 @@ const instance: User = {
     phoneNumber,
     phoneNumberVerified,
     isActive,
+    staff,
     blocked,
     deleted,
     deletedAt,

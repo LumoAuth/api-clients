@@ -53,6 +53,7 @@
 | **service_documentation** | **String** |  | [optional] |
 | **entity_profiles_supported** | **Array&lt;String&gt;** |  | [optional] |
 | **client_id_metadata_document_supported** | **Boolean** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] |
+| **protected_resources** | **Array&lt;String&gt;** | Personal Agent Protocol: https://{domain} for each of the organization&#39;s Company domains, then the other resources that it offers personal agents. Only while the protocol is switched on, and only in the document of the issuer that the organization chose as its Company identifier. | [optional] |
 | **authorization_grant_profiles_supported** | **Array&lt;String&gt;** | Only when the organization accepts ID-JAGs. | [optional] |
 | **op_policy_uri** | **String** | The Privacy policy URL of the organization&#39;s login page settings. Only when it is set. | [optional] |
 | **op_tos_uri** | **String** | The Terms of service URL of the organization&#39;s login page settings. Only when it is set. | [optional] |
@@ -112,6 +113,7 @@ instance = LumoAuthApiClient::OpenIdConfiguration.new(
   service_documentation: https://docs.lumoauth.dev,
   entity_profiles_supported: [&quot;user&quot;,&quot;ai_agent&quot;,&quot;workload&quot;],
   client_id_metadata_document_supported: null,
+  protected_resources: null,
   authorization_grant_profiles_supported: [&quot;urn:ietf:params:oauth:grant-profile:id-jag&quot;],
   op_policy_uri: null,
   op_tos_uri: null

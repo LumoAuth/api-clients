@@ -69,6 +69,7 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'phoneNumber' => 'string',
         'phoneNumberVerified' => 'bool',
         'isActive' => 'bool',
+        'staff' => 'bool',
         'blocked' => 'bool',
         'deleted' => 'bool',
         'deletedAt' => '\DateTime',
@@ -107,6 +108,7 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'phoneNumber' => null,
         'phoneNumberVerified' => null,
         'isActive' => null,
+        'staff' => null,
         'blocked' => null,
         'deleted' => null,
         'deletedAt' => 'date-time',
@@ -143,6 +145,7 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'phoneNumber' => true,
         'phoneNumberVerified' => false,
         'isActive' => false,
+        'staff' => false,
         'blocked' => false,
         'deleted' => false,
         'deletedAt' => true,
@@ -259,6 +262,7 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'phoneNumber' => 'phoneNumber',
         'phoneNumberVerified' => 'phoneNumberVerified',
         'isActive' => 'isActive',
+        'staff' => 'staff',
         'blocked' => 'blocked',
         'deleted' => 'deleted',
         'deletedAt' => 'deletedAt',
@@ -295,6 +299,7 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'phoneNumber' => 'setPhoneNumber',
         'phoneNumberVerified' => 'setPhoneNumberVerified',
         'isActive' => 'setIsActive',
+        'staff' => 'setStaff',
         'blocked' => 'setBlocked',
         'deleted' => 'setDeleted',
         'deletedAt' => 'setDeletedAt',
@@ -331,6 +336,7 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'phoneNumber' => 'getPhoneNumber',
         'phoneNumberVerified' => 'getPhoneNumberVerified',
         'isActive' => 'getIsActive',
+        'staff' => 'getStaff',
         'blocked' => 'getBlocked',
         'deleted' => 'getDeleted',
         'deletedAt' => 'getDeletedAt',
@@ -418,6 +424,7 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('phoneNumber', $data ?? [], null);
         $this->setIfExists('phoneNumberVerified', $data ?? [], null);
         $this->setIfExists('isActive', $data ?? [], null);
+        $this->setIfExists('staff', $data ?? [], null);
         $this->setIfExists('blocked', $data ?? [], null);
         $this->setIfExists('deleted', $data ?? [], null);
         $this->setIfExists('deletedAt', $data ?? [], null);
@@ -841,6 +848,33 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable isActive cannot be null');
         }
         $this->container['isActive'] = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Gets staff
+     *
+     * @return bool|null
+     */
+    public function getStaff()
+    {
+        return $this->container['staff'];
+    }
+
+    /**
+     * Sets staff
+     *
+     * @param bool|null $staff Staff account: one of the organization's own users, not a person of a customer organization. Only staff accounts pass the \"Organization users only\" setting of applications and agents. Switched off when the account joins a customer organization; the end of the membership does not switch it on again. Set it with PUT or PATCH /users/{userId}.
+     *
+     * @return self
+     */
+    public function setStaff($staff)
+    {
+        if (is_null($staff)) {
+            throw new \InvalidArgumentException('non-nullable staff cannot be null');
+        }
+        $this->container['staff'] = $staff;
 
         return $this;
     }

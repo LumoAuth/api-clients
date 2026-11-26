@@ -55,7 +55,7 @@ import io.lumoauth.client.JSON;
 /**
  * User
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-24T12:46:14.617672415-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T17:17:31.040557193Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class User {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -111,6 +111,11 @@ public class User {
   @SerializedName(SERIALIZED_NAME_IS_ACTIVE)
   @javax.annotation.Nonnull
   private Boolean isActive;
+
+  public static final String SERIALIZED_NAME_STAFF = "staff";
+  @SerializedName(SERIALIZED_NAME_STAFF)
+  @javax.annotation.Nullable
+  private Boolean staff;
 
   public static final String SERIALIZED_NAME_BLOCKED = "blocked";
   @SerializedName(SERIALIZED_NAME_BLOCKED)
@@ -406,6 +411,25 @@ public class User {
 
   public void setIsActive(@javax.annotation.Nonnull Boolean isActive) {
     this.isActive = isActive;
+  }
+
+
+  public User staff(@javax.annotation.Nullable Boolean staff) {
+    this.staff = staff;
+    return this;
+  }
+
+  /**
+   * Staff account: one of the organization&#39;s own users, not a person of a customer organization. Only staff accounts pass the \&quot;Organization users only\&quot; setting of applications and agents. Switched off when the account joins a customer organization; the end of the membership does not switch it on again. Set it with PUT or PATCH /users/{userId}.
+   * @return staff
+   */
+  @javax.annotation.Nullable
+  public Boolean getStaff() {
+    return staff;
+  }
+
+  public void setStaff(@javax.annotation.Nullable Boolean staff) {
+    this.staff = staff;
   }
 
 
@@ -769,6 +793,7 @@ public class User {
         Objects.equals(this.phoneNumber, user.phoneNumber) &&
         Objects.equals(this.phoneNumberVerified, user.phoneNumberVerified) &&
         Objects.equals(this.isActive, user.isActive) &&
+        Objects.equals(this.staff, user.staff) &&
         Objects.equals(this.blocked, user.blocked) &&
         Objects.equals(this.deleted, user.deleted) &&
         Objects.equals(this.deletedAt, user.deletedAt) &&
@@ -794,7 +819,7 @@ public class User {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, email, username, name, givenName, familyName, picture, emailVerified, phoneNumber, phoneNumberVerified, isActive, blocked, deleted, deletedAt, mfaEnabled, isAdmin, createdAt, lastLoginAt, loginCount, roles, groups, locale, zoneinfo, updatedAt, blockedAt, isJitProvisioned, jitProvisionedBy, socialProvider);
+    return Objects.hash(id, email, username, name, givenName, familyName, picture, emailVerified, phoneNumber, phoneNumberVerified, isActive, staff, blocked, deleted, deletedAt, mfaEnabled, isAdmin, createdAt, lastLoginAt, loginCount, roles, groups, locale, zoneinfo, updatedAt, blockedAt, isJitProvisioned, jitProvisionedBy, socialProvider);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -819,6 +844,7 @@ public class User {
     sb.append("    phoneNumber: ").append(toIndentedString(phoneNumber)).append("\n");
     sb.append("    phoneNumberVerified: ").append(toIndentedString(phoneNumberVerified)).append("\n");
     sb.append("    isActive: ").append(toIndentedString(isActive)).append("\n");
+    sb.append("    staff: ").append(toIndentedString(staff)).append("\n");
     sb.append("    blocked: ").append(toIndentedString(blocked)).append("\n");
     sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
     sb.append("    deletedAt: ").append(toIndentedString(deletedAt)).append("\n");
@@ -857,7 +883,7 @@ public class User {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("id", "email", "username", "name", "givenName", "familyName", "picture", "emailVerified", "phoneNumber", "phoneNumberVerified", "isActive", "blocked", "deleted", "deletedAt", "mfaEnabled", "isAdmin", "createdAt", "lastLoginAt", "loginCount", "roles", "groups", "locale", "zoneinfo", "updatedAt", "blockedAt", "isJitProvisioned", "jitProvisionedBy", "socialProvider"));
+    openapiFields = new HashSet<String>(Arrays.asList("id", "email", "username", "name", "givenName", "familyName", "picture", "emailVerified", "phoneNumber", "phoneNumberVerified", "isActive", "staff", "blocked", "deleted", "deletedAt", "mfaEnabled", "isAdmin", "createdAt", "lastLoginAt", "loginCount", "roles", "groups", "locale", "zoneinfo", "updatedAt", "blockedAt", "isJitProvisioned", "jitProvisionedBy", "socialProvider"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("id", "email", "emailVerified", "isActive", "blocked", "mfaEnabled", "isAdmin", "createdAt", "loginCount"));
