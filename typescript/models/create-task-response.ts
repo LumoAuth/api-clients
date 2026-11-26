@@ -27,6 +27,12 @@ export interface CreateTaskResponse {
      */
     'task_id'?: string;
     /**
+     * The parent task, or null for a task without one.
+     * @type {string}
+     * @memberof CreateTaskResponse
+     */
+    'parent_task_id'?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof CreateTaskResponse

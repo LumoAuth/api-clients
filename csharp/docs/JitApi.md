@@ -226,7 +226,7 @@ catch (ApiException e)
 
 Create a new ephemeral task/persona for an agent.
 
-Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: for nested agent chains   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
+Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: an open task of this organization that the new task is a step of   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
 
 ### Example
 ```csharp
@@ -317,7 +317,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Ephemeral task/persona created. |  -  |
-| **400** | Delegation user not found or not authorized. |  -  |
+| **400** | Delegation user not found or not authorized, or parent_task_id does not name an open task of this organization, or the chain of tasks is already 5 tasks deep. |  -  |
 | **401** | Invalid or missing agent token. |  -  |
 | **403** | Agent is not authorized to act on behalf of users. |  -  |
 | **404** | Tenant not found. |  -  |

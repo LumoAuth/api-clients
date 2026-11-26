@@ -10485,7 +10485,7 @@ paths:
         {
           "name": "Research Task #123",           // Optional: human-readable name
           "type": "research",                     // Optional: task type for categorization
-          "parent_task_id": "task_abc123",        // Optional: for nested agent chains
+          "parent_task_id": "task_abc123",        // Optional: an open task of this organization that the new task is a step of
           "on_behalf_of": "user@example.com"      // Optional: delegation context
         }
       operationId: createTask
@@ -10511,7 +10511,9 @@ paths:
                 $ref: "#/components/schemas/CreateTaskResponse"
           description: Ephemeral task/persona created.
         "400":
-          description: Delegation user not found or not authorized.
+          description: "Delegation user not found or not authorized, or parent_task_id\
+            \ does not name an open task of this organization, or the chain of tasks\
+            \ is already 5 tasks deep."
         "401":
           description: Invalid or missing agent token.
         "403":
@@ -25234,7 +25236,10 @@ components:
           example: research
           type: string
         parent_task_id:
-          description: Optional parent task id for nested agent chains.
+          description: "Optional. The task_id of an open task of this organization,\
+            \ for a task that is one step of that task. The new task expires no later\
+            \ than its parent and ends when the parent ends. A chain holds at most\
+            \ 5 tasks."
           type: string
         on_behalf_of:
           description: Optional delegation user email (requires delegation permission).
@@ -25243,6 +25248,7 @@ components:
     CreateTaskResponse:
       example:
         agent: "{}"
+        parent_task_id: parent_task_id
         caep_session_id: caep_session_id
         expires_at: 2000-01-23T04:56:07.000+00:00
         agent_id: agent_id
@@ -25250,6 +25256,10 @@ components:
         task_id: task_id
       properties:
         task_id:
+          type: string
+        parent_task_id:
+          description: "The parent task, or null for a task without one."
+          nullable: true
           type: string
         caep_session_id:
           type: string

@@ -55,7 +55,7 @@ import io.lumoauth.client.JSON;
 /**
  * The verification result. &#x60;active&#x60; true — the request is verified; false — return &#x60;response&#x60; to the personal agent unchanged.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T09:17:26.252888759-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T23:54:58.744713573Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class PoppyVerifyResult {
   public static final String SERIALIZED_NAME_ACTIVE = "active";
   @SerializedName(SERIALIZED_NAME_ACTIVE)

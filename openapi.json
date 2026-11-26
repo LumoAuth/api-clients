@@ -12275,7 +12275,7 @@
                     "Jit"
                 ],
                 "summary": "Create a new ephemeral task/persona for an agent.",
-                "description": "Each task gets a unique sub-identity with isolated permissions.\nThis limits the \"blast radius\" of any potential compromise.\n\nRequest body:\n{\n  \"name\": \"Research Task #123\",           // Optional: human-readable name\n  \"type\": \"research\",                     // Optional: task type for categorization\n  \"parent_task_id\": \"task_abc123\",        // Optional: for nested agent chains\n  \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context\n}",
+                "description": "Each task gets a unique sub-identity with isolated permissions.\nThis limits the \"blast radius\" of any potential compromise.\n\nRequest body:\n{\n  \"name\": \"Research Task #123\",           // Optional: human-readable name\n  \"type\": \"research\",                     // Optional: task type for categorization\n  \"parent_task_id\": \"task_abc123\",        // Optional: an open task of this organization that the new task is a step of\n  \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context\n}",
                 "operationId": "createTask",
                 "parameters": [
                     {
@@ -12309,7 +12309,7 @@
                         }
                     },
                     "400": {
-                        "description": "Delegation user not found or not authorized."
+                        "description": "Delegation user not found or not authorized, or parent_task_id does not name an open task of this organization, or the chain of tasks is already 5 tasks deep."
                     },
                     "401": {
                         "description": "Invalid or missing agent token."
@@ -24717,7 +24717,7 @@
                         "example": "research"
                     },
                     "parent_task_id": {
-                        "description": "Optional parent task id for nested agent chains.",
+                        "description": "Optional. The task_id of an open task of this organization, for a task that is one step of that task. The new task expires no later than its parent and ends when the parent ends. A chain holds at most 5 tasks.",
                         "type": "string"
                     },
                     "on_behalf_of": {
@@ -24731,6 +24731,11 @@
                 "properties": {
                     "task_id": {
                         "type": "string"
+                    },
+                    "parent_task_id": {
+                        "description": "The parent task, or null for a task without one.",
+                        "type": "string",
+                        "nullable": true
                     },
                     "caep_session_id": {
                         "type": "string"

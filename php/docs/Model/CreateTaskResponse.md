@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **taskId** | **string** |  | [optional]
+**parentTaskId** | **string** | The parent task, or null for a task without one. | [optional]
 **caepSessionId** | **string** |  | [optional]
 **expiresAt** | **\DateTime** |  | [optional]
 **agentId** | **string** |  | [optional]

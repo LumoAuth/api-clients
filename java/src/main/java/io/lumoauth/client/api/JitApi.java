@@ -406,7 +406,7 @@ public class JitApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Ephemeral task/persona created. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Delegation user not found or not authorized. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Delegation user not found or not authorized, or parent_task_id does not name an open task of this organization, or the chain of tasks is already 5 tasks deep. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Agent is not authorized to act on behalf of users. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
@@ -472,7 +472,7 @@ public class JitApi {
 
     /**
      * Create a new ephemeral task/persona for an agent.
-     * Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: for nested agent chains   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
+     * Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: an open task of this organization that the new task is a step of   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
      * @param orgId  (required)
      * @param createTaskRequest  (optional)
      * @return CreateTaskResponse
@@ -482,7 +482,7 @@ public class JitApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Ephemeral task/persona created. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Delegation user not found or not authorized. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Delegation user not found or not authorized, or parent_task_id does not name an open task of this organization, or the chain of tasks is already 5 tasks deep. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Agent is not authorized to act on behalf of users. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
@@ -496,7 +496,7 @@ public class JitApi {
 
     /**
      * Create a new ephemeral task/persona for an agent.
-     * Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: for nested agent chains   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
+     * Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: an open task of this organization that the new task is a step of   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
      * @param orgId  (required)
      * @param createTaskRequest  (optional)
      * @return ApiResponse&lt;CreateTaskResponse&gt;
@@ -506,7 +506,7 @@ public class JitApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Ephemeral task/persona created. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Delegation user not found or not authorized. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Delegation user not found or not authorized, or parent_task_id does not name an open task of this organization, or the chain of tasks is already 5 tasks deep. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Agent is not authorized to act on behalf of users. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
@@ -521,7 +521,7 @@ public class JitApi {
 
     /**
      * Create a new ephemeral task/persona for an agent. (asynchronously)
-     * Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: for nested agent chains   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
+     * Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: an open task of this organization that the new task is a step of   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
      * @param orgId  (required)
      * @param createTaskRequest  (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -532,7 +532,7 @@ public class JitApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Ephemeral task/persona created. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Delegation user not found or not authorized. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Delegation user not found or not authorized, or parent_task_id does not name an open task of this organization, or the chain of tasks is already 5 tasks deep. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Agent is not authorized to act on behalf of users. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>

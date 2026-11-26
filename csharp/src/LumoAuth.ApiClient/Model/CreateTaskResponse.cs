@@ -37,14 +37,16 @@ namespace LumoAuth.ApiClient.Model
         /// Initializes a new instance of the <see cref="CreateTaskResponse" /> class.
         /// </summary>
         /// <param name="taskId">taskId.</param>
+        /// <param name="parentTaskId">The parent task, or null for a task without one..</param>
         /// <param name="caepSessionId">caepSessionId.</param>
         /// <param name="expiresAt">expiresAt.</param>
         /// <param name="agentId">agentId.</param>
         /// <param name="agent">agent.</param>
         /// <param name="onBehalfOf">onBehalfOf.</param>
-        public CreateTaskResponse(string taskId = default, string caepSessionId = default, DateTime expiresAt = default, string agentId = default, Object agent = default, string onBehalfOf = default)
+        public CreateTaskResponse(string taskId = default, string parentTaskId = default, string caepSessionId = default, DateTime expiresAt = default, string agentId = default, Object agent = default, string onBehalfOf = default)
         {
             this.TaskId = taskId;
+            this.ParentTaskId = parentTaskId;
             this.CaepSessionId = caepSessionId;
             this.ExpiresAt = expiresAt;
             this.AgentId = agentId;
@@ -57,6 +59,13 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         [DataMember(Name = "task_id", EmitDefaultValue = false)]
         public string TaskId { get; set; }
+
+        /// <summary>
+        /// The parent task, or null for a task without one.
+        /// </summary>
+        /// <value>The parent task, or null for a task without one.</value>
+        [DataMember(Name = "parent_task_id", EmitDefaultValue = true)]
+        public string ParentTaskId { get; set; }
 
         /// <summary>
         /// Gets or Sets CaepSessionId
@@ -97,6 +106,7 @@ namespace LumoAuth.ApiClient.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class CreateTaskResponse {\n");
             sb.Append("  TaskId: ").Append(TaskId).Append("\n");
+            sb.Append("  ParentTaskId: ").Append(ParentTaskId).Append("\n");
             sb.Append("  CaepSessionId: ").Append(CaepSessionId).Append("\n");
             sb.Append("  ExpiresAt: ").Append(ExpiresAt).Append("\n");
             sb.Append("  AgentId: ").Append(AgentId).Append("\n");

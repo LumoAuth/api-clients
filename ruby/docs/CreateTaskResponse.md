@@ -5,6 +5,7 @@
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **task_id** | **String** |  | [optional] |
+| **parent_task_id** | **String** | The parent task, or null for a task without one. | [optional] |
 | **caep_session_id** | **String** |  | [optional] |
 | **expires_at** | **Time** |  | [optional] |
 | **agent_id** | **String** |  | [optional] |
@@ -18,6 +19,7 @@ require 'lumoauth_api_client'
 
 instance = LumoAuthApiClient::CreateTaskResponse.new(
   task_id: null,
+  parent_task_id: null,
   caep_session_id: null,
   expires_at: null,
   agent_id: null,

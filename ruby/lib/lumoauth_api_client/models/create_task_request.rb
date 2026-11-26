@@ -21,7 +21,7 @@ module LumoAuthApiClient
     # Optional task type for categorization.
     attr_accessor :type
 
-    # Optional parent task id for nested agent chains.
+    # Optional. The task_id of an open task of this organization, for a task that is one step of that task. The new task expires no later than its parent and ends when the parent ends. A chain holds at most 5 tasks.
     attr_accessor :parent_task_id
 
     # Optional delegation user email (requires delegation permission).

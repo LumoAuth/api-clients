@@ -65,6 +65,15 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'ParentTaskId'
+        /// </summary>
+        [Fact]
+        public void ParentTaskIdTest()
+        {
+            // TODO unit test for the property 'ParentTaskId'
+        }
+
+        /// <summary>
         /// Test the property 'CaepSessionId'
         /// </summary>
         [Fact]

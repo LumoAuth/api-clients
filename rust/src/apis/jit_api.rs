@@ -198,7 +198,7 @@ pub async fn complete_task(configuration: &configuration::Configuration, org_id:
     }
 }
 
-/// Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: for nested agent chains   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
+/// Each task gets a unique sub-identity with isolated permissions. This limits the \"blast radius\" of any potential compromise.  Request body: {   \"name\": \"Research Task #123\",           // Optional: human-readable name   \"type\": \"research\",                     // Optional: task type for categorization   \"parent_task_id\": \"task_abc123\",        // Optional: an open task of this organization that the new task is a step of   \"on_behalf_of\": \"user@example.com\"      // Optional: delegation context }
 pub async fn create_task(configuration: &configuration::Configuration, org_id: &str, create_task_request: Option<models::CreateTaskRequest>) -> Result<models::CreateTaskResponse, Error<CreateTaskError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
