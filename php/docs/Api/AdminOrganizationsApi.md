@@ -29,7 +29,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 ## `adminOrgInvitationsCreate()`
 
 ```php
-adminOrgInvitationsCreate($orgId, $organizationId): \LumoAuth\ApiClient\Model\AdminOrgInvitationsCreateResponse
+adminOrgInvitationsCreate($orgId, $organizationId, $adminOrgInvitationsCreateRequest): \LumoAuth\ApiClient\Model\AdminOrgInvitationsCreateResponse
 ```
 
 Invite a user to an organization
@@ -58,9 +58,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminOrganizationsApi(
 );
 $orgId = 'orgId_example'; // string
 $organizationId = 'organizationId_example'; // string
+$adminOrgInvitationsCreateRequest = new \LumoAuth\ApiClient\Model\AdminOrgInvitationsCreateRequest(); // \LumoAuth\ApiClient\Model\AdminOrgInvitationsCreateRequest
 
 try {
-    $result = $apiInstance->adminOrgInvitationsCreate($orgId, $organizationId);
+    $result = $apiInstance->adminOrgInvitationsCreate($orgId, $organizationId, $adminOrgInvitationsCreateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminOrganizationsApi->adminOrgInvitationsCreate: ', $e->getMessage(), PHP_EOL;
@@ -73,6 +74,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **organizationId** | **string**|  | |
+| **adminOrgInvitationsCreateRequest** | [**\LumoAuth\ApiClient\Model\AdminOrgInvitationsCreateRequest**](../Model/AdminOrgInvitationsCreateRequest.md)|  | |
 
 ### Return type
 
@@ -84,7 +86,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -293,7 +295,7 @@ try {
 ## `adminOrgMembersAdd()`
 
 ```php
-adminOrgMembersAdd($orgId, $organizationId): \LumoAuth\ApiClient\Model\AdminOrgMembersAddResponse
+adminOrgMembersAdd($orgId, $organizationId, $adminOrgMembersAddRequest): \LumoAuth\ApiClient\Model\AdminOrgMembersAddResponse
 ```
 
 Add a member to an organization
@@ -322,9 +324,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminOrganizationsApi(
 );
 $orgId = 'orgId_example'; // string
 $organizationId = 'organizationId_example'; // string
+$adminOrgMembersAddRequest = new \LumoAuth\ApiClient\Model\AdminOrgMembersAddRequest(); // \LumoAuth\ApiClient\Model\AdminOrgMembersAddRequest
 
 try {
-    $result = $apiInstance->adminOrgMembersAdd($orgId, $organizationId);
+    $result = $apiInstance->adminOrgMembersAdd($orgId, $organizationId, $adminOrgMembersAddRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminOrganizationsApi->adminOrgMembersAdd: ', $e->getMessage(), PHP_EOL;
@@ -337,6 +340,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **organizationId** | **string**|  | |
+| **adminOrgMembersAddRequest** | [**\LumoAuth\ApiClient\Model\AdminOrgMembersAddRequest**](../Model/AdminOrgMembersAddRequest.md)|  | |
 
 ### Return type
 
@@ -348,7 +352,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -490,7 +494,7 @@ try {
 ## `adminOrgRolesCreate()`
 
 ```php
-adminOrgRolesCreate($orgId, $organizationId): \LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse
+adminOrgRolesCreate($orgId, $organizationId, $adminOrgRolesCreateRequest): \LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse
 ```
 
 Create an organization role
@@ -519,9 +523,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminOrganizationsApi(
 );
 $orgId = 'orgId_example'; // string
 $organizationId = 'organizationId_example'; // string
+$adminOrgRolesCreateRequest = new \LumoAuth\ApiClient\Model\AdminOrgRolesCreateRequest(); // \LumoAuth\ApiClient\Model\AdminOrgRolesCreateRequest
 
 try {
-    $result = $apiInstance->adminOrgRolesCreate($orgId, $organizationId);
+    $result = $apiInstance->adminOrgRolesCreate($orgId, $organizationId, $adminOrgRolesCreateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminOrganizationsApi->adminOrgRolesCreate: ', $e->getMessage(), PHP_EOL;
@@ -534,6 +539,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **organizationId** | **string**|  | |
+| **adminOrgRolesCreateRequest** | [**\LumoAuth\ApiClient\Model\AdminOrgRolesCreateRequest**](../Model/AdminOrgRolesCreateRequest.md)|  | |
 
 ### Return type
 
@@ -545,7 +551,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -687,7 +693,7 @@ try {
 ## `adminOrganizationsCreate()`
 
 ```php
-adminOrganizationsCreate($orgId): \LumoAuth\ApiClient\Model\AdminOrganizationsCreateResponse
+adminOrganizationsCreate($orgId, $adminOrganizationsCreateRequest): \LumoAuth\ApiClient\Model\AdminOrganizationsCreateResponse
 ```
 
 Create an organization
@@ -715,9 +721,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminOrganizationsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$adminOrganizationsCreateRequest = new \LumoAuth\ApiClient\Model\AdminOrganizationsCreateRequest(); // \LumoAuth\ApiClient\Model\AdminOrganizationsCreateRequest
 
 try {
-    $result = $apiInstance->adminOrganizationsCreate($orgId);
+    $result = $apiInstance->adminOrganizationsCreate($orgId, $adminOrganizationsCreateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminOrganizationsApi->adminOrganizationsCreate: ', $e->getMessage(), PHP_EOL;
@@ -729,6 +736,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **adminOrganizationsCreateRequest** | [**\LumoAuth\ApiClient\Model\AdminOrganizationsCreateRequest**](../Model/AdminOrganizationsCreateRequest.md)|  | |
 
 ### Return type
 
@@ -740,7 +748,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -943,7 +951,7 @@ try {
 ## `patchAdminOrgMembersUpdate()`
 
 ```php
-patchAdminOrgMembersUpdate($orgId, $organizationId, $userId): \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateResponse
+patchAdminOrgMembersUpdate($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest): \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateResponse
 ```
 
 Update a member's role or status
@@ -973,9 +981,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminOrganizationsApi(
 $orgId = 'orgId_example'; // string
 $organizationId = 'organizationId_example'; // string
 $userId = 'userId_example'; // string
+$putAdminOrgMembersUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest
 
 try {
-    $result = $apiInstance->patchAdminOrgMembersUpdate($orgId, $organizationId, $userId);
+    $result = $apiInstance->patchAdminOrgMembersUpdate($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminOrganizationsApi->patchAdminOrgMembersUpdate: ', $e->getMessage(), PHP_EOL;
@@ -989,6 +998,7 @@ try {
 | **orgId** | **string**|  | |
 | **organizationId** | **string**|  | |
 | **userId** | **string**|  | |
+| **putAdminOrgMembersUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest**](../Model/PutAdminOrgMembersUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1000,7 +1010,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1010,7 +1020,7 @@ try {
 ## `patchAdminOrgRolesUpdate()`
 
 ```php
-patchAdminOrgRolesUpdate($orgId, $organizationId, $roleId): \LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse
+patchAdminOrgRolesUpdate($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest): \LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse
 ```
 
 Update an organization role
@@ -1040,9 +1050,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminOrganizationsApi(
 $orgId = 'orgId_example'; // string
 $organizationId = 'organizationId_example'; // string
 $roleId = 'roleId_example'; // string
+$putAdminOrgRolesUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest
 
 try {
-    $result = $apiInstance->patchAdminOrgRolesUpdate($orgId, $organizationId, $roleId);
+    $result = $apiInstance->patchAdminOrgRolesUpdate($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminOrganizationsApi->patchAdminOrgRolesUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1056,6 +1067,7 @@ try {
 | **orgId** | **string**|  | |
 | **organizationId** | **string**|  | |
 | **roleId** | **string**|  | |
+| **putAdminOrgRolesUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest**](../Model/PutAdminOrgRolesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1067,7 +1079,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1077,7 +1089,7 @@ try {
 ## `patchAdminOrganizationsUpdate()`
 
 ```php
-patchAdminOrganizationsUpdate($orgId, $organizationId): \LumoAuth\ApiClient\Model\AdminOrganizationsGetResponse
+patchAdminOrganizationsUpdate($orgId, $organizationId, $putAdminOrganizationsUpdateRequest): \LumoAuth\ApiClient\Model\AdminOrganizationsGetResponse
 ```
 
 Update an organization
@@ -1106,9 +1118,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminOrganizationsApi(
 );
 $orgId = 'orgId_example'; // string
 $organizationId = 'organizationId_example'; // string
+$putAdminOrganizationsUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest
 
 try {
-    $result = $apiInstance->patchAdminOrganizationsUpdate($orgId, $organizationId);
+    $result = $apiInstance->patchAdminOrganizationsUpdate($orgId, $organizationId, $putAdminOrganizationsUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminOrganizationsApi->patchAdminOrganizationsUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1121,6 +1134,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **organizationId** | **string**|  | |
+| **putAdminOrganizationsUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest**](../Model/PutAdminOrganizationsUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1132,7 +1146,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1142,7 +1156,7 @@ try {
 ## `putAdminOrgMembersUpdate()`
 
 ```php
-putAdminOrgMembersUpdate($orgId, $organizationId, $userId): \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateResponse
+putAdminOrgMembersUpdate($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest): \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateResponse
 ```
 
 Update a member's role or status
@@ -1172,9 +1186,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminOrganizationsApi(
 $orgId = 'orgId_example'; // string
 $organizationId = 'organizationId_example'; // string
 $userId = 'userId_example'; // string
+$putAdminOrgMembersUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest
 
 try {
-    $result = $apiInstance->putAdminOrgMembersUpdate($orgId, $organizationId, $userId);
+    $result = $apiInstance->putAdminOrgMembersUpdate($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminOrganizationsApi->putAdminOrgMembersUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1188,6 +1203,7 @@ try {
 | **orgId** | **string**|  | |
 | **organizationId** | **string**|  | |
 | **userId** | **string**|  | |
+| **putAdminOrgMembersUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest**](../Model/PutAdminOrgMembersUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1199,7 +1215,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1209,7 +1225,7 @@ try {
 ## `putAdminOrgRolesUpdate()`
 
 ```php
-putAdminOrgRolesUpdate($orgId, $organizationId, $roleId): \LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse
+putAdminOrgRolesUpdate($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest): \LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse
 ```
 
 Update an organization role
@@ -1239,9 +1255,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminOrganizationsApi(
 $orgId = 'orgId_example'; // string
 $organizationId = 'organizationId_example'; // string
 $roleId = 'roleId_example'; // string
+$putAdminOrgRolesUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest
 
 try {
-    $result = $apiInstance->putAdminOrgRolesUpdate($orgId, $organizationId, $roleId);
+    $result = $apiInstance->putAdminOrgRolesUpdate($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminOrganizationsApi->putAdminOrgRolesUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1255,6 +1272,7 @@ try {
 | **orgId** | **string**|  | |
 | **organizationId** | **string**|  | |
 | **roleId** | **string**|  | |
+| **putAdminOrgRolesUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest**](../Model/PutAdminOrgRolesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1266,7 +1284,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1276,7 +1294,7 @@ try {
 ## `putAdminOrganizationsUpdate()`
 
 ```php
-putAdminOrganizationsUpdate($orgId, $organizationId): \LumoAuth\ApiClient\Model\AdminOrganizationsGetResponse
+putAdminOrganizationsUpdate($orgId, $organizationId, $putAdminOrganizationsUpdateRequest): \LumoAuth\ApiClient\Model\AdminOrganizationsGetResponse
 ```
 
 Update an organization
@@ -1305,9 +1323,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminOrganizationsApi(
 );
 $orgId = 'orgId_example'; // string
 $organizationId = 'organizationId_example'; // string
+$putAdminOrganizationsUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest
 
 try {
-    $result = $apiInstance->putAdminOrganizationsUpdate($orgId, $organizationId);
+    $result = $apiInstance->putAdminOrganizationsUpdate($orgId, $organizationId, $putAdminOrganizationsUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminOrganizationsApi->putAdminOrganizationsUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1320,6 +1339,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **organizationId** | **string**|  | |
+| **putAdminOrganizationsUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest**](../Model/PutAdminOrganizationsUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1331,7 +1351,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

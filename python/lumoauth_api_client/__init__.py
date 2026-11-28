@@ -5,7 +5,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -60,17 +60,22 @@ __all__ = [
     "ApiAttributeError",
     "ApiException",
     "AbacAttributeDefinition",
+    "AbacAttributesCreateRequest",
     "AbacAttributesCreateResponse",
     "AbacAttributesGetResponse",
     "AbacAttributesListResponse",
+    "AbacPoliciesCreateRequest",
     "AbacPoliciesCreateResponse",
     "AbacPoliciesGetResponse",
     "AbacPoliciesListResponse",
     "AbacPoliciesToggleResponse",
     "AbacPolicy",
     "AbacResourceAttribute",
+    "AddUserGroupRequest",
     "AddUserGroupResponse",
+    "AddUserPermissionRequest",
     "AddUserPermissionResponse",
+    "AddUserRoleRequest",
     "AddUserRoleResponse",
     "AdminAgentsActivateResponse",
     "AdminAgentsAgentsDisableResponse",
@@ -125,8 +130,13 @@ __all__ = [
     "AdminClientsGetBrandingResponse",
     "AdminClientsGetBrandingResponseData",
     "AdminEmailTemplatesListResponse",
+    "AdminEmailTemplatesPreviewRequest",
     "AdminEmailTemplatesPreviewResponse",
+    "AdminEmailTemplatesUpsertRequest",
     "AdminEmailTemplatesVariablesResponse",
+    "AdminGroupsAddMembersRequest",
+    "AdminGroupsAddRoleRequest",
+    "AdminGroupsCreateRequest",
     "AdminGroupsCreateResponse",
     "AdminGroupsGetMembersResponse",
     "AdminGroupsGetMembersResponseDataItem",
@@ -134,6 +144,7 @@ __all__ = [
     "AdminGroupsGroupsGetRolesResponse",
     "AdminGroupsGroupsGetRolesResponseDataItem",
     "AdminGroupsListResponse",
+    "AdminGroupsUpdateRolesRequest",
     "AdminIdentitiesLegacySamlRelinkRequest",
     "AdminIdentitiesLegacySamlRelinkResponse",
     "AdminIdentitiesLegacySamlRelinkResponseData",
@@ -144,6 +155,10 @@ __all__ = [
     "AdminIdentitiesListResponse",
     "AdminIdentitiesListResponseData",
     "AdminIdentitiesListResponseDataBindingsItem",
+    "AdminInitialAccessTokensCreateResponse",
+    "AdminInitialAccessTokensCreateResponseData",
+    "AdminInitialAccessTokensListResponse",
+    "AdminInitialAccessTokensListResponseDataItem",
     "AdminMcpServersCreateResponse",
     "AdminMcpServersGetResponse",
     "AdminMcpServersGrantsListResponse",
@@ -154,18 +169,24 @@ __all__ = [
     "AdminMcpServersGrantsSetResponse",
     "AdminMcpServersGrantsSetResponseData",
     "AdminMcpServersListResponse",
+    "AdminOrgInvitationsCreateRequest",
     "AdminOrgInvitationsCreateResponse",
     "AdminOrgInvitationsListResponse",
+    "AdminOrgMembersAddRequest",
     "AdminOrgMembersAddResponse",
     "AdminOrgMembersListResponse",
+    "AdminOrgRolesCreateRequest",
     "AdminOrgRolesCreateResponse",
     "AdminOrgRolesListResponse",
+    "AdminOrganizationsCreateRequest",
     "AdminOrganizationsCreateResponse",
     "AdminOrganizationsGetResponse",
     "AdminOrganizationsListResponse",
+    "AdminPermissionsCreateRequest",
     "AdminPermissionsCreateResponse",
     "AdminPermissionsGetResponse",
     "AdminPermissionsListResponse",
+    "AdminPermissionsUpdateRequest",
     "AdminPermissionsUsageResponse",
     "AdminPermissionsUsageResponseData",
     "AdminPoppyDomainCheckRequest",
@@ -193,17 +214,22 @@ __all__ = [
     "AdminPoppyUpdateRequestTasks",
     "AdminPoppyUpdateRequestWeb",
     "AdminPoppyUpdateResponse",
+    "AdminRolesAddPermissionsRequest",
+    "AdminRolesAddUserRequest",
+    "AdminRolesCreateRequest",
     "AdminRolesCreateResponse",
     "AdminRolesGetPermissionsResponse",
     "AdminRolesGetPermissionsResponseDataItem",
     "AdminRolesGetResponse",
     "AdminRolesGetUsersResponse",
     "AdminRolesListResponse",
+    "AdminRolesUpdatePermissionsRequest",
     "AdminSandboxListResponse",
     "AdminSandboxSpawnRequest",
     "AdminSandboxSpawnResponse",
     "AdminSandboxSpawnResponseData",
     "AdminSandboxSpawnResponseData1",
+    "AdminScopesCreateRequest",
     "AdminScopesCreateResponse",
     "AdminScopesListResponse",
     "AdminScopesListResponseMeta",
@@ -229,6 +255,7 @@ __all__ = [
     "AdminSocialProvidersAvailableResponse",
     "AdminSocialProvidersAvailableResponseDataItem",
     "AdminSocialProvidersCallbackUrlsResponse",
+    "AdminSocialProvidersCreateRequest",
     "AdminSocialProvidersCreateResponse",
     "AdminSocialProvidersGetResponse",
     "AdminSocialProvidersListResponse",
@@ -241,6 +268,7 @@ __all__ = [
     "AdminUserTokensRevokeAllResponse",
     "AdminUserTokensRevokePostResponse",
     "AdminUsersRestoreResponse",
+    "AdminWebhooksCreateRequest",
     "AdminWebhooksCreateResponse",
     "AdminWebhooksCreateResponseData",
     "AdminWebhooksDeliveriesListResponse",
@@ -269,6 +297,7 @@ __all__ = [
     "AskRequest",
     "AskResponse",
     "AttestRequest",
+    "AttestRequestScope",
     "AttestResponse",
     "AttestResponseIdentity",
     "AuditLogEntry",
@@ -285,16 +314,22 @@ __all__ = [
     "BackchannelAuthorizeResponse",
     "BlockUserResponse",
     "BrandingSettings",
+    "CheckAbacBulkRequest",
     "CheckAbacBulkResponse",
     "CheckAbacBulkResponseResultsItem",
+    "CheckAbacRequest",
     "CheckAbacResponse",
     "CheckAbacResponseMatchedPoliciesItem",
     "CheckAnyPermissionResponse",
     "CheckEmailFirstRequest",
     "CheckEmailFirstResponse",
+    "CheckPermissionRequest",
     "CheckPermissionResponse",
+    "CheckPermissionsBulkRequest",
     "CheckPermissionsBulkResponse",
+    "CheckRelationRequest",
     "CheckRelationResponse",
+    "CheckRelationScopedRequest",
     "CheckRelationScopedResponse",
     "CimdCheckResult",
     "CimdCheckResultEffective",
@@ -307,8 +342,10 @@ __all__ = [
     "CreateClientResponse",
     "CreateClientResponseData",
     "CreateMfaChallengeRequest",
+    "CreateStreamConfigRequest",
     "CreateTaskRequest",
     "CreateTaskResponse",
+    "CreateUserRequest",
     "CreateUserResponse",
     "DeleteUserAuthenticatorResponse",
     "DeleteUserResponse",
@@ -322,7 +359,9 @@ __all__ = [
     "EndPoppySessionResponse",
     "EnrollAuthenticator201Response",
     "EnrollAuthenticatorRequest",
+    "EvaluateBatchRequest",
     "EvaluateBatchResponse",
+    "EvaluateRequest",
     "EvaluateResponseContext",
     "EvaluateResponseContextReasonAdmin",
     "ExpandRelationRequest",
@@ -404,6 +443,9 @@ __all__ = [
     "McpServerToolAuthorizeRequest",
     "McpServerToolAuthorizeRequestSubject",
     "McpServerToolAuthorizeResponse",
+    "McpServerWrite",
+    "McpServerWriteBasicScopes",
+    "McpServerWriteScopesSupported",
     "MessageResponse",
     "MfaAuthenticator",
     "MfaAuthenticatorLastUsedContext",
@@ -415,6 +457,7 @@ __all__ = [
     "OAuthAccessToken",
     "OAuthClient",
     "OAuthClientSecretIssued",
+    "OAuthClientWrite",
     "OAuthScope",
     "OpenIdConfiguration",
     "Organization",
@@ -453,13 +496,20 @@ __all__ = [
     "ProtectedResourceList",
     "ProtectedResourceMetadata",
     "PushEnrollmentStarted",
+    "PutAbacAttributesUpdateRequest",
     "PutAbacAttributesUpdateResponse",
+    "PutAbacPoliciesUpdateRequest",
     "PutAbacPoliciesUpdateResponse",
     "PutAdminAgentsUpdateRequest",
     "PutAdminAgentsUpdateResponse",
+    "PutAdminAuditLogsRetentionUpdateRequest",
     "PutAdminClientsUpdateBrandingRequest",
     "PutAdminClientsUpdateBrandingResponse",
+    "PutAdminGroupsUpdateRequest",
+    "PutAdminOrgMembersUpdateRequest",
     "PutAdminOrgMembersUpdateResponse",
+    "PutAdminOrgRolesUpdateRequest",
+    "PutAdminOrganizationsUpdateRequest",
     "PutAdminSettingsAuthenticationUpdateResponse",
     "PutAdminSettingsBrandingUpdateResponse",
     "PutAdminSettingsEmailUpdateRequest",
@@ -468,11 +518,17 @@ __all__ = [
     "PutAdminSettingsGeneralUpdateResponse",
     "PutAdminSettingsGeneralUpdateResponseData",
     "PutAdminSettingsScimUpdateResponse",
+    "PutAdminSettingsSecurityUpdateRequest",
     "PutAdminSettingsSecurityUpdateResponse",
+    "PutAdminSocialProvidersUpdateRequest",
+    "PutAdminTenantUpdateRequest",
     "PutAdminTenantUpdateResponse",
+    "PutAdminWebhooksUpdateRequest",
     "PutAdminWebhooksUpdateResponse",
     "RedactedSecret",
+    "RegisterAgentRequest",
     "RegisterAgentResponse",
+    "RegisterClientRequest",
     "RegisterClientResponse",
     "RegisteredClientMetadata",
     "RemoveUserGroupResponse",
@@ -497,10 +553,13 @@ __all__ = [
     "ScimSettingsOutbound",
     "SendPoppyFeedbackRequest",
     "SendUserVerificationEmailResponse",
+    "SetClientScopesRequest",
     "SetClientScopesResponse",
+    "SetResourceAttributeRequest",
     "SetResourceAttributeResponse",
     "SetUserAttributeResponse",
     "SetUserAttributeResponseData",
+    "SetUserPasswordPostRequest",
     "SetUserPasswordPostResponse",
     "SignedAgentCard",
     "SingleServerMetadata",
@@ -515,6 +574,7 @@ __all__ = [
     "StartAgentEnrollmentRequestInventoryMcpServersItem",
     "StartAgentEnrollmentRequestJwks",
     "StartAgentEnrollmentResponse",
+    "SubmitLoginJsonRequest",
     "SubmitLoginJsonResponse",
     "TenantProfile",
     "TokenResponse",
@@ -524,7 +584,9 @@ __all__ = [
     "UpdateAuthenticatorRequest",
     "UpdateClientResponse",
     "UpdateMfaPolicyResponse",
+    "UpdateUserGroupsRequest",
     "UpdateUserGroupsResponse",
+    "UpdateUserRequest",
     "UpdateUserResponse",
     "UpdateUserRolesResponse",
     "User",
@@ -539,6 +601,7 @@ __all__ = [
     "VerifyMfaChallengeRequest",
     "VerifyResourceTokenRequest",
     "VerifyResourceTokenResponse",
+    "VerifyStreamRequest",
     "Webhook",
     "WebhookDelivery",
     "WebhookDeliveryDetail",
@@ -591,17 +654,22 @@ from lumoauth_api_client.exceptions import ApiException as ApiException
 
 # import models into sdk package
 from lumoauth_api_client.models.abac_attribute_definition import AbacAttributeDefinition as AbacAttributeDefinition
+from lumoauth_api_client.models.abac_attributes_create_request import AbacAttributesCreateRequest as AbacAttributesCreateRequest
 from lumoauth_api_client.models.abac_attributes_create_response import AbacAttributesCreateResponse as AbacAttributesCreateResponse
 from lumoauth_api_client.models.abac_attributes_get_response import AbacAttributesGetResponse as AbacAttributesGetResponse
 from lumoauth_api_client.models.abac_attributes_list_response import AbacAttributesListResponse as AbacAttributesListResponse
+from lumoauth_api_client.models.abac_policies_create_request import AbacPoliciesCreateRequest as AbacPoliciesCreateRequest
 from lumoauth_api_client.models.abac_policies_create_response import AbacPoliciesCreateResponse as AbacPoliciesCreateResponse
 from lumoauth_api_client.models.abac_policies_get_response import AbacPoliciesGetResponse as AbacPoliciesGetResponse
 from lumoauth_api_client.models.abac_policies_list_response import AbacPoliciesListResponse as AbacPoliciesListResponse
 from lumoauth_api_client.models.abac_policies_toggle_response import AbacPoliciesToggleResponse as AbacPoliciesToggleResponse
 from lumoauth_api_client.models.abac_policy import AbacPolicy as AbacPolicy
 from lumoauth_api_client.models.abac_resource_attribute import AbacResourceAttribute as AbacResourceAttribute
+from lumoauth_api_client.models.add_user_group_request import AddUserGroupRequest as AddUserGroupRequest
 from lumoauth_api_client.models.add_user_group_response import AddUserGroupResponse as AddUserGroupResponse
+from lumoauth_api_client.models.add_user_permission_request import AddUserPermissionRequest as AddUserPermissionRequest
 from lumoauth_api_client.models.add_user_permission_response import AddUserPermissionResponse as AddUserPermissionResponse
+from lumoauth_api_client.models.add_user_role_request import AddUserRoleRequest as AddUserRoleRequest
 from lumoauth_api_client.models.add_user_role_response import AddUserRoleResponse as AddUserRoleResponse
 from lumoauth_api_client.models.admin_agents_activate_response import AdminAgentsActivateResponse as AdminAgentsActivateResponse
 from lumoauth_api_client.models.admin_agents_agents_disable_response import AdminAgentsAgentsDisableResponse as AdminAgentsAgentsDisableResponse
@@ -656,8 +724,13 @@ from lumoauth_api_client.models.admin_clients_cimd_check_response import AdminCl
 from lumoauth_api_client.models.admin_clients_get_branding_response import AdminClientsGetBrandingResponse as AdminClientsGetBrandingResponse
 from lumoauth_api_client.models.admin_clients_get_branding_response_data import AdminClientsGetBrandingResponseData as AdminClientsGetBrandingResponseData
 from lumoauth_api_client.models.admin_email_templates_list_response import AdminEmailTemplatesListResponse as AdminEmailTemplatesListResponse
+from lumoauth_api_client.models.admin_email_templates_preview_request import AdminEmailTemplatesPreviewRequest as AdminEmailTemplatesPreviewRequest
 from lumoauth_api_client.models.admin_email_templates_preview_response import AdminEmailTemplatesPreviewResponse as AdminEmailTemplatesPreviewResponse
+from lumoauth_api_client.models.admin_email_templates_upsert_request import AdminEmailTemplatesUpsertRequest as AdminEmailTemplatesUpsertRequest
 from lumoauth_api_client.models.admin_email_templates_variables_response import AdminEmailTemplatesVariablesResponse as AdminEmailTemplatesVariablesResponse
+from lumoauth_api_client.models.admin_groups_add_members_request import AdminGroupsAddMembersRequest as AdminGroupsAddMembersRequest
+from lumoauth_api_client.models.admin_groups_add_role_request import AdminGroupsAddRoleRequest as AdminGroupsAddRoleRequest
+from lumoauth_api_client.models.admin_groups_create_request import AdminGroupsCreateRequest as AdminGroupsCreateRequest
 from lumoauth_api_client.models.admin_groups_create_response import AdminGroupsCreateResponse as AdminGroupsCreateResponse
 from lumoauth_api_client.models.admin_groups_get_members_response import AdminGroupsGetMembersResponse as AdminGroupsGetMembersResponse
 from lumoauth_api_client.models.admin_groups_get_members_response_data_item import AdminGroupsGetMembersResponseDataItem as AdminGroupsGetMembersResponseDataItem
@@ -665,6 +738,7 @@ from lumoauth_api_client.models.admin_groups_get_response import AdminGroupsGetR
 from lumoauth_api_client.models.admin_groups_groups_get_roles_response import AdminGroupsGroupsGetRolesResponse as AdminGroupsGroupsGetRolesResponse
 from lumoauth_api_client.models.admin_groups_groups_get_roles_response_data_item import AdminGroupsGroupsGetRolesResponseDataItem as AdminGroupsGroupsGetRolesResponseDataItem
 from lumoauth_api_client.models.admin_groups_list_response import AdminGroupsListResponse as AdminGroupsListResponse
+from lumoauth_api_client.models.admin_groups_update_roles_request import AdminGroupsUpdateRolesRequest as AdminGroupsUpdateRolesRequest
 from lumoauth_api_client.models.admin_identities_legacy_saml_relink_request import AdminIdentitiesLegacySamlRelinkRequest as AdminIdentitiesLegacySamlRelinkRequest
 from lumoauth_api_client.models.admin_identities_legacy_saml_relink_response import AdminIdentitiesLegacySamlRelinkResponse as AdminIdentitiesLegacySamlRelinkResponse
 from lumoauth_api_client.models.admin_identities_legacy_saml_relink_response_data import AdminIdentitiesLegacySamlRelinkResponseData as AdminIdentitiesLegacySamlRelinkResponseData
@@ -675,6 +749,10 @@ from lumoauth_api_client.models.admin_identities_link_request import AdminIdenti
 from lumoauth_api_client.models.admin_identities_list_response import AdminIdentitiesListResponse as AdminIdentitiesListResponse
 from lumoauth_api_client.models.admin_identities_list_response_data import AdminIdentitiesListResponseData as AdminIdentitiesListResponseData
 from lumoauth_api_client.models.admin_identities_list_response_data_bindings_item import AdminIdentitiesListResponseDataBindingsItem as AdminIdentitiesListResponseDataBindingsItem
+from lumoauth_api_client.models.admin_initial_access_tokens_create_response import AdminInitialAccessTokensCreateResponse as AdminInitialAccessTokensCreateResponse
+from lumoauth_api_client.models.admin_initial_access_tokens_create_response_data import AdminInitialAccessTokensCreateResponseData as AdminInitialAccessTokensCreateResponseData
+from lumoauth_api_client.models.admin_initial_access_tokens_list_response import AdminInitialAccessTokensListResponse as AdminInitialAccessTokensListResponse
+from lumoauth_api_client.models.admin_initial_access_tokens_list_response_data_item import AdminInitialAccessTokensListResponseDataItem as AdminInitialAccessTokensListResponseDataItem
 from lumoauth_api_client.models.admin_mcp_servers_create_response import AdminMcpServersCreateResponse as AdminMcpServersCreateResponse
 from lumoauth_api_client.models.admin_mcp_servers_get_response import AdminMcpServersGetResponse as AdminMcpServersGetResponse
 from lumoauth_api_client.models.admin_mcp_servers_grants_list_response import AdminMcpServersGrantsListResponse as AdminMcpServersGrantsListResponse
@@ -685,18 +763,24 @@ from lumoauth_api_client.models.admin_mcp_servers_grants_set_request import Admi
 from lumoauth_api_client.models.admin_mcp_servers_grants_set_response import AdminMcpServersGrantsSetResponse as AdminMcpServersGrantsSetResponse
 from lumoauth_api_client.models.admin_mcp_servers_grants_set_response_data import AdminMcpServersGrantsSetResponseData as AdminMcpServersGrantsSetResponseData
 from lumoauth_api_client.models.admin_mcp_servers_list_response import AdminMcpServersListResponse as AdminMcpServersListResponse
+from lumoauth_api_client.models.admin_org_invitations_create_request import AdminOrgInvitationsCreateRequest as AdminOrgInvitationsCreateRequest
 from lumoauth_api_client.models.admin_org_invitations_create_response import AdminOrgInvitationsCreateResponse as AdminOrgInvitationsCreateResponse
 from lumoauth_api_client.models.admin_org_invitations_list_response import AdminOrgInvitationsListResponse as AdminOrgInvitationsListResponse
+from lumoauth_api_client.models.admin_org_members_add_request import AdminOrgMembersAddRequest as AdminOrgMembersAddRequest
 from lumoauth_api_client.models.admin_org_members_add_response import AdminOrgMembersAddResponse as AdminOrgMembersAddResponse
 from lumoauth_api_client.models.admin_org_members_list_response import AdminOrgMembersListResponse as AdminOrgMembersListResponse
+from lumoauth_api_client.models.admin_org_roles_create_request import AdminOrgRolesCreateRequest as AdminOrgRolesCreateRequest
 from lumoauth_api_client.models.admin_org_roles_create_response import AdminOrgRolesCreateResponse as AdminOrgRolesCreateResponse
 from lumoauth_api_client.models.admin_org_roles_list_response import AdminOrgRolesListResponse as AdminOrgRolesListResponse
+from lumoauth_api_client.models.admin_organizations_create_request import AdminOrganizationsCreateRequest as AdminOrganizationsCreateRequest
 from lumoauth_api_client.models.admin_organizations_create_response import AdminOrganizationsCreateResponse as AdminOrganizationsCreateResponse
 from lumoauth_api_client.models.admin_organizations_get_response import AdminOrganizationsGetResponse as AdminOrganizationsGetResponse
 from lumoauth_api_client.models.admin_organizations_list_response import AdminOrganizationsListResponse as AdminOrganizationsListResponse
+from lumoauth_api_client.models.admin_permissions_create_request import AdminPermissionsCreateRequest as AdminPermissionsCreateRequest
 from lumoauth_api_client.models.admin_permissions_create_response import AdminPermissionsCreateResponse as AdminPermissionsCreateResponse
 from lumoauth_api_client.models.admin_permissions_get_response import AdminPermissionsGetResponse as AdminPermissionsGetResponse
 from lumoauth_api_client.models.admin_permissions_list_response import AdminPermissionsListResponse as AdminPermissionsListResponse
+from lumoauth_api_client.models.admin_permissions_update_request import AdminPermissionsUpdateRequest as AdminPermissionsUpdateRequest
 from lumoauth_api_client.models.admin_permissions_usage_response import AdminPermissionsUsageResponse as AdminPermissionsUsageResponse
 from lumoauth_api_client.models.admin_permissions_usage_response_data import AdminPermissionsUsageResponseData as AdminPermissionsUsageResponseData
 from lumoauth_api_client.models.admin_poppy_domain_check_request import AdminPoppyDomainCheckRequest as AdminPoppyDomainCheckRequest
@@ -724,17 +808,22 @@ from lumoauth_api_client.models.admin_poppy_update_request_sign_in import AdminP
 from lumoauth_api_client.models.admin_poppy_update_request_tasks import AdminPoppyUpdateRequestTasks as AdminPoppyUpdateRequestTasks
 from lumoauth_api_client.models.admin_poppy_update_request_web import AdminPoppyUpdateRequestWeb as AdminPoppyUpdateRequestWeb
 from lumoauth_api_client.models.admin_poppy_update_response import AdminPoppyUpdateResponse as AdminPoppyUpdateResponse
+from lumoauth_api_client.models.admin_roles_add_permissions_request import AdminRolesAddPermissionsRequest as AdminRolesAddPermissionsRequest
+from lumoauth_api_client.models.admin_roles_add_user_request import AdminRolesAddUserRequest as AdminRolesAddUserRequest
+from lumoauth_api_client.models.admin_roles_create_request import AdminRolesCreateRequest as AdminRolesCreateRequest
 from lumoauth_api_client.models.admin_roles_create_response import AdminRolesCreateResponse as AdminRolesCreateResponse
 from lumoauth_api_client.models.admin_roles_get_permissions_response import AdminRolesGetPermissionsResponse as AdminRolesGetPermissionsResponse
 from lumoauth_api_client.models.admin_roles_get_permissions_response_data_item import AdminRolesGetPermissionsResponseDataItem as AdminRolesGetPermissionsResponseDataItem
 from lumoauth_api_client.models.admin_roles_get_response import AdminRolesGetResponse as AdminRolesGetResponse
 from lumoauth_api_client.models.admin_roles_get_users_response import AdminRolesGetUsersResponse as AdminRolesGetUsersResponse
 from lumoauth_api_client.models.admin_roles_list_response import AdminRolesListResponse as AdminRolesListResponse
+from lumoauth_api_client.models.admin_roles_update_permissions_request import AdminRolesUpdatePermissionsRequest as AdminRolesUpdatePermissionsRequest
 from lumoauth_api_client.models.admin_sandbox_list_response import AdminSandboxListResponse as AdminSandboxListResponse
 from lumoauth_api_client.models.admin_sandbox_spawn_request import AdminSandboxSpawnRequest as AdminSandboxSpawnRequest
 from lumoauth_api_client.models.admin_sandbox_spawn_response import AdminSandboxSpawnResponse as AdminSandboxSpawnResponse
 from lumoauth_api_client.models.admin_sandbox_spawn_response_data import AdminSandboxSpawnResponseData as AdminSandboxSpawnResponseData
 from lumoauth_api_client.models.admin_sandbox_spawn_response_data1 import AdminSandboxSpawnResponseData1 as AdminSandboxSpawnResponseData1
+from lumoauth_api_client.models.admin_scopes_create_request import AdminScopesCreateRequest as AdminScopesCreateRequest
 from lumoauth_api_client.models.admin_scopes_create_response import AdminScopesCreateResponse as AdminScopesCreateResponse
 from lumoauth_api_client.models.admin_scopes_list_response import AdminScopesListResponse as AdminScopesListResponse
 from lumoauth_api_client.models.admin_scopes_list_response_meta import AdminScopesListResponseMeta as AdminScopesListResponseMeta
@@ -760,6 +849,7 @@ from lumoauth_api_client.models.admin_settings_security_get_response import Admi
 from lumoauth_api_client.models.admin_social_providers_available_response import AdminSocialProvidersAvailableResponse as AdminSocialProvidersAvailableResponse
 from lumoauth_api_client.models.admin_social_providers_available_response_data_item import AdminSocialProvidersAvailableResponseDataItem as AdminSocialProvidersAvailableResponseDataItem
 from lumoauth_api_client.models.admin_social_providers_callback_urls_response import AdminSocialProvidersCallbackUrlsResponse as AdminSocialProvidersCallbackUrlsResponse
+from lumoauth_api_client.models.admin_social_providers_create_request import AdminSocialProvidersCreateRequest as AdminSocialProvidersCreateRequest
 from lumoauth_api_client.models.admin_social_providers_create_response import AdminSocialProvidersCreateResponse as AdminSocialProvidersCreateResponse
 from lumoauth_api_client.models.admin_social_providers_get_response import AdminSocialProvidersGetResponse as AdminSocialProvidersGetResponse
 from lumoauth_api_client.models.admin_social_providers_list_response import AdminSocialProvidersListResponse as AdminSocialProvidersListResponse
@@ -772,6 +862,7 @@ from lumoauth_api_client.models.admin_user_sessions_revoke_post_response import 
 from lumoauth_api_client.models.admin_user_tokens_revoke_all_response import AdminUserTokensRevokeAllResponse as AdminUserTokensRevokeAllResponse
 from lumoauth_api_client.models.admin_user_tokens_revoke_post_response import AdminUserTokensRevokePostResponse as AdminUserTokensRevokePostResponse
 from lumoauth_api_client.models.admin_users_restore_response import AdminUsersRestoreResponse as AdminUsersRestoreResponse
+from lumoauth_api_client.models.admin_webhooks_create_request import AdminWebhooksCreateRequest as AdminWebhooksCreateRequest
 from lumoauth_api_client.models.admin_webhooks_create_response import AdminWebhooksCreateResponse as AdminWebhooksCreateResponse
 from lumoauth_api_client.models.admin_webhooks_create_response_data import AdminWebhooksCreateResponseData as AdminWebhooksCreateResponseData
 from lumoauth_api_client.models.admin_webhooks_deliveries_list_response import AdminWebhooksDeliveriesListResponse as AdminWebhooksDeliveriesListResponse
@@ -800,6 +891,7 @@ from lumoauth_api_client.models.approve_request_response import ApproveRequestRe
 from lumoauth_api_client.models.ask_request import AskRequest as AskRequest
 from lumoauth_api_client.models.ask_response import AskResponse as AskResponse
 from lumoauth_api_client.models.attest_request import AttestRequest as AttestRequest
+from lumoauth_api_client.models.attest_request_scope import AttestRequestScope as AttestRequestScope
 from lumoauth_api_client.models.attest_response import AttestResponse as AttestResponse
 from lumoauth_api_client.models.attest_response_identity import AttestResponseIdentity as AttestResponseIdentity
 from lumoauth_api_client.models.audit_log_entry import AuditLogEntry as AuditLogEntry
@@ -816,16 +908,22 @@ from lumoauth_api_client.models.authorize_mcp_response import AuthorizeMcpRespon
 from lumoauth_api_client.models.backchannel_authorize_response import BackchannelAuthorizeResponse as BackchannelAuthorizeResponse
 from lumoauth_api_client.models.block_user_response import BlockUserResponse as BlockUserResponse
 from lumoauth_api_client.models.branding_settings import BrandingSettings as BrandingSettings
+from lumoauth_api_client.models.check_abac_bulk_request import CheckAbacBulkRequest as CheckAbacBulkRequest
 from lumoauth_api_client.models.check_abac_bulk_response import CheckAbacBulkResponse as CheckAbacBulkResponse
 from lumoauth_api_client.models.check_abac_bulk_response_results_item import CheckAbacBulkResponseResultsItem as CheckAbacBulkResponseResultsItem
+from lumoauth_api_client.models.check_abac_request import CheckAbacRequest as CheckAbacRequest
 from lumoauth_api_client.models.check_abac_response import CheckAbacResponse as CheckAbacResponse
 from lumoauth_api_client.models.check_abac_response_matched_policies_item import CheckAbacResponseMatchedPoliciesItem as CheckAbacResponseMatchedPoliciesItem
 from lumoauth_api_client.models.check_any_permission_response import CheckAnyPermissionResponse as CheckAnyPermissionResponse
 from lumoauth_api_client.models.check_email_first_request import CheckEmailFirstRequest as CheckEmailFirstRequest
 from lumoauth_api_client.models.check_email_first_response import CheckEmailFirstResponse as CheckEmailFirstResponse
+from lumoauth_api_client.models.check_permission_request import CheckPermissionRequest as CheckPermissionRequest
 from lumoauth_api_client.models.check_permission_response import CheckPermissionResponse as CheckPermissionResponse
+from lumoauth_api_client.models.check_permissions_bulk_request import CheckPermissionsBulkRequest as CheckPermissionsBulkRequest
 from lumoauth_api_client.models.check_permissions_bulk_response import CheckPermissionsBulkResponse as CheckPermissionsBulkResponse
+from lumoauth_api_client.models.check_relation_request import CheckRelationRequest as CheckRelationRequest
 from lumoauth_api_client.models.check_relation_response import CheckRelationResponse as CheckRelationResponse
+from lumoauth_api_client.models.check_relation_scoped_request import CheckRelationScopedRequest as CheckRelationScopedRequest
 from lumoauth_api_client.models.check_relation_scoped_response import CheckRelationScopedResponse as CheckRelationScopedResponse
 from lumoauth_api_client.models.cimd_check_result import CimdCheckResult as CimdCheckResult
 from lumoauth_api_client.models.cimd_check_result_effective import CimdCheckResultEffective as CimdCheckResultEffective
@@ -838,8 +936,10 @@ from lumoauth_api_client.models.create_approval_response202 import CreateApprova
 from lumoauth_api_client.models.create_client_response import CreateClientResponse as CreateClientResponse
 from lumoauth_api_client.models.create_client_response_data import CreateClientResponseData as CreateClientResponseData
 from lumoauth_api_client.models.create_mfa_challenge_request import CreateMfaChallengeRequest as CreateMfaChallengeRequest
+from lumoauth_api_client.models.create_stream_config_request import CreateStreamConfigRequest as CreateStreamConfigRequest
 from lumoauth_api_client.models.create_task_request import CreateTaskRequest as CreateTaskRequest
 from lumoauth_api_client.models.create_task_response import CreateTaskResponse as CreateTaskResponse
+from lumoauth_api_client.models.create_user_request import CreateUserRequest as CreateUserRequest
 from lumoauth_api_client.models.create_user_response import CreateUserResponse as CreateUserResponse
 from lumoauth_api_client.models.delete_user_authenticator_response import DeleteUserAuthenticatorResponse as DeleteUserAuthenticatorResponse
 from lumoauth_api_client.models.delete_user_response import DeleteUserResponse as DeleteUserResponse
@@ -853,7 +953,9 @@ from lumoauth_api_client.models.end_poppy_session_request import EndPoppySession
 from lumoauth_api_client.models.end_poppy_session_response import EndPoppySessionResponse as EndPoppySessionResponse
 from lumoauth_api_client.models.enroll_authenticator201_response import EnrollAuthenticator201Response as EnrollAuthenticator201Response
 from lumoauth_api_client.models.enroll_authenticator_request import EnrollAuthenticatorRequest as EnrollAuthenticatorRequest
+from lumoauth_api_client.models.evaluate_batch_request import EvaluateBatchRequest as EvaluateBatchRequest
 from lumoauth_api_client.models.evaluate_batch_response import EvaluateBatchResponse as EvaluateBatchResponse
+from lumoauth_api_client.models.evaluate_request import EvaluateRequest as EvaluateRequest
 from lumoauth_api_client.models.evaluate_response_context import EvaluateResponseContext as EvaluateResponseContext
 from lumoauth_api_client.models.evaluate_response_context_reason_admin import EvaluateResponseContextReasonAdmin as EvaluateResponseContextReasonAdmin
 from lumoauth_api_client.models.expand_relation_request import ExpandRelationRequest as ExpandRelationRequest
@@ -935,6 +1037,9 @@ from lumoauth_api_client.models.mcp_server_posture_checks_inner import McpServer
 from lumoauth_api_client.models.mcp_server_tool_authorize_request import McpServerToolAuthorizeRequest as McpServerToolAuthorizeRequest
 from lumoauth_api_client.models.mcp_server_tool_authorize_request_subject import McpServerToolAuthorizeRequestSubject as McpServerToolAuthorizeRequestSubject
 from lumoauth_api_client.models.mcp_server_tool_authorize_response import McpServerToolAuthorizeResponse as McpServerToolAuthorizeResponse
+from lumoauth_api_client.models.mcp_server_write import McpServerWrite as McpServerWrite
+from lumoauth_api_client.models.mcp_server_write_basic_scopes import McpServerWriteBasicScopes as McpServerWriteBasicScopes
+from lumoauth_api_client.models.mcp_server_write_scopes_supported import McpServerWriteScopesSupported as McpServerWriteScopesSupported
 from lumoauth_api_client.models.message_response import MessageResponse as MessageResponse
 from lumoauth_api_client.models.mfa_authenticator import MfaAuthenticator as MfaAuthenticator
 from lumoauth_api_client.models.mfa_authenticator_last_used_context import MfaAuthenticatorLastUsedContext as MfaAuthenticatorLastUsedContext
@@ -946,6 +1051,7 @@ from lumoauth_api_client.models.mfa_policy import MfaPolicy as MfaPolicy
 from lumoauth_api_client.models.o_auth_access_token import OAuthAccessToken as OAuthAccessToken
 from lumoauth_api_client.models.o_auth_client import OAuthClient as OAuthClient
 from lumoauth_api_client.models.o_auth_client_secret_issued import OAuthClientSecretIssued as OAuthClientSecretIssued
+from lumoauth_api_client.models.o_auth_client_write import OAuthClientWrite as OAuthClientWrite
 from lumoauth_api_client.models.o_auth_scope import OAuthScope as OAuthScope
 from lumoauth_api_client.models.open_id_configuration import OpenIdConfiguration as OpenIdConfiguration
 from lumoauth_api_client.models.organization import Organization as Organization
@@ -984,13 +1090,20 @@ from lumoauth_api_client.models.poppy_verify_result_session import PoppyVerifyRe
 from lumoauth_api_client.models.protected_resource_list import ProtectedResourceList as ProtectedResourceList
 from lumoauth_api_client.models.protected_resource_metadata import ProtectedResourceMetadata as ProtectedResourceMetadata
 from lumoauth_api_client.models.push_enrollment_started import PushEnrollmentStarted as PushEnrollmentStarted
+from lumoauth_api_client.models.put_abac_attributes_update_request import PutAbacAttributesUpdateRequest as PutAbacAttributesUpdateRequest
 from lumoauth_api_client.models.put_abac_attributes_update_response import PutAbacAttributesUpdateResponse as PutAbacAttributesUpdateResponse
+from lumoauth_api_client.models.put_abac_policies_update_request import PutAbacPoliciesUpdateRequest as PutAbacPoliciesUpdateRequest
 from lumoauth_api_client.models.put_abac_policies_update_response import PutAbacPoliciesUpdateResponse as PutAbacPoliciesUpdateResponse
 from lumoauth_api_client.models.put_admin_agents_update_request import PutAdminAgentsUpdateRequest as PutAdminAgentsUpdateRequest
 from lumoauth_api_client.models.put_admin_agents_update_response import PutAdminAgentsUpdateResponse as PutAdminAgentsUpdateResponse
+from lumoauth_api_client.models.put_admin_audit_logs_retention_update_request import PutAdminAuditLogsRetentionUpdateRequest as PutAdminAuditLogsRetentionUpdateRequest
 from lumoauth_api_client.models.put_admin_clients_update_branding_request import PutAdminClientsUpdateBrandingRequest as PutAdminClientsUpdateBrandingRequest
 from lumoauth_api_client.models.put_admin_clients_update_branding_response import PutAdminClientsUpdateBrandingResponse as PutAdminClientsUpdateBrandingResponse
+from lumoauth_api_client.models.put_admin_groups_update_request import PutAdminGroupsUpdateRequest as PutAdminGroupsUpdateRequest
+from lumoauth_api_client.models.put_admin_org_members_update_request import PutAdminOrgMembersUpdateRequest as PutAdminOrgMembersUpdateRequest
 from lumoauth_api_client.models.put_admin_org_members_update_response import PutAdminOrgMembersUpdateResponse as PutAdminOrgMembersUpdateResponse
+from lumoauth_api_client.models.put_admin_org_roles_update_request import PutAdminOrgRolesUpdateRequest as PutAdminOrgRolesUpdateRequest
+from lumoauth_api_client.models.put_admin_organizations_update_request import PutAdminOrganizationsUpdateRequest as PutAdminOrganizationsUpdateRequest
 from lumoauth_api_client.models.put_admin_settings_authentication_update_response import PutAdminSettingsAuthenticationUpdateResponse as PutAdminSettingsAuthenticationUpdateResponse
 from lumoauth_api_client.models.put_admin_settings_branding_update_response import PutAdminSettingsBrandingUpdateResponse as PutAdminSettingsBrandingUpdateResponse
 from lumoauth_api_client.models.put_admin_settings_email_update_request import PutAdminSettingsEmailUpdateRequest as PutAdminSettingsEmailUpdateRequest
@@ -999,11 +1112,17 @@ from lumoauth_api_client.models.put_admin_settings_general_update_request import
 from lumoauth_api_client.models.put_admin_settings_general_update_response import PutAdminSettingsGeneralUpdateResponse as PutAdminSettingsGeneralUpdateResponse
 from lumoauth_api_client.models.put_admin_settings_general_update_response_data import PutAdminSettingsGeneralUpdateResponseData as PutAdminSettingsGeneralUpdateResponseData
 from lumoauth_api_client.models.put_admin_settings_scim_update_response import PutAdminSettingsScimUpdateResponse as PutAdminSettingsScimUpdateResponse
+from lumoauth_api_client.models.put_admin_settings_security_update_request import PutAdminSettingsSecurityUpdateRequest as PutAdminSettingsSecurityUpdateRequest
 from lumoauth_api_client.models.put_admin_settings_security_update_response import PutAdminSettingsSecurityUpdateResponse as PutAdminSettingsSecurityUpdateResponse
+from lumoauth_api_client.models.put_admin_social_providers_update_request import PutAdminSocialProvidersUpdateRequest as PutAdminSocialProvidersUpdateRequest
+from lumoauth_api_client.models.put_admin_tenant_update_request import PutAdminTenantUpdateRequest as PutAdminTenantUpdateRequest
 from lumoauth_api_client.models.put_admin_tenant_update_response import PutAdminTenantUpdateResponse as PutAdminTenantUpdateResponse
+from lumoauth_api_client.models.put_admin_webhooks_update_request import PutAdminWebhooksUpdateRequest as PutAdminWebhooksUpdateRequest
 from lumoauth_api_client.models.put_admin_webhooks_update_response import PutAdminWebhooksUpdateResponse as PutAdminWebhooksUpdateResponse
 from lumoauth_api_client.models.redacted_secret import RedactedSecret as RedactedSecret
+from lumoauth_api_client.models.register_agent_request import RegisterAgentRequest as RegisterAgentRequest
 from lumoauth_api_client.models.register_agent_response import RegisterAgentResponse as RegisterAgentResponse
+from lumoauth_api_client.models.register_client_request import RegisterClientRequest as RegisterClientRequest
 from lumoauth_api_client.models.register_client_response import RegisterClientResponse as RegisterClientResponse
 from lumoauth_api_client.models.registered_client_metadata import RegisteredClientMetadata as RegisteredClientMetadata
 from lumoauth_api_client.models.remove_user_group_response import RemoveUserGroupResponse as RemoveUserGroupResponse
@@ -1028,10 +1147,13 @@ from lumoauth_api_client.models.scim_settings_inbound_protected_attributes impor
 from lumoauth_api_client.models.scim_settings_outbound import ScimSettingsOutbound as ScimSettingsOutbound
 from lumoauth_api_client.models.send_poppy_feedback_request import SendPoppyFeedbackRequest as SendPoppyFeedbackRequest
 from lumoauth_api_client.models.send_user_verification_email_response import SendUserVerificationEmailResponse as SendUserVerificationEmailResponse
+from lumoauth_api_client.models.set_client_scopes_request import SetClientScopesRequest as SetClientScopesRequest
 from lumoauth_api_client.models.set_client_scopes_response import SetClientScopesResponse as SetClientScopesResponse
+from lumoauth_api_client.models.set_resource_attribute_request import SetResourceAttributeRequest as SetResourceAttributeRequest
 from lumoauth_api_client.models.set_resource_attribute_response import SetResourceAttributeResponse as SetResourceAttributeResponse
 from lumoauth_api_client.models.set_user_attribute_response import SetUserAttributeResponse as SetUserAttributeResponse
 from lumoauth_api_client.models.set_user_attribute_response_data import SetUserAttributeResponseData as SetUserAttributeResponseData
+from lumoauth_api_client.models.set_user_password_post_request import SetUserPasswordPostRequest as SetUserPasswordPostRequest
 from lumoauth_api_client.models.set_user_password_post_response import SetUserPasswordPostResponse as SetUserPasswordPostResponse
 from lumoauth_api_client.models.signed_agent_card import SignedAgentCard as SignedAgentCard
 from lumoauth_api_client.models.single_server_metadata import SingleServerMetadata as SingleServerMetadata
@@ -1046,6 +1168,7 @@ from lumoauth_api_client.models.start_agent_enrollment_request_inventory import 
 from lumoauth_api_client.models.start_agent_enrollment_request_inventory_mcp_servers_item import StartAgentEnrollmentRequestInventoryMcpServersItem as StartAgentEnrollmentRequestInventoryMcpServersItem
 from lumoauth_api_client.models.start_agent_enrollment_request_jwks import StartAgentEnrollmentRequestJwks as StartAgentEnrollmentRequestJwks
 from lumoauth_api_client.models.start_agent_enrollment_response import StartAgentEnrollmentResponse as StartAgentEnrollmentResponse
+from lumoauth_api_client.models.submit_login_json_request import SubmitLoginJsonRequest as SubmitLoginJsonRequest
 from lumoauth_api_client.models.submit_login_json_response import SubmitLoginJsonResponse as SubmitLoginJsonResponse
 from lumoauth_api_client.models.tenant_profile import TenantProfile as TenantProfile
 from lumoauth_api_client.models.token_response import TokenResponse as TokenResponse
@@ -1055,7 +1178,9 @@ from lumoauth_api_client.models.unblock_user_response import UnblockUserResponse
 from lumoauth_api_client.models.update_authenticator_request import UpdateAuthenticatorRequest as UpdateAuthenticatorRequest
 from lumoauth_api_client.models.update_client_response import UpdateClientResponse as UpdateClientResponse
 from lumoauth_api_client.models.update_mfa_policy_response import UpdateMfaPolicyResponse as UpdateMfaPolicyResponse
+from lumoauth_api_client.models.update_user_groups_request import UpdateUserGroupsRequest as UpdateUserGroupsRequest
 from lumoauth_api_client.models.update_user_groups_response import UpdateUserGroupsResponse as UpdateUserGroupsResponse
+from lumoauth_api_client.models.update_user_request import UpdateUserRequest as UpdateUserRequest
 from lumoauth_api_client.models.update_user_response import UpdateUserResponse as UpdateUserResponse
 from lumoauth_api_client.models.update_user_roles_response import UpdateUserRolesResponse as UpdateUserRolesResponse
 from lumoauth_api_client.models.user import User as User
@@ -1070,6 +1195,7 @@ from lumoauth_api_client.models.verify_auth_token_response import VerifyAuthToke
 from lumoauth_api_client.models.verify_mfa_challenge_request import VerifyMfaChallengeRequest as VerifyMfaChallengeRequest
 from lumoauth_api_client.models.verify_resource_token_request import VerifyResourceTokenRequest as VerifyResourceTokenRequest
 from lumoauth_api_client.models.verify_resource_token_response import VerifyResourceTokenResponse as VerifyResourceTokenResponse
+from lumoauth_api_client.models.verify_stream_request import VerifyStreamRequest as VerifyStreamRequest
 from lumoauth_api_client.models.webhook import Webhook as Webhook
 from lumoauth_api_client.models.webhook_delivery import WebhookDelivery as WebhookDelivery
 from lumoauth_api_client.models.webhook_delivery_detail import WebhookDeliveryDetail as WebhookDeliveryDetail

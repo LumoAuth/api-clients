@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**admin_groups_get**](AdminGroupsApi.md#admin_groups_get) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Get a single group by ID or slug
 [**admin_groups_get_members**](AdminGroupsApi.md#admin_groups_get_members) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members
 [**admin_groups_groups_get_roles**](AdminGroupsApi.md#admin_groups_groups_get_roles) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles
-[**admin_groups_list**](AdminGroupsApi.md#admin_groups_list) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant
+[**admin_groups_list**](AdminGroupsApi.md#admin_groups_list) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the organization
 [**admin_groups_remove_member**](AdminGroupsApi.md#admin_groups_remove_member) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group
 [**admin_groups_remove_role**](AdminGroupsApi.md#admin_groups_remove_role) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group
 [**admin_groups_update_roles**](AdminGroupsApi.md#admin_groups_update_roles) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles)
@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 
 # **admin_groups_add_members**
-> AdminGroupsCreateResponse admin_groups_add_members(org_id, group_id)
+> AdminGroupsCreateResponse admin_groups_add_members(org_id, group_id, admin_groups_add_members_request)
 
 Add member(s) to group
 
@@ -31,6 +31,7 @@ Add member(s) to group
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_groups_add_members_request import AdminGroupsAddMembersRequest
 from lumoauth_api_client.models.admin_groups_create_response import AdminGroupsCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -63,10 +64,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminGroupsApi(api_client)
     org_id = 'org_id_example' # str | 
     group_id = 'group_id_example' # str | 
+    admin_groups_add_members_request = lumoauth_api_client.AdminGroupsAddMembersRequest() # AdminGroupsAddMembersRequest | 
 
     try:
         # Add member(s) to group
-        api_response = api_instance.admin_groups_add_members(org_id, group_id)
+        api_response = api_instance.admin_groups_add_members(org_id, group_id, admin_groups_add_members_request)
         print("The response of AdminGroupsApi->admin_groups_add_members:\n")
         pprint(api_response)
     except Exception as e:
@@ -82,6 +84,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **group_id** | **str**|  | 
+ **admin_groups_add_members_request** | [**AdminGroupsAddMembersRequest**](AdminGroupsAddMembersRequest.md)|  | 
 
 ### Return type
 
@@ -93,7 +96,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -105,11 +108,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_groups_add_role**
-> MessageResponse admin_groups_add_role(org_id, group_id)
+> MessageResponse admin_groups_add_role(org_id, group_id, admin_groups_add_role_request)
 
 Add a single role to a group
 
-A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 ### Example
 
@@ -118,6 +121,7 @@ A role can be given to a group only when it belongs to this organization and the
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_groups_add_role_request import AdminGroupsAddRoleRequest
 from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -150,10 +154,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminGroupsApi(api_client)
     org_id = 'org_id_example' # str | 
     group_id = 'group_id_example' # str | 
+    admin_groups_add_role_request = lumoauth_api_client.AdminGroupsAddRoleRequest() # AdminGroupsAddRoleRequest | 
 
     try:
         # Add a single role to a group
-        api_response = api_instance.admin_groups_add_role(org_id, group_id)
+        api_response = api_instance.admin_groups_add_role(org_id, group_id, admin_groups_add_role_request)
         print("The response of AdminGroupsApi->admin_groups_add_role:\n")
         pprint(api_response)
     except Exception as e:
@@ -169,6 +174,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **group_id** | **str**|  | 
+ **admin_groups_add_role_request** | [**AdminGroupsAddRoleRequest**](AdminGroupsAddRoleRequest.md)|  | 
 
 ### Return type
 
@@ -180,7 +186,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -192,11 +198,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_groups_create**
-> AdminGroupsCreateResponse admin_groups_create(org_id)
+> AdminGroupsCreateResponse admin_groups_create(org_id, admin_groups_create_request)
 
 Create a new group
 
-Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 ### Example
 
@@ -205,6 +211,7 @@ Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be 
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_groups_create_request import AdminGroupsCreateRequest
 from lumoauth_api_client.models.admin_groups_create_response import AdminGroupsCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -236,10 +243,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminGroupsApi(api_client)
     org_id = 'org_id_example' # str | 
+    admin_groups_create_request = lumoauth_api_client.AdminGroupsCreateRequest() # AdminGroupsCreateRequest | 
 
     try:
         # Create a new group
-        api_response = api_instance.admin_groups_create(org_id)
+        api_response = api_instance.admin_groups_create(org_id, admin_groups_create_request)
         print("The response of AdminGroupsApi->admin_groups_create:\n")
         pprint(api_response)
     except Exception as e:
@@ -254,6 +262,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **admin_groups_create_request** | [**AdminGroupsCreateRequest**](AdminGroupsCreateRequest.md)|  | 
 
 ### Return type
 
@@ -265,7 +274,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -619,7 +628,7 @@ Name | Type | Description  | Notes
 # **admin_groups_list**
 > AdminGroupsListResponse admin_groups_list(org_id)
 
-List all groups in the tenant
+List all groups in the organization
 
 ### Example
 
@@ -661,7 +670,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # List all groups in the tenant
+        # List all groups in the organization
         api_response = api_instance.admin_groups_list(org_id)
         print("The response of AdminGroupsApi->admin_groups_list:\n")
         pprint(api_response)
@@ -874,11 +883,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_groups_update_roles**
-> AdminGroupsCreateResponse admin_groups_update_roles(org_id, group_id)
+> AdminGroupsCreateResponse admin_groups_update_roles(org_id, group_id, admin_groups_update_roles_request)
 
 Update group roles (replaces all existing roles)
 
-`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
 ### Example
 
@@ -888,6 +897,7 @@ Update group roles (replaces all existing roles)
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.admin_groups_create_response import AdminGroupsCreateResponse
+from lumoauth_api_client.models.admin_groups_update_roles_request import AdminGroupsUpdateRolesRequest
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -919,10 +929,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminGroupsApi(api_client)
     org_id = 'org_id_example' # str | 
     group_id = 'group_id_example' # str | 
+    admin_groups_update_roles_request = lumoauth_api_client.AdminGroupsUpdateRolesRequest() # AdminGroupsUpdateRolesRequest | 
 
     try:
         # Update group roles (replaces all existing roles)
-        api_response = api_instance.admin_groups_update_roles(org_id, group_id)
+        api_response = api_instance.admin_groups_update_roles(org_id, group_id, admin_groups_update_roles_request)
         print("The response of AdminGroupsApi->admin_groups_update_roles:\n")
         pprint(api_response)
     except Exception as e:
@@ -938,6 +949,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **group_id** | **str**|  | 
+ **admin_groups_update_roles_request** | [**AdminGroupsUpdateRolesRequest**](AdminGroupsUpdateRolesRequest.md)|  | 
 
 ### Return type
 
@@ -949,7 +961,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -961,7 +973,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_groups_update**
-> AdminGroupsCreateResponse patch_admin_groups_update(org_id, group_id)
+> AdminGroupsCreateResponse patch_admin_groups_update(org_id, group_id, put_admin_groups_update_request)
 
 Update an existing group
 
@@ -973,6 +985,7 @@ Update an existing group
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.admin_groups_create_response import AdminGroupsCreateResponse
+from lumoauth_api_client.models.put_admin_groups_update_request import PutAdminGroupsUpdateRequest
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1004,10 +1017,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminGroupsApi(api_client)
     org_id = 'org_id_example' # str | 
     group_id = 'group_id_example' # str | 
+    put_admin_groups_update_request = lumoauth_api_client.PutAdminGroupsUpdateRequest() # PutAdminGroupsUpdateRequest | 
 
     try:
         # Update an existing group
-        api_response = api_instance.patch_admin_groups_update(org_id, group_id)
+        api_response = api_instance.patch_admin_groups_update(org_id, group_id, put_admin_groups_update_request)
         print("The response of AdminGroupsApi->patch_admin_groups_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1023,6 +1037,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **group_id** | **str**|  | 
+ **put_admin_groups_update_request** | [**PutAdminGroupsUpdateRequest**](PutAdminGroupsUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -1034,7 +1049,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1046,7 +1061,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_groups_update**
-> AdminGroupsCreateResponse put_admin_groups_update(org_id, group_id)
+> AdminGroupsCreateResponse put_admin_groups_update(org_id, group_id, put_admin_groups_update_request)
 
 Update an existing group
 
@@ -1058,6 +1073,7 @@ Update an existing group
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.admin_groups_create_response import AdminGroupsCreateResponse
+from lumoauth_api_client.models.put_admin_groups_update_request import PutAdminGroupsUpdateRequest
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1089,10 +1105,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminGroupsApi(api_client)
     org_id = 'org_id_example' # str | 
     group_id = 'group_id_example' # str | 
+    put_admin_groups_update_request = lumoauth_api_client.PutAdminGroupsUpdateRequest() # PutAdminGroupsUpdateRequest | 
 
     try:
         # Update an existing group
-        api_response = api_instance.put_admin_groups_update(org_id, group_id)
+        api_response = api_instance.put_admin_groups_update(org_id, group_id, put_admin_groups_update_request)
         print("The response of AdminGroupsApi->put_admin_groups_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1108,6 +1125,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **group_id** | **str**|  | 
+ **put_admin_groups_update_request** | [**PutAdminGroupsUpdateRequest**](PutAdminGroupsUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -1119,7 +1137,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

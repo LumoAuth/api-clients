@@ -4,15 +4,15 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**AdminSandboxDestroy**](AdminSandboxApi.md#adminsandboxdestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant |
-| [**AdminSandboxList**](AdminSandboxApi.md#adminsandboxlist) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox tenants |
-| [**AdminSandboxSpawn**](AdminSandboxApi.md#adminsandboxspawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant |
+| [**AdminSandboxDestroy**](AdminSandboxApi.md#adminsandboxdestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox organization |
+| [**AdminSandboxList**](AdminSandboxApi.md#adminsandboxlist) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox organizations |
+| [**AdminSandboxSpawn**](AdminSandboxApi.md#adminsandboxspawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox organization |
 
 <a id="adminsandboxdestroy"></a>
 # **AdminSandboxDestroy**
 > MessageResponse AdminSandboxDestroy (string orgId, string sandboxSlug)
 
-Destroy a sandbox tenant
+Destroy a sandbox organization
 
 ### Example
 ```csharp
@@ -47,7 +47,7 @@ namespace Example
 
             try
             {
-                // Destroy a sandbox tenant
+                // Destroy a sandbox organization
                 MessageResponse result = apiInstance.AdminSandboxDestroy(orgId, sandboxSlug);
                 Debug.WriteLine(result);
             }
@@ -68,7 +68,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Destroy a sandbox tenant
+    // Destroy a sandbox organization
     ApiResponse<MessageResponse> response = apiInstance.AdminSandboxDestroyWithHttpInfo(orgId, sandboxSlug);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
@@ -115,7 +115,7 @@ catch (ApiException e)
 # **AdminSandboxList**
 > AdminSandboxListResponse AdminSandboxList (string orgId)
 
-List the caller's sandbox tenants
+List the caller's sandbox organizations
 
 ### Example
 ```csharp
@@ -149,7 +149,7 @@ namespace Example
 
             try
             {
-                // List the caller's sandbox tenants
+                // List the caller's sandbox organizations
                 AdminSandboxListResponse result = apiInstance.AdminSandboxList(orgId);
                 Debug.WriteLine(result);
             }
@@ -170,7 +170,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List the caller's sandbox tenants
+    // List the caller's sandbox organizations
     ApiResponse<AdminSandboxListResponse> response = apiInstance.AdminSandboxListWithHttpInfo(orgId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
@@ -215,7 +215,7 @@ catch (ApiException e)
 # **AdminSandboxSpawn**
 > AdminSandboxSpawnResponse AdminSandboxSpawn (string orgId, AdminSandboxSpawnRequest? adminSandboxSpawnRequest = null)
 
-Spawn a sandbox tenant
+Spawn a sandbox organization
 
 Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
 
@@ -252,7 +252,7 @@ namespace Example
 
             try
             {
-                // Spawn a sandbox tenant
+                // Spawn a sandbox organization
                 AdminSandboxSpawnResponse result = apiInstance.AdminSandboxSpawn(orgId, adminSandboxSpawnRequest);
                 Debug.WriteLine(result);
             }
@@ -273,7 +273,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Spawn a sandbox tenant
+    // Spawn a sandbox organization
     ApiResponse<AdminSandboxSpawnResponse> response = apiInstance.AdminSandboxSpawnWithHttpInfo(orgId, adminSandboxSpawnRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);

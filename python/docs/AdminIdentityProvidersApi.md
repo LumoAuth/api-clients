@@ -184,7 +184,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_social_providers_create**
-> AdminSocialProvidersCreateResponse admin_social_providers_create(org_id)
+> AdminSocialProvidersCreateResponse admin_social_providers_create(org_id, admin_social_providers_create_request)
 
 Create a social login provider
 
@@ -195,6 +195,7 @@ Create a social login provider
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_social_providers_create_request import AdminSocialProvidersCreateRequest
 from lumoauth_api_client.models.admin_social_providers_create_response import AdminSocialProvidersCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -226,10 +227,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminIdentityProvidersApi(api_client)
     org_id = 'org_id_example' # str | 
+    admin_social_providers_create_request = lumoauth_api_client.AdminSocialProvidersCreateRequest() # AdminSocialProvidersCreateRequest | An unknown field is refused with 400.
 
     try:
         # Create a social login provider
-        api_response = api_instance.admin_social_providers_create(org_id)
+        api_response = api_instance.admin_social_providers_create(org_id, admin_social_providers_create_request)
         print("The response of AdminIdentityProvidersApi->admin_social_providers_create:\n")
         pprint(api_response)
     except Exception as e:
@@ -244,6 +246,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **admin_social_providers_create_request** | [**AdminSocialProvidersCreateRequest**](AdminSocialProvidersCreateRequest.md)| An unknown field is refused with 400. | 
 
 ### Return type
 
@@ -255,7 +258,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -778,7 +781,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_social_providers_update**
-> AdminSocialProvidersCreateResponse patch_admin_social_providers_update(org_id, provider_id)
+> AdminSocialProvidersCreateResponse patch_admin_social_providers_update(org_id, provider_id, put_admin_social_providers_update_request)
 
 Update a social login provider
 
@@ -790,6 +793,7 @@ Update a social login provider
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.admin_social_providers_create_response import AdminSocialProvidersCreateResponse
+from lumoauth_api_client.models.put_admin_social_providers_update_request import PutAdminSocialProvidersUpdateRequest
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -821,10 +825,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminIdentityProvidersApi(api_client)
     org_id = 'org_id_example' # str | 
     provider_id = 'provider_id_example' # str | 
+    put_admin_social_providers_update_request = lumoauth_api_client.PutAdminSocialProvidersUpdateRequest() # PutAdminSocialProvidersUpdateRequest | Only the fields that are sent change. An unknown field is refused with 400.
 
     try:
         # Update a social login provider
-        api_response = api_instance.patch_admin_social_providers_update(org_id, provider_id)
+        api_response = api_instance.patch_admin_social_providers_update(org_id, provider_id, put_admin_social_providers_update_request)
         print("The response of AdminIdentityProvidersApi->patch_admin_social_providers_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -840,6 +845,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **provider_id** | **str**|  | 
+ **put_admin_social_providers_update_request** | [**PutAdminSocialProvidersUpdateRequest**](PutAdminSocialProvidersUpdateRequest.md)| Only the fields that are sent change. An unknown field is refused with 400. | 
 
 ### Return type
 
@@ -851,7 +857,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -864,7 +870,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_social_providers_update**
-> AdminSocialProvidersCreateResponse put_admin_social_providers_update(org_id, provider_id)
+> AdminSocialProvidersCreateResponse put_admin_social_providers_update(org_id, provider_id, put_admin_social_providers_update_request)
 
 Create or replace a social login provider
 
@@ -876,6 +882,7 @@ Create or replace a social login provider
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.admin_social_providers_create_response import AdminSocialProvidersCreateResponse
+from lumoauth_api_client.models.put_admin_social_providers_update_request import PutAdminSocialProvidersUpdateRequest
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -907,10 +914,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminIdentityProvidersApi(api_client)
     org_id = 'org_id_example' # str | 
     provider_id = 'provider_id_example' # str | 
+    put_admin_social_providers_update_request = lumoauth_api_client.PutAdminSocialProvidersUpdateRequest() # PutAdminSocialProvidersUpdateRequest | Only the fields that are sent change. An unknown field is refused with 400.
 
     try:
         # Create or replace a social login provider
-        api_response = api_instance.put_admin_social_providers_update(org_id, provider_id)
+        api_response = api_instance.put_admin_social_providers_update(org_id, provider_id, put_admin_social_providers_update_request)
         print("The response of AdminIdentityProvidersApi->put_admin_social_providers_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -926,6 +934,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **provider_id** | **str**|  | 
+ **put_admin_social_providers_update_request** | [**PutAdminSocialProvidersUpdateRequest**](PutAdminSocialProvidersUpdateRequest.md)| Only the fields that are sent change. An unknown field is refused with 400. | 
 
 ### Return type
 
@@ -937,7 +946,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

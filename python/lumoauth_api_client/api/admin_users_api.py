@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -20,11 +20,15 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
+from lumoauth_api_client.models.add_user_group_request import AddUserGroupRequest
 from lumoauth_api_client.models.add_user_group_response import AddUserGroupResponse
+from lumoauth_api_client.models.add_user_permission_request import AddUserPermissionRequest
 from lumoauth_api_client.models.add_user_permission_response import AddUserPermissionResponse
+from lumoauth_api_client.models.add_user_role_request import AddUserRoleRequest
 from lumoauth_api_client.models.add_user_role_response import AddUserRoleResponse
 from lumoauth_api_client.models.admin_agents_get_response import AdminAgentsGetResponse
 from lumoauth_api_client.models.admin_groups_groups_get_roles_response import AdminGroupsGroupsGetRolesResponse
+from lumoauth_api_client.models.admin_groups_update_roles_request import AdminGroupsUpdateRolesRequest
 from lumoauth_api_client.models.admin_identities_legacy_saml_relink_request import AdminIdentitiesLegacySamlRelinkRequest
 from lumoauth_api_client.models.admin_identities_legacy_saml_relink_response import AdminIdentitiesLegacySamlRelinkResponse
 from lumoauth_api_client.models.admin_identities_legacy_saml_report_response import AdminIdentitiesLegacySamlReportResponse
@@ -33,6 +37,7 @@ from lumoauth_api_client.models.admin_identities_list_response import AdminIdent
 from lumoauth_api_client.models.admin_roles_get_permissions_response import AdminRolesGetPermissionsResponse
 from lumoauth_api_client.models.admin_users_restore_response import AdminUsersRestoreResponse
 from lumoauth_api_client.models.block_user_response import BlockUserResponse
+from lumoauth_api_client.models.create_user_request import CreateUserRequest
 from lumoauth_api_client.models.create_user_response import CreateUserResponse
 from lumoauth_api_client.models.delete_user_response import DeleteUserResponse
 from lumoauth_api_client.models.get_user_response import GetUserResponse
@@ -42,10 +47,13 @@ from lumoauth_api_client.models.remove_user_group_response import RemoveUserGrou
 from lumoauth_api_client.models.remove_user_permission_response import RemoveUserPermissionResponse
 from lumoauth_api_client.models.remove_user_role_response import RemoveUserRoleResponse
 from lumoauth_api_client.models.send_user_verification_email_response import SendUserVerificationEmailResponse
+from lumoauth_api_client.models.set_user_password_post_request import SetUserPasswordPostRequest
 from lumoauth_api_client.models.set_user_password_post_response import SetUserPasswordPostResponse
 from lumoauth_api_client.models.trigger_user_password_reset_response import TriggerUserPasswordResetResponse
 from lumoauth_api_client.models.unblock_user_response import UnblockUserResponse
+from lumoauth_api_client.models.update_user_groups_request import UpdateUserGroupsRequest
 from lumoauth_api_client.models.update_user_groups_response import UpdateUserGroupsResponse
+from lumoauth_api_client.models.update_user_request import UpdateUserRequest
 from lumoauth_api_client.models.update_user_response import UpdateUserResponse
 from lumoauth_api_client.models.update_user_roles_response import UpdateUserRolesResponse
 
@@ -72,6 +80,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        add_user_group_request: AddUserGroupRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -92,6 +101,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param add_user_group_request: (required)
+        :type add_user_group_request: AddUserGroupRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -117,6 +128,7 @@ class AdminUsersApi:
         _param = self._add_user_group_serialize(
             org_id=org_id,
             user_id=user_id,
+            add_user_group_request=add_user_group_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -142,6 +154,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        add_user_group_request: AddUserGroupRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -162,6 +175,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param add_user_group_request: (required)
+        :type add_user_group_request: AddUserGroupRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -187,6 +202,7 @@ class AdminUsersApi:
         _param = self._add_user_group_serialize(
             org_id=org_id,
             user_id=user_id,
+            add_user_group_request=add_user_group_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -212,6 +228,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        add_user_group_request: AddUserGroupRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -232,6 +249,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param add_user_group_request: (required)
+        :type add_user_group_request: AddUserGroupRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -257,6 +276,7 @@ class AdminUsersApi:
         _param = self._add_user_group_serialize(
             org_id=org_id,
             user_id=user_id,
+            add_user_group_request=add_user_group_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -277,6 +297,7 @@ class AdminUsersApi:
         self,
         org_id,
         user_id,
+        add_user_group_request,
         _request_auth,
         _content_type,
         _headers,
@@ -306,6 +327,8 @@ class AdminUsersApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if add_user_group_request is not None:
+            _body_params = add_user_group_request
 
 
         # set the HTTP header `Accept`
@@ -316,6 +339,19 @@ class AdminUsersApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -346,6 +382,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        add_user_permission_request: AddUserPermissionRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -361,12 +398,14 @@ class AdminUsersApi:
     ) -> AddUserPermissionResponse:
         """Assign a permission to a user
 
-        Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+        Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization's own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
         :param org_id: (required)
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param add_user_permission_request: (required)
+        :type add_user_permission_request: AddUserPermissionRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -392,6 +431,7 @@ class AdminUsersApi:
         _param = self._add_user_permission_serialize(
             org_id=org_id,
             user_id=user_id,
+            add_user_permission_request=add_user_permission_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -417,6 +457,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        add_user_permission_request: AddUserPermissionRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -432,12 +473,14 @@ class AdminUsersApi:
     ) -> ApiResponse[AddUserPermissionResponse]:
         """Assign a permission to a user
 
-        Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+        Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization's own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
         :param org_id: (required)
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param add_user_permission_request: (required)
+        :type add_user_permission_request: AddUserPermissionRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -463,6 +506,7 @@ class AdminUsersApi:
         _param = self._add_user_permission_serialize(
             org_id=org_id,
             user_id=user_id,
+            add_user_permission_request=add_user_permission_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -488,6 +532,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        add_user_permission_request: AddUserPermissionRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -503,12 +548,14 @@ class AdminUsersApi:
     ) -> RESTResponseType:
         """Assign a permission to a user
 
-        Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+        Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization's own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
         :param org_id: (required)
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param add_user_permission_request: (required)
+        :type add_user_permission_request: AddUserPermissionRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -534,6 +581,7 @@ class AdminUsersApi:
         _param = self._add_user_permission_serialize(
             org_id=org_id,
             user_id=user_id,
+            add_user_permission_request=add_user_permission_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -554,6 +602,7 @@ class AdminUsersApi:
         self,
         org_id,
         user_id,
+        add_user_permission_request,
         _request_auth,
         _content_type,
         _headers,
@@ -583,6 +632,8 @@ class AdminUsersApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if add_user_permission_request is not None:
+            _body_params = add_user_permission_request
 
 
         # set the HTTP header `Accept`
@@ -593,6 +644,19 @@ class AdminUsersApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -623,6 +687,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        add_user_role_request: AddUserRoleRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -643,6 +708,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param add_user_role_request: (required)
+        :type add_user_role_request: AddUserRoleRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -668,6 +735,7 @@ class AdminUsersApi:
         _param = self._add_user_role_serialize(
             org_id=org_id,
             user_id=user_id,
+            add_user_role_request=add_user_role_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -693,6 +761,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        add_user_role_request: AddUserRoleRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -713,6 +782,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param add_user_role_request: (required)
+        :type add_user_role_request: AddUserRoleRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -738,6 +809,7 @@ class AdminUsersApi:
         _param = self._add_user_role_serialize(
             org_id=org_id,
             user_id=user_id,
+            add_user_role_request=add_user_role_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -763,6 +835,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        add_user_role_request: AddUserRoleRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -783,6 +856,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param add_user_role_request: (required)
+        :type add_user_role_request: AddUserRoleRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -808,6 +883,7 @@ class AdminUsersApi:
         _param = self._add_user_role_serialize(
             org_id=org_id,
             user_id=user_id,
+            add_user_role_request=add_user_role_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -828,6 +904,7 @@ class AdminUsersApi:
         self,
         org_id,
         user_id,
+        add_user_role_request,
         _request_auth,
         _content_type,
         _headers,
@@ -857,6 +934,8 @@ class AdminUsersApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if add_user_role_request is not None:
+            _body_params = add_user_role_request
 
 
         # set the HTTP header `Accept`
@@ -867,6 +946,19 @@ class AdminUsersApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2935,6 +3027,7 @@ class AdminUsersApi:
     def create_user(
         self,
         org_id: StrictStr,
+        create_user_request: CreateUserRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2953,6 +3046,8 @@ class AdminUsersApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param create_user_request: (required)
+        :type create_user_request: CreateUserRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2977,6 +3072,7 @@ class AdminUsersApi:
 
         _param = self._create_user_serialize(
             org_id=org_id,
+            create_user_request=create_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3002,6 +3098,7 @@ class AdminUsersApi:
     def create_user_with_http_info(
         self,
         org_id: StrictStr,
+        create_user_request: CreateUserRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3020,6 +3117,8 @@ class AdminUsersApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param create_user_request: (required)
+        :type create_user_request: CreateUserRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3044,6 +3143,7 @@ class AdminUsersApi:
 
         _param = self._create_user_serialize(
             org_id=org_id,
+            create_user_request=create_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3069,6 +3169,7 @@ class AdminUsersApi:
     def create_user_without_preload_content(
         self,
         org_id: StrictStr,
+        create_user_request: CreateUserRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3087,6 +3188,8 @@ class AdminUsersApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param create_user_request: (required)
+        :type create_user_request: CreateUserRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3111,6 +3214,7 @@ class AdminUsersApi:
 
         _param = self._create_user_serialize(
             org_id=org_id,
+            create_user_request=create_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3131,6 +3235,7 @@ class AdminUsersApi:
     def _create_user_serialize(
         self,
         org_id,
+        create_user_request,
         _request_auth,
         _content_type,
         _headers,
@@ -3158,6 +3263,8 @@ class AdminUsersApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if create_user_request is not None:
+            _body_params = create_user_request
 
 
         # set the HTTP header `Accept`
@@ -3168,6 +3275,19 @@ class AdminUsersApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -5305,6 +5425,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        update_user_request: Annotated[UpdateUserRequest, Field(description="Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5326,6 +5447,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param update_user_request: Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
+        :type update_user_request: UpdateUserRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5351,6 +5474,7 @@ class AdminUsersApi:
         _param = self._patch_user_serialize(
             org_id=org_id,
             user_id=user_id,
+            update_user_request=update_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5379,6 +5503,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        update_user_request: Annotated[UpdateUserRequest, Field(description="Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5400,6 +5525,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param update_user_request: Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
+        :type update_user_request: UpdateUserRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5425,6 +5552,7 @@ class AdminUsersApi:
         _param = self._patch_user_serialize(
             org_id=org_id,
             user_id=user_id,
+            update_user_request=update_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5453,6 +5581,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        update_user_request: Annotated[UpdateUserRequest, Field(description="Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5474,6 +5603,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param update_user_request: Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
+        :type update_user_request: UpdateUserRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5499,6 +5630,7 @@ class AdminUsersApi:
         _param = self._patch_user_serialize(
             org_id=org_id,
             user_id=user_id,
+            update_user_request=update_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5522,6 +5654,7 @@ class AdminUsersApi:
         self,
         org_id,
         user_id,
+        update_user_request,
         _request_auth,
         _content_type,
         _headers,
@@ -5551,6 +5684,8 @@ class AdminUsersApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if update_user_request is not None:
+            _body_params = update_user_request
 
 
         # set the HTTP header `Accept`
@@ -5561,6 +5696,19 @@ class AdminUsersApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -7005,6 +7153,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        set_user_password_post_request: SetUserPasswordPostRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7026,6 +7175,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param set_user_password_post_request: (required)
+        :type set_user_password_post_request: SetUserPasswordPostRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7051,6 +7202,7 @@ class AdminUsersApi:
         _param = self._set_user_password_serialize(
             org_id=org_id,
             user_id=user_id,
+            set_user_password_post_request=set_user_password_post_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7078,6 +7230,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        set_user_password_post_request: SetUserPasswordPostRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7099,6 +7252,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param set_user_password_post_request: (required)
+        :type set_user_password_post_request: SetUserPasswordPostRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7124,6 +7279,7 @@ class AdminUsersApi:
         _param = self._set_user_password_serialize(
             org_id=org_id,
             user_id=user_id,
+            set_user_password_post_request=set_user_password_post_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7151,6 +7307,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        set_user_password_post_request: SetUserPasswordPostRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7172,6 +7329,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param set_user_password_post_request: (required)
+        :type set_user_password_post_request: SetUserPasswordPostRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7197,6 +7356,7 @@ class AdminUsersApi:
         _param = self._set_user_password_serialize(
             org_id=org_id,
             user_id=user_id,
+            set_user_password_post_request=set_user_password_post_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7219,6 +7379,7 @@ class AdminUsersApi:
         self,
         org_id,
         user_id,
+        set_user_password_post_request,
         _request_auth,
         _content_type,
         _headers,
@@ -7248,6 +7409,8 @@ class AdminUsersApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if set_user_password_post_request is not None:
+            _body_params = set_user_password_post_request
 
 
         # set the HTTP header `Accept`
@@ -7258,6 +7421,19 @@ class AdminUsersApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -7288,6 +7464,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        set_user_password_post_request: SetUserPasswordPostRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7309,6 +7486,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param set_user_password_post_request: (required)
+        :type set_user_password_post_request: SetUserPasswordPostRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7334,6 +7513,7 @@ class AdminUsersApi:
         _param = self._set_user_password_post_serialize(
             org_id=org_id,
             user_id=user_id,
+            set_user_password_post_request=set_user_password_post_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7361,6 +7541,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        set_user_password_post_request: SetUserPasswordPostRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7382,6 +7563,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param set_user_password_post_request: (required)
+        :type set_user_password_post_request: SetUserPasswordPostRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7407,6 +7590,7 @@ class AdminUsersApi:
         _param = self._set_user_password_post_serialize(
             org_id=org_id,
             user_id=user_id,
+            set_user_password_post_request=set_user_password_post_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7434,6 +7618,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        set_user_password_post_request: SetUserPasswordPostRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7455,6 +7640,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param set_user_password_post_request: (required)
+        :type set_user_password_post_request: SetUserPasswordPostRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7480,6 +7667,7 @@ class AdminUsersApi:
         _param = self._set_user_password_post_serialize(
             org_id=org_id,
             user_id=user_id,
+            set_user_password_post_request=set_user_password_post_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7502,6 +7690,7 @@ class AdminUsersApi:
         self,
         org_id,
         user_id,
+        set_user_password_post_request,
         _request_auth,
         _content_type,
         _headers,
@@ -7531,6 +7720,8 @@ class AdminUsersApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if set_user_password_post_request is not None:
+            _body_params = set_user_password_post_request
 
 
         # set the HTTP header `Accept`
@@ -7541,6 +7732,19 @@ class AdminUsersApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -8119,6 +8323,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        update_user_request: Annotated[UpdateUserRequest, Field(description="Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8140,6 +8345,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param update_user_request: Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
+        :type update_user_request: UpdateUserRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8165,6 +8372,7 @@ class AdminUsersApi:
         _param = self._update_user_serialize(
             org_id=org_id,
             user_id=user_id,
+            update_user_request=update_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8193,6 +8401,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        update_user_request: Annotated[UpdateUserRequest, Field(description="Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8214,6 +8423,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param update_user_request: Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
+        :type update_user_request: UpdateUserRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8239,6 +8450,7 @@ class AdminUsersApi:
         _param = self._update_user_serialize(
             org_id=org_id,
             user_id=user_id,
+            update_user_request=update_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8267,6 +8479,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        update_user_request: Annotated[UpdateUserRequest, Field(description="Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8288,6 +8501,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param update_user_request: Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
+        :type update_user_request: UpdateUserRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8313,6 +8528,7 @@ class AdminUsersApi:
         _param = self._update_user_serialize(
             org_id=org_id,
             user_id=user_id,
+            update_user_request=update_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8336,6 +8552,7 @@ class AdminUsersApi:
         self,
         org_id,
         user_id,
+        update_user_request,
         _request_auth,
         _content_type,
         _headers,
@@ -8365,6 +8582,8 @@ class AdminUsersApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if update_user_request is not None:
+            _body_params = update_user_request
 
 
         # set the HTTP header `Accept`
@@ -8375,6 +8594,19 @@ class AdminUsersApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -8405,6 +8637,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        update_user_groups_request: UpdateUserGroupsRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8425,6 +8658,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param update_user_groups_request: (required)
+        :type update_user_groups_request: UpdateUserGroupsRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8450,6 +8685,7 @@ class AdminUsersApi:
         _param = self._update_user_groups_serialize(
             org_id=org_id,
             user_id=user_id,
+            update_user_groups_request=update_user_groups_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8475,6 +8711,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        update_user_groups_request: UpdateUserGroupsRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8495,6 +8732,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param update_user_groups_request: (required)
+        :type update_user_groups_request: UpdateUserGroupsRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8520,6 +8759,7 @@ class AdminUsersApi:
         _param = self._update_user_groups_serialize(
             org_id=org_id,
             user_id=user_id,
+            update_user_groups_request=update_user_groups_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8545,6 +8785,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        update_user_groups_request: UpdateUserGroupsRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8565,6 +8806,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param update_user_groups_request: (required)
+        :type update_user_groups_request: UpdateUserGroupsRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8590,6 +8833,7 @@ class AdminUsersApi:
         _param = self._update_user_groups_serialize(
             org_id=org_id,
             user_id=user_id,
+            update_user_groups_request=update_user_groups_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8610,6 +8854,7 @@ class AdminUsersApi:
         self,
         org_id,
         user_id,
+        update_user_groups_request,
         _request_auth,
         _content_type,
         _headers,
@@ -8639,6 +8884,8 @@ class AdminUsersApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if update_user_groups_request is not None:
+            _body_params = update_user_groups_request
 
 
         # set the HTTP header `Accept`
@@ -8649,6 +8896,19 @@ class AdminUsersApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -8679,6 +8939,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        admin_groups_update_roles_request: AdminGroupsUpdateRolesRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8699,6 +8960,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param admin_groups_update_roles_request: (required)
+        :type admin_groups_update_roles_request: AdminGroupsUpdateRolesRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8724,6 +8987,7 @@ class AdminUsersApi:
         _param = self._update_user_roles_serialize(
             org_id=org_id,
             user_id=user_id,
+            admin_groups_update_roles_request=admin_groups_update_roles_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8749,6 +9013,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        admin_groups_update_roles_request: AdminGroupsUpdateRolesRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8769,6 +9034,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param admin_groups_update_roles_request: (required)
+        :type admin_groups_update_roles_request: AdminGroupsUpdateRolesRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8794,6 +9061,7 @@ class AdminUsersApi:
         _param = self._update_user_roles_serialize(
             org_id=org_id,
             user_id=user_id,
+            admin_groups_update_roles_request=admin_groups_update_roles_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8819,6 +9087,7 @@ class AdminUsersApi:
         self,
         org_id: StrictStr,
         user_id: StrictStr,
+        admin_groups_update_roles_request: AdminGroupsUpdateRolesRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8839,6 +9108,8 @@ class AdminUsersApi:
         :type org_id: str
         :param user_id: (required)
         :type user_id: str
+        :param admin_groups_update_roles_request: (required)
+        :type admin_groups_update_roles_request: AdminGroupsUpdateRolesRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8864,6 +9135,7 @@ class AdminUsersApi:
         _param = self._update_user_roles_serialize(
             org_id=org_id,
             user_id=user_id,
+            admin_groups_update_roles_request=admin_groups_update_roles_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8884,6 +9156,7 @@ class AdminUsersApi:
         self,
         org_id,
         user_id,
+        admin_groups_update_roles_request,
         _request_auth,
         _content_type,
         _headers,
@@ -8913,6 +9186,8 @@ class AdminUsersApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_groups_update_roles_request is not None:
+            _body_params = admin_groups_update_roles_request
 
 
         # set the HTTP header `Accept`
@@ -8923,6 +9198,19 @@ class AdminUsersApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

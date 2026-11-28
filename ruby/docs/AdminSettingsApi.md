@@ -7,7 +7,10 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**admin_analytics_dashboard**](AdminSettingsApi.md#admin_analytics_dashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics |
 | [**admin_analytics_logins**](AdminSettingsApi.md#admin_analytics_logins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics |
 | [**admin_analytics_users**](AdminSettingsApi.md#admin_analytics_users) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics |
-| [**admin_organization_get**](AdminSettingsApi.md#admin_organization_get) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile |
+| [**admin_initial_access_tokens_create**](AdminSettingsApi.md#admin_initial_access_tokens_create) | **POST** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | Create an initial access token for dynamic client registration |
+| [**admin_initial_access_tokens_delete**](AdminSettingsApi.md#admin_initial_access_tokens_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId} | Delete an initial access token of dynamic client registration |
+| [**admin_initial_access_tokens_list**](AdminSettingsApi.md#admin_initial_access_tokens_list) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | List the initial access tokens of dynamic client registration |
+| [**admin_organization_get**](AdminSettingsApi.md#admin_organization_get) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization profile |
 | [**admin_settings_all**](AdminSettingsApi.md#admin_settings_all) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined) |
 | [**admin_settings_auth_get**](AdminSettingsApi.md#admin_settings_auth_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings |
 | [**admin_settings_authentication_get**](AdminSettingsApi.md#admin_settings_authentication_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth) |
@@ -16,8 +19,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**admin_settings_general_get**](AdminSettingsApi.md#admin_settings_general_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings |
 | [**admin_settings_scim_get**](AdminSettingsApi.md#admin_settings_scim_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings |
 | [**admin_settings_security_get**](AdminSettingsApi.md#admin_settings_security_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings |
-| [**admin_tenant_get**](AdminSettingsApi.md#admin_tenant_get) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile |
-| [**patch_admin_organization_update**](AdminSettingsApi.md#patch_admin_organization_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings |
+| [**admin_tenant_get**](AdminSettingsApi.md#admin_tenant_get) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization profile |
+| [**patch_admin_organization_update**](AdminSettingsApi.md#patch_admin_organization_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update the organization&#39;s name and settings |
 | [**patch_admin_settings_auth_update**](AdminSettingsApi.md#patch_admin_settings_auth_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings |
 | [**patch_admin_settings_authentication_update**](AdminSettingsApi.md#patch_admin_settings_authentication_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth) |
 | [**patch_admin_settings_branding_update**](AdminSettingsApi.md#patch_admin_settings_branding_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings |
@@ -25,8 +28,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**patch_admin_settings_general_update**](AdminSettingsApi.md#patch_admin_settings_general_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings |
 | [**patch_admin_settings_scim_update**](AdminSettingsApi.md#patch_admin_settings_scim_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings |
 | [**patch_admin_settings_security_update**](AdminSettingsApi.md#patch_admin_settings_security_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings |
-| [**patch_admin_tenant_update**](AdminSettingsApi.md#patch_admin_tenant_update) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings |
-| [**put_admin_organization_update**](AdminSettingsApi.md#put_admin_organization_update) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings |
+| [**patch_admin_tenant_update**](AdminSettingsApi.md#patch_admin_tenant_update) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update the organization&#39;s name and settings |
+| [**put_admin_organization_update**](AdminSettingsApi.md#put_admin_organization_update) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update the organization&#39;s name and settings |
 | [**put_admin_settings_auth_update**](AdminSettingsApi.md#put_admin_settings_auth_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings |
 | [**put_admin_settings_authentication_update**](AdminSettingsApi.md#put_admin_settings_authentication_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth) |
 | [**put_admin_settings_branding_update**](AdminSettingsApi.md#put_admin_settings_branding_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings |
@@ -34,7 +37,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**put_admin_settings_general_update**](AdminSettingsApi.md#put_admin_settings_general_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings |
 | [**put_admin_settings_scim_update**](AdminSettingsApi.md#put_admin_settings_scim_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings |
 | [**put_admin_settings_security_update**](AdminSettingsApi.md#put_admin_settings_security_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings |
-| [**put_admin_tenant_update**](AdminSettingsApi.md#put_admin_tenant_update) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings |
+| [**put_admin_tenant_update**](AdminSettingsApi.md#put_admin_tenant_update) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update the organization&#39;s name and settings |
 
 
 ## admin_analytics_dashboard
@@ -261,11 +264,13 @@ end
 - **Accept**: application/json
 
 
-## admin_organization_get
+## admin_initial_access_tokens_create
 
-> <AdminTenantGetResponse> admin_organization_get(org_id)
+> <AdminInitialAccessTokensCreateResponse> admin_initial_access_tokens_create(org_id)
 
-Get organization (tenant) profile
+Create an initial access token for dynamic client registration
+
+Generates a token and adds it to the organization's list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
 
 ### Examples
 
@@ -287,7 +292,229 @@ api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # Get organization (tenant) profile
+  # Create an initial access token for dynamic client registration
+  result = api_instance.admin_initial_access_tokens_create(org_id)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminSettingsApi->admin_initial_access_tokens_create: #{e}"
+end
+```
+
+#### Using the admin_initial_access_tokens_create_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AdminInitialAccessTokensCreateResponse>, Integer, Hash)> admin_initial_access_tokens_create_with_http_info(org_id)
+
+```ruby
+begin
+  # Create an initial access token for dynamic client registration
+  data, status_code, headers = api_instance.admin_initial_access_tokens_create_with_http_info(org_id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AdminInitialAccessTokensCreateResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminSettingsApi->admin_initial_access_tokens_create_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+
+### Return type
+
+[**AdminInitialAccessTokensCreateResponse**](AdminInitialAccessTokensCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## admin_initial_access_tokens_delete
+
+> <MessageResponse> admin_initial_access_tokens_delete(org_id, token_id)
+
+Delete an initial access token of dynamic client registration
+
+The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminSettingsApi.new
+org_id = 'org_id_example' # String | 
+token_id = 'token_id_example' # String | 
+
+begin
+  # Delete an initial access token of dynamic client registration
+  result = api_instance.admin_initial_access_tokens_delete(org_id, token_id)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminSettingsApi->admin_initial_access_tokens_delete: #{e}"
+end
+```
+
+#### Using the admin_initial_access_tokens_delete_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<MessageResponse>, Integer, Hash)> admin_initial_access_tokens_delete_with_http_info(org_id, token_id)
+
+```ruby
+begin
+  # Delete an initial access token of dynamic client registration
+  data, status_code, headers = api_instance.admin_initial_access_tokens_delete_with_http_info(org_id, token_id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <MessageResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminSettingsApi->admin_initial_access_tokens_delete_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **token_id** | **String** |  |  |
+
+### Return type
+
+[**MessageResponse**](MessageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## admin_initial_access_tokens_list
+
+> <AdminInitialAccessTokensListResponse> admin_initial_access_tokens_list(org_id)
+
+List the initial access tokens of dynamic client registration
+
+Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminSettingsApi.new
+org_id = 'org_id_example' # String | 
+
+begin
+  # List the initial access tokens of dynamic client registration
+  result = api_instance.admin_initial_access_tokens_list(org_id)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminSettingsApi->admin_initial_access_tokens_list: #{e}"
+end
+```
+
+#### Using the admin_initial_access_tokens_list_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AdminInitialAccessTokensListResponse>, Integer, Hash)> admin_initial_access_tokens_list_with_http_info(org_id)
+
+```ruby
+begin
+  # List the initial access tokens of dynamic client registration
+  data, status_code, headers = api_instance.admin_initial_access_tokens_list_with_http_info(org_id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AdminInitialAccessTokensListResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminSettingsApi->admin_initial_access_tokens_list_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+
+### Return type
+
+[**AdminInitialAccessTokensListResponse**](AdminInitialAccessTokensListResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## admin_organization_get
+
+> <AdminTenantGetResponse> admin_organization_get(org_id)
+
+Get organization profile
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminSettingsApi.new
+org_id = 'org_id_example' # String | 
+
+begin
+  # Get organization profile
   result = api_instance.admin_organization_get(org_id)
   p result
 rescue LumoAuthApiClient::ApiError => e
@@ -303,7 +530,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # Get organization (tenant) profile
+  # Get organization profile
   data, status_code, headers = api_instance.admin_organization_get_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
@@ -917,7 +1144,7 @@ end
 
 > <AdminTenantGetResponse> admin_tenant_get(org_id)
 
-Get organization (tenant) profile
+Get organization profile
 
 ### Examples
 
@@ -939,7 +1166,7 @@ api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # Get organization (tenant) profile
+  # Get organization profile
   result = api_instance.admin_tenant_get(org_id)
   p result
 rescue LumoAuthApiClient::ApiError => e
@@ -955,7 +1182,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # Get organization (tenant) profile
+  # Get organization profile
   data, status_code, headers = api_instance.admin_tenant_get_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
@@ -987,9 +1214,9 @@ end
 
 ## patch_admin_organization_update
 
-> <PutAdminTenantUpdateResponse> patch_admin_organization_update(org_id)
+> <PutAdminTenantUpdateResponse> patch_admin_organization_update(org_id, put_admin_tenant_update_request)
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Examples
 
@@ -1009,10 +1236,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+put_admin_tenant_update_request = LumoAuthApiClient::PutAdminTenantUpdateRequest.new # PutAdminTenantUpdateRequest | 
 
 begin
-  # Update organization (tenant) name and settings
-  result = api_instance.patch_admin_organization_update(org_id)
+  # Update the organization's name and settings
+  result = api_instance.patch_admin_organization_update(org_id, put_admin_tenant_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->patch_admin_organization_update: #{e}"
@@ -1023,12 +1251,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminTenantUpdateResponse>, Integer, Hash)> patch_admin_organization_update_with_http_info(org_id)
+> <Array(<PutAdminTenantUpdateResponse>, Integer, Hash)> patch_admin_organization_update_with_http_info(org_id, put_admin_tenant_update_request)
 
 ```ruby
 begin
-  # Update organization (tenant) name and settings
-  data, status_code, headers = api_instance.patch_admin_organization_update_with_http_info(org_id)
+  # Update the organization's name and settings
+  data, status_code, headers = api_instance.patch_admin_organization_update_with_http_info(org_id, put_admin_tenant_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminTenantUpdateResponse>
@@ -1042,6 +1270,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **put_admin_tenant_update_request** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1053,15 +1282,17 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## patch_admin_settings_auth_update
 
-> <PutAdminSettingsAuthenticationUpdateResponse> patch_admin_settings_auth_update(org_id)
+> <PutAdminSettingsAuthenticationUpdateResponse> patch_admin_settings_auth_update(org_id, authentication_settings)
 
 Update authentication settings
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Examples
 
@@ -1081,10 +1312,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+authentication_settings = LumoAuthApiClient::AuthenticationSettings.new # AuthenticationSettings | 
 
 begin
   # Update authentication settings
-  result = api_instance.patch_admin_settings_auth_update(org_id)
+  result = api_instance.patch_admin_settings_auth_update(org_id, authentication_settings)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->patch_admin_settings_auth_update: #{e}"
@@ -1095,12 +1327,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminSettingsAuthenticationUpdateResponse>, Integer, Hash)> patch_admin_settings_auth_update_with_http_info(org_id)
+> <Array(<PutAdminSettingsAuthenticationUpdateResponse>, Integer, Hash)> patch_admin_settings_auth_update_with_http_info(org_id, authentication_settings)
 
 ```ruby
 begin
   # Update authentication settings
-  data, status_code, headers = api_instance.patch_admin_settings_auth_update_with_http_info(org_id)
+  data, status_code, headers = api_instance.patch_admin_settings_auth_update_with_http_info(org_id, authentication_settings)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminSettingsAuthenticationUpdateResponse>
@@ -1114,6 +1346,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **authentication_settings** | [**AuthenticationSettings**](AuthenticationSettings.md) |  |  |
 
 ### Return type
 
@@ -1125,15 +1358,17 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## patch_admin_settings_authentication_update
 
-> <PutAdminSettingsAuthenticationUpdateResponse> patch_admin_settings_authentication_update(org_id)
+> <PutAdminSettingsAuthenticationUpdateResponse> patch_admin_settings_authentication_update(org_id, authentication_settings)
 
 Update authentication settings (alias for settings/auth)
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Examples
 
@@ -1153,10 +1388,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+authentication_settings = LumoAuthApiClient::AuthenticationSettings.new # AuthenticationSettings | 
 
 begin
   # Update authentication settings (alias for settings/auth)
-  result = api_instance.patch_admin_settings_authentication_update(org_id)
+  result = api_instance.patch_admin_settings_authentication_update(org_id, authentication_settings)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->patch_admin_settings_authentication_update: #{e}"
@@ -1167,12 +1403,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminSettingsAuthenticationUpdateResponse>, Integer, Hash)> patch_admin_settings_authentication_update_with_http_info(org_id)
+> <Array(<PutAdminSettingsAuthenticationUpdateResponse>, Integer, Hash)> patch_admin_settings_authentication_update_with_http_info(org_id, authentication_settings)
 
 ```ruby
 begin
   # Update authentication settings (alias for settings/auth)
-  data, status_code, headers = api_instance.patch_admin_settings_authentication_update_with_http_info(org_id)
+  data, status_code, headers = api_instance.patch_admin_settings_authentication_update_with_http_info(org_id, authentication_settings)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminSettingsAuthenticationUpdateResponse>
@@ -1186,6 +1422,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **authentication_settings** | [**AuthenticationSettings**](AuthenticationSettings.md) |  |  |
 
 ### Return type
 
@@ -1197,13 +1434,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## patch_admin_settings_branding_update
 
-> <PutAdminSettingsBrandingUpdateResponse> patch_admin_settings_branding_update(org_id)
+> <PutAdminSettingsBrandingUpdateResponse> patch_admin_settings_branding_update(org_id, branding_settings)
 
 Update branding/login page settings
 
@@ -1227,10 +1464,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+branding_settings = LumoAuthApiClient::BrandingSettings.new # BrandingSettings | 
 
 begin
   # Update branding/login page settings
-  result = api_instance.patch_admin_settings_branding_update(org_id)
+  result = api_instance.patch_admin_settings_branding_update(org_id, branding_settings)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->patch_admin_settings_branding_update: #{e}"
@@ -1241,12 +1479,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminSettingsBrandingUpdateResponse>, Integer, Hash)> patch_admin_settings_branding_update_with_http_info(org_id)
+> <Array(<PutAdminSettingsBrandingUpdateResponse>, Integer, Hash)> patch_admin_settings_branding_update_with_http_info(org_id, branding_settings)
 
 ```ruby
 begin
   # Update branding/login page settings
-  data, status_code, headers = api_instance.patch_admin_settings_branding_update_with_http_info(org_id)
+  data, status_code, headers = api_instance.patch_admin_settings_branding_update_with_http_info(org_id, branding_settings)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminSettingsBrandingUpdateResponse>
@@ -1260,6 +1498,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **branding_settings** | [**BrandingSettings**](BrandingSettings.md) |  |  |
 
 ### Return type
 
@@ -1271,7 +1510,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -1433,7 +1672,7 @@ end
 
 ## patch_admin_settings_scim_update
 
-> <PutAdminSettingsScimUpdateResponse> patch_admin_settings_scim_update(org_id)
+> <PutAdminSettingsScimUpdateResponse> patch_admin_settings_scim_update(org_id, scim_settings)
 
 Update SCIM settings
 
@@ -1455,10 +1694,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+scim_settings = LumoAuthApiClient::ScimSettings.new # ScimSettings | 
 
 begin
   # Update SCIM settings
-  result = api_instance.patch_admin_settings_scim_update(org_id)
+  result = api_instance.patch_admin_settings_scim_update(org_id, scim_settings)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->patch_admin_settings_scim_update: #{e}"
@@ -1469,12 +1709,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminSettingsScimUpdateResponse>, Integer, Hash)> patch_admin_settings_scim_update_with_http_info(org_id)
+> <Array(<PutAdminSettingsScimUpdateResponse>, Integer, Hash)> patch_admin_settings_scim_update_with_http_info(org_id, scim_settings)
 
 ```ruby
 begin
   # Update SCIM settings
-  data, status_code, headers = api_instance.patch_admin_settings_scim_update_with_http_info(org_id)
+  data, status_code, headers = api_instance.patch_admin_settings_scim_update_with_http_info(org_id, scim_settings)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminSettingsScimUpdateResponse>
@@ -1488,6 +1728,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **scim_settings** | [**ScimSettings**](ScimSettings.md) |  |  |
 
 ### Return type
 
@@ -1499,13 +1740,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## patch_admin_settings_security_update
 
-> <PutAdminSettingsSecurityUpdateResponse> patch_admin_settings_security_update(org_id)
+> <PutAdminSettingsSecurityUpdateResponse> patch_admin_settings_security_update(org_id, put_admin_settings_security_update_request)
 
 Update security settings
 
@@ -1527,10 +1768,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+put_admin_settings_security_update_request = LumoAuthApiClient::PutAdminSettingsSecurityUpdateRequest.new # PutAdminSettingsSecurityUpdateRequest | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
 
 begin
   # Update security settings
-  result = api_instance.patch_admin_settings_security_update(org_id)
+  result = api_instance.patch_admin_settings_security_update(org_id, put_admin_settings_security_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->patch_admin_settings_security_update: #{e}"
@@ -1541,12 +1783,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminSettingsSecurityUpdateResponse>, Integer, Hash)> patch_admin_settings_security_update_with_http_info(org_id)
+> <Array(<PutAdminSettingsSecurityUpdateResponse>, Integer, Hash)> patch_admin_settings_security_update_with_http_info(org_id, put_admin_settings_security_update_request)
 
 ```ruby
 begin
   # Update security settings
-  data, status_code, headers = api_instance.patch_admin_settings_security_update_with_http_info(org_id)
+  data, status_code, headers = api_instance.patch_admin_settings_security_update_with_http_info(org_id, put_admin_settings_security_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminSettingsSecurityUpdateResponse>
@@ -1560,6 +1802,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **put_admin_settings_security_update_request** | [**PutAdminSettingsSecurityUpdateRequest**](PutAdminSettingsSecurityUpdateRequest.md) | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. |  |
 
 ### Return type
 
@@ -1571,15 +1814,15 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## patch_admin_tenant_update
 
-> <PutAdminTenantUpdateResponse> patch_admin_tenant_update(org_id)
+> <PutAdminTenantUpdateResponse> patch_admin_tenant_update(org_id, put_admin_tenant_update_request)
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Examples
 
@@ -1599,10 +1842,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+put_admin_tenant_update_request = LumoAuthApiClient::PutAdminTenantUpdateRequest.new # PutAdminTenantUpdateRequest | 
 
 begin
-  # Update organization (tenant) name and settings
-  result = api_instance.patch_admin_tenant_update(org_id)
+  # Update the organization's name and settings
+  result = api_instance.patch_admin_tenant_update(org_id, put_admin_tenant_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->patch_admin_tenant_update: #{e}"
@@ -1613,12 +1857,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminTenantUpdateResponse>, Integer, Hash)> patch_admin_tenant_update_with_http_info(org_id)
+> <Array(<PutAdminTenantUpdateResponse>, Integer, Hash)> patch_admin_tenant_update_with_http_info(org_id, put_admin_tenant_update_request)
 
 ```ruby
 begin
-  # Update organization (tenant) name and settings
-  data, status_code, headers = api_instance.patch_admin_tenant_update_with_http_info(org_id)
+  # Update the organization's name and settings
+  data, status_code, headers = api_instance.patch_admin_tenant_update_with_http_info(org_id, put_admin_tenant_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminTenantUpdateResponse>
@@ -1632,6 +1876,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **put_admin_tenant_update_request** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1643,15 +1888,15 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## put_admin_organization_update
 
-> <PutAdminTenantUpdateResponse> put_admin_organization_update(org_id)
+> <PutAdminTenantUpdateResponse> put_admin_organization_update(org_id, put_admin_tenant_update_request)
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Examples
 
@@ -1671,10 +1916,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+put_admin_tenant_update_request = LumoAuthApiClient::PutAdminTenantUpdateRequest.new # PutAdminTenantUpdateRequest | 
 
 begin
-  # Update organization (tenant) name and settings
-  result = api_instance.put_admin_organization_update(org_id)
+  # Update the organization's name and settings
+  result = api_instance.put_admin_organization_update(org_id, put_admin_tenant_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->put_admin_organization_update: #{e}"
@@ -1685,12 +1931,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminTenantUpdateResponse>, Integer, Hash)> put_admin_organization_update_with_http_info(org_id)
+> <Array(<PutAdminTenantUpdateResponse>, Integer, Hash)> put_admin_organization_update_with_http_info(org_id, put_admin_tenant_update_request)
 
 ```ruby
 begin
-  # Update organization (tenant) name and settings
-  data, status_code, headers = api_instance.put_admin_organization_update_with_http_info(org_id)
+  # Update the organization's name and settings
+  data, status_code, headers = api_instance.put_admin_organization_update_with_http_info(org_id, put_admin_tenant_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminTenantUpdateResponse>
@@ -1704,6 +1950,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **put_admin_tenant_update_request** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1715,15 +1962,17 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## put_admin_settings_auth_update
 
-> <PutAdminSettingsAuthenticationUpdateResponse> put_admin_settings_auth_update(org_id)
+> <PutAdminSettingsAuthenticationUpdateResponse> put_admin_settings_auth_update(org_id, authentication_settings)
 
 Update authentication settings
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Examples
 
@@ -1743,10 +1992,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+authentication_settings = LumoAuthApiClient::AuthenticationSettings.new # AuthenticationSettings | 
 
 begin
   # Update authentication settings
-  result = api_instance.put_admin_settings_auth_update(org_id)
+  result = api_instance.put_admin_settings_auth_update(org_id, authentication_settings)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->put_admin_settings_auth_update: #{e}"
@@ -1757,12 +2007,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminSettingsAuthenticationUpdateResponse>, Integer, Hash)> put_admin_settings_auth_update_with_http_info(org_id)
+> <Array(<PutAdminSettingsAuthenticationUpdateResponse>, Integer, Hash)> put_admin_settings_auth_update_with_http_info(org_id, authentication_settings)
 
 ```ruby
 begin
   # Update authentication settings
-  data, status_code, headers = api_instance.put_admin_settings_auth_update_with_http_info(org_id)
+  data, status_code, headers = api_instance.put_admin_settings_auth_update_with_http_info(org_id, authentication_settings)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminSettingsAuthenticationUpdateResponse>
@@ -1776,6 +2026,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **authentication_settings** | [**AuthenticationSettings**](AuthenticationSettings.md) |  |  |
 
 ### Return type
 
@@ -1787,15 +2038,17 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## put_admin_settings_authentication_update
 
-> <PutAdminSettingsAuthenticationUpdateResponse> put_admin_settings_authentication_update(org_id)
+> <PutAdminSettingsAuthenticationUpdateResponse> put_admin_settings_authentication_update(org_id, authentication_settings)
 
 Update authentication settings (alias for settings/auth)
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Examples
 
@@ -1815,10 +2068,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+authentication_settings = LumoAuthApiClient::AuthenticationSettings.new # AuthenticationSettings | 
 
 begin
   # Update authentication settings (alias for settings/auth)
-  result = api_instance.put_admin_settings_authentication_update(org_id)
+  result = api_instance.put_admin_settings_authentication_update(org_id, authentication_settings)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->put_admin_settings_authentication_update: #{e}"
@@ -1829,12 +2083,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminSettingsAuthenticationUpdateResponse>, Integer, Hash)> put_admin_settings_authentication_update_with_http_info(org_id)
+> <Array(<PutAdminSettingsAuthenticationUpdateResponse>, Integer, Hash)> put_admin_settings_authentication_update_with_http_info(org_id, authentication_settings)
 
 ```ruby
 begin
   # Update authentication settings (alias for settings/auth)
-  data, status_code, headers = api_instance.put_admin_settings_authentication_update_with_http_info(org_id)
+  data, status_code, headers = api_instance.put_admin_settings_authentication_update_with_http_info(org_id, authentication_settings)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminSettingsAuthenticationUpdateResponse>
@@ -1848,6 +2102,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **authentication_settings** | [**AuthenticationSettings**](AuthenticationSettings.md) |  |  |
 
 ### Return type
 
@@ -1859,13 +2114,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## put_admin_settings_branding_update
 
-> <PutAdminSettingsBrandingUpdateResponse> put_admin_settings_branding_update(org_id)
+> <PutAdminSettingsBrandingUpdateResponse> put_admin_settings_branding_update(org_id, branding_settings)
 
 Update branding/login page settings
 
@@ -1889,10 +2144,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+branding_settings = LumoAuthApiClient::BrandingSettings.new # BrandingSettings | 
 
 begin
   # Update branding/login page settings
-  result = api_instance.put_admin_settings_branding_update(org_id)
+  result = api_instance.put_admin_settings_branding_update(org_id, branding_settings)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->put_admin_settings_branding_update: #{e}"
@@ -1903,12 +2159,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminSettingsBrandingUpdateResponse>, Integer, Hash)> put_admin_settings_branding_update_with_http_info(org_id)
+> <Array(<PutAdminSettingsBrandingUpdateResponse>, Integer, Hash)> put_admin_settings_branding_update_with_http_info(org_id, branding_settings)
 
 ```ruby
 begin
   # Update branding/login page settings
-  data, status_code, headers = api_instance.put_admin_settings_branding_update_with_http_info(org_id)
+  data, status_code, headers = api_instance.put_admin_settings_branding_update_with_http_info(org_id, branding_settings)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminSettingsBrandingUpdateResponse>
@@ -1922,6 +2178,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **branding_settings** | [**BrandingSettings**](BrandingSettings.md) |  |  |
 
 ### Return type
 
@@ -1933,7 +2190,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -2095,7 +2352,7 @@ end
 
 ## put_admin_settings_scim_update
 
-> <PutAdminSettingsScimUpdateResponse> put_admin_settings_scim_update(org_id)
+> <PutAdminSettingsScimUpdateResponse> put_admin_settings_scim_update(org_id, scim_settings)
 
 Update SCIM settings
 
@@ -2117,10 +2374,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+scim_settings = LumoAuthApiClient::ScimSettings.new # ScimSettings | 
 
 begin
   # Update SCIM settings
-  result = api_instance.put_admin_settings_scim_update(org_id)
+  result = api_instance.put_admin_settings_scim_update(org_id, scim_settings)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->put_admin_settings_scim_update: #{e}"
@@ -2131,12 +2389,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminSettingsScimUpdateResponse>, Integer, Hash)> put_admin_settings_scim_update_with_http_info(org_id)
+> <Array(<PutAdminSettingsScimUpdateResponse>, Integer, Hash)> put_admin_settings_scim_update_with_http_info(org_id, scim_settings)
 
 ```ruby
 begin
   # Update SCIM settings
-  data, status_code, headers = api_instance.put_admin_settings_scim_update_with_http_info(org_id)
+  data, status_code, headers = api_instance.put_admin_settings_scim_update_with_http_info(org_id, scim_settings)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminSettingsScimUpdateResponse>
@@ -2150,6 +2408,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **scim_settings** | [**ScimSettings**](ScimSettings.md) |  |  |
 
 ### Return type
 
@@ -2161,13 +2420,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## put_admin_settings_security_update
 
-> <PutAdminSettingsSecurityUpdateResponse> put_admin_settings_security_update(org_id)
+> <PutAdminSettingsSecurityUpdateResponse> put_admin_settings_security_update(org_id, put_admin_settings_security_update_request)
 
 Update security settings
 
@@ -2189,10 +2448,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+put_admin_settings_security_update_request = LumoAuthApiClient::PutAdminSettingsSecurityUpdateRequest.new # PutAdminSettingsSecurityUpdateRequest | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
 
 begin
   # Update security settings
-  result = api_instance.put_admin_settings_security_update(org_id)
+  result = api_instance.put_admin_settings_security_update(org_id, put_admin_settings_security_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->put_admin_settings_security_update: #{e}"
@@ -2203,12 +2463,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminSettingsSecurityUpdateResponse>, Integer, Hash)> put_admin_settings_security_update_with_http_info(org_id)
+> <Array(<PutAdminSettingsSecurityUpdateResponse>, Integer, Hash)> put_admin_settings_security_update_with_http_info(org_id, put_admin_settings_security_update_request)
 
 ```ruby
 begin
   # Update security settings
-  data, status_code, headers = api_instance.put_admin_settings_security_update_with_http_info(org_id)
+  data, status_code, headers = api_instance.put_admin_settings_security_update_with_http_info(org_id, put_admin_settings_security_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminSettingsSecurityUpdateResponse>
@@ -2222,6 +2482,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **put_admin_settings_security_update_request** | [**PutAdminSettingsSecurityUpdateRequest**](PutAdminSettingsSecurityUpdateRequest.md) | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. |  |
 
 ### Return type
 
@@ -2233,15 +2494,15 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## put_admin_tenant_update
 
-> <PutAdminTenantUpdateResponse> put_admin_tenant_update(org_id)
+> <PutAdminTenantUpdateResponse> put_admin_tenant_update(org_id, put_admin_tenant_update_request)
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Examples
 
@@ -2261,10 +2522,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminSettingsApi.new
 org_id = 'org_id_example' # String | 
+put_admin_tenant_update_request = LumoAuthApiClient::PutAdminTenantUpdateRequest.new # PutAdminTenantUpdateRequest | 
 
 begin
-  # Update organization (tenant) name and settings
-  result = api_instance.put_admin_tenant_update(org_id)
+  # Update the organization's name and settings
+  result = api_instance.put_admin_tenant_update(org_id, put_admin_tenant_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSettingsApi->put_admin_tenant_update: #{e}"
@@ -2275,12 +2537,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminTenantUpdateResponse>, Integer, Hash)> put_admin_tenant_update_with_http_info(org_id)
+> <Array(<PutAdminTenantUpdateResponse>, Integer, Hash)> put_admin_tenant_update_with_http_info(org_id, put_admin_tenant_update_request)
 
 ```ruby
 begin
-  # Update organization (tenant) name and settings
-  data, status_code, headers = api_instance.put_admin_tenant_update_with_http_info(org_id)
+  # Update the organization's name and settings
+  data, status_code, headers = api_instance.put_admin_tenant_update_with_http_info(org_id, put_admin_tenant_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminTenantUpdateResponse>
@@ -2294,6 +2556,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **put_admin_tenant_update_request** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -2305,6 +2568,6 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 

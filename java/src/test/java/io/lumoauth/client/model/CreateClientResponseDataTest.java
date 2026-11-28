@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -22,7 +22,10 @@ import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -134,6 +137,126 @@ public class CreateClientResponseDataTest {
     @Test
     public void cibaEnabledTest() {
         // TODO: test cibaEnabled
+    }
+
+    /**
+     * Test the property 'allowedOrigins'
+     */
+    @Test
+    public void allowedOriginsTest() {
+        // TODO: test allowedOrigins
+    }
+
+    /**
+     * Test the property 'postLogoutRedirectUris'
+     */
+    @Test
+    public void postLogoutRedirectUrisTest() {
+        // TODO: test postLogoutRedirectUris
+    }
+
+    /**
+     * Test the property 'frontchannelLogoutUri'
+     */
+    @Test
+    public void frontchannelLogoutUriTest() {
+        // TODO: test frontchannelLogoutUri
+    }
+
+    /**
+     * Test the property 'backchannelLogoutUri'
+     */
+    @Test
+    public void backchannelLogoutUriTest() {
+        // TODO: test backchannelLogoutUri
+    }
+
+    /**
+     * Test the property 'accessTokenFormat'
+     */
+    @Test
+    public void accessTokenFormatTest() {
+        // TODO: test accessTokenFormat
+    }
+
+    /**
+     * Test the property 'tokenEndpointAuthMethod'
+     */
+    @Test
+    public void tokenEndpointAuthMethodTest() {
+        // TODO: test tokenEndpointAuthMethod
+    }
+
+    /**
+     * Test the property 'jwksUri'
+     */
+    @Test
+    public void jwksUriTest() {
+        // TODO: test jwksUri
+    }
+
+    /**
+     * Test the property 'jwks'
+     */
+    @Test
+    public void jwksTest() {
+        // TODO: test jwks
+    }
+
+    /**
+     * Test the property 'fapiMode'
+     */
+    @Test
+    public void fapiModeTest() {
+        // TODO: test fapiMode
+    }
+
+    /**
+     * Test the property 'requirePar'
+     */
+    @Test
+    public void requireParTest() {
+        // TODO: test requirePar
+    }
+
+    /**
+     * Test the property 'dpopBoundAccessTokens'
+     */
+    @Test
+    public void dpopBoundAccessTokensTest() {
+        // TODO: test dpopBoundAccessTokens
+    }
+
+    /**
+     * Test the property 'attestationBasedAuthEnabled'
+     */
+    @Test
+    public void attestationBasedAuthEnabledTest() {
+        // TODO: test attestationBasedAuthEnabled
+    }
+
+    /**
+     * Test the property 'attesterIssuer'
+     */
+    @Test
+    public void attesterIssuerTest() {
+        // TODO: test attesterIssuer
+    }
+
+    /**
+     * Test the property 'attesterJwksUri'
+     */
+    @Test
+    public void attesterJwksUriTest() {
+        // TODO: test attesterJwksUri
+    }
+
+    /**
+     * Test the property 'tokenExchangeEnabled'
+     */
+    @Test
+    public void tokenExchangeEnabledTest() {
+        // TODO: test tokenExchangeEnabled
     }
 
     /**

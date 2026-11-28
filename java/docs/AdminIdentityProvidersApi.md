@@ -161,7 +161,7 @@ public class Example {
 
 <a id="adminSocialProvidersCreate"></a>
 # **adminSocialProvidersCreate**
-> AdminSocialProvidersCreateResponse adminSocialProvidersCreate(orgId)
+> AdminSocialProvidersCreateResponse adminSocialProvidersCreate(orgId, adminSocialProvidersCreateRequest)
 
 Create a social login provider
 
@@ -192,8 +192,9 @@ public class Example {
 
     AdminIdentityProvidersApi apiInstance = new AdminIdentityProvidersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest = new AdminSocialProvidersCreateRequest(); // AdminSocialProvidersCreateRequest | An unknown field is refused with 400.
     try {
-      AdminSocialProvidersCreateResponse result = apiInstance.adminSocialProvidersCreate(orgId);
+      AdminSocialProvidersCreateResponse result = apiInstance.adminSocialProvidersCreate(orgId, adminSocialProvidersCreateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminIdentityProvidersApi#adminSocialProvidersCreate");
@@ -211,6 +212,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **adminSocialProvidersCreateRequest** | [**AdminSocialProvidersCreateRequest**](AdminSocialProvidersCreateRequest.md)| An unknown field is refused with 400. | |
 
 ### Return type
 
@@ -222,7 +224,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -671,7 +673,7 @@ public class Example {
 
 <a id="patchAdminSocialProvidersUpdate"></a>
 # **patchAdminSocialProvidersUpdate**
-> AdminSocialProvidersCreateResponse patchAdminSocialProvidersUpdate(orgId, providerId)
+> AdminSocialProvidersCreateResponse patchAdminSocialProvidersUpdate(orgId, providerId, putAdminSocialProvidersUpdateRequest)
 
 Update a social login provider
 
@@ -703,8 +705,9 @@ public class Example {
     AdminIdentityProvidersApi apiInstance = new AdminIdentityProvidersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String providerId = "providerId_example"; // String | 
+    PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest = new PutAdminSocialProvidersUpdateRequest(); // PutAdminSocialProvidersUpdateRequest | Only the fields that are sent change. An unknown field is refused with 400.
     try {
-      AdminSocialProvidersCreateResponse result = apiInstance.patchAdminSocialProvidersUpdate(orgId, providerId);
+      AdminSocialProvidersCreateResponse result = apiInstance.patchAdminSocialProvidersUpdate(orgId, providerId, putAdminSocialProvidersUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminIdentityProvidersApi#patchAdminSocialProvidersUpdate");
@@ -723,6 +726,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **providerId** | **String**|  | |
+| **putAdminSocialProvidersUpdateRequest** | [**PutAdminSocialProvidersUpdateRequest**](PutAdminSocialProvidersUpdateRequest.md)| Only the fields that are sent change. An unknown field is refused with 400. | |
 
 ### Return type
 
@@ -734,7 +738,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -745,7 +749,7 @@ public class Example {
 
 <a id="putAdminSocialProvidersUpdate"></a>
 # **putAdminSocialProvidersUpdate**
-> AdminSocialProvidersCreateResponse putAdminSocialProvidersUpdate(orgId, providerId)
+> AdminSocialProvidersCreateResponse putAdminSocialProvidersUpdate(orgId, providerId, putAdminSocialProvidersUpdateRequest)
 
 Create or replace a social login provider
 
@@ -777,8 +781,9 @@ public class Example {
     AdminIdentityProvidersApi apiInstance = new AdminIdentityProvidersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String providerId = "providerId_example"; // String | 
+    PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest = new PutAdminSocialProvidersUpdateRequest(); // PutAdminSocialProvidersUpdateRequest | Only the fields that are sent change. An unknown field is refused with 400.
     try {
-      AdminSocialProvidersCreateResponse result = apiInstance.putAdminSocialProvidersUpdate(orgId, providerId);
+      AdminSocialProvidersCreateResponse result = apiInstance.putAdminSocialProvidersUpdate(orgId, providerId, putAdminSocialProvidersUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminIdentityProvidersApi#putAdminSocialProvidersUpdate");
@@ -797,6 +802,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **providerId** | **String**|  | |
+| **putAdminSocialProvidersUpdateRequest** | [**PutAdminSocialProvidersUpdateRequest**](PutAdminSocialProvidersUpdateRequest.md)| Only the fields that are sent change. An unknown field is refused with 400. | |
 
 ### Return type
 
@@ -808,7 +814,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

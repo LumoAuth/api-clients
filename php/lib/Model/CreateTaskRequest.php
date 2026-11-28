@@ -13,7 +13,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -378,7 +378,7 @@ class CreateTaskRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets parentTaskId
      *
-     * @param string|null $parentTaskId Optional parent task id for nested agent chains.
+     * @param string|null $parentTaskId Optional. The task_id of an open task of this organization, for a task that is one step of that task. The new task expires no later than its parent and ends when the parent ends. A chain holds at most 5 tasks.
      *
      * @return self
      */

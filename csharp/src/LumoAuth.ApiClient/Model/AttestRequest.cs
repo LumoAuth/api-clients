@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -42,7 +42,8 @@ namespace LumoAuth.ApiClient.Model
         /// Initializes a new instance of the <see cref="AttestRequest" /> class.
         /// </summary>
         /// <param name="attestationToken">The workload OIDC token (JWT). (required).</param>
-        public AttestRequest(string attestationToken = default)
+        /// <param name="scope">scope.</param>
+        public AttestRequest(string attestationToken = default, AttestRequestScope scope = default)
         {
             // to ensure "attestationToken" is required (not null)
             if (attestationToken == null)
@@ -50,6 +51,7 @@ namespace LumoAuth.ApiClient.Model
                 throw new ArgumentNullException("attestationToken is a required property for AttestRequest and cannot be null");
             }
             this.AttestationToken = attestationToken;
+            this.Scope = scope;
         }
 
         /// <summary>
@@ -60,6 +62,12 @@ namespace LumoAuth.ApiClient.Model
         public string AttestationToken { get; set; }
 
         /// <summary>
+        /// Gets or Sets Scope
+        /// </summary>
+        [DataMember(Name = "scope", EmitDefaultValue = false)]
+        public AttestRequestScope Scope { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -68,6 +76,7 @@ namespace LumoAuth.ApiClient.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class AttestRequest {\n");
             sb.Append("  AttestationToken: ").Append(AttestationToken).Append("\n");
+            sb.Append("  Scope: ").Append(Scope).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

@@ -4,9 +4,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**adminSandboxDestroy**](AdminSandboxAPI.md#adminsandboxdestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant
-[**adminSandboxList**](AdminSandboxAPI.md#adminsandboxlist) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox tenants
-[**adminSandboxSpawn**](AdminSandboxAPI.md#adminsandboxspawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant
+[**adminSandboxDestroy**](AdminSandboxAPI.md#adminsandboxdestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox organization
+[**adminSandboxList**](AdminSandboxAPI.md#adminsandboxlist) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox organizations
+[**adminSandboxSpawn**](AdminSandboxAPI.md#adminsandboxspawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox organization
 
 
 # **adminSandboxDestroy**
@@ -14,7 +14,7 @@ Method | HTTP request | Description
     open class func adminSandboxDestroy(orgId: String, sandboxSlug: String, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
 ```
 
-Destroy a sandbox tenant
+Destroy a sandbox organization
 
 ### Example
 ```swift
@@ -24,7 +24,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let sandboxSlug = "sandboxSlug_example" // String | 
 
-// Destroy a sandbox tenant
+// Destroy a sandbox organization
 AdminSandboxAPI.adminSandboxDestroy(orgId: orgId, sandboxSlug: sandboxSlug) { (response, error) in
     guard error == nil else {
         print(error)
@@ -64,7 +64,7 @@ Name | Type | Description  | Notes
     open class func adminSandboxList(orgId: String, completion: @escaping (_ data: AdminSandboxListResponse?, _ error: Error?) -> Void)
 ```
 
-List the caller's sandbox tenants
+List the caller's sandbox organizations
 
 ### Example
 ```swift
@@ -73,7 +73,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// List the caller's sandbox tenants
+// List the caller's sandbox organizations
 AdminSandboxAPI.adminSandboxList(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -112,7 +112,7 @@ Name | Type | Description  | Notes
     open class func adminSandboxSpawn(orgId: String, adminSandboxSpawnRequest: AdminSandboxSpawnRequest? = nil, completion: @escaping (_ data: AdminSandboxSpawnResponse?, _ error: Error?) -> Void)
 ```
 
-Spawn a sandbox tenant
+Spawn a sandbox organization
 
 Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
 
@@ -124,7 +124,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let adminSandboxSpawnRequest = AdminSandboxSpawnRequest(name: "name_example", ttlHours: 123) // AdminSandboxSpawnRequest |  (optional)
 
-// Spawn a sandbox tenant
+// Spawn a sandbox organization
 AdminSandboxAPI.adminSandboxSpawn(orgId: orgId, adminSandboxSpawnRequest: adminSandboxSpawnRequest) { (response, error) in
     guard error == nil else {
         print(error)

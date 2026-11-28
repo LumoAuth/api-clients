@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -74,7 +74,20 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.AdminAuditLogsExport(orgId);
+            //string? format = null;
+            //string? eventType = null;
+            //string? action = null;
+            //string? actorId = null;
+            //string? targetType = null;
+            //string? targetId = null;
+            //string? severity = null;
+            //string? status = null;
+            //string? ipAddress = null;
+            //string? search = null;
+            //string? traceId = null;
+            //DateTime? from = null;
+            //DateTime? to = null;
+            //var response = instance.AdminAuditLogsExport(orgId, format, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to);
             //Assert.IsType<string>(response);
         }
 
@@ -99,7 +112,21 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.AdminAuditLogsList(orgId);
+            //int? page = null;
+            //int? limit = null;
+            //string? eventType = null;
+            //string? action = null;
+            //string? actorId = null;
+            //string? targetType = null;
+            //string? targetId = null;
+            //string? severity = null;
+            //string? status = null;
+            //string? ipAddress = null;
+            //string? search = null;
+            //string? traceId = null;
+            //DateTime? from = null;
+            //DateTime? to = null;
+            //var response = instance.AdminAuditLogsList(orgId, page, limit, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to);
             //Assert.IsType<AdminAuditLogsListResponse>(response);
         }
 
@@ -135,7 +162,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.PatchAdminAuditLogsRetentionUpdate(orgId);
+            //PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest = null;
+            //var response = instance.PatchAdminAuditLogsRetentionUpdate(orgId, putAdminAuditLogsRetentionUpdateRequest);
             //Assert.IsType<AdminAuditLogsRetentionResponse>(response);
         }
 
@@ -147,7 +175,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.PutAdminAuditLogsRetentionUpdate(orgId);
+            //PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest = null;
+            //var response = instance.PutAdminAuditLogsRetentionUpdate(orgId, putAdminAuditLogsRetentionUpdateRequest);
             //Assert.IsType<AdminAuditLogsRetentionResponse>(response);
         }
     }

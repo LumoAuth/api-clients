@@ -146,7 +146,7 @@ try {
 ## `adminSocialProvidersCreate()`
 
 ```php
-adminSocialProvidersCreate($orgId): \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse
+adminSocialProvidersCreate($orgId, $adminSocialProvidersCreateRequest): \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse
 ```
 
 Create a social login provider
@@ -174,9 +174,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminIdentityProvidersApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$adminSocialProvidersCreateRequest = new \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateRequest(); // \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateRequest | An unknown field is refused with 400.
 
 try {
-    $result = $apiInstance->adminSocialProvidersCreate($orgId);
+    $result = $apiInstance->adminSocialProvidersCreate($orgId, $adminSocialProvidersCreateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminIdentityProvidersApi->adminSocialProvidersCreate: ', $e->getMessage(), PHP_EOL;
@@ -188,6 +189,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **adminSocialProvidersCreateRequest** | [**\LumoAuth\ApiClient\Model\AdminSocialProvidersCreateRequest**](../Model/AdminSocialProvidersCreateRequest.md)| An unknown field is refused with 400. | |
 
 ### Return type
 
@@ -199,7 +201,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -595,7 +597,7 @@ try {
 ## `patchAdminSocialProvidersUpdate()`
 
 ```php
-patchAdminSocialProvidersUpdate($orgId, $providerId): \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse
+patchAdminSocialProvidersUpdate($orgId, $providerId, $putAdminSocialProvidersUpdateRequest): \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse
 ```
 
 Update a social login provider
@@ -624,9 +626,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminIdentityProvidersApi(
 );
 $orgId = 'orgId_example'; // string
 $providerId = 'providerId_example'; // string
+$putAdminSocialProvidersUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest | Only the fields that are sent change. An unknown field is refused with 400.
 
 try {
-    $result = $apiInstance->patchAdminSocialProvidersUpdate($orgId, $providerId);
+    $result = $apiInstance->patchAdminSocialProvidersUpdate($orgId, $providerId, $putAdminSocialProvidersUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminIdentityProvidersApi->patchAdminSocialProvidersUpdate: ', $e->getMessage(), PHP_EOL;
@@ -639,6 +642,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **providerId** | **string**|  | |
+| **putAdminSocialProvidersUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest**](../Model/PutAdminSocialProvidersUpdateRequest.md)| Only the fields that are sent change. An unknown field is refused with 400. | |
 
 ### Return type
 
@@ -650,7 +654,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -660,7 +664,7 @@ try {
 ## `putAdminSocialProvidersUpdate()`
 
 ```php
-putAdminSocialProvidersUpdate($orgId, $providerId): \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse
+putAdminSocialProvidersUpdate($orgId, $providerId, $putAdminSocialProvidersUpdateRequest): \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse
 ```
 
 Create or replace a social login provider
@@ -689,9 +693,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminIdentityProvidersApi(
 );
 $orgId = 'orgId_example'; // string
 $providerId = 'providerId_example'; // string
+$putAdminSocialProvidersUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest | Only the fields that are sent change. An unknown field is refused with 400.
 
 try {
-    $result = $apiInstance->putAdminSocialProvidersUpdate($orgId, $providerId);
+    $result = $apiInstance->putAdminSocialProvidersUpdate($orgId, $providerId, $putAdminSocialProvidersUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminIdentityProvidersApi->putAdminSocialProvidersUpdate: ', $e->getMessage(), PHP_EOL;
@@ -704,6 +709,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **providerId** | **string**|  | |
+| **putAdminSocialProvidersUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest**](../Model/PutAdminSocialProvidersUpdateRequest.md)| Only the fields that are sent change. An unknown field is refused with 400. | |
 
 ### Return type
 
@@ -715,7 +721,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

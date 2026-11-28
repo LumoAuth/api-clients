@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -36,8 +36,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacRequest"></param>
         /// <returns>CheckAbacResponse</returns>
-        CheckAbacResponse CheckAbac(string orgId);
+        CheckAbacResponse CheckAbac(string orgId, CheckAbacRequest checkAbacRequest);
 
         /// <summary>
         /// Evaluate an ABAC policy decision for the caller
@@ -47,8 +48,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacRequest"></param>
         /// <returns>ApiResponse of CheckAbacResponse</returns>
-        ApiResponse<CheckAbacResponse> CheckAbacWithHttpInfo(string orgId);
+        ApiResponse<CheckAbacResponse> CheckAbacWithHttpInfo(string orgId, CheckAbacRequest checkAbacRequest);
         /// <summary>
         /// Evaluate up to 100 ABAC checks for the caller in one call
         /// </summary>
@@ -57,8 +59,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacBulkRequest"></param>
         /// <returns>CheckAbacBulkResponse</returns>
-        CheckAbacBulkResponse CheckAbacBulk(string orgId);
+        CheckAbacBulkResponse CheckAbacBulk(string orgId, CheckAbacBulkRequest checkAbacBulkRequest);
 
         /// <summary>
         /// Evaluate up to 100 ABAC checks for the caller in one call
@@ -68,8 +71,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacBulkRequest"></param>
         /// <returns>ApiResponse of CheckAbacBulkResponse</returns>
-        ApiResponse<CheckAbacBulkResponse> CheckAbacBulkWithHttpInfo(string orgId);
+        ApiResponse<CheckAbacBulkResponse> CheckAbacBulkWithHttpInfo(string orgId, CheckAbacBulkRequest checkAbacBulkRequest);
         /// <summary>
         /// Check whether the subject holds all of the permissions
         /// </summary>
@@ -77,8 +81,9 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <returns>CheckAnyPermissionResponse</returns>
-        CheckAnyPermissionResponse CheckAllPermissions();
+        CheckAnyPermissionResponse CheckAllPermissions(CheckPermissionsBulkRequest checkPermissionsBulkRequest);
 
         /// <summary>
         /// Check whether the subject holds all of the permissions
@@ -87,8 +92,9 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <returns>ApiResponse of CheckAnyPermissionResponse</returns>
-        ApiResponse<CheckAnyPermissionResponse> CheckAllPermissionsWithHttpInfo();
+        ApiResponse<CheckAnyPermissionResponse> CheckAllPermissionsWithHttpInfo(CheckPermissionsBulkRequest checkPermissionsBulkRequest);
         /// <summary>
         /// Check whether the subject holds any of the permissions
         /// </summary>
@@ -96,8 +102,9 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <returns>CheckAnyPermissionResponse</returns>
-        CheckAnyPermissionResponse CheckAnyPermission();
+        CheckAnyPermissionResponse CheckAnyPermission(CheckPermissionsBulkRequest checkPermissionsBulkRequest);
 
         /// <summary>
         /// Check whether the subject holds any of the permissions
@@ -106,8 +113,9 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <returns>ApiResponse of CheckAnyPermissionResponse</returns>
-        ApiResponse<CheckAnyPermissionResponse> CheckAnyPermissionWithHttpInfo();
+        ApiResponse<CheckAnyPermissionResponse> CheckAnyPermissionWithHttpInfo(CheckPermissionsBulkRequest checkPermissionsBulkRequest);
         /// <summary>
         /// Check one permission
         /// </summary>
@@ -115,8 +123,9 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},        // read: resource_id + defined environment attribute slugs   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionRequest"></param>
         /// <returns>CheckPermissionResponse</returns>
-        CheckPermissionResponse CheckPermission();
+        CheckPermissionResponse CheckPermission(CheckPermissionRequest checkPermissionRequest);
 
         /// <summary>
         /// Check one permission
@@ -125,8 +134,9 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},        // read: resource_id + defined environment attribute slugs   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionRequest"></param>
         /// <returns>ApiResponse of CheckPermissionResponse</returns>
-        ApiResponse<CheckPermissionResponse> CheckPermissionWithHttpInfo();
+        ApiResponse<CheckPermissionResponse> CheckPermissionWithHttpInfo(CheckPermissionRequest checkPermissionRequest);
         /// <summary>
         /// Check up to 100 permissions in one call
         /// </summary>
@@ -134,8 +144,9 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <returns>CheckPermissionsBulkResponse</returns>
-        CheckPermissionsBulkResponse CheckPermissionsBulk();
+        CheckPermissionsBulkResponse CheckPermissionsBulk(CheckPermissionsBulkRequest checkPermissionsBulkRequest);
 
         /// <summary>
         /// Check up to 100 permissions in one call
@@ -144,8 +155,9 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <returns>ApiResponse of CheckPermissionsBulkResponse</returns>
-        ApiResponse<CheckPermissionsBulkResponse> CheckPermissionsBulkWithHttpInfo();
+        ApiResponse<CheckPermissionsBulkResponse> CheckPermissionsBulkWithHttpInfo(CheckPermissionsBulkRequest checkPermissionsBulkRequest);
         /// <summary>
         /// Zanzibar relationship check
         /// </summary>
@@ -153,8 +165,9 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/zanzibar/check Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot;,   \&quot;subject\&quot;: \&quot;user:456\&quot; }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkRelationRequest"></param>
         /// <returns>CheckRelationResponse</returns>
-        CheckRelationResponse CheckRelation();
+        CheckRelationResponse CheckRelation(CheckRelationRequest checkRelationRequest);
 
         /// <summary>
         /// Zanzibar relationship check
@@ -163,15 +176,17 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/zanzibar/check Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot;,   \&quot;subject\&quot;: \&quot;user:456\&quot; }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkRelationRequest"></param>
         /// <returns>ApiResponse of CheckRelationResponse</returns>
-        ApiResponse<CheckRelationResponse> CheckRelationWithHttpInfo();
+        ApiResponse<CheckRelationResponse> CheckRelationWithHttpInfo(CheckRelationRequest checkRelationRequest);
         /// <summary>
         /// Zanzibar relationship check
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkRelationScopedRequest"></param>
         /// <returns>CheckRelationScopedResponse</returns>
-        CheckRelationScopedResponse CheckRelationScoped(string orgId);
+        CheckRelationScopedResponse CheckRelationScoped(string orgId, CheckRelationScopedRequest checkRelationScopedRequest);
 
         /// <summary>
         /// Zanzibar relationship check
@@ -181,8 +196,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkRelationScopedRequest"></param>
         /// <returns>ApiResponse of CheckRelationScopedResponse</returns>
-        ApiResponse<CheckRelationScopedResponse> CheckRelationScopedWithHttpInfo(string orgId);
+        ApiResponse<CheckRelationScopedResponse> CheckRelationScopedWithHttpInfo(string orgId, CheckRelationScopedRequest checkRelationScopedRequest);
         /// <summary>
         /// AuthZEN 1.0 access evaluation
         /// </summary>
@@ -190,8 +206,9 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/v1/evaluation Body: {   \&quot;subject\&quot;:  {\&quot;type\&quot;: \&quot;user\&quot;|\&quot;agent\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;action\&quot;:   {\&quot;name\&quot;: \&quot;...\&quot;},   \&quot;resource\&quot;: {\&quot;type\&quot;: \&quot;...\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;context\&quot;:  {...} } Response: {\&quot;decision\&quot;: true|false, \&quot;context\&quot;: {...}?}
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateRequest">AuthZEN Authorization API 1.0 evaluation request.</param>
         /// <returns>AuthZenDecision</returns>
-        AuthZenDecision Evaluate();
+        AuthZenDecision Evaluate(EvaluateRequest evaluateRequest);
 
         /// <summary>
         /// AuthZEN 1.0 access evaluation
@@ -200,8 +217,9 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/v1/evaluation Body: {   \&quot;subject\&quot;:  {\&quot;type\&quot;: \&quot;user\&quot;|\&quot;agent\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;action\&quot;:   {\&quot;name\&quot;: \&quot;...\&quot;},   \&quot;resource\&quot;: {\&quot;type\&quot;: \&quot;...\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;context\&quot;:  {...} } Response: {\&quot;decision\&quot;: true|false, \&quot;context\&quot;: {...}?}
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateRequest">AuthZEN Authorization API 1.0 evaluation request.</param>
         /// <returns>ApiResponse of AuthZenDecision</returns>
-        ApiResponse<AuthZenDecision> EvaluateWithHttpInfo();
+        ApiResponse<AuthZenDecision> EvaluateWithHttpInfo(EvaluateRequest evaluateRequest);
         /// <summary>
         /// AuthZEN 1.0 boxcarred access evaluations
         /// </summary>
@@ -209,8 +227,9 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/v1/evaluations Body: {   \&quot;subject\&quot;:  {...}?,   // optional defaults, overridden per item   \&quot;action\&quot;:   {...}?,   \&quot;resource\&quot;: {...}?,   \&quot;context\&quot;:  {...}?,   \&quot;evaluations\&quot;: [{...}, ...] } Response: {\&quot;evaluations\&quot;: [{\&quot;decision\&quot;: ...}, ...]} preserving order.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateBatchRequest">AuthZEN Authorization API 1.0 batch evaluation request.</param>
         /// <returns>EvaluateBatchResponse</returns>
-        EvaluateBatchResponse EvaluateBatch();
+        EvaluateBatchResponse EvaluateBatch(EvaluateBatchRequest evaluateBatchRequest);
 
         /// <summary>
         /// AuthZEN 1.0 boxcarred access evaluations
@@ -219,8 +238,9 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/v1/evaluations Body: {   \&quot;subject\&quot;:  {...}?,   // optional defaults, overridden per item   \&quot;action\&quot;:   {...}?,   \&quot;resource\&quot;: {...}?,   \&quot;context\&quot;:  {...}?,   \&quot;evaluations\&quot;: [{...}, ...] } Response: {\&quot;evaluations\&quot;: [{\&quot;decision\&quot;: ...}, ...]} preserving order.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateBatchRequest">AuthZEN Authorization API 1.0 batch evaluation request.</param>
         /// <returns>ApiResponse of EvaluateBatchResponse</returns>
-        ApiResponse<EvaluateBatchResponse> EvaluateBatchWithHttpInfo();
+        ApiResponse<EvaluateBatchResponse> EvaluateBatchWithHttpInfo(EvaluateBatchRequest evaluateBatchRequest);
         /// <summary>
         /// Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites.
         /// </summary>
@@ -364,8 +384,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="resourceType"></param>
         /// <param name="resourceId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <returns>SetResourceAttributeResponse</returns>
-        SetResourceAttributeResponse SetResourceAttribute(string orgId, string resourceType, string resourceId, string attributeSlug);
+        SetResourceAttributeResponse SetResourceAttribute(string orgId, string resourceType, string resourceId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest);
 
         /// <summary>
         /// Set a resource attribute
@@ -378,8 +399,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="resourceType"></param>
         /// <param name="resourceId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <returns>ApiResponse of SetResourceAttributeResponse</returns>
-        ApiResponse<SetResourceAttributeResponse> SetResourceAttributeWithHttpInfo(string orgId, string resourceType, string resourceId, string attributeSlug);
+        ApiResponse<SetResourceAttributeResponse> SetResourceAttributeWithHttpInfo(string orgId, string resourceType, string resourceId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest);
         /// <summary>
         /// Set a user attribute
         /// </summary>
@@ -390,8 +412,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <returns>SetUserAttributeResponse</returns>
-        SetUserAttributeResponse SetUserAttribute(string orgId, string userId, string attributeSlug);
+        SetUserAttributeResponse SetUserAttribute(string orgId, string userId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest);
 
         /// <summary>
         /// Set a user attribute
@@ -403,8 +426,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <returns>ApiResponse of SetUserAttributeResponse</returns>
-        ApiResponse<SetUserAttributeResponse> SetUserAttributeWithHttpInfo(string orgId, string userId, string attributeSlug);
+        ApiResponse<SetUserAttributeResponse> SetUserAttributeWithHttpInfo(string orgId, string userId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest);
         #endregion Synchronous Operations
     }
 
@@ -422,9 +446,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckAbacResponse</returns>
-        System.Threading.Tasks.Task<CheckAbacResponse> CheckAbacAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<CheckAbacResponse> CheckAbacAsync(string orgId, CheckAbacRequest checkAbacRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Evaluate an ABAC policy decision for the caller
@@ -434,9 +459,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckAbacResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CheckAbacResponse>> CheckAbacWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<CheckAbacResponse>> CheckAbacWithHttpInfoAsync(string orgId, CheckAbacRequest checkAbacRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Evaluate up to 100 ABAC checks for the caller in one call
         /// </summary>
@@ -445,9 +471,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckAbacBulkResponse</returns>
-        System.Threading.Tasks.Task<CheckAbacBulkResponse> CheckAbacBulkAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<CheckAbacBulkResponse> CheckAbacBulkAsync(string orgId, CheckAbacBulkRequest checkAbacBulkRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Evaluate up to 100 ABAC checks for the caller in one call
@@ -457,9 +484,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckAbacBulkResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CheckAbacBulkResponse>> CheckAbacBulkWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<CheckAbacBulkResponse>> CheckAbacBulkWithHttpInfoAsync(string orgId, CheckAbacBulkRequest checkAbacBulkRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Check whether the subject holds all of the permissions
         /// </summary>
@@ -467,9 +495,10 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckAnyPermissionResponse</returns>
-        System.Threading.Tasks.Task<CheckAnyPermissionResponse> CheckAllPermissionsAsync(System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<CheckAnyPermissionResponse> CheckAllPermissionsAsync(CheckPermissionsBulkRequest checkPermissionsBulkRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Check whether the subject holds all of the permissions
@@ -478,9 +507,10 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckAnyPermissionResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CheckAnyPermissionResponse>> CheckAllPermissionsWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<CheckAnyPermissionResponse>> CheckAllPermissionsWithHttpInfoAsync(CheckPermissionsBulkRequest checkPermissionsBulkRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Check whether the subject holds any of the permissions
         /// </summary>
@@ -488,9 +518,10 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckAnyPermissionResponse</returns>
-        System.Threading.Tasks.Task<CheckAnyPermissionResponse> CheckAnyPermissionAsync(System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<CheckAnyPermissionResponse> CheckAnyPermissionAsync(CheckPermissionsBulkRequest checkPermissionsBulkRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Check whether the subject holds any of the permissions
@@ -499,9 +530,10 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckAnyPermissionResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CheckAnyPermissionResponse>> CheckAnyPermissionWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<CheckAnyPermissionResponse>> CheckAnyPermissionWithHttpInfoAsync(CheckPermissionsBulkRequest checkPermissionsBulkRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Check one permission
         /// </summary>
@@ -509,9 +541,10 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},        // read: resource_id + defined environment attribute slugs   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckPermissionResponse</returns>
-        System.Threading.Tasks.Task<CheckPermissionResponse> CheckPermissionAsync(System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<CheckPermissionResponse> CheckPermissionAsync(CheckPermissionRequest checkPermissionRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Check one permission
@@ -520,9 +553,10 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},        // read: resource_id + defined environment attribute slugs   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckPermissionResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CheckPermissionResponse>> CheckPermissionWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<CheckPermissionResponse>> CheckPermissionWithHttpInfoAsync(CheckPermissionRequest checkPermissionRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Check up to 100 permissions in one call
         /// </summary>
@@ -530,9 +564,10 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckPermissionsBulkResponse</returns>
-        System.Threading.Tasks.Task<CheckPermissionsBulkResponse> CheckPermissionsBulkAsync(System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<CheckPermissionsBulkResponse> CheckPermissionsBulkAsync(CheckPermissionsBulkRequest checkPermissionsBulkRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Check up to 100 permissions in one call
@@ -541,9 +576,10 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckPermissionsBulkResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CheckPermissionsBulkResponse>> CheckPermissionsBulkWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<CheckPermissionsBulkResponse>> CheckPermissionsBulkWithHttpInfoAsync(CheckPermissionsBulkRequest checkPermissionsBulkRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Zanzibar relationship check
         /// </summary>
@@ -551,9 +587,10 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/zanzibar/check Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot;,   \&quot;subject\&quot;: \&quot;user:456\&quot; }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkRelationRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckRelationResponse</returns>
-        System.Threading.Tasks.Task<CheckRelationResponse> CheckRelationAsync(System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<CheckRelationResponse> CheckRelationAsync(CheckRelationRequest checkRelationRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Zanzibar relationship check
@@ -562,9 +599,10 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/zanzibar/check Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot;,   \&quot;subject\&quot;: \&quot;user:456\&quot; }
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkRelationRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckRelationResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CheckRelationResponse>> CheckRelationWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<CheckRelationResponse>> CheckRelationWithHttpInfoAsync(CheckRelationRequest checkRelationRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Zanzibar relationship check
         /// </summary>
@@ -573,9 +611,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkRelationScopedRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckRelationScopedResponse</returns>
-        System.Threading.Tasks.Task<CheckRelationScopedResponse> CheckRelationScopedAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<CheckRelationScopedResponse> CheckRelationScopedAsync(string orgId, CheckRelationScopedRequest checkRelationScopedRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Zanzibar relationship check
@@ -585,9 +624,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkRelationScopedRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckRelationScopedResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CheckRelationScopedResponse>> CheckRelationScopedWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<CheckRelationScopedResponse>> CheckRelationScopedWithHttpInfoAsync(string orgId, CheckRelationScopedRequest checkRelationScopedRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// AuthZEN 1.0 access evaluation
         /// </summary>
@@ -595,9 +635,10 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/v1/evaluation Body: {   \&quot;subject\&quot;:  {\&quot;type\&quot;: \&quot;user\&quot;|\&quot;agent\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;action\&quot;:   {\&quot;name\&quot;: \&quot;...\&quot;},   \&quot;resource\&quot;: {\&quot;type\&quot;: \&quot;...\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;context\&quot;:  {...} } Response: {\&quot;decision\&quot;: true|false, \&quot;context\&quot;: {...}?}
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateRequest">AuthZEN Authorization API 1.0 evaluation request.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthZenDecision</returns>
-        System.Threading.Tasks.Task<AuthZenDecision> EvaluateAsync(System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AuthZenDecision> EvaluateAsync(EvaluateRequest evaluateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// AuthZEN 1.0 access evaluation
@@ -606,9 +647,10 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/v1/evaluation Body: {   \&quot;subject\&quot;:  {\&quot;type\&quot;: \&quot;user\&quot;|\&quot;agent\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;action\&quot;:   {\&quot;name\&quot;: \&quot;...\&quot;},   \&quot;resource\&quot;: {\&quot;type\&quot;: \&quot;...\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;context\&quot;:  {...} } Response: {\&quot;decision\&quot;: true|false, \&quot;context\&quot;: {...}?}
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateRequest">AuthZEN Authorization API 1.0 evaluation request.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthZenDecision)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthZenDecision>> EvaluateWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AuthZenDecision>> EvaluateWithHttpInfoAsync(EvaluateRequest evaluateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// AuthZEN 1.0 boxcarred access evaluations
         /// </summary>
@@ -616,9 +658,10 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/v1/evaluations Body: {   \&quot;subject\&quot;:  {...}?,   // optional defaults, overridden per item   \&quot;action\&quot;:   {...}?,   \&quot;resource\&quot;: {...}?,   \&quot;context\&quot;:  {...}?,   \&quot;evaluations\&quot;: [{...}, ...] } Response: {\&quot;evaluations\&quot;: [{\&quot;decision\&quot;: ...}, ...]} preserving order.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateBatchRequest">AuthZEN Authorization API 1.0 batch evaluation request.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of EvaluateBatchResponse</returns>
-        System.Threading.Tasks.Task<EvaluateBatchResponse> EvaluateBatchAsync(System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<EvaluateBatchResponse> EvaluateBatchAsync(EvaluateBatchRequest evaluateBatchRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// AuthZEN 1.0 boxcarred access evaluations
@@ -627,9 +670,10 @@ namespace LumoAuth.ApiClient.Api
         /// POST /api/v1/authz/v1/evaluations Body: {   \&quot;subject\&quot;:  {...}?,   // optional defaults, overridden per item   \&quot;action\&quot;:   {...}?,   \&quot;resource\&quot;: {...}?,   \&quot;context\&quot;:  {...}?,   \&quot;evaluations\&quot;: [{...}, ...] } Response: {\&quot;evaluations\&quot;: [{\&quot;decision\&quot;: ...}, ...]} preserving order.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateBatchRequest">AuthZEN Authorization API 1.0 batch evaluation request.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (EvaluateBatchResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<EvaluateBatchResponse>> EvaluateBatchWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<EvaluateBatchResponse>> EvaluateBatchWithHttpInfoAsync(EvaluateBatchRequest evaluateBatchRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites.
         /// </summary>
@@ -785,9 +829,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="resourceType"></param>
         /// <param name="resourceId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of SetResourceAttributeResponse</returns>
-        System.Threading.Tasks.Task<SetResourceAttributeResponse> SetResourceAttributeAsync(string orgId, string resourceType, string resourceId, string attributeSlug, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<SetResourceAttributeResponse> SetResourceAttributeAsync(string orgId, string resourceType, string resourceId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Set a resource attribute
@@ -800,9 +845,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="resourceType"></param>
         /// <param name="resourceId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (SetResourceAttributeResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<SetResourceAttributeResponse>> SetResourceAttributeWithHttpInfoAsync(string orgId, string resourceType, string resourceId, string attributeSlug, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<SetResourceAttributeResponse>> SetResourceAttributeWithHttpInfoAsync(string orgId, string resourceType, string resourceId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Set a user attribute
         /// </summary>
@@ -813,9 +859,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of SetUserAttributeResponse</returns>
-        System.Threading.Tasks.Task<SetUserAttributeResponse> SetUserAttributeAsync(string orgId, string userId, string attributeSlug, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<SetUserAttributeResponse> SetUserAttributeAsync(string orgId, string userId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Set a user attribute
@@ -827,9 +874,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (SetUserAttributeResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<SetUserAttributeResponse>> SetUserAttributeWithHttpInfoAsync(string orgId, string userId, string attributeSlug, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<SetUserAttributeResponse>> SetUserAttributeWithHttpInfoAsync(string orgId, string userId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -1048,10 +1096,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacRequest"></param>
         /// <returns>CheckAbacResponse</returns>
-        public CheckAbacResponse CheckAbac(string orgId)
+        public CheckAbacResponse CheckAbac(string orgId, CheckAbacRequest checkAbacRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckAbacResponse> localVarResponse = CheckAbacWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<CheckAbacResponse> localVarResponse = CheckAbacWithHttpInfo(orgId, checkAbacRequest);
             return localVarResponse.Data;
         }
 
@@ -1060,16 +1109,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacRequest"></param>
         /// <returns>ApiResponse of CheckAbacResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<CheckAbacResponse> CheckAbacWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<CheckAbacResponse> CheckAbacWithHttpInfo(string orgId, CheckAbacRequest checkAbacRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AuthorizationApi->CheckAbac");
 
+            // verify the required parameter 'checkAbacRequest' is set
+            if (checkAbacRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkAbacRequest' when calling AuthorizationApi->CheckAbac");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1084,6 +1139,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = checkAbacRequest;
 
             // authentication (BearerAuth) required
             // bearer authentication required
@@ -1109,11 +1165,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckAbacResponse</returns>
-        public async System.Threading.Tasks.Task<CheckAbacResponse> CheckAbacAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<CheckAbacResponse> CheckAbacAsync(string orgId, CheckAbacRequest checkAbacRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckAbacResponse> localVarResponse = await CheckAbacWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<CheckAbacResponse> localVarResponse = await CheckAbacWithHttpInfoAsync(orgId, checkAbacRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1122,18 +1179,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckAbacResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckAbacResponse>> CheckAbacWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckAbacResponse>> CheckAbacWithHttpInfoAsync(string orgId, CheckAbacRequest checkAbacRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AuthorizationApi->CheckAbac");
 
+            // verify the required parameter 'checkAbacRequest' is set
+            if (checkAbacRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkAbacRequest' when calling AuthorizationApi->CheckAbac");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1149,6 +1212,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = checkAbacRequest;
 
             // authentication (BearerAuth) required
             // bearer authentication required
@@ -1175,10 +1239,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacBulkRequest"></param>
         /// <returns>CheckAbacBulkResponse</returns>
-        public CheckAbacBulkResponse CheckAbacBulk(string orgId)
+        public CheckAbacBulkResponse CheckAbacBulk(string orgId, CheckAbacBulkRequest checkAbacBulkRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckAbacBulkResponse> localVarResponse = CheckAbacBulkWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<CheckAbacBulkResponse> localVarResponse = CheckAbacBulkWithHttpInfo(orgId, checkAbacBulkRequest);
             return localVarResponse.Data;
         }
 
@@ -1187,16 +1252,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacBulkRequest"></param>
         /// <returns>ApiResponse of CheckAbacBulkResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<CheckAbacBulkResponse> CheckAbacBulkWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<CheckAbacBulkResponse> CheckAbacBulkWithHttpInfo(string orgId, CheckAbacBulkRequest checkAbacBulkRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AuthorizationApi->CheckAbacBulk");
 
+            // verify the required parameter 'checkAbacBulkRequest' is set
+            if (checkAbacBulkRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkAbacBulkRequest' when calling AuthorizationApi->CheckAbacBulk");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1211,6 +1282,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = checkAbacBulkRequest;
 
             // authentication (BearerAuth) required
             // bearer authentication required
@@ -1236,11 +1308,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckAbacBulkResponse</returns>
-        public async System.Threading.Tasks.Task<CheckAbacBulkResponse> CheckAbacBulkAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<CheckAbacBulkResponse> CheckAbacBulkAsync(string orgId, CheckAbacBulkRequest checkAbacBulkRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckAbacBulkResponse> localVarResponse = await CheckAbacBulkWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<CheckAbacBulkResponse> localVarResponse = await CheckAbacBulkWithHttpInfoAsync(orgId, checkAbacBulkRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1249,18 +1322,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkAbacBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckAbacBulkResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckAbacBulkResponse>> CheckAbacBulkWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckAbacBulkResponse>> CheckAbacBulkWithHttpInfoAsync(string orgId, CheckAbacBulkRequest checkAbacBulkRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AuthorizationApi->CheckAbacBulk");
 
+            // verify the required parameter 'checkAbacBulkRequest' is set
+            if (checkAbacBulkRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkAbacBulkRequest' when calling AuthorizationApi->CheckAbacBulk");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1276,6 +1355,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = checkAbacBulkRequest;
 
             // authentication (BearerAuth) required
             // bearer authentication required
@@ -1301,10 +1381,11 @@ namespace LumoAuth.ApiClient.Api
         /// Check whether the subject holds all of the permissions POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <returns>CheckAnyPermissionResponse</returns>
-        public CheckAnyPermissionResponse CheckAllPermissions()
+        public CheckAnyPermissionResponse CheckAllPermissions(CheckPermissionsBulkRequest checkPermissionsBulkRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse> localVarResponse = CheckAllPermissionsWithHttpInfo();
+            LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse> localVarResponse = CheckAllPermissionsWithHttpInfo(checkPermissionsBulkRequest);
             return localVarResponse.Data;
         }
 
@@ -1312,12 +1393,18 @@ namespace LumoAuth.ApiClient.Api
         /// Check whether the subject holds all of the permissions POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <returns>ApiResponse of CheckAnyPermissionResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse> CheckAllPermissionsWithHttpInfo()
+        public LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse> CheckAllPermissionsWithHttpInfo(CheckPermissionsBulkRequest checkPermissionsBulkRequest)
         {
+            // verify the required parameter 'checkPermissionsBulkRequest' is set
+            if (checkPermissionsBulkRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkPermissionsBulkRequest' when calling AuthorizationApi->CheckAllPermissions");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1331,6 +1418,7 @@ namespace LumoAuth.ApiClient.Api
             var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
+            localVarRequestOptions.Data = checkPermissionsBulkRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1360,11 +1448,12 @@ namespace LumoAuth.ApiClient.Api
         /// Check whether the subject holds all of the permissions POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckAnyPermissionResponse</returns>
-        public async System.Threading.Tasks.Task<CheckAnyPermissionResponse> CheckAllPermissionsAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<CheckAnyPermissionResponse> CheckAllPermissionsAsync(CheckPermissionsBulkRequest checkPermissionsBulkRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse> localVarResponse = await CheckAllPermissionsWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse> localVarResponse = await CheckAllPermissionsWithHttpInfoAsync(checkPermissionsBulkRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1372,14 +1461,20 @@ namespace LumoAuth.ApiClient.Api
         /// Check whether the subject holds all of the permissions POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckAnyPermissionResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse>> CheckAllPermissionsWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse>> CheckAllPermissionsWithHttpInfoAsync(CheckPermissionsBulkRequest checkPermissionsBulkRequest, System.Threading.CancellationToken cancellationToken = default)
         {
+            // verify the required parameter 'checkPermissionsBulkRequest' is set
+            if (checkPermissionsBulkRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkPermissionsBulkRequest' when calling AuthorizationApi->CheckAllPermissions");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1394,6 +1489,7 @@ namespace LumoAuth.ApiClient.Api
             var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
+            localVarRequestOptions.Data = checkPermissionsBulkRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1424,10 +1520,11 @@ namespace LumoAuth.ApiClient.Api
         /// Check whether the subject holds any of the permissions POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <returns>CheckAnyPermissionResponse</returns>
-        public CheckAnyPermissionResponse CheckAnyPermission()
+        public CheckAnyPermissionResponse CheckAnyPermission(CheckPermissionsBulkRequest checkPermissionsBulkRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse> localVarResponse = CheckAnyPermissionWithHttpInfo();
+            LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse> localVarResponse = CheckAnyPermissionWithHttpInfo(checkPermissionsBulkRequest);
             return localVarResponse.Data;
         }
 
@@ -1435,12 +1532,18 @@ namespace LumoAuth.ApiClient.Api
         /// Check whether the subject holds any of the permissions POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <returns>ApiResponse of CheckAnyPermissionResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse> CheckAnyPermissionWithHttpInfo()
+        public LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse> CheckAnyPermissionWithHttpInfo(CheckPermissionsBulkRequest checkPermissionsBulkRequest)
         {
+            // verify the required parameter 'checkPermissionsBulkRequest' is set
+            if (checkPermissionsBulkRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkPermissionsBulkRequest' when calling AuthorizationApi->CheckAnyPermission");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1454,6 +1557,7 @@ namespace LumoAuth.ApiClient.Api
             var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
+            localVarRequestOptions.Data = checkPermissionsBulkRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1483,11 +1587,12 @@ namespace LumoAuth.ApiClient.Api
         /// Check whether the subject holds any of the permissions POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckAnyPermissionResponse</returns>
-        public async System.Threading.Tasks.Task<CheckAnyPermissionResponse> CheckAnyPermissionAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<CheckAnyPermissionResponse> CheckAnyPermissionAsync(CheckPermissionsBulkRequest checkPermissionsBulkRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse> localVarResponse = await CheckAnyPermissionWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse> localVarResponse = await CheckAnyPermissionWithHttpInfoAsync(checkPermissionsBulkRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1495,14 +1600,20 @@ namespace LumoAuth.ApiClient.Api
         /// Check whether the subject holds any of the permissions POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckAnyPermissionResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse>> CheckAnyPermissionWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckAnyPermissionResponse>> CheckAnyPermissionWithHttpInfoAsync(CheckPermissionsBulkRequest checkPermissionsBulkRequest, System.Threading.CancellationToken cancellationToken = default)
         {
+            // verify the required parameter 'checkPermissionsBulkRequest' is set
+            if (checkPermissionsBulkRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkPermissionsBulkRequest' when calling AuthorizationApi->CheckAnyPermission");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1517,6 +1628,7 @@ namespace LumoAuth.ApiClient.Api
             var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
+            localVarRequestOptions.Data = checkPermissionsBulkRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1547,10 +1659,11 @@ namespace LumoAuth.ApiClient.Api
         /// Check one permission POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},        // read: resource_id + defined environment attribute slugs   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionRequest"></param>
         /// <returns>CheckPermissionResponse</returns>
-        public CheckPermissionResponse CheckPermission()
+        public CheckPermissionResponse CheckPermission(CheckPermissionRequest checkPermissionRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionResponse> localVarResponse = CheckPermissionWithHttpInfo();
+            LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionResponse> localVarResponse = CheckPermissionWithHttpInfo(checkPermissionRequest);
             return localVarResponse.Data;
         }
 
@@ -1558,12 +1671,18 @@ namespace LumoAuth.ApiClient.Api
         /// Check one permission POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},        // read: resource_id + defined environment attribute slugs   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionRequest"></param>
         /// <returns>ApiResponse of CheckPermissionResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionResponse> CheckPermissionWithHttpInfo()
+        public LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionResponse> CheckPermissionWithHttpInfo(CheckPermissionRequest checkPermissionRequest)
         {
+            // verify the required parameter 'checkPermissionRequest' is set
+            if (checkPermissionRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkPermissionRequest' when calling AuthorizationApi->CheckPermission");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1577,6 +1696,7 @@ namespace LumoAuth.ApiClient.Api
             var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
+            localVarRequestOptions.Data = checkPermissionRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1606,11 +1726,12 @@ namespace LumoAuth.ApiClient.Api
         /// Check one permission POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},        // read: resource_id + defined environment attribute slugs   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckPermissionResponse</returns>
-        public async System.Threading.Tasks.Task<CheckPermissionResponse> CheckPermissionAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<CheckPermissionResponse> CheckPermissionAsync(CheckPermissionRequest checkPermissionRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionResponse> localVarResponse = await CheckPermissionWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionResponse> localVarResponse = await CheckPermissionWithHttpInfoAsync(checkPermissionRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1618,14 +1739,20 @@ namespace LumoAuth.ApiClient.Api
         /// Check one permission POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},        // read: resource_id + defined environment attribute slugs   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckPermissionResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionResponse>> CheckPermissionWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionResponse>> CheckPermissionWithHttpInfoAsync(CheckPermissionRequest checkPermissionRequest, System.Threading.CancellationToken cancellationToken = default)
         {
+            // verify the required parameter 'checkPermissionRequest' is set
+            if (checkPermissionRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkPermissionRequest' when calling AuthorizationApi->CheckPermission");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1640,6 +1767,7 @@ namespace LumoAuth.ApiClient.Api
             var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
+            localVarRequestOptions.Data = checkPermissionRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1670,10 +1798,11 @@ namespace LumoAuth.ApiClient.Api
         /// Check up to 100 permissions in one call POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <returns>CheckPermissionsBulkResponse</returns>
-        public CheckPermissionsBulkResponse CheckPermissionsBulk()
+        public CheckPermissionsBulkResponse CheckPermissionsBulk(CheckPermissionsBulkRequest checkPermissionsBulkRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionsBulkResponse> localVarResponse = CheckPermissionsBulkWithHttpInfo();
+            LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionsBulkResponse> localVarResponse = CheckPermissionsBulkWithHttpInfo(checkPermissionsBulkRequest);
             return localVarResponse.Data;
         }
 
@@ -1681,12 +1810,18 @@ namespace LumoAuth.ApiClient.Api
         /// Check up to 100 permissions in one call POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <returns>ApiResponse of CheckPermissionsBulkResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionsBulkResponse> CheckPermissionsBulkWithHttpInfo()
+        public LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionsBulkResponse> CheckPermissionsBulkWithHttpInfo(CheckPermissionsBulkRequest checkPermissionsBulkRequest)
         {
+            // verify the required parameter 'checkPermissionsBulkRequest' is set
+            if (checkPermissionsBulkRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkPermissionsBulkRequest' when calling AuthorizationApi->CheckPermissionsBulk");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1700,6 +1835,7 @@ namespace LumoAuth.ApiClient.Api
             var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
+            localVarRequestOptions.Data = checkPermissionsBulkRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1729,11 +1865,12 @@ namespace LumoAuth.ApiClient.Api
         /// Check up to 100 permissions in one call POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckPermissionsBulkResponse</returns>
-        public async System.Threading.Tasks.Task<CheckPermissionsBulkResponse> CheckPermissionsBulkAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<CheckPermissionsBulkResponse> CheckPermissionsBulkAsync(CheckPermissionsBulkRequest checkPermissionsBulkRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionsBulkResponse> localVarResponse = await CheckPermissionsBulkWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionsBulkResponse> localVarResponse = await CheckPermissionsBulkWithHttpInfoAsync(checkPermissionsBulkRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1741,14 +1878,20 @@ namespace LumoAuth.ApiClient.Api
         /// Check up to 100 permissions in one call POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkPermissionsBulkRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckPermissionsBulkResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionsBulkResponse>> CheckPermissionsBulkWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckPermissionsBulkResponse>> CheckPermissionsBulkWithHttpInfoAsync(CheckPermissionsBulkRequest checkPermissionsBulkRequest, System.Threading.CancellationToken cancellationToken = default)
         {
+            // verify the required parameter 'checkPermissionsBulkRequest' is set
+            if (checkPermissionsBulkRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkPermissionsBulkRequest' when calling AuthorizationApi->CheckPermissionsBulk");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1763,6 +1906,7 @@ namespace LumoAuth.ApiClient.Api
             var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
+            localVarRequestOptions.Data = checkPermissionsBulkRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1793,10 +1937,11 @@ namespace LumoAuth.ApiClient.Api
         /// Zanzibar relationship check POST /api/v1/authz/zanzibar/check Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot;,   \&quot;subject\&quot;: \&quot;user:456\&quot; }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkRelationRequest"></param>
         /// <returns>CheckRelationResponse</returns>
-        public CheckRelationResponse CheckRelation()
+        public CheckRelationResponse CheckRelation(CheckRelationRequest checkRelationRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckRelationResponse> localVarResponse = CheckRelationWithHttpInfo();
+            LumoAuth.ApiClient.Client.ApiResponse<CheckRelationResponse> localVarResponse = CheckRelationWithHttpInfo(checkRelationRequest);
             return localVarResponse.Data;
         }
 
@@ -1804,12 +1949,18 @@ namespace LumoAuth.ApiClient.Api
         /// Zanzibar relationship check POST /api/v1/authz/zanzibar/check Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot;,   \&quot;subject\&quot;: \&quot;user:456\&quot; }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkRelationRequest"></param>
         /// <returns>ApiResponse of CheckRelationResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<CheckRelationResponse> CheckRelationWithHttpInfo()
+        public LumoAuth.ApiClient.Client.ApiResponse<CheckRelationResponse> CheckRelationWithHttpInfo(CheckRelationRequest checkRelationRequest)
         {
+            // verify the required parameter 'checkRelationRequest' is set
+            if (checkRelationRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkRelationRequest' when calling AuthorizationApi->CheckRelation");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1823,6 +1974,7 @@ namespace LumoAuth.ApiClient.Api
             var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
+            localVarRequestOptions.Data = checkRelationRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1852,11 +2004,12 @@ namespace LumoAuth.ApiClient.Api
         /// Zanzibar relationship check POST /api/v1/authz/zanzibar/check Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot;,   \&quot;subject\&quot;: \&quot;user:456\&quot; }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkRelationRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckRelationResponse</returns>
-        public async System.Threading.Tasks.Task<CheckRelationResponse> CheckRelationAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<CheckRelationResponse> CheckRelationAsync(CheckRelationRequest checkRelationRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckRelationResponse> localVarResponse = await CheckRelationWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<CheckRelationResponse> localVarResponse = await CheckRelationWithHttpInfoAsync(checkRelationRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1864,14 +2017,20 @@ namespace LumoAuth.ApiClient.Api
         /// Zanzibar relationship check POST /api/v1/authz/zanzibar/check Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot;,   \&quot;subject\&quot;: \&quot;user:456\&quot; }
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="checkRelationRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckRelationResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckRelationResponse>> CheckRelationWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckRelationResponse>> CheckRelationWithHttpInfoAsync(CheckRelationRequest checkRelationRequest, System.Threading.CancellationToken cancellationToken = default)
         {
+            // verify the required parameter 'checkRelationRequest' is set
+            if (checkRelationRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkRelationRequest' when calling AuthorizationApi->CheckRelation");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1886,6 +2045,7 @@ namespace LumoAuth.ApiClient.Api
             var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
+            localVarRequestOptions.Data = checkRelationRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1917,10 +2077,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkRelationScopedRequest"></param>
         /// <returns>CheckRelationScopedResponse</returns>
-        public CheckRelationScopedResponse CheckRelationScoped(string orgId)
+        public CheckRelationScopedResponse CheckRelationScoped(string orgId, CheckRelationScopedRequest checkRelationScopedRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckRelationScopedResponse> localVarResponse = CheckRelationScopedWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<CheckRelationScopedResponse> localVarResponse = CheckRelationScopedWithHttpInfo(orgId, checkRelationScopedRequest);
             return localVarResponse.Data;
         }
 
@@ -1929,16 +2090,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkRelationScopedRequest"></param>
         /// <returns>ApiResponse of CheckRelationScopedResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<CheckRelationScopedResponse> CheckRelationScopedWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<CheckRelationScopedResponse> CheckRelationScopedWithHttpInfo(string orgId, CheckRelationScopedRequest checkRelationScopedRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AuthorizationApi->CheckRelationScoped");
 
+            // verify the required parameter 'checkRelationScopedRequest' is set
+            if (checkRelationScopedRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkRelationScopedRequest' when calling AuthorizationApi->CheckRelationScoped");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1953,6 +2120,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = checkRelationScopedRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1983,11 +2151,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkRelationScopedRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CheckRelationScopedResponse</returns>
-        public async System.Threading.Tasks.Task<CheckRelationScopedResponse> CheckRelationScopedAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<CheckRelationScopedResponse> CheckRelationScopedAsync(string orgId, CheckRelationScopedRequest checkRelationScopedRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CheckRelationScopedResponse> localVarResponse = await CheckRelationScopedWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<CheckRelationScopedResponse> localVarResponse = await CheckRelationScopedWithHttpInfoAsync(orgId, checkRelationScopedRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1996,18 +2165,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="checkRelationScopedRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CheckRelationScopedResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckRelationScopedResponse>> CheckRelationScopedWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CheckRelationScopedResponse>> CheckRelationScopedWithHttpInfoAsync(string orgId, CheckRelationScopedRequest checkRelationScopedRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AuthorizationApi->CheckRelationScoped");
 
+            // verify the required parameter 'checkRelationScopedRequest' is set
+            if (checkRelationScopedRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'checkRelationScopedRequest' when calling AuthorizationApi->CheckRelationScoped");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2023,6 +2198,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = checkRelationScopedRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2053,10 +2229,11 @@ namespace LumoAuth.ApiClient.Api
         /// AuthZEN 1.0 access evaluation POST /api/v1/authz/v1/evaluation Body: {   \&quot;subject\&quot;:  {\&quot;type\&quot;: \&quot;user\&quot;|\&quot;agent\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;action\&quot;:   {\&quot;name\&quot;: \&quot;...\&quot;},   \&quot;resource\&quot;: {\&quot;type\&quot;: \&quot;...\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;context\&quot;:  {...} } Response: {\&quot;decision\&quot;: true|false, \&quot;context\&quot;: {...}?}
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateRequest">AuthZEN Authorization API 1.0 evaluation request.</param>
         /// <returns>AuthZenDecision</returns>
-        public AuthZenDecision Evaluate()
+        public AuthZenDecision Evaluate(EvaluateRequest evaluateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AuthZenDecision> localVarResponse = EvaluateWithHttpInfo();
+            LumoAuth.ApiClient.Client.ApiResponse<AuthZenDecision> localVarResponse = EvaluateWithHttpInfo(evaluateRequest);
             return localVarResponse.Data;
         }
 
@@ -2064,12 +2241,18 @@ namespace LumoAuth.ApiClient.Api
         /// AuthZEN 1.0 access evaluation POST /api/v1/authz/v1/evaluation Body: {   \&quot;subject\&quot;:  {\&quot;type\&quot;: \&quot;user\&quot;|\&quot;agent\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;action\&quot;:   {\&quot;name\&quot;: \&quot;...\&quot;},   \&quot;resource\&quot;: {\&quot;type\&quot;: \&quot;...\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;context\&quot;:  {...} } Response: {\&quot;decision\&quot;: true|false, \&quot;context\&quot;: {...}?}
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateRequest">AuthZEN Authorization API 1.0 evaluation request.</param>
         /// <returns>ApiResponse of AuthZenDecision</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AuthZenDecision> EvaluateWithHttpInfo()
+        public LumoAuth.ApiClient.Client.ApiResponse<AuthZenDecision> EvaluateWithHttpInfo(EvaluateRequest evaluateRequest)
         {
+            // verify the required parameter 'evaluateRequest' is set
+            if (evaluateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'evaluateRequest' when calling AuthorizationApi->Evaluate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2083,6 +2266,7 @@ namespace LumoAuth.ApiClient.Api
             var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
+            localVarRequestOptions.Data = evaluateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2112,11 +2296,12 @@ namespace LumoAuth.ApiClient.Api
         /// AuthZEN 1.0 access evaluation POST /api/v1/authz/v1/evaluation Body: {   \&quot;subject\&quot;:  {\&quot;type\&quot;: \&quot;user\&quot;|\&quot;agent\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;action\&quot;:   {\&quot;name\&quot;: \&quot;...\&quot;},   \&quot;resource\&quot;: {\&quot;type\&quot;: \&quot;...\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;context\&quot;:  {...} } Response: {\&quot;decision\&quot;: true|false, \&quot;context\&quot;: {...}?}
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateRequest">AuthZEN Authorization API 1.0 evaluation request.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AuthZenDecision</returns>
-        public async System.Threading.Tasks.Task<AuthZenDecision> EvaluateAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AuthZenDecision> EvaluateAsync(EvaluateRequest evaluateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AuthZenDecision> localVarResponse = await EvaluateWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AuthZenDecision> localVarResponse = await EvaluateWithHttpInfoAsync(evaluateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2124,14 +2309,20 @@ namespace LumoAuth.ApiClient.Api
         /// AuthZEN 1.0 access evaluation POST /api/v1/authz/v1/evaluation Body: {   \&quot;subject\&quot;:  {\&quot;type\&quot;: \&quot;user\&quot;|\&quot;agent\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;action\&quot;:   {\&quot;name\&quot;: \&quot;...\&quot;},   \&quot;resource\&quot;: {\&quot;type\&quot;: \&quot;...\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;context\&quot;:  {...} } Response: {\&quot;decision\&quot;: true|false, \&quot;context\&quot;: {...}?}
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateRequest">AuthZEN Authorization API 1.0 evaluation request.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AuthZenDecision)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AuthZenDecision>> EvaluateWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AuthZenDecision>> EvaluateWithHttpInfoAsync(EvaluateRequest evaluateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
+            // verify the required parameter 'evaluateRequest' is set
+            if (evaluateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'evaluateRequest' when calling AuthorizationApi->Evaluate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2146,6 +2337,7 @@ namespace LumoAuth.ApiClient.Api
             var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
+            localVarRequestOptions.Data = evaluateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2176,10 +2368,11 @@ namespace LumoAuth.ApiClient.Api
         /// AuthZEN 1.0 boxcarred access evaluations POST /api/v1/authz/v1/evaluations Body: {   \&quot;subject\&quot;:  {...}?,   // optional defaults, overridden per item   \&quot;action\&quot;:   {...}?,   \&quot;resource\&quot;: {...}?,   \&quot;context\&quot;:  {...}?,   \&quot;evaluations\&quot;: [{...}, ...] } Response: {\&quot;evaluations\&quot;: [{\&quot;decision\&quot;: ...}, ...]} preserving order.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateBatchRequest">AuthZEN Authorization API 1.0 batch evaluation request.</param>
         /// <returns>EvaluateBatchResponse</returns>
-        public EvaluateBatchResponse EvaluateBatch()
+        public EvaluateBatchResponse EvaluateBatch(EvaluateBatchRequest evaluateBatchRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<EvaluateBatchResponse> localVarResponse = EvaluateBatchWithHttpInfo();
+            LumoAuth.ApiClient.Client.ApiResponse<EvaluateBatchResponse> localVarResponse = EvaluateBatchWithHttpInfo(evaluateBatchRequest);
             return localVarResponse.Data;
         }
 
@@ -2187,12 +2380,18 @@ namespace LumoAuth.ApiClient.Api
         /// AuthZEN 1.0 boxcarred access evaluations POST /api/v1/authz/v1/evaluations Body: {   \&quot;subject\&quot;:  {...}?,   // optional defaults, overridden per item   \&quot;action\&quot;:   {...}?,   \&quot;resource\&quot;: {...}?,   \&quot;context\&quot;:  {...}?,   \&quot;evaluations\&quot;: [{...}, ...] } Response: {\&quot;evaluations\&quot;: [{\&quot;decision\&quot;: ...}, ...]} preserving order.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateBatchRequest">AuthZEN Authorization API 1.0 batch evaluation request.</param>
         /// <returns>ApiResponse of EvaluateBatchResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<EvaluateBatchResponse> EvaluateBatchWithHttpInfo()
+        public LumoAuth.ApiClient.Client.ApiResponse<EvaluateBatchResponse> EvaluateBatchWithHttpInfo(EvaluateBatchRequest evaluateBatchRequest)
         {
+            // verify the required parameter 'evaluateBatchRequest' is set
+            if (evaluateBatchRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'evaluateBatchRequest' when calling AuthorizationApi->EvaluateBatch");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2206,6 +2405,7 @@ namespace LumoAuth.ApiClient.Api
             var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
+            localVarRequestOptions.Data = evaluateBatchRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2235,11 +2435,12 @@ namespace LumoAuth.ApiClient.Api
         /// AuthZEN 1.0 boxcarred access evaluations POST /api/v1/authz/v1/evaluations Body: {   \&quot;subject\&quot;:  {...}?,   // optional defaults, overridden per item   \&quot;action\&quot;:   {...}?,   \&quot;resource\&quot;: {...}?,   \&quot;context\&quot;:  {...}?,   \&quot;evaluations\&quot;: [{...}, ...] } Response: {\&quot;evaluations\&quot;: [{\&quot;decision\&quot;: ...}, ...]} preserving order.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateBatchRequest">AuthZEN Authorization API 1.0 batch evaluation request.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of EvaluateBatchResponse</returns>
-        public async System.Threading.Tasks.Task<EvaluateBatchResponse> EvaluateBatchAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<EvaluateBatchResponse> EvaluateBatchAsync(EvaluateBatchRequest evaluateBatchRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<EvaluateBatchResponse> localVarResponse = await EvaluateBatchWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<EvaluateBatchResponse> localVarResponse = await EvaluateBatchWithHttpInfoAsync(evaluateBatchRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2247,14 +2448,20 @@ namespace LumoAuth.ApiClient.Api
         /// AuthZEN 1.0 boxcarred access evaluations POST /api/v1/authz/v1/evaluations Body: {   \&quot;subject\&quot;:  {...}?,   // optional defaults, overridden per item   \&quot;action\&quot;:   {...}?,   \&quot;resource\&quot;: {...}?,   \&quot;context\&quot;:  {...}?,   \&quot;evaluations\&quot;: [{...}, ...] } Response: {\&quot;evaluations\&quot;: [{\&quot;decision\&quot;: ...}, ...]} preserving order.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="evaluateBatchRequest">AuthZEN Authorization API 1.0 batch evaluation request.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (EvaluateBatchResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<EvaluateBatchResponse>> EvaluateBatchWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<EvaluateBatchResponse>> EvaluateBatchWithHttpInfoAsync(EvaluateBatchRequest evaluateBatchRequest, System.Threading.CancellationToken cancellationToken = default)
         {
+            // verify the required parameter 'evaluateBatchRequest' is set
+            if (evaluateBatchRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'evaluateBatchRequest' when calling AuthorizationApi->EvaluateBatch");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2269,6 +2476,7 @@ namespace LumoAuth.ApiClient.Api
             var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
+            localVarRequestOptions.Data = evaluateBatchRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3139,10 +3347,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="resourceType"></param>
         /// <param name="resourceId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <returns>SetResourceAttributeResponse</returns>
-        public SetResourceAttributeResponse SetResourceAttribute(string orgId, string resourceType, string resourceId, string attributeSlug)
+        public SetResourceAttributeResponse SetResourceAttribute(string orgId, string resourceType, string resourceId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<SetResourceAttributeResponse> localVarResponse = SetResourceAttributeWithHttpInfo(orgId, resourceType, resourceId, attributeSlug);
+            LumoAuth.ApiClient.Client.ApiResponse<SetResourceAttributeResponse> localVarResponse = SetResourceAttributeWithHttpInfo(orgId, resourceType, resourceId, attributeSlug, setResourceAttributeRequest);
             return localVarResponse.Data;
         }
 
@@ -3154,8 +3363,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="resourceType"></param>
         /// <param name="resourceId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <returns>ApiResponse of SetResourceAttributeResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<SetResourceAttributeResponse> SetResourceAttributeWithHttpInfo(string orgId, string resourceType, string resourceId, string attributeSlug)
+        public LumoAuth.ApiClient.Client.ApiResponse<SetResourceAttributeResponse> SetResourceAttributeWithHttpInfo(string orgId, string resourceType, string resourceId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3173,9 +3383,14 @@ namespace LumoAuth.ApiClient.Api
             if (attributeSlug == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'attributeSlug' when calling AuthorizationApi->SetResourceAttribute");
 
+            // verify the required parameter 'setResourceAttributeRequest' is set
+            if (setResourceAttributeRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'setResourceAttributeRequest' when calling AuthorizationApi->SetResourceAttribute");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3193,6 +3408,7 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("resourceType", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resourceType)); // path parameter
             localVarRequestOptions.PathParameters.Add("resourceId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resourceId)); // path parameter
             localVarRequestOptions.PathParameters.Add("attributeSlug", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(attributeSlug)); // path parameter
+            localVarRequestOptions.Data = setResourceAttributeRequest;
 
             // authentication (BearerAuth) required
             // bearer authentication required
@@ -3221,11 +3437,12 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="resourceType"></param>
         /// <param name="resourceId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of SetResourceAttributeResponse</returns>
-        public async System.Threading.Tasks.Task<SetResourceAttributeResponse> SetResourceAttributeAsync(string orgId, string resourceType, string resourceId, string attributeSlug, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<SetResourceAttributeResponse> SetResourceAttributeAsync(string orgId, string resourceType, string resourceId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<SetResourceAttributeResponse> localVarResponse = await SetResourceAttributeWithHttpInfoAsync(orgId, resourceType, resourceId, attributeSlug, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<SetResourceAttributeResponse> localVarResponse = await SetResourceAttributeWithHttpInfoAsync(orgId, resourceType, resourceId, attributeSlug, setResourceAttributeRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -3237,9 +3454,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="resourceType"></param>
         /// <param name="resourceId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (SetResourceAttributeResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SetResourceAttributeResponse>> SetResourceAttributeWithHttpInfoAsync(string orgId, string resourceType, string resourceId, string attributeSlug, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SetResourceAttributeResponse>> SetResourceAttributeWithHttpInfoAsync(string orgId, string resourceType, string resourceId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3257,10 +3475,15 @@ namespace LumoAuth.ApiClient.Api
             if (attributeSlug == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'attributeSlug' when calling AuthorizationApi->SetResourceAttribute");
 
+            // verify the required parameter 'setResourceAttributeRequest' is set
+            if (setResourceAttributeRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'setResourceAttributeRequest' when calling AuthorizationApi->SetResourceAttribute");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3279,6 +3502,7 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("resourceType", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resourceType)); // path parameter
             localVarRequestOptions.PathParameters.Add("resourceId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resourceId)); // path parameter
             localVarRequestOptions.PathParameters.Add("attributeSlug", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(attributeSlug)); // path parameter
+            localVarRequestOptions.Data = setResourceAttributeRequest;
 
             // authentication (BearerAuth) required
             // bearer authentication required
@@ -3307,10 +3531,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <returns>SetUserAttributeResponse</returns>
-        public SetUserAttributeResponse SetUserAttribute(string orgId, string userId, string attributeSlug)
+        public SetUserAttributeResponse SetUserAttribute(string orgId, string userId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<SetUserAttributeResponse> localVarResponse = SetUserAttributeWithHttpInfo(orgId, userId, attributeSlug);
+            LumoAuth.ApiClient.Client.ApiResponse<SetUserAttributeResponse> localVarResponse = SetUserAttributeWithHttpInfo(orgId, userId, attributeSlug, setResourceAttributeRequest);
             return localVarResponse.Data;
         }
 
@@ -3321,8 +3546,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <returns>ApiResponse of SetUserAttributeResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<SetUserAttributeResponse> SetUserAttributeWithHttpInfo(string orgId, string userId, string attributeSlug)
+        public LumoAuth.ApiClient.Client.ApiResponse<SetUserAttributeResponse> SetUserAttributeWithHttpInfo(string orgId, string userId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3336,9 +3562,14 @@ namespace LumoAuth.ApiClient.Api
             if (attributeSlug == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'attributeSlug' when calling AuthorizationApi->SetUserAttribute");
 
+            // verify the required parameter 'setResourceAttributeRequest' is set
+            if (setResourceAttributeRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'setResourceAttributeRequest' when calling AuthorizationApi->SetUserAttribute");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3355,6 +3586,7 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
             localVarRequestOptions.PathParameters.Add("attributeSlug", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(attributeSlug)); // path parameter
+            localVarRequestOptions.Data = setResourceAttributeRequest;
 
             // authentication (BearerAuth) required
             // bearer authentication required
@@ -3382,11 +3614,12 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of SetUserAttributeResponse</returns>
-        public async System.Threading.Tasks.Task<SetUserAttributeResponse> SetUserAttributeAsync(string orgId, string userId, string attributeSlug, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<SetUserAttributeResponse> SetUserAttributeAsync(string orgId, string userId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<SetUserAttributeResponse> localVarResponse = await SetUserAttributeWithHttpInfoAsync(orgId, userId, attributeSlug, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<SetUserAttributeResponse> localVarResponse = await SetUserAttributeWithHttpInfoAsync(orgId, userId, attributeSlug, setResourceAttributeRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -3397,9 +3630,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="attributeSlug"></param>
+        /// <param name="setResourceAttributeRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (SetUserAttributeResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SetUserAttributeResponse>> SetUserAttributeWithHttpInfoAsync(string orgId, string userId, string attributeSlug, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SetUserAttributeResponse>> SetUserAttributeWithHttpInfoAsync(string orgId, string userId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3413,10 +3647,15 @@ namespace LumoAuth.ApiClient.Api
             if (attributeSlug == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'attributeSlug' when calling AuthorizationApi->SetUserAttribute");
 
+            // verify the required parameter 'setResourceAttributeRequest' is set
+            if (setResourceAttributeRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'setResourceAttributeRequest' when calling AuthorizationApi->SetUserAttribute");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3434,6 +3673,7 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
             localVarRequestOptions.PathParameters.Add("attributeSlug", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(attributeSlug)); // path parameter
+            localVarRequestOptions.Data = setResourceAttributeRequest;
 
             // authentication (BearerAuth) required
             // bearer authentication required

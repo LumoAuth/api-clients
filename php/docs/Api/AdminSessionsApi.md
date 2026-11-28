@@ -9,9 +9,9 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | [**adminSessionsCount()**](AdminSessionsApi.md#adminSessionsCount) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Active session count |
 | [**adminSessionsList()**](AdminSessionsApi.md#adminSessionsList) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions |
 | [**adminSessionsRevoke()**](AdminSessionsApi.md#adminSessionsRevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a session |
-| [**adminSessionsRevokeAll()**](AdminSessionsApi.md#adminSessionsRevokeAll) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the tenant |
+| [**adminSessionsRevokeAll()**](AdminSessionsApi.md#adminSessionsRevokeAll) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the organization |
 | [**adminSessionsStats()**](AdminSessionsApi.md#adminSessionsStats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Session statistics |
-| [**adminTokensList()**](AdminSessionsApi.md#adminTokensList) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens |
+| [**adminTokensList()**](AdminSessionsApi.md#adminTokensList) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List stored (opaque) access tokens |
 | [**adminTokensRevoke()**](AdminSessionsApi.md#adminTokensRevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/tokens/{tokenId} | Revoke a token |
 | [**adminUserSessionsList()**](AdminSessionsApi.md#adminUserSessionsList) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | List a user&#39;s active sessions |
 | [**adminUserSessionsRevokeAll()**](AdminSessionsApi.md#adminUserSessionsRevokeAll) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions of a user |
@@ -221,7 +221,7 @@ adminSessionsList($orgId): \LumoAuth\ApiClient\Model\AdminSessionsListResponse
 
 List active sessions
 
-Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
 ### Example
 
@@ -349,7 +349,7 @@ try {
 adminSessionsRevokeAll($orgId, $adminSessionsRevokeAllRequest): \LumoAuth\ApiClient\Model\AdminSessionsRevokeAllResponse
 ```
 
-Revoke every session in the tenant
+Revoke every session in the organization
 
 Signs out all users. Requires `confirm: true` in the body.
 
@@ -479,9 +479,9 @@ try {
 adminTokensList($orgId): \LumoAuth\ApiClient\Model\AdminTokensListResponse
 ```
 
-List access tokens
+List stored (opaque) access tokens
 
-Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
+Paginated OPAQUE access tokens issued by the organization's clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user's or a client's tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
 
 ### Example
 
@@ -808,6 +808,8 @@ adminUserTokensRevokeAll($orgId, $userId): \LumoAuth\ApiClient\Model\AdminUserTo
 
 Revoke all tokens of a user
 
+Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
+
 ### Example
 
 ```php
@@ -872,6 +874,8 @@ adminUserTokensRevokePost($orgId, $userId): \LumoAuth\ApiClient\Model\AdminUserT
 ```
 
 Revoke all tokens of a user (POST alias)
+
+Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 
 ### Example
 

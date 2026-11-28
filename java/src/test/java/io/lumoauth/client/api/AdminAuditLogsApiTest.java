@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -20,6 +20,8 @@ import io.lumoauth.client.model.AdminAuditLogsGetResponse;
 import io.lumoauth.client.model.AdminAuditLogsListResponse;
 import io.lumoauth.client.model.AdminAuditLogsRetentionResponse;
 import io.lumoauth.client.model.AdminAuditLogsStatsResponse;
+import java.time.OffsetDateTime;
+import io.lumoauth.client.model.PutAdminAuditLogsRetentionUpdateRequest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +39,7 @@ public class AdminAuditLogsApiTest {
     private final AdminAuditLogsApi api = new AdminAuditLogsApi();
 
     /**
-     * List the distinct audit action types recorded for the tenant
+     * List the distinct audit action types recorded for the organization
      *
      * @throws ApiException if the Api call fails
      */
@@ -58,7 +60,20 @@ public class AdminAuditLogsApiTest {
     @Test
     public void adminAuditLogsExportTest() throws ApiException {
         String orgId = null;
-        String response = api.adminAuditLogsExport(orgId);
+        String format = null;
+        String eventType = null;
+        String action = null;
+        String actorId = null;
+        String targetType = null;
+        String targetId = null;
+        String severity = null;
+        String status = null;
+        String ipAddress = null;
+        String search = null;
+        String traceId = null;
+        OffsetDateTime from = null;
+        OffsetDateTime to = null;
+        String response = api.adminAuditLogsExport(orgId, format, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to);
         // TODO: test validations
     }
 
@@ -83,7 +98,21 @@ public class AdminAuditLogsApiTest {
     @Test
     public void adminAuditLogsListTest() throws ApiException {
         String orgId = null;
-        AdminAuditLogsListResponse response = api.adminAuditLogsList(orgId);
+        Integer page = null;
+        Integer limit = null;
+        String eventType = null;
+        String action = null;
+        String actorId = null;
+        String targetType = null;
+        String targetId = null;
+        String severity = null;
+        String status = null;
+        String ipAddress = null;
+        String search = null;
+        String traceId = null;
+        OffsetDateTime from = null;
+        OffsetDateTime to = null;
+        AdminAuditLogsListResponse response = api.adminAuditLogsList(orgId, page, limit, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to);
         // TODO: test validations
     }
 
@@ -121,7 +150,8 @@ public class AdminAuditLogsApiTest {
     @Test
     public void patchAdminAuditLogsRetentionUpdateTest() throws ApiException {
         String orgId = null;
-        AdminAuditLogsRetentionResponse response = api.patchAdminAuditLogsRetentionUpdate(orgId);
+        PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest = null;
+        AdminAuditLogsRetentionResponse response = api.patchAdminAuditLogsRetentionUpdate(orgId, putAdminAuditLogsRetentionUpdateRequest);
         // TODO: test validations
     }
 
@@ -135,7 +165,8 @@ public class AdminAuditLogsApiTest {
     @Test
     public void putAdminAuditLogsRetentionUpdateTest() throws ApiException {
         String orgId = null;
-        AdminAuditLogsRetentionResponse response = api.putAdminAuditLogsRetentionUpdate(orgId);
+        PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest = null;
+        AdminAuditLogsRetentionResponse response = api.putAdminAuditLogsRetentionUpdate(orgId, putAdminAuditLogsRetentionUpdateRequest);
         // TODO: test validations
     }
 

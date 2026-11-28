@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -33,8 +33,9 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createStreamConfigRequest"></param>
         /// <returns>SsfStream</returns>
-        SsfStream CreateStreamConfig(string orgId);
+        SsfStream CreateStreamConfig(string orgId, CreateStreamConfigRequest createStreamConfigRequest);
 
         /// <summary>
         /// Create an SSF stream
@@ -44,8 +45,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createStreamConfigRequest"></param>
         /// <returns>ApiResponse of SsfStream</returns>
-        ApiResponse<SsfStream> CreateStreamConfigWithHttpInfo(string orgId);
+        ApiResponse<SsfStream> CreateStreamConfigWithHttpInfo(string orgId, CreateStreamConfigRequest createStreamConfigRequest);
         /// <summary>
         /// Delete an SSF stream
         /// </summary>
@@ -97,8 +99,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="verifyStreamRequest"> (optional)</param>
         /// <returns></returns>
-        void VerifyStream(string orgId);
+        void VerifyStream(string orgId, VerifyStreamRequest? verifyStreamRequest = default);
 
         /// <summary>
         /// Request a stream verification event
@@ -108,8 +111,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="verifyStreamRequest"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> VerifyStreamWithHttpInfo(string orgId);
+        ApiResponse<Object> VerifyStreamWithHttpInfo(string orgId, VerifyStreamRequest? verifyStreamRequest = default);
         #endregion Synchronous Operations
     }
 
@@ -127,9 +131,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createStreamConfigRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of SsfStream</returns>
-        System.Threading.Tasks.Task<SsfStream> CreateStreamConfigAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<SsfStream> CreateStreamConfigAsync(string orgId, CreateStreamConfigRequest createStreamConfigRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create an SSF stream
@@ -139,9 +144,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createStreamConfigRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (SsfStream)</returns>
-        System.Threading.Tasks.Task<ApiResponse<SsfStream>> CreateStreamConfigWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<SsfStream>> CreateStreamConfigWithHttpInfoAsync(string orgId, CreateStreamConfigRequest createStreamConfigRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete an SSF stream
         /// </summary>
@@ -200,9 +206,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="verifyStreamRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task VerifyStreamAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task VerifyStreamAsync(string orgId, VerifyStreamRequest? verifyStreamRequest = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Request a stream verification event
@@ -212,9 +219,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="verifyStreamRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> VerifyStreamWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<Object>> VerifyStreamWithHttpInfoAsync(string orgId, VerifyStreamRequest? verifyStreamRequest = default, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -433,10 +441,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createStreamConfigRequest"></param>
         /// <returns>SsfStream</returns>
-        public SsfStream CreateStreamConfig(string orgId)
+        public SsfStream CreateStreamConfig(string orgId, CreateStreamConfigRequest createStreamConfigRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<SsfStream> localVarResponse = CreateStreamConfigWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<SsfStream> localVarResponse = CreateStreamConfigWithHttpInfo(orgId, createStreamConfigRequest);
             return localVarResponse.Data;
         }
 
@@ -445,16 +454,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createStreamConfigRequest"></param>
         /// <returns>ApiResponse of SsfStream</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<SsfStream> CreateStreamConfigWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<SsfStream> CreateStreamConfigWithHttpInfo(string orgId, CreateStreamConfigRequest createStreamConfigRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling SsfApi->CreateStreamConfig");
 
+            // verify the required parameter 'createStreamConfigRequest' is set
+            if (createStreamConfigRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'createStreamConfigRequest' when calling SsfApi->CreateStreamConfig");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -469,6 +484,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = createStreamConfigRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -499,11 +515,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createStreamConfigRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of SsfStream</returns>
-        public async System.Threading.Tasks.Task<SsfStream> CreateStreamConfigAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<SsfStream> CreateStreamConfigAsync(string orgId, CreateStreamConfigRequest createStreamConfigRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<SsfStream> localVarResponse = await CreateStreamConfigWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<SsfStream> localVarResponse = await CreateStreamConfigWithHttpInfoAsync(orgId, createStreamConfigRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -512,18 +529,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createStreamConfigRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (SsfStream)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SsfStream>> CreateStreamConfigWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SsfStream>> CreateStreamConfigWithHttpInfoAsync(string orgId, CreateStreamConfigRequest createStreamConfigRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling SsfApi->CreateStreamConfig");
 
+            // verify the required parameter 'createStreamConfigRequest' is set
+            if (createStreamConfigRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'createStreamConfigRequest' when calling SsfApi->CreateStreamConfig");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -539,6 +562,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = createStreamConfigRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -866,10 +890,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="verifyStreamRequest"> (optional)</param>
         /// <returns></returns>
-        public void VerifyStream(string orgId)
+        public void VerifyStream(string orgId, VerifyStreamRequest? verifyStreamRequest = default)
         {
-            VerifyStreamWithHttpInfo(orgId);
+            VerifyStreamWithHttpInfo(orgId, verifyStreamRequest);
         }
 
         /// <summary>
@@ -877,8 +902,9 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="verifyStreamRequest"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> VerifyStreamWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<Object> VerifyStreamWithHttpInfo(string orgId, VerifyStreamRequest? verifyStreamRequest = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -887,6 +913,7 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -900,6 +927,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = verifyStreamRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -930,11 +958,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="verifyStreamRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task VerifyStreamAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task VerifyStreamAsync(string orgId, VerifyStreamRequest? verifyStreamRequest = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            await VerifyStreamWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            await VerifyStreamWithHttpInfoAsync(orgId, verifyStreamRequest, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -942,9 +971,10 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="verifyStreamRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> VerifyStreamWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> VerifyStreamWithHttpInfoAsync(string orgId, VerifyStreamRequest? verifyStreamRequest = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -954,6 +984,7 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -968,6 +999,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = verifyStreamRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -14,11 +14,15 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AddUserGroupRequest;
 import io.lumoauth.client.model.AddUserGroupResponse;
+import io.lumoauth.client.model.AddUserPermissionRequest;
 import io.lumoauth.client.model.AddUserPermissionResponse;
+import io.lumoauth.client.model.AddUserRoleRequest;
 import io.lumoauth.client.model.AddUserRoleResponse;
 import io.lumoauth.client.model.AdminAgentsGetResponse;
 import io.lumoauth.client.model.AdminGroupsGroupsGetRolesResponse;
+import io.lumoauth.client.model.AdminGroupsUpdateRolesRequest;
 import io.lumoauth.client.model.AdminIdentitiesLegacySamlRelinkRequest;
 import io.lumoauth.client.model.AdminIdentitiesLegacySamlRelinkResponse;
 import io.lumoauth.client.model.AdminIdentitiesLegacySamlReportResponse;
@@ -27,6 +31,7 @@ import io.lumoauth.client.model.AdminIdentitiesListResponse;
 import io.lumoauth.client.model.AdminRolesGetPermissionsResponse;
 import io.lumoauth.client.model.AdminUsersRestoreResponse;
 import io.lumoauth.client.model.BlockUserResponse;
+import io.lumoauth.client.model.CreateUserRequest;
 import io.lumoauth.client.model.CreateUserResponse;
 import io.lumoauth.client.model.DeleteUserResponse;
 import io.lumoauth.client.model.GetUserResponse;
@@ -36,10 +41,13 @@ import io.lumoauth.client.model.RemoveUserGroupResponse;
 import io.lumoauth.client.model.RemoveUserPermissionResponse;
 import io.lumoauth.client.model.RemoveUserRoleResponse;
 import io.lumoauth.client.model.SendUserVerificationEmailResponse;
+import io.lumoauth.client.model.SetUserPasswordPostRequest;
 import io.lumoauth.client.model.SetUserPasswordPostResponse;
 import io.lumoauth.client.model.TriggerUserPasswordResetResponse;
 import io.lumoauth.client.model.UnblockUserResponse;
+import io.lumoauth.client.model.UpdateUserGroupsRequest;
 import io.lumoauth.client.model.UpdateUserGroupsResponse;
+import io.lumoauth.client.model.UpdateUserRequest;
 import io.lumoauth.client.model.UpdateUserResponse;
 import io.lumoauth.client.model.UpdateUserRolesResponse;
 import org.junit.jupiter.api.Disabled;
@@ -67,14 +75,15 @@ public class AdminUsersApiTest {
     public void addUserGroupTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        AddUserGroupResponse response = api.addUserGroup(orgId, userId);
+        AddUserGroupRequest addUserGroupRequest = null;
+        AddUserGroupResponse response = api.addUserGroup(orgId, userId, addUserGroupRequest);
         // TODO: test validations
     }
 
     /**
      * Assign a permission to a user
      *
-     * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+     * Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization&#39;s own permissions needs &#x60;roles.assign-permissions&#x60; instead, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60; (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
      *
      * @throws ApiException if the Api call fails
      */
@@ -82,7 +91,8 @@ public class AdminUsersApiTest {
     public void addUserPermissionTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        AddUserPermissionResponse response = api.addUserPermission(orgId, userId);
+        AddUserPermissionRequest addUserPermissionRequest = null;
+        AddUserPermissionResponse response = api.addUserPermission(orgId, userId, addUserPermissionRequest);
         // TODO: test validations
     }
 
@@ -95,7 +105,8 @@ public class AdminUsersApiTest {
     public void addUserRoleTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        AddUserRoleResponse response = api.addUserRole(orgId, userId);
+        AddUserRoleRequest addUserRoleRequest = null;
+        AddUserRoleResponse response = api.addUserRole(orgId, userId, addUserRoleRequest);
         // TODO: test validations
     }
 
@@ -212,7 +223,8 @@ public class AdminUsersApiTest {
     @Test
     public void createUserTest() throws ApiException {
         String orgId = null;
-        CreateUserResponse response = api.createUser(orgId);
+        CreateUserRequest createUserRequest = null;
+        CreateUserResponse response = api.createUser(orgId, createUserRequest);
         // TODO: test validations
     }
 
@@ -329,7 +341,8 @@ public class AdminUsersApiTest {
     public void patchUserTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        UpdateUserResponse response = api.patchUser(orgId, userId);
+        UpdateUserRequest updateUserRequest = null;
+        UpdateUserResponse response = api.patchUser(orgId, userId, updateUserRequest);
         // TODO: test validations
     }
 
@@ -414,7 +427,8 @@ public class AdminUsersApiTest {
     public void setUserPasswordTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        SetUserPasswordPostResponse response = api.setUserPassword(orgId, userId);
+        SetUserPasswordPostRequest setUserPasswordPostRequest = null;
+        SetUserPasswordPostResponse response = api.setUserPassword(orgId, userId, setUserPasswordPostRequest);
         // TODO: test validations
     }
 
@@ -429,7 +443,8 @@ public class AdminUsersApiTest {
     public void setUserPasswordPostTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        SetUserPasswordPostResponse response = api.setUserPasswordPost(orgId, userId);
+        SetUserPasswordPostRequest setUserPasswordPostRequest = null;
+        SetUserPasswordPostResponse response = api.setUserPasswordPost(orgId, userId, setUserPasswordPostRequest);
         // TODO: test validations
     }
 
@@ -470,7 +485,8 @@ public class AdminUsersApiTest {
     public void updateUserTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        UpdateUserResponse response = api.updateUser(orgId, userId);
+        UpdateUserRequest updateUserRequest = null;
+        UpdateUserResponse response = api.updateUser(orgId, userId, updateUserRequest);
         // TODO: test validations
     }
 
@@ -483,7 +499,8 @@ public class AdminUsersApiTest {
     public void updateUserGroupsTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        UpdateUserGroupsResponse response = api.updateUserGroups(orgId, userId);
+        UpdateUserGroupsRequest updateUserGroupsRequest = null;
+        UpdateUserGroupsResponse response = api.updateUserGroups(orgId, userId, updateUserGroupsRequest);
         // TODO: test validations
     }
 
@@ -496,7 +513,8 @@ public class AdminUsersApiTest {
     public void updateUserRolesTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        UpdateUserRolesResponse response = api.updateUserRoles(orgId, userId);
+        AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest = null;
+        UpdateUserRolesResponse response = api.updateUserRoles(orgId, userId, adminGroupsUpdateRolesRequest);
         // TODO: test validations
     }
 

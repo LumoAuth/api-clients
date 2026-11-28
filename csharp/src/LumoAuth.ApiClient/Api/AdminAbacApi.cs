@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -33,8 +33,9 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacAttributesCreateRequest"></param>
         /// <returns>AbacAttributesCreateResponse</returns>
-        AbacAttributesCreateResponse AbacAttributesCreate(string orgId);
+        AbacAttributesCreateResponse AbacAttributesCreate(string orgId, AbacAttributesCreateRequest abacAttributesCreateRequest);
 
         /// <summary>
         /// Create an attribute definition
@@ -44,8 +45,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacAttributesCreateRequest"></param>
         /// <returns>ApiResponse of AbacAttributesCreateResponse</returns>
-        ApiResponse<AbacAttributesCreateResponse> AbacAttributesCreateWithHttpInfo(string orgId);
+        ApiResponse<AbacAttributesCreateResponse> AbacAttributesCreateWithHttpInfo(string orgId, AbacAttributesCreateRequest abacAttributesCreateRequest);
         /// <summary>
         /// Delete an attribute definition
         /// </summary>
@@ -109,8 +111,9 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacPoliciesCreateRequest"></param>
         /// <returns>AbacPoliciesCreateResponse</returns>
-        AbacPoliciesCreateResponse AbacPoliciesCreate(string orgId);
+        AbacPoliciesCreateResponse AbacPoliciesCreate(string orgId, AbacPoliciesCreateRequest abacPoliciesCreateRequest);
 
         /// <summary>
         /// Create an ABAC policy
@@ -120,8 +123,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacPoliciesCreateRequest"></param>
         /// <returns>ApiResponse of AbacPoliciesCreateResponse</returns>
-        ApiResponse<AbacPoliciesCreateResponse> AbacPoliciesCreateWithHttpInfo(string orgId);
+        ApiResponse<AbacPoliciesCreateResponse> AbacPoliciesCreateWithHttpInfo(string orgId, AbacPoliciesCreateRequest abacPoliciesCreateRequest);
         /// <summary>
         /// Delete an ABAC policy
         /// </summary>
@@ -208,8 +212,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <returns>PutAbacAttributesUpdateResponse</returns>
-        PutAbacAttributesUpdateResponse PatchAbacAttributesUpdate(string orgId, string id);
+        PutAbacAttributesUpdateResponse PatchAbacAttributesUpdate(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest);
 
         /// <summary>
         /// Partially update an attribute definition
@@ -220,16 +225,18 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <returns>ApiResponse of PutAbacAttributesUpdateResponse</returns>
-        ApiResponse<PutAbacAttributesUpdateResponse> PatchAbacAttributesUpdateWithHttpInfo(string orgId, string id);
+        ApiResponse<PutAbacAttributesUpdateResponse> PatchAbacAttributesUpdateWithHttpInfo(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest);
         /// <summary>
         /// Partially update an ABAC policy
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <returns>PutAbacPoliciesUpdateResponse</returns>
-        PutAbacPoliciesUpdateResponse PatchAbacPoliciesUpdate(string orgId, string id);
+        PutAbacPoliciesUpdateResponse PatchAbacPoliciesUpdate(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest);
 
         /// <summary>
         /// Partially update an ABAC policy
@@ -240,16 +247,18 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <returns>ApiResponse of PutAbacPoliciesUpdateResponse</returns>
-        ApiResponse<PutAbacPoliciesUpdateResponse> PatchAbacPoliciesUpdateWithHttpInfo(string orgId, string id);
+        ApiResponse<PutAbacPoliciesUpdateResponse> PatchAbacPoliciesUpdateWithHttpInfo(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest);
         /// <summary>
         /// Update an attribute definition
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <returns>PutAbacAttributesUpdateResponse</returns>
-        PutAbacAttributesUpdateResponse PutAbacAttributesUpdate(string orgId, string id);
+        PutAbacAttributesUpdateResponse PutAbacAttributesUpdate(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest);
 
         /// <summary>
         /// Update an attribute definition
@@ -260,16 +269,18 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <returns>ApiResponse of PutAbacAttributesUpdateResponse</returns>
-        ApiResponse<PutAbacAttributesUpdateResponse> PutAbacAttributesUpdateWithHttpInfo(string orgId, string id);
+        ApiResponse<PutAbacAttributesUpdateResponse> PutAbacAttributesUpdateWithHttpInfo(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest);
         /// <summary>
         /// Update an ABAC policy
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <returns>PutAbacPoliciesUpdateResponse</returns>
-        PutAbacPoliciesUpdateResponse PutAbacPoliciesUpdate(string orgId, string id);
+        PutAbacPoliciesUpdateResponse PutAbacPoliciesUpdate(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest);
 
         /// <summary>
         /// Update an ABAC policy
@@ -280,8 +291,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <returns>ApiResponse of PutAbacPoliciesUpdateResponse</returns>
-        ApiResponse<PutAbacPoliciesUpdateResponse> PutAbacPoliciesUpdateWithHttpInfo(string orgId, string id);
+        ApiResponse<PutAbacPoliciesUpdateResponse> PutAbacPoliciesUpdateWithHttpInfo(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest);
         #endregion Synchronous Operations
     }
 
@@ -299,9 +311,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacAttributesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AbacAttributesCreateResponse</returns>
-        System.Threading.Tasks.Task<AbacAttributesCreateResponse> AbacAttributesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AbacAttributesCreateResponse> AbacAttributesCreateAsync(string orgId, AbacAttributesCreateRequest abacAttributesCreateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create an attribute definition
@@ -311,9 +324,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacAttributesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AbacAttributesCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AbacAttributesCreateResponse>> AbacAttributesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AbacAttributesCreateResponse>> AbacAttributesCreateWithHttpInfoAsync(string orgId, AbacAttributesCreateRequest abacAttributesCreateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete an attribute definition
         /// </summary>
@@ -395,9 +409,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacPoliciesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AbacPoliciesCreateResponse</returns>
-        System.Threading.Tasks.Task<AbacPoliciesCreateResponse> AbacPoliciesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AbacPoliciesCreateResponse> AbacPoliciesCreateAsync(string orgId, AbacPoliciesCreateRequest abacPoliciesCreateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create an ABAC policy
@@ -407,9 +422,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacPoliciesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AbacPoliciesCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AbacPoliciesCreateResponse>> AbacPoliciesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AbacPoliciesCreateResponse>> AbacPoliciesCreateWithHttpInfoAsync(string orgId, AbacPoliciesCreateRequest abacPoliciesCreateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete an ABAC policy
         /// </summary>
@@ -519,9 +535,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAbacAttributesUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAbacAttributesUpdateResponse> PatchAbacAttributesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAbacAttributesUpdateResponse> PatchAbacAttributesUpdateAsync(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Partially update an attribute definition
@@ -532,9 +549,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAbacAttributesUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAbacAttributesUpdateResponse>> PatchAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAbacAttributesUpdateResponse>> PatchAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Partially update an ABAC policy
         /// </summary>
@@ -544,9 +562,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAbacPoliciesUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAbacPoliciesUpdateResponse> PatchAbacPoliciesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAbacPoliciesUpdateResponse> PatchAbacPoliciesUpdateAsync(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Partially update an ABAC policy
@@ -557,9 +576,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAbacPoliciesUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAbacPoliciesUpdateResponse>> PatchAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAbacPoliciesUpdateResponse>> PatchAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update an attribute definition
         /// </summary>
@@ -569,9 +589,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAbacAttributesUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAbacAttributesUpdateResponse> PutAbacAttributesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAbacAttributesUpdateResponse> PutAbacAttributesUpdateAsync(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update an attribute definition
@@ -582,9 +603,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAbacAttributesUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAbacAttributesUpdateResponse>> PutAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAbacAttributesUpdateResponse>> PutAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update an ABAC policy
         /// </summary>
@@ -594,9 +616,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAbacPoliciesUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAbacPoliciesUpdateResponse> PutAbacPoliciesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAbacPoliciesUpdateResponse> PutAbacPoliciesUpdateAsync(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update an ABAC policy
@@ -607,9 +630,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAbacPoliciesUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAbacPoliciesUpdateResponse>> PutAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAbacPoliciesUpdateResponse>> PutAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -828,10 +852,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacAttributesCreateRequest"></param>
         /// <returns>AbacAttributesCreateResponse</returns>
-        public AbacAttributesCreateResponse AbacAttributesCreate(string orgId)
+        public AbacAttributesCreateResponse AbacAttributesCreate(string orgId, AbacAttributesCreateRequest abacAttributesCreateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesCreateResponse> localVarResponse = AbacAttributesCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesCreateResponse> localVarResponse = AbacAttributesCreateWithHttpInfo(orgId, abacAttributesCreateRequest);
             return localVarResponse.Data;
         }
 
@@ -840,16 +865,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacAttributesCreateRequest"></param>
         /// <returns>ApiResponse of AbacAttributesCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesCreateResponse> AbacAttributesCreateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesCreateResponse> AbacAttributesCreateWithHttpInfo(string orgId, AbacAttributesCreateRequest abacAttributesCreateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminAbacApi->AbacAttributesCreate");
 
+            // verify the required parameter 'abacAttributesCreateRequest' is set
+            if (abacAttributesCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'abacAttributesCreateRequest' when calling AdminAbacApi->AbacAttributesCreate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -864,6 +895,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = abacAttributesCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -894,11 +926,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacAttributesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AbacAttributesCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AbacAttributesCreateResponse> AbacAttributesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AbacAttributesCreateResponse> AbacAttributesCreateAsync(string orgId, AbacAttributesCreateRequest abacAttributesCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesCreateResponse> localVarResponse = await AbacAttributesCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesCreateResponse> localVarResponse = await AbacAttributesCreateWithHttpInfoAsync(orgId, abacAttributesCreateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -907,18 +940,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacAttributesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AbacAttributesCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesCreateResponse>> AbacAttributesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesCreateResponse>> AbacAttributesCreateWithHttpInfoAsync(string orgId, AbacAttributesCreateRequest abacAttributesCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminAbacApi->AbacAttributesCreate");
 
+            // verify the required parameter 'abacAttributesCreateRequest' is set
+            if (abacAttributesCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'abacAttributesCreateRequest' when calling AdminAbacApi->AbacAttributesCreate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -934,6 +973,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = abacAttributesCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1404,10 +1444,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacPoliciesCreateRequest"></param>
         /// <returns>AbacPoliciesCreateResponse</returns>
-        public AbacPoliciesCreateResponse AbacPoliciesCreate(string orgId)
+        public AbacPoliciesCreateResponse AbacPoliciesCreate(string orgId, AbacPoliciesCreateRequest abacPoliciesCreateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesCreateResponse> localVarResponse = AbacPoliciesCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesCreateResponse> localVarResponse = AbacPoliciesCreateWithHttpInfo(orgId, abacPoliciesCreateRequest);
             return localVarResponse.Data;
         }
 
@@ -1416,16 +1457,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacPoliciesCreateRequest"></param>
         /// <returns>ApiResponse of AbacPoliciesCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesCreateResponse> AbacPoliciesCreateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesCreateResponse> AbacPoliciesCreateWithHttpInfo(string orgId, AbacPoliciesCreateRequest abacPoliciesCreateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminAbacApi->AbacPoliciesCreate");
 
+            // verify the required parameter 'abacPoliciesCreateRequest' is set
+            if (abacPoliciesCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'abacPoliciesCreateRequest' when calling AdminAbacApi->AbacPoliciesCreate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1440,6 +1487,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = abacPoliciesCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1470,11 +1518,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacPoliciesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AbacPoliciesCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AbacPoliciesCreateResponse> AbacPoliciesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AbacPoliciesCreateResponse> AbacPoliciesCreateAsync(string orgId, AbacPoliciesCreateRequest abacPoliciesCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesCreateResponse> localVarResponse = await AbacPoliciesCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesCreateResponse> localVarResponse = await AbacPoliciesCreateWithHttpInfoAsync(orgId, abacPoliciesCreateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1483,18 +1532,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="abacPoliciesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AbacPoliciesCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesCreateResponse>> AbacPoliciesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesCreateResponse>> AbacPoliciesCreateWithHttpInfoAsync(string orgId, AbacPoliciesCreateRequest abacPoliciesCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminAbacApi->AbacPoliciesCreate");
 
+            // verify the required parameter 'abacPoliciesCreateRequest' is set
+            if (abacPoliciesCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'abacPoliciesCreateRequest' when calling AdminAbacApi->AbacPoliciesCreate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1510,6 +1565,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = abacPoliciesCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2144,10 +2200,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <returns>PutAbacAttributesUpdateResponse</returns>
-        public PutAbacAttributesUpdateResponse PatchAbacAttributesUpdate(string orgId, string id)
+        public PutAbacAttributesUpdateResponse PatchAbacAttributesUpdate(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> localVarResponse = PatchAbacAttributesUpdateWithHttpInfo(orgId, id);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> localVarResponse = PatchAbacAttributesUpdateWithHttpInfo(orgId, id, putAbacAttributesUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -2157,8 +2214,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <returns>ApiResponse of PutAbacAttributesUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> PatchAbacAttributesUpdateWithHttpInfo(string orgId, string id)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> PatchAbacAttributesUpdateWithHttpInfo(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2168,9 +2226,14 @@ namespace LumoAuth.ApiClient.Api
             if (id == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'id' when calling AdminAbacApi->PatchAbacAttributesUpdate");
 
+            // verify the required parameter 'putAbacAttributesUpdateRequest' is set
+            if (putAbacAttributesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAbacAttributesUpdateRequest' when calling AdminAbacApi->PatchAbacAttributesUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2186,6 +2249,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(id)); // path parameter
+            localVarRequestOptions.Data = putAbacAttributesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2217,11 +2281,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAbacAttributesUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAbacAttributesUpdateResponse> PatchAbacAttributesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAbacAttributesUpdateResponse> PatchAbacAttributesUpdateAsync(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> localVarResponse = await PatchAbacAttributesUpdateWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> localVarResponse = await PatchAbacAttributesUpdateWithHttpInfoAsync(orgId, id, putAbacAttributesUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2231,9 +2296,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAbacAttributesUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse>> PatchAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse>> PatchAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2243,10 +2309,15 @@ namespace LumoAuth.ApiClient.Api
             if (id == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'id' when calling AdminAbacApi->PatchAbacAttributesUpdate");
 
+            // verify the required parameter 'putAbacAttributesUpdateRequest' is set
+            if (putAbacAttributesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAbacAttributesUpdateRequest' when calling AdminAbacApi->PatchAbacAttributesUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2263,6 +2334,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(id)); // path parameter
+            localVarRequestOptions.Data = putAbacAttributesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2295,10 +2367,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <returns>PutAbacPoliciesUpdateResponse</returns>
-        public PutAbacPoliciesUpdateResponse PatchAbacPoliciesUpdate(string orgId, string id)
+        public PutAbacPoliciesUpdateResponse PatchAbacPoliciesUpdate(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> localVarResponse = PatchAbacPoliciesUpdateWithHttpInfo(orgId, id);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> localVarResponse = PatchAbacPoliciesUpdateWithHttpInfo(orgId, id, putAbacPoliciesUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -2308,8 +2381,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <returns>ApiResponse of PutAbacPoliciesUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> PatchAbacPoliciesUpdateWithHttpInfo(string orgId, string id)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> PatchAbacPoliciesUpdateWithHttpInfo(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2319,9 +2393,14 @@ namespace LumoAuth.ApiClient.Api
             if (id == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'id' when calling AdminAbacApi->PatchAbacPoliciesUpdate");
 
+            // verify the required parameter 'putAbacPoliciesUpdateRequest' is set
+            if (putAbacPoliciesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAbacPoliciesUpdateRequest' when calling AdminAbacApi->PatchAbacPoliciesUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2337,6 +2416,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(id)); // path parameter
+            localVarRequestOptions.Data = putAbacPoliciesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2368,11 +2448,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAbacPoliciesUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAbacPoliciesUpdateResponse> PatchAbacPoliciesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAbacPoliciesUpdateResponse> PatchAbacPoliciesUpdateAsync(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> localVarResponse = await PatchAbacPoliciesUpdateWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> localVarResponse = await PatchAbacPoliciesUpdateWithHttpInfoAsync(orgId, id, putAbacPoliciesUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2382,9 +2463,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAbacPoliciesUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse>> PatchAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse>> PatchAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2394,10 +2476,15 @@ namespace LumoAuth.ApiClient.Api
             if (id == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'id' when calling AdminAbacApi->PatchAbacPoliciesUpdate");
 
+            // verify the required parameter 'putAbacPoliciesUpdateRequest' is set
+            if (putAbacPoliciesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAbacPoliciesUpdateRequest' when calling AdminAbacApi->PatchAbacPoliciesUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2414,6 +2501,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(id)); // path parameter
+            localVarRequestOptions.Data = putAbacPoliciesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2446,10 +2534,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <returns>PutAbacAttributesUpdateResponse</returns>
-        public PutAbacAttributesUpdateResponse PutAbacAttributesUpdate(string orgId, string id)
+        public PutAbacAttributesUpdateResponse PutAbacAttributesUpdate(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> localVarResponse = PutAbacAttributesUpdateWithHttpInfo(orgId, id);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> localVarResponse = PutAbacAttributesUpdateWithHttpInfo(orgId, id, putAbacAttributesUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -2459,8 +2548,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <returns>ApiResponse of PutAbacAttributesUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> PutAbacAttributesUpdateWithHttpInfo(string orgId, string id)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> PutAbacAttributesUpdateWithHttpInfo(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2470,9 +2560,14 @@ namespace LumoAuth.ApiClient.Api
             if (id == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'id' when calling AdminAbacApi->PutAbacAttributesUpdate");
 
+            // verify the required parameter 'putAbacAttributesUpdateRequest' is set
+            if (putAbacAttributesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAbacAttributesUpdateRequest' when calling AdminAbacApi->PutAbacAttributesUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2488,6 +2583,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(id)); // path parameter
+            localVarRequestOptions.Data = putAbacAttributesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2519,11 +2615,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAbacAttributesUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAbacAttributesUpdateResponse> PutAbacAttributesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAbacAttributesUpdateResponse> PutAbacAttributesUpdateAsync(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> localVarResponse = await PutAbacAttributesUpdateWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> localVarResponse = await PutAbacAttributesUpdateWithHttpInfoAsync(orgId, id, putAbacAttributesUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2533,9 +2630,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacAttributesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAbacAttributesUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse>> PutAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse>> PutAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2545,10 +2643,15 @@ namespace LumoAuth.ApiClient.Api
             if (id == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'id' when calling AdminAbacApi->PutAbacAttributesUpdate");
 
+            // verify the required parameter 'putAbacAttributesUpdateRequest' is set
+            if (putAbacAttributesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAbacAttributesUpdateRequest' when calling AdminAbacApi->PutAbacAttributesUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2565,6 +2668,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(id)); // path parameter
+            localVarRequestOptions.Data = putAbacAttributesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2597,10 +2701,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <returns>PutAbacPoliciesUpdateResponse</returns>
-        public PutAbacPoliciesUpdateResponse PutAbacPoliciesUpdate(string orgId, string id)
+        public PutAbacPoliciesUpdateResponse PutAbacPoliciesUpdate(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> localVarResponse = PutAbacPoliciesUpdateWithHttpInfo(orgId, id);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> localVarResponse = PutAbacPoliciesUpdateWithHttpInfo(orgId, id, putAbacPoliciesUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -2610,8 +2715,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <returns>ApiResponse of PutAbacPoliciesUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> PutAbacPoliciesUpdateWithHttpInfo(string orgId, string id)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> PutAbacPoliciesUpdateWithHttpInfo(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2621,9 +2727,14 @@ namespace LumoAuth.ApiClient.Api
             if (id == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'id' when calling AdminAbacApi->PutAbacPoliciesUpdate");
 
+            // verify the required parameter 'putAbacPoliciesUpdateRequest' is set
+            if (putAbacPoliciesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAbacPoliciesUpdateRequest' when calling AdminAbacApi->PutAbacPoliciesUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2639,6 +2750,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(id)); // path parameter
+            localVarRequestOptions.Data = putAbacPoliciesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2670,11 +2782,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAbacPoliciesUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAbacPoliciesUpdateResponse> PutAbacPoliciesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAbacPoliciesUpdateResponse> PutAbacPoliciesUpdateAsync(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> localVarResponse = await PutAbacPoliciesUpdateWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> localVarResponse = await PutAbacPoliciesUpdateWithHttpInfoAsync(orgId, id, putAbacPoliciesUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2684,9 +2797,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
+        /// <param name="putAbacPoliciesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAbacPoliciesUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse>> PutAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse>> PutAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2696,10 +2810,15 @@ namespace LumoAuth.ApiClient.Api
             if (id == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'id' when calling AdminAbacApi->PutAbacPoliciesUpdate");
 
+            // verify the required parameter 'putAbacPoliciesUpdateRequest' is set
+            if (putAbacPoliciesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAbacPoliciesUpdateRequest' when calling AdminAbacApi->PutAbacPoliciesUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2716,6 +2835,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(id)); // path parameter
+            localVarRequestOptions.Data = putAbacPoliciesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

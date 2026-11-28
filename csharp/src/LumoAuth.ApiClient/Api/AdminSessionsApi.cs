@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -90,7 +90,7 @@ namespace LumoAuth.ApiClient.Api
         /// List active sessions
         /// </summary>
         /// <remarks>
-        /// Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
+        /// Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -101,7 +101,7 @@ namespace LumoAuth.ApiClient.Api
         /// List active sessions
         /// </summary>
         /// <remarks>
-        /// Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
+        /// Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -128,7 +128,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of AdminSessionsRevokeResponse</returns>
         ApiResponse<AdminSessionsRevokeResponse> AdminSessionsRevokeWithHttpInfo(string orgId, string sessionId);
         /// <summary>
-        /// Revoke every session in the tenant
+        /// Revoke every session in the organization
         /// </summary>
         /// <remarks>
         /// Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
@@ -140,7 +140,7 @@ namespace LumoAuth.ApiClient.Api
         AdminSessionsRevokeAllResponse AdminSessionsRevokeAll(string orgId, AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest);
 
         /// <summary>
-        /// Revoke every session in the tenant
+        /// Revoke every session in the organization
         /// </summary>
         /// <remarks>
         /// Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
@@ -169,10 +169,10 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of AdminSessionsStatsResponse</returns>
         ApiResponse<AdminSessionsStatsResponse> AdminSessionsStatsWithHttpInfo(string orgId);
         /// <summary>
-        /// List access tokens
+        /// List stored (opaque) access tokens
         /// </summary>
         /// <remarks>
-        /// Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
+        /// Paginated OPAQUE access tokens issued by the organization&#39;s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user&#39;s or a client&#39;s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -180,10 +180,10 @@ namespace LumoAuth.ApiClient.Api
         AdminTokensListResponse AdminTokensList(string orgId);
 
         /// <summary>
-        /// List access tokens
+        /// List stored (opaque) access tokens
         /// </summary>
         /// <remarks>
-        /// Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
+        /// Paginated OPAQUE access tokens issued by the organization&#39;s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user&#39;s or a client&#39;s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -275,6 +275,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Revoke all tokens of a user
         /// </summary>
+        /// <remarks>
+        /// Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
@@ -285,7 +288,7 @@ namespace LumoAuth.ApiClient.Api
         /// Revoke all tokens of a user
         /// </summary>
         /// <remarks>
-        /// 
+        /// Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -295,6 +298,9 @@ namespace LumoAuth.ApiClient.Api
         /// <summary>
         /// Revoke all tokens of a user (POST alias)
         /// </summary>
+        /// <remarks>
+        /// Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
@@ -305,7 +311,7 @@ namespace LumoAuth.ApiClient.Api
         /// Revoke all tokens of a user (POST alias)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -398,7 +404,7 @@ namespace LumoAuth.ApiClient.Api
         /// List active sessions
         /// </summary>
         /// <remarks>
-        /// Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
+        /// Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -410,7 +416,7 @@ namespace LumoAuth.ApiClient.Api
         /// List active sessions
         /// </summary>
         /// <remarks>
-        /// Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
+        /// Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -443,7 +449,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (AdminSessionsRevokeResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AdminSessionsRevokeResponse>> AdminSessionsRevokeWithHttpInfoAsync(string orgId, string sessionId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Revoke every session in the tenant
+        /// Revoke every session in the organization
         /// </summary>
         /// <remarks>
         /// Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
@@ -456,7 +462,7 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task<AdminSessionsRevokeAllResponse> AdminSessionsRevokeAllAsync(string orgId, AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Revoke every session in the tenant
+        /// Revoke every session in the organization
         /// </summary>
         /// <remarks>
         /// Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
@@ -491,10 +497,10 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (AdminSessionsStatsResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AdminSessionsStatsResponse>> AdminSessionsStatsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// List access tokens
+        /// List stored (opaque) access tokens
         /// </summary>
         /// <remarks>
-        /// Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
+        /// Paginated OPAQUE access tokens issued by the organization&#39;s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user&#39;s or a client&#39;s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -503,10 +509,10 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task<AdminTokensListResponse> AdminTokensListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List access tokens
+        /// List stored (opaque) access tokens
         /// </summary>
         /// <remarks>
-        /// Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
+        /// Paginated OPAQUE access tokens issued by the organization&#39;s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user&#39;s or a client&#39;s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -617,7 +623,7 @@ namespace LumoAuth.ApiClient.Api
         /// Revoke all tokens of a user
         /// </summary>
         /// <remarks>
-        /// 
+        /// Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -630,7 +636,7 @@ namespace LumoAuth.ApiClient.Api
         /// Revoke all tokens of a user
         /// </summary>
         /// <remarks>
-        /// 
+        /// Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -642,7 +648,7 @@ namespace LumoAuth.ApiClient.Api
         /// Revoke all tokens of a user (POST alias)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -655,7 +661,7 @@ namespace LumoAuth.ApiClient.Api
         /// Revoke all tokens of a user (POST alias)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1316,7 +1322,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List active sessions Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
+        /// List active sessions Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1328,7 +1334,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List active sessions Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
+        /// List active sessions Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1382,7 +1388,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List active sessions Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
+        /// List active sessions Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1395,7 +1401,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List active sessions Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
+        /// List active sessions Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1604,7 +1610,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke every session in the tenant Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
+        /// Revoke every session in the organization Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1617,7 +1623,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke every session in the tenant Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
+        /// Revoke every session in the organization Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1678,7 +1684,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke every session in the tenant Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
+        /// Revoke every session in the organization Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1692,7 +1698,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke every session in the tenant Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
+        /// Revoke every session in the organization Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1894,7 +1900,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List access tokens Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
+        /// List stored (opaque) access tokens Paginated OPAQUE access tokens issued by the organization&#39;s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user&#39;s or a client&#39;s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1906,7 +1912,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List access tokens Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
+        /// List stored (opaque) access tokens Paginated OPAQUE access tokens issued by the organization&#39;s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user&#39;s or a client&#39;s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1960,7 +1966,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List access tokens Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
+        /// List stored (opaque) access tokens Paginated OPAQUE access tokens issued by the organization&#39;s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user&#39;s or a client&#39;s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1973,7 +1979,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List access tokens Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
+        /// List stored (opaque) access tokens Paginated OPAQUE access tokens issued by the organization&#39;s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user&#39;s or a client&#39;s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2635,7 +2641,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens of a user 
+        /// Revoke all tokens of a user Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2648,7 +2654,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens of a user 
+        /// Revoke all tokens of a user Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2708,7 +2714,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens of a user 
+        /// Revoke all tokens of a user Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2722,7 +2728,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens of a user 
+        /// Revoke all tokens of a user Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2786,7 +2792,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens of a user (POST alias) 
+        /// Revoke all tokens of a user (POST alias) Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2799,7 +2805,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens of a user (POST alias) 
+        /// Revoke all tokens of a user (POST alias) Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2859,7 +2865,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens of a user (POST alias) 
+        /// Revoke all tokens of a user (POST alias) Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2873,7 +2879,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens of a user (POST alias) 
+        /// Revoke all tokens of a user (POST alias) Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

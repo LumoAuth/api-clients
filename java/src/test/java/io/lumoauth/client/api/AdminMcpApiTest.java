@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -21,6 +21,7 @@ import io.lumoauth.client.model.AdminMcpServersGrantsRemoveResponse;
 import io.lumoauth.client.model.AdminMcpServersGrantsSetRequest;
 import io.lumoauth.client.model.AdminMcpServersGrantsSetResponse;
 import io.lumoauth.client.model.AdminMcpServersListResponse;
+import io.lumoauth.client.model.McpServerWrite;
 import io.lumoauth.client.model.MessageResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -48,7 +49,8 @@ public class AdminMcpApiTest {
     @Test
     public void adminMcpServersCreateTest() throws ApiException {
         String orgId = null;
-        AdminMcpServersCreateResponse response = api.adminMcpServersCreate(orgId);
+        McpServerWrite mcpServerWrite = null;
+        AdminMcpServersCreateResponse response = api.adminMcpServersCreate(orgId, mcpServerWrite);
         // TODO: test validations
     }
 
@@ -130,6 +132,36 @@ public class AdminMcpApiTest {
     public void adminMcpServersListTest() throws ApiException {
         String orgId = null;
         AdminMcpServersListResponse response = api.adminMcpServersList(orgId);
+        // TODO: test validations
+    }
+
+    /**
+     * Update an MCP server
+     *
+     * Only the fields that are sent change; each is judged as on create. &#x60;resource_uri&#x60; cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void patchAdminMcpServersUpdateTest() throws ApiException {
+        String orgId = null;
+        String serverId = null;
+        McpServerWrite mcpServerWrite = null;
+        AdminMcpServersCreateResponse response = api.patchAdminMcpServersUpdate(orgId, serverId, mcpServerWrite);
+        // TODO: test validations
+    }
+
+    /**
+     * Update an MCP server (same as PATCH: only the fields that are sent change)
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void putAdminMcpServersUpdateTest() throws ApiException {
+        String orgId = null;
+        String serverId = null;
+        McpServerWrite mcpServerWrite = null;
+        AdminMcpServersCreateResponse response = api.putAdminMcpServersUpdate(orgId, serverId, mcpServerWrite);
         // TODO: test validations
     }
 

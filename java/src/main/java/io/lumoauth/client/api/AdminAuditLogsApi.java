@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -33,6 +33,8 @@ import io.lumoauth.client.model.AdminAuditLogsGetResponse;
 import io.lumoauth.client.model.AdminAuditLogsListResponse;
 import io.lumoauth.client.model.AdminAuditLogsRetentionResponse;
 import io.lumoauth.client.model.AdminAuditLogsStatsResponse;
+import java.time.OffsetDateTime;
+import io.lumoauth.client.model.PutAdminAuditLogsRetentionUpdateRequest;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -147,7 +149,7 @@ public class AdminAuditLogsApi {
     }
 
     /**
-     * List the distinct audit action types recorded for the tenant
+     * List the distinct audit action types recorded for the organization
      * 
      * @param orgId  (required)
      * @return AdminAuditLogsActionsResponse
@@ -165,7 +167,7 @@ public class AdminAuditLogsApi {
     }
 
     /**
-     * List the distinct audit action types recorded for the tenant
+     * List the distinct audit action types recorded for the organization
      * 
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminAuditLogsActionsResponse&gt;
@@ -184,7 +186,7 @@ public class AdminAuditLogsApi {
     }
 
     /**
-     * List the distinct audit action types recorded for the tenant (asynchronously)
+     * List the distinct audit action types recorded for the organization (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -207,6 +209,19 @@ public class AdminAuditLogsApi {
     /**
      * Build call for adminAuditLogsExport
      * @param orgId  (required)
+     * @param format csv (default) or json. (optional, default to csv)
+     * @param eventType Exact event type, for example user.login. (optional)
+     * @param action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param severity  (optional)
+     * @param status Result of the event. (optional)
+     * @param ipAddress  (optional)
+     * @param search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -217,7 +232,7 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Download (Content-Disposition: attachment). JSON when ?format&#x3D;json, otherwise CSV; at most 10000 rows. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAuditLogsExportCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminAuditLogsExportCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String format, @javax.annotation.Nullable String eventType, @javax.annotation.Nullable String action, @javax.annotation.Nullable String actorId, @javax.annotation.Nullable String targetType, @javax.annotation.Nullable String targetId, @javax.annotation.Nullable String severity, @javax.annotation.Nullable String status, @javax.annotation.Nullable String ipAddress, @javax.annotation.Nullable String search, @javax.annotation.Nullable String traceId, @javax.annotation.Nullable OffsetDateTime from, @javax.annotation.Nullable OffsetDateTime to, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -243,6 +258,58 @@ public class AdminAuditLogsApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (format != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("format", format));
+        }
+
+        if (eventType != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("eventType", eventType));
+        }
+
+        if (action != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("action", action));
+        }
+
+        if (actorId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("actorId", actorId));
+        }
+
+        if (targetType != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("targetType", targetType));
+        }
+
+        if (targetId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("targetId", targetId));
+        }
+
+        if (severity != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("severity", severity));
+        }
+
+        if (status != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("status", status));
+        }
+
+        if (ipAddress != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("ipAddress", ipAddress));
+        }
+
+        if (search != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("search", search));
+        }
+
+        if (traceId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("traceId", traceId));
+        }
+
+        if (from != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("from", from));
+        }
+
+        if (to != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("to", to));
+        }
+
         final String[] localVarAccepts = {
             "text/csv",
             "application/json"
@@ -264,13 +331,13 @@ public class AdminAuditLogsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminAuditLogsExportValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminAuditLogsExportValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String format, @javax.annotation.Nullable String eventType, @javax.annotation.Nullable String action, @javax.annotation.Nullable String actorId, @javax.annotation.Nullable String targetType, @javax.annotation.Nullable String targetId, @javax.annotation.Nullable String severity, @javax.annotation.Nullable String status, @javax.annotation.Nullable String ipAddress, @javax.annotation.Nullable String search, @javax.annotation.Nullable String traceId, @javax.annotation.Nullable OffsetDateTime from, @javax.annotation.Nullable OffsetDateTime to, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminAuditLogsExport(Async)");
         }
 
-        return adminAuditLogsExportCall(orgId, _callback);
+        return adminAuditLogsExportCall(orgId, format, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to, _callback);
 
     }
 
@@ -278,6 +345,19 @@ public class AdminAuditLogsApi {
      * Export audit logs as CSV (default) or JSON
      * Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
      * @param orgId  (required)
+     * @param format csv (default) or json. (optional, default to csv)
+     * @param eventType Exact event type, for example user.login. (optional)
+     * @param action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param severity  (optional)
+     * @param status Result of the event. (optional)
+     * @param ipAddress  (optional)
+     * @param search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -287,8 +367,8 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Download (Content-Disposition: attachment). JSON when ?format&#x3D;json, otherwise CSV; at most 10000 rows. </td><td>  -  </td></tr>
      </table>
      */
-    public String adminAuditLogsExport(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<String> localVarResp = adminAuditLogsExportWithHttpInfo(orgId);
+    public String adminAuditLogsExport(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String format, @javax.annotation.Nullable String eventType, @javax.annotation.Nullable String action, @javax.annotation.Nullable String actorId, @javax.annotation.Nullable String targetType, @javax.annotation.Nullable String targetId, @javax.annotation.Nullable String severity, @javax.annotation.Nullable String status, @javax.annotation.Nullable String ipAddress, @javax.annotation.Nullable String search, @javax.annotation.Nullable String traceId, @javax.annotation.Nullable OffsetDateTime from, @javax.annotation.Nullable OffsetDateTime to) throws ApiException {
+        ApiResponse<String> localVarResp = adminAuditLogsExportWithHttpInfo(orgId, format, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to);
         return localVarResp.getData();
     }
 
@@ -296,6 +376,19 @@ public class AdminAuditLogsApi {
      * Export audit logs as CSV (default) or JSON
      * Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
      * @param orgId  (required)
+     * @param format csv (default) or json. (optional, default to csv)
+     * @param eventType Exact event type, for example user.login. (optional)
+     * @param action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param severity  (optional)
+     * @param status Result of the event. (optional)
+     * @param ipAddress  (optional)
+     * @param search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -305,8 +398,8 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Download (Content-Disposition: attachment). JSON when ?format&#x3D;json, otherwise CSV; at most 10000 rows. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<String> adminAuditLogsExportWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = adminAuditLogsExportValidateBeforeCall(orgId, null);
+    public ApiResponse<String> adminAuditLogsExportWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String format, @javax.annotation.Nullable String eventType, @javax.annotation.Nullable String action, @javax.annotation.Nullable String actorId, @javax.annotation.Nullable String targetType, @javax.annotation.Nullable String targetId, @javax.annotation.Nullable String severity, @javax.annotation.Nullable String status, @javax.annotation.Nullable String ipAddress, @javax.annotation.Nullable String search, @javax.annotation.Nullable String traceId, @javax.annotation.Nullable OffsetDateTime from, @javax.annotation.Nullable OffsetDateTime to) throws ApiException {
+        okhttp3.Call localVarCall = adminAuditLogsExportValidateBeforeCall(orgId, format, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to, null);
         Type localVarReturnType = new TypeToken<String>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -315,6 +408,19 @@ public class AdminAuditLogsApi {
      * Export audit logs as CSV (default) or JSON (asynchronously)
      * Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
      * @param orgId  (required)
+     * @param format csv (default) or json. (optional, default to csv)
+     * @param eventType Exact event type, for example user.login. (optional)
+     * @param action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param severity  (optional)
+     * @param status Result of the event. (optional)
+     * @param ipAddress  (optional)
+     * @param search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -325,9 +431,9 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Download (Content-Disposition: attachment). JSON when ?format&#x3D;json, otherwise CSV; at most 10000 rows. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAuditLogsExportAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
+    public okhttp3.Call adminAuditLogsExportAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String format, @javax.annotation.Nullable String eventType, @javax.annotation.Nullable String action, @javax.annotation.Nullable String actorId, @javax.annotation.Nullable String targetType, @javax.annotation.Nullable String targetId, @javax.annotation.Nullable String severity, @javax.annotation.Nullable String status, @javax.annotation.Nullable String ipAddress, @javax.annotation.Nullable String search, @javax.annotation.Nullable String traceId, @javax.annotation.Nullable OffsetDateTime from, @javax.annotation.Nullable OffsetDateTime to, final ApiCallback<String> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminAuditLogsExportValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = adminAuditLogsExportValidateBeforeCall(orgId, format, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to, _callback);
         Type localVarReturnType = new TypeToken<String>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -476,6 +582,20 @@ public class AdminAuditLogsApi {
     /**
      * Build call for adminAuditLogsList
      * @param orgId  (required)
+     * @param page  (optional, default to 1)
+     * @param limit  (optional, default to 25)
+     * @param eventType Exact event type, for example user.login. (optional)
+     * @param action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param severity  (optional)
+     * @param status Result of the event. (optional)
+     * @param ipAddress  (optional)
+     * @param search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -486,7 +606,7 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Audit log entries (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAuditLogsListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminAuditLogsListCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer limit, @javax.annotation.Nullable String eventType, @javax.annotation.Nullable String action, @javax.annotation.Nullable String actorId, @javax.annotation.Nullable String targetType, @javax.annotation.Nullable String targetId, @javax.annotation.Nullable String severity, @javax.annotation.Nullable String status, @javax.annotation.Nullable String ipAddress, @javax.annotation.Nullable String search, @javax.annotation.Nullable String traceId, @javax.annotation.Nullable OffsetDateTime from, @javax.annotation.Nullable OffsetDateTime to, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -512,6 +632,62 @@ public class AdminAuditLogsApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (page != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("page", page));
+        }
+
+        if (limit != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("limit", limit));
+        }
+
+        if (eventType != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("eventType", eventType));
+        }
+
+        if (action != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("action", action));
+        }
+
+        if (actorId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("actorId", actorId));
+        }
+
+        if (targetType != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("targetType", targetType));
+        }
+
+        if (targetId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("targetId", targetId));
+        }
+
+        if (severity != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("severity", severity));
+        }
+
+        if (status != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("status", status));
+        }
+
+        if (ipAddress != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("ipAddress", ipAddress));
+        }
+
+        if (search != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("search", search));
+        }
+
+        if (traceId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("traceId", traceId));
+        }
+
+        if (from != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("from", from));
+        }
+
+        if (to != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("to", to));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -532,13 +708,13 @@ public class AdminAuditLogsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminAuditLogsListValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminAuditLogsListValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer limit, @javax.annotation.Nullable String eventType, @javax.annotation.Nullable String action, @javax.annotation.Nullable String actorId, @javax.annotation.Nullable String targetType, @javax.annotation.Nullable String targetId, @javax.annotation.Nullable String severity, @javax.annotation.Nullable String status, @javax.annotation.Nullable String ipAddress, @javax.annotation.Nullable String search, @javax.annotation.Nullable String traceId, @javax.annotation.Nullable OffsetDateTime from, @javax.annotation.Nullable OffsetDateTime to, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminAuditLogsList(Async)");
         }
 
-        return adminAuditLogsListCall(orgId, _callback);
+        return adminAuditLogsListCall(orgId, page, limit, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to, _callback);
 
     }
 
@@ -546,6 +722,20 @@ public class AdminAuditLogsApi {
      * List audit log entries
      * 
      * @param orgId  (required)
+     * @param page  (optional, default to 1)
+     * @param limit  (optional, default to 25)
+     * @param eventType Exact event type, for example user.login. (optional)
+     * @param action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param severity  (optional)
+     * @param status Result of the event. (optional)
+     * @param ipAddress  (optional)
+     * @param search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @return AdminAuditLogsListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -555,8 +745,8 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Audit log entries (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
-    public AdminAuditLogsListResponse adminAuditLogsList(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<AdminAuditLogsListResponse> localVarResp = adminAuditLogsListWithHttpInfo(orgId);
+    public AdminAuditLogsListResponse adminAuditLogsList(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer limit, @javax.annotation.Nullable String eventType, @javax.annotation.Nullable String action, @javax.annotation.Nullable String actorId, @javax.annotation.Nullable String targetType, @javax.annotation.Nullable String targetId, @javax.annotation.Nullable String severity, @javax.annotation.Nullable String status, @javax.annotation.Nullable String ipAddress, @javax.annotation.Nullable String search, @javax.annotation.Nullable String traceId, @javax.annotation.Nullable OffsetDateTime from, @javax.annotation.Nullable OffsetDateTime to) throws ApiException {
+        ApiResponse<AdminAuditLogsListResponse> localVarResp = adminAuditLogsListWithHttpInfo(orgId, page, limit, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to);
         return localVarResp.getData();
     }
 
@@ -564,6 +754,20 @@ public class AdminAuditLogsApi {
      * List audit log entries
      * 
      * @param orgId  (required)
+     * @param page  (optional, default to 1)
+     * @param limit  (optional, default to 25)
+     * @param eventType Exact event type, for example user.login. (optional)
+     * @param action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param severity  (optional)
+     * @param status Result of the event. (optional)
+     * @param ipAddress  (optional)
+     * @param search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @return ApiResponse&lt;AdminAuditLogsListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -573,8 +777,8 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Audit log entries (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminAuditLogsListResponse> adminAuditLogsListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = adminAuditLogsListValidateBeforeCall(orgId, null);
+    public ApiResponse<AdminAuditLogsListResponse> adminAuditLogsListWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer limit, @javax.annotation.Nullable String eventType, @javax.annotation.Nullable String action, @javax.annotation.Nullable String actorId, @javax.annotation.Nullable String targetType, @javax.annotation.Nullable String targetId, @javax.annotation.Nullable String severity, @javax.annotation.Nullable String status, @javax.annotation.Nullable String ipAddress, @javax.annotation.Nullable String search, @javax.annotation.Nullable String traceId, @javax.annotation.Nullable OffsetDateTime from, @javax.annotation.Nullable OffsetDateTime to) throws ApiException {
+        okhttp3.Call localVarCall = adminAuditLogsListValidateBeforeCall(orgId, page, limit, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to, null);
         Type localVarReturnType = new TypeToken<AdminAuditLogsListResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -583,6 +787,20 @@ public class AdminAuditLogsApi {
      * List audit log entries (asynchronously)
      * 
      * @param orgId  (required)
+     * @param page  (optional, default to 1)
+     * @param limit  (optional, default to 25)
+     * @param eventType Exact event type, for example user.login. (optional)
+     * @param action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param severity  (optional)
+     * @param status Result of the event. (optional)
+     * @param ipAddress  (optional)
+     * @param search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -593,9 +811,9 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Audit log entries (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAuditLogsListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminAuditLogsListResponse> _callback) throws ApiException {
+    public okhttp3.Call adminAuditLogsListAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer limit, @javax.annotation.Nullable String eventType, @javax.annotation.Nullable String action, @javax.annotation.Nullable String actorId, @javax.annotation.Nullable String targetType, @javax.annotation.Nullable String targetId, @javax.annotation.Nullable String severity, @javax.annotation.Nullable String status, @javax.annotation.Nullable String ipAddress, @javax.annotation.Nullable String search, @javax.annotation.Nullable String traceId, @javax.annotation.Nullable OffsetDateTime from, @javax.annotation.Nullable OffsetDateTime to, final ApiCallback<AdminAuditLogsListResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminAuditLogsListValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = adminAuditLogsListValidateBeforeCall(orgId, page, limit, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to, _callback);
         Type localVarReturnType = new TypeToken<AdminAuditLogsListResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -857,6 +1075,7 @@ public class AdminAuditLogsApi {
     /**
      * Build call for patchAdminAuditLogsRetentionUpdate
      * @param orgId  (required)
+     * @param putAdminAuditLogsRetentionUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -867,7 +1086,7 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminAuditLogsRetentionUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminAuditLogsRetentionUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -881,7 +1100,7 @@ public class AdminAuditLogsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminAuditLogsRetentionUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/audit-logs/retention"
@@ -902,6 +1121,7 @@ public class AdminAuditLogsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -913,13 +1133,18 @@ public class AdminAuditLogsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminAuditLogsRetentionUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminAuditLogsRetentionUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminAuditLogsRetentionUpdate(Async)");
         }
 
-        return patchAdminAuditLogsRetentionUpdateCall(orgId, _callback);
+        // verify the required parameter 'putAdminAuditLogsRetentionUpdateRequest' is set
+        if (putAdminAuditLogsRetentionUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminAuditLogsRetentionUpdateRequest' when calling patchAdminAuditLogsRetentionUpdate(Async)");
+        }
+
+        return patchAdminAuditLogsRetentionUpdateCall(orgId, putAdminAuditLogsRetentionUpdateRequest, _callback);
 
     }
 
@@ -927,6 +1152,7 @@ public class AdminAuditLogsApi {
      * Update audit log retention settings
      * Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
      * @param orgId  (required)
+     * @param putAdminAuditLogsRetentionUpdateRequest  (required)
      * @return AdminAuditLogsRetentionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -936,8 +1162,8 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public AdminAuditLogsRetentionResponse patchAdminAuditLogsRetentionUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<AdminAuditLogsRetentionResponse> localVarResp = patchAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+    public AdminAuditLogsRetentionResponse patchAdminAuditLogsRetentionUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest) throws ApiException {
+        ApiResponse<AdminAuditLogsRetentionResponse> localVarResp = patchAdminAuditLogsRetentionUpdateWithHttpInfo(orgId, putAdminAuditLogsRetentionUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -945,6 +1171,7 @@ public class AdminAuditLogsApi {
      * Update audit log retention settings
      * Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
      * @param orgId  (required)
+     * @param putAdminAuditLogsRetentionUpdateRequest  (required)
      * @return ApiResponse&lt;AdminAuditLogsRetentionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -954,8 +1181,8 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminAuditLogsRetentionResponse> patchAdminAuditLogsRetentionUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminAuditLogsRetentionUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<AdminAuditLogsRetentionResponse> patchAdminAuditLogsRetentionUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminAuditLogsRetentionUpdateValidateBeforeCall(orgId, putAdminAuditLogsRetentionUpdateRequest, null);
         Type localVarReturnType = new TypeToken<AdminAuditLogsRetentionResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -964,6 +1191,7 @@ public class AdminAuditLogsApi {
      * Update audit log retention settings (asynchronously)
      * Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
      * @param orgId  (required)
+     * @param putAdminAuditLogsRetentionUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -974,9 +1202,9 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminAuditLogsRetentionUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminAuditLogsRetentionResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminAuditLogsRetentionUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest, final ApiCallback<AdminAuditLogsRetentionResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminAuditLogsRetentionUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = patchAdminAuditLogsRetentionUpdateValidateBeforeCall(orgId, putAdminAuditLogsRetentionUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminAuditLogsRetentionResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -984,6 +1212,7 @@ public class AdminAuditLogsApi {
     /**
      * Build call for putAdminAuditLogsRetentionUpdate
      * @param orgId  (required)
+     * @param putAdminAuditLogsRetentionUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -994,7 +1223,7 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminAuditLogsRetentionUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminAuditLogsRetentionUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1008,7 +1237,7 @@ public class AdminAuditLogsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminAuditLogsRetentionUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/audit-logs/retention"
@@ -1029,6 +1258,7 @@ public class AdminAuditLogsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1040,13 +1270,18 @@ public class AdminAuditLogsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminAuditLogsRetentionUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminAuditLogsRetentionUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminAuditLogsRetentionUpdate(Async)");
         }
 
-        return putAdminAuditLogsRetentionUpdateCall(orgId, _callback);
+        // verify the required parameter 'putAdminAuditLogsRetentionUpdateRequest' is set
+        if (putAdminAuditLogsRetentionUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminAuditLogsRetentionUpdateRequest' when calling putAdminAuditLogsRetentionUpdate(Async)");
+        }
+
+        return putAdminAuditLogsRetentionUpdateCall(orgId, putAdminAuditLogsRetentionUpdateRequest, _callback);
 
     }
 
@@ -1054,6 +1289,7 @@ public class AdminAuditLogsApi {
      * Update audit log retention settings
      * Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
      * @param orgId  (required)
+     * @param putAdminAuditLogsRetentionUpdateRequest  (required)
      * @return AdminAuditLogsRetentionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1063,8 +1299,8 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public AdminAuditLogsRetentionResponse putAdminAuditLogsRetentionUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<AdminAuditLogsRetentionResponse> localVarResp = putAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+    public AdminAuditLogsRetentionResponse putAdminAuditLogsRetentionUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest) throws ApiException {
+        ApiResponse<AdminAuditLogsRetentionResponse> localVarResp = putAdminAuditLogsRetentionUpdateWithHttpInfo(orgId, putAdminAuditLogsRetentionUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -1072,6 +1308,7 @@ public class AdminAuditLogsApi {
      * Update audit log retention settings
      * Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
      * @param orgId  (required)
+     * @param putAdminAuditLogsRetentionUpdateRequest  (required)
      * @return ApiResponse&lt;AdminAuditLogsRetentionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1081,8 +1318,8 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminAuditLogsRetentionResponse> putAdminAuditLogsRetentionUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminAuditLogsRetentionUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<AdminAuditLogsRetentionResponse> putAdminAuditLogsRetentionUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = putAdminAuditLogsRetentionUpdateValidateBeforeCall(orgId, putAdminAuditLogsRetentionUpdateRequest, null);
         Type localVarReturnType = new TypeToken<AdminAuditLogsRetentionResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1091,6 +1328,7 @@ public class AdminAuditLogsApi {
      * Update audit log retention settings (asynchronously)
      * Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
      * @param orgId  (required)
+     * @param putAdminAuditLogsRetentionUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1101,9 +1339,9 @@ public class AdminAuditLogsApi {
         <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminAuditLogsRetentionUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminAuditLogsRetentionResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminAuditLogsRetentionUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest, final ApiCallback<AdminAuditLogsRetentionResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminAuditLogsRetentionUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = putAdminAuditLogsRetentionUpdateValidateBeforeCall(orgId, putAdminAuditLogsRetentionUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminAuditLogsRetentionResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

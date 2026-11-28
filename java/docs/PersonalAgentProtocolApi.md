@@ -85,6 +85,7 @@ public class Example {
 | **401** | invalid_client. |  -  |
 | **403** | insufficient_scope. |  -  |
 | **404** | not_found: unknown organization or Session. |  -  |
+| **409** | protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). |  -  |
 
 <a id="getPoppyDocument"></a>
 # **getPoppyDocument**
@@ -287,7 +288,8 @@ public class Example {
 | **200** | The state of the Session. |  -  |
 | **401** | invalid_client. |  -  |
 | **403** | insufficient_scope. |  -  |
-| **404** | not_found: unknown organization, or the protocol is switched off. |  -  |
+| **404** | not_found: unknown organization. |  -  |
+| **409** | protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). Answered after the calling application authenticated. |  -  |
 
 <a id="getPoppyTasks"></a>
 # **getPoppyTasks**
@@ -511,6 +513,7 @@ public class Example {
 | **400** | invalid_request: method, url or headers missing or malformed. |  -  |
 | **401** | invalid_client: the calling application did not authenticate. |  -  |
 | **403** | insufficient_scope: the calling application may not verify Session headers. |  -  |
-| **404** | not_found: unknown organization, or the protocol is switched off. |  -  |
+| **404** | not_found: unknown organization. |  -  |
+| **409** | protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). Answered after the calling application authenticated. |  -  |
 | **429** | too_many_requests, with Retry-After. |  -  |
 

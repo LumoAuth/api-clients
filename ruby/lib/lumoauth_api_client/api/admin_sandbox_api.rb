@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -19,7 +19,7 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Destroy a sandbox tenant
+    # Destroy a sandbox organization
     # @param org_id [String] 
     # @param sandbox_slug [String] 
     # @param [Hash] opts the optional parameters
@@ -29,7 +29,7 @@ module LumoAuthApiClient
       data
     end
 
-    # Destroy a sandbox tenant
+    # Destroy a sandbox organization
     # @param org_id [String] 
     # @param sandbox_slug [String] 
     # @param [Hash] opts the optional parameters
@@ -86,7 +86,7 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List the caller's sandbox tenants
+    # List the caller's sandbox organizations
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminSandboxListResponse]
@@ -95,7 +95,7 @@ module LumoAuthApiClient
       data
     end
 
-    # List the caller&#39;s sandbox tenants
+    # List the caller&#39;s sandbox organizations
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminSandboxListResponse, Integer, Hash)>] AdminSandboxListResponse data, response status code and response headers
@@ -147,7 +147,7 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Spawn a sandbox tenant
+    # Spawn a sandbox organization
     # Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
@@ -158,7 +158,7 @@ module LumoAuthApiClient
       data
     end
 
-    # Spawn a sandbox tenant
+    # Spawn a sandbox organization
     # Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters

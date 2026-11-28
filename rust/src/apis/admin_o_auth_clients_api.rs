@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -117,6 +117,7 @@ pub enum PutAdminClientsUpdateBrandingError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RotateClientSecretError {
+    Status400(),
     Status403(),
     Status404(),
     UnknownValue(serde_json::Value),
@@ -240,9 +241,10 @@ pub async fn admin_clients_get_branding(configuration: &configuration::Configura
     }
 }
 
-pub async fn create_client(configuration: &configuration::Configuration, org_id: &str) -> Result<models::CreateClientResponse, Error<CreateClientError>> {
+pub async fn create_client(configuration: &configuration::Configuration, org_id: &str, o_auth_client_write: models::OAuthClientWrite) -> Result<models::CreateClientResponse, Error<CreateClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_o_auth_client_write = o_auth_client_write;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/clients", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -261,6 +263,7 @@ pub async fn create_client(configuration: &configuration::Configuration, org_id:
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_o_auth_client_write);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -628,10 +631,11 @@ pub async fn patch_admin_clients_update_branding(configuration: &configuration::
 }
 
 /// A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
-pub async fn patch_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::UpdateClientResponse, Error<PatchClientError>> {
+pub async fn patch_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str, o_auth_client_write: models::OAuthClientWrite) -> Result<models::UpdateClientResponse, Error<PatchClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
+    let p_o_auth_client_write = o_auth_client_write;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/clients/{clientId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), clientId=crate::apis::urlencode(p_client_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -650,6 +654,7 @@ pub async fn patch_client(configuration: &configuration::Configuration, org_id: 
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_o_auth_client_write);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -777,10 +782,11 @@ pub async fn rotate_client_secret(configuration: &configuration::Configuration, 
 }
 
 /// A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
-pub async fn set_client_scopes(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::SetClientScopesResponse, Error<SetClientScopesError>> {
+pub async fn set_client_scopes(configuration: &configuration::Configuration, org_id: &str, client_id: &str, set_client_scopes_request: models::SetClientScopesRequest) -> Result<models::SetClientScopesResponse, Error<SetClientScopesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
+    let p_set_client_scopes_request = set_client_scopes_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), clientId=crate::apis::urlencode(p_client_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -799,6 +805,7 @@ pub async fn set_client_scopes(configuration: &configuration::Configuration, org
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_set_client_scopes_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -826,10 +833,11 @@ pub async fn set_client_scopes(configuration: &configuration::Configuration, org
 }
 
 /// A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
-pub async fn update_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::UpdateClientResponse, Error<UpdateClientError>> {
+pub async fn update_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str, o_auth_client_write: models::OAuthClientWrite) -> Result<models::UpdateClientResponse, Error<UpdateClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
+    let p_o_auth_client_write = o_auth_client_write;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/clients/{clientId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), clientId=crate::apis::urlencode(p_client_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -848,6 +856,7 @@ pub async fn update_client(configuration: &configuration::Configuration, org_id:
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_o_auth_client_write);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

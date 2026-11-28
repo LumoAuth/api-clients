@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -260,10 +260,11 @@ pub enum UpdateUserRolesError {
 }
 
 
-pub async fn add_user_group(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AddUserGroupResponse, Error<AddUserGroupError>> {
+pub async fn add_user_group(configuration: &configuration::Configuration, org_id: &str, user_id: &str, add_user_group_request: models::AddUserGroupRequest) -> Result<models::AddUserGroupResponse, Error<AddUserGroupError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
+    let p_add_user_group_request = add_user_group_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users/{userId}/groups", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), userId=crate::apis::urlencode(p_user_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -282,6 +283,7 @@ pub async fn add_user_group(configuration: &configuration::Configuration, org_id
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_add_user_group_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -308,11 +310,12 @@ pub async fn add_user_group(configuration: &configuration::Configuration, org_id
     }
 }
 
-/// Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
-pub async fn add_user_permission(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AddUserPermissionResponse, Error<AddUserPermissionError>> {
+/// Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization's own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+pub async fn add_user_permission(configuration: &configuration::Configuration, org_id: &str, user_id: &str, add_user_permission_request: models::AddUserPermissionRequest) -> Result<models::AddUserPermissionResponse, Error<AddUserPermissionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
+    let p_add_user_permission_request = add_user_permission_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users/{userId}/permissions", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), userId=crate::apis::urlencode(p_user_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -331,6 +334,7 @@ pub async fn add_user_permission(configuration: &configuration::Configuration, o
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_add_user_permission_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -357,10 +361,11 @@ pub async fn add_user_permission(configuration: &configuration::Configuration, o
     }
 }
 
-pub async fn add_user_role(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AddUserRoleResponse, Error<AddUserRoleError>> {
+pub async fn add_user_role(configuration: &configuration::Configuration, org_id: &str, user_id: &str, add_user_role_request: models::AddUserRoleRequest) -> Result<models::AddUserRoleResponse, Error<AddUserRoleError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
+    let p_add_user_role_request = add_user_role_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users/{userId}/roles", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), userId=crate::apis::urlencode(p_user_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -379,6 +384,7 @@ pub async fn add_user_role(configuration: &configuration::Configuration, org_id:
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_add_user_role_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -754,9 +760,10 @@ pub async fn block_user(configuration: &configuration::Configuration, org_id: &s
     }
 }
 
-pub async fn create_user(configuration: &configuration::Configuration, org_id: &str) -> Result<models::CreateUserResponse, Error<CreateUserError>> {
+pub async fn create_user(configuration: &configuration::Configuration, org_id: &str, create_user_request: models::CreateUserRequest) -> Result<models::CreateUserResponse, Error<CreateUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_create_user_request = create_user_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -775,6 +782,7 @@ pub async fn create_user(configuration: &configuration::Configuration, org_id: &
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_create_user_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1185,10 +1193,11 @@ pub async fn mark_user_verified(configuration: &configuration::Configuration, or
 }
 
 /// Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive`, `staff` or `emailVerified` needs a caller who holds every permission of the user. `staff: true` is refused with 409 for an account that is a member of a customer organization. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
-pub async fn patch_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::UpdateUserResponse, Error<PatchUserError>> {
+pub async fn patch_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str, update_user_request: models::UpdateUserRequest) -> Result<models::UpdateUserResponse, Error<PatchUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
+    let p_update_user_request = update_user_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users/{userId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), userId=crate::apis::urlencode(p_user_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -1207,6 +1216,7 @@ pub async fn patch_user(configuration: &configuration::Configuration, org_id: &s
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_update_user_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1467,10 +1477,11 @@ pub async fn send_user_verification_email(configuration: &configuration::Configu
 }
 
 /// Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
-pub async fn set_user_password(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::SetUserPasswordPostResponse, Error<SetUserPasswordError>> {
+pub async fn set_user_password(configuration: &configuration::Configuration, org_id: &str, user_id: &str, set_user_password_post_request: models::SetUserPasswordPostRequest) -> Result<models::SetUserPasswordPostResponse, Error<SetUserPasswordError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
+    let p_set_user_password_post_request = set_user_password_post_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users/{userId}/password", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), userId=crate::apis::urlencode(p_user_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1489,6 +1500,7 @@ pub async fn set_user_password(configuration: &configuration::Configuration, org
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_set_user_password_post_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1516,10 +1528,11 @@ pub async fn set_user_password(configuration: &configuration::Configuration, org
 }
 
 /// Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
-pub async fn set_user_password_post(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::SetUserPasswordPostResponse, Error<SetUserPasswordPostError>> {
+pub async fn set_user_password_post(configuration: &configuration::Configuration, org_id: &str, user_id: &str, set_user_password_post_request: models::SetUserPasswordPostRequest) -> Result<models::SetUserPasswordPostResponse, Error<SetUserPasswordPostError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
+    let p_set_user_password_post_request = set_user_password_post_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users/{userId}/password", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), userId=crate::apis::urlencode(p_user_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -1538,6 +1551,7 @@ pub async fn set_user_password_post(configuration: &configuration::Configuration
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_set_user_password_post_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1661,10 +1675,11 @@ pub async fn unblock_user(configuration: &configuration::Configuration, org_id: 
 }
 
 /// Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive`, `staff` or `emailVerified` needs a caller who holds every permission of the user. `staff: true` is refused with 409 for an account that is a member of a customer organization. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
-pub async fn update_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::UpdateUserResponse, Error<UpdateUserError>> {
+pub async fn update_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str, update_user_request: models::UpdateUserRequest) -> Result<models::UpdateUserResponse, Error<UpdateUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
+    let p_update_user_request = update_user_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users/{userId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), userId=crate::apis::urlencode(p_user_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1683,6 +1698,7 @@ pub async fn update_user(configuration: &configuration::Configuration, org_id: &
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_update_user_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1709,10 +1725,11 @@ pub async fn update_user(configuration: &configuration::Configuration, org_id: &
     }
 }
 
-pub async fn update_user_groups(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::UpdateUserGroupsResponse, Error<UpdateUserGroupsError>> {
+pub async fn update_user_groups(configuration: &configuration::Configuration, org_id: &str, user_id: &str, update_user_groups_request: models::UpdateUserGroupsRequest) -> Result<models::UpdateUserGroupsResponse, Error<UpdateUserGroupsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
+    let p_update_user_groups_request = update_user_groups_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users/{userId}/groups", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), userId=crate::apis::urlencode(p_user_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1731,6 +1748,7 @@ pub async fn update_user_groups(configuration: &configuration::Configuration, or
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_update_user_groups_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1757,10 +1775,11 @@ pub async fn update_user_groups(configuration: &configuration::Configuration, or
     }
 }
 
-pub async fn update_user_roles(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::UpdateUserRolesResponse, Error<UpdateUserRolesError>> {
+pub async fn update_user_roles(configuration: &configuration::Configuration, org_id: &str, user_id: &str, admin_groups_update_roles_request: models::AdminGroupsUpdateRolesRequest) -> Result<models::UpdateUserRolesResponse, Error<UpdateUserRolesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
+    let p_admin_groups_update_roles_request = admin_groups_update_roles_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users/{userId}/roles", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), userId=crate::apis::urlencode(p_user_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1779,6 +1798,7 @@ pub async fn update_user_roles(configuration: &configuration::Configuration, org
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_groups_update_roles_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

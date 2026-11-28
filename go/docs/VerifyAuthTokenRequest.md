@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AuthToken** | Pointer to **string** | The auth token presented by the agent. | [optional] 
-**Resource** | Pointer to **string** | Resource identifier; defaults to the authenticated resource. | [optional] 
+**AuthToken** | **string** | The auth token presented by the agent. | 
+**Resource** | **string** | Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource. | 
 
 ## Methods
 
 ### NewVerifyAuthTokenRequest
 
-`func NewVerifyAuthTokenRequest() *VerifyAuthTokenRequest`
+`func NewVerifyAuthTokenRequest(authToken string, resource string, ) *VerifyAuthTokenRequest`
 
 NewVerifyAuthTokenRequest instantiates a new VerifyAuthTokenRequest object
 This constructor will assign default values to properties that have it defined,
@@ -45,11 +45,6 @@ and a boolean to check if the value has been set.
 
 SetAuthToken sets AuthToken field to given value.
 
-### HasAuthToken
-
-`func (o *VerifyAuthTokenRequest) HasAuthToken() bool`
-
-HasAuthToken returns a boolean if a field has been set.
 
 ### GetResource
 
@@ -70,11 +65,6 @@ and a boolean to check if the value has been set.
 
 SetResource sets Resource field to given value.
 
-### HasResource
-
-`func (o *VerifyAuthTokenRequest) HasResource() bool`
-
-HasResource returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

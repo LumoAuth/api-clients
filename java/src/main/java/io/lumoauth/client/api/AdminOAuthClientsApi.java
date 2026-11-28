@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -36,10 +36,12 @@ import io.lumoauth.client.model.GetClientResponse;
 import io.lumoauth.client.model.ListClientScopesResponse;
 import io.lumoauth.client.model.ListClientsResponse;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.OAuthClientWrite;
 import io.lumoauth.client.model.PatchAdminClientsUpdateBrandingResponse;
 import io.lumoauth.client.model.PutAdminClientsUpdateBrandingRequest;
 import io.lumoauth.client.model.PutAdminClientsUpdateBrandingResponse;
 import io.lumoauth.client.model.RotateClientSecretResponse;
+import io.lumoauth.client.model.SetClientScopesRequest;
 import io.lumoauth.client.model.SetClientScopesResponse;
 import io.lumoauth.client.model.UpdateClientResponse;
 
@@ -371,6 +373,7 @@ public class AdminOAuthClientsApi {
     /**
      * Build call for createClient
      * @param orgId  (required)
+     * @param oauthClientWrite  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -381,7 +384,7 @@ public class AdminOAuthClientsApi {
         <tr><td> 201 </td><td> Created. For a confidential client the plaintext secret is included once and never shown again; a public client (isConfidential false) has no secret and the field is absent </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createClientCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call createClientCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -395,7 +398,7 @@ public class AdminOAuthClientsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = oauthClientWrite;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/clients"
@@ -416,6 +419,7 @@ public class AdminOAuthClientsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -427,13 +431,18 @@ public class AdminOAuthClientsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call createClientValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call createClientValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling createClient(Async)");
         }
 
-        return createClientCall(orgId, _callback);
+        // verify the required parameter 'oauthClientWrite' is set
+        if (oauthClientWrite == null) {
+            throw new ApiException("Missing the required parameter 'oauthClientWrite' when calling createClient(Async)");
+        }
+
+        return createClientCall(orgId, oauthClientWrite, _callback);
 
     }
 
@@ -441,6 +450,7 @@ public class AdminOAuthClientsApi {
      * Create an OAuth client
      * 
      * @param orgId  (required)
+     * @param oauthClientWrite  (required)
      * @return CreateClientResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -450,8 +460,8 @@ public class AdminOAuthClientsApi {
         <tr><td> 201 </td><td> Created. For a confidential client the plaintext secret is included once and never shown again; a public client (isConfidential false) has no secret and the field is absent </td><td>  -  </td></tr>
      </table>
      */
-    public CreateClientResponse createClient(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<CreateClientResponse> localVarResp = createClientWithHttpInfo(orgId);
+    public CreateClientResponse createClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite) throws ApiException {
+        ApiResponse<CreateClientResponse> localVarResp = createClientWithHttpInfo(orgId, oauthClientWrite);
         return localVarResp.getData();
     }
 
@@ -459,6 +469,7 @@ public class AdminOAuthClientsApi {
      * Create an OAuth client
      * 
      * @param orgId  (required)
+     * @param oauthClientWrite  (required)
      * @return ApiResponse&lt;CreateClientResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -468,8 +479,8 @@ public class AdminOAuthClientsApi {
         <tr><td> 201 </td><td> Created. For a confidential client the plaintext secret is included once and never shown again; a public client (isConfidential false) has no secret and the field is absent </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<CreateClientResponse> createClientWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = createClientValidateBeforeCall(orgId, null);
+    public ApiResponse<CreateClientResponse> createClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite) throws ApiException {
+        okhttp3.Call localVarCall = createClientValidateBeforeCall(orgId, oauthClientWrite, null);
         Type localVarReturnType = new TypeToken<CreateClientResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -478,6 +489,7 @@ public class AdminOAuthClientsApi {
      * Create an OAuth client (asynchronously)
      * 
      * @param orgId  (required)
+     * @param oauthClientWrite  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -488,9 +500,9 @@ public class AdminOAuthClientsApi {
         <tr><td> 201 </td><td> Created. For a confidential client the plaintext secret is included once and never shown again; a public client (isConfidential false) has no secret and the field is absent </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createClientAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<CreateClientResponse> _callback) throws ApiException {
+    public okhttp3.Call createClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite, final ApiCallback<CreateClientResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = createClientValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = createClientValidateBeforeCall(orgId, oauthClientWrite, _callback);
         Type localVarReturnType = new TypeToken<CreateClientResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1489,6 +1501,7 @@ public class AdminOAuthClientsApi {
      * Build call for patchClient
      * @param orgId  (required)
      * @param clientId  (required)
+     * @param oauthClientWrite  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1501,7 +1514,7 @@ public class AdminOAuthClientsApi {
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchClientCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchClientCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1515,7 +1528,7 @@ public class AdminOAuthClientsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = oauthClientWrite;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}"
@@ -1537,6 +1550,7 @@ public class AdminOAuthClientsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1548,7 +1562,7 @@ public class AdminOAuthClientsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchClientValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchClientValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchClient(Async)");
@@ -1559,7 +1573,12 @@ public class AdminOAuthClientsApi {
             throw new ApiException("Missing the required parameter 'clientId' when calling patchClient(Async)");
         }
 
-        return patchClientCall(orgId, clientId, _callback);
+        // verify the required parameter 'oauthClientWrite' is set
+        if (oauthClientWrite == null) {
+            throw new ApiException("Missing the required parameter 'oauthClientWrite' when calling patchClient(Async)");
+        }
+
+        return patchClientCall(orgId, clientId, oauthClientWrite, _callback);
 
     }
 
@@ -1568,6 +1587,7 @@ public class AdminOAuthClientsApi {
      * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
+     * @param oauthClientWrite  (required)
      * @return UpdateClientResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1579,8 +1599,8 @@ public class AdminOAuthClientsApi {
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public UpdateClientResponse patchClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        ApiResponse<UpdateClientResponse> localVarResp = patchClientWithHttpInfo(orgId, clientId);
+    public UpdateClientResponse patchClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite) throws ApiException {
+        ApiResponse<UpdateClientResponse> localVarResp = patchClientWithHttpInfo(orgId, clientId, oauthClientWrite);
         return localVarResp.getData();
     }
 
@@ -1589,6 +1609,7 @@ public class AdminOAuthClientsApi {
      * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
+     * @param oauthClientWrite  (required)
      * @return ApiResponse&lt;UpdateClientResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1600,8 +1621,8 @@ public class AdminOAuthClientsApi {
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<UpdateClientResponse> patchClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        okhttp3.Call localVarCall = patchClientValidateBeforeCall(orgId, clientId, null);
+    public ApiResponse<UpdateClientResponse> patchClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite) throws ApiException {
+        okhttp3.Call localVarCall = patchClientValidateBeforeCall(orgId, clientId, oauthClientWrite, null);
         Type localVarReturnType = new TypeToken<UpdateClientResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1611,6 +1632,7 @@ public class AdminOAuthClientsApi {
      * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
+     * @param oauthClientWrite  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1623,9 +1645,9 @@ public class AdminOAuthClientsApi {
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<UpdateClientResponse> _callback) throws ApiException {
+    public okhttp3.Call patchClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite, final ApiCallback<UpdateClientResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchClientValidateBeforeCall(orgId, clientId, _callback);
+        okhttp3.Call localVarCall = patchClientValidateBeforeCall(orgId, clientId, oauthClientWrite, _callback);
         Type localVarReturnType = new TypeToken<UpdateClientResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1788,6 +1810,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Rotated — the new plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The client authenticates with a key (private_key_jwt, or a FAPI 2.0 profile) and has no client secret </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
@@ -1866,6 +1889,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Rotated — the new plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The client authenticates with a key (private_key_jwt, or a FAPI 2.0 profile) and has no client secret </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
@@ -1887,6 +1911,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Rotated — the new plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The client authenticates with a key (private_key_jwt, or a FAPI 2.0 profile) and has no client secret </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
@@ -1910,6 +1935,7 @@ public class AdminOAuthClientsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Rotated — the new plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The client authenticates with a key (private_key_jwt, or a FAPI 2.0 profile) and has no client secret </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> The client holds a privilege that the caller may not hand out </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
@@ -1925,6 +1951,7 @@ public class AdminOAuthClientsApi {
      * Build call for setClientScopes
      * @param orgId  (required)
      * @param clientId  (required)
+     * @param setClientScopesRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1937,7 +1964,7 @@ public class AdminOAuthClientsApi {
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setClientScopesCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call setClientScopesCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull SetClientScopesRequest setClientScopesRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1951,7 +1978,7 @@ public class AdminOAuthClientsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = setClientScopesRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes"
@@ -1973,6 +2000,7 @@ public class AdminOAuthClientsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1984,7 +2012,7 @@ public class AdminOAuthClientsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call setClientScopesValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call setClientScopesValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull SetClientScopesRequest setClientScopesRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling setClientScopes(Async)");
@@ -1995,7 +2023,12 @@ public class AdminOAuthClientsApi {
             throw new ApiException("Missing the required parameter 'clientId' when calling setClientScopes(Async)");
         }
 
-        return setClientScopesCall(orgId, clientId, _callback);
+        // verify the required parameter 'setClientScopesRequest' is set
+        if (setClientScopesRequest == null) {
+            throw new ApiException("Missing the required parameter 'setClientScopesRequest' when calling setClientScopes(Async)");
+        }
+
+        return setClientScopesCall(orgId, clientId, setClientScopesRequest, _callback);
 
     }
 
@@ -2004,6 +2037,7 @@ public class AdminOAuthClientsApi {
      * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
      * @param orgId  (required)
      * @param clientId  (required)
+     * @param setClientScopesRequest  (required)
      * @return SetClientScopesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2015,8 +2049,8 @@ public class AdminOAuthClientsApi {
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public SetClientScopesResponse setClientScopes(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        ApiResponse<SetClientScopesResponse> localVarResp = setClientScopesWithHttpInfo(orgId, clientId);
+    public SetClientScopesResponse setClientScopes(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull SetClientScopesRequest setClientScopesRequest) throws ApiException {
+        ApiResponse<SetClientScopesResponse> localVarResp = setClientScopesWithHttpInfo(orgId, clientId, setClientScopesRequest);
         return localVarResp.getData();
     }
 
@@ -2025,6 +2059,7 @@ public class AdminOAuthClientsApi {
      * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
      * @param orgId  (required)
      * @param clientId  (required)
+     * @param setClientScopesRequest  (required)
      * @return ApiResponse&lt;SetClientScopesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2036,8 +2071,8 @@ public class AdminOAuthClientsApi {
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<SetClientScopesResponse> setClientScopesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        okhttp3.Call localVarCall = setClientScopesValidateBeforeCall(orgId, clientId, null);
+    public ApiResponse<SetClientScopesResponse> setClientScopesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull SetClientScopesRequest setClientScopesRequest) throws ApiException {
+        okhttp3.Call localVarCall = setClientScopesValidateBeforeCall(orgId, clientId, setClientScopesRequest, null);
         Type localVarReturnType = new TypeToken<SetClientScopesResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2047,6 +2082,7 @@ public class AdminOAuthClientsApi {
      * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
      * @param orgId  (required)
      * @param clientId  (required)
+     * @param setClientScopesRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2059,9 +2095,9 @@ public class AdminOAuthClientsApi {
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setClientScopesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<SetClientScopesResponse> _callback) throws ApiException {
+    public okhttp3.Call setClientScopesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull SetClientScopesRequest setClientScopesRequest, final ApiCallback<SetClientScopesResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = setClientScopesValidateBeforeCall(orgId, clientId, _callback);
+        okhttp3.Call localVarCall = setClientScopesValidateBeforeCall(orgId, clientId, setClientScopesRequest, _callback);
         Type localVarReturnType = new TypeToken<SetClientScopesResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2070,6 +2106,7 @@ public class AdminOAuthClientsApi {
      * Build call for updateClient
      * @param orgId  (required)
      * @param clientId  (required)
+     * @param oauthClientWrite  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2082,7 +2119,7 @@ public class AdminOAuthClientsApi {
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateClientCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call updateClientCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2096,7 +2133,7 @@ public class AdminOAuthClientsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = oauthClientWrite;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}"
@@ -2118,6 +2155,7 @@ public class AdminOAuthClientsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2129,7 +2167,7 @@ public class AdminOAuthClientsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateClientValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call updateClientValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling updateClient(Async)");
@@ -2140,7 +2178,12 @@ public class AdminOAuthClientsApi {
             throw new ApiException("Missing the required parameter 'clientId' when calling updateClient(Async)");
         }
 
-        return updateClientCall(orgId, clientId, _callback);
+        // verify the required parameter 'oauthClientWrite' is set
+        if (oauthClientWrite == null) {
+            throw new ApiException("Missing the required parameter 'oauthClientWrite' when calling updateClient(Async)");
+        }
+
+        return updateClientCall(orgId, clientId, oauthClientWrite, _callback);
 
     }
 
@@ -2149,6 +2192,7 @@ public class AdminOAuthClientsApi {
      * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
+     * @param oauthClientWrite  (required)
      * @return UpdateClientResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2160,8 +2204,8 @@ public class AdminOAuthClientsApi {
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public UpdateClientResponse updateClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        ApiResponse<UpdateClientResponse> localVarResp = updateClientWithHttpInfo(orgId, clientId);
+    public UpdateClientResponse updateClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite) throws ApiException {
+        ApiResponse<UpdateClientResponse> localVarResp = updateClientWithHttpInfo(orgId, clientId, oauthClientWrite);
         return localVarResp.getData();
     }
 
@@ -2170,6 +2214,7 @@ public class AdminOAuthClientsApi {
      * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
+     * @param oauthClientWrite  (required)
      * @return ApiResponse&lt;UpdateClientResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2181,8 +2226,8 @@ public class AdminOAuthClientsApi {
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<UpdateClientResponse> updateClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        okhttp3.Call localVarCall = updateClientValidateBeforeCall(orgId, clientId, null);
+    public ApiResponse<UpdateClientResponse> updateClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite) throws ApiException {
+        okhttp3.Call localVarCall = updateClientValidateBeforeCall(orgId, clientId, oauthClientWrite, null);
         Type localVarReturnType = new TypeToken<UpdateClientResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2192,6 +2237,7 @@ public class AdminOAuthClientsApi {
      * A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
      * @param orgId  (required)
      * @param clientId  (required)
+     * @param oauthClientWrite  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2204,9 +2250,9 @@ public class AdminOAuthClientsApi {
         <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<UpdateClientResponse> _callback) throws ApiException {
+    public okhttp3.Call updateClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, @javax.annotation.Nonnull OAuthClientWrite oauthClientWrite, final ApiCallback<UpdateClientResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = updateClientValidateBeforeCall(orgId, clientId, _callback);
+        okhttp3.Call localVarCall = updateClientValidateBeforeCall(orgId, clientId, oauthClientWrite, _callback);
         Type localVarReturnType = new TypeToken<UpdateClientResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -518,6 +518,12 @@ type ApiAdminEmailTemplatesPreviewRequest struct {
 	ApiService AdminEmailAPI
 	orgId string
 	type_ string
+	adminEmailTemplatesPreviewRequest *AdminEmailTemplatesPreviewRequest
+}
+
+func (r ApiAdminEmailTemplatesPreviewRequest) AdminEmailTemplatesPreviewRequest(adminEmailTemplatesPreviewRequest AdminEmailTemplatesPreviewRequest) ApiAdminEmailTemplatesPreviewRequest {
+	r.adminEmailTemplatesPreviewRequest = &adminEmailTemplatesPreviewRequest
+	return r
 }
 
 func (r ApiAdminEmailTemplatesPreviewRequest) Execute() (*AdminEmailTemplatesPreviewResponse, *http.Response, error) {
@@ -565,7 +571,7 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesPreviewExecute(r ApiAdminEmail
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -581,6 +587,8 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesPreviewExecute(r ApiAdminEmail
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminEmailTemplatesPreviewRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -637,6 +645,12 @@ type ApiAdminEmailTemplatesUpsertRequest struct {
 	ApiService AdminEmailAPI
 	orgId string
 	type_ string
+	adminEmailTemplatesUpsertRequest *AdminEmailTemplatesUpsertRequest
+}
+
+func (r ApiAdminEmailTemplatesUpsertRequest) AdminEmailTemplatesUpsertRequest(adminEmailTemplatesUpsertRequest AdminEmailTemplatesUpsertRequest) ApiAdminEmailTemplatesUpsertRequest {
+	r.adminEmailTemplatesUpsertRequest = &adminEmailTemplatesUpsertRequest
+	return r
 }
 
 func (r ApiAdminEmailTemplatesUpsertRequest) Execute() (*EmailTemplate, *http.Response, error) {
@@ -684,9 +698,12 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesUpsertExecute(r ApiAdminEmailT
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminEmailTemplatesUpsertRequest == nil {
+		return localVarReturnValue, nil, reportError("adminEmailTemplatesUpsertRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -702,6 +719,8 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesUpsertExecute(r ApiAdminEmailT
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminEmailTemplatesUpsertRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

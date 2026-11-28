@@ -11,7 +11,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**admin_roles_get**](AdminRolesApi.md#admin_roles_get) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Get a single role by ID or slug |
 | [**admin_roles_get_permissions**](AdminRolesApi.md#admin_roles_get_permissions) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Get role permissions |
 | [**admin_roles_get_users**](AdminRolesApi.md#admin_roles_get_users) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users | Get users assigned to a role |
-| [**admin_roles_list**](AdminRolesApi.md#admin_roles_list) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the tenant |
+| [**admin_roles_list**](AdminRolesApi.md#admin_roles_list) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the organization |
 | [**admin_roles_remove_permission**](AdminRolesApi.md#admin_roles_remove_permission) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId} | Remove a permission from a role |
 | [**admin_roles_remove_user**](AdminRolesApi.md#admin_roles_remove_user) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId} | Remove a user from a role |
 | [**admin_roles_update_permissions**](AdminRolesApi.md#admin_roles_update_permissions) | **PUT** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Update role permissions (replaces all) |
@@ -21,11 +21,11 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 ## admin_roles_add_permissions
 
-> <MessageResponse> admin_roles_add_permissions(org_id, role_id)
+> <MessageResponse> admin_roles_add_permissions(org_id, role_id, admin_roles_add_permissions_request)
 
 Add permission(s) to a role
 
-Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization's own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 ### Examples
 
@@ -46,10 +46,11 @@ end
 api_instance = LumoAuthApiClient::AdminRolesApi.new
 org_id = 'org_id_example' # String | 
 role_id = 'role_id_example' # String | 
+admin_roles_add_permissions_request = LumoAuthApiClient::AdminRolesAddPermissionsRequest.new # AdminRolesAddPermissionsRequest | 
 
 begin
   # Add permission(s) to a role
-  result = api_instance.admin_roles_add_permissions(org_id, role_id)
+  result = api_instance.admin_roles_add_permissions(org_id, role_id, admin_roles_add_permissions_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_add_permissions: #{e}"
@@ -60,12 +61,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<MessageResponse>, Integer, Hash)> admin_roles_add_permissions_with_http_info(org_id, role_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_roles_add_permissions_with_http_info(org_id, role_id, admin_roles_add_permissions_request)
 
 ```ruby
 begin
   # Add permission(s) to a role
-  data, status_code, headers = api_instance.admin_roles_add_permissions_with_http_info(org_id, role_id)
+  data, status_code, headers = api_instance.admin_roles_add_permissions_with_http_info(org_id, role_id, admin_roles_add_permissions_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <MessageResponse>
@@ -80,6 +81,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **role_id** | **String** |  |  |
+| **admin_roles_add_permissions_request** | [**AdminRolesAddPermissionsRequest**](AdminRolesAddPermissionsRequest.md) |  |  |
 
 ### Return type
 
@@ -91,13 +93,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## admin_roles_add_user
 
-> <MessageResponse> admin_roles_add_user(org_id, role_id)
+> <MessageResponse> admin_roles_add_user(org_id, role_id, admin_roles_add_user_request)
 
 Assign a user to a role
 
@@ -120,10 +122,11 @@ end
 api_instance = LumoAuthApiClient::AdminRolesApi.new
 org_id = 'org_id_example' # String | 
 role_id = 'role_id_example' # String | 
+admin_roles_add_user_request = LumoAuthApiClient::AdminRolesAddUserRequest.new({user_id: 'user_id_example'}) # AdminRolesAddUserRequest | 
 
 begin
   # Assign a user to a role
-  result = api_instance.admin_roles_add_user(org_id, role_id)
+  result = api_instance.admin_roles_add_user(org_id, role_id, admin_roles_add_user_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_add_user: #{e}"
@@ -134,12 +137,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<MessageResponse>, Integer, Hash)> admin_roles_add_user_with_http_info(org_id, role_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_roles_add_user_with_http_info(org_id, role_id, admin_roles_add_user_request)
 
 ```ruby
 begin
   # Assign a user to a role
-  data, status_code, headers = api_instance.admin_roles_add_user_with_http_info(org_id, role_id)
+  data, status_code, headers = api_instance.admin_roles_add_user_with_http_info(org_id, role_id, admin_roles_add_user_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <MessageResponse>
@@ -154,6 +157,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **role_id** | **String** |  |  |
+| **admin_roles_add_user_request** | [**AdminRolesAddUserRequest**](AdminRolesAddUserRequest.md) |  |  |
 
 ### Return type
 
@@ -165,17 +169,17 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## admin_roles_create
 
-> <AdminRolesCreateResponse> admin_roles_create(org_id)
+> <AdminRolesCreateResponse> admin_roles_create(org_id, admin_roles_create_request)
 
 Create a new role
 
-Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization's own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
 ### Examples
 
@@ -195,10 +199,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminRolesApi.new
 org_id = 'org_id_example' # String | 
+admin_roles_create_request = LumoAuthApiClient::AdminRolesCreateRequest.new({name: 'name_example'}) # AdminRolesCreateRequest | 
 
 begin
   # Create a new role
-  result = api_instance.admin_roles_create(org_id)
+  result = api_instance.admin_roles_create(org_id, admin_roles_create_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_create: #{e}"
@@ -209,12 +214,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminRolesCreateResponse>, Integer, Hash)> admin_roles_create_with_http_info(org_id)
+> <Array(<AdminRolesCreateResponse>, Integer, Hash)> admin_roles_create_with_http_info(org_id, admin_roles_create_request)
 
 ```ruby
 begin
   # Create a new role
-  data, status_code, headers = api_instance.admin_roles_create_with_http_info(org_id)
+  data, status_code, headers = api_instance.admin_roles_create_with_http_info(org_id, admin_roles_create_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminRolesCreateResponse>
@@ -228,6 +233,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **admin_roles_create_request** | [**AdminRolesCreateRequest**](AdminRolesCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -239,7 +245,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -543,7 +549,7 @@ end
 
 > <AdminRolesListResponse> admin_roles_list(org_id)
 
-List all roles in the tenant
+List all roles in the organization
 
 ### Examples
 
@@ -565,7 +571,7 @@ api_instance = LumoAuthApiClient::AdminRolesApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # List all roles in the tenant
+  # List all roles in the organization
   result = api_instance.admin_roles_list(org_id)
   p result
 rescue LumoAuthApiClient::ApiError => e
@@ -581,7 +587,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # List all roles in the tenant
+  # List all roles in the organization
   data, status_code, headers = api_instance.admin_roles_list_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
@@ -767,11 +773,11 @@ end
 
 ## admin_roles_update_permissions
 
-> <AdminRolesCreateResponse> admin_roles_update_permissions(org_id, role_id)
+> <AdminRolesCreateResponse> admin_roles_update_permissions(org_id, role_id, admin_roles_update_permissions_request)
 
 Update role permissions (replaces all)
 
-Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization's own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 ### Examples
 
@@ -792,10 +798,11 @@ end
 api_instance = LumoAuthApiClient::AdminRolesApi.new
 org_id = 'org_id_example' # String | 
 role_id = 'role_id_example' # String | 
+admin_roles_update_permissions_request = LumoAuthApiClient::AdminRolesUpdatePermissionsRequest.new({permissions: ['permissions_example']}) # AdminRolesUpdatePermissionsRequest | 
 
 begin
   # Update role permissions (replaces all)
-  result = api_instance.admin_roles_update_permissions(org_id, role_id)
+  result = api_instance.admin_roles_update_permissions(org_id, role_id, admin_roles_update_permissions_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_update_permissions: #{e}"
@@ -806,12 +813,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminRolesCreateResponse>, Integer, Hash)> admin_roles_update_permissions_with_http_info(org_id, role_id)
+> <Array(<AdminRolesCreateResponse>, Integer, Hash)> admin_roles_update_permissions_with_http_info(org_id, role_id, admin_roles_update_permissions_request)
 
 ```ruby
 begin
   # Update role permissions (replaces all)
-  data, status_code, headers = api_instance.admin_roles_update_permissions_with_http_info(org_id, role_id)
+  data, status_code, headers = api_instance.admin_roles_update_permissions_with_http_info(org_id, role_id, admin_roles_update_permissions_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminRolesCreateResponse>
@@ -826,6 +833,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **role_id** | **String** |  |  |
+| **admin_roles_update_permissions_request** | [**AdminRolesUpdatePermissionsRequest**](AdminRolesUpdatePermissionsRequest.md) |  |  |
 
 ### Return type
 
@@ -837,13 +845,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## patch_admin_roles_update
 
-> <AdminRolesCreateResponse> patch_admin_roles_update(org_id, role_id)
+> <AdminRolesCreateResponse> patch_admin_roles_update(org_id, role_id, put_admin_org_roles_update_request)
 
 Update an existing role
 
@@ -866,10 +874,11 @@ end
 api_instance = LumoAuthApiClient::AdminRolesApi.new
 org_id = 'org_id_example' # String | 
 role_id = 'role_id_example' # String | 
+put_admin_org_roles_update_request = LumoAuthApiClient::PutAdminOrgRolesUpdateRequest.new # PutAdminOrgRolesUpdateRequest | 
 
 begin
   # Update an existing role
-  result = api_instance.patch_admin_roles_update(org_id, role_id)
+  result = api_instance.patch_admin_roles_update(org_id, role_id, put_admin_org_roles_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->patch_admin_roles_update: #{e}"
@@ -880,12 +889,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminRolesCreateResponse>, Integer, Hash)> patch_admin_roles_update_with_http_info(org_id, role_id)
+> <Array(<AdminRolesCreateResponse>, Integer, Hash)> patch_admin_roles_update_with_http_info(org_id, role_id, put_admin_org_roles_update_request)
 
 ```ruby
 begin
   # Update an existing role
-  data, status_code, headers = api_instance.patch_admin_roles_update_with_http_info(org_id, role_id)
+  data, status_code, headers = api_instance.patch_admin_roles_update_with_http_info(org_id, role_id, put_admin_org_roles_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminRolesCreateResponse>
@@ -900,6 +909,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **role_id** | **String** |  |  |
+| **put_admin_org_roles_update_request** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -911,13 +921,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## put_admin_roles_update
 
-> <AdminRolesCreateResponse> put_admin_roles_update(org_id, role_id)
+> <AdminRolesCreateResponse> put_admin_roles_update(org_id, role_id, put_admin_org_roles_update_request)
 
 Update an existing role
 
@@ -940,10 +950,11 @@ end
 api_instance = LumoAuthApiClient::AdminRolesApi.new
 org_id = 'org_id_example' # String | 
 role_id = 'role_id_example' # String | 
+put_admin_org_roles_update_request = LumoAuthApiClient::PutAdminOrgRolesUpdateRequest.new # PutAdminOrgRolesUpdateRequest | 
 
 begin
   # Update an existing role
-  result = api_instance.put_admin_roles_update(org_id, role_id)
+  result = api_instance.put_admin_roles_update(org_id, role_id, put_admin_org_roles_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->put_admin_roles_update: #{e}"
@@ -954,12 +965,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminRolesCreateResponse>, Integer, Hash)> put_admin_roles_update_with_http_info(org_id, role_id)
+> <Array(<AdminRolesCreateResponse>, Integer, Hash)> put_admin_roles_update_with_http_info(org_id, role_id, put_admin_org_roles_update_request)
 
 ```ruby
 begin
   # Update an existing role
-  data, status_code, headers = api_instance.put_admin_roles_update_with_http_info(org_id, role_id)
+  data, status_code, headers = api_instance.put_admin_roles_update_with_http_info(org_id, role_id, put_admin_org_roles_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminRolesCreateResponse>
@@ -974,6 +985,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **role_id** | **String** |  |  |
+| **put_admin_org_roles_update_request** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -985,6 +997,6 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 

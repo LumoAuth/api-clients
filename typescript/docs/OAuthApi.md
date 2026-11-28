@@ -97,9 +97,35 @@ const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let scope: string; // (default to undefined)
+let loginHint: string; // (optional) (default to undefined)
+let loginHintToken: string; // (optional) (default to undefined)
+let idTokenHint: string; // (optional) (default to undefined)
+let bindingMessage: string; // (optional) (default to undefined)
+let acrValues: string; // (optional) (default to undefined)
+let requestedExpiry: number; //Seconds. An application\\\'s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. (optional) (default to undefined)
+let clientNotificationToken: string; // (optional) (default to undefined)
+let authorizationDetails: string; // (optional) (default to undefined)
+let clientId: string; //Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) (default to undefined)
+let clientSecret: string; //client_secret_post (optional) (default to undefined)
+let clientAssertionType: string; // (optional) (default to undefined)
+let clientAssertion: string; //private_key_jwt (RFC 7523) (optional) (default to undefined)
 
 const { status, data } = await apiInstance.backchannelAuthorize(
-    orgId
+    orgId,
+    scope,
+    loginHint,
+    loginHintToken,
+    idTokenHint,
+    bindingMessage,
+    acrValues,
+    requestedExpiry,
+    clientNotificationToken,
+    authorizationDetails,
+    clientId,
+    clientSecret,
+    clientAssertionType,
+    clientAssertion
 );
 ```
 
@@ -108,6 +134,19 @@ const { status, data } = await apiInstance.backchannelAuthorize(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **scope** | [**string**] |  | defaults to undefined|
+| **loginHint** | [**string**] |  | (optional) defaults to undefined|
+| **loginHintToken** | [**string**] |  | (optional) defaults to undefined|
+| **idTokenHint** | [**string**] |  | (optional) defaults to undefined|
+| **bindingMessage** | [**string**] |  | (optional) defaults to undefined|
+| **acrValues** | [**string**] |  | (optional) defaults to undefined|
+| **requestedExpiry** | [**number**] | Seconds. An application\\\&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. | (optional) defaults to undefined|
+| **clientNotificationToken** | [**string**] |  | (optional) defaults to undefined|
+| **authorizationDetails** | [**string**] |  | (optional) defaults to undefined|
+| **clientId** | [**string**] | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | (optional) defaults to undefined|
+| **clientSecret** | [**string**] | client_secret_post | (optional) defaults to undefined|
+| **clientAssertionType** | [**string**] |  | (optional) defaults to undefined|
+| **clientAssertion** | [**string**] | private_key_jwt (RFC 7523) | (optional) defaults to undefined|
 
 
 ### Return type
@@ -120,7 +159,7 @@ const { status, data } = await apiInstance.backchannelAuthorize(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
@@ -128,9 +167,9 @@ const { status, data } = await apiInstance.backchannelAuthorize(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Authentication request accepted (CIBA Core §7.3). The hint is never confirmed: an unknown user yields an unstored auth_req_id of the same shape. interval is present for poll and ping delivery modes (always for agent-initiated requests). |  -  |
-|**400** | invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. |  -  |
-|**401** | invalid_client — client authentication failed. |  -  |
-|**403** | unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. |  -  |
+|**400** | invalid_request (also for more than one client authentication method; an agent\&#39;s Bearer / DPoP credential next to the application\&#39;s credentials is not a second one), unauthorized_client (CIBA not enabled for the client or plan, or agent_id named but not authenticated by that agent), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details (CIBA Core §13). |  -  |
+|**401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. |  * WWW-Authenticate -  <br>  |
+|**403** | access_denied. |  -  |
 |**429** | too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -197,7 +236,7 @@ No authorization required
 # **deviceAuthorization**
 > DeviceAuthorizationResponse deviceAuthorization()
 
-Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
 
 ### Example
 
@@ -211,9 +250,21 @@ const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let clientId: string; //Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) (default to undefined)
+let clientSecret: string; //client_secret_post (optional) (default to undefined)
+let clientAssertionType: string; // (optional) (default to undefined)
+let clientAssertion: string; //private_key_jwt (RFC 7523) (optional) (default to undefined)
+let scope: string; //Space-separated scopes. (optional) (default to undefined)
+let resource: string; //RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client\\\'s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. (optional) (default to undefined)
 
 const { status, data } = await apiInstance.deviceAuthorization(
-    orgId
+    orgId,
+    clientId,
+    clientSecret,
+    clientAssertionType,
+    clientAssertion,
+    scope,
+    resource
 );
 ```
 
@@ -222,6 +273,12 @@ const { status, data } = await apiInstance.deviceAuthorization(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **clientId** | [**string**] | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | (optional) defaults to undefined|
+| **clientSecret** | [**string**] | client_secret_post | (optional) defaults to undefined|
+| **clientAssertionType** | [**string**] |  | (optional) defaults to undefined|
+| **clientAssertion** | [**string**] | private_key_jwt (RFC 7523) | (optional) defaults to undefined|
+| **scope** | [**string**] | Space-separated scopes. | (optional) defaults to undefined|
+| **resource** | [**string**] | RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client\\\&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. | (optional) defaults to undefined|
 
 
 ### Return type
@@ -234,7 +291,7 @@ const { status, data } = await apiInstance.deviceAuthorization(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
@@ -242,8 +299,8 @@ const { status, data } = await apiInstance.deviceAuthorization(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Device authorization response (RFC 8628 §3.2). |  -  |
-|**400** | invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. |  -  |
-|**401** | invalid_client — a confidential client failed to authenticate. |  -  |
+|**400** | invalid_request (more than one client authentication method in the request), unauthorized_client (the client may not use the device grant), invalid_scope, or invalid_target (a resource that is malformed or not registered for the client). |  -  |
+|**401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. Also for a missing client_id: a public client sends its client_id, a confidential client authenticates (by HTTP Basic it needs no client_id in the body). |  * WWW-Authenticate -  <br>  |
 |**429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -426,9 +483,21 @@ const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let token: string; // (default to undefined)
+let tokenTypeHint: string; // (optional) (default to undefined)
+let clientId: string; //The calling client, with client_secret (client_secret_post), or an agent\\\'s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). (optional) (default to undefined)
+let clientSecret: string; //client_secret_post (optional) (default to undefined)
+let clientAssertionType: string; // (optional) (default to undefined)
+let clientAssertion: string; //private_key_jwt (RFC 7523) (optional) (default to undefined)
 
 const { status, data } = await apiInstance.introspect(
-    orgId
+    orgId,
+    token,
+    tokenTypeHint,
+    clientId,
+    clientSecret,
+    clientAssertionType,
+    clientAssertion
 );
 ```
 
@@ -437,6 +506,12 @@ const { status, data } = await apiInstance.introspect(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **token** | [**string**] |  | defaults to undefined|
+| **tokenTypeHint** | [**string**]**Array<&#39;access_token&#39; &#124; &#39;refresh_token&#39;>** |  | (optional) defaults to undefined|
+| **clientId** | [**string**] | The calling client, with client_secret (client_secret_post), or an agent\\\&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). | (optional) defaults to undefined|
+| **clientSecret** | [**string**] | client_secret_post | (optional) defaults to undefined|
+| **clientAssertionType** | [**string**] |  | (optional) defaults to undefined|
+| **clientAssertion** | [**string**] | private_key_jwt (RFC 7523) | (optional) defaults to undefined|
 
 
 ### Return type
@@ -449,16 +524,16 @@ const { status, data } = await apiInstance.introspect(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. |  -  |
-|**400** | invalid_request — token parameter missing. |  -  |
-|**401** | invalid_client — client authentication failed. |  -  |
+|**200** | Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for a user token that carries the email scope (opaque and JWT alike); iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. |  -  |
+|**400** | invalid_request: token parameter missing, or more than one client authentication method in the request (RFC 6749 §2.3). |  -  |
+|**401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client cannot introspect. |  * WWW-Authenticate -  <br>  |
 |**429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -480,9 +555,39 @@ const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let responseType: string; // (optional) (default to undefined)
+let redirectUri: string; // (optional) (default to undefined)
+let scope: string; // (optional) (default to undefined)
+let state: string; // (optional) (default to undefined)
+let nonce: string; // (optional) (default to undefined)
+let codeChallenge: string; // (optional) (default to undefined)
+let codeChallengeMethod: string; // (optional) (default to undefined)
+let request: string; //A signed request object (JAR, RFC 9101). (optional) (default to undefined)
+let resource: string; // (optional) (default to undefined)
+let prompt: string; // (optional) (default to undefined)
+let loginHint: string; // (optional) (default to undefined)
+let clientId: string; //Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) (default to undefined)
+let clientSecret: string; //client_secret_post (optional) (default to undefined)
+let clientAssertionType: string; // (optional) (default to undefined)
+let clientAssertion: string; //private_key_jwt (RFC 7523) (optional) (default to undefined)
 
 const { status, data } = await apiInstance.par(
-    orgId
+    orgId,
+    responseType,
+    redirectUri,
+    scope,
+    state,
+    nonce,
+    codeChallenge,
+    codeChallengeMethod,
+    request,
+    resource,
+    prompt,
+    loginHint,
+    clientId,
+    clientSecret,
+    clientAssertionType,
+    clientAssertion
 );
 ```
 
@@ -491,6 +596,21 @@ const { status, data } = await apiInstance.par(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **responseType** | [**string**] |  | (optional) defaults to undefined|
+| **redirectUri** | [**string**] |  | (optional) defaults to undefined|
+| **scope** | [**string**] |  | (optional) defaults to undefined|
+| **state** | [**string**] |  | (optional) defaults to undefined|
+| **nonce** | [**string**] |  | (optional) defaults to undefined|
+| **codeChallenge** | [**string**] |  | (optional) defaults to undefined|
+| **codeChallengeMethod** | [**string**] |  | (optional) defaults to undefined|
+| **request** | [**string**] | A signed request object (JAR, RFC 9101). | (optional) defaults to undefined|
+| **resource** | [**string**] |  | (optional) defaults to undefined|
+| **prompt** | [**string**] |  | (optional) defaults to undefined|
+| **loginHint** | [**string**] |  | (optional) defaults to undefined|
+| **clientId** | [**string**] | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | (optional) defaults to undefined|
+| **clientSecret** | [**string**] | client_secret_post | (optional) defaults to undefined|
+| **clientAssertionType** | [**string**] |  | (optional) defaults to undefined|
+| **clientAssertion** | [**string**] | private_key_jwt (RFC 7523) | (optional) defaults to undefined|
 
 
 ### Return type
@@ -503,7 +623,7 @@ const { status, data } = await apiInstance.par(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
@@ -511,14 +631,14 @@ const { status, data } = await apiInstance.par(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**201** | Pushed authorization request created (RFC 9126 §2.2). |  -  |
-|**400** | invalid_request / invalid_target / invalid_request_object, or the organization is unknown. |  -  |
-|**401** | invalid_client — client authentication failed. |  -  |
+|**400** | invalid_request (also for more than one client authentication method) / invalid_target / invalid_request_object, or the organization is unknown. |  -  |
+|**401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. |  * WWW-Authenticate -  <br>  |
 |**429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **registerClient**
-> RegisterClientResponse registerClient()
+> RegisterClientResponse registerClient(registerClientRequest)
 
 Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization\'s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
 
@@ -527,16 +647,19 @@ Registers an OAuth client from a JSON metadata document. Authenticated with an i
 ```typescript
 import {
     OAuthApi,
-    Configuration
+    Configuration,
+    RegisterClientRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let registerClientRequest: RegisterClientRequest; //RFC 7591 client metadata.
 
 const { status, data } = await apiInstance.registerClient(
-    orgId
+    orgId,
+    registerClientRequest
 );
 ```
 
@@ -544,6 +667,7 @@ const { status, data } = await apiInstance.registerClient(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **registerClientRequest** | **RegisterClientRequest**| RFC 7591 client metadata. | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -557,7 +681,7 @@ const { status, data } = await apiInstance.registerClient(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -566,7 +690,7 @@ const { status, data } = await apiInstance.registerClient(
 |-------------|-------------|------------------|
 |**201** | Client registered (OIDC Dynamic Client Registration §3.2). client_secret / client_secret_expires_at only for confidential clients; registration_access_token and registration_client_uri when a registration access token was issued; the remaining optional members echo registered metadata and are omitted when empty or at their default. Sent with Cache-Control: no-store. |  -  |
 |**400** | invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. |  -  |
-|**401** | access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). |  -  |
+|**401** | invalid_token: the initial access token is missing or not valid (RFC 7591 §3, RFC 6750 §3.1). WWW-Authenticate: Bearer realm&#x3D;\&quot;Client Registration\&quot;, with error&#x3D;\&quot;invalid_token\&quot; when a token was sent. |  * WWW-Authenticate -  <br>  |
 |**403** | access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. |  -  |
 |**429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
@@ -648,9 +772,21 @@ const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let token: string; // (default to undefined)
+let tokenTypeHint: string; // (optional) (default to undefined)
+let clientId: string; //Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) (default to undefined)
+let clientSecret: string; //client_secret_post (optional) (default to undefined)
+let clientAssertionType: string; // (optional) (default to undefined)
+let clientAssertion: string; //private_key_jwt (RFC 7523) (optional) (default to undefined)
 
 const { status, data } = await apiInstance.revoke(
-    orgId
+    orgId,
+    token,
+    tokenTypeHint,
+    clientId,
+    clientSecret,
+    clientAssertionType,
+    clientAssertion
 );
 ```
 
@@ -659,6 +795,12 @@ const { status, data } = await apiInstance.revoke(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **token** | [**string**] |  | defaults to undefined|
+| **tokenTypeHint** | [**string**]**Array<&#39;access_token&#39; &#124; &#39;refresh_token&#39;>** |  | (optional) defaults to undefined|
+| **clientId** | [**string**] | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | (optional) defaults to undefined|
+| **clientSecret** | [**string**] | client_secret_post | (optional) defaults to undefined|
+| **clientAssertionType** | [**string**] |  | (optional) defaults to undefined|
+| **clientAssertion** | [**string**] | private_key_jwt (RFC 7523) | (optional) defaults to undefined|
 
 
 ### Return type
@@ -671,16 +813,16 @@ const { status, data } = await apiInstance.revoke(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). |  -  |
-|**400** | invalid_request (token parameter missing) or unsupported_token_type. |  -  |
-|**401** | invalid_client — client authentication failed. |  -  |
+|**200** | The token of the calling client was revoked, or the token is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an empty JSON object. |  -  |
+|**400** | invalid_request (token parameter missing, or more than one client authentication method in the request, RFC 6749 §2.3), unsupported_token_type, or invalid_grant: a live token that was issued to another client or agent is not revoked (RFC 7009 §2.1). |  -  |
+|**401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client revokes its own tokens with its client_id. |  * WWW-Authenticate -  <br>  |
 |**429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -956,7 +1098,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submitLoginJson**
-> SubmitLoginJsonResponse submitLoginJson()
+> SubmitLoginJsonResponse submitLoginJson(submitLoginJsonRequest)
 
 Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
 
@@ -965,16 +1107,19 @@ Establishes the end-user browser session from JSON credentials so a following /o
 ```typescript
 import {
     OAuthApi,
-    Configuration
+    Configuration,
+    SubmitLoginJsonRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let submitLoginJsonRequest: SubmitLoginJsonRequest; //
 
 const { status, data } = await apiInstance.submitLoginJson(
-    orgId
+    orgId,
+    submitLoginJsonRequest
 );
 ```
 
@@ -982,6 +1127,7 @@ const { status, data } = await apiInstance.submitLoginJson(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **submitLoginJsonRequest** | **SubmitLoginJsonRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -995,7 +1141,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1081,9 +1227,47 @@ const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let grantType: string; // (default to undefined)
+let code: string; // (optional) (default to undefined)
+let redirectUri: string; // (optional) (default to undefined)
+let codeVerifier: string; // (optional) (default to undefined)
+let refreshToken: string; // (optional) (default to undefined)
+let deviceCode: string; // (optional) (default to undefined)
+let authReqId: string; //CIBA (optional) (default to undefined)
+let scope: string; // (optional) (default to undefined)
+let resource: string; // (optional) (default to undefined)
+let subjectToken: string; //Token exchange (RFC 8693) (optional) (default to undefined)
+let subjectTokenType: string; // (optional) (default to undefined)
+let actorToken: string; // (optional) (default to undefined)
+let actorTokenType: string; // (optional) (default to undefined)
+let requestedTokenType: string; // (optional) (default to undefined)
+let assertion: string; //JWT bearer / ID-JAG grant (optional) (default to undefined)
+let clientId: string; //Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) (default to undefined)
+let clientSecret: string; //client_secret_post (optional) (default to undefined)
+let clientAssertionType: string; // (optional) (default to undefined)
+let clientAssertion: string; //private_key_jwt (RFC 7523) (optional) (default to undefined)
 
 const { status, data } = await apiInstance.token(
-    orgId
+    orgId,
+    grantType,
+    code,
+    redirectUri,
+    codeVerifier,
+    refreshToken,
+    deviceCode,
+    authReqId,
+    scope,
+    resource,
+    subjectToken,
+    subjectTokenType,
+    actorToken,
+    actorTokenType,
+    requestedTokenType,
+    assertion,
+    clientId,
+    clientSecret,
+    clientAssertionType,
+    clientAssertion
 );
 ```
 
@@ -1092,6 +1276,25 @@ const { status, data } = await apiInstance.token(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **grantType** | [**string**] |  | defaults to undefined|
+| **code** | [**string**] |  | (optional) defaults to undefined|
+| **redirectUri** | [**string**] |  | (optional) defaults to undefined|
+| **codeVerifier** | [**string**] |  | (optional) defaults to undefined|
+| **refreshToken** | [**string**] |  | (optional) defaults to undefined|
+| **deviceCode** | [**string**] |  | (optional) defaults to undefined|
+| **authReqId** | [**string**] | CIBA | (optional) defaults to undefined|
+| **scope** | [**string**] |  | (optional) defaults to undefined|
+| **resource** | [**string**] |  | (optional) defaults to undefined|
+| **subjectToken** | [**string**] | Token exchange (RFC 8693) | (optional) defaults to undefined|
+| **subjectTokenType** | [**string**] |  | (optional) defaults to undefined|
+| **actorToken** | [**string**] |  | (optional) defaults to undefined|
+| **actorTokenType** | [**string**] |  | (optional) defaults to undefined|
+| **requestedTokenType** | [**string**] |  | (optional) defaults to undefined|
+| **assertion** | [**string**] | JWT bearer / ID-JAG grant | (optional) defaults to undefined|
+| **clientId** | [**string**] | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | (optional) defaults to undefined|
+| **clientSecret** | [**string**] | client_secret_post | (optional) defaults to undefined|
+| **clientAssertionType** | [**string**] |  | (optional) defaults to undefined|
+| **clientAssertion** | [**string**] | private_key_jwt (RFC 7523) | (optional) defaults to undefined|
 
 
 ### Return type
@@ -1104,7 +1307,7 @@ const { status, data } = await apiInstance.token(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
@@ -1112,9 +1315,9 @@ const { status, data } = await apiInstance.token(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. |  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  |
-|**400** | invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). |  -  |
-|**401** | invalid_client — client authentication failed. |  -  |
-|**403** | plan_limit_reached — the month\&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. |  -  |
+|**400** | invalid_request (also for more than one client authentication method) / invalid_grant / unauthorized_client (the client may not use this grant) / unsupported_grant_type / invalid_scope / invalid_target / access_denied (an agent refused by a conditional access policy or not allowed to act for users; a user who denied a device or CIBA request): every token endpoint error but invalid_client is 400 (RFC 6749 §5.2). |  -  |
+|**401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client authenticates by sending its client_id. |  * WWW-Authenticate -  <br>  |
+|**403** | plan_limit_reached (a LumoAuth extension): the month\&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. |  -  |
 |**429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

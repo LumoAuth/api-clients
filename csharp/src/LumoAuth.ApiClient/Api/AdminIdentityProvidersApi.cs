@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -69,8 +69,9 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSocialProvidersCreateRequest">An unknown field is refused with 400.</param>
         /// <returns>AdminSocialProvidersCreateResponse</returns>
-        AdminSocialProvidersCreateResponse AdminSocialProvidersCreate(string orgId);
+        AdminSocialProvidersCreateResponse AdminSocialProvidersCreate(string orgId, AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest);
 
         /// <summary>
         /// Create a social login provider
@@ -80,8 +81,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSocialProvidersCreateRequest">An unknown field is refused with 400.</param>
         /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
-        ApiResponse<AdminSocialProvidersCreateResponse> AdminSocialProvidersCreateWithHttpInfo(string orgId);
+        ApiResponse<AdminSocialProvidersCreateResponse> AdminSocialProvidersCreateWithHttpInfo(string orgId, AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest);
         /// <summary>
         /// Delete a social login provider
         /// </summary>
@@ -204,8 +206,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <returns>AdminSocialProvidersCreateResponse</returns>
-        AdminSocialProvidersCreateResponse PatchAdminSocialProvidersUpdate(string orgId, string providerId);
+        AdminSocialProvidersCreateResponse PatchAdminSocialProvidersUpdate(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest);
 
         /// <summary>
         /// Update a social login provider
@@ -216,16 +219,18 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
-        ApiResponse<AdminSocialProvidersCreateResponse> PatchAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId);
+        ApiResponse<AdminSocialProvidersCreateResponse> PatchAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest);
         /// <summary>
         /// Create or replace a social login provider
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <returns>AdminSocialProvidersCreateResponse</returns>
-        AdminSocialProvidersCreateResponse PutAdminSocialProvidersUpdate(string orgId, string providerId);
+        AdminSocialProvidersCreateResponse PutAdminSocialProvidersUpdate(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest);
 
         /// <summary>
         /// Create or replace a social login provider
@@ -236,8 +241,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
-        ApiResponse<AdminSocialProvidersCreateResponse> PutAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId);
+        ApiResponse<AdminSocialProvidersCreateResponse> PutAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest);
         #endregion Synchronous Operations
     }
 
@@ -301,9 +307,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSocialProvidersCreateRequest">An unknown field is refused with 400.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> AdminSocialProvidersCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> AdminSocialProvidersCreateAsync(string orgId, AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a social login provider
@@ -313,9 +320,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSocialProvidersCreateRequest">An unknown field is refused with 400.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersCreateResponse>> AdminSocialProvidersCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersCreateResponse>> AdminSocialProvidersCreateWithHttpInfoAsync(string orgId, AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete a social login provider
         /// </summary>
@@ -471,9 +479,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> PatchAdminSocialProvidersUpdateAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> PatchAdminSocialProvidersUpdateAsync(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update a social login provider
@@ -484,9 +493,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersCreateResponse>> PatchAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersCreateResponse>> PatchAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Create or replace a social login provider
         /// </summary>
@@ -496,9 +506,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> PutAdminSocialProvidersUpdateAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> PutAdminSocialProvidersUpdateAsync(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create or replace a social login provider
@@ -509,9 +520,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersCreateResponse>> PutAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersCreateResponse>> PutAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -1004,10 +1016,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSocialProvidersCreateRequest">An unknown field is refused with 400.</param>
         /// <returns>AdminSocialProvidersCreateResponse</returns>
-        public AdminSocialProvidersCreateResponse AdminSocialProvidersCreate(string orgId)
+        public AdminSocialProvidersCreateResponse AdminSocialProvidersCreate(string orgId, AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = AdminSocialProvidersCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = AdminSocialProvidersCreateWithHttpInfo(orgId, adminSocialProvidersCreateRequest);
             return localVarResponse.Data;
         }
 
@@ -1016,16 +1029,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSocialProvidersCreateRequest">An unknown field is refused with 400.</param>
         /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> AdminSocialProvidersCreateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> AdminSocialProvidersCreateWithHttpInfo(string orgId, AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminIdentityProvidersApi->AdminSocialProvidersCreate");
 
+            // verify the required parameter 'adminSocialProvidersCreateRequest' is set
+            if (adminSocialProvidersCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminSocialProvidersCreateRequest' when calling AdminIdentityProvidersApi->AdminSocialProvidersCreate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1040,6 +1059,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminSocialProvidersCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1070,11 +1090,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSocialProvidersCreateRequest">An unknown field is refused with 400.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> AdminSocialProvidersCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> AdminSocialProvidersCreateAsync(string orgId, AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = await AdminSocialProvidersCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = await AdminSocialProvidersCreateWithHttpInfoAsync(orgId, adminSocialProvidersCreateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1083,18 +1104,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSocialProvidersCreateRequest">An unknown field is refused with 400.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse>> AdminSocialProvidersCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse>> AdminSocialProvidersCreateWithHttpInfoAsync(string orgId, AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminIdentityProvidersApi->AdminSocialProvidersCreate");
 
+            // verify the required parameter 'adminSocialProvidersCreateRequest' is set
+            if (adminSocialProvidersCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminSocialProvidersCreateRequest' when calling AdminIdentityProvidersApi->AdminSocialProvidersCreate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1110,6 +1137,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminSocialProvidersCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2020,10 +2048,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <returns>AdminSocialProvidersCreateResponse</returns>
-        public AdminSocialProvidersCreateResponse PatchAdminSocialProvidersUpdate(string orgId, string providerId)
+        public AdminSocialProvidersCreateResponse PatchAdminSocialProvidersUpdate(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = PatchAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = PatchAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId, putAdminSocialProvidersUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -2033,8 +2062,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> PatchAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> PatchAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2044,9 +2074,14 @@ namespace LumoAuth.ApiClient.Api
             if (providerId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'providerId' when calling AdminIdentityProvidersApi->PatchAdminSocialProvidersUpdate");
 
+            // verify the required parameter 'putAdminSocialProvidersUpdateRequest' is set
+            if (putAdminSocialProvidersUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminSocialProvidersUpdateRequest' when calling AdminIdentityProvidersApi->PatchAdminSocialProvidersUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2062,6 +2097,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("providerId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(providerId)); // path parameter
+            localVarRequestOptions.Data = putAdminSocialProvidersUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2093,11 +2129,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> PatchAdminSocialProvidersUpdateAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> PatchAdminSocialProvidersUpdateAsync(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = await PatchAdminSocialProvidersUpdateWithHttpInfoAsync(orgId, providerId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = await PatchAdminSocialProvidersUpdateWithHttpInfoAsync(orgId, providerId, putAdminSocialProvidersUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2107,9 +2144,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse>> PatchAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse>> PatchAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2119,10 +2157,15 @@ namespace LumoAuth.ApiClient.Api
             if (providerId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'providerId' when calling AdminIdentityProvidersApi->PatchAdminSocialProvidersUpdate");
 
+            // verify the required parameter 'putAdminSocialProvidersUpdateRequest' is set
+            if (putAdminSocialProvidersUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminSocialProvidersUpdateRequest' when calling AdminIdentityProvidersApi->PatchAdminSocialProvidersUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2139,6 +2182,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("providerId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(providerId)); // path parameter
+            localVarRequestOptions.Data = putAdminSocialProvidersUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2171,10 +2215,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <returns>AdminSocialProvidersCreateResponse</returns>
-        public AdminSocialProvidersCreateResponse PutAdminSocialProvidersUpdate(string orgId, string providerId)
+        public AdminSocialProvidersCreateResponse PutAdminSocialProvidersUpdate(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = PutAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = PutAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId, putAdminSocialProvidersUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -2184,8 +2229,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> PutAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> PutAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2195,9 +2241,14 @@ namespace LumoAuth.ApiClient.Api
             if (providerId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'providerId' when calling AdminIdentityProvidersApi->PutAdminSocialProvidersUpdate");
 
+            // verify the required parameter 'putAdminSocialProvidersUpdateRequest' is set
+            if (putAdminSocialProvidersUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminSocialProvidersUpdateRequest' when calling AdminIdentityProvidersApi->PutAdminSocialProvidersUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2213,6 +2264,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("providerId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(providerId)); // path parameter
+            localVarRequestOptions.Data = putAdminSocialProvidersUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2244,11 +2296,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> PutAdminSocialProvidersUpdateAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> PutAdminSocialProvidersUpdateAsync(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = await PutAdminSocialProvidersUpdateWithHttpInfoAsync(orgId, providerId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = await PutAdminSocialProvidersUpdateWithHttpInfoAsync(orgId, providerId, putAdminSocialProvidersUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2258,9 +2311,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
+        /// <param name="putAdminSocialProvidersUpdateRequest">Only the fields that are sent change. An unknown field is refused with 400.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse>> PutAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse>> PutAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2270,10 +2324,15 @@ namespace LumoAuth.ApiClient.Api
             if (providerId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'providerId' when calling AdminIdentityProvidersApi->PutAdminSocialProvidersUpdate");
 
+            // verify the required parameter 'putAdminSocialProvidersUpdateRequest' is set
+            if (putAdminSocialProvidersUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminSocialProvidersUpdateRequest' when calling AdminIdentityProvidersApi->PutAdminSocialProvidersUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2290,6 +2349,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("providerId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(providerId)); // path parameter
+            localVarRequestOptions.Data = putAdminSocialProvidersUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

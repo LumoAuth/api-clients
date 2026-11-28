@@ -20,7 +20,7 @@ public struct IntrospectResponse: Codable, JSONEncodable, Hashable {
     public var clientId: String?
     /** User id, or client_… / agent_… for non-user subjects. */
     public var sub: String?
-    /** The user's email (user-bound tokens only). */
+    /** The user's e-mail address: only for a user token that carries the email scope (as UserInfo releases the address), opaque or JWT. */
     public var username: String?
     /** Expiry, Unix seconds. */
     public var exp: Int?

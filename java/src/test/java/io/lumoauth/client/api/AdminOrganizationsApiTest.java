@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -14,17 +14,24 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminOrgInvitationsCreateRequest;
 import io.lumoauth.client.model.AdminOrgInvitationsCreateResponse;
 import io.lumoauth.client.model.AdminOrgInvitationsListResponse;
+import io.lumoauth.client.model.AdminOrgMembersAddRequest;
 import io.lumoauth.client.model.AdminOrgMembersAddResponse;
 import io.lumoauth.client.model.AdminOrgMembersListResponse;
+import io.lumoauth.client.model.AdminOrgRolesCreateRequest;
 import io.lumoauth.client.model.AdminOrgRolesCreateResponse;
 import io.lumoauth.client.model.AdminOrgRolesListResponse;
+import io.lumoauth.client.model.AdminOrganizationsCreateRequest;
 import io.lumoauth.client.model.AdminOrganizationsCreateResponse;
 import io.lumoauth.client.model.AdminOrganizationsGetResponse;
 import io.lumoauth.client.model.AdminOrganizationsListResponse;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAdminOrgMembersUpdateRequest;
 import io.lumoauth.client.model.PutAdminOrgMembersUpdateResponse;
+import io.lumoauth.client.model.PutAdminOrgRolesUpdateRequest;
+import io.lumoauth.client.model.PutAdminOrganizationsUpdateRequest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -50,7 +57,8 @@ public class AdminOrganizationsApiTest {
     public void adminOrgInvitationsCreateTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        AdminOrgInvitationsCreateResponse response = api.adminOrgInvitationsCreate(orgId, organizationId);
+        AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest = null;
+        AdminOrgInvitationsCreateResponse response = api.adminOrgInvitationsCreate(orgId, organizationId, adminOrgInvitationsCreateRequest);
         // TODO: test validations
     }
 
@@ -104,7 +112,8 @@ public class AdminOrganizationsApiTest {
     public void adminOrgMembersAddTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        AdminOrgMembersAddResponse response = api.adminOrgMembersAdd(orgId, organizationId);
+        AdminOrgMembersAddRequest adminOrgMembersAddRequest = null;
+        AdminOrgMembersAddResponse response = api.adminOrgMembersAdd(orgId, organizationId, adminOrgMembersAddRequest);
         // TODO: test validations
     }
 
@@ -144,7 +153,8 @@ public class AdminOrganizationsApiTest {
     public void adminOrgRolesCreateTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        AdminOrgRolesCreateResponse response = api.adminOrgRolesCreate(orgId, organizationId);
+        AdminOrgRolesCreateRequest adminOrgRolesCreateRequest = null;
+        AdminOrgRolesCreateResponse response = api.adminOrgRolesCreate(orgId, organizationId, adminOrgRolesCreateRequest);
         // TODO: test validations
     }
 
@@ -183,7 +193,8 @@ public class AdminOrganizationsApiTest {
     @Test
     public void adminOrganizationsCreateTest() throws ApiException {
         String orgId = null;
-        AdminOrganizationsCreateResponse response = api.adminOrganizationsCreate(orgId);
+        AdminOrganizationsCreateRequest adminOrganizationsCreateRequest = null;
+        AdminOrganizationsCreateResponse response = api.adminOrganizationsCreate(orgId, adminOrganizationsCreateRequest);
         // TODO: test validations
     }
 
@@ -235,7 +246,8 @@ public class AdminOrganizationsApiTest {
         String orgId = null;
         String organizationId = null;
         String userId = null;
-        PutAdminOrgMembersUpdateResponse response = api.patchAdminOrgMembersUpdate(orgId, organizationId, userId);
+        PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest = null;
+        PutAdminOrgMembersUpdateResponse response = api.patchAdminOrgMembersUpdate(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest);
         // TODO: test validations
     }
 
@@ -249,7 +261,8 @@ public class AdminOrganizationsApiTest {
         String orgId = null;
         String organizationId = null;
         String roleId = null;
-        AdminOrgRolesCreateResponse response = api.patchAdminOrgRolesUpdate(orgId, organizationId, roleId);
+        PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest = null;
+        AdminOrgRolesCreateResponse response = api.patchAdminOrgRolesUpdate(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest);
         // TODO: test validations
     }
 
@@ -262,7 +275,8 @@ public class AdminOrganizationsApiTest {
     public void patchAdminOrganizationsUpdateTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        AdminOrganizationsGetResponse response = api.patchAdminOrganizationsUpdate(orgId, organizationId);
+        PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest = null;
+        AdminOrganizationsGetResponse response = api.patchAdminOrganizationsUpdate(orgId, organizationId, putAdminOrganizationsUpdateRequest);
         // TODO: test validations
     }
 
@@ -276,7 +290,8 @@ public class AdminOrganizationsApiTest {
         String orgId = null;
         String organizationId = null;
         String userId = null;
-        PutAdminOrgMembersUpdateResponse response = api.putAdminOrgMembersUpdate(orgId, organizationId, userId);
+        PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest = null;
+        PutAdminOrgMembersUpdateResponse response = api.putAdminOrgMembersUpdate(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest);
         // TODO: test validations
     }
 
@@ -290,7 +305,8 @@ public class AdminOrganizationsApiTest {
         String orgId = null;
         String organizationId = null;
         String roleId = null;
-        AdminOrgRolesCreateResponse response = api.putAdminOrgRolesUpdate(orgId, organizationId, roleId);
+        PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest = null;
+        AdminOrgRolesCreateResponse response = api.putAdminOrgRolesUpdate(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest);
         // TODO: test validations
     }
 
@@ -303,7 +319,8 @@ public class AdminOrganizationsApiTest {
     public void putAdminOrganizationsUpdateTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        AdminOrganizationsGetResponse response = api.putAdminOrganizationsUpdate(orgId, organizationId);
+        PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest = null;
+        AdminOrganizationsGetResponse response = api.putAdminOrganizationsUpdate(orgId, organizationId, putAdminOrganizationsUpdateRequest);
         // TODO: test validations
     }
 

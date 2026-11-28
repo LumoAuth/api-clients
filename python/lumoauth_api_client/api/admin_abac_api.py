@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -20,15 +20,19 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
+from lumoauth_api_client.models.abac_attributes_create_request import AbacAttributesCreateRequest
 from lumoauth_api_client.models.abac_attributes_create_response import AbacAttributesCreateResponse
 from lumoauth_api_client.models.abac_attributes_get_response import AbacAttributesGetResponse
 from lumoauth_api_client.models.abac_attributes_list_response import AbacAttributesListResponse
+from lumoauth_api_client.models.abac_policies_create_request import AbacPoliciesCreateRequest
 from lumoauth_api_client.models.abac_policies_create_response import AbacPoliciesCreateResponse
 from lumoauth_api_client.models.abac_policies_get_response import AbacPoliciesGetResponse
 from lumoauth_api_client.models.abac_policies_list_response import AbacPoliciesListResponse
 from lumoauth_api_client.models.abac_policies_toggle_response import AbacPoliciesToggleResponse
 from lumoauth_api_client.models.message_response import MessageResponse
+from lumoauth_api_client.models.put_abac_attributes_update_request import PutAbacAttributesUpdateRequest
 from lumoauth_api_client.models.put_abac_attributes_update_response import PutAbacAttributesUpdateResponse
+from lumoauth_api_client.models.put_abac_policies_update_request import PutAbacPoliciesUpdateRequest
 from lumoauth_api_client.models.put_abac_policies_update_response import PutAbacPoliciesUpdateResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
@@ -53,6 +57,7 @@ class AdminAbacApi:
     def abac_attributes_create(
         self,
         org_id: StrictStr,
+        abac_attributes_create_request: AbacAttributesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -71,6 +76,8 @@ class AdminAbacApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param abac_attributes_create_request: (required)
+        :type abac_attributes_create_request: AbacAttributesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -95,6 +102,7 @@ class AdminAbacApi:
 
         _param = self._abac_attributes_create_serialize(
             org_id=org_id,
+            abac_attributes_create_request=abac_attributes_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -121,6 +129,7 @@ class AdminAbacApi:
     def abac_attributes_create_with_http_info(
         self,
         org_id: StrictStr,
+        abac_attributes_create_request: AbacAttributesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -139,6 +148,8 @@ class AdminAbacApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param abac_attributes_create_request: (required)
+        :type abac_attributes_create_request: AbacAttributesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -163,6 +174,7 @@ class AdminAbacApi:
 
         _param = self._abac_attributes_create_serialize(
             org_id=org_id,
+            abac_attributes_create_request=abac_attributes_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -189,6 +201,7 @@ class AdminAbacApi:
     def abac_attributes_create_without_preload_content(
         self,
         org_id: StrictStr,
+        abac_attributes_create_request: AbacAttributesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -207,6 +220,8 @@ class AdminAbacApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param abac_attributes_create_request: (required)
+        :type abac_attributes_create_request: AbacAttributesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -231,6 +246,7 @@ class AdminAbacApi:
 
         _param = self._abac_attributes_create_serialize(
             org_id=org_id,
+            abac_attributes_create_request=abac_attributes_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -252,6 +268,7 @@ class AdminAbacApi:
     def _abac_attributes_create_serialize(
         self,
         org_id,
+        abac_attributes_create_request,
         _request_auth,
         _content_type,
         _headers,
@@ -279,6 +296,8 @@ class AdminAbacApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if abac_attributes_create_request is not None:
+            _body_params = abac_attributes_create_request
 
 
         # set the HTTP header `Accept`
@@ -289,6 +308,19 @@ class AdminAbacApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1134,6 +1166,7 @@ class AdminAbacApi:
     def abac_policies_create(
         self,
         org_id: StrictStr,
+        abac_policies_create_request: AbacPoliciesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1152,6 +1185,8 @@ class AdminAbacApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param abac_policies_create_request: (required)
+        :type abac_policies_create_request: AbacPoliciesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1176,6 +1211,7 @@ class AdminAbacApi:
 
         _param = self._abac_policies_create_serialize(
             org_id=org_id,
+            abac_policies_create_request=abac_policies_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1202,6 +1238,7 @@ class AdminAbacApi:
     def abac_policies_create_with_http_info(
         self,
         org_id: StrictStr,
+        abac_policies_create_request: AbacPoliciesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1220,6 +1257,8 @@ class AdminAbacApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param abac_policies_create_request: (required)
+        :type abac_policies_create_request: AbacPoliciesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1244,6 +1283,7 @@ class AdminAbacApi:
 
         _param = self._abac_policies_create_serialize(
             org_id=org_id,
+            abac_policies_create_request=abac_policies_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1270,6 +1310,7 @@ class AdminAbacApi:
     def abac_policies_create_without_preload_content(
         self,
         org_id: StrictStr,
+        abac_policies_create_request: AbacPoliciesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1288,6 +1329,8 @@ class AdminAbacApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param abac_policies_create_request: (required)
+        :type abac_policies_create_request: AbacPoliciesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1312,6 +1355,7 @@ class AdminAbacApi:
 
         _param = self._abac_policies_create_serialize(
             org_id=org_id,
+            abac_policies_create_request=abac_policies_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1333,6 +1377,7 @@ class AdminAbacApi:
     def _abac_policies_create_serialize(
         self,
         org_id,
+        abac_policies_create_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1360,6 +1405,8 @@ class AdminAbacApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if abac_policies_create_request is not None:
+            _body_params = abac_policies_create_request
 
 
         # set the HTTP header `Accept`
@@ -1370,6 +1417,19 @@ class AdminAbacApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2513,6 +2573,7 @@ class AdminAbacApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
+        put_abac_attributes_update_request: PutAbacAttributesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2533,6 +2594,8 @@ class AdminAbacApi:
         :type org_id: str
         :param id: (required)
         :type id: str
+        :param put_abac_attributes_update_request: (required)
+        :type put_abac_attributes_update_request: PutAbacAttributesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2558,6 +2621,7 @@ class AdminAbacApi:
         _param = self._patch_abac_attributes_update_serialize(
             org_id=org_id,
             id=id,
+            put_abac_attributes_update_request=put_abac_attributes_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2585,6 +2649,7 @@ class AdminAbacApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
+        put_abac_attributes_update_request: PutAbacAttributesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2605,6 +2670,8 @@ class AdminAbacApi:
         :type org_id: str
         :param id: (required)
         :type id: str
+        :param put_abac_attributes_update_request: (required)
+        :type put_abac_attributes_update_request: PutAbacAttributesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2630,6 +2697,7 @@ class AdminAbacApi:
         _param = self._patch_abac_attributes_update_serialize(
             org_id=org_id,
             id=id,
+            put_abac_attributes_update_request=put_abac_attributes_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2657,6 +2725,7 @@ class AdminAbacApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
+        put_abac_attributes_update_request: PutAbacAttributesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2677,6 +2746,8 @@ class AdminAbacApi:
         :type org_id: str
         :param id: (required)
         :type id: str
+        :param put_abac_attributes_update_request: (required)
+        :type put_abac_attributes_update_request: PutAbacAttributesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2702,6 +2773,7 @@ class AdminAbacApi:
         _param = self._patch_abac_attributes_update_serialize(
             org_id=org_id,
             id=id,
+            put_abac_attributes_update_request=put_abac_attributes_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2724,6 +2796,7 @@ class AdminAbacApi:
         self,
         org_id,
         id,
+        put_abac_attributes_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -2753,6 +2826,8 @@ class AdminAbacApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_abac_attributes_update_request is not None:
+            _body_params = put_abac_attributes_update_request
 
 
         # set the HTTP header `Accept`
@@ -2763,6 +2838,19 @@ class AdminAbacApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2793,6 +2881,7 @@ class AdminAbacApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
+        put_abac_policies_update_request: PutAbacPoliciesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2813,6 +2902,8 @@ class AdminAbacApi:
         :type org_id: str
         :param id: (required)
         :type id: str
+        :param put_abac_policies_update_request: (required)
+        :type put_abac_policies_update_request: PutAbacPoliciesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2838,6 +2929,7 @@ class AdminAbacApi:
         _param = self._patch_abac_policies_update_serialize(
             org_id=org_id,
             id=id,
+            put_abac_policies_update_request=put_abac_policies_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2866,6 +2958,7 @@ class AdminAbacApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
+        put_abac_policies_update_request: PutAbacPoliciesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2886,6 +2979,8 @@ class AdminAbacApi:
         :type org_id: str
         :param id: (required)
         :type id: str
+        :param put_abac_policies_update_request: (required)
+        :type put_abac_policies_update_request: PutAbacPoliciesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2911,6 +3006,7 @@ class AdminAbacApi:
         _param = self._patch_abac_policies_update_serialize(
             org_id=org_id,
             id=id,
+            put_abac_policies_update_request=put_abac_policies_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2939,6 +3035,7 @@ class AdminAbacApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
+        put_abac_policies_update_request: PutAbacPoliciesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2959,6 +3056,8 @@ class AdminAbacApi:
         :type org_id: str
         :param id: (required)
         :type id: str
+        :param put_abac_policies_update_request: (required)
+        :type put_abac_policies_update_request: PutAbacPoliciesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2984,6 +3083,7 @@ class AdminAbacApi:
         _param = self._patch_abac_policies_update_serialize(
             org_id=org_id,
             id=id,
+            put_abac_policies_update_request=put_abac_policies_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3007,6 +3107,7 @@ class AdminAbacApi:
         self,
         org_id,
         id,
+        put_abac_policies_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -3036,6 +3137,8 @@ class AdminAbacApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_abac_policies_update_request is not None:
+            _body_params = put_abac_policies_update_request
 
 
         # set the HTTP header `Accept`
@@ -3046,6 +3149,19 @@ class AdminAbacApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -3076,6 +3192,7 @@ class AdminAbacApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
+        put_abac_attributes_update_request: PutAbacAttributesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3096,6 +3213,8 @@ class AdminAbacApi:
         :type org_id: str
         :param id: (required)
         :type id: str
+        :param put_abac_attributes_update_request: (required)
+        :type put_abac_attributes_update_request: PutAbacAttributesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3121,6 +3240,7 @@ class AdminAbacApi:
         _param = self._put_abac_attributes_update_serialize(
             org_id=org_id,
             id=id,
+            put_abac_attributes_update_request=put_abac_attributes_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3148,6 +3268,7 @@ class AdminAbacApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
+        put_abac_attributes_update_request: PutAbacAttributesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3168,6 +3289,8 @@ class AdminAbacApi:
         :type org_id: str
         :param id: (required)
         :type id: str
+        :param put_abac_attributes_update_request: (required)
+        :type put_abac_attributes_update_request: PutAbacAttributesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3193,6 +3316,7 @@ class AdminAbacApi:
         _param = self._put_abac_attributes_update_serialize(
             org_id=org_id,
             id=id,
+            put_abac_attributes_update_request=put_abac_attributes_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3220,6 +3344,7 @@ class AdminAbacApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
+        put_abac_attributes_update_request: PutAbacAttributesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3240,6 +3365,8 @@ class AdminAbacApi:
         :type org_id: str
         :param id: (required)
         :type id: str
+        :param put_abac_attributes_update_request: (required)
+        :type put_abac_attributes_update_request: PutAbacAttributesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3265,6 +3392,7 @@ class AdminAbacApi:
         _param = self._put_abac_attributes_update_serialize(
             org_id=org_id,
             id=id,
+            put_abac_attributes_update_request=put_abac_attributes_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3287,6 +3415,7 @@ class AdminAbacApi:
         self,
         org_id,
         id,
+        put_abac_attributes_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -3316,6 +3445,8 @@ class AdminAbacApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_abac_attributes_update_request is not None:
+            _body_params = put_abac_attributes_update_request
 
 
         # set the HTTP header `Accept`
@@ -3326,6 +3457,19 @@ class AdminAbacApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -3356,6 +3500,7 @@ class AdminAbacApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
+        put_abac_policies_update_request: PutAbacPoliciesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3376,6 +3521,8 @@ class AdminAbacApi:
         :type org_id: str
         :param id: (required)
         :type id: str
+        :param put_abac_policies_update_request: (required)
+        :type put_abac_policies_update_request: PutAbacPoliciesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3401,6 +3548,7 @@ class AdminAbacApi:
         _param = self._put_abac_policies_update_serialize(
             org_id=org_id,
             id=id,
+            put_abac_policies_update_request=put_abac_policies_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3429,6 +3577,7 @@ class AdminAbacApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
+        put_abac_policies_update_request: PutAbacPoliciesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3449,6 +3598,8 @@ class AdminAbacApi:
         :type org_id: str
         :param id: (required)
         :type id: str
+        :param put_abac_policies_update_request: (required)
+        :type put_abac_policies_update_request: PutAbacPoliciesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3474,6 +3625,7 @@ class AdminAbacApi:
         _param = self._put_abac_policies_update_serialize(
             org_id=org_id,
             id=id,
+            put_abac_policies_update_request=put_abac_policies_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3502,6 +3654,7 @@ class AdminAbacApi:
         self,
         org_id: StrictStr,
         id: Annotated[str, Field(strict=True)],
+        put_abac_policies_update_request: PutAbacPoliciesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3522,6 +3675,8 @@ class AdminAbacApi:
         :type org_id: str
         :param id: (required)
         :type id: str
+        :param put_abac_policies_update_request: (required)
+        :type put_abac_policies_update_request: PutAbacPoliciesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3547,6 +3702,7 @@ class AdminAbacApi:
         _param = self._put_abac_policies_update_serialize(
             org_id=org_id,
             id=id,
+            put_abac_policies_update_request=put_abac_policies_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3570,6 +3726,7 @@ class AdminAbacApi:
         self,
         org_id,
         id,
+        put_abac_policies_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -3599,6 +3756,8 @@ class AdminAbacApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_abac_policies_update_request is not None:
+            _body_params = put_abac_policies_update_request
 
 
         # set the HTTP header `Accept`
@@ -3609,6 +3768,19 @@ class AdminAbacApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

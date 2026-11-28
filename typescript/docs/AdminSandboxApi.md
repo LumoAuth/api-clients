@@ -4,9 +4,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**adminSandboxDestroy**](#adminsandboxdestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant|
-|[**adminSandboxList**](#adminsandboxlist) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller\&#39;s sandbox tenants|
-|[**adminSandboxSpawn**](#adminsandboxspawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant|
+|[**adminSandboxDestroy**](#adminsandboxdestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox organization|
+|[**adminSandboxList**](#adminsandboxlist) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller\&#39;s sandbox organizations|
+|[**adminSandboxSpawn**](#adminsandboxspawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox organization|
 
 # **adminSandboxDestroy**
 > MessageResponse adminSandboxDestroy()

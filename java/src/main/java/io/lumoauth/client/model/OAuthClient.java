@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -23,7 +23,10 @@ import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -51,7 +54,7 @@ import io.lumoauth.client.JSON;
 /**
  * OAuthClient
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T09:17:26.252888759-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-28T17:25:42.087818540Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class OAuthClient {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -112,6 +115,243 @@ public class OAuthClient {
   @SerializedName(SERIALIZED_NAME_CIBA_ENABLED)
   @javax.annotation.Nullable
   private Boolean cibaEnabled;
+
+  public static final String SERIALIZED_NAME_ALLOWED_ORIGINS = "allowedOrigins";
+  @SerializedName(SERIALIZED_NAME_ALLOWED_ORIGINS)
+  @javax.annotation.Nullable
+  private List<String> allowedOrigins = new ArrayList<>();
+
+  public static final String SERIALIZED_NAME_POST_LOGOUT_REDIRECT_URIS = "postLogoutRedirectUris";
+  @SerializedName(SERIALIZED_NAME_POST_LOGOUT_REDIRECT_URIS)
+  @javax.annotation.Nullable
+  private List<String> postLogoutRedirectUris = new ArrayList<>();
+
+  public static final String SERIALIZED_NAME_FRONTCHANNEL_LOGOUT_URI = "frontchannelLogoutUri";
+  @SerializedName(SERIALIZED_NAME_FRONTCHANNEL_LOGOUT_URI)
+  @javax.annotation.Nullable
+  private String frontchannelLogoutUri;
+
+  public static final String SERIALIZED_NAME_BACKCHANNEL_LOGOUT_URI = "backchannelLogoutUri";
+  @SerializedName(SERIALIZED_NAME_BACKCHANNEL_LOGOUT_URI)
+  @javax.annotation.Nullable
+  private String backchannelLogoutUri;
+
+  /**
+   * Detailed responses only. Format of the access tokens that the client receives.
+   */
+  @JsonAdapter(AccessTokenFormatEnum.Adapter.class)
+  public enum AccessTokenFormatEnum {
+    OPAQUE("opaque"),
+    
+    JWT("jwt");
+
+    private String value;
+
+    AccessTokenFormatEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static AccessTokenFormatEnum fromValue(String value) {
+      for (AccessTokenFormatEnum b : AccessTokenFormatEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<AccessTokenFormatEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final AccessTokenFormatEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public AccessTokenFormatEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return AccessTokenFormatEnum.fromValue(value);
+      }
+    }
+
+    public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      String value = jsonElement.getAsString();
+      AccessTokenFormatEnum.fromValue(value);
+    }
+  }
+
+  public static final String SERIALIZED_NAME_ACCESS_TOKEN_FORMAT = "accessTokenFormat";
+  @SerializedName(SERIALIZED_NAME_ACCESS_TOKEN_FORMAT)
+  @javax.annotation.Nullable
+  private AccessTokenFormatEnum accessTokenFormat;
+
+  /**
+   * Detailed responses only.
+   */
+  @JsonAdapter(TokenEndpointAuthMethodEnum.Adapter.class)
+  public enum TokenEndpointAuthMethodEnum {
+    CLIENT_SECRET_BASIC("client_secret_basic"),
+    
+    PRIVATE_KEY_JWT("private_key_jwt"),
+    
+    NONE("none"),
+    
+    ATTEST_JWT_CLIENT_AUTH("attest_jwt_client_auth");
+
+    private String value;
+
+    TokenEndpointAuthMethodEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static TokenEndpointAuthMethodEnum fromValue(String value) {
+      for (TokenEndpointAuthMethodEnum b : TokenEndpointAuthMethodEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<TokenEndpointAuthMethodEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final TokenEndpointAuthMethodEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public TokenEndpointAuthMethodEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return TokenEndpointAuthMethodEnum.fromValue(value);
+      }
+    }
+
+    public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      String value = jsonElement.getAsString();
+      TokenEndpointAuthMethodEnum.fromValue(value);
+    }
+  }
+
+  public static final String SERIALIZED_NAME_TOKEN_ENDPOINT_AUTH_METHOD = "tokenEndpointAuthMethod";
+  @SerializedName(SERIALIZED_NAME_TOKEN_ENDPOINT_AUTH_METHOD)
+  @javax.annotation.Nullable
+  private TokenEndpointAuthMethodEnum tokenEndpointAuthMethod;
+
+  public static final String SERIALIZED_NAME_JWKS_URI = "jwksUri";
+  @SerializedName(SERIALIZED_NAME_JWKS_URI)
+  @javax.annotation.Nullable
+  private String jwksUri;
+
+  public static final String SERIALIZED_NAME_JWKS = "jwks";
+  @SerializedName(SERIALIZED_NAME_JWKS)
+  @javax.annotation.Nullable
+  private Map<String, Object> jwks;
+
+  /**
+   * Detailed responses only. FAPI 2.0 security profile.
+   */
+  @JsonAdapter(FapiModeEnum.Adapter.class)
+  public enum FapiModeEnum {
+    DISABLED("disabled"),
+    
+    FAPI2_BASELINE("fapi2_baseline"),
+    
+    FAPI2_ADVANCED("fapi2_advanced");
+
+    private String value;
+
+    FapiModeEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static FapiModeEnum fromValue(String value) {
+      for (FapiModeEnum b : FapiModeEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<FapiModeEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final FapiModeEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public FapiModeEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return FapiModeEnum.fromValue(value);
+      }
+    }
+
+    public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      String value = jsonElement.getAsString();
+      FapiModeEnum.fromValue(value);
+    }
+  }
+
+  public static final String SERIALIZED_NAME_FAPI_MODE = "fapiMode";
+  @SerializedName(SERIALIZED_NAME_FAPI_MODE)
+  @javax.annotation.Nullable
+  private FapiModeEnum fapiMode;
+
+  public static final String SERIALIZED_NAME_REQUIRE_PAR = "requirePar";
+  @SerializedName(SERIALIZED_NAME_REQUIRE_PAR)
+  @javax.annotation.Nullable
+  private Boolean requirePar;
+
+  public static final String SERIALIZED_NAME_DPOP_BOUND_ACCESS_TOKENS = "dpopBoundAccessTokens";
+  @SerializedName(SERIALIZED_NAME_DPOP_BOUND_ACCESS_TOKENS)
+  @javax.annotation.Nullable
+  private Boolean dpopBoundAccessTokens;
+
+  public static final String SERIALIZED_NAME_ATTESTATION_BASED_AUTH_ENABLED = "attestationBasedAuthEnabled";
+  @SerializedName(SERIALIZED_NAME_ATTESTATION_BASED_AUTH_ENABLED)
+  @javax.annotation.Nullable
+  private Boolean attestationBasedAuthEnabled;
+
+  public static final String SERIALIZED_NAME_ATTESTER_ISSUER = "attesterIssuer";
+  @SerializedName(SERIALIZED_NAME_ATTESTER_ISSUER)
+  @javax.annotation.Nullable
+  private String attesterIssuer;
+
+  public static final String SERIALIZED_NAME_ATTESTER_JWKS_URI = "attesterJwksUri";
+  @SerializedName(SERIALIZED_NAME_ATTESTER_JWKS_URI)
+  @javax.annotation.Nullable
+  private String attesterJwksUri;
+
+  public static final String SERIALIZED_NAME_TOKEN_EXCHANGE_ENABLED = "tokenExchangeEnabled";
+  @SerializedName(SERIALIZED_NAME_TOKEN_EXCHANGE_ENABLED)
+  @javax.annotation.Nullable
+  private Boolean tokenExchangeEnabled;
 
   public OAuthClient() {
   }
@@ -368,6 +608,315 @@ public class OAuthClient {
   }
 
 
+  public OAuthClient allowedOrigins(@javax.annotation.Nullable List<String> allowedOrigins) {
+    this.allowedOrigins = allowedOrigins;
+    return this;
+  }
+
+  public OAuthClient addAllowedOriginsItem(String allowedOriginsItem) {
+    if (this.allowedOrigins == null) {
+      this.allowedOrigins = new ArrayList<>();
+    }
+    this.allowedOrigins.add(allowedOriginsItem);
+    return this;
+  }
+
+  /**
+   * Detailed responses only. Browser CORS origins (scheme://host[:port]).
+   * @return allowedOrigins
+   */
+  @javax.annotation.Nullable
+  public List<String> getAllowedOrigins() {
+    return allowedOrigins;
+  }
+
+  public void setAllowedOrigins(@javax.annotation.Nullable List<String> allowedOrigins) {
+    this.allowedOrigins = allowedOrigins;
+  }
+
+
+  public OAuthClient postLogoutRedirectUris(@javax.annotation.Nullable List<String> postLogoutRedirectUris) {
+    this.postLogoutRedirectUris = postLogoutRedirectUris;
+    return this;
+  }
+
+  public OAuthClient addPostLogoutRedirectUrisItem(String postLogoutRedirectUrisItem) {
+    if (this.postLogoutRedirectUris == null) {
+      this.postLogoutRedirectUris = new ArrayList<>();
+    }
+    this.postLogoutRedirectUris.add(postLogoutRedirectUrisItem);
+    return this;
+  }
+
+  /**
+   * Detailed responses only. Addresses that the end-session endpoint may return to.
+   * @return postLogoutRedirectUris
+   */
+  @javax.annotation.Nullable
+  public List<String> getPostLogoutRedirectUris() {
+    return postLogoutRedirectUris;
+  }
+
+  public void setPostLogoutRedirectUris(@javax.annotation.Nullable List<String> postLogoutRedirectUris) {
+    this.postLogoutRedirectUris = postLogoutRedirectUris;
+  }
+
+
+  public OAuthClient frontchannelLogoutUri(@javax.annotation.Nullable String frontchannelLogoutUri) {
+    this.frontchannelLogoutUri = frontchannelLogoutUri;
+    return this;
+  }
+
+  /**
+   * Detailed responses only. OIDC Front-Channel Logout address.
+   * @return frontchannelLogoutUri
+   */
+  @javax.annotation.Nullable
+  public String getFrontchannelLogoutUri() {
+    return frontchannelLogoutUri;
+  }
+
+  public void setFrontchannelLogoutUri(@javax.annotation.Nullable String frontchannelLogoutUri) {
+    this.frontchannelLogoutUri = frontchannelLogoutUri;
+  }
+
+
+  public OAuthClient backchannelLogoutUri(@javax.annotation.Nullable String backchannelLogoutUri) {
+    this.backchannelLogoutUri = backchannelLogoutUri;
+    return this;
+  }
+
+  /**
+   * Detailed responses only. OIDC Back-Channel Logout address.
+   * @return backchannelLogoutUri
+   */
+  @javax.annotation.Nullable
+  public String getBackchannelLogoutUri() {
+    return backchannelLogoutUri;
+  }
+
+  public void setBackchannelLogoutUri(@javax.annotation.Nullable String backchannelLogoutUri) {
+    this.backchannelLogoutUri = backchannelLogoutUri;
+  }
+
+
+  public OAuthClient accessTokenFormat(@javax.annotation.Nullable AccessTokenFormatEnum accessTokenFormat) {
+    this.accessTokenFormat = accessTokenFormat;
+    return this;
+  }
+
+  /**
+   * Detailed responses only. Format of the access tokens that the client receives.
+   * @return accessTokenFormat
+   */
+  @javax.annotation.Nullable
+  public AccessTokenFormatEnum getAccessTokenFormat() {
+    return accessTokenFormat;
+  }
+
+  public void setAccessTokenFormat(@javax.annotation.Nullable AccessTokenFormatEnum accessTokenFormat) {
+    this.accessTokenFormat = accessTokenFormat;
+  }
+
+
+  public OAuthClient tokenEndpointAuthMethod(@javax.annotation.Nullable TokenEndpointAuthMethodEnum tokenEndpointAuthMethod) {
+    this.tokenEndpointAuthMethod = tokenEndpointAuthMethod;
+    return this;
+  }
+
+  /**
+   * Detailed responses only.
+   * @return tokenEndpointAuthMethod
+   */
+  @javax.annotation.Nullable
+  public TokenEndpointAuthMethodEnum getTokenEndpointAuthMethod() {
+    return tokenEndpointAuthMethod;
+  }
+
+  public void setTokenEndpointAuthMethod(@javax.annotation.Nullable TokenEndpointAuthMethodEnum tokenEndpointAuthMethod) {
+    this.tokenEndpointAuthMethod = tokenEndpointAuthMethod;
+  }
+
+
+  public OAuthClient jwksUri(@javax.annotation.Nullable String jwksUri) {
+    this.jwksUri = jwksUri;
+    return this;
+  }
+
+  /**
+   * Detailed responses only. https address of the client&#39;s public keys.
+   * @return jwksUri
+   */
+  @javax.annotation.Nullable
+  public String getJwksUri() {
+    return jwksUri;
+  }
+
+  public void setJwksUri(@javax.annotation.Nullable String jwksUri) {
+    this.jwksUri = jwksUri;
+  }
+
+
+  public OAuthClient jwks(@javax.annotation.Nullable Map<String, Object> jwks) {
+    this.jwks = jwks;
+    return this;
+  }
+
+  public OAuthClient putJwksItem(String key, Object jwksItem) {
+    if (this.jwks == null) {
+      this.jwks = new HashMap<>();
+    }
+    this.jwks.put(key, jwksItem);
+    return this;
+  }
+
+  /**
+   * Detailed responses only. The client&#39;s public keys, inline.
+   * @return jwks
+   */
+  @javax.annotation.Nullable
+  public Map<String, Object> getJwks() {
+    return jwks;
+  }
+
+  public void setJwks(@javax.annotation.Nullable Map<String, Object> jwks) {
+    this.jwks = jwks;
+  }
+
+
+  public OAuthClient fapiMode(@javax.annotation.Nullable FapiModeEnum fapiMode) {
+    this.fapiMode = fapiMode;
+    return this;
+  }
+
+  /**
+   * Detailed responses only. FAPI 2.0 security profile.
+   * @return fapiMode
+   */
+  @javax.annotation.Nullable
+  public FapiModeEnum getFapiMode() {
+    return fapiMode;
+  }
+
+  public void setFapiMode(@javax.annotation.Nullable FapiModeEnum fapiMode) {
+    this.fapiMode = fapiMode;
+  }
+
+
+  public OAuthClient requirePar(@javax.annotation.Nullable Boolean requirePar) {
+    this.requirePar = requirePar;
+    return this;
+  }
+
+  /**
+   * Detailed responses only. The stored switch; a FAPI profile requires PAR whatever it says.
+   * @return requirePar
+   */
+  @javax.annotation.Nullable
+  public Boolean getRequirePar() {
+    return requirePar;
+  }
+
+  public void setRequirePar(@javax.annotation.Nullable Boolean requirePar) {
+    this.requirePar = requirePar;
+  }
+
+
+  public OAuthClient dpopBoundAccessTokens(@javax.annotation.Nullable Boolean dpopBoundAccessTokens) {
+    this.dpopBoundAccessTokens = dpopBoundAccessTokens;
+    return this;
+  }
+
+  /**
+   * Detailed responses only. The stored switch; a FAPI profile requires DPoP whatever it says.
+   * @return dpopBoundAccessTokens
+   */
+  @javax.annotation.Nullable
+  public Boolean getDpopBoundAccessTokens() {
+    return dpopBoundAccessTokens;
+  }
+
+  public void setDpopBoundAccessTokens(@javax.annotation.Nullable Boolean dpopBoundAccessTokens) {
+    this.dpopBoundAccessTokens = dpopBoundAccessTokens;
+  }
+
+
+  public OAuthClient attestationBasedAuthEnabled(@javax.annotation.Nullable Boolean attestationBasedAuthEnabled) {
+    this.attestationBasedAuthEnabled = attestationBasedAuthEnabled;
+    return this;
+  }
+
+  /**
+   * Detailed responses only.
+   * @return attestationBasedAuthEnabled
+   */
+  @javax.annotation.Nullable
+  public Boolean getAttestationBasedAuthEnabled() {
+    return attestationBasedAuthEnabled;
+  }
+
+  public void setAttestationBasedAuthEnabled(@javax.annotation.Nullable Boolean attestationBasedAuthEnabled) {
+    this.attestationBasedAuthEnabled = attestationBasedAuthEnabled;
+  }
+
+
+  public OAuthClient attesterIssuer(@javax.annotation.Nullable String attesterIssuer) {
+    this.attesterIssuer = attesterIssuer;
+    return this;
+  }
+
+  /**
+   * Detailed responses only.
+   * @return attesterIssuer
+   */
+  @javax.annotation.Nullable
+  public String getAttesterIssuer() {
+    return attesterIssuer;
+  }
+
+  public void setAttesterIssuer(@javax.annotation.Nullable String attesterIssuer) {
+    this.attesterIssuer = attesterIssuer;
+  }
+
+
+  public OAuthClient attesterJwksUri(@javax.annotation.Nullable String attesterJwksUri) {
+    this.attesterJwksUri = attesterJwksUri;
+    return this;
+  }
+
+  /**
+   * Detailed responses only.
+   * @return attesterJwksUri
+   */
+  @javax.annotation.Nullable
+  public String getAttesterJwksUri() {
+    return attesterJwksUri;
+  }
+
+  public void setAttesterJwksUri(@javax.annotation.Nullable String attesterJwksUri) {
+    this.attesterJwksUri = attesterJwksUri;
+  }
+
+
+  public OAuthClient tokenExchangeEnabled(@javax.annotation.Nullable Boolean tokenExchangeEnabled) {
+    this.tokenExchangeEnabled = tokenExchangeEnabled;
+    return this;
+  }
+
+  /**
+   * Detailed responses only. Whether the client may use token exchange (RFC 8693).
+   * @return tokenExchangeEnabled
+   */
+  @javax.annotation.Nullable
+  public Boolean getTokenExchangeEnabled() {
+    return tokenExchangeEnabled;
+  }
+
+  public void setTokenExchangeEnabled(@javax.annotation.Nullable Boolean tokenExchangeEnabled) {
+    this.tokenExchangeEnabled = tokenExchangeEnabled;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -389,12 +938,38 @@ public class OAuthClient {
         Objects.equals(this.redirectUris, oauthClient.redirectUris) &&
         Objects.equals(this.scopes, oauthClient.scopes) &&
         Objects.equals(this.grantTypes, oauthClient.grantTypes) &&
-        Objects.equals(this.cibaEnabled, oauthClient.cibaEnabled);
+        Objects.equals(this.cibaEnabled, oauthClient.cibaEnabled) &&
+        Objects.equals(this.allowedOrigins, oauthClient.allowedOrigins) &&
+        Objects.equals(this.postLogoutRedirectUris, oauthClient.postLogoutRedirectUris) &&
+        Objects.equals(this.frontchannelLogoutUri, oauthClient.frontchannelLogoutUri) &&
+        Objects.equals(this.backchannelLogoutUri, oauthClient.backchannelLogoutUri) &&
+        Objects.equals(this.accessTokenFormat, oauthClient.accessTokenFormat) &&
+        Objects.equals(this.tokenEndpointAuthMethod, oauthClient.tokenEndpointAuthMethod) &&
+        Objects.equals(this.jwksUri, oauthClient.jwksUri) &&
+        Objects.equals(this.jwks, oauthClient.jwks) &&
+        Objects.equals(this.fapiMode, oauthClient.fapiMode) &&
+        Objects.equals(this.requirePar, oauthClient.requirePar) &&
+        Objects.equals(this.dpopBoundAccessTokens, oauthClient.dpopBoundAccessTokens) &&
+        Objects.equals(this.attestationBasedAuthEnabled, oauthClient.attestationBasedAuthEnabled) &&
+        Objects.equals(this.attesterIssuer, oauthClient.attesterIssuer) &&
+        Objects.equals(this.attesterJwksUri, oauthClient.attesterJwksUri) &&
+        Objects.equals(this.tokenExchangeEnabled, oauthClient.tokenExchangeEnabled);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, clientId, name, isConfidential, isPublic, isActive, requiresPkce, createdAt, redirectUris, scopes, grantTypes, cibaEnabled);
+    return Objects.hash(id, clientId, name, isConfidential, isPublic, isActive, requiresPkce, createdAt, redirectUris, scopes, grantTypes, cibaEnabled, allowedOrigins, postLogoutRedirectUris, frontchannelLogoutUri, backchannelLogoutUri, accessTokenFormat, tokenEndpointAuthMethod, jwksUri, jwks, fapiMode, requirePar, dpopBoundAccessTokens, attestationBasedAuthEnabled, attesterIssuer, attesterJwksUri, tokenExchangeEnabled);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -413,6 +988,21 @@ public class OAuthClient {
     sb.append("    scopes: ").append(toIndentedString(scopes)).append("\n");
     sb.append("    grantTypes: ").append(toIndentedString(grantTypes)).append("\n");
     sb.append("    cibaEnabled: ").append(toIndentedString(cibaEnabled)).append("\n");
+    sb.append("    allowedOrigins: ").append(toIndentedString(allowedOrigins)).append("\n");
+    sb.append("    postLogoutRedirectUris: ").append(toIndentedString(postLogoutRedirectUris)).append("\n");
+    sb.append("    frontchannelLogoutUri: ").append(toIndentedString(frontchannelLogoutUri)).append("\n");
+    sb.append("    backchannelLogoutUri: ").append(toIndentedString(backchannelLogoutUri)).append("\n");
+    sb.append("    accessTokenFormat: ").append(toIndentedString(accessTokenFormat)).append("\n");
+    sb.append("    tokenEndpointAuthMethod: ").append(toIndentedString(tokenEndpointAuthMethod)).append("\n");
+    sb.append("    jwksUri: ").append(toIndentedString(jwksUri)).append("\n");
+    sb.append("    jwks: ").append(toIndentedString(jwks)).append("\n");
+    sb.append("    fapiMode: ").append(toIndentedString(fapiMode)).append("\n");
+    sb.append("    requirePar: ").append(toIndentedString(requirePar)).append("\n");
+    sb.append("    dpopBoundAccessTokens: ").append(toIndentedString(dpopBoundAccessTokens)).append("\n");
+    sb.append("    attestationBasedAuthEnabled: ").append(toIndentedString(attestationBasedAuthEnabled)).append("\n");
+    sb.append("    attesterIssuer: ").append(toIndentedString(attesterIssuer)).append("\n");
+    sb.append("    attesterJwksUri: ").append(toIndentedString(attesterJwksUri)).append("\n");
+    sb.append("    tokenExchangeEnabled: ").append(toIndentedString(tokenExchangeEnabled)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -434,7 +1024,7 @@ public class OAuthClient {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt", "redirectUris", "scopes", "grantTypes", "cibaEnabled"));
+    openapiFields = new HashSet<String>(Arrays.asList("id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt", "redirectUris", "scopes", "grantTypes", "cibaEnabled", "allowedOrigins", "postLogoutRedirectUris", "frontchannelLogoutUri", "backchannelLogoutUri", "accessTokenFormat", "tokenEndpointAuthMethod", "jwksUri", "jwks", "fapiMode", "requirePar", "dpopBoundAccessTokens", "attestationBasedAuthEnabled", "attesterIssuer", "attesterJwksUri", "tokenExchangeEnabled"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt"));
@@ -485,6 +1075,50 @@ public class OAuthClient {
       // ensure the optional json data is an array if present
       if (jsonObj.get("grantTypes") != null && !jsonObj.get("grantTypes").isJsonNull() && !jsonObj.get("grantTypes").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `grantTypes` to be an array in the JSON string but got `%s`", jsonObj.get("grantTypes").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("allowedOrigins") != null && !jsonObj.get("allowedOrigins").isJsonNull() && !jsonObj.get("allowedOrigins").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `allowedOrigins` to be an array in the JSON string but got `%s`", jsonObj.get("allowedOrigins").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("postLogoutRedirectUris") != null && !jsonObj.get("postLogoutRedirectUris").isJsonNull() && !jsonObj.get("postLogoutRedirectUris").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `postLogoutRedirectUris` to be an array in the JSON string but got `%s`", jsonObj.get("postLogoutRedirectUris").toString()));
+      }
+      if ((jsonObj.get("frontchannelLogoutUri") != null && !jsonObj.get("frontchannelLogoutUri").isJsonNull()) && !jsonObj.get("frontchannelLogoutUri").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `frontchannelLogoutUri` to be a primitive type in the JSON string but got `%s`", jsonObj.get("frontchannelLogoutUri").toString()));
+      }
+      if ((jsonObj.get("backchannelLogoutUri") != null && !jsonObj.get("backchannelLogoutUri").isJsonNull()) && !jsonObj.get("backchannelLogoutUri").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `backchannelLogoutUri` to be a primitive type in the JSON string but got `%s`", jsonObj.get("backchannelLogoutUri").toString()));
+      }
+      if ((jsonObj.get("accessTokenFormat") != null && !jsonObj.get("accessTokenFormat").isJsonNull()) && !jsonObj.get("accessTokenFormat").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `accessTokenFormat` to be a primitive type in the JSON string but got `%s`", jsonObj.get("accessTokenFormat").toString()));
+      }
+      // validate the optional field `accessTokenFormat`
+      if (jsonObj.get("accessTokenFormat") != null && !jsonObj.get("accessTokenFormat").isJsonNull()) {
+        AccessTokenFormatEnum.validateJsonElement(jsonObj.get("accessTokenFormat"));
+      }
+      if ((jsonObj.get("tokenEndpointAuthMethod") != null && !jsonObj.get("tokenEndpointAuthMethod").isJsonNull()) && !jsonObj.get("tokenEndpointAuthMethod").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `tokenEndpointAuthMethod` to be a primitive type in the JSON string but got `%s`", jsonObj.get("tokenEndpointAuthMethod").toString()));
+      }
+      // validate the optional field `tokenEndpointAuthMethod`
+      if (jsonObj.get("tokenEndpointAuthMethod") != null && !jsonObj.get("tokenEndpointAuthMethod").isJsonNull()) {
+        TokenEndpointAuthMethodEnum.validateJsonElement(jsonObj.get("tokenEndpointAuthMethod"));
+      }
+      if ((jsonObj.get("jwksUri") != null && !jsonObj.get("jwksUri").isJsonNull()) && !jsonObj.get("jwksUri").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `jwksUri` to be a primitive type in the JSON string but got `%s`", jsonObj.get("jwksUri").toString()));
+      }
+      if ((jsonObj.get("fapiMode") != null && !jsonObj.get("fapiMode").isJsonNull()) && !jsonObj.get("fapiMode").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `fapiMode` to be a primitive type in the JSON string but got `%s`", jsonObj.get("fapiMode").toString()));
+      }
+      // validate the optional field `fapiMode`
+      if (jsonObj.get("fapiMode") != null && !jsonObj.get("fapiMode").isJsonNull()) {
+        FapiModeEnum.validateJsonElement(jsonObj.get("fapiMode"));
+      }
+      if ((jsonObj.get("attesterIssuer") != null && !jsonObj.get("attesterIssuer").isJsonNull()) && !jsonObj.get("attesterIssuer").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `attesterIssuer` to be a primitive type in the JSON string but got `%s`", jsonObj.get("attesterIssuer").toString()));
+      }
+      if ((jsonObj.get("attesterJwksUri") != null && !jsonObj.get("attesterJwksUri").isJsonNull()) && !jsonObj.get("attesterJwksUri").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `attesterJwksUri` to be a primitive type in the JSON string but got `%s`", jsonObj.get("attesterJwksUri").toString()));
       }
   }
 

@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -72,7 +72,7 @@ public class JitApiTest {
     /**
      * Create a new ephemeral task/persona for an agent.
      *
-     * Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: for nested agent chains   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
+     * Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: an open task of this organization that the new task is a step of   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
      *
      * @throws ApiException if the Api call fails
      */

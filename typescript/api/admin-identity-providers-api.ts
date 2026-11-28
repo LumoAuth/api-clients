@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -26,6 +26,8 @@ import type { AdminSocialProvidersAvailableResponse } from '../models';
 // @ts-ignore
 import type { AdminSocialProvidersCallbackUrlsResponse } from '../models';
 // @ts-ignore
+import type { AdminSocialProvidersCreateRequest } from '../models';
+// @ts-ignore
 import type { AdminSocialProvidersCreateResponse } from '../models';
 // @ts-ignore
 import type { AdminSocialProvidersGetResponse } from '../models';
@@ -33,6 +35,8 @@ import type { AdminSocialProvidersGetResponse } from '../models';
 import type { AdminSocialProvidersListResponse } from '../models';
 // @ts-ignore
 import type { MessageResponse } from '../models';
+// @ts-ignore
+import type { PutAdminSocialProvidersUpdateRequest } from '../models';
 /**
  * AdminIdentityProvidersApi - axios parameter creator
  * @export
@@ -125,12 +129,15 @@ export const AdminIdentityProvidersApiAxiosParamCreator = function (configuratio
          * 
          * @summary Create a social login provider
          * @param {string} orgId 
+         * @param {AdminSocialProvidersCreateRequest} adminSocialProvidersCreateRequest An unknown field is refused with 400.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSocialProvidersCreate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminSocialProvidersCreate: async (orgId: string, adminSocialProvidersCreateRequest: AdminSocialProvidersCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminSocialProvidersCreate', 'orgId', orgId)
+            // verify required parameter 'adminSocialProvidersCreateRequest' is not null or undefined
+            assertParamExists('adminSocialProvidersCreate', 'adminSocialProvidersCreateRequest', adminSocialProvidersCreateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/social-providers`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -153,9 +160,12 @@ export const AdminIdentityProvidersApiAxiosParamCreator = function (configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminSocialProvidersCreateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -429,14 +439,17 @@ export const AdminIdentityProvidersApiAxiosParamCreator = function (configuratio
          * @summary Update a social login provider
          * @param {string} orgId 
          * @param {string} providerId 
+         * @param {PutAdminSocialProvidersUpdateRequest} putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSocialProvidersUpdate: async (orgId: string, providerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminSocialProvidersUpdate: async (orgId: string, providerId: string, putAdminSocialProvidersUpdateRequest: PutAdminSocialProvidersUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminSocialProvidersUpdate', 'orgId', orgId)
             // verify required parameter 'providerId' is not null or undefined
             assertParamExists('patchAdminSocialProvidersUpdate', 'providerId', providerId)
+            // verify required parameter 'putAdminSocialProvidersUpdateRequest' is not null or undefined
+            assertParamExists('patchAdminSocialProvidersUpdate', 'putAdminSocialProvidersUpdateRequest', putAdminSocialProvidersUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/social-providers/{providerId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"providerId"}}`, encodeURIComponent(String(providerId)));
@@ -460,9 +473,12 @@ export const AdminIdentityProvidersApiAxiosParamCreator = function (configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminSocialProvidersUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -474,14 +490,17 @@ export const AdminIdentityProvidersApiAxiosParamCreator = function (configuratio
          * @summary Create or replace a social login provider
          * @param {string} orgId 
          * @param {string} providerId 
+         * @param {PutAdminSocialProvidersUpdateRequest} putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSocialProvidersUpdate: async (orgId: string, providerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminSocialProvidersUpdate: async (orgId: string, providerId: string, putAdminSocialProvidersUpdateRequest: PutAdminSocialProvidersUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminSocialProvidersUpdate', 'orgId', orgId)
             // verify required parameter 'providerId' is not null or undefined
             assertParamExists('putAdminSocialProvidersUpdate', 'providerId', providerId)
+            // verify required parameter 'putAdminSocialProvidersUpdateRequest' is not null or undefined
+            assertParamExists('putAdminSocialProvidersUpdate', 'putAdminSocialProvidersUpdateRequest', putAdminSocialProvidersUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/social-providers/{providerId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"providerId"}}`, encodeURIComponent(String(providerId)));
@@ -505,9 +524,12 @@ export const AdminIdentityProvidersApiAxiosParamCreator = function (configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminSocialProvidersUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -554,11 +576,12 @@ export const AdminIdentityProvidersApiFp = function(configuration?: Configuratio
          * 
          * @summary Create a social login provider
          * @param {string} orgId 
+         * @param {AdminSocialProvidersCreateRequest} adminSocialProvidersCreateRequest An unknown field is refused with 400.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSocialProvidersCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminSocialProvidersCreate(orgId, options);
+        async adminSocialProvidersCreate(orgId: string, adminSocialProvidersCreateRequest: AdminSocialProvidersCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminSocialProvidersCreate(orgId, adminSocialProvidersCreateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminIdentityProvidersApi.adminSocialProvidersCreate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -650,11 +673,12 @@ export const AdminIdentityProvidersApiFp = function(configuration?: Configuratio
          * @summary Update a social login provider
          * @param {string} orgId 
          * @param {string} providerId 
+         * @param {PutAdminSocialProvidersUpdateRequest} putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSocialProvidersUpdate(orgId: string, providerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSocialProvidersUpdate(orgId, providerId, options);
+        async patchAdminSocialProvidersUpdate(orgId: string, providerId: string, putAdminSocialProvidersUpdateRequest: PutAdminSocialProvidersUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSocialProvidersUpdate(orgId, providerId, putAdminSocialProvidersUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminIdentityProvidersApi.patchAdminSocialProvidersUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -664,11 +688,12 @@ export const AdminIdentityProvidersApiFp = function(configuration?: Configuratio
          * @summary Create or replace a social login provider
          * @param {string} orgId 
          * @param {string} providerId 
+         * @param {PutAdminSocialProvidersUpdateRequest} putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSocialProvidersUpdate(orgId: string, providerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSocialProvidersUpdate(orgId, providerId, options);
+        async putAdminSocialProvidersUpdate(orgId: string, providerId: string, putAdminSocialProvidersUpdateRequest: PutAdminSocialProvidersUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSocialProvidersUpdate(orgId, providerId, putAdminSocialProvidersUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminIdentityProvidersApi.putAdminSocialProvidersUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -711,7 +736,7 @@ export const AdminIdentityProvidersApiFactory = function (configuration?: Config
          * @throws {RequiredError}
          */
         adminSocialProvidersCreate(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCreateResponse> {
-            return localVarFp.adminSocialProvidersCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminSocialProvidersCreate(requestParameters.orgId, requestParameters.adminSocialProvidersCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -781,7 +806,7 @@ export const AdminIdentityProvidersApiFactory = function (configuration?: Config
          * @throws {RequiredError}
          */
         patchAdminSocialProvidersUpdate(requestParameters: AdminIdentityProvidersApiPatchAdminSocialProvidersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCreateResponse> {
-            return localVarFp.patchAdminSocialProvidersUpdate(requestParameters.orgId, requestParameters.providerId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminSocialProvidersUpdate(requestParameters.orgId, requestParameters.providerId, requestParameters.putAdminSocialProvidersUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -791,7 +816,7 @@ export const AdminIdentityProvidersApiFactory = function (configuration?: Config
          * @throws {RequiredError}
          */
         putAdminSocialProvidersUpdate(requestParameters: AdminIdentityProvidersApiPutAdminSocialProvidersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCreateResponse> {
-            return localVarFp.putAdminSocialProvidersUpdate(requestParameters.orgId, requestParameters.providerId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminSocialProvidersUpdate(requestParameters.orgId, requestParameters.providerId, requestParameters.putAdminSocialProvidersUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -954,6 +979,13 @@ export interface AdminIdentityProvidersApiAdminSocialProvidersCreateRequest {
      * @memberof AdminIdentityProvidersApiAdminSocialProvidersCreate
      */
     readonly orgId: string
+
+    /**
+     * An unknown field is refused with 400.
+     * @type {AdminSocialProvidersCreateRequest}
+     * @memberof AdminIdentityProvidersApiAdminSocialProvidersCreate
+     */
+    readonly adminSocialProvidersCreateRequest: AdminSocialProvidersCreateRequest
 }
 
 /**
@@ -1087,6 +1119,13 @@ export interface AdminIdentityProvidersApiPatchAdminSocialProvidersUpdateRequest
      * @memberof AdminIdentityProvidersApiPatchAdminSocialProvidersUpdate
      */
     readonly providerId: string
+
+    /**
+     * Only the fields that are sent change. An unknown field is refused with 400.
+     * @type {PutAdminSocialProvidersUpdateRequest}
+     * @memberof AdminIdentityProvidersApiPatchAdminSocialProvidersUpdate
+     */
+    readonly putAdminSocialProvidersUpdateRequest: PutAdminSocialProvidersUpdateRequest
 }
 
 /**
@@ -1108,6 +1147,13 @@ export interface AdminIdentityProvidersApiPutAdminSocialProvidersUpdateRequest {
      * @memberof AdminIdentityProvidersApiPutAdminSocialProvidersUpdate
      */
     readonly providerId: string
+
+    /**
+     * Only the fields that are sent change. An unknown field is refused with 400.
+     * @type {PutAdminSocialProvidersUpdateRequest}
+     * @memberof AdminIdentityProvidersApiPutAdminSocialProvidersUpdate
+     */
+    readonly putAdminSocialProvidersUpdateRequest: PutAdminSocialProvidersUpdateRequest
 }
 
 /**
@@ -1150,7 +1196,7 @@ export class AdminIdentityProvidersApi extends BaseAPI implements AdminIdentityP
      * @memberof AdminIdentityProvidersApi
      */
     public adminSocialProvidersCreate(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersCreateRequest, options?: RawAxiosRequestConfig) {
-        return AdminIdentityProvidersApiFp(this.configuration).adminSocialProvidersCreate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminIdentityProvidersApiFp(this.configuration).adminSocialProvidersCreate(requestParameters.orgId, requestParameters.adminSocialProvidersCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1234,7 +1280,7 @@ export class AdminIdentityProvidersApi extends BaseAPI implements AdminIdentityP
      * @memberof AdminIdentityProvidersApi
      */
     public patchAdminSocialProvidersUpdate(requestParameters: AdminIdentityProvidersApiPatchAdminSocialProvidersUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminIdentityProvidersApiFp(this.configuration).patchAdminSocialProvidersUpdate(requestParameters.orgId, requestParameters.providerId, options).then((request) => request(this.axios, this.basePath));
+        return AdminIdentityProvidersApiFp(this.configuration).patchAdminSocialProvidersUpdate(requestParameters.orgId, requestParameters.providerId, requestParameters.putAdminSocialProvidersUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1246,7 +1292,7 @@ export class AdminIdentityProvidersApi extends BaseAPI implements AdminIdentityP
      * @memberof AdminIdentityProvidersApi
      */
     public putAdminSocialProvidersUpdate(requestParameters: AdminIdentityProvidersApiPutAdminSocialProvidersUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminIdentityProvidersApiFp(this.configuration).putAdminSocialProvidersUpdate(requestParameters.orgId, requestParameters.providerId, options).then((request) => request(this.axios, this.basePath));
+        return AdminIdentityProvidersApiFp(this.configuration).putAdminSocialProvidersUpdate(requestParameters.orgId, requestParameters.providerId, requestParameters.putAdminSocialProvidersUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -29,10 +29,12 @@ import java.io.IOException;
 
 import io.lumoauth.client.model.AdminSocialProvidersAvailableResponse;
 import io.lumoauth.client.model.AdminSocialProvidersCallbackUrlsResponse;
+import io.lumoauth.client.model.AdminSocialProvidersCreateRequest;
 import io.lumoauth.client.model.AdminSocialProvidersCreateResponse;
 import io.lumoauth.client.model.AdminSocialProvidersGetResponse;
 import io.lumoauth.client.model.AdminSocialProvidersListResponse;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAdminSocialProvidersUpdateRequest;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -334,6 +336,7 @@ public class AdminIdentityProvidersApi {
     /**
      * Build call for adminSocialProvidersCreate
      * @param orgId  (required)
+     * @param adminSocialProvidersCreateRequest An unknown field is refused with 400. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -345,7 +348,7 @@ public class AdminIdentityProvidersApi {
         <tr><td> 409 </td><td> Provider already configured </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSocialProvidersCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminSocialProvidersCreateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -359,7 +362,7 @@ public class AdminIdentityProvidersApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminSocialProvidersCreateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/social-providers"
@@ -380,6 +383,7 @@ public class AdminIdentityProvidersApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -391,13 +395,18 @@ public class AdminIdentityProvidersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminSocialProvidersCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminSocialProvidersCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminSocialProvidersCreate(Async)");
         }
 
-        return adminSocialProvidersCreateCall(orgId, _callback);
+        // verify the required parameter 'adminSocialProvidersCreateRequest' is set
+        if (adminSocialProvidersCreateRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminSocialProvidersCreateRequest' when calling adminSocialProvidersCreate(Async)");
+        }
+
+        return adminSocialProvidersCreateCall(orgId, adminSocialProvidersCreateRequest, _callback);
 
     }
 
@@ -405,6 +414,7 @@ public class AdminIdentityProvidersApi {
      * Create a social login provider
      * 
      * @param orgId  (required)
+     * @param adminSocialProvidersCreateRequest An unknown field is refused with 400. (required)
      * @return AdminSocialProvidersCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -415,8 +425,8 @@ public class AdminIdentityProvidersApi {
         <tr><td> 409 </td><td> Provider already configured </td><td>  -  </td></tr>
      </table>
      */
-    public AdminSocialProvidersCreateResponse adminSocialProvidersCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<AdminSocialProvidersCreateResponse> localVarResp = adminSocialProvidersCreateWithHttpInfo(orgId);
+    public AdminSocialProvidersCreateResponse adminSocialProvidersCreate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest) throws ApiException {
+        ApiResponse<AdminSocialProvidersCreateResponse> localVarResp = adminSocialProvidersCreateWithHttpInfo(orgId, adminSocialProvidersCreateRequest);
         return localVarResp.getData();
     }
 
@@ -424,6 +434,7 @@ public class AdminIdentityProvidersApi {
      * Create a social login provider
      * 
      * @param orgId  (required)
+     * @param adminSocialProvidersCreateRequest An unknown field is refused with 400. (required)
      * @return ApiResponse&lt;AdminSocialProvidersCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -434,8 +445,8 @@ public class AdminIdentityProvidersApi {
         <tr><td> 409 </td><td> Provider already configured </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminSocialProvidersCreateResponse> adminSocialProvidersCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = adminSocialProvidersCreateValidateBeforeCall(orgId, null);
+    public ApiResponse<AdminSocialProvidersCreateResponse> adminSocialProvidersCreateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminSocialProvidersCreateValidateBeforeCall(orgId, adminSocialProvidersCreateRequest, null);
         Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -444,6 +455,7 @@ public class AdminIdentityProvidersApi {
      * Create a social login provider (asynchronously)
      * 
      * @param orgId  (required)
+     * @param adminSocialProvidersCreateRequest An unknown field is refused with 400. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -455,9 +467,9 @@ public class AdminIdentityProvidersApi {
         <tr><td> 409 </td><td> Provider already configured </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSocialProvidersCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSocialProvidersCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call adminSocialProvidersCreateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest, final ApiCallback<AdminSocialProvidersCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminSocialProvidersCreateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = adminSocialProvidersCreateValidateBeforeCall(orgId, adminSocialProvidersCreateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1284,6 +1296,7 @@ public class AdminIdentityProvidersApi {
      * Build call for patchAdminSocialProvidersUpdate
      * @param orgId  (required)
      * @param providerId  (required)
+     * @param putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1295,7 +1308,7 @@ public class AdminIdentityProvidersApi {
         <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSocialProvidersUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminSocialProvidersUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, @javax.annotation.Nonnull PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1309,7 +1322,7 @@ public class AdminIdentityProvidersApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminSocialProvidersUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}"
@@ -1331,6 +1344,7 @@ public class AdminIdentityProvidersApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1342,7 +1356,7 @@ public class AdminIdentityProvidersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminSocialProvidersUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminSocialProvidersUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, @javax.annotation.Nonnull PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminSocialProvidersUpdate(Async)");
@@ -1353,7 +1367,12 @@ public class AdminIdentityProvidersApi {
             throw new ApiException("Missing the required parameter 'providerId' when calling patchAdminSocialProvidersUpdate(Async)");
         }
 
-        return patchAdminSocialProvidersUpdateCall(orgId, providerId, _callback);
+        // verify the required parameter 'putAdminSocialProvidersUpdateRequest' is set
+        if (putAdminSocialProvidersUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminSocialProvidersUpdateRequest' when calling patchAdminSocialProvidersUpdate(Async)");
+        }
+
+        return patchAdminSocialProvidersUpdateCall(orgId, providerId, putAdminSocialProvidersUpdateRequest, _callback);
 
     }
 
@@ -1362,6 +1381,7 @@ public class AdminIdentityProvidersApi {
      * 
      * @param orgId  (required)
      * @param providerId  (required)
+     * @param putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @return AdminSocialProvidersCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1372,8 +1392,8 @@ public class AdminIdentityProvidersApi {
         <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public AdminSocialProvidersCreateResponse patchAdminSocialProvidersUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
-        ApiResponse<AdminSocialProvidersCreateResponse> localVarResp = patchAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+    public AdminSocialProvidersCreateResponse patchAdminSocialProvidersUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, @javax.annotation.Nonnull PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest) throws ApiException {
+        ApiResponse<AdminSocialProvidersCreateResponse> localVarResp = patchAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId, putAdminSocialProvidersUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -1382,6 +1402,7 @@ public class AdminIdentityProvidersApi {
      * 
      * @param orgId  (required)
      * @param providerId  (required)
+     * @param putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @return ApiResponse&lt;AdminSocialProvidersCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1392,8 +1413,8 @@ public class AdminIdentityProvidersApi {
         <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminSocialProvidersCreateResponse> patchAdminSocialProvidersUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminSocialProvidersUpdateValidateBeforeCall(orgId, providerId, null);
+    public ApiResponse<AdminSocialProvidersCreateResponse> patchAdminSocialProvidersUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, @javax.annotation.Nonnull PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminSocialProvidersUpdateValidateBeforeCall(orgId, providerId, putAdminSocialProvidersUpdateRequest, null);
         Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1403,6 +1424,7 @@ public class AdminIdentityProvidersApi {
      * 
      * @param orgId  (required)
      * @param providerId  (required)
+     * @param putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1414,9 +1436,9 @@ public class AdminIdentityProvidersApi {
         <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSocialProvidersUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback<AdminSocialProvidersCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSocialProvidersUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, @javax.annotation.Nonnull PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest, final ApiCallback<AdminSocialProvidersCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminSocialProvidersUpdateValidateBeforeCall(orgId, providerId, _callback);
+        okhttp3.Call localVarCall = patchAdminSocialProvidersUpdateValidateBeforeCall(orgId, providerId, putAdminSocialProvidersUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1425,6 +1447,7 @@ public class AdminIdentityProvidersApi {
      * Build call for putAdminSocialProvidersUpdate
      * @param orgId  (required)
      * @param providerId  (required)
+     * @param putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1436,7 +1459,7 @@ public class AdminIdentityProvidersApi {
         <tr><td> 201 </td><td> Provider did not exist and was created </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSocialProvidersUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminSocialProvidersUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, @javax.annotation.Nonnull PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1450,7 +1473,7 @@ public class AdminIdentityProvidersApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminSocialProvidersUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}"
@@ -1472,6 +1495,7 @@ public class AdminIdentityProvidersApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1483,7 +1507,7 @@ public class AdminIdentityProvidersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminSocialProvidersUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminSocialProvidersUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, @javax.annotation.Nonnull PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminSocialProvidersUpdate(Async)");
@@ -1494,7 +1518,12 @@ public class AdminIdentityProvidersApi {
             throw new ApiException("Missing the required parameter 'providerId' when calling putAdminSocialProvidersUpdate(Async)");
         }
 
-        return putAdminSocialProvidersUpdateCall(orgId, providerId, _callback);
+        // verify the required parameter 'putAdminSocialProvidersUpdateRequest' is set
+        if (putAdminSocialProvidersUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminSocialProvidersUpdateRequest' when calling putAdminSocialProvidersUpdate(Async)");
+        }
+
+        return putAdminSocialProvidersUpdateCall(orgId, providerId, putAdminSocialProvidersUpdateRequest, _callback);
 
     }
 
@@ -1503,6 +1532,7 @@ public class AdminIdentityProvidersApi {
      * 
      * @param orgId  (required)
      * @param providerId  (required)
+     * @param putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @return AdminSocialProvidersCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1513,8 +1543,8 @@ public class AdminIdentityProvidersApi {
         <tr><td> 201 </td><td> Provider did not exist and was created </td><td>  -  </td></tr>
      </table>
      */
-    public AdminSocialProvidersCreateResponse putAdminSocialProvidersUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
-        ApiResponse<AdminSocialProvidersCreateResponse> localVarResp = putAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+    public AdminSocialProvidersCreateResponse putAdminSocialProvidersUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, @javax.annotation.Nonnull PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest) throws ApiException {
+        ApiResponse<AdminSocialProvidersCreateResponse> localVarResp = putAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId, putAdminSocialProvidersUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -1523,6 +1553,7 @@ public class AdminIdentityProvidersApi {
      * 
      * @param orgId  (required)
      * @param providerId  (required)
+     * @param putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @return ApiResponse&lt;AdminSocialProvidersCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1533,8 +1564,8 @@ public class AdminIdentityProvidersApi {
         <tr><td> 201 </td><td> Provider did not exist and was created </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminSocialProvidersCreateResponse> putAdminSocialProvidersUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminSocialProvidersUpdateValidateBeforeCall(orgId, providerId, null);
+    public ApiResponse<AdminSocialProvidersCreateResponse> putAdminSocialProvidersUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, @javax.annotation.Nonnull PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = putAdminSocialProvidersUpdateValidateBeforeCall(orgId, providerId, putAdminSocialProvidersUpdateRequest, null);
         Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1544,6 +1575,7 @@ public class AdminIdentityProvidersApi {
      * 
      * @param orgId  (required)
      * @param providerId  (required)
+     * @param putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1555,9 +1587,9 @@ public class AdminIdentityProvidersApi {
         <tr><td> 201 </td><td> Provider did not exist and was created </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSocialProvidersUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback<AdminSocialProvidersCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminSocialProvidersUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, @javax.annotation.Nonnull PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest, final ApiCallback<AdminSocialProvidersCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminSocialProvidersUpdateValidateBeforeCall(orgId, providerId, _callback);
+        okhttp3.Call localVarCall = putAdminSocialProvidersUpdateValidateBeforeCall(orgId, providerId, putAdminSocialProvidersUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

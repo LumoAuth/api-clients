@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -27,17 +27,24 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminOrgInvitationsCreateRequest;
 import io.lumoauth.client.model.AdminOrgInvitationsCreateResponse;
 import io.lumoauth.client.model.AdminOrgInvitationsListResponse;
+import io.lumoauth.client.model.AdminOrgMembersAddRequest;
 import io.lumoauth.client.model.AdminOrgMembersAddResponse;
 import io.lumoauth.client.model.AdminOrgMembersListResponse;
+import io.lumoauth.client.model.AdminOrgRolesCreateRequest;
 import io.lumoauth.client.model.AdminOrgRolesCreateResponse;
 import io.lumoauth.client.model.AdminOrgRolesListResponse;
+import io.lumoauth.client.model.AdminOrganizationsCreateRequest;
 import io.lumoauth.client.model.AdminOrganizationsCreateResponse;
 import io.lumoauth.client.model.AdminOrganizationsGetResponse;
 import io.lumoauth.client.model.AdminOrganizationsListResponse;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAdminOrgMembersUpdateRequest;
 import io.lumoauth.client.model.PutAdminOrgMembersUpdateResponse;
+import io.lumoauth.client.model.PutAdminOrgRolesUpdateRequest;
+import io.lumoauth.client.model.PutAdminOrganizationsUpdateRequest;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -86,6 +93,7 @@ public class AdminOrganizationsApi {
      * Build call for adminOrgInvitationsCreate
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param adminOrgInvitationsCreateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -100,7 +108,7 @@ public class AdminOrganizationsApi {
         <tr><td> 429 </td><td> Too many invitations from this organization, or to this address, in the last hour </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminOrgInvitationsCreateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminOrgInvitationsCreateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -114,7 +122,7 @@ public class AdminOrganizationsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminOrgInvitationsCreateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations"
@@ -136,6 +144,7 @@ public class AdminOrganizationsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -147,7 +156,7 @@ public class AdminOrganizationsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminOrgInvitationsCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminOrgInvitationsCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminOrgInvitationsCreate(Async)");
@@ -158,7 +167,12 @@ public class AdminOrganizationsApi {
             throw new ApiException("Missing the required parameter 'organizationId' when calling adminOrgInvitationsCreate(Async)");
         }
 
-        return adminOrgInvitationsCreateCall(orgId, organizationId, _callback);
+        // verify the required parameter 'adminOrgInvitationsCreateRequest' is set
+        if (adminOrgInvitationsCreateRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminOrgInvitationsCreateRequest' when calling adminOrgInvitationsCreate(Async)");
+        }
+
+        return adminOrgInvitationsCreateCall(orgId, organizationId, adminOrgInvitationsCreateRequest, _callback);
 
     }
 
@@ -167,6 +181,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param adminOrgInvitationsCreateRequest  (required)
      * @return AdminOrgInvitationsCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -180,8 +195,8 @@ public class AdminOrganizationsApi {
         <tr><td> 429 </td><td> Too many invitations from this organization, or to this address, in the last hour </td><td>  -  </td></tr>
      </table>
      */
-    public AdminOrgInvitationsCreateResponse adminOrgInvitationsCreate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
-        ApiResponse<AdminOrgInvitationsCreateResponse> localVarResp = adminOrgInvitationsCreateWithHttpInfo(orgId, organizationId);
+    public AdminOrgInvitationsCreateResponse adminOrgInvitationsCreate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest) throws ApiException {
+        ApiResponse<AdminOrgInvitationsCreateResponse> localVarResp = adminOrgInvitationsCreateWithHttpInfo(orgId, organizationId, adminOrgInvitationsCreateRequest);
         return localVarResp.getData();
     }
 
@@ -190,6 +205,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param adminOrgInvitationsCreateRequest  (required)
      * @return ApiResponse&lt;AdminOrgInvitationsCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -203,8 +219,8 @@ public class AdminOrganizationsApi {
         <tr><td> 429 </td><td> Too many invitations from this organization, or to this address, in the last hour </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminOrgInvitationsCreateResponse> adminOrgInvitationsCreateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
-        okhttp3.Call localVarCall = adminOrgInvitationsCreateValidateBeforeCall(orgId, organizationId, null);
+    public ApiResponse<AdminOrgInvitationsCreateResponse> adminOrgInvitationsCreateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminOrgInvitationsCreateValidateBeforeCall(orgId, organizationId, adminOrgInvitationsCreateRequest, null);
         Type localVarReturnType = new TypeToken<AdminOrgInvitationsCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -214,6 +230,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param adminOrgInvitationsCreateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -228,9 +245,9 @@ public class AdminOrganizationsApi {
         <tr><td> 429 </td><td> Too many invitations from this organization, or to this address, in the last hour </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminOrgInvitationsCreateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback<AdminOrgInvitationsCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call adminOrgInvitationsCreateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest, final ApiCallback<AdminOrgInvitationsCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminOrgInvitationsCreateValidateBeforeCall(orgId, organizationId, _callback);
+        okhttp3.Call localVarCall = adminOrgInvitationsCreateValidateBeforeCall(orgId, organizationId, adminOrgInvitationsCreateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminOrgInvitationsCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -690,6 +707,7 @@ public class AdminOrganizationsApi {
      * Build call for adminOrgMembersAdd
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param adminOrgMembersAddRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -702,7 +720,7 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> User is already a member </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminOrgMembersAddCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminOrgMembersAddCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgMembersAddRequest adminOrgMembersAddRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -716,7 +734,7 @@ public class AdminOrganizationsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminOrgMembersAddRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members"
@@ -738,6 +756,7 @@ public class AdminOrganizationsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -749,7 +768,7 @@ public class AdminOrganizationsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminOrgMembersAddValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminOrgMembersAddValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgMembersAddRequest adminOrgMembersAddRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminOrgMembersAdd(Async)");
@@ -760,7 +779,12 @@ public class AdminOrganizationsApi {
             throw new ApiException("Missing the required parameter 'organizationId' when calling adminOrgMembersAdd(Async)");
         }
 
-        return adminOrgMembersAddCall(orgId, organizationId, _callback);
+        // verify the required parameter 'adminOrgMembersAddRequest' is set
+        if (adminOrgMembersAddRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminOrgMembersAddRequest' when calling adminOrgMembersAdd(Async)");
+        }
+
+        return adminOrgMembersAddCall(orgId, organizationId, adminOrgMembersAddRequest, _callback);
 
     }
 
@@ -769,6 +793,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param adminOrgMembersAddRequest  (required)
      * @return AdminOrgMembersAddResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -780,8 +805,8 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> User is already a member </td><td>  -  </td></tr>
      </table>
      */
-    public AdminOrgMembersAddResponse adminOrgMembersAdd(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
-        ApiResponse<AdminOrgMembersAddResponse> localVarResp = adminOrgMembersAddWithHttpInfo(orgId, organizationId);
+    public AdminOrgMembersAddResponse adminOrgMembersAdd(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgMembersAddRequest adminOrgMembersAddRequest) throws ApiException {
+        ApiResponse<AdminOrgMembersAddResponse> localVarResp = adminOrgMembersAddWithHttpInfo(orgId, organizationId, adminOrgMembersAddRequest);
         return localVarResp.getData();
     }
 
@@ -790,6 +815,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param adminOrgMembersAddRequest  (required)
      * @return ApiResponse&lt;AdminOrgMembersAddResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -801,8 +827,8 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> User is already a member </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminOrgMembersAddResponse> adminOrgMembersAddWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
-        okhttp3.Call localVarCall = adminOrgMembersAddValidateBeforeCall(orgId, organizationId, null);
+    public ApiResponse<AdminOrgMembersAddResponse> adminOrgMembersAddWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgMembersAddRequest adminOrgMembersAddRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminOrgMembersAddValidateBeforeCall(orgId, organizationId, adminOrgMembersAddRequest, null);
         Type localVarReturnType = new TypeToken<AdminOrgMembersAddResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -812,6 +838,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param adminOrgMembersAddRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -824,9 +851,9 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> User is already a member </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminOrgMembersAddAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback<AdminOrgMembersAddResponse> _callback) throws ApiException {
+    public okhttp3.Call adminOrgMembersAddAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgMembersAddRequest adminOrgMembersAddRequest, final ApiCallback<AdminOrgMembersAddResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminOrgMembersAddValidateBeforeCall(orgId, organizationId, _callback);
+        okhttp3.Call localVarCall = adminOrgMembersAddValidateBeforeCall(orgId, organizationId, adminOrgMembersAddRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminOrgMembersAddResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1131,6 +1158,7 @@ public class AdminOrganizationsApi {
      * Build call for adminOrgRolesCreate
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param adminOrgRolesCreateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1144,7 +1172,7 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> A role with this slug already exists in this organization </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminOrgRolesCreateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminOrgRolesCreateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgRolesCreateRequest adminOrgRolesCreateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1158,7 +1186,7 @@ public class AdminOrganizationsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminOrgRolesCreateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles"
@@ -1180,6 +1208,7 @@ public class AdminOrganizationsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1191,7 +1220,7 @@ public class AdminOrganizationsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminOrgRolesCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminOrgRolesCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgRolesCreateRequest adminOrgRolesCreateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminOrgRolesCreate(Async)");
@@ -1202,7 +1231,12 @@ public class AdminOrganizationsApi {
             throw new ApiException("Missing the required parameter 'organizationId' when calling adminOrgRolesCreate(Async)");
         }
 
-        return adminOrgRolesCreateCall(orgId, organizationId, _callback);
+        // verify the required parameter 'adminOrgRolesCreateRequest' is set
+        if (adminOrgRolesCreateRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminOrgRolesCreateRequest' when calling adminOrgRolesCreate(Async)");
+        }
+
+        return adminOrgRolesCreateCall(orgId, organizationId, adminOrgRolesCreateRequest, _callback);
 
     }
 
@@ -1211,6 +1245,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param adminOrgRolesCreateRequest  (required)
      * @return AdminOrgRolesCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1223,8 +1258,8 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> A role with this slug already exists in this organization </td><td>  -  </td></tr>
      </table>
      */
-    public AdminOrgRolesCreateResponse adminOrgRolesCreate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
-        ApiResponse<AdminOrgRolesCreateResponse> localVarResp = adminOrgRolesCreateWithHttpInfo(orgId, organizationId);
+    public AdminOrgRolesCreateResponse adminOrgRolesCreate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgRolesCreateRequest adminOrgRolesCreateRequest) throws ApiException {
+        ApiResponse<AdminOrgRolesCreateResponse> localVarResp = adminOrgRolesCreateWithHttpInfo(orgId, organizationId, adminOrgRolesCreateRequest);
         return localVarResp.getData();
     }
 
@@ -1233,6 +1268,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param adminOrgRolesCreateRequest  (required)
      * @return ApiResponse&lt;AdminOrgRolesCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1245,8 +1281,8 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> A role with this slug already exists in this organization </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminOrgRolesCreateResponse> adminOrgRolesCreateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
-        okhttp3.Call localVarCall = adminOrgRolesCreateValidateBeforeCall(orgId, organizationId, null);
+    public ApiResponse<AdminOrgRolesCreateResponse> adminOrgRolesCreateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgRolesCreateRequest adminOrgRolesCreateRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminOrgRolesCreateValidateBeforeCall(orgId, organizationId, adminOrgRolesCreateRequest, null);
         Type localVarReturnType = new TypeToken<AdminOrgRolesCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1256,6 +1292,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param adminOrgRolesCreateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1269,9 +1306,9 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> A role with this slug already exists in this organization </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminOrgRolesCreateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback<AdminOrgRolesCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call adminOrgRolesCreateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull AdminOrgRolesCreateRequest adminOrgRolesCreateRequest, final ApiCallback<AdminOrgRolesCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminOrgRolesCreateValidateBeforeCall(orgId, organizationId, _callback);
+        okhttp3.Call localVarCall = adminOrgRolesCreateValidateBeforeCall(orgId, organizationId, adminOrgRolesCreateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminOrgRolesCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1575,6 +1612,7 @@ public class AdminOrganizationsApi {
     /**
      * Build call for adminOrganizationsCreate
      * @param orgId  (required)
+     * @param adminOrganizationsCreateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1588,7 +1626,7 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminOrganizationsCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminOrganizationsCreateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminOrganizationsCreateRequest adminOrganizationsCreateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1602,7 +1640,7 @@ public class AdminOrganizationsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminOrganizationsCreateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/organizations"
@@ -1623,6 +1661,7 @@ public class AdminOrganizationsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1634,13 +1673,18 @@ public class AdminOrganizationsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminOrganizationsCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminOrganizationsCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminOrganizationsCreateRequest adminOrganizationsCreateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminOrganizationsCreate(Async)");
         }
 
-        return adminOrganizationsCreateCall(orgId, _callback);
+        // verify the required parameter 'adminOrganizationsCreateRequest' is set
+        if (adminOrganizationsCreateRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminOrganizationsCreateRequest' when calling adminOrganizationsCreate(Async)");
+        }
+
+        return adminOrganizationsCreateCall(orgId, adminOrganizationsCreateRequest, _callback);
 
     }
 
@@ -1648,6 +1692,7 @@ public class AdminOrganizationsApi {
      * Create an organization
      * 
      * @param orgId  (required)
+     * @param adminOrganizationsCreateRequest  (required)
      * @return AdminOrganizationsCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1660,8 +1705,8 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
-    public AdminOrganizationsCreateResponse adminOrganizationsCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<AdminOrganizationsCreateResponse> localVarResp = adminOrganizationsCreateWithHttpInfo(orgId);
+    public AdminOrganizationsCreateResponse adminOrganizationsCreate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminOrganizationsCreateRequest adminOrganizationsCreateRequest) throws ApiException {
+        ApiResponse<AdminOrganizationsCreateResponse> localVarResp = adminOrganizationsCreateWithHttpInfo(orgId, adminOrganizationsCreateRequest);
         return localVarResp.getData();
     }
 
@@ -1669,6 +1714,7 @@ public class AdminOrganizationsApi {
      * Create an organization
      * 
      * @param orgId  (required)
+     * @param adminOrganizationsCreateRequest  (required)
      * @return ApiResponse&lt;AdminOrganizationsCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1681,8 +1727,8 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminOrganizationsCreateResponse> adminOrganizationsCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = adminOrganizationsCreateValidateBeforeCall(orgId, null);
+    public ApiResponse<AdminOrganizationsCreateResponse> adminOrganizationsCreateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminOrganizationsCreateRequest adminOrganizationsCreateRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminOrganizationsCreateValidateBeforeCall(orgId, adminOrganizationsCreateRequest, null);
         Type localVarReturnType = new TypeToken<AdminOrganizationsCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1691,6 +1737,7 @@ public class AdminOrganizationsApi {
      * Create an organization (asynchronously)
      * 
      * @param orgId  (required)
+     * @param adminOrganizationsCreateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1704,9 +1751,9 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminOrganizationsCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminOrganizationsCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call adminOrganizationsCreateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminOrganizationsCreateRequest adminOrganizationsCreateRequest, final ApiCallback<AdminOrganizationsCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminOrganizationsCreateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = adminOrganizationsCreateValidateBeforeCall(orgId, adminOrganizationsCreateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminOrganizationsCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2125,6 +2172,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param userId  (required)
+     * @param putAdminOrgMembersUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2137,7 +2185,7 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update member role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminOrgMembersUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminOrgMembersUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2151,7 +2199,7 @@ public class AdminOrganizationsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminOrgMembersUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId}"
@@ -2174,6 +2222,7 @@ public class AdminOrganizationsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2185,7 +2234,7 @@ public class AdminOrganizationsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminOrgMembersUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminOrgMembersUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminOrgMembersUpdate(Async)");
@@ -2201,7 +2250,12 @@ public class AdminOrganizationsApi {
             throw new ApiException("Missing the required parameter 'userId' when calling patchAdminOrgMembersUpdate(Async)");
         }
 
-        return patchAdminOrgMembersUpdateCall(orgId, organizationId, userId, _callback);
+        // verify the required parameter 'putAdminOrgMembersUpdateRequest' is set
+        if (putAdminOrgMembersUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminOrgMembersUpdateRequest' when calling patchAdminOrgMembersUpdate(Async)");
+        }
+
+        return patchAdminOrgMembersUpdateCall(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest, _callback);
 
     }
 
@@ -2211,6 +2265,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param userId  (required)
+     * @param putAdminOrgMembersUpdateRequest  (required)
      * @return PutAdminOrgMembersUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2222,8 +2277,8 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update member role </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminOrgMembersUpdateResponse patchAdminOrgMembersUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId) throws ApiException {
-        ApiResponse<PutAdminOrgMembersUpdateResponse> localVarResp = patchAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId);
+    public PutAdminOrgMembersUpdateResponse patchAdminOrgMembersUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest) throws ApiException {
+        ApiResponse<PutAdminOrgMembersUpdateResponse> localVarResp = patchAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -2233,6 +2288,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param userId  (required)
+     * @param putAdminOrgMembersUpdateRequest  (required)
      * @return ApiResponse&lt;PutAdminOrgMembersUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2244,8 +2300,8 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update member role </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminOrgMembersUpdateResponse> patchAdminOrgMembersUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminOrgMembersUpdateValidateBeforeCall(orgId, organizationId, userId, null);
+    public ApiResponse<PutAdminOrgMembersUpdateResponse> patchAdminOrgMembersUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminOrgMembersUpdateValidateBeforeCall(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest, null);
         Type localVarReturnType = new TypeToken<PutAdminOrgMembersUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2256,6 +2312,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param userId  (required)
+     * @param putAdminOrgMembersUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2268,9 +2325,9 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update member role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminOrgMembersUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, final ApiCallback<PutAdminOrgMembersUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminOrgMembersUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest, final ApiCallback<PutAdminOrgMembersUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminOrgMembersUpdateValidateBeforeCall(orgId, organizationId, userId, _callback);
+        okhttp3.Call localVarCall = patchAdminOrgMembersUpdateValidateBeforeCall(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<PutAdminOrgMembersUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2280,6 +2337,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2292,7 +2350,7 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminOrgRolesUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminOrgRolesUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2306,7 +2364,7 @@ public class AdminOrganizationsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminOrgRolesUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}"
@@ -2329,6 +2387,7 @@ public class AdminOrganizationsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2340,7 +2399,7 @@ public class AdminOrganizationsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminOrgRolesUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminOrgRolesUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminOrgRolesUpdate(Async)");
@@ -2356,7 +2415,12 @@ public class AdminOrganizationsApi {
             throw new ApiException("Missing the required parameter 'roleId' when calling patchAdminOrgRolesUpdate(Async)");
         }
 
-        return patchAdminOrgRolesUpdateCall(orgId, organizationId, roleId, _callback);
+        // verify the required parameter 'putAdminOrgRolesUpdateRequest' is set
+        if (putAdminOrgRolesUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminOrgRolesUpdateRequest' when calling patchAdminOrgRolesUpdate(Async)");
+        }
+
+        return patchAdminOrgRolesUpdateCall(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest, _callback);
 
     }
 
@@ -2366,6 +2430,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @return AdminOrgRolesCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2377,8 +2442,8 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update role </td><td>  -  </td></tr>
      </table>
      */
-    public AdminOrgRolesCreateResponse patchAdminOrgRolesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        ApiResponse<AdminOrgRolesCreateResponse> localVarResp = patchAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId);
+    public AdminOrgRolesCreateResponse patchAdminOrgRolesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest) throws ApiException {
+        ApiResponse<AdminOrgRolesCreateResponse> localVarResp = patchAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -2388,6 +2453,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @return ApiResponse&lt;AdminOrgRolesCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2399,8 +2465,8 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update role </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminOrgRolesCreateResponse> patchAdminOrgRolesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminOrgRolesUpdateValidateBeforeCall(orgId, organizationId, roleId, null);
+    public ApiResponse<AdminOrgRolesCreateResponse> patchAdminOrgRolesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminOrgRolesUpdateValidateBeforeCall(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest, null);
         Type localVarReturnType = new TypeToken<AdminOrgRolesCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2411,6 +2477,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2423,9 +2490,9 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminOrgRolesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, final ApiCallback<AdminOrgRolesCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminOrgRolesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, final ApiCallback<AdminOrgRolesCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminOrgRolesUpdateValidateBeforeCall(orgId, organizationId, roleId, _callback);
+        okhttp3.Call localVarCall = patchAdminOrgRolesUpdateValidateBeforeCall(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminOrgRolesCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2434,6 +2501,7 @@ public class AdminOrganizationsApi {
      * Build call for patchAdminOrganizationsUpdate
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param putAdminOrganizationsUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2447,7 +2515,7 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminOrganizationsUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminOrganizationsUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2461,7 +2529,7 @@ public class AdminOrganizationsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminOrganizationsUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}"
@@ -2483,6 +2551,7 @@ public class AdminOrganizationsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2494,7 +2563,7 @@ public class AdminOrganizationsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminOrganizationsUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminOrganizationsUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminOrganizationsUpdate(Async)");
@@ -2505,7 +2574,12 @@ public class AdminOrganizationsApi {
             throw new ApiException("Missing the required parameter 'organizationId' when calling patchAdminOrganizationsUpdate(Async)");
         }
 
-        return patchAdminOrganizationsUpdateCall(orgId, organizationId, _callback);
+        // verify the required parameter 'putAdminOrganizationsUpdateRequest' is set
+        if (putAdminOrganizationsUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminOrganizationsUpdateRequest' when calling patchAdminOrganizationsUpdate(Async)");
+        }
+
+        return patchAdminOrganizationsUpdateCall(orgId, organizationId, putAdminOrganizationsUpdateRequest, _callback);
 
     }
 
@@ -2514,6 +2588,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param putAdminOrganizationsUpdateRequest  (required)
      * @return AdminOrganizationsGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2526,8 +2601,8 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
-    public AdminOrganizationsGetResponse patchAdminOrganizationsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
-        ApiResponse<AdminOrganizationsGetResponse> localVarResp = patchAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId);
+    public AdminOrganizationsGetResponse patchAdminOrganizationsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest) throws ApiException {
+        ApiResponse<AdminOrganizationsGetResponse> localVarResp = patchAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId, putAdminOrganizationsUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -2536,6 +2611,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param putAdminOrganizationsUpdateRequest  (required)
      * @return ApiResponse&lt;AdminOrganizationsGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2548,8 +2624,8 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminOrganizationsGetResponse> patchAdminOrganizationsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminOrganizationsUpdateValidateBeforeCall(orgId, organizationId, null);
+    public ApiResponse<AdminOrganizationsGetResponse> patchAdminOrganizationsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminOrganizationsUpdateValidateBeforeCall(orgId, organizationId, putAdminOrganizationsUpdateRequest, null);
         Type localVarReturnType = new TypeToken<AdminOrganizationsGetResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2559,6 +2635,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param putAdminOrganizationsUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2572,9 +2649,9 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminOrganizationsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback<AdminOrganizationsGetResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminOrganizationsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest, final ApiCallback<AdminOrganizationsGetResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminOrganizationsUpdateValidateBeforeCall(orgId, organizationId, _callback);
+        okhttp3.Call localVarCall = patchAdminOrganizationsUpdateValidateBeforeCall(orgId, organizationId, putAdminOrganizationsUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminOrganizationsGetResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2584,6 +2661,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param userId  (required)
+     * @param putAdminOrgMembersUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2596,7 +2674,7 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update member role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminOrgMembersUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminOrgMembersUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2610,7 +2688,7 @@ public class AdminOrganizationsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminOrgMembersUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId}"
@@ -2633,6 +2711,7 @@ public class AdminOrganizationsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2644,7 +2723,7 @@ public class AdminOrganizationsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminOrgMembersUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminOrgMembersUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminOrgMembersUpdate(Async)");
@@ -2660,7 +2739,12 @@ public class AdminOrganizationsApi {
             throw new ApiException("Missing the required parameter 'userId' when calling putAdminOrgMembersUpdate(Async)");
         }
 
-        return putAdminOrgMembersUpdateCall(orgId, organizationId, userId, _callback);
+        // verify the required parameter 'putAdminOrgMembersUpdateRequest' is set
+        if (putAdminOrgMembersUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminOrgMembersUpdateRequest' when calling putAdminOrgMembersUpdate(Async)");
+        }
+
+        return putAdminOrgMembersUpdateCall(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest, _callback);
 
     }
 
@@ -2670,6 +2754,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param userId  (required)
+     * @param putAdminOrgMembersUpdateRequest  (required)
      * @return PutAdminOrgMembersUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2681,8 +2766,8 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update member role </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminOrgMembersUpdateResponse putAdminOrgMembersUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId) throws ApiException {
-        ApiResponse<PutAdminOrgMembersUpdateResponse> localVarResp = putAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId);
+    public PutAdminOrgMembersUpdateResponse putAdminOrgMembersUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest) throws ApiException {
+        ApiResponse<PutAdminOrgMembersUpdateResponse> localVarResp = putAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -2692,6 +2777,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param userId  (required)
+     * @param putAdminOrgMembersUpdateRequest  (required)
      * @return ApiResponse&lt;PutAdminOrgMembersUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2703,8 +2789,8 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update member role </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminOrgMembersUpdateResponse> putAdminOrgMembersUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminOrgMembersUpdateValidateBeforeCall(orgId, organizationId, userId, null);
+    public ApiResponse<PutAdminOrgMembersUpdateResponse> putAdminOrgMembersUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = putAdminOrgMembersUpdateValidateBeforeCall(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest, null);
         Type localVarReturnType = new TypeToken<PutAdminOrgMembersUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2715,6 +2801,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param userId  (required)
+     * @param putAdminOrgMembersUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2727,9 +2814,9 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update member role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminOrgMembersUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, final ApiCallback<PutAdminOrgMembersUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminOrgMembersUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest, final ApiCallback<PutAdminOrgMembersUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminOrgMembersUpdateValidateBeforeCall(orgId, organizationId, userId, _callback);
+        okhttp3.Call localVarCall = putAdminOrgMembersUpdateValidateBeforeCall(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<PutAdminOrgMembersUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2739,6 +2826,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2751,7 +2839,7 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminOrgRolesUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminOrgRolesUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2765,7 +2853,7 @@ public class AdminOrganizationsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminOrgRolesUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}"
@@ -2788,6 +2876,7 @@ public class AdminOrganizationsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2799,7 +2888,7 @@ public class AdminOrganizationsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminOrgRolesUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminOrgRolesUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminOrgRolesUpdate(Async)");
@@ -2815,7 +2904,12 @@ public class AdminOrganizationsApi {
             throw new ApiException("Missing the required parameter 'roleId' when calling putAdminOrgRolesUpdate(Async)");
         }
 
-        return putAdminOrgRolesUpdateCall(orgId, organizationId, roleId, _callback);
+        // verify the required parameter 'putAdminOrgRolesUpdateRequest' is set
+        if (putAdminOrgRolesUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminOrgRolesUpdateRequest' when calling putAdminOrgRolesUpdate(Async)");
+        }
+
+        return putAdminOrgRolesUpdateCall(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest, _callback);
 
     }
 
@@ -2825,6 +2919,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @return AdminOrgRolesCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2836,8 +2931,8 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update role </td><td>  -  </td></tr>
      </table>
      */
-    public AdminOrgRolesCreateResponse putAdminOrgRolesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        ApiResponse<AdminOrgRolesCreateResponse> localVarResp = putAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId);
+    public AdminOrgRolesCreateResponse putAdminOrgRolesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest) throws ApiException {
+        ApiResponse<AdminOrgRolesCreateResponse> localVarResp = putAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -2847,6 +2942,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @return ApiResponse&lt;AdminOrgRolesCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2858,8 +2954,8 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update role </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminOrgRolesCreateResponse> putAdminOrgRolesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminOrgRolesUpdateValidateBeforeCall(orgId, organizationId, roleId, null);
+    public ApiResponse<AdminOrgRolesCreateResponse> putAdminOrgRolesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = putAdminOrgRolesUpdateValidateBeforeCall(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest, null);
         Type localVarReturnType = new TypeToken<AdminOrgRolesCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2870,6 +2966,7 @@ public class AdminOrganizationsApi {
      * @param orgId  (required)
      * @param organizationId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2882,9 +2979,9 @@ public class AdminOrganizationsApi {
         <tr><td> 422 </td><td> Unable to update role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminOrgRolesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, final ApiCallback<AdminOrgRolesCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminOrgRolesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, final ApiCallback<AdminOrgRolesCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminOrgRolesUpdateValidateBeforeCall(orgId, organizationId, roleId, _callback);
+        okhttp3.Call localVarCall = putAdminOrgRolesUpdateValidateBeforeCall(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminOrgRolesCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2893,6 +2990,7 @@ public class AdminOrganizationsApi {
      * Build call for putAdminOrganizationsUpdate
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param putAdminOrganizationsUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2906,7 +3004,7 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminOrganizationsUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminOrganizationsUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2920,7 +3018,7 @@ public class AdminOrganizationsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminOrganizationsUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}"
@@ -2942,6 +3040,7 @@ public class AdminOrganizationsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2953,7 +3052,7 @@ public class AdminOrganizationsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminOrganizationsUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminOrganizationsUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminOrganizationsUpdate(Async)");
@@ -2964,7 +3063,12 @@ public class AdminOrganizationsApi {
             throw new ApiException("Missing the required parameter 'organizationId' when calling putAdminOrganizationsUpdate(Async)");
         }
 
-        return putAdminOrganizationsUpdateCall(orgId, organizationId, _callback);
+        // verify the required parameter 'putAdminOrganizationsUpdateRequest' is set
+        if (putAdminOrganizationsUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminOrganizationsUpdateRequest' when calling putAdminOrganizationsUpdate(Async)");
+        }
+
+        return putAdminOrganizationsUpdateCall(orgId, organizationId, putAdminOrganizationsUpdateRequest, _callback);
 
     }
 
@@ -2973,6 +3077,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param putAdminOrganizationsUpdateRequest  (required)
      * @return AdminOrganizationsGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2985,8 +3090,8 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
-    public AdminOrganizationsGetResponse putAdminOrganizationsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
-        ApiResponse<AdminOrganizationsGetResponse> localVarResp = putAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId);
+    public AdminOrganizationsGetResponse putAdminOrganizationsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest) throws ApiException {
+        ApiResponse<AdminOrganizationsGetResponse> localVarResp = putAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId, putAdminOrganizationsUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -2995,6 +3100,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param putAdminOrganizationsUpdateRequest  (required)
      * @return ApiResponse&lt;AdminOrganizationsGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3007,8 +3113,8 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminOrganizationsGetResponse> putAdminOrganizationsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminOrganizationsUpdateValidateBeforeCall(orgId, organizationId, null);
+    public ApiResponse<AdminOrganizationsGetResponse> putAdminOrganizationsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = putAdminOrganizationsUpdateValidateBeforeCall(orgId, organizationId, putAdminOrganizationsUpdateRequest, null);
         Type localVarReturnType = new TypeToken<AdminOrganizationsGetResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -3018,6 +3124,7 @@ public class AdminOrganizationsApi {
      * 
      * @param orgId  (required)
      * @param organizationId  (required)
+     * @param putAdminOrganizationsUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3031,9 +3138,9 @@ public class AdminOrganizationsApi {
         <tr><td> 409 </td><td> The slug is taken </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminOrganizationsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, final ApiCallback<AdminOrganizationsGetResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminOrganizationsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String organizationId, @javax.annotation.Nonnull PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest, final ApiCallback<AdminOrganizationsGetResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminOrganizationsUpdateValidateBeforeCall(orgId, organizationId, _callback);
+        okhttp3.Call localVarCall = putAdminOrganizationsUpdateValidateBeforeCall(orgId, organizationId, putAdminOrganizationsUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminOrganizationsGetResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

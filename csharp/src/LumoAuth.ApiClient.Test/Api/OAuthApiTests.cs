@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -74,7 +74,20 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.BackchannelAuthorize(orgId);
+            //string scope = null;
+            //string? loginHint = null;
+            //string? loginHintToken = null;
+            //string? idTokenHint = null;
+            //string? bindingMessage = null;
+            //string? acrValues = null;
+            //int? requestedExpiry = null;
+            //string? clientNotificationToken = null;
+            //string? authorizationDetails = null;
+            //string? clientId = null;
+            //string? clientSecret = null;
+            //string? clientAssertionType = null;
+            //string? clientAssertion = null;
+            //var response = instance.BackchannelAuthorize(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion);
             //Assert.IsType<BackchannelAuthorizeResponse>(response);
         }
 
@@ -99,7 +112,13 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.DeviceAuthorization(orgId);
+            //string? clientId = null;
+            //string? clientSecret = null;
+            //string? clientAssertionType = null;
+            //string? clientAssertion = null;
+            //string? scope = null;
+            //string? resource = null;
+            //var response = instance.DeviceAuthorization(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource);
             //Assert.IsType<DeviceAuthorizationResponse>(response);
         }
 
@@ -148,7 +167,13 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.Introspect(orgId);
+            //string token = null;
+            //string? tokenTypeHint = null;
+            //string? clientId = null;
+            //string? clientSecret = null;
+            //string? clientAssertionType = null;
+            //string? clientAssertion = null;
+            //var response = instance.Introspect(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
             //Assert.IsType<IntrospectResponse>(response);
         }
 
@@ -160,7 +185,22 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.Par(orgId);
+            //string? responseType = null;
+            //string? redirectUri = null;
+            //string? scope = null;
+            //string? state = null;
+            //string? nonce = null;
+            //string? codeChallenge = null;
+            //string? codeChallengeMethod = null;
+            //string? request = null;
+            //string? resource = null;
+            //string? prompt = null;
+            //string? loginHint = null;
+            //string? clientId = null;
+            //string? clientSecret = null;
+            //string? clientAssertionType = null;
+            //string? clientAssertion = null;
+            //var response = instance.Par(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion);
             //Assert.IsType<ParResponse>(response);
         }
 
@@ -172,7 +212,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.RegisterClient(orgId);
+            //RegisterClientRequest registerClientRequest = null;
+            //var response = instance.RegisterClient(orgId, registerClientRequest);
             //Assert.IsType<RegisterClientResponse>(response);
         }
 
@@ -197,7 +238,13 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.Revoke(orgId);
+            //string token = null;
+            //string? tokenTypeHint = null;
+            //string? clientId = null;
+            //string? clientSecret = null;
+            //string? clientAssertionType = null;
+            //string? clientAssertion = null;
+            //var response = instance.Revoke(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
             //Assert.IsType<Object>(response);
         }
 
@@ -269,7 +316,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.SubmitLoginJson(orgId);
+            //SubmitLoginJsonRequest submitLoginJsonRequest = null;
+            //var response = instance.SubmitLoginJson(orgId, submitLoginJsonRequest);
             //Assert.IsType<SubmitLoginJsonResponse>(response);
         }
 
@@ -293,7 +341,26 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.Token(orgId);
+            //string grantType = null;
+            //string? code = null;
+            //string? redirectUri = null;
+            //string? codeVerifier = null;
+            //string? refreshToken = null;
+            //string? deviceCode = null;
+            //string? authReqId = null;
+            //string? scope = null;
+            //string? resource = null;
+            //string? subjectToken = null;
+            //string? subjectTokenType = null;
+            //string? actorToken = null;
+            //string? actorTokenType = null;
+            //string? requestedTokenType = null;
+            //string? assertion = null;
+            //string? clientId = null;
+            //string? clientSecret = null;
+            //string? clientAssertionType = null;
+            //string? clientAssertion = null;
+            //var response = instance.Token(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion);
             //Assert.IsType<TokenResponse>(response);
         }
     }

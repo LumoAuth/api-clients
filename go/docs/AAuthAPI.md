@@ -883,7 +883,7 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
-	issueResourceTokenRequest := *openapiclient.NewIssueResourceTokenRequest() // IssueResourceTokenRequest | 
+	issueResourceTokenRequest := *openapiclient.NewIssueResourceTokenRequest("Resource_example", "Agent_example", "AgentJkt_example") // IssueResourceTokenRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -1025,7 +1025,7 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
-	verifyAuthTokenRequest := *openapiclient.NewVerifyAuthTokenRequest() // VerifyAuthTokenRequest | 
+	verifyAuthTokenRequest := *openapiclient.NewVerifyAuthTokenRequest("AuthToken_example", "Resource_example") // VerifyAuthTokenRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -1097,7 +1097,7 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
-	verifyResourceTokenRequest := *openapiclient.NewVerifyResourceTokenRequest() // VerifyResourceTokenRequest | 
+	verifyResourceTokenRequest := *openapiclient.NewVerifyResourceTokenRequest("Resource_example", "ResourceToken_example", "Agent_example", "AgentJkt_example") // VerifyResourceTokenRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -168,15 +168,16 @@ class AdminAbacApi
      * Create an attribute definition
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AbacAttributesCreateRequest $abacAttributesCreateRequest abacAttributesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacAttributesCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AbacAttributesCreateResponse
      */
-    public function abacAttributesCreate($orgId, string $contentType = self::contentTypes['abacAttributesCreate'][0])
+    public function abacAttributesCreate($orgId, $abacAttributesCreateRequest, string $contentType = self::contentTypes['abacAttributesCreate'][0])
     {
-        list($response) = $this->abacAttributesCreateWithHttpInfo($orgId, $contentType);
+        list($response) = $this->abacAttributesCreateWithHttpInfo($orgId, $abacAttributesCreateRequest, $contentType);
         return $response;
     }
 
@@ -186,15 +187,16 @@ class AdminAbacApi
      * Create an attribute definition
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AbacAttributesCreateRequest $abacAttributesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacAttributesCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AbacAttributesCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function abacAttributesCreateWithHttpInfo($orgId, string $contentType = self::contentTypes['abacAttributesCreate'][0])
+    public function abacAttributesCreateWithHttpInfo($orgId, $abacAttributesCreateRequest, string $contentType = self::contentTypes['abacAttributesCreate'][0])
     {
-        $request = $this->abacAttributesCreateRequest($orgId, $contentType);
+        $request = $this->abacAttributesCreateRequest($orgId, $abacAttributesCreateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -271,14 +273,15 @@ class AdminAbacApi
      * Create an attribute definition
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AbacAttributesCreateRequest $abacAttributesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacAttributesCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function abacAttributesCreateAsync($orgId, string $contentType = self::contentTypes['abacAttributesCreate'][0])
+    public function abacAttributesCreateAsync($orgId, $abacAttributesCreateRequest, string $contentType = self::contentTypes['abacAttributesCreate'][0])
     {
-        return $this->abacAttributesCreateAsyncWithHttpInfo($orgId, $contentType)
+        return $this->abacAttributesCreateAsyncWithHttpInfo($orgId, $abacAttributesCreateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -292,15 +295,16 @@ class AdminAbacApi
      * Create an attribute definition
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AbacAttributesCreateRequest $abacAttributesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacAttributesCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function abacAttributesCreateAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['abacAttributesCreate'][0])
+    public function abacAttributesCreateAsyncWithHttpInfo($orgId, $abacAttributesCreateRequest, string $contentType = self::contentTypes['abacAttributesCreate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AbacAttributesCreateResponse';
-        $request = $this->abacAttributesCreateRequest($orgId, $contentType);
+        $request = $this->abacAttributesCreateRequest($orgId, $abacAttributesCreateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -342,18 +346,26 @@ class AdminAbacApi
      * Create request for operation 'abacAttributesCreate'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AbacAttributesCreateRequest $abacAttributesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacAttributesCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function abacAttributesCreateRequest($orgId, string $contentType = self::contentTypes['abacAttributesCreate'][0])
+    public function abacAttributesCreateRequest($orgId, $abacAttributesCreateRequest, string $contentType = self::contentTypes['abacAttributesCreate'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling abacAttributesCreate'
+            );
+        }
+
+        // verify the required parameter 'abacAttributesCreateRequest' is set
+        if ($abacAttributesCreateRequest === null || (is_array($abacAttributesCreateRequest) && count($abacAttributesCreateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $abacAttributesCreateRequest when calling abacAttributesCreate'
             );
         }
 
@@ -384,7 +396,14 @@ class AdminAbacApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($abacAttributesCreateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($abacAttributesCreateRequest));
+            } else {
+                $httpBody = $abacAttributesCreateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -1322,15 +1341,16 @@ class AdminAbacApi
      * Create an ABAC policy
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AbacPoliciesCreateRequest $abacPoliciesCreateRequest abacPoliciesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacPoliciesCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AbacPoliciesCreateResponse
      */
-    public function abacPoliciesCreate($orgId, string $contentType = self::contentTypes['abacPoliciesCreate'][0])
+    public function abacPoliciesCreate($orgId, $abacPoliciesCreateRequest, string $contentType = self::contentTypes['abacPoliciesCreate'][0])
     {
-        list($response) = $this->abacPoliciesCreateWithHttpInfo($orgId, $contentType);
+        list($response) = $this->abacPoliciesCreateWithHttpInfo($orgId, $abacPoliciesCreateRequest, $contentType);
         return $response;
     }
 
@@ -1340,15 +1360,16 @@ class AdminAbacApi
      * Create an ABAC policy
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AbacPoliciesCreateRequest $abacPoliciesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacPoliciesCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AbacPoliciesCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function abacPoliciesCreateWithHttpInfo($orgId, string $contentType = self::contentTypes['abacPoliciesCreate'][0])
+    public function abacPoliciesCreateWithHttpInfo($orgId, $abacPoliciesCreateRequest, string $contentType = self::contentTypes['abacPoliciesCreate'][0])
     {
-        $request = $this->abacPoliciesCreateRequest($orgId, $contentType);
+        $request = $this->abacPoliciesCreateRequest($orgId, $abacPoliciesCreateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1425,14 +1446,15 @@ class AdminAbacApi
      * Create an ABAC policy
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AbacPoliciesCreateRequest $abacPoliciesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacPoliciesCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function abacPoliciesCreateAsync($orgId, string $contentType = self::contentTypes['abacPoliciesCreate'][0])
+    public function abacPoliciesCreateAsync($orgId, $abacPoliciesCreateRequest, string $contentType = self::contentTypes['abacPoliciesCreate'][0])
     {
-        return $this->abacPoliciesCreateAsyncWithHttpInfo($orgId, $contentType)
+        return $this->abacPoliciesCreateAsyncWithHttpInfo($orgId, $abacPoliciesCreateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1446,15 +1468,16 @@ class AdminAbacApi
      * Create an ABAC policy
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AbacPoliciesCreateRequest $abacPoliciesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacPoliciesCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function abacPoliciesCreateAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['abacPoliciesCreate'][0])
+    public function abacPoliciesCreateAsyncWithHttpInfo($orgId, $abacPoliciesCreateRequest, string $contentType = self::contentTypes['abacPoliciesCreate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AbacPoliciesCreateResponse';
-        $request = $this->abacPoliciesCreateRequest($orgId, $contentType);
+        $request = $this->abacPoliciesCreateRequest($orgId, $abacPoliciesCreateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1496,18 +1519,26 @@ class AdminAbacApi
      * Create request for operation 'abacPoliciesCreate'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AbacPoliciesCreateRequest $abacPoliciesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abacPoliciesCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function abacPoliciesCreateRequest($orgId, string $contentType = self::contentTypes['abacPoliciesCreate'][0])
+    public function abacPoliciesCreateRequest($orgId, $abacPoliciesCreateRequest, string $contentType = self::contentTypes['abacPoliciesCreate'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling abacPoliciesCreate'
+            );
+        }
+
+        // verify the required parameter 'abacPoliciesCreateRequest' is set
+        if ($abacPoliciesCreateRequest === null || (is_array($abacPoliciesCreateRequest) && count($abacPoliciesCreateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $abacPoliciesCreateRequest when calling abacPoliciesCreate'
             );
         }
 
@@ -1538,7 +1569,14 @@ class AdminAbacApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($abacPoliciesCreateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($abacPoliciesCreateRequest));
+            } else {
+                $httpBody = $abacPoliciesCreateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -2792,15 +2830,16 @@ class AdminAbacApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $id id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest $putAbacAttributesUpdateRequest putAbacAttributesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAbacAttributesUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateResponse
      */
-    public function patchAbacAttributesUpdate($orgId, $id, string $contentType = self::contentTypes['patchAbacAttributesUpdate'][0])
+    public function patchAbacAttributesUpdate($orgId, $id, $putAbacAttributesUpdateRequest, string $contentType = self::contentTypes['patchAbacAttributesUpdate'][0])
     {
-        list($response) = $this->patchAbacAttributesUpdateWithHttpInfo($orgId, $id, $contentType);
+        list($response) = $this->patchAbacAttributesUpdateWithHttpInfo($orgId, $id, $putAbacAttributesUpdateRequest, $contentType);
         return $response;
     }
 
@@ -2811,15 +2850,16 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest $putAbacAttributesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAbacAttributesUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function patchAbacAttributesUpdateWithHttpInfo($orgId, $id, string $contentType = self::contentTypes['patchAbacAttributesUpdate'][0])
+    public function patchAbacAttributesUpdateWithHttpInfo($orgId, $id, $putAbacAttributesUpdateRequest, string $contentType = self::contentTypes['patchAbacAttributesUpdate'][0])
     {
-        $request = $this->patchAbacAttributesUpdateRequest($orgId, $id, $contentType);
+        $request = $this->patchAbacAttributesUpdateRequest($orgId, $id, $putAbacAttributesUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2897,14 +2937,15 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest $putAbacAttributesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAbacAttributesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAbacAttributesUpdateAsync($orgId, $id, string $contentType = self::contentTypes['patchAbacAttributesUpdate'][0])
+    public function patchAbacAttributesUpdateAsync($orgId, $id, $putAbacAttributesUpdateRequest, string $contentType = self::contentTypes['patchAbacAttributesUpdate'][0])
     {
-        return $this->patchAbacAttributesUpdateAsyncWithHttpInfo($orgId, $id, $contentType)
+        return $this->patchAbacAttributesUpdateAsyncWithHttpInfo($orgId, $id, $putAbacAttributesUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2919,15 +2960,16 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest $putAbacAttributesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAbacAttributesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAbacAttributesUpdateAsyncWithHttpInfo($orgId, $id, string $contentType = self::contentTypes['patchAbacAttributesUpdate'][0])
+    public function patchAbacAttributesUpdateAsyncWithHttpInfo($orgId, $id, $putAbacAttributesUpdateRequest, string $contentType = self::contentTypes['patchAbacAttributesUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\PutAbacAttributesUpdateResponse';
-        $request = $this->patchAbacAttributesUpdateRequest($orgId, $id, $contentType);
+        $request = $this->patchAbacAttributesUpdateRequest($orgId, $id, $putAbacAttributesUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2970,12 +3012,13 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest $putAbacAttributesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAbacAttributesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function patchAbacAttributesUpdateRequest($orgId, $id, string $contentType = self::contentTypes['patchAbacAttributesUpdate'][0])
+    public function patchAbacAttributesUpdateRequest($orgId, $id, $putAbacAttributesUpdateRequest, string $contentType = self::contentTypes['patchAbacAttributesUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -2995,6 +3038,13 @@ class AdminAbacApi
             throw new \InvalidArgumentException("invalid value for \"id\" when calling AdminAbacApi.patchAbacAttributesUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
         }
         
+        // verify the required parameter 'putAbacAttributesUpdateRequest' is set
+        if ($putAbacAttributesUpdateRequest === null || (is_array($putAbacAttributesUpdateRequest) && count($putAbacAttributesUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAbacAttributesUpdateRequest when calling patchAbacAttributesUpdate'
+            );
+        }
+
 
         $resourcePath = '/orgs/{orgId}/api/v1/abac/attributes/{id}';
         $formParams = [];
@@ -3030,7 +3080,14 @@ class AdminAbacApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAbacAttributesUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAbacAttributesUpdateRequest));
+            } else {
+                $httpBody = $putAbacAttributesUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -3092,15 +3149,16 @@ class AdminAbacApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $id id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest $putAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAbacPoliciesUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateResponse
      */
-    public function patchAbacPoliciesUpdate($orgId, $id, string $contentType = self::contentTypes['patchAbacPoliciesUpdate'][0])
+    public function patchAbacPoliciesUpdate($orgId, $id, $putAbacPoliciesUpdateRequest, string $contentType = self::contentTypes['patchAbacPoliciesUpdate'][0])
     {
-        list($response) = $this->patchAbacPoliciesUpdateWithHttpInfo($orgId, $id, $contentType);
+        list($response) = $this->patchAbacPoliciesUpdateWithHttpInfo($orgId, $id, $putAbacPoliciesUpdateRequest, $contentType);
         return $response;
     }
 
@@ -3111,15 +3169,16 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest $putAbacPoliciesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAbacPoliciesUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function patchAbacPoliciesUpdateWithHttpInfo($orgId, $id, string $contentType = self::contentTypes['patchAbacPoliciesUpdate'][0])
+    public function patchAbacPoliciesUpdateWithHttpInfo($orgId, $id, $putAbacPoliciesUpdateRequest, string $contentType = self::contentTypes['patchAbacPoliciesUpdate'][0])
     {
-        $request = $this->patchAbacPoliciesUpdateRequest($orgId, $id, $contentType);
+        $request = $this->patchAbacPoliciesUpdateRequest($orgId, $id, $putAbacPoliciesUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3197,14 +3256,15 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest $putAbacPoliciesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAbacPoliciesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAbacPoliciesUpdateAsync($orgId, $id, string $contentType = self::contentTypes['patchAbacPoliciesUpdate'][0])
+    public function patchAbacPoliciesUpdateAsync($orgId, $id, $putAbacPoliciesUpdateRequest, string $contentType = self::contentTypes['patchAbacPoliciesUpdate'][0])
     {
-        return $this->patchAbacPoliciesUpdateAsyncWithHttpInfo($orgId, $id, $contentType)
+        return $this->patchAbacPoliciesUpdateAsyncWithHttpInfo($orgId, $id, $putAbacPoliciesUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3219,15 +3279,16 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest $putAbacPoliciesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAbacPoliciesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAbacPoliciesUpdateAsyncWithHttpInfo($orgId, $id, string $contentType = self::contentTypes['patchAbacPoliciesUpdate'][0])
+    public function patchAbacPoliciesUpdateAsyncWithHttpInfo($orgId, $id, $putAbacPoliciesUpdateRequest, string $contentType = self::contentTypes['patchAbacPoliciesUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateResponse';
-        $request = $this->patchAbacPoliciesUpdateRequest($orgId, $id, $contentType);
+        $request = $this->patchAbacPoliciesUpdateRequest($orgId, $id, $putAbacPoliciesUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3270,12 +3331,13 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest $putAbacPoliciesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAbacPoliciesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function patchAbacPoliciesUpdateRequest($orgId, $id, string $contentType = self::contentTypes['patchAbacPoliciesUpdate'][0])
+    public function patchAbacPoliciesUpdateRequest($orgId, $id, $putAbacPoliciesUpdateRequest, string $contentType = self::contentTypes['patchAbacPoliciesUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -3295,6 +3357,13 @@ class AdminAbacApi
             throw new \InvalidArgumentException("invalid value for \"id\" when calling AdminAbacApi.patchAbacPoliciesUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
         }
         
+        // verify the required parameter 'putAbacPoliciesUpdateRequest' is set
+        if ($putAbacPoliciesUpdateRequest === null || (is_array($putAbacPoliciesUpdateRequest) && count($putAbacPoliciesUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAbacPoliciesUpdateRequest when calling patchAbacPoliciesUpdate'
+            );
+        }
+
 
         $resourcePath = '/orgs/{orgId}/api/v1/abac/policies/{id}';
         $formParams = [];
@@ -3330,7 +3399,14 @@ class AdminAbacApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAbacPoliciesUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAbacPoliciesUpdateRequest));
+            } else {
+                $httpBody = $putAbacPoliciesUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -3392,15 +3468,16 @@ class AdminAbacApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $id id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest $putAbacAttributesUpdateRequest putAbacAttributesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAbacAttributesUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateResponse
      */
-    public function putAbacAttributesUpdate($orgId, $id, string $contentType = self::contentTypes['putAbacAttributesUpdate'][0])
+    public function putAbacAttributesUpdate($orgId, $id, $putAbacAttributesUpdateRequest, string $contentType = self::contentTypes['putAbacAttributesUpdate'][0])
     {
-        list($response) = $this->putAbacAttributesUpdateWithHttpInfo($orgId, $id, $contentType);
+        list($response) = $this->putAbacAttributesUpdateWithHttpInfo($orgId, $id, $putAbacAttributesUpdateRequest, $contentType);
         return $response;
     }
 
@@ -3411,15 +3488,16 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest $putAbacAttributesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAbacAttributesUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function putAbacAttributesUpdateWithHttpInfo($orgId, $id, string $contentType = self::contentTypes['putAbacAttributesUpdate'][0])
+    public function putAbacAttributesUpdateWithHttpInfo($orgId, $id, $putAbacAttributesUpdateRequest, string $contentType = self::contentTypes['putAbacAttributesUpdate'][0])
     {
-        $request = $this->putAbacAttributesUpdateRequest($orgId, $id, $contentType);
+        $request = $this->putAbacAttributesUpdateRequest($orgId, $id, $putAbacAttributesUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3497,14 +3575,15 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest $putAbacAttributesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAbacAttributesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAbacAttributesUpdateAsync($orgId, $id, string $contentType = self::contentTypes['putAbacAttributesUpdate'][0])
+    public function putAbacAttributesUpdateAsync($orgId, $id, $putAbacAttributesUpdateRequest, string $contentType = self::contentTypes['putAbacAttributesUpdate'][0])
     {
-        return $this->putAbacAttributesUpdateAsyncWithHttpInfo($orgId, $id, $contentType)
+        return $this->putAbacAttributesUpdateAsyncWithHttpInfo($orgId, $id, $putAbacAttributesUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3519,15 +3598,16 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest $putAbacAttributesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAbacAttributesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAbacAttributesUpdateAsyncWithHttpInfo($orgId, $id, string $contentType = self::contentTypes['putAbacAttributesUpdate'][0])
+    public function putAbacAttributesUpdateAsyncWithHttpInfo($orgId, $id, $putAbacAttributesUpdateRequest, string $contentType = self::contentTypes['putAbacAttributesUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\PutAbacAttributesUpdateResponse';
-        $request = $this->putAbacAttributesUpdateRequest($orgId, $id, $contentType);
+        $request = $this->putAbacAttributesUpdateRequest($orgId, $id, $putAbacAttributesUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3570,12 +3650,13 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest $putAbacAttributesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAbacAttributesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function putAbacAttributesUpdateRequest($orgId, $id, string $contentType = self::contentTypes['putAbacAttributesUpdate'][0])
+    public function putAbacAttributesUpdateRequest($orgId, $id, $putAbacAttributesUpdateRequest, string $contentType = self::contentTypes['putAbacAttributesUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -3595,6 +3676,13 @@ class AdminAbacApi
             throw new \InvalidArgumentException("invalid value for \"id\" when calling AdminAbacApi.putAbacAttributesUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
         }
         
+        // verify the required parameter 'putAbacAttributesUpdateRequest' is set
+        if ($putAbacAttributesUpdateRequest === null || (is_array($putAbacAttributesUpdateRequest) && count($putAbacAttributesUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAbacAttributesUpdateRequest when calling putAbacAttributesUpdate'
+            );
+        }
+
 
         $resourcePath = '/orgs/{orgId}/api/v1/abac/attributes/{id}';
         $formParams = [];
@@ -3630,7 +3718,14 @@ class AdminAbacApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAbacAttributesUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAbacAttributesUpdateRequest));
+            } else {
+                $httpBody = $putAbacAttributesUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -3692,15 +3787,16 @@ class AdminAbacApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $id id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest $putAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAbacPoliciesUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateResponse
      */
-    public function putAbacPoliciesUpdate($orgId, $id, string $contentType = self::contentTypes['putAbacPoliciesUpdate'][0])
+    public function putAbacPoliciesUpdate($orgId, $id, $putAbacPoliciesUpdateRequest, string $contentType = self::contentTypes['putAbacPoliciesUpdate'][0])
     {
-        list($response) = $this->putAbacPoliciesUpdateWithHttpInfo($orgId, $id, $contentType);
+        list($response) = $this->putAbacPoliciesUpdateWithHttpInfo($orgId, $id, $putAbacPoliciesUpdateRequest, $contentType);
         return $response;
     }
 
@@ -3711,15 +3807,16 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest $putAbacPoliciesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAbacPoliciesUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function putAbacPoliciesUpdateWithHttpInfo($orgId, $id, string $contentType = self::contentTypes['putAbacPoliciesUpdate'][0])
+    public function putAbacPoliciesUpdateWithHttpInfo($orgId, $id, $putAbacPoliciesUpdateRequest, string $contentType = self::contentTypes['putAbacPoliciesUpdate'][0])
     {
-        $request = $this->putAbacPoliciesUpdateRequest($orgId, $id, $contentType);
+        $request = $this->putAbacPoliciesUpdateRequest($orgId, $id, $putAbacPoliciesUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3797,14 +3894,15 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest $putAbacPoliciesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAbacPoliciesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAbacPoliciesUpdateAsync($orgId, $id, string $contentType = self::contentTypes['putAbacPoliciesUpdate'][0])
+    public function putAbacPoliciesUpdateAsync($orgId, $id, $putAbacPoliciesUpdateRequest, string $contentType = self::contentTypes['putAbacPoliciesUpdate'][0])
     {
-        return $this->putAbacPoliciesUpdateAsyncWithHttpInfo($orgId, $id, $contentType)
+        return $this->putAbacPoliciesUpdateAsyncWithHttpInfo($orgId, $id, $putAbacPoliciesUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3819,15 +3917,16 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest $putAbacPoliciesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAbacPoliciesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAbacPoliciesUpdateAsyncWithHttpInfo($orgId, $id, string $contentType = self::contentTypes['putAbacPoliciesUpdate'][0])
+    public function putAbacPoliciesUpdateAsyncWithHttpInfo($orgId, $id, $putAbacPoliciesUpdateRequest, string $contentType = self::contentTypes['putAbacPoliciesUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateResponse';
-        $request = $this->putAbacPoliciesUpdateRequest($orgId, $id, $contentType);
+        $request = $this->putAbacPoliciesUpdateRequest($orgId, $id, $putAbacPoliciesUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3870,12 +3969,13 @@ class AdminAbacApi
      *
      * @param  string $orgId (required)
      * @param  string $id (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest $putAbacPoliciesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAbacPoliciesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function putAbacPoliciesUpdateRequest($orgId, $id, string $contentType = self::contentTypes['putAbacPoliciesUpdate'][0])
+    public function putAbacPoliciesUpdateRequest($orgId, $id, $putAbacPoliciesUpdateRequest, string $contentType = self::contentTypes['putAbacPoliciesUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -3895,6 +3995,13 @@ class AdminAbacApi
             throw new \InvalidArgumentException("invalid value for \"id\" when calling AdminAbacApi.putAbacPoliciesUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
         }
         
+        // verify the required parameter 'putAbacPoliciesUpdateRequest' is set
+        if ($putAbacPoliciesUpdateRequest === null || (is_array($putAbacPoliciesUpdateRequest) && count($putAbacPoliciesUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAbacPoliciesUpdateRequest when calling putAbacPoliciesUpdate'
+            );
+        }
+
 
         $resourcePath = '/orgs/{orgId}/api/v1/abac/policies/{id}';
         $formParams = [];
@@ -3930,7 +4037,14 @@ class AdminAbacApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAbacPoliciesUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAbacPoliciesUpdateRequest));
+            } else {
+                $httpBody = $putAbacPoliciesUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

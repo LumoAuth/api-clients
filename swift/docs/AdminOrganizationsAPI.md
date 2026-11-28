@@ -28,7 +28,7 @@ Method | HTTP request | Description
 
 # **adminOrgInvitationsCreate**
 ```swift
-    open class func adminOrgInvitationsCreate(orgId: String, organizationId: String, completion: @escaping (_ data: AdminOrgInvitationsCreateResponse?, _ error: Error?) -> Void)
+    open class func adminOrgInvitationsCreate(orgId: String, organizationId: String, adminOrgInvitationsCreateRequest: AdminOrgInvitationsCreateRequest, completion: @escaping (_ data: AdminOrgInvitationsCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Invite a user to an organization
@@ -40,9 +40,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let organizationId = "organizationId_example" // String | 
+let adminOrgInvitationsCreateRequest = AdminOrgInvitationsCreateRequest(email: "email_example", roleId: 123, message: "message_example", skipEmail: false) // AdminOrgInvitationsCreateRequest | 
 
 // Invite a user to an organization
-AdminOrganizationsAPI.adminOrgInvitationsCreate(orgId: orgId, organizationId: organizationId) { (response, error) in
+AdminOrganizationsAPI.adminOrgInvitationsCreate(orgId: orgId, organizationId: organizationId, adminOrgInvitationsCreateRequest: adminOrgInvitationsCreateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -60,6 +61,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **organizationId** | **String** |  | 
+ **adminOrgInvitationsCreateRequest** | [**AdminOrgInvitationsCreateRequest**](AdminOrgInvitationsCreateRequest.md) |  | 
 
 ### Return type
 
@@ -71,7 +73,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -232,7 +234,7 @@ Name | Type | Description  | Notes
 
 # **adminOrgMembersAdd**
 ```swift
-    open class func adminOrgMembersAdd(orgId: String, organizationId: String, completion: @escaping (_ data: AdminOrgMembersAddResponse?, _ error: Error?) -> Void)
+    open class func adminOrgMembersAdd(orgId: String, organizationId: String, adminOrgMembersAddRequest: AdminOrgMembersAddRequest, completion: @escaping (_ data: AdminOrgMembersAddResponse?, _ error: Error?) -> Void)
 ```
 
 Add a member to an organization
@@ -244,9 +246,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let organizationId = "organizationId_example" // String | 
+let adminOrgMembersAddRequest = AdminOrgMembersAddRequest(userId: 123, roleId: 123) // AdminOrgMembersAddRequest | 
 
 // Add a member to an organization
-AdminOrganizationsAPI.adminOrgMembersAdd(orgId: orgId, organizationId: organizationId) { (response, error) in
+AdminOrganizationsAPI.adminOrgMembersAdd(orgId: orgId, organizationId: organizationId, adminOrgMembersAddRequest: adminOrgMembersAddRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -264,6 +267,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **organizationId** | **String** |  | 
+ **adminOrgMembersAddRequest** | [**AdminOrgMembersAddRequest**](AdminOrgMembersAddRequest.md) |  | 
 
 ### Return type
 
@@ -275,7 +279,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -384,7 +388,7 @@ Name | Type | Description  | Notes
 
 # **adminOrgRolesCreate**
 ```swift
-    open class func adminOrgRolesCreate(orgId: String, organizationId: String, completion: @escaping (_ data: AdminOrgRolesCreateResponse?, _ error: Error?) -> Void)
+    open class func adminOrgRolesCreate(orgId: String, organizationId: String, adminOrgRolesCreateRequest: AdminOrgRolesCreateRequest, completion: @escaping (_ data: AdminOrgRolesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Create an organization role
@@ -396,9 +400,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let organizationId = "organizationId_example" // String | 
+let adminOrgRolesCreateRequest = AdminOrgRolesCreateRequest(name: "name_example", slug: "slug_example", description: "description_example", isDefault: false) // AdminOrgRolesCreateRequest | 
 
 // Create an organization role
-AdminOrganizationsAPI.adminOrgRolesCreate(orgId: orgId, organizationId: organizationId) { (response, error) in
+AdminOrganizationsAPI.adminOrgRolesCreate(orgId: orgId, organizationId: organizationId, adminOrgRolesCreateRequest: adminOrgRolesCreateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -416,6 +421,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **organizationId** | **String** |  | 
+ **adminOrgRolesCreateRequest** | [**AdminOrgRolesCreateRequest**](AdminOrgRolesCreateRequest.md) |  | 
 
 ### Return type
 
@@ -427,7 +433,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -536,7 +542,7 @@ Name | Type | Description  | Notes
 
 # **adminOrganizationsCreate**
 ```swift
-    open class func adminOrganizationsCreate(orgId: String, completion: @escaping (_ data: AdminOrganizationsCreateResponse?, _ error: Error?) -> Void)
+    open class func adminOrganizationsCreate(orgId: String, adminOrganizationsCreateRequest: AdminOrganizationsCreateRequest, completion: @escaping (_ data: AdminOrganizationsCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Create an organization
@@ -547,9 +553,10 @@ Create an organization
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let adminOrganizationsCreateRequest = AdminOrganizationsCreateRequest(name: "name_example", slug: "slug_example", displayName: "displayName_example", description: "description_example", logoUrl: "logoUrl_example", metadata: "TODO", isActive: false) // AdminOrganizationsCreateRequest | 
 
 // Create an organization
-AdminOrganizationsAPI.adminOrganizationsCreate(orgId: orgId) { (response, error) in
+AdminOrganizationsAPI.adminOrganizationsCreate(orgId: orgId, adminOrganizationsCreateRequest: adminOrganizationsCreateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -566,6 +573,7 @@ AdminOrganizationsAPI.adminOrganizationsCreate(orgId: orgId) { (response, error)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **adminOrganizationsCreateRequest** | [**AdminOrganizationsCreateRequest**](AdminOrganizationsCreateRequest.md) |  | 
 
 ### Return type
 
@@ -577,7 +585,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -732,7 +740,7 @@ Name | Type | Description  | Notes
 
 # **patchAdminOrgMembersUpdate**
 ```swift
-    open class func patchAdminOrgMembersUpdate(orgId: String, organizationId: String, userId: String, completion: @escaping (_ data: PutAdminOrgMembersUpdateResponse?, _ error: Error?) -> Void)
+    open class func patchAdminOrgMembersUpdate(orgId: String, organizationId: String, userId: String, putAdminOrgMembersUpdateRequest: PutAdminOrgMembersUpdateRequest, completion: @escaping (_ data: PutAdminOrgMembersUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update a member's role or status
@@ -745,9 +753,10 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let organizationId = "organizationId_example" // String | 
 let userId = "userId_example" // String | 
+let putAdminOrgMembersUpdateRequest = PutAdminOrgMembersUpdateRequest(roleId: 123, status: "status_example") // PutAdminOrgMembersUpdateRequest | 
 
 // Update a member's role or status
-AdminOrganizationsAPI.patchAdminOrgMembersUpdate(orgId: orgId, organizationId: organizationId, userId: userId) { (response, error) in
+AdminOrganizationsAPI.patchAdminOrgMembersUpdate(orgId: orgId, organizationId: organizationId, userId: userId, putAdminOrgMembersUpdateRequest: putAdminOrgMembersUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -766,6 +775,7 @@ Name | Type | Description  | Notes
  **orgId** | **String** |  | 
  **organizationId** | **String** |  | 
  **userId** | **String** |  | 
+ **putAdminOrgMembersUpdateRequest** | [**PutAdminOrgMembersUpdateRequest**](PutAdminOrgMembersUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -777,14 +787,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminOrgRolesUpdate**
 ```swift
-    open class func patchAdminOrgRolesUpdate(orgId: String, organizationId: String, roleId: String, completion: @escaping (_ data: AdminOrgRolesCreateResponse?, _ error: Error?) -> Void)
+    open class func patchAdminOrgRolesUpdate(orgId: String, organizationId: String, roleId: String, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest, completion: @escaping (_ data: AdminOrgRolesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Update an organization role
@@ -797,9 +807,10 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let organizationId = "organizationId_example" // String | 
 let roleId = "roleId_example" // String | 
+let putAdminOrgRolesUpdateRequest = PutAdminOrgRolesUpdateRequest(name: "name_example", description: "description_example") // PutAdminOrgRolesUpdateRequest | 
 
 // Update an organization role
-AdminOrganizationsAPI.patchAdminOrgRolesUpdate(orgId: orgId, organizationId: organizationId, roleId: roleId) { (response, error) in
+AdminOrganizationsAPI.patchAdminOrgRolesUpdate(orgId: orgId, organizationId: organizationId, roleId: roleId, putAdminOrgRolesUpdateRequest: putAdminOrgRolesUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -818,6 +829,7 @@ Name | Type | Description  | Notes
  **orgId** | **String** |  | 
  **organizationId** | **String** |  | 
  **roleId** | **String** |  | 
+ **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -829,14 +841,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminOrganizationsUpdate**
 ```swift
-    open class func patchAdminOrganizationsUpdate(orgId: String, organizationId: String, completion: @escaping (_ data: AdminOrganizationsGetResponse?, _ error: Error?) -> Void)
+    open class func patchAdminOrganizationsUpdate(orgId: String, organizationId: String, putAdminOrganizationsUpdateRequest: PutAdminOrganizationsUpdateRequest, completion: @escaping (_ data: AdminOrganizationsGetResponse?, _ error: Error?) -> Void)
 ```
 
 Update an organization
@@ -848,9 +860,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let organizationId = "organizationId_example" // String | 
+let putAdminOrganizationsUpdateRequest = PutAdminOrganizationsUpdateRequest(name: "name_example", slug: "slug_example", displayName: "displayName_example", description: "description_example", logoUrl: "logoUrl_example", metadata: "TODO", isActive: false) // PutAdminOrganizationsUpdateRequest | 
 
 // Update an organization
-AdminOrganizationsAPI.patchAdminOrganizationsUpdate(orgId: orgId, organizationId: organizationId) { (response, error) in
+AdminOrganizationsAPI.patchAdminOrganizationsUpdate(orgId: orgId, organizationId: organizationId, putAdminOrganizationsUpdateRequest: putAdminOrganizationsUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -868,6 +881,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **organizationId** | **String** |  | 
+ **putAdminOrganizationsUpdateRequest** | [**PutAdminOrganizationsUpdateRequest**](PutAdminOrganizationsUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -879,14 +893,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminOrgMembersUpdate**
 ```swift
-    open class func putAdminOrgMembersUpdate(orgId: String, organizationId: String, userId: String, completion: @escaping (_ data: PutAdminOrgMembersUpdateResponse?, _ error: Error?) -> Void)
+    open class func putAdminOrgMembersUpdate(orgId: String, organizationId: String, userId: String, putAdminOrgMembersUpdateRequest: PutAdminOrgMembersUpdateRequest, completion: @escaping (_ data: PutAdminOrgMembersUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update a member's role or status
@@ -899,9 +913,10 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let organizationId = "organizationId_example" // String | 
 let userId = "userId_example" // String | 
+let putAdminOrgMembersUpdateRequest = PutAdminOrgMembersUpdateRequest(roleId: 123, status: "status_example") // PutAdminOrgMembersUpdateRequest | 
 
 // Update a member's role or status
-AdminOrganizationsAPI.putAdminOrgMembersUpdate(orgId: orgId, organizationId: organizationId, userId: userId) { (response, error) in
+AdminOrganizationsAPI.putAdminOrgMembersUpdate(orgId: orgId, organizationId: organizationId, userId: userId, putAdminOrgMembersUpdateRequest: putAdminOrgMembersUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -920,6 +935,7 @@ Name | Type | Description  | Notes
  **orgId** | **String** |  | 
  **organizationId** | **String** |  | 
  **userId** | **String** |  | 
+ **putAdminOrgMembersUpdateRequest** | [**PutAdminOrgMembersUpdateRequest**](PutAdminOrgMembersUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -931,14 +947,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminOrgRolesUpdate**
 ```swift
-    open class func putAdminOrgRolesUpdate(orgId: String, organizationId: String, roleId: String, completion: @escaping (_ data: AdminOrgRolesCreateResponse?, _ error: Error?) -> Void)
+    open class func putAdminOrgRolesUpdate(orgId: String, organizationId: String, roleId: String, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest, completion: @escaping (_ data: AdminOrgRolesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Update an organization role
@@ -951,9 +967,10 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let organizationId = "organizationId_example" // String | 
 let roleId = "roleId_example" // String | 
+let putAdminOrgRolesUpdateRequest = PutAdminOrgRolesUpdateRequest(name: "name_example", description: "description_example") // PutAdminOrgRolesUpdateRequest | 
 
 // Update an organization role
-AdminOrganizationsAPI.putAdminOrgRolesUpdate(orgId: orgId, organizationId: organizationId, roleId: roleId) { (response, error) in
+AdminOrganizationsAPI.putAdminOrgRolesUpdate(orgId: orgId, organizationId: organizationId, roleId: roleId, putAdminOrgRolesUpdateRequest: putAdminOrgRolesUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -972,6 +989,7 @@ Name | Type | Description  | Notes
  **orgId** | **String** |  | 
  **organizationId** | **String** |  | 
  **roleId** | **String** |  | 
+ **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -983,14 +1001,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminOrganizationsUpdate**
 ```swift
-    open class func putAdminOrganizationsUpdate(orgId: String, organizationId: String, completion: @escaping (_ data: AdminOrganizationsGetResponse?, _ error: Error?) -> Void)
+    open class func putAdminOrganizationsUpdate(orgId: String, organizationId: String, putAdminOrganizationsUpdateRequest: PutAdminOrganizationsUpdateRequest, completion: @escaping (_ data: AdminOrganizationsGetResponse?, _ error: Error?) -> Void)
 ```
 
 Update an organization
@@ -1002,9 +1020,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let organizationId = "organizationId_example" // String | 
+let putAdminOrganizationsUpdateRequest = PutAdminOrganizationsUpdateRequest(name: "name_example", slug: "slug_example", displayName: "displayName_example", description: "description_example", logoUrl: "logoUrl_example", metadata: "TODO", isActive: false) // PutAdminOrganizationsUpdateRequest | 
 
 // Update an organization
-AdminOrganizationsAPI.putAdminOrganizationsUpdate(orgId: orgId, organizationId: organizationId) { (response, error) in
+AdminOrganizationsAPI.putAdminOrganizationsUpdate(orgId: orgId, organizationId: organizationId, putAdminOrganizationsUpdateRequest: putAdminOrganizationsUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1022,6 +1041,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **organizationId** | **String** |  | 
+ **putAdminOrganizationsUpdateRequest** | [**PutAdminOrganizationsUpdateRequest**](PutAdminOrganizationsUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -1033,7 +1053,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

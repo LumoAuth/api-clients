@@ -5,9 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**resource_token** | **string** | The resource token to validate. | [optional] [default to undefined]
-**agent** | **string** | Agent identifier the token must be bound to. | [optional] [default to undefined]
-**agent_jkt** | **string** | JWK thumbprint of the agent key. | [optional] [default to undefined]
+**resource** | **string** | Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource. | [default to undefined]
+**resource_token** | **string** | The resource token to validate. | [default to undefined]
+**agent** | **string** | Agent identifier the token must be bound to. | [default to undefined]
+**agent_jkt** | **string** | JWK thumbprint of the agent key. | [default to undefined]
 
 ## Example
 
@@ -15,6 +16,7 @@ Name | Type | Description | Notes
 import { VerifyResourceTokenRequest } from '@lumoauth/api-client';
 
 const instance: VerifyResourceTokenRequest = {
+    resource,
     resource_token,
     agent,
     agent_jkt,

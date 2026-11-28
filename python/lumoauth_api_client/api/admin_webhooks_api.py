@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -19,6 +19,7 @@ from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr, field_validator
 from typing_extensions import Annotated
+from lumoauth_api_client.models.admin_webhooks_create_request import AdminWebhooksCreateRequest
 from lumoauth_api_client.models.admin_webhooks_create_response import AdminWebhooksCreateResponse
 from lumoauth_api_client.models.admin_webhooks_deliveries_list_response import AdminWebhooksDeliveriesListResponse
 from lumoauth_api_client.models.admin_webhooks_delivery_replay_response import AdminWebhooksDeliveryReplayResponse
@@ -32,6 +33,7 @@ from lumoauth_api_client.models.admin_webhooks_tunnel_start_response import Admi
 from lumoauth_api_client.models.admin_webhooks_webhooks_disable_response import AdminWebhooksWebhooksDisableResponse
 from lumoauth_api_client.models.admin_webhooks_webhooks_enable_response import AdminWebhooksWebhooksEnableResponse
 from lumoauth_api_client.models.message_response import MessageResponse
+from lumoauth_api_client.models.put_admin_webhooks_update_request import PutAdminWebhooksUpdateRequest
 from lumoauth_api_client.models.put_admin_webhooks_update_response import PutAdminWebhooksUpdateResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
@@ -56,6 +58,7 @@ class AdminWebhooksApi:
     def admin_webhooks_create(
         self,
         org_id: StrictStr,
+        admin_webhooks_create_request: AdminWebhooksCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -75,6 +78,8 @@ class AdminWebhooksApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_webhooks_create_request: (required)
+        :type admin_webhooks_create_request: AdminWebhooksCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -99,6 +104,7 @@ class AdminWebhooksApi:
 
         _param = self._admin_webhooks_create_serialize(
             org_id=org_id,
+            admin_webhooks_create_request=admin_webhooks_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -123,6 +129,7 @@ class AdminWebhooksApi:
     def admin_webhooks_create_with_http_info(
         self,
         org_id: StrictStr,
+        admin_webhooks_create_request: AdminWebhooksCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -142,6 +149,8 @@ class AdminWebhooksApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_webhooks_create_request: (required)
+        :type admin_webhooks_create_request: AdminWebhooksCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -166,6 +175,7 @@ class AdminWebhooksApi:
 
         _param = self._admin_webhooks_create_serialize(
             org_id=org_id,
+            admin_webhooks_create_request=admin_webhooks_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -190,6 +200,7 @@ class AdminWebhooksApi:
     def admin_webhooks_create_without_preload_content(
         self,
         org_id: StrictStr,
+        admin_webhooks_create_request: AdminWebhooksCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -209,6 +220,8 @@ class AdminWebhooksApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_webhooks_create_request: (required)
+        :type admin_webhooks_create_request: AdminWebhooksCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -233,6 +246,7 @@ class AdminWebhooksApi:
 
         _param = self._admin_webhooks_create_serialize(
             org_id=org_id,
+            admin_webhooks_create_request=admin_webhooks_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -252,6 +266,7 @@ class AdminWebhooksApi:
     def _admin_webhooks_create_serialize(
         self,
         org_id,
+        admin_webhooks_create_request,
         _request_auth,
         _content_type,
         _headers,
@@ -279,6 +294,8 @@ class AdminWebhooksApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_webhooks_create_request is not None:
+            _body_params = admin_webhooks_create_request
 
 
         # set the HTTP header `Accept`
@@ -289,6 +306,19 @@ class AdminWebhooksApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2019,7 +2049,7 @@ class AdminWebhooksApi:
     ) -> AdminWebhooksListResponse:
         """List webhooks
 
-        Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+        Paginated list of the organization's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
         :param org_id: (required)
         :type org_id: str
@@ -2086,7 +2116,7 @@ class AdminWebhooksApi:
     ) -> ApiResponse[AdminWebhooksListResponse]:
         """List webhooks
 
-        Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+        Paginated list of the organization's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
         :param org_id: (required)
         :type org_id: str
@@ -2153,7 +2183,7 @@ class AdminWebhooksApi:
     ) -> RESTResponseType:
         """List webhooks
 
-        Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+        Paginated list of the organization's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
         :param org_id: (required)
         :type org_id: str
@@ -2844,7 +2874,7 @@ class AdminWebhooksApi:
     ) -> AdminWebhooksTunnelStartResponse:
         """Start a webhook tunnel
 
-        Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+        Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
 
         :param org_id: (required)
         :type org_id: str
@@ -2911,7 +2941,7 @@ class AdminWebhooksApi:
     ) -> ApiResponse[AdminWebhooksTunnelStartResponse]:
         """Start a webhook tunnel
 
-        Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+        Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
 
         :param org_id: (required)
         :type org_id: str
@@ -2978,7 +3008,7 @@ class AdminWebhooksApi:
     ) -> RESTResponseType:
         """Start a webhook tunnel
 
-        Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+        Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
 
         :param org_id: (required)
         :type org_id: str
@@ -4212,6 +4242,7 @@ class AdminWebhooksApi:
         self,
         org_id: StrictStr,
         webhook_id: Annotated[str, Field(strict=True)],
+        put_admin_webhooks_update_request: PutAdminWebhooksUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4232,6 +4263,8 @@ class AdminWebhooksApi:
         :type org_id: str
         :param webhook_id: (required)
         :type webhook_id: str
+        :param put_admin_webhooks_update_request: (required)
+        :type put_admin_webhooks_update_request: PutAdminWebhooksUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4257,6 +4290,7 @@ class AdminWebhooksApi:
         _param = self._patch_admin_webhooks_update_serialize(
             org_id=org_id,
             webhook_id=webhook_id,
+            put_admin_webhooks_update_request=put_admin_webhooks_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4283,6 +4317,7 @@ class AdminWebhooksApi:
         self,
         org_id: StrictStr,
         webhook_id: Annotated[str, Field(strict=True)],
+        put_admin_webhooks_update_request: PutAdminWebhooksUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4303,6 +4338,8 @@ class AdminWebhooksApi:
         :type org_id: str
         :param webhook_id: (required)
         :type webhook_id: str
+        :param put_admin_webhooks_update_request: (required)
+        :type put_admin_webhooks_update_request: PutAdminWebhooksUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4328,6 +4365,7 @@ class AdminWebhooksApi:
         _param = self._patch_admin_webhooks_update_serialize(
             org_id=org_id,
             webhook_id=webhook_id,
+            put_admin_webhooks_update_request=put_admin_webhooks_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4354,6 +4392,7 @@ class AdminWebhooksApi:
         self,
         org_id: StrictStr,
         webhook_id: Annotated[str, Field(strict=True)],
+        put_admin_webhooks_update_request: PutAdminWebhooksUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4374,6 +4413,8 @@ class AdminWebhooksApi:
         :type org_id: str
         :param webhook_id: (required)
         :type webhook_id: str
+        :param put_admin_webhooks_update_request: (required)
+        :type put_admin_webhooks_update_request: PutAdminWebhooksUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4399,6 +4440,7 @@ class AdminWebhooksApi:
         _param = self._patch_admin_webhooks_update_serialize(
             org_id=org_id,
             webhook_id=webhook_id,
+            put_admin_webhooks_update_request=put_admin_webhooks_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4420,6 +4462,7 @@ class AdminWebhooksApi:
         self,
         org_id,
         webhook_id,
+        put_admin_webhooks_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -4449,6 +4492,8 @@ class AdminWebhooksApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_webhooks_update_request is not None:
+            _body_params = put_admin_webhooks_update_request
 
 
         # set the HTTP header `Accept`
@@ -4459,6 +4504,19 @@ class AdminWebhooksApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -4489,6 +4547,7 @@ class AdminWebhooksApi:
         self,
         org_id: StrictStr,
         webhook_id: Annotated[str, Field(strict=True)],
+        put_admin_webhooks_update_request: PutAdminWebhooksUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4510,6 +4569,8 @@ class AdminWebhooksApi:
         :type org_id: str
         :param webhook_id: (required)
         :type webhook_id: str
+        :param put_admin_webhooks_update_request: (required)
+        :type put_admin_webhooks_update_request: PutAdminWebhooksUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4535,6 +4596,7 @@ class AdminWebhooksApi:
         _param = self._put_admin_webhooks_update_serialize(
             org_id=org_id,
             webhook_id=webhook_id,
+            put_admin_webhooks_update_request=put_admin_webhooks_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4561,6 +4623,7 @@ class AdminWebhooksApi:
         self,
         org_id: StrictStr,
         webhook_id: Annotated[str, Field(strict=True)],
+        put_admin_webhooks_update_request: PutAdminWebhooksUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4582,6 +4645,8 @@ class AdminWebhooksApi:
         :type org_id: str
         :param webhook_id: (required)
         :type webhook_id: str
+        :param put_admin_webhooks_update_request: (required)
+        :type put_admin_webhooks_update_request: PutAdminWebhooksUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4607,6 +4672,7 @@ class AdminWebhooksApi:
         _param = self._put_admin_webhooks_update_serialize(
             org_id=org_id,
             webhook_id=webhook_id,
+            put_admin_webhooks_update_request=put_admin_webhooks_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4633,6 +4699,7 @@ class AdminWebhooksApi:
         self,
         org_id: StrictStr,
         webhook_id: Annotated[str, Field(strict=True)],
+        put_admin_webhooks_update_request: PutAdminWebhooksUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4654,6 +4721,8 @@ class AdminWebhooksApi:
         :type org_id: str
         :param webhook_id: (required)
         :type webhook_id: str
+        :param put_admin_webhooks_update_request: (required)
+        :type put_admin_webhooks_update_request: PutAdminWebhooksUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4679,6 +4748,7 @@ class AdminWebhooksApi:
         _param = self._put_admin_webhooks_update_serialize(
             org_id=org_id,
             webhook_id=webhook_id,
+            put_admin_webhooks_update_request=put_admin_webhooks_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4700,6 +4770,7 @@ class AdminWebhooksApi:
         self,
         org_id,
         webhook_id,
+        put_admin_webhooks_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -4729,6 +4800,8 @@ class AdminWebhooksApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_webhooks_update_request is not None:
+            _body_params = put_admin_webhooks_update_request
 
 
         # set the HTTP header `Accept`
@@ -4739,6 +4812,19 @@ class AdminWebhooksApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

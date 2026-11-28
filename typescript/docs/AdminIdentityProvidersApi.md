@@ -117,7 +117,7 @@ const { status, data } = await apiInstance.adminSocialProvidersCallbackUrls(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSocialProvidersCreate**
-> AdminSocialProvidersCreateResponse adminSocialProvidersCreate()
+> AdminSocialProvidersCreateResponse adminSocialProvidersCreate(adminSocialProvidersCreateRequest)
 
 
 ### Example
@@ -125,16 +125,19 @@ const { status, data } = await apiInstance.adminSocialProvidersCallbackUrls(
 ```typescript
 import {
     AdminIdentityProvidersApi,
-    Configuration
+    Configuration,
+    AdminSocialProvidersCreateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminIdentityProvidersApi(configuration);
 
 let orgId: string; // (default to undefined)
+let adminSocialProvidersCreateRequest: AdminSocialProvidersCreateRequest; //An unknown field is refused with 400.
 
 const { status, data } = await apiInstance.adminSocialProvidersCreate(
-    orgId
+    orgId,
+    adminSocialProvidersCreateRequest
 );
 ```
 
@@ -142,6 +145,7 @@ const { status, data } = await apiInstance.adminSocialProvidersCreate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminSocialProvidersCreateRequest** | **AdminSocialProvidersCreateRequest**| An unknown field is refused with 400. | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -155,7 +159,7 @@ const { status, data } = await apiInstance.adminSocialProvidersCreate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -484,7 +488,7 @@ const { status, data } = await apiInstance.adminSocialProvidersTypes(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSocialProvidersUpdate**
-> AdminSocialProvidersCreateResponse patchAdminSocialProvidersUpdate()
+> AdminSocialProvidersCreateResponse patchAdminSocialProvidersUpdate(putAdminSocialProvidersUpdateRequest)
 
 
 ### Example
@@ -492,7 +496,8 @@ const { status, data } = await apiInstance.adminSocialProvidersTypes(
 ```typescript
 import {
     AdminIdentityProvidersApi,
-    Configuration
+    Configuration,
+    PutAdminSocialProvidersUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -500,10 +505,12 @@ const apiInstance = new AdminIdentityProvidersApi(configuration);
 
 let orgId: string; // (default to undefined)
 let providerId: string; // (default to undefined)
+let putAdminSocialProvidersUpdateRequest: PutAdminSocialProvidersUpdateRequest; //Only the fields that are sent change. An unknown field is refused with 400.
 
 const { status, data } = await apiInstance.patchAdminSocialProvidersUpdate(
     orgId,
-    providerId
+    providerId,
+    putAdminSocialProvidersUpdateRequest
 );
 ```
 
@@ -511,6 +518,7 @@ const { status, data } = await apiInstance.patchAdminSocialProvidersUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminSocialProvidersUpdateRequest** | **PutAdminSocialProvidersUpdateRequest**| Only the fields that are sent change. An unknown field is refused with 400. | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **providerId** | [**string**] |  | defaults to undefined|
 
@@ -525,7 +533,7 @@ const { status, data } = await apiInstance.patchAdminSocialProvidersUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -538,7 +546,7 @@ const { status, data } = await apiInstance.patchAdminSocialProvidersUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSocialProvidersUpdate**
-> AdminSocialProvidersCreateResponse putAdminSocialProvidersUpdate()
+> AdminSocialProvidersCreateResponse putAdminSocialProvidersUpdate(putAdminSocialProvidersUpdateRequest)
 
 
 ### Example
@@ -546,7 +554,8 @@ const { status, data } = await apiInstance.patchAdminSocialProvidersUpdate(
 ```typescript
 import {
     AdminIdentityProvidersApi,
-    Configuration
+    Configuration,
+    PutAdminSocialProvidersUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -554,10 +563,12 @@ const apiInstance = new AdminIdentityProvidersApi(configuration);
 
 let orgId: string; // (default to undefined)
 let providerId: string; // (default to undefined)
+let putAdminSocialProvidersUpdateRequest: PutAdminSocialProvidersUpdateRequest; //Only the fields that are sent change. An unknown field is refused with 400.
 
 const { status, data } = await apiInstance.putAdminSocialProvidersUpdate(
     orgId,
-    providerId
+    providerId,
+    putAdminSocialProvidersUpdateRequest
 );
 ```
 
@@ -565,6 +576,7 @@ const { status, data } = await apiInstance.putAdminSocialProvidersUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminSocialProvidersUpdateRequest** | **PutAdminSocialProvidersUpdateRequest**| Only the fields that are sent change. An unknown field is refused with 400. | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **providerId** | [**string**] |  | defaults to undefined|
 
@@ -579,7 +591,7 @@ const { status, data } = await apiInstance.putAdminSocialProvidersUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -121,13 +121,65 @@ pub async fn admin_audit_logs_actions(configuration: &configuration::Configurati
 }
 
 /// Needs `audit.export` and `audit.view`, as the export on the portal's audit log page does.
-pub async fn admin_audit_logs_export(configuration: &configuration::Configuration, org_id: &str) -> Result<String, Error<AdminAuditLogsExportError>> {
+pub async fn admin_audit_logs_export(configuration: &configuration::Configuration, org_id: &str, format: Option<&str>, event_type: Option<&str>, action: Option<&str>, actor_id: Option<&str>, target_type: Option<&str>, target_id: Option<&str>, severity: Option<&str>, status: Option<&str>, ip_address: Option<&str>, search: Option<&str>, trace_id: Option<&str>, from: Option<String>, to: Option<String>) -> Result<String, Error<AdminAuditLogsExportError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_format = format;
+    let p_event_type = event_type;
+    let p_action = action;
+    let p_actor_id = actor_id;
+    let p_target_type = target_type;
+    let p_target_id = target_id;
+    let p_severity = severity;
+    let p_status = status;
+    let p_ip_address = ip_address;
+    let p_search = search;
+    let p_trace_id = trace_id;
+    let p_from = from;
+    let p_to = to;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/audit-logs/export", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_format {
+        req_builder = req_builder.query(&[("format", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_event_type {
+        req_builder = req_builder.query(&[("eventType", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_action {
+        req_builder = req_builder.query(&[("action", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_actor_id {
+        req_builder = req_builder.query(&[("actorId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_target_type {
+        req_builder = req_builder.query(&[("targetType", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_target_id {
+        req_builder = req_builder.query(&[("targetId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_severity {
+        req_builder = req_builder.query(&[("severity", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_status {
+        req_builder = req_builder.query(&[("status", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_ip_address {
+        req_builder = req_builder.query(&[("ipAddress", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_search {
+        req_builder = req_builder.query(&[("search", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_trace_id {
+        req_builder = req_builder.query(&[("traceId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_from {
+        req_builder = req_builder.query(&[("from", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_to {
+        req_builder = req_builder.query(&[("to", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -216,13 +268,69 @@ pub async fn admin_audit_logs_get(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn admin_audit_logs_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminAuditLogsListResponse, Error<AdminAuditLogsListError>> {
+pub async fn admin_audit_logs_list(configuration: &configuration::Configuration, org_id: &str, page: Option<i32>, limit: Option<i32>, event_type: Option<&str>, action: Option<&str>, actor_id: Option<&str>, target_type: Option<&str>, target_id: Option<&str>, severity: Option<&str>, status: Option<&str>, ip_address: Option<&str>, search: Option<&str>, trace_id: Option<&str>, from: Option<String>, to: Option<String>) -> Result<models::AdminAuditLogsListResponse, Error<AdminAuditLogsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_page = page;
+    let p_limit = limit;
+    let p_event_type = event_type;
+    let p_action = action;
+    let p_actor_id = actor_id;
+    let p_target_type = target_type;
+    let p_target_id = target_id;
+    let p_severity = severity;
+    let p_status = status;
+    let p_ip_address = ip_address;
+    let p_search = search;
+    let p_trace_id = trace_id;
+    let p_from = from;
+    let p_to = to;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/audit-logs", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_page {
+        req_builder = req_builder.query(&[("page", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_event_type {
+        req_builder = req_builder.query(&[("eventType", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_action {
+        req_builder = req_builder.query(&[("action", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_actor_id {
+        req_builder = req_builder.query(&[("actorId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_target_type {
+        req_builder = req_builder.query(&[("targetType", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_target_id {
+        req_builder = req_builder.query(&[("targetId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_severity {
+        req_builder = req_builder.query(&[("severity", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_status {
+        req_builder = req_builder.query(&[("status", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_ip_address {
+        req_builder = req_builder.query(&[("ipAddress", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_search {
+        req_builder = req_builder.query(&[("search", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_trace_id {
+        req_builder = req_builder.query(&[("traceId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_from {
+        req_builder = req_builder.query(&[("from", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_to {
+        req_builder = req_builder.query(&[("to", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -358,9 +466,10 @@ pub async fn admin_audit_logs_stats(configuration: &configuration::Configuration
 }
 
 /// Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
-pub async fn patch_admin_audit_logs_retention_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminAuditLogsRetentionResponse, Error<PatchAdminAuditLogsRetentionUpdateError>> {
+pub async fn patch_admin_audit_logs_retention_update(configuration: &configuration::Configuration, org_id: &str, put_admin_audit_logs_retention_update_request: models::PutAdminAuditLogsRetentionUpdateRequest) -> Result<models::AdminAuditLogsRetentionResponse, Error<PatchAdminAuditLogsRetentionUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_put_admin_audit_logs_retention_update_request = put_admin_audit_logs_retention_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/audit-logs/retention", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -379,6 +488,7 @@ pub async fn patch_admin_audit_logs_retention_update(configuration: &configurati
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_audit_logs_retention_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -406,9 +516,10 @@ pub async fn patch_admin_audit_logs_retention_update(configuration: &configurati
 }
 
 /// Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
-pub async fn put_admin_audit_logs_retention_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminAuditLogsRetentionResponse, Error<PutAdminAuditLogsRetentionUpdateError>> {
+pub async fn put_admin_audit_logs_retention_update(configuration: &configuration::Configuration, org_id: &str, put_admin_audit_logs_retention_update_request: models::PutAdminAuditLogsRetentionUpdateRequest) -> Result<models::AdminAuditLogsRetentionResponse, Error<PutAdminAuditLogsRetentionUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_put_admin_audit_logs_retention_update_request = put_admin_audit_logs_retention_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/audit-logs/retention", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -427,6 +538,7 @@ pub async fn put_admin_audit_logs_retention_update(configuration: &configuration
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_audit_logs_retention_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

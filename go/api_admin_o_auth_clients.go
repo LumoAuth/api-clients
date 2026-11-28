@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -507,6 +507,12 @@ type ApiCreateClientRequest struct {
 	ctx context.Context
 	ApiService AdminOAuthClientsAPI
 	orgId string
+	oAuthClientWrite *OAuthClientWrite
+}
+
+func (r ApiCreateClientRequest) OAuthClientWrite(oAuthClientWrite OAuthClientWrite) ApiCreateClientRequest {
+	r.oAuthClientWrite = &oAuthClientWrite
+	return r
 }
 
 func (r ApiCreateClientRequest) Execute() (*CreateClientResponse, *http.Response, error) {
@@ -549,9 +555,12 @@ func (a *AdminOAuthClientsAPIService) CreateClientExecute(r ApiCreateClientReque
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.oAuthClientWrite == nil {
+		return localVarReturnValue, nil, reportError("oAuthClientWrite is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -567,6 +576,8 @@ func (a *AdminOAuthClientsAPIService) CreateClientExecute(r ApiCreateClientReque
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.oAuthClientWrite
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1466,6 +1477,12 @@ type ApiPatchClientRequest struct {
 	ApiService AdminOAuthClientsAPI
 	orgId string
 	clientId string
+	oAuthClientWrite *OAuthClientWrite
+}
+
+func (r ApiPatchClientRequest) OAuthClientWrite(oAuthClientWrite OAuthClientWrite) ApiPatchClientRequest {
+	r.oAuthClientWrite = &oAuthClientWrite
+	return r
 }
 
 func (r ApiPatchClientRequest) Execute() (*UpdateClientResponse, *http.Response, error) {
@@ -1513,9 +1530,12 @@ func (a *AdminOAuthClientsAPIService) PatchClientExecute(r ApiPatchClientRequest
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.oAuthClientWrite == nil {
+		return localVarReturnValue, nil, reportError("oAuthClientWrite is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1531,6 +1551,8 @@ func (a *AdminOAuthClientsAPIService) PatchClientExecute(r ApiPatchClientRequest
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.oAuthClientWrite
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1837,6 +1859,12 @@ type ApiSetClientScopesRequest struct {
 	ApiService AdminOAuthClientsAPI
 	orgId string
 	clientId string
+	setClientScopesRequest *SetClientScopesRequest
+}
+
+func (r ApiSetClientScopesRequest) SetClientScopesRequest(setClientScopesRequest SetClientScopesRequest) ApiSetClientScopesRequest {
+	r.setClientScopesRequest = &setClientScopesRequest
+	return r
 }
 
 func (r ApiSetClientScopesRequest) Execute() (*SetClientScopesResponse, *http.Response, error) {
@@ -1884,9 +1912,12 @@ func (a *AdminOAuthClientsAPIService) SetClientScopesExecute(r ApiSetClientScope
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.setClientScopesRequest == nil {
+		return localVarReturnValue, nil, reportError("setClientScopesRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1902,6 +1933,8 @@ func (a *AdminOAuthClientsAPIService) SetClientScopesExecute(r ApiSetClientScope
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.setClientScopesRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1958,6 +1991,12 @@ type ApiUpdateClientRequest struct {
 	ApiService AdminOAuthClientsAPI
 	orgId string
 	clientId string
+	oAuthClientWrite *OAuthClientWrite
+}
+
+func (r ApiUpdateClientRequest) OAuthClientWrite(oAuthClientWrite OAuthClientWrite) ApiUpdateClientRequest {
+	r.oAuthClientWrite = &oAuthClientWrite
+	return r
 }
 
 func (r ApiUpdateClientRequest) Execute() (*UpdateClientResponse, *http.Response, error) {
@@ -2005,9 +2044,12 @@ func (a *AdminOAuthClientsAPIService) UpdateClientExecute(r ApiUpdateClientReque
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.oAuthClientWrite == nil {
+		return localVarReturnValue, nil, reportError("oAuthClientWrite is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2023,6 +2065,8 @@ func (a *AdminOAuthClientsAPIService) UpdateClientExecute(r ApiUpdateClientReque
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.oAuthClientWrite
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

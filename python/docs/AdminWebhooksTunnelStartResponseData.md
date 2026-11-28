@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **webhook_id** | **int** |  | [optional] 
 **session_id** | **str** |  | [optional] 
 **tunnel_url** | **str** |  | [optional] 
+**signing_secret** | **str** | The secret that signs the tunnel&#39;s deliveries (X-LumoAuth-Signature). Shown once. | [optional] 
 
 ## Example
 

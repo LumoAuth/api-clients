@@ -169,7 +169,7 @@ Name | Type | Description  | Notes
 
 ## CreateClient
 
-> CreateClientResponse CreateClient(ctx, orgId).Execute()
+> CreateClientResponse CreateClient(ctx, orgId).OAuthClientWrite(oAuthClientWrite).Execute()
 
 Create an OAuth client
 
@@ -187,10 +187,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	oAuthClientWrite := *openapiclient.NewOAuthClientWrite() // OAuthClientWrite | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminOAuthClientsAPI.CreateClient(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.CreateClient(context.Background(), orgId).OAuthClientWrite(oAuthClientWrite).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.CreateClient``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -216,6 +217,7 @@ Other parameters are passed through a pointer to a apiCreateClientRequest struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **oAuthClientWrite** | [**OAuthClientWrite**](OAuthClientWrite.md) |  | 
 
 ### Return type
 
@@ -227,7 +229,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -739,7 +741,7 @@ Name | Type | Description  | Notes
 
 ## PatchClient
 
-> UpdateClientResponse PatchClient(ctx, orgId, clientId).Execute()
+> UpdateClientResponse PatchClient(ctx, orgId, clientId).OAuthClientWrite(oAuthClientWrite).Execute()
 
 Update an OAuth client
 
@@ -760,10 +762,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	clientId := "clientId_example" // string | 
+	oAuthClientWrite := *openapiclient.NewOAuthClientWrite() // OAuthClientWrite | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminOAuthClientsAPI.PatchClient(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.PatchClient(context.Background(), orgId, clientId).OAuthClientWrite(oAuthClientWrite).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.PatchClient``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -791,6 +794,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **oAuthClientWrite** | [**OAuthClientWrite**](OAuthClientWrite.md) |  | 
 
 ### Return type
 
@@ -802,7 +806,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -960,7 +964,7 @@ Name | Type | Description  | Notes
 
 ## SetClientScopes
 
-> SetClientScopesResponse SetClientScopes(ctx, orgId, clientId).Execute()
+> SetClientScopesResponse SetClientScopes(ctx, orgId, clientId).SetClientScopesRequest(setClientScopesRequest).Execute()
 
 Replace the scopes granted to an OAuth client
 
@@ -981,10 +985,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	clientId := "clientId_example" // string | 
+	setClientScopesRequest := *openapiclient.NewSetClientScopesRequest([]string{"Scopes_example"}) // SetClientScopesRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminOAuthClientsAPI.SetClientScopes(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.SetClientScopes(context.Background(), orgId, clientId).SetClientScopesRequest(setClientScopesRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.SetClientScopes``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1012,6 +1017,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **setClientScopesRequest** | [**SetClientScopesRequest**](SetClientScopesRequest.md) |  | 
 
 ### Return type
 
@@ -1023,7 +1029,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1033,7 +1039,7 @@ Name | Type | Description  | Notes
 
 ## UpdateClient
 
-> UpdateClientResponse UpdateClient(ctx, orgId, clientId).Execute()
+> UpdateClientResponse UpdateClient(ctx, orgId, clientId).OAuthClientWrite(oAuthClientWrite).Execute()
 
 Update an OAuth client (same as PATCH: only the fields that are sent change)
 
@@ -1054,10 +1060,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	clientId := "clientId_example" // string | 
+	oAuthClientWrite := *openapiclient.NewOAuthClientWrite() // OAuthClientWrite | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminOAuthClientsAPI.UpdateClient(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.UpdateClient(context.Background(), orgId, clientId).OAuthClientWrite(oAuthClientWrite).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.UpdateClient``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1085,6 +1092,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **oAuthClientWrite** | [**OAuthClientWrite**](OAuthClientWrite.md) |  | 
 
 ### Return type
 
@@ -1096,7 +1104,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

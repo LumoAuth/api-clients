@@ -13,7 +13,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -69,7 +69,22 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         'redirectUris' => 'string[]',
         'scopes' => 'string[]',
         'grantTypes' => 'string[]',
-        'cibaEnabled' => 'bool'
+        'cibaEnabled' => 'bool',
+        'allowedOrigins' => 'string[]',
+        'postLogoutRedirectUris' => 'string[]',
+        'frontchannelLogoutUri' => 'string',
+        'backchannelLogoutUri' => 'string',
+        'accessTokenFormat' => 'string',
+        'tokenEndpointAuthMethod' => 'string',
+        'jwksUri' => 'string',
+        'jwks' => 'array<string,mixed>',
+        'fapiMode' => 'string',
+        'requirePar' => 'bool',
+        'dpopBoundAccessTokens' => 'bool',
+        'attestationBasedAuthEnabled' => 'bool',
+        'attesterIssuer' => 'string',
+        'attesterJwksUri' => 'string',
+        'tokenExchangeEnabled' => 'bool'
     ];
 
     /**
@@ -91,7 +106,22 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         'redirectUris' => null,
         'scopes' => null,
         'grantTypes' => null,
-        'cibaEnabled' => null
+        'cibaEnabled' => null,
+        'allowedOrigins' => null,
+        'postLogoutRedirectUris' => null,
+        'frontchannelLogoutUri' => null,
+        'backchannelLogoutUri' => null,
+        'accessTokenFormat' => null,
+        'tokenEndpointAuthMethod' => null,
+        'jwksUri' => null,
+        'jwks' => null,
+        'fapiMode' => null,
+        'requirePar' => null,
+        'dpopBoundAccessTokens' => null,
+        'attestationBasedAuthEnabled' => null,
+        'attesterIssuer' => null,
+        'attesterJwksUri' => null,
+        'tokenExchangeEnabled' => null
     ];
 
     /**
@@ -111,7 +141,22 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         'redirectUris' => false,
         'scopes' => false,
         'grantTypes' => false,
-        'cibaEnabled' => false
+        'cibaEnabled' => false,
+        'allowedOrigins' => false,
+        'postLogoutRedirectUris' => false,
+        'frontchannelLogoutUri' => true,
+        'backchannelLogoutUri' => true,
+        'accessTokenFormat' => false,
+        'tokenEndpointAuthMethod' => false,
+        'jwksUri' => true,
+        'jwks' => true,
+        'fapiMode' => false,
+        'requirePar' => false,
+        'dpopBoundAccessTokens' => false,
+        'attestationBasedAuthEnabled' => false,
+        'attesterIssuer' => true,
+        'attesterJwksUri' => true,
+        'tokenExchangeEnabled' => false
     ];
 
     /**
@@ -211,7 +256,22 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         'redirectUris' => 'redirectUris',
         'scopes' => 'scopes',
         'grantTypes' => 'grantTypes',
-        'cibaEnabled' => 'cibaEnabled'
+        'cibaEnabled' => 'cibaEnabled',
+        'allowedOrigins' => 'allowedOrigins',
+        'postLogoutRedirectUris' => 'postLogoutRedirectUris',
+        'frontchannelLogoutUri' => 'frontchannelLogoutUri',
+        'backchannelLogoutUri' => 'backchannelLogoutUri',
+        'accessTokenFormat' => 'accessTokenFormat',
+        'tokenEndpointAuthMethod' => 'tokenEndpointAuthMethod',
+        'jwksUri' => 'jwksUri',
+        'jwks' => 'jwks',
+        'fapiMode' => 'fapiMode',
+        'requirePar' => 'requirePar',
+        'dpopBoundAccessTokens' => 'dpopBoundAccessTokens',
+        'attestationBasedAuthEnabled' => 'attestationBasedAuthEnabled',
+        'attesterIssuer' => 'attesterIssuer',
+        'attesterJwksUri' => 'attesterJwksUri',
+        'tokenExchangeEnabled' => 'tokenExchangeEnabled'
     ];
 
     /**
@@ -231,7 +291,22 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         'redirectUris' => 'setRedirectUris',
         'scopes' => 'setScopes',
         'grantTypes' => 'setGrantTypes',
-        'cibaEnabled' => 'setCibaEnabled'
+        'cibaEnabled' => 'setCibaEnabled',
+        'allowedOrigins' => 'setAllowedOrigins',
+        'postLogoutRedirectUris' => 'setPostLogoutRedirectUris',
+        'frontchannelLogoutUri' => 'setFrontchannelLogoutUri',
+        'backchannelLogoutUri' => 'setBackchannelLogoutUri',
+        'accessTokenFormat' => 'setAccessTokenFormat',
+        'tokenEndpointAuthMethod' => 'setTokenEndpointAuthMethod',
+        'jwksUri' => 'setJwksUri',
+        'jwks' => 'setJwks',
+        'fapiMode' => 'setFapiMode',
+        'requirePar' => 'setRequirePar',
+        'dpopBoundAccessTokens' => 'setDpopBoundAccessTokens',
+        'attestationBasedAuthEnabled' => 'setAttestationBasedAuthEnabled',
+        'attesterIssuer' => 'setAttesterIssuer',
+        'attesterJwksUri' => 'setAttesterJwksUri',
+        'tokenExchangeEnabled' => 'setTokenExchangeEnabled'
     ];
 
     /**
@@ -251,7 +326,22 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         'redirectUris' => 'getRedirectUris',
         'scopes' => 'getScopes',
         'grantTypes' => 'getGrantTypes',
-        'cibaEnabled' => 'getCibaEnabled'
+        'cibaEnabled' => 'getCibaEnabled',
+        'allowedOrigins' => 'getAllowedOrigins',
+        'postLogoutRedirectUris' => 'getPostLogoutRedirectUris',
+        'frontchannelLogoutUri' => 'getFrontchannelLogoutUri',
+        'backchannelLogoutUri' => 'getBackchannelLogoutUri',
+        'accessTokenFormat' => 'getAccessTokenFormat',
+        'tokenEndpointAuthMethod' => 'getTokenEndpointAuthMethod',
+        'jwksUri' => 'getJwksUri',
+        'jwks' => 'getJwks',
+        'fapiMode' => 'getFapiMode',
+        'requirePar' => 'getRequirePar',
+        'dpopBoundAccessTokens' => 'getDpopBoundAccessTokens',
+        'attestationBasedAuthEnabled' => 'getAttestationBasedAuthEnabled',
+        'attesterIssuer' => 'getAttesterIssuer',
+        'attesterJwksUri' => 'getAttesterJwksUri',
+        'tokenExchangeEnabled' => 'getTokenExchangeEnabled'
     ];
 
     /**
@@ -295,6 +385,57 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+    public const ACCESS_TOKEN_FORMAT_OPAQUE = 'opaque';
+    public const ACCESS_TOKEN_FORMAT_JWT = 'jwt';
+    public const TOKEN_ENDPOINT_AUTH_METHOD_CLIENT_SECRET_BASIC = 'client_secret_basic';
+    public const TOKEN_ENDPOINT_AUTH_METHOD_PRIVATE_KEY_JWT = 'private_key_jwt';
+    public const TOKEN_ENDPOINT_AUTH_METHOD_NONE = 'none';
+    public const TOKEN_ENDPOINT_AUTH_METHOD_ATTEST_JWT_CLIENT_AUTH = 'attest_jwt_client_auth';
+    public const FAPI_MODE_DISABLED = 'disabled';
+    public const FAPI_MODE_FAPI2_BASELINE = 'fapi2_baseline';
+    public const FAPI_MODE_FAPI2_ADVANCED = 'fapi2_advanced';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getAccessTokenFormatAllowableValues()
+    {
+        return [
+            self::ACCESS_TOKEN_FORMAT_OPAQUE,
+            self::ACCESS_TOKEN_FORMAT_JWT,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getTokenEndpointAuthMethodAllowableValues()
+    {
+        return [
+            self::TOKEN_ENDPOINT_AUTH_METHOD_CLIENT_SECRET_BASIC,
+            self::TOKEN_ENDPOINT_AUTH_METHOD_PRIVATE_KEY_JWT,
+            self::TOKEN_ENDPOINT_AUTH_METHOD_NONE,
+            self::TOKEN_ENDPOINT_AUTH_METHOD_ATTEST_JWT_CLIENT_AUTH,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getFapiModeAllowableValues()
+    {
+        return [
+            self::FAPI_MODE_DISABLED,
+            self::FAPI_MODE_FAPI2_BASELINE,
+            self::FAPI_MODE_FAPI2_ADVANCED,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -323,6 +464,21 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('scopes', $data ?? [], null);
         $this->setIfExists('grantTypes', $data ?? [], null);
         $this->setIfExists('cibaEnabled', $data ?? [], null);
+        $this->setIfExists('allowedOrigins', $data ?? [], null);
+        $this->setIfExists('postLogoutRedirectUris', $data ?? [], null);
+        $this->setIfExists('frontchannelLogoutUri', $data ?? [], null);
+        $this->setIfExists('backchannelLogoutUri', $data ?? [], null);
+        $this->setIfExists('accessTokenFormat', $data ?? [], null);
+        $this->setIfExists('tokenEndpointAuthMethod', $data ?? [], null);
+        $this->setIfExists('jwksUri', $data ?? [], null);
+        $this->setIfExists('jwks', $data ?? [], null);
+        $this->setIfExists('fapiMode', $data ?? [], null);
+        $this->setIfExists('requirePar', $data ?? [], null);
+        $this->setIfExists('dpopBoundAccessTokens', $data ?? [], null);
+        $this->setIfExists('attestationBasedAuthEnabled', $data ?? [], null);
+        $this->setIfExists('attesterIssuer', $data ?? [], null);
+        $this->setIfExists('attesterJwksUri', $data ?? [], null);
+        $this->setIfExists('tokenExchangeEnabled', $data ?? [], null);
     }
 
     /**
@@ -376,6 +532,33 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['createdAt'] === null) {
             $invalidProperties[] = "'createdAt' can't be null";
         }
+        $allowedValues = $this->getAccessTokenFormatAllowableValues();
+        if (!is_null($this->container['accessTokenFormat']) && !in_array($this->container['accessTokenFormat'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'accessTokenFormat', must be one of '%s'",
+                $this->container['accessTokenFormat'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getTokenEndpointAuthMethodAllowableValues();
+        if (!is_null($this->container['tokenEndpointAuthMethod']) && !in_array($this->container['tokenEndpointAuthMethod'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'tokenEndpointAuthMethod', must be one of '%s'",
+                $this->container['tokenEndpointAuthMethod'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getFapiModeAllowableValues();
+        if (!is_null($this->container['fapiMode']) && !in_array($this->container['fapiMode'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'fapiMode', must be one of '%s'",
+                $this->container['fapiMode'],
+                implode("', '", $allowedValues)
+            );
+        }
+
         return $invalidProperties;
     }
 
@@ -711,6 +894,483 @@ class OAuthClient implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable cibaEnabled cannot be null');
         }
         $this->container['cibaEnabled'] = $cibaEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets allowedOrigins
+     *
+     * @return string[]|null
+     */
+    public function getAllowedOrigins()
+    {
+        return $this->container['allowedOrigins'];
+    }
+
+    /**
+     * Sets allowedOrigins
+     *
+     * @param string[]|null $allowedOrigins Detailed responses only. Browser CORS origins (scheme://host[:port]).
+     *
+     * @return self
+     */
+    public function setAllowedOrigins($allowedOrigins)
+    {
+        if (is_null($allowedOrigins)) {
+            throw new \InvalidArgumentException('non-nullable allowedOrigins cannot be null');
+        }
+        $this->container['allowedOrigins'] = $allowedOrigins;
+
+        return $this;
+    }
+
+    /**
+     * Gets postLogoutRedirectUris
+     *
+     * @return string[]|null
+     */
+    public function getPostLogoutRedirectUris()
+    {
+        return $this->container['postLogoutRedirectUris'];
+    }
+
+    /**
+     * Sets postLogoutRedirectUris
+     *
+     * @param string[]|null $postLogoutRedirectUris Detailed responses only. Addresses that the end-session endpoint may return to.
+     *
+     * @return self
+     */
+    public function setPostLogoutRedirectUris($postLogoutRedirectUris)
+    {
+        if (is_null($postLogoutRedirectUris)) {
+            throw new \InvalidArgumentException('non-nullable postLogoutRedirectUris cannot be null');
+        }
+        $this->container['postLogoutRedirectUris'] = $postLogoutRedirectUris;
+
+        return $this;
+    }
+
+    /**
+     * Gets frontchannelLogoutUri
+     *
+     * @return string|null
+     */
+    public function getFrontchannelLogoutUri()
+    {
+        return $this->container['frontchannelLogoutUri'];
+    }
+
+    /**
+     * Sets frontchannelLogoutUri
+     *
+     * @param string|null $frontchannelLogoutUri Detailed responses only. OIDC Front-Channel Logout address.
+     *
+     * @return self
+     */
+    public function setFrontchannelLogoutUri($frontchannelLogoutUri)
+    {
+        if (is_null($frontchannelLogoutUri)) {
+            array_push($this->openAPINullablesSetToNull, 'frontchannelLogoutUri');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('frontchannelLogoutUri', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['frontchannelLogoutUri'] = $frontchannelLogoutUri;
+
+        return $this;
+    }
+
+    /**
+     * Gets backchannelLogoutUri
+     *
+     * @return string|null
+     */
+    public function getBackchannelLogoutUri()
+    {
+        return $this->container['backchannelLogoutUri'];
+    }
+
+    /**
+     * Sets backchannelLogoutUri
+     *
+     * @param string|null $backchannelLogoutUri Detailed responses only. OIDC Back-Channel Logout address.
+     *
+     * @return self
+     */
+    public function setBackchannelLogoutUri($backchannelLogoutUri)
+    {
+        if (is_null($backchannelLogoutUri)) {
+            array_push($this->openAPINullablesSetToNull, 'backchannelLogoutUri');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('backchannelLogoutUri', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['backchannelLogoutUri'] = $backchannelLogoutUri;
+
+        return $this;
+    }
+
+    /**
+     * Gets accessTokenFormat
+     *
+     * @return string|null
+     */
+    public function getAccessTokenFormat()
+    {
+        return $this->container['accessTokenFormat'];
+    }
+
+    /**
+     * Sets accessTokenFormat
+     *
+     * @param string|null $accessTokenFormat Detailed responses only. Format of the access tokens that the client receives.
+     *
+     * @return self
+     */
+    public function setAccessTokenFormat($accessTokenFormat)
+    {
+        if (is_null($accessTokenFormat)) {
+            throw new \InvalidArgumentException('non-nullable accessTokenFormat cannot be null');
+        }
+        $allowedValues = $this->getAccessTokenFormatAllowableValues();
+        if (!in_array($accessTokenFormat, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'accessTokenFormat', must be one of '%s'",
+                    $accessTokenFormat,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['accessTokenFormat'] = $accessTokenFormat;
+
+        return $this;
+    }
+
+    /**
+     * Gets tokenEndpointAuthMethod
+     *
+     * @return string|null
+     */
+    public function getTokenEndpointAuthMethod()
+    {
+        return $this->container['tokenEndpointAuthMethod'];
+    }
+
+    /**
+     * Sets tokenEndpointAuthMethod
+     *
+     * @param string|null $tokenEndpointAuthMethod Detailed responses only.
+     *
+     * @return self
+     */
+    public function setTokenEndpointAuthMethod($tokenEndpointAuthMethod)
+    {
+        if (is_null($tokenEndpointAuthMethod)) {
+            throw new \InvalidArgumentException('non-nullable tokenEndpointAuthMethod cannot be null');
+        }
+        $allowedValues = $this->getTokenEndpointAuthMethodAllowableValues();
+        if (!in_array($tokenEndpointAuthMethod, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'tokenEndpointAuthMethod', must be one of '%s'",
+                    $tokenEndpointAuthMethod,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['tokenEndpointAuthMethod'] = $tokenEndpointAuthMethod;
+
+        return $this;
+    }
+
+    /**
+     * Gets jwksUri
+     *
+     * @return string|null
+     */
+    public function getJwksUri()
+    {
+        return $this->container['jwksUri'];
+    }
+
+    /**
+     * Sets jwksUri
+     *
+     * @param string|null $jwksUri Detailed responses only. https address of the client's public keys.
+     *
+     * @return self
+     */
+    public function setJwksUri($jwksUri)
+    {
+        if (is_null($jwksUri)) {
+            array_push($this->openAPINullablesSetToNull, 'jwksUri');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('jwksUri', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['jwksUri'] = $jwksUri;
+
+        return $this;
+    }
+
+    /**
+     * Gets jwks
+     *
+     * @return array<string,mixed>|null
+     */
+    public function getJwks()
+    {
+        return $this->container['jwks'];
+    }
+
+    /**
+     * Sets jwks
+     *
+     * @param array<string,mixed>|null $jwks Detailed responses only. The client's public keys, inline.
+     *
+     * @return self
+     */
+    public function setJwks($jwks)
+    {
+        if (is_null($jwks)) {
+            array_push($this->openAPINullablesSetToNull, 'jwks');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('jwks', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['jwks'] = $jwks;
+
+        return $this;
+    }
+
+    /**
+     * Gets fapiMode
+     *
+     * @return string|null
+     */
+    public function getFapiMode()
+    {
+        return $this->container['fapiMode'];
+    }
+
+    /**
+     * Sets fapiMode
+     *
+     * @param string|null $fapiMode Detailed responses only. FAPI 2.0 security profile.
+     *
+     * @return self
+     */
+    public function setFapiMode($fapiMode)
+    {
+        if (is_null($fapiMode)) {
+            throw new \InvalidArgumentException('non-nullable fapiMode cannot be null');
+        }
+        $allowedValues = $this->getFapiModeAllowableValues();
+        if (!in_array($fapiMode, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'fapiMode', must be one of '%s'",
+                    $fapiMode,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['fapiMode'] = $fapiMode;
+
+        return $this;
+    }
+
+    /**
+     * Gets requirePar
+     *
+     * @return bool|null
+     */
+    public function getRequirePar()
+    {
+        return $this->container['requirePar'];
+    }
+
+    /**
+     * Sets requirePar
+     *
+     * @param bool|null $requirePar Detailed responses only. The stored switch; a FAPI profile requires PAR whatever it says.
+     *
+     * @return self
+     */
+    public function setRequirePar($requirePar)
+    {
+        if (is_null($requirePar)) {
+            throw new \InvalidArgumentException('non-nullable requirePar cannot be null');
+        }
+        $this->container['requirePar'] = $requirePar;
+
+        return $this;
+    }
+
+    /**
+     * Gets dpopBoundAccessTokens
+     *
+     * @return bool|null
+     */
+    public function getDpopBoundAccessTokens()
+    {
+        return $this->container['dpopBoundAccessTokens'];
+    }
+
+    /**
+     * Sets dpopBoundAccessTokens
+     *
+     * @param bool|null $dpopBoundAccessTokens Detailed responses only. The stored switch; a FAPI profile requires DPoP whatever it says.
+     *
+     * @return self
+     */
+    public function setDpopBoundAccessTokens($dpopBoundAccessTokens)
+    {
+        if (is_null($dpopBoundAccessTokens)) {
+            throw new \InvalidArgumentException('non-nullable dpopBoundAccessTokens cannot be null');
+        }
+        $this->container['dpopBoundAccessTokens'] = $dpopBoundAccessTokens;
+
+        return $this;
+    }
+
+    /**
+     * Gets attestationBasedAuthEnabled
+     *
+     * @return bool|null
+     */
+    public function getAttestationBasedAuthEnabled()
+    {
+        return $this->container['attestationBasedAuthEnabled'];
+    }
+
+    /**
+     * Sets attestationBasedAuthEnabled
+     *
+     * @param bool|null $attestationBasedAuthEnabled Detailed responses only.
+     *
+     * @return self
+     */
+    public function setAttestationBasedAuthEnabled($attestationBasedAuthEnabled)
+    {
+        if (is_null($attestationBasedAuthEnabled)) {
+            throw new \InvalidArgumentException('non-nullable attestationBasedAuthEnabled cannot be null');
+        }
+        $this->container['attestationBasedAuthEnabled'] = $attestationBasedAuthEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets attesterIssuer
+     *
+     * @return string|null
+     */
+    public function getAttesterIssuer()
+    {
+        return $this->container['attesterIssuer'];
+    }
+
+    /**
+     * Sets attesterIssuer
+     *
+     * @param string|null $attesterIssuer Detailed responses only.
+     *
+     * @return self
+     */
+    public function setAttesterIssuer($attesterIssuer)
+    {
+        if (is_null($attesterIssuer)) {
+            array_push($this->openAPINullablesSetToNull, 'attesterIssuer');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('attesterIssuer', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['attesterIssuer'] = $attesterIssuer;
+
+        return $this;
+    }
+
+    /**
+     * Gets attesterJwksUri
+     *
+     * @return string|null
+     */
+    public function getAttesterJwksUri()
+    {
+        return $this->container['attesterJwksUri'];
+    }
+
+    /**
+     * Sets attesterJwksUri
+     *
+     * @param string|null $attesterJwksUri Detailed responses only.
+     *
+     * @return self
+     */
+    public function setAttesterJwksUri($attesterJwksUri)
+    {
+        if (is_null($attesterJwksUri)) {
+            array_push($this->openAPINullablesSetToNull, 'attesterJwksUri');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('attesterJwksUri', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['attesterJwksUri'] = $attesterJwksUri;
+
+        return $this;
+    }
+
+    /**
+     * Gets tokenExchangeEnabled
+     *
+     * @return bool|null
+     */
+    public function getTokenExchangeEnabled()
+    {
+        return $this->container['tokenExchangeEnabled'];
+    }
+
+    /**
+     * Sets tokenExchangeEnabled
+     *
+     * @param bool|null $tokenExchangeEnabled Detailed responses only. Whether the client may use token exchange (RFC 8693).
+     *
+     * @return self
+     */
+    public function setTokenExchangeEnabled($tokenExchangeEnabled)
+    {
+        if (is_null($tokenExchangeEnabled)) {
+            throw new \InvalidArgumentException('non-nullable tokenExchangeEnabled cannot be null');
+        }
+        $this->container['tokenExchangeEnabled'] = $tokenExchangeEnabled;
 
         return $this;
     }

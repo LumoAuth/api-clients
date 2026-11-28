@@ -4,15 +4,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ResourceToken** | Pointer to **string** | The resource token to validate. | [optional] 
-**Agent** | Pointer to **string** | Agent identifier the token must be bound to. | [optional] 
-**AgentJkt** | Pointer to **string** | JWK thumbprint of the agent key. | [optional] 
+**Resource** | **string** | Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource. | 
+**ResourceToken** | **string** | The resource token to validate. | 
+**Agent** | **string** | Agent identifier the token must be bound to. | 
+**AgentJkt** | **string** | JWK thumbprint of the agent key. | 
 
 ## Methods
 
 ### NewVerifyResourceTokenRequest
 
-`func NewVerifyResourceTokenRequest() *VerifyResourceTokenRequest`
+`func NewVerifyResourceTokenRequest(resource string, resourceToken string, agent string, agentJkt string, ) *VerifyResourceTokenRequest`
 
 NewVerifyResourceTokenRequest instantiates a new VerifyResourceTokenRequest object
 This constructor will assign default values to properties that have it defined,
@@ -26,6 +27,26 @@ will change when the set of required properties is changed
 NewVerifyResourceTokenRequestWithDefaults instantiates a new VerifyResourceTokenRequest object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetResource
+
+`func (o *VerifyResourceTokenRequest) GetResource() string`
+
+GetResource returns the Resource field if non-nil, zero value otherwise.
+
+### GetResourceOk
+
+`func (o *VerifyResourceTokenRequest) GetResourceOk() (*string, bool)`
+
+GetResourceOk returns a tuple with the Resource field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResource
+
+`func (o *VerifyResourceTokenRequest) SetResource(v string)`
+
+SetResource sets Resource field to given value.
+
 
 ### GetResourceToken
 
@@ -46,11 +67,6 @@ and a boolean to check if the value has been set.
 
 SetResourceToken sets ResourceToken field to given value.
 
-### HasResourceToken
-
-`func (o *VerifyResourceTokenRequest) HasResourceToken() bool`
-
-HasResourceToken returns a boolean if a field has been set.
 
 ### GetAgent
 
@@ -71,11 +87,6 @@ and a boolean to check if the value has been set.
 
 SetAgent sets Agent field to given value.
 
-### HasAgent
-
-`func (o *VerifyResourceTokenRequest) HasAgent() bool`
-
-HasAgent returns a boolean if a field has been set.
 
 ### GetAgentJkt
 
@@ -96,11 +107,6 @@ and a boolean to check if the value has been set.
 
 SetAgentJkt sets AgentJkt field to given value.
 
-### HasAgentJkt
-
-`func (o *VerifyResourceTokenRequest) HasAgentJkt() bool`
-
-HasAgentJkt returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -40,7 +40,7 @@ Method | HTTP request | Description
 
 ## AddUserGroup
 
-> AddUserGroupResponse AddUserGroup(ctx, orgId, userId).Execute()
+> AddUserGroupResponse AddUserGroup(ctx, orgId, userId).AddUserGroupRequest(addUserGroupRequest).Execute()
 
 Add a user to a group
 
@@ -59,10 +59,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	userId := "userId_example" // string | 
+	addUserGroupRequest := *openapiclient.NewAddUserGroupRequest() // AddUserGroupRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminUsersAPI.AddUserGroup(context.Background(), orgId, userId).Execute()
+	resp, r, err := apiClient.AdminUsersAPI.AddUserGroup(context.Background(), orgId, userId).AddUserGroupRequest(addUserGroupRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminUsersAPI.AddUserGroup``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -90,6 +91,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **addUserGroupRequest** | [**AddUserGroupRequest**](AddUserGroupRequest.md) |  | 
 
 ### Return type
 
@@ -101,7 +103,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -111,7 +113,7 @@ Name | Type | Description  | Notes
 
 ## AddUserPermission
 
-> AddUserPermissionResponse AddUserPermission(ctx, orgId, userId).Execute()
+> AddUserPermissionResponse AddUserPermission(ctx, orgId, userId).AddUserPermissionRequest(addUserPermissionRequest).Execute()
 
 Assign a permission to a user
 
@@ -132,10 +134,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	userId := "userId_example" // string | 
+	addUserPermissionRequest := *openapiclient.NewAddUserPermissionRequest(int32(123)) // AddUserPermissionRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminUsersAPI.AddUserPermission(context.Background(), orgId, userId).Execute()
+	resp, r, err := apiClient.AdminUsersAPI.AddUserPermission(context.Background(), orgId, userId).AddUserPermissionRequest(addUserPermissionRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminUsersAPI.AddUserPermission``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -163,6 +166,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **addUserPermissionRequest** | [**AddUserPermissionRequest**](AddUserPermissionRequest.md) |  | 
 
 ### Return type
 
@@ -174,7 +178,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -184,7 +188,7 @@ Name | Type | Description  | Notes
 
 ## AddUserRole
 
-> AddUserRoleResponse AddUserRole(ctx, orgId, userId).Execute()
+> AddUserRoleResponse AddUserRole(ctx, orgId, userId).AddUserRoleRequest(addUserRoleRequest).Execute()
 
 Assign a role to a user
 
@@ -203,10 +207,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	userId := "userId_example" // string | 
+	addUserRoleRequest := *openapiclient.NewAddUserRoleRequest() // AddUserRoleRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminUsersAPI.AddUserRole(context.Background(), orgId, userId).Execute()
+	resp, r, err := apiClient.AdminUsersAPI.AddUserRole(context.Background(), orgId, userId).AddUserRoleRequest(addUserRoleRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminUsersAPI.AddUserRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -234,6 +239,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **addUserRoleRequest** | [**AddUserRoleRequest**](AddUserRoleRequest.md) |  | 
 
 ### Return type
 
@@ -245,7 +251,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -767,7 +773,7 @@ Name | Type | Description  | Notes
 
 ## CreateUser
 
-> CreateUserResponse CreateUser(ctx, orgId).Execute()
+> CreateUserResponse CreateUser(ctx, orgId).CreateUserRequest(createUserRequest).Execute()
 
 Create a user
 
@@ -785,10 +791,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	createUserRequest := *openapiclient.NewCreateUserRequest("Email_example") // CreateUserRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminUsersAPI.CreateUser(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminUsersAPI.CreateUser(context.Background(), orgId).CreateUserRequest(createUserRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminUsersAPI.CreateUser``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -814,6 +821,7 @@ Other parameters are passed through a pointer to a apiCreateUserRequest struct v
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **createUserRequest** | [**CreateUserRequest**](CreateUserRequest.md) |  | 
 
 ### Return type
 
@@ -825,7 +833,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1353,7 +1361,7 @@ Name | Type | Description  | Notes
 
 ## PatchUser
 
-> UpdateUserResponse PatchUser(ctx, orgId, userId).Execute()
+> UpdateUserResponse PatchUser(ctx, orgId, userId).UpdateUserRequest(updateUserRequest).Execute()
 
 Update a user
 
@@ -1374,10 +1382,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	userId := "userId_example" // string | 
+	updateUserRequest := *openapiclient.NewUpdateUserRequest() // UpdateUserRequest | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminUsersAPI.PatchUser(context.Background(), orgId, userId).Execute()
+	resp, r, err := apiClient.AdminUsersAPI.PatchUser(context.Background(), orgId, userId).UpdateUserRequest(updateUserRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminUsersAPI.PatchUser``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1405,6 +1414,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **updateUserRequest** | [**UpdateUserRequest**](UpdateUserRequest.md) | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. | 
 
 ### Return type
 
@@ -1416,7 +1426,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1790,7 +1800,7 @@ Name | Type | Description  | Notes
 
 ## SetUserPassword
 
-> SetUserPasswordPostResponse SetUserPassword(ctx, orgId, userId).Execute()
+> SetUserPasswordPostResponse SetUserPassword(ctx, orgId, userId).SetUserPasswordPostRequest(setUserPasswordPostRequest).Execute()
 
 Set a user's password
 
@@ -1811,10 +1821,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	userId := "userId_example" // string | 
+	setUserPasswordPostRequest := *openapiclient.NewSetUserPasswordPostRequest("Password_example") // SetUserPasswordPostRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminUsersAPI.SetUserPassword(context.Background(), orgId, userId).Execute()
+	resp, r, err := apiClient.AdminUsersAPI.SetUserPassword(context.Background(), orgId, userId).SetUserPasswordPostRequest(setUserPasswordPostRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminUsersAPI.SetUserPassword``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1842,6 +1853,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **setUserPasswordPostRequest** | [**SetUserPasswordPostRequest**](SetUserPasswordPostRequest.md) |  | 
 
 ### Return type
 
@@ -1853,7 +1865,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1863,7 +1875,7 @@ Name | Type | Description  | Notes
 
 ## SetUserPasswordPost
 
-> SetUserPasswordPostResponse SetUserPasswordPost(ctx, orgId, userId).Execute()
+> SetUserPasswordPostResponse SetUserPasswordPost(ctx, orgId, userId).SetUserPasswordPostRequest(setUserPasswordPostRequest).Execute()
 
 Set a user's password
 
@@ -1884,10 +1896,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	userId := "userId_example" // string | 
+	setUserPasswordPostRequest := *openapiclient.NewSetUserPasswordPostRequest("Password_example") // SetUserPasswordPostRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminUsersAPI.SetUserPasswordPost(context.Background(), orgId, userId).Execute()
+	resp, r, err := apiClient.AdminUsersAPI.SetUserPasswordPost(context.Background(), orgId, userId).SetUserPasswordPostRequest(setUserPasswordPostRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminUsersAPI.SetUserPasswordPost``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1915,6 +1928,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **setUserPasswordPostRequest** | [**SetUserPasswordPostRequest**](SetUserPasswordPostRequest.md) |  | 
 
 ### Return type
 
@@ -1926,7 +1940,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -2078,7 +2092,7 @@ Name | Type | Description  | Notes
 
 ## UpdateUser
 
-> UpdateUserResponse UpdateUser(ctx, orgId, userId).Execute()
+> UpdateUserResponse UpdateUser(ctx, orgId, userId).UpdateUserRequest(updateUserRequest).Execute()
 
 Update a user
 
@@ -2099,10 +2113,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	userId := "userId_example" // string | 
+	updateUserRequest := *openapiclient.NewUpdateUserRequest() // UpdateUserRequest | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminUsersAPI.UpdateUser(context.Background(), orgId, userId).Execute()
+	resp, r, err := apiClient.AdminUsersAPI.UpdateUser(context.Background(), orgId, userId).UpdateUserRequest(updateUserRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminUsersAPI.UpdateUser``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -2130,6 +2145,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **updateUserRequest** | [**UpdateUserRequest**](UpdateUserRequest.md) | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. | 
 
 ### Return type
 
@@ -2141,7 +2157,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -2151,7 +2167,7 @@ Name | Type | Description  | Notes
 
 ## UpdateUserGroups
 
-> UpdateUserGroupsResponse UpdateUserGroups(ctx, orgId, userId).Execute()
+> UpdateUserGroupsResponse UpdateUserGroups(ctx, orgId, userId).UpdateUserGroupsRequest(updateUserGroupsRequest).Execute()
 
 Replace a user's groups
 
@@ -2170,10 +2186,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	userId := "userId_example" // string | 
+	updateUserGroupsRequest := *openapiclient.NewUpdateUserGroupsRequest([]string{"Groups_example"}) // UpdateUserGroupsRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminUsersAPI.UpdateUserGroups(context.Background(), orgId, userId).Execute()
+	resp, r, err := apiClient.AdminUsersAPI.UpdateUserGroups(context.Background(), orgId, userId).UpdateUserGroupsRequest(updateUserGroupsRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminUsersAPI.UpdateUserGroups``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -2201,6 +2218,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **updateUserGroupsRequest** | [**UpdateUserGroupsRequest**](UpdateUserGroupsRequest.md) |  | 
 
 ### Return type
 
@@ -2212,7 +2230,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -2222,7 +2240,7 @@ Name | Type | Description  | Notes
 
 ## UpdateUserRoles
 
-> UpdateUserRolesResponse UpdateUserRoles(ctx, orgId, userId).Execute()
+> UpdateUserRolesResponse UpdateUserRoles(ctx, orgId, userId).AdminGroupsUpdateRolesRequest(adminGroupsUpdateRolesRequest).Execute()
 
 Replace a user's roles
 
@@ -2241,10 +2259,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	userId := "userId_example" // string | 
+	adminGroupsUpdateRolesRequest := *openapiclient.NewAdminGroupsUpdateRolesRequest([]string{"Roles_example"}) // AdminGroupsUpdateRolesRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminUsersAPI.UpdateUserRoles(context.Background(), orgId, userId).Execute()
+	resp, r, err := apiClient.AdminUsersAPI.UpdateUserRoles(context.Background(), orgId, userId).AdminGroupsUpdateRolesRequest(adminGroupsUpdateRolesRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminUsersAPI.UpdateUserRoles``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -2272,6 +2291,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **adminGroupsUpdateRolesRequest** | [**AdminGroupsUpdateRolesRequest**](AdminGroupsUpdateRolesRequest.md) |  | 
 
 ### Return type
 
@@ -2283,7 +2303,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

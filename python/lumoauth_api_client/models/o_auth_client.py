@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -40,7 +40,52 @@ class OAuthClient(BaseModel):
     scopes: Optional[List[StrictStr]] = Field(default=None, description="Detailed responses only")
     grant_types: Optional[List[StrictStr]] = Field(default=None, description="Detailed responses only", alias="grantTypes")
     ciba_enabled: Optional[StrictBool] = Field(default=None, description="Detailed responses only. Whether the client may use CIBA (backchannel authentication).", alias="cibaEnabled")
-    __properties: ClassVar[List[str]] = ["id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt", "redirectUris", "scopes", "grantTypes", "cibaEnabled"]
+    allowed_origins: Optional[List[StrictStr]] = Field(default=None, description="Detailed responses only. Browser CORS origins (scheme://host[:port]).", alias="allowedOrigins")
+    post_logout_redirect_uris: Optional[List[StrictStr]] = Field(default=None, description="Detailed responses only. Addresses that the end-session endpoint may return to.", alias="postLogoutRedirectUris")
+    frontchannel_logout_uri: Optional[StrictStr] = Field(default=None, description="Detailed responses only. OIDC Front-Channel Logout address.", alias="frontchannelLogoutUri")
+    backchannel_logout_uri: Optional[StrictStr] = Field(default=None, description="Detailed responses only. OIDC Back-Channel Logout address.", alias="backchannelLogoutUri")
+    access_token_format: Optional[StrictStr] = Field(default=None, description="Detailed responses only. Format of the access tokens that the client receives.", alias="accessTokenFormat")
+    token_endpoint_auth_method: Optional[StrictStr] = Field(default=None, description="Detailed responses only.", alias="tokenEndpointAuthMethod")
+    jwks_uri: Optional[StrictStr] = Field(default=None, description="Detailed responses only. https address of the client's public keys.", alias="jwksUri")
+    jwks: Optional[Dict[str, Any]] = Field(default=None, description="Detailed responses only. The client's public keys, inline.")
+    fapi_mode: Optional[StrictStr] = Field(default=None, description="Detailed responses only. FAPI 2.0 security profile.", alias="fapiMode")
+    require_par: Optional[StrictBool] = Field(default=None, description="Detailed responses only. The stored switch; a FAPI profile requires PAR whatever it says.", alias="requirePar")
+    dpop_bound_access_tokens: Optional[StrictBool] = Field(default=None, description="Detailed responses only. The stored switch; a FAPI profile requires DPoP whatever it says.", alias="dpopBoundAccessTokens")
+    attestation_based_auth_enabled: Optional[StrictBool] = Field(default=None, description="Detailed responses only.", alias="attestationBasedAuthEnabled")
+    attester_issuer: Optional[StrictStr] = Field(default=None, description="Detailed responses only.", alias="attesterIssuer")
+    attester_jwks_uri: Optional[StrictStr] = Field(default=None, description="Detailed responses only.", alias="attesterJwksUri")
+    token_exchange_enabled: Optional[StrictBool] = Field(default=None, description="Detailed responses only. Whether the client may use token exchange (RFC 8693).", alias="tokenExchangeEnabled")
+    __properties: ClassVar[List[str]] = ["id", "clientId", "name", "isConfidential", "isPublic", "isActive", "requiresPkce", "createdAt", "redirectUris", "scopes", "grantTypes", "cibaEnabled", "allowedOrigins", "postLogoutRedirectUris", "frontchannelLogoutUri", "backchannelLogoutUri", "accessTokenFormat", "tokenEndpointAuthMethod", "jwksUri", "jwks", "fapiMode", "requirePar", "dpopBoundAccessTokens", "attestationBasedAuthEnabled", "attesterIssuer", "attesterJwksUri", "tokenExchangeEnabled"]
+
+    @field_validator('access_token_format')
+    def access_token_format_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['opaque', 'jwt']):
+            raise ValueError("must be one of enum values ('opaque', 'jwt')")
+        return value
+
+    @field_validator('token_endpoint_auth_method')
+    def token_endpoint_auth_method_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['client_secret_basic', 'private_key_jwt', 'none', 'attest_jwt_client_auth']):
+            raise ValueError("must be one of enum values ('client_secret_basic', 'private_key_jwt', 'none', 'attest_jwt_client_auth')")
+        return value
+
+    @field_validator('fapi_mode')
+    def fapi_mode_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['disabled', 'fapi2_baseline', 'fapi2_advanced']):
+            raise ValueError("must be one of enum values ('disabled', 'fapi2_baseline', 'fapi2_advanced')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -81,6 +126,36 @@ class OAuthClient(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if frontchannel_logout_uri (nullable) is None
+        # and model_fields_set contains the field
+        if self.frontchannel_logout_uri is None and "frontchannel_logout_uri" in self.model_fields_set:
+            _dict['frontchannelLogoutUri'] = None
+
+        # set to None if backchannel_logout_uri (nullable) is None
+        # and model_fields_set contains the field
+        if self.backchannel_logout_uri is None and "backchannel_logout_uri" in self.model_fields_set:
+            _dict['backchannelLogoutUri'] = None
+
+        # set to None if jwks_uri (nullable) is None
+        # and model_fields_set contains the field
+        if self.jwks_uri is None and "jwks_uri" in self.model_fields_set:
+            _dict['jwksUri'] = None
+
+        # set to None if jwks (nullable) is None
+        # and model_fields_set contains the field
+        if self.jwks is None and "jwks" in self.model_fields_set:
+            _dict['jwks'] = None
+
+        # set to None if attester_issuer (nullable) is None
+        # and model_fields_set contains the field
+        if self.attester_issuer is None and "attester_issuer" in self.model_fields_set:
+            _dict['attesterIssuer'] = None
+
+        # set to None if attester_jwks_uri (nullable) is None
+        # and model_fields_set contains the field
+        if self.attester_jwks_uri is None and "attester_jwks_uri" in self.model_fields_set:
+            _dict['attesterJwksUri'] = None
+
         return _dict
 
     @classmethod
@@ -104,7 +179,22 @@ class OAuthClient(BaseModel):
             "redirectUris": obj.get("redirectUris"),
             "scopes": obj.get("scopes"),
             "grantTypes": obj.get("grantTypes"),
-            "cibaEnabled": obj.get("cibaEnabled")
+            "cibaEnabled": obj.get("cibaEnabled"),
+            "allowedOrigins": obj.get("allowedOrigins"),
+            "postLogoutRedirectUris": obj.get("postLogoutRedirectUris"),
+            "frontchannelLogoutUri": obj.get("frontchannelLogoutUri"),
+            "backchannelLogoutUri": obj.get("backchannelLogoutUri"),
+            "accessTokenFormat": obj.get("accessTokenFormat"),
+            "tokenEndpointAuthMethod": obj.get("tokenEndpointAuthMethod"),
+            "jwksUri": obj.get("jwksUri"),
+            "jwks": obj.get("jwks"),
+            "fapiMode": obj.get("fapiMode"),
+            "requirePar": obj.get("requirePar"),
+            "dpopBoundAccessTokens": obj.get("dpopBoundAccessTokens"),
+            "attestationBasedAuthEnabled": obj.get("attestationBasedAuthEnabled"),
+            "attesterIssuer": obj.get("attesterIssuer"),
+            "attesterJwksUri": obj.get("attesterJwksUri"),
+            "tokenExchangeEnabled": obj.get("tokenExchangeEnabled")
         })
         return _obj
 

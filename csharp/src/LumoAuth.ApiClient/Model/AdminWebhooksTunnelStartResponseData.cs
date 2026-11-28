@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -39,11 +39,13 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="webhookId">webhookId.</param>
         /// <param name="sessionId">sessionId.</param>
         /// <param name="tunnelUrl">tunnelUrl.</param>
-        public AdminWebhooksTunnelStartResponseData(int webhookId = default, string sessionId = default, string tunnelUrl = default)
+        /// <param name="signingSecret">The secret that signs the tunnel&#39;s deliveries (X-LumoAuth-Signature). Shown once..</param>
+        public AdminWebhooksTunnelStartResponseData(int webhookId = default, string sessionId = default, string tunnelUrl = default, string signingSecret = default)
         {
             this.WebhookId = webhookId;
             this.SessionId = sessionId;
             this.TunnelUrl = tunnelUrl;
+            this.SigningSecret = signingSecret;
         }
 
         /// <summary>
@@ -71,6 +73,13 @@ namespace LumoAuth.ApiClient.Model
         public string TunnelUrl { get; set; }
 
         /// <summary>
+        /// The secret that signs the tunnel&#39;s deliveries (X-LumoAuth-Signature). Shown once.
+        /// </summary>
+        /// <value>The secret that signs the tunnel&#39;s deliveries (X-LumoAuth-Signature). Shown once.</value>
+        [DataMember(Name = "signing_secret", EmitDefaultValue = false)]
+        public string SigningSecret { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -81,6 +90,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  WebhookId: ").Append(WebhookId).Append("\n");
             sb.Append("  SessionId: ").Append(SessionId).Append("\n");
             sb.Append("  TunnelUrl: ").Append(TunnelUrl).Append("\n");
+            sb.Append("  SigningSecret: ").Append(SigningSecret).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

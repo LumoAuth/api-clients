@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -17,6 +17,9 @@ module LumoAuthApiClient
   class CreateTaskResponse
     attr_accessor :task_id
 
+    # The parent task, or null for a task without one.
+    attr_accessor :parent_task_id
+
     attr_accessor :caep_session_id
 
     attr_accessor :expires_at
@@ -31,6 +34,7 @@ module LumoAuthApiClient
     def self.attribute_map
       {
         :'task_id' => :'task_id',
+        :'parent_task_id' => :'parent_task_id',
         :'caep_session_id' => :'caep_session_id',
         :'expires_at' => :'expires_at',
         :'agent_id' => :'agent_id',
@@ -53,6 +57,7 @@ module LumoAuthApiClient
     def self.openapi_types
       {
         :'task_id' => :'String',
+        :'parent_task_id' => :'String',
         :'caep_session_id' => :'String',
         :'expires_at' => :'Time',
         :'agent_id' => :'String',
@@ -64,6 +69,7 @@ module LumoAuthApiClient
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'parent_task_id',
       ])
     end
 
@@ -85,6 +91,10 @@ module LumoAuthApiClient
 
       if attributes.key?(:'task_id')
         self.task_id = attributes[:'task_id']
+      end
+
+      if attributes.key?(:'parent_task_id')
+        self.parent_task_id = attributes[:'parent_task_id']
       end
 
       if attributes.key?(:'caep_session_id')
@@ -129,6 +139,7 @@ module LumoAuthApiClient
       return true if self.equal?(o)
       self.class == o.class &&
           task_id == o.task_id &&
+          parent_task_id == o.parent_task_id &&
           caep_session_id == o.caep_session_id &&
           expires_at == o.expires_at &&
           agent_id == o.agent_id &&
@@ -145,7 +156,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [task_id, caep_session_id, expires_at, agent_id, agent, on_behalf_of].hash
+      [task_id, parent_task_id, caep_session_id, expires_at, agent_id, agent, on_behalf_of].hash
     end
 
     # Builds the object from hash

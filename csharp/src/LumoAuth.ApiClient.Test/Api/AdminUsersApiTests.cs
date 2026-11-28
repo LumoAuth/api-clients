@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -63,7 +63,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //var response = instance.AddUserGroup(orgId, userId);
+            //AddUserGroupRequest addUserGroupRequest = null;
+            //var response = instance.AddUserGroup(orgId, userId, addUserGroupRequest);
             //Assert.IsType<AddUserGroupResponse>(response);
         }
 
@@ -76,7 +77,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //var response = instance.AddUserPermission(orgId, userId);
+            //AddUserPermissionRequest addUserPermissionRequest = null;
+            //var response = instance.AddUserPermission(orgId, userId, addUserPermissionRequest);
             //Assert.IsType<AddUserPermissionResponse>(response);
         }
 
@@ -89,7 +91,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //var response = instance.AddUserRole(orgId, userId);
+            //AddUserRoleRequest addUserRoleRequest = null;
+            //var response = instance.AddUserRole(orgId, userId, addUserRoleRequest);
             //Assert.IsType<AddUserRoleResponse>(response);
         }
 
@@ -194,7 +197,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.CreateUser(orgId);
+            //CreateUserRequest createUserRequest = null;
+            //var response = instance.CreateUser(orgId, createUserRequest);
             //Assert.IsType<CreateUserResponse>(response);
         }
 
@@ -309,7 +313,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //var response = instance.PatchUser(orgId, userId);
+            //UpdateUserRequest updateUserRequest = null;
+            //var response = instance.PatchUser(orgId, userId, updateUserRequest);
             //Assert.IsType<UpdateUserResponse>(response);
         }
 
@@ -389,7 +394,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //var response = instance.SetUserPassword(orgId, userId);
+            //SetUserPasswordPostRequest setUserPasswordPostRequest = null;
+            //var response = instance.SetUserPassword(orgId, userId, setUserPasswordPostRequest);
             //Assert.IsType<SetUserPasswordPostResponse>(response);
         }
 
@@ -402,7 +408,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //var response = instance.SetUserPasswordPost(orgId, userId);
+            //SetUserPasswordPostRequest setUserPasswordPostRequest = null;
+            //var response = instance.SetUserPasswordPost(orgId, userId, setUserPasswordPostRequest);
             //Assert.IsType<SetUserPasswordPostResponse>(response);
         }
 
@@ -441,7 +448,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //var response = instance.UpdateUser(orgId, userId);
+            //UpdateUserRequest updateUserRequest = null;
+            //var response = instance.UpdateUser(orgId, userId, updateUserRequest);
             //Assert.IsType<UpdateUserResponse>(response);
         }
 
@@ -454,7 +462,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //var response = instance.UpdateUserGroups(orgId, userId);
+            //UpdateUserGroupsRequest updateUserGroupsRequest = null;
+            //var response = instance.UpdateUserGroups(orgId, userId, updateUserGroupsRequest);
             //Assert.IsType<UpdateUserGroupsResponse>(response);
         }
 
@@ -467,7 +476,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //var response = instance.UpdateUserRoles(orgId, userId);
+            //AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest = null;
+            //var response = instance.UpdateUserRoles(orgId, userId, adminGroupsUpdateRolesRequest);
             //Assert.IsType<UpdateUserRolesResponse>(response);
         }
     }

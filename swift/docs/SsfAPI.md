@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 # **createStreamConfig**
 ```swift
-    open class func createStreamConfig(orgId: String, completion: @escaping (_ data: SsfStream?, _ error: Error?) -> Void)
+    open class func createStreamConfig(orgId: String, createStreamConfigRequest: CreateStreamConfigRequest, completion: @escaping (_ data: SsfStream?, _ error: Error?) -> Void)
 ```
 
 Create an SSF stream
@@ -23,9 +23,10 @@ Create an SSF stream
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let createStreamConfigRequest = CreateStreamConfigRequest(delivery: "TODO", eventsRequested: ["eventsRequested_example"], audience: "audience_example") // CreateStreamConfigRequest | 
 
 // Create an SSF stream
-SsfAPI.createStreamConfig(orgId: orgId) { (response, error) in
+SsfAPI.createStreamConfig(orgId: orgId, createStreamConfigRequest: createStreamConfigRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -42,6 +43,7 @@ SsfAPI.createStreamConfig(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **createStreamConfigRequest** | [**CreateStreamConfigRequest**](CreateStreamConfigRequest.md) |  | 
 
 ### Return type
 
@@ -53,7 +55,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -162,7 +164,7 @@ Name | Type | Description  | Notes
 
 # **verifyStream**
 ```swift
-    open class func verifyStream(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func verifyStream(orgId: String, verifyStreamRequest: VerifyStreamRequest? = nil, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
 ```
 
 Request a stream verification event
@@ -175,9 +177,10 @@ Needs `settings.manage`, as the portal does.
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let verifyStreamRequest = VerifyStreamRequest(streamId: "streamId_example", state: "state_example") // VerifyStreamRequest |  (optional)
 
 // Request a stream verification event
-SsfAPI.verifyStream(orgId: orgId) { (response, error) in
+SsfAPI.verifyStream(orgId: orgId, verifyStreamRequest: verifyStreamRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -194,6 +197,7 @@ SsfAPI.verifyStream(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **verifyStreamRequest** | [**VerifyStreamRequest**](VerifyStreamRequest.md) |  | [optional] 
 
 ### Return type
 
@@ -205,7 +209,7 @@ Void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

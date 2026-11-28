@@ -168,7 +168,7 @@ open class AdminSessionsAPI {
     /**
      List active sessions
      - GET /orgs/{orgId}/api/v1/admin/sessions
-     - Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+     - Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -249,7 +249,7 @@ open class AdminSessionsAPI {
     }
 
     /**
-     Revoke every session in the tenant
+     Revoke every session in the organization
      
      - parameter orgId: (path)  
      - parameter adminSessionsRevokeAllRequest: (body)  
@@ -261,7 +261,7 @@ open class AdminSessionsAPI {
     }
 
     /**
-     Revoke every session in the tenant
+     Revoke every session in the organization
      - POST /orgs/{orgId}/api/v1/admin/sessions/revoke-all
      - Signs out all users. Requires `confirm: true` in the body.
      - API Key:
@@ -340,7 +340,7 @@ open class AdminSessionsAPI {
     }
 
     /**
-     List access tokens
+     List stored (opaque) access tokens
      
      - parameter orgId: (path)  
      - returns: AdminTokensListResponse
@@ -351,9 +351,9 @@ open class AdminSessionsAPI {
     }
 
     /**
-     List access tokens
+     List stored (opaque) access tokens
      - GET /orgs/{orgId}/api/v1/admin/tokens
-     - Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
+     - Paginated OPAQUE access tokens issued by the organization's clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user's or a client's tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -596,6 +596,7 @@ open class AdminSessionsAPI {
     /**
      Revoke all tokens of a user
      - DELETE /orgs/{orgId}/api/v1/admin/users/{userId}/tokens
+     - Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -645,6 +646,7 @@ open class AdminSessionsAPI {
     /**
      Revoke all tokens of a user (POST alias)
      - POST /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke
+     - Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth

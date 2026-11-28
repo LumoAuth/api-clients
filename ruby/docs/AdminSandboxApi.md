@@ -4,16 +4,16 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**admin_sandbox_destroy**](AdminSandboxApi.md#admin_sandbox_destroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant |
-| [**admin_sandbox_list**](AdminSandboxApi.md#admin_sandbox_list) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox tenants |
-| [**admin_sandbox_spawn**](AdminSandboxApi.md#admin_sandbox_spawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant |
+| [**admin_sandbox_destroy**](AdminSandboxApi.md#admin_sandbox_destroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox organization |
+| [**admin_sandbox_list**](AdminSandboxApi.md#admin_sandbox_list) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox organizations |
+| [**admin_sandbox_spawn**](AdminSandboxApi.md#admin_sandbox_spawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox organization |
 
 
 ## admin_sandbox_destroy
 
 > <MessageResponse> admin_sandbox_destroy(org_id, sandbox_slug)
 
-Destroy a sandbox tenant
+Destroy a sandbox organization
 
 ### Examples
 
@@ -36,7 +36,7 @@ org_id = 'org_id_example' # String |
 sandbox_slug = 'sandbox_slug_example' # String | 
 
 begin
-  # Destroy a sandbox tenant
+  # Destroy a sandbox organization
   result = api_instance.admin_sandbox_destroy(org_id, sandbox_slug)
   p result
 rescue LumoAuthApiClient::ApiError => e
@@ -52,7 +52,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # Destroy a sandbox tenant
+  # Destroy a sandbox organization
   data, status_code, headers = api_instance.admin_sandbox_destroy_with_http_info(org_id, sandbox_slug)
   p status_code # => 2xx
   p headers # => { ... }
@@ -87,7 +87,7 @@ end
 
 > <AdminSandboxListResponse> admin_sandbox_list(org_id)
 
-List the caller's sandbox tenants
+List the caller's sandbox organizations
 
 ### Examples
 
@@ -109,7 +109,7 @@ api_instance = LumoAuthApiClient::AdminSandboxApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # List the caller's sandbox tenants
+  # List the caller's sandbox organizations
   result = api_instance.admin_sandbox_list(org_id)
   p result
 rescue LumoAuthApiClient::ApiError => e
@@ -125,7 +125,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # List the caller's sandbox tenants
+  # List the caller's sandbox organizations
   data, status_code, headers = api_instance.admin_sandbox_list_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
@@ -159,7 +159,7 @@ end
 
 > <AdminSandboxSpawnResponse> admin_sandbox_spawn(org_id, opts)
 
-Spawn a sandbox tenant
+Spawn a sandbox organization
 
 Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
 
@@ -186,7 +186,7 @@ opts = {
 }
 
 begin
-  # Spawn a sandbox tenant
+  # Spawn a sandbox organization
   result = api_instance.admin_sandbox_spawn(org_id, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
@@ -202,7 +202,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # Spawn a sandbox tenant
+  # Spawn a sandbox organization
   data, status_code, headers = api_instance.admin_sandbox_spawn_with_http_info(org_id, opts)
   p status_code # => 2xx
   p headers # => { ... }

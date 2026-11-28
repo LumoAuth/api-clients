@@ -16,11 +16,12 @@ open class SsfAPI {
      Create an SSF stream
      
      - parameter orgId: (path)  
+     - parameter createStreamConfigRequest: (body)  
      - returns: SsfStream
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func createStreamConfig(orgId: String) async throws -> SsfStream {
-        return try await createStreamConfigWithRequestBuilder(orgId: orgId).execute().body
+    open class func createStreamConfig(orgId: String, createStreamConfigRequest: CreateStreamConfigRequest) async throws -> SsfStream {
+        return try await createStreamConfigWithRequestBuilder(orgId: orgId, createStreamConfigRequest: createStreamConfigRequest).execute().body
     }
 
     /**
@@ -33,20 +34,21 @@ open class SsfAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter createStreamConfigRequest: (body)  
      - returns: RequestBuilder<SsfStream> 
      */
-    open class func createStreamConfigWithRequestBuilder(orgId: String) -> RequestBuilder<SsfStream> {
+    open class func createStreamConfigWithRequestBuilder(orgId: String, createStreamConfigRequest: CreateStreamConfigRequest) -> RequestBuilder<SsfStream> {
         var localVariablePath = "/orgs/{orgId}/api/v1/ssf/stream"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: createStreamConfigRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -159,11 +161,12 @@ open class SsfAPI {
      Request a stream verification event
      
      - parameter orgId: (path)  
+     - parameter verifyStreamRequest: (body)  (optional)
      - returns: Void
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func verifyStream(orgId: String) async throws {
-        return try await verifyStreamWithRequestBuilder(orgId: orgId).execute().body
+    open class func verifyStream(orgId: String, verifyStreamRequest: VerifyStreamRequest? = nil) async throws {
+        return try await verifyStreamWithRequestBuilder(orgId: orgId, verifyStreamRequest: verifyStreamRequest).execute().body
     }
 
     /**
@@ -177,20 +180,21 @@ open class SsfAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter verifyStreamRequest: (body)  (optional)
      - returns: RequestBuilder<Void> 
      */
-    open class func verifyStreamWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func verifyStreamWithRequestBuilder(orgId: String, verifyStreamRequest: VerifyStreamRequest? = nil) -> RequestBuilder<Void> {
         var localVariablePath = "/orgs/{orgId}/api/v1/ssf/verify"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: verifyStreamRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

@@ -25,7 +25,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 ## admin_webhooks_create
 
-> <AdminWebhooksCreateResponse> admin_webhooks_create(org_id)
+> <AdminWebhooksCreateResponse> admin_webhooks_create(org_id, admin_webhooks_create_request)
 
 Create a webhook
 
@@ -49,10 +49,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminWebhooksApi.new
 org_id = 'org_id_example' # String | 
+admin_webhooks_create_request = LumoAuthApiClient::AdminWebhooksCreateRequest.new({url: 'url_example', events: ['events_example']}) # AdminWebhooksCreateRequest | 
 
 begin
   # Create a webhook
-  result = api_instance.admin_webhooks_create(org_id)
+  result = api_instance.admin_webhooks_create(org_id, admin_webhooks_create_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_create: #{e}"
@@ -63,12 +64,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminWebhooksCreateResponse>, Integer, Hash)> admin_webhooks_create_with_http_info(org_id)
+> <Array(<AdminWebhooksCreateResponse>, Integer, Hash)> admin_webhooks_create_with_http_info(org_id, admin_webhooks_create_request)
 
 ```ruby
 begin
   # Create a webhook
-  data, status_code, headers = api_instance.admin_webhooks_create_with_http_info(org_id)
+  data, status_code, headers = api_instance.admin_webhooks_create_with_http_info(org_id, admin_webhooks_create_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminWebhooksCreateResponse>
@@ -82,6 +83,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **admin_webhooks_create_request** | [**AdminWebhooksCreateRequest**](AdminWebhooksCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -93,7 +95,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -555,7 +557,7 @@ end
 
 List webhooks
 
-Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+Paginated list of the organization's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
 ### Examples
 
@@ -781,7 +783,7 @@ end
 
 Start a webhook tunnel
 
-Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
 
 ### Examples
 
@@ -1151,7 +1153,7 @@ end
 
 ## patch_admin_webhooks_update
 
-> <PutAdminWebhooksUpdateResponse> patch_admin_webhooks_update(org_id, webhook_id)
+> <PutAdminWebhooksUpdateResponse> patch_admin_webhooks_update(org_id, webhook_id, put_admin_webhooks_update_request)
 
 Partially update a webhook
 
@@ -1174,10 +1176,11 @@ end
 api_instance = LumoAuthApiClient::AdminWebhooksApi.new
 org_id = 'org_id_example' # String | 
 webhook_id = 'webhook_id_example' # String | 
+put_admin_webhooks_update_request = LumoAuthApiClient::PutAdminWebhooksUpdateRequest.new # PutAdminWebhooksUpdateRequest | 
 
 begin
   # Partially update a webhook
-  result = api_instance.patch_admin_webhooks_update(org_id, webhook_id)
+  result = api_instance.patch_admin_webhooks_update(org_id, webhook_id, put_admin_webhooks_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->patch_admin_webhooks_update: #{e}"
@@ -1188,12 +1191,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminWebhooksUpdateResponse>, Integer, Hash)> patch_admin_webhooks_update_with_http_info(org_id, webhook_id)
+> <Array(<PutAdminWebhooksUpdateResponse>, Integer, Hash)> patch_admin_webhooks_update_with_http_info(org_id, webhook_id, put_admin_webhooks_update_request)
 
 ```ruby
 begin
   # Partially update a webhook
-  data, status_code, headers = api_instance.patch_admin_webhooks_update_with_http_info(org_id, webhook_id)
+  data, status_code, headers = api_instance.patch_admin_webhooks_update_with_http_info(org_id, webhook_id, put_admin_webhooks_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminWebhooksUpdateResponse>
@@ -1208,6 +1211,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **webhook_id** | **String** |  |  |
+| **put_admin_webhooks_update_request** | [**PutAdminWebhooksUpdateRequest**](PutAdminWebhooksUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1219,13 +1223,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## put_admin_webhooks_update
 
-> <PutAdminWebhooksUpdateResponse> put_admin_webhooks_update(org_id, webhook_id)
+> <PutAdminWebhooksUpdateResponse> put_admin_webhooks_update(org_id, webhook_id, put_admin_webhooks_update_request)
 
 Update a webhook
 
@@ -1250,10 +1254,11 @@ end
 api_instance = LumoAuthApiClient::AdminWebhooksApi.new
 org_id = 'org_id_example' # String | 
 webhook_id = 'webhook_id_example' # String | 
+put_admin_webhooks_update_request = LumoAuthApiClient::PutAdminWebhooksUpdateRequest.new # PutAdminWebhooksUpdateRequest | 
 
 begin
   # Update a webhook
-  result = api_instance.put_admin_webhooks_update(org_id, webhook_id)
+  result = api_instance.put_admin_webhooks_update(org_id, webhook_id, put_admin_webhooks_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->put_admin_webhooks_update: #{e}"
@@ -1264,12 +1269,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAdminWebhooksUpdateResponse>, Integer, Hash)> put_admin_webhooks_update_with_http_info(org_id, webhook_id)
+> <Array(<PutAdminWebhooksUpdateResponse>, Integer, Hash)> put_admin_webhooks_update_with_http_info(org_id, webhook_id, put_admin_webhooks_update_request)
 
 ```ruby
 begin
   # Update a webhook
-  data, status_code, headers = api_instance.put_admin_webhooks_update_with_http_info(org_id, webhook_id)
+  data, status_code, headers = api_instance.put_admin_webhooks_update_with_http_info(org_id, webhook_id, put_admin_webhooks_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAdminWebhooksUpdateResponse>
@@ -1284,6 +1289,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **webhook_id** | **String** |  |  |
+| **put_admin_webhooks_update_request** | [**PutAdminWebhooksUpdateRequest**](PutAdminWebhooksUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1295,6 +1301,6 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 

@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -43,6 +43,7 @@ import io.lumoauth.client.model.GetApprovalStatusResponse;
 import io.lumoauth.client.model.GetCurrentAgentResponse;
 import io.lumoauth.client.model.PollAgentEnrollmentRequest;
 import io.lumoauth.client.model.PollAgentEnrollmentResponse;
+import io.lumoauth.client.model.RegisterAgentRequest;
 import io.lumoauth.client.model.RegisterAgentResponse;
 import io.lumoauth.client.model.ReportAgentUsageResponse;
 import io.lumoauth.client.model.SignedAgentCard;
@@ -404,11 +405,11 @@ public class AgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities, or to the subset named by the optional &#x60;scope&#x60; field of the request body. Sent with a &#x60;DPoP&#x60; header, the token is DPoP-bound (token_type DPoP, cnf.jkt). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_json or missing_attestation_token. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_json, missing_attestation_token, invalid_scope, invalid_dpop_proof, or use_dpop_nonce with a DPoP-Nonce header when the organization requires server nonces. The nonce challenge comes before the attestation token is checked (it stays unspent) and before the budget is charged: resend the same request with a proof that carries the nonce. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
         <tr><td> 401 </td><td> attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> access_policy_denied — a conditional access policy refused the agent (reason code included). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> tenant_not_found. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> rate_limit_exceeded (Retry-After: 60). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limit_exceeded (Retry-After: 60), or budget_exceeded: the agent&#39;s budget is spent (Retry-After: seconds until the spent window ends). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call attestCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AttestRequest attestRequest, final ApiCallback _callback) throws ApiException {
@@ -492,11 +493,11 @@ public class AgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities, or to the subset named by the optional &#x60;scope&#x60; field of the request body. Sent with a &#x60;DPoP&#x60; header, the token is DPoP-bound (token_type DPoP, cnf.jkt). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_json or missing_attestation_token. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_json, missing_attestation_token, invalid_scope, invalid_dpop_proof, or use_dpop_nonce with a DPoP-Nonce header when the organization requires server nonces. The nonce challenge comes before the attestation token is checked (it stays unspent) and before the budget is charged: resend the same request with a proof that carries the nonce. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
         <tr><td> 401 </td><td> attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> access_policy_denied — a conditional access policy refused the agent (reason code included). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> tenant_not_found. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> rate_limit_exceeded (Retry-After: 60). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limit_exceeded (Retry-After: 60), or budget_exceeded: the agent&#39;s budget is spent (Retry-After: seconds until the spent window ends). </td><td>  -  </td></tr>
      </table>
      */
     public AttestResponse attest(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AttestRequest attestRequest) throws ApiException {
@@ -517,11 +518,11 @@ public class AgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities, or to the subset named by the optional &#x60;scope&#x60; field of the request body. Sent with a &#x60;DPoP&#x60; header, the token is DPoP-bound (token_type DPoP, cnf.jkt). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_json or missing_attestation_token. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_json, missing_attestation_token, invalid_scope, invalid_dpop_proof, or use_dpop_nonce with a DPoP-Nonce header when the organization requires server nonces. The nonce challenge comes before the attestation token is checked (it stays unspent) and before the budget is charged: resend the same request with a proof that carries the nonce. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
         <tr><td> 401 </td><td> attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> access_policy_denied — a conditional access policy refused the agent (reason code included). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> tenant_not_found. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> rate_limit_exceeded (Retry-After: 60). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limit_exceeded (Retry-After: 60), or budget_exceeded: the agent&#39;s budget is spent (Retry-After: seconds until the spent window ends). </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AttestResponse> attestWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AttestRequest attestRequest) throws ApiException {
@@ -544,11 +545,11 @@ public class AgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities, or to the subset named by the optional &#x60;scope&#x60; field of the request body. Sent with a &#x60;DPoP&#x60; header, the token is DPoP-bound (token_type DPoP, cnf.jkt). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_json or missing_attestation_token. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_json, missing_attestation_token, invalid_scope, invalid_dpop_proof, or use_dpop_nonce with a DPoP-Nonce header when the organization requires server nonces. The nonce challenge comes before the attestation token is checked (it stays unspent) and before the budget is charged: resend the same request with a proof that carries the nonce. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
         <tr><td> 401 </td><td> attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> access_policy_denied — a conditional access policy refused the agent (reason code included). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> tenant_not_found. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> rate_limit_exceeded (Retry-After: 60). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limit_exceeded (Retry-After: 60), or budget_exceeded: the agent&#39;s budget is spent (Retry-After: seconds until the spent window ends). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call attestAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AttestRequest attestRequest, final ApiCallback<AttestResponse> _callback) throws ApiException {
@@ -725,10 +726,10 @@ public class AgentsApi {
         <tr><td> 201 </td><td> Approval request created and delivered (see &#x60;delivery&#x60;). </td><td>  -  </td></tr>
         <tr><td> 202 </td><td> User has no push device; an email sign-in fallback link was sent. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, expires_in or meta (invalid_meta names the field), or missing on_behalf_of. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or target user not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller is not an agent, belongs to another organization, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or target user not found. </td><td>  -  </td></tr>
         <tr><td> 428 </td><td> User has no enrolled push device, no approval channel receives the request, and the email fallback could not be sent. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limited (per tenant/agent/user). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limited (per organization, agent and user). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call createApprovalCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CreateApprovalRequest createApprovalRequest, final ApiCallback _callback) throws ApiException {
@@ -807,10 +808,10 @@ public class AgentsApi {
         <tr><td> 201 </td><td> Approval request created and delivered (see &#x60;delivery&#x60;). </td><td>  -  </td></tr>
         <tr><td> 202 </td><td> User has no push device; an email sign-in fallback link was sent. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, expires_in or meta (invalid_meta names the field), or missing on_behalf_of. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or target user not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller is not an agent, belongs to another organization, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or target user not found. </td><td>  -  </td></tr>
         <tr><td> 428 </td><td> User has no enrolled push device, no approval channel receives the request, and the email fallback could not be sent. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limited (per tenant/agent/user). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limited (per organization, agent and user). </td><td>  -  </td></tr>
      </table>
      */
     public CreateApprovalResponse createApproval(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CreateApprovalRequest createApprovalRequest) throws ApiException {
@@ -832,10 +833,10 @@ public class AgentsApi {
         <tr><td> 201 </td><td> Approval request created and delivered (see &#x60;delivery&#x60;). </td><td>  -  </td></tr>
         <tr><td> 202 </td><td> User has no push device; an email sign-in fallback link was sent. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, expires_in or meta (invalid_meta names the field), or missing on_behalf_of. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or target user not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller is not an agent, belongs to another organization, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or target user not found. </td><td>  -  </td></tr>
         <tr><td> 428 </td><td> User has no enrolled push device, no approval channel receives the request, and the email fallback could not be sent. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limited (per tenant/agent/user). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limited (per organization, agent and user). </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<CreateApprovalResponse> createApprovalWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CreateApprovalRequest createApprovalRequest) throws ApiException {
@@ -859,10 +860,10 @@ public class AgentsApi {
         <tr><td> 201 </td><td> Approval request created and delivered (see &#x60;delivery&#x60;). </td><td>  -  </td></tr>
         <tr><td> 202 </td><td> User has no push device; an email sign-in fallback link was sent. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid JSON, task_id, reason, impact, expires_in or meta (invalid_meta names the field), or missing on_behalf_of. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or target user not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller is not an agent, belongs to another organization, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or target user not found. </td><td>  -  </td></tr>
         <tr><td> 428 </td><td> User has no enrolled push device, no approval channel receives the request, and the email fallback could not be sent. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limited (per tenant/agent/user). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limited (per organization, agent and user). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call createApprovalAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CreateApprovalRequest createApprovalRequest, final ApiCallback<CreateApprovalResponse> _callback) throws ApiException {
@@ -1030,7 +1031,7 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Current status of the approval request. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller is not an agent, or the request belongs to another agent. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or approval request not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or approval request not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getApprovalStatusCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, final ApiCallback _callback) throws ApiException {
@@ -1108,7 +1109,7 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Current status of the approval request. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller is not an agent, or the request belongs to another agent. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or approval request not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or approval request not found. </td><td>  -  </td></tr>
      </table>
      */
     public GetApprovalStatusResponse getApprovalStatus(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token) throws ApiException {
@@ -1129,7 +1130,7 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Current status of the approval request. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller is not an agent, or the request belongs to another agent. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or approval request not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or approval request not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<GetApprovalStatusResponse> getApprovalStatusWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token) throws ApiException {
@@ -1152,7 +1153,7 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Current status of the approval request. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller is not an agent, or the request belongs to another agent. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or approval request not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or approval request not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getApprovalStatusAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, final ApiCallback<GetApprovalStatusResponse> _callback) throws ApiException {
@@ -1445,6 +1446,7 @@ public class AgentsApi {
     /**
      * Build call for registerAgent
      * @param orgId  (required)
+     * @param registerAgentRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1455,7 +1457,7 @@ public class AgentsApi {
         <tr><td> 200 </td><td> Registered agent </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call registerAgentCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call registerAgentCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterAgentRequest registerAgentRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1469,7 +1471,7 @@ public class AgentsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = registerAgentRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/agents/register"
@@ -1490,6 +1492,7 @@ public class AgentsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1501,13 +1504,18 @@ public class AgentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call registerAgentValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call registerAgentValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterAgentRequest registerAgentRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling registerAgent(Async)");
         }
 
-        return registerAgentCall(orgId, _callback);
+        // verify the required parameter 'registerAgentRequest' is set
+        if (registerAgentRequest == null) {
+            throw new ApiException("Missing the required parameter 'registerAgentRequest' when calling registerAgent(Async)");
+        }
+
+        return registerAgentCall(orgId, registerAgentRequest, _callback);
 
     }
 
@@ -1515,6 +1523,7 @@ public class AgentsApi {
      * Register (or re-register) an agent
      * 
      * @param orgId  (required)
+     * @param registerAgentRequest  (required)
      * @return RegisterAgentResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1524,8 +1533,8 @@ public class AgentsApi {
         <tr><td> 200 </td><td> Registered agent </td><td>  -  </td></tr>
      </table>
      */
-    public RegisterAgentResponse registerAgent(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<RegisterAgentResponse> localVarResp = registerAgentWithHttpInfo(orgId);
+    public RegisterAgentResponse registerAgent(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterAgentRequest registerAgentRequest) throws ApiException {
+        ApiResponse<RegisterAgentResponse> localVarResp = registerAgentWithHttpInfo(orgId, registerAgentRequest);
         return localVarResp.getData();
     }
 
@@ -1533,6 +1542,7 @@ public class AgentsApi {
      * Register (or re-register) an agent
      * 
      * @param orgId  (required)
+     * @param registerAgentRequest  (required)
      * @return ApiResponse&lt;RegisterAgentResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1542,8 +1552,8 @@ public class AgentsApi {
         <tr><td> 200 </td><td> Registered agent </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<RegisterAgentResponse> registerAgentWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = registerAgentValidateBeforeCall(orgId, null);
+    public ApiResponse<RegisterAgentResponse> registerAgentWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterAgentRequest registerAgentRequest) throws ApiException {
+        okhttp3.Call localVarCall = registerAgentValidateBeforeCall(orgId, registerAgentRequest, null);
         Type localVarReturnType = new TypeToken<RegisterAgentResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1552,6 +1562,7 @@ public class AgentsApi {
      * Register (or re-register) an agent (asynchronously)
      * 
      * @param orgId  (required)
+     * @param registerAgentRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1562,9 +1573,9 @@ public class AgentsApi {
         <tr><td> 200 </td><td> Registered agent </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call registerAgentAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<RegisterAgentResponse> _callback) throws ApiException {
+    public okhttp3.Call registerAgentAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterAgentRequest registerAgentRequest, final ApiCallback<RegisterAgentResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = registerAgentValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = registerAgentValidateBeforeCall(orgId, registerAgentRequest, _callback);
         Type localVarReturnType = new TypeToken<RegisterAgentResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

@@ -39,7 +39,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="addUserGroup"></a>
 # **addUserGroup**
-> AddUserGroupResponse addUserGroup(orgId, userId)
+> AddUserGroupResponse addUserGroup(orgId, userId, addUserGroupRequest)
 
 Add a user to a group
 
@@ -71,8 +71,9 @@ public class Example {
     AdminUsersApi apiInstance = new AdminUsersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
+    AddUserGroupRequest addUserGroupRequest = new AddUserGroupRequest(); // AddUserGroupRequest | 
     try {
-      AddUserGroupResponse result = apiInstance.addUserGroup(orgId, userId);
+      AddUserGroupResponse result = apiInstance.addUserGroup(orgId, userId, addUserGroupRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminUsersApi#addUserGroup");
@@ -91,6 +92,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **userId** | **String**|  | |
+| **addUserGroupRequest** | [**AddUserGroupRequest**](AddUserGroupRequest.md)|  | |
 
 ### Return type
 
@@ -102,7 +104,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -112,11 +114,11 @@ public class Example {
 
 <a id="addUserPermission"></a>
 # **addUserPermission**
-> AddUserPermissionResponse addUserPermission(orgId, userId)
+> AddUserPermissionResponse addUserPermission(orgId, userId, addUserPermissionRequest)
 
 Assign a permission to a user
 
-Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization&#39;s own permissions needs &#x60;roles.assign-permissions&#x60; instead, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60; (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
 
 ### Example
 ```java
@@ -146,8 +148,9 @@ public class Example {
     AdminUsersApi apiInstance = new AdminUsersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
+    AddUserPermissionRequest addUserPermissionRequest = new AddUserPermissionRequest(); // AddUserPermissionRequest | 
     try {
-      AddUserPermissionResponse result = apiInstance.addUserPermission(orgId, userId);
+      AddUserPermissionResponse result = apiInstance.addUserPermission(orgId, userId, addUserPermissionRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminUsersApi#addUserPermission");
@@ -166,6 +169,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **userId** | **String**|  | |
+| **addUserPermissionRequest** | [**AddUserPermissionRequest**](AddUserPermissionRequest.md)|  | |
 
 ### Return type
 
@@ -177,7 +181,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -187,7 +191,7 @@ public class Example {
 
 <a id="addUserRole"></a>
 # **addUserRole**
-> AddUserRoleResponse addUserRole(orgId, userId)
+> AddUserRoleResponse addUserRole(orgId, userId, addUserRoleRequest)
 
 Assign a role to a user
 
@@ -219,8 +223,9 @@ public class Example {
     AdminUsersApi apiInstance = new AdminUsersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
+    AddUserRoleRequest addUserRoleRequest = new AddUserRoleRequest(); // AddUserRoleRequest | 
     try {
-      AddUserRoleResponse result = apiInstance.addUserRole(orgId, userId);
+      AddUserRoleResponse result = apiInstance.addUserRole(orgId, userId, addUserRoleRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminUsersApi#addUserRole");
@@ -239,6 +244,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **userId** | **String**|  | |
+| **addUserRoleRequest** | [**AddUserRoleRequest**](AddUserRoleRequest.md)|  | |
 
 ### Return type
 
@@ -250,7 +256,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -802,7 +808,7 @@ public class Example {
 
 <a id="createUser"></a>
 # **createUser**
-> CreateUserResponse createUser(orgId)
+> CreateUserResponse createUser(orgId, createUserRequest)
 
 Create a user
 
@@ -833,8 +839,9 @@ public class Example {
 
     AdminUsersApi apiInstance = new AdminUsersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    CreateUserRequest createUserRequest = new CreateUserRequest(); // CreateUserRequest | 
     try {
-      CreateUserResponse result = apiInstance.createUser(orgId);
+      CreateUserResponse result = apiInstance.createUser(orgId, createUserRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminUsersApi#createUser");
@@ -852,6 +859,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **createUserRequest** | [**CreateUserRequest**](CreateUserRequest.md)|  | |
 
 ### Return type
 
@@ -863,7 +871,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1407,7 +1415,7 @@ public class Example {
 
 <a id="patchUser"></a>
 # **patchUser**
-> UpdateUserResponse patchUser(orgId, userId)
+> UpdateUserResponse patchUser(orgId, userId, updateUserRequest)
 
 Update a user
 
@@ -1441,8 +1449,9 @@ public class Example {
     AdminUsersApi apiInstance = new AdminUsersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
+    UpdateUserRequest updateUserRequest = new UpdateUserRequest(); // UpdateUserRequest | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
     try {
-      UpdateUserResponse result = apiInstance.patchUser(orgId, userId);
+      UpdateUserResponse result = apiInstance.patchUser(orgId, userId, updateUserRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminUsersApi#patchUser");
@@ -1461,6 +1470,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **userId** | **String**|  | |
+| **updateUserRequest** | [**UpdateUserRequest**](UpdateUserRequest.md)| Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. | |
 
 ### Return type
 
@@ -1472,7 +1482,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1857,7 +1867,7 @@ public class Example {
 
 <a id="setUserPassword"></a>
 # **setUserPassword**
-> SetUserPasswordPostResponse setUserPassword(orgId, userId)
+> SetUserPasswordPostResponse setUserPassword(orgId, userId, setUserPasswordPostRequest)
 
 Set a user&#39;s password
 
@@ -1891,8 +1901,9 @@ public class Example {
     AdminUsersApi apiInstance = new AdminUsersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
+    SetUserPasswordPostRequest setUserPasswordPostRequest = new SetUserPasswordPostRequest(); // SetUserPasswordPostRequest | 
     try {
-      SetUserPasswordPostResponse result = apiInstance.setUserPassword(orgId, userId);
+      SetUserPasswordPostResponse result = apiInstance.setUserPassword(orgId, userId, setUserPasswordPostRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminUsersApi#setUserPassword");
@@ -1911,6 +1922,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **userId** | **String**|  | |
+| **setUserPasswordPostRequest** | [**SetUserPasswordPostRequest**](SetUserPasswordPostRequest.md)|  | |
 
 ### Return type
 
@@ -1922,7 +1934,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1934,7 +1946,7 @@ public class Example {
 
 <a id="setUserPasswordPost"></a>
 # **setUserPasswordPost**
-> SetUserPasswordPostResponse setUserPasswordPost(orgId, userId)
+> SetUserPasswordPostResponse setUserPasswordPost(orgId, userId, setUserPasswordPostRequest)
 
 Set a user&#39;s password
 
@@ -1968,8 +1980,9 @@ public class Example {
     AdminUsersApi apiInstance = new AdminUsersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
+    SetUserPasswordPostRequest setUserPasswordPostRequest = new SetUserPasswordPostRequest(); // SetUserPasswordPostRequest | 
     try {
-      SetUserPasswordPostResponse result = apiInstance.setUserPasswordPost(orgId, userId);
+      SetUserPasswordPostResponse result = apiInstance.setUserPasswordPost(orgId, userId, setUserPasswordPostRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminUsersApi#setUserPasswordPost");
@@ -1988,6 +2001,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **userId** | **String**|  | |
+| **setUserPasswordPostRequest** | [**SetUserPasswordPostRequest**](SetUserPasswordPostRequest.md)|  | |
 
 ### Return type
 
@@ -1999,7 +2013,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2157,7 +2171,7 @@ public class Example {
 
 <a id="updateUser"></a>
 # **updateUser**
-> UpdateUserResponse updateUser(orgId, userId)
+> UpdateUserResponse updateUser(orgId, userId, updateUserRequest)
 
 Update a user
 
@@ -2191,8 +2205,9 @@ public class Example {
     AdminUsersApi apiInstance = new AdminUsersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
+    UpdateUserRequest updateUserRequest = new UpdateUserRequest(); // UpdateUserRequest | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
     try {
-      UpdateUserResponse result = apiInstance.updateUser(orgId, userId);
+      UpdateUserResponse result = apiInstance.updateUser(orgId, userId, updateUserRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminUsersApi#updateUser");
@@ -2211,6 +2226,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **userId** | **String**|  | |
+| **updateUserRequest** | [**UpdateUserRequest**](UpdateUserRequest.md)| Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. | |
 
 ### Return type
 
@@ -2222,7 +2238,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2235,7 +2251,7 @@ public class Example {
 
 <a id="updateUserGroups"></a>
 # **updateUserGroups**
-> UpdateUserGroupsResponse updateUserGroups(orgId, userId)
+> UpdateUserGroupsResponse updateUserGroups(orgId, userId, updateUserGroupsRequest)
 
 Replace a user&#39;s groups
 
@@ -2267,8 +2283,9 @@ public class Example {
     AdminUsersApi apiInstance = new AdminUsersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
+    UpdateUserGroupsRequest updateUserGroupsRequest = new UpdateUserGroupsRequest(); // UpdateUserGroupsRequest | 
     try {
-      UpdateUserGroupsResponse result = apiInstance.updateUserGroups(orgId, userId);
+      UpdateUserGroupsResponse result = apiInstance.updateUserGroups(orgId, userId, updateUserGroupsRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminUsersApi#updateUserGroups");
@@ -2287,6 +2304,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **userId** | **String**|  | |
+| **updateUserGroupsRequest** | [**UpdateUserGroupsRequest**](UpdateUserGroupsRequest.md)|  | |
 
 ### Return type
 
@@ -2298,7 +2316,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2308,7 +2326,7 @@ public class Example {
 
 <a id="updateUserRoles"></a>
 # **updateUserRoles**
-> UpdateUserRolesResponse updateUserRoles(orgId, userId)
+> UpdateUserRolesResponse updateUserRoles(orgId, userId, adminGroupsUpdateRolesRequest)
 
 Replace a user&#39;s roles
 
@@ -2340,8 +2358,9 @@ public class Example {
     AdminUsersApi apiInstance = new AdminUsersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
+    AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest = new AdminGroupsUpdateRolesRequest(); // AdminGroupsUpdateRolesRequest | 
     try {
-      UpdateUserRolesResponse result = apiInstance.updateUserRoles(orgId, userId);
+      UpdateUserRolesResponse result = apiInstance.updateUserRoles(orgId, userId, adminGroupsUpdateRolesRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminUsersApi#updateUserRoles");
@@ -2360,6 +2379,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **userId** | **String**|  | |
+| **adminGroupsUpdateRolesRequest** | [**AdminGroupsUpdateRolesRequest**](AdminGroupsUpdateRolesRequest.md)|  | |
 
 ### Return type
 
@@ -2371,7 +2391,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

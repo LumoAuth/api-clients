@@ -11,12 +11,14 @@ Method | HTTP request | Description
 [**AdminMcpServersGrantsRemove**](AdminMcpAPI.md#AdminMcpServersGrantsRemove) | **Delete** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Remove every grant of an agent on an MCP server
 [**AdminMcpServersGrantsSet**](AdminMcpAPI.md#AdminMcpServersGrantsSet) | **Put** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Set the tools of an MCP server that an agent may call
 [**AdminMcpServersList**](AdminMcpAPI.md#AdminMcpServersList) | **Get** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers
+[**PatchAdminMcpServersUpdate**](AdminMcpAPI.md#PatchAdminMcpServersUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server
+[**PutAdminMcpServersUpdate**](AdminMcpAPI.md#PutAdminMcpServersUpdate) | **Put** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server (same as PATCH: only the fields that are sent change)
 
 
 
 ## AdminMcpServersCreate
 
-> AdminMcpServersCreateResponse AdminMcpServersCreate(ctx, orgId).Execute()
+> AdminMcpServersCreateResponse AdminMcpServersCreate(ctx, orgId).McpServerWrite(mcpServerWrite).Execute()
 
 Register an MCP server
 
@@ -36,10 +38,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	mcpServerWrite := *openapiclient.NewMcpServerWrite() // McpServerWrite | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminMcpAPI.AdminMcpServersCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminMcpAPI.AdminMcpServersCreate(context.Background(), orgId).McpServerWrite(mcpServerWrite).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminMcpAPI.AdminMcpServersCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -65,6 +68,7 @@ Other parameters are passed through a pointer to a apiAdminMcpServersCreateReque
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **mcpServerWrite** | [**McpServerWrite**](McpServerWrite.md) |  | 
 
 ### Return type
 
@@ -76,7 +80,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -510,6 +514,154 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PatchAdminMcpServersUpdate
+
+> AdminMcpServersCreateResponse PatchAdminMcpServersUpdate(ctx, orgId, serverId).McpServerWrite(mcpServerWrite).Execute()
+
+Update an MCP server
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	serverId := "serverId_example" // string | 
+	mcpServerWrite := *openapiclient.NewMcpServerWrite() // McpServerWrite | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AdminMcpAPI.PatchAdminMcpServersUpdate(context.Background(), orgId, serverId).McpServerWrite(mcpServerWrite).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AdminMcpAPI.PatchAdminMcpServersUpdate``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PatchAdminMcpServersUpdate`: AdminMcpServersCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminMcpAPI.PatchAdminMcpServersUpdate`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+**serverId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPatchAdminMcpServersUpdateRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **mcpServerWrite** | [**McpServerWrite**](McpServerWrite.md) |  | 
+
+### Return type
+
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PutAdminMcpServersUpdate
+
+> AdminMcpServersCreateResponse PutAdminMcpServersUpdate(ctx, orgId, serverId).McpServerWrite(mcpServerWrite).Execute()
+
+Update an MCP server (same as PATCH: only the fields that are sent change)
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	serverId := "serverId_example" // string | 
+	mcpServerWrite := *openapiclient.NewMcpServerWrite() // McpServerWrite | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AdminMcpAPI.PutAdminMcpServersUpdate(context.Background(), orgId, serverId).McpServerWrite(mcpServerWrite).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AdminMcpAPI.PutAdminMcpServersUpdate``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PutAdminMcpServersUpdate`: AdminMcpServersCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminMcpAPI.PutAdminMcpServersUpdate`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+**serverId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPutAdminMcpServersUpdateRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **mcpServerWrite** | [**McpServerWrite**](McpServerWrite.md) |  | 
+
+### Return type
+
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

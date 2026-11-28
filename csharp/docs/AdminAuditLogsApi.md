@@ -4,7 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**AdminAuditLogsActions**](AdminAuditLogsApi.md#adminauditlogsactions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the tenant |
+| [**AdminAuditLogsActions**](AdminAuditLogsApi.md#adminauditlogsactions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the organization |
 | [**AdminAuditLogsExport**](AdminAuditLogsApi.md#adminauditlogsexport) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV (default) or JSON |
 | [**AdminAuditLogsGet**](AdminAuditLogsApi.md#adminauditlogsget) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get an audit log entry |
 | [**AdminAuditLogsList**](AdminAuditLogsApi.md#adminauditlogslist) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit log entries |
@@ -17,7 +17,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 # **AdminAuditLogsActions**
 > AdminAuditLogsActionsResponse AdminAuditLogsActions (string orgId)
 
-List the distinct audit action types recorded for the tenant
+List the distinct audit action types recorded for the organization
 
 ### Example
 ```csharp
@@ -51,7 +51,7 @@ namespace Example
 
             try
             {
-                // List the distinct audit action types recorded for the tenant
+                // List the distinct audit action types recorded for the organization
                 AdminAuditLogsActionsResponse result = apiInstance.AdminAuditLogsActions(orgId);
                 Debug.WriteLine(result);
             }
@@ -72,7 +72,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List the distinct audit action types recorded for the tenant
+    // List the distinct audit action types recorded for the organization
     ApiResponse<AdminAuditLogsActionsResponse> response = apiInstance.AdminAuditLogsActionsWithHttpInfo(orgId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
@@ -115,7 +115,7 @@ catch (ApiException e)
 
 <a id="adminauditlogsexport"></a>
 # **AdminAuditLogsExport**
-> string AdminAuditLogsExport (string orgId)
+> string AdminAuditLogsExport (string orgId, string? format = null, string? eventType = null, string? action = null, string? actorId = null, string? targetType = null, string? targetId = null, string? severity = null, string? status = null, string? ipAddress = null, string? search = null, string? traceId = null, DateTime? from = null, DateTime? to = null)
 
 Export audit logs as CSV (default) or JSON
 
@@ -150,11 +150,24 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminAuditLogsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var format = "csv";  // string? | csv (default) or json. (optional)  (default to csv)
+            var eventType = "eventType_example";  // string? | Exact event type, for example user.login. (optional) 
+            var action = "action_example";  // string? | The short verb of the event (as GET /audit-logs/actions lists them). (optional) 
+            var actorId = "actorId_example";  // string? | Who acted: a user, API key or agent id. Also accepted as userId. (optional) 
+            var targetType = "targetType_example";  // string? | Kind of the subject of the event. Also accepted as resourceType. (optional) 
+            var targetId = "targetId_example";  // string? | The subject of the event, for example the user of a login.failed entry. (optional) 
+            var severity = "debug";  // string? |  (optional) 
+            var status = "success";  // string? | Result of the event. (optional) 
+            var ipAddress = "ipAddress_example";  // string? |  (optional) 
+            var search = "search_example";  // string? | Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional) 
+            var traceId = "traceId_example";  // string? | Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional) 
+            var from = DateTime.Parse("2013-10-20T19:20:30+01:00");  // DateTime? | Entries at or after this time (ISO 8601). Also accepted as startDate. (optional) 
+            var to = DateTime.Parse("2013-10-20T19:20:30+01:00");  // DateTime? | Entries at or before this time (ISO 8601). Also accepted as endDate. (optional) 
 
             try
             {
                 // Export audit logs as CSV (default) or JSON
-                string result = apiInstance.AdminAuditLogsExport(orgId);
+                string result = apiInstance.AdminAuditLogsExport(orgId, format, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -175,7 +188,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Export audit logs as CSV (default) or JSON
-    ApiResponse<string> response = apiInstance.AdminAuditLogsExportWithHttpInfo(orgId);
+    ApiResponse<string> response = apiInstance.AdminAuditLogsExportWithHttpInfo(orgId, format, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -193,6 +206,19 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **format** | **string?** | csv (default) or json. | [optional] [default to csv] |
+| **eventType** | **string?** | Exact event type, for example user.login. | [optional]  |
+| **action** | **string?** | The short verb of the event (as GET /audit-logs/actions lists them). | [optional]  |
+| **actorId** | **string?** | Who acted: a user, API key or agent id. Also accepted as userId. | [optional]  |
+| **targetType** | **string?** | Kind of the subject of the event. Also accepted as resourceType. | [optional]  |
+| **targetId** | **string?** | The subject of the event, for example the user of a login.failed entry. | [optional]  |
+| **severity** | **string?** |  | [optional]  |
+| **status** | **string?** | Result of the event. | [optional]  |
+| **ipAddress** | **string?** |  | [optional]  |
+| **search** | **string?** | Text in the message, error message, event type, actor id or name, target name, client id or trace ID. | [optional]  |
+| **traceId** | **string?** | Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). | [optional]  |
+| **from** | **DateTime?** | Entries at or after this time (ISO 8601). Also accepted as startDate. | [optional]  |
+| **to** | **DateTime?** | Entries at or before this time (ISO 8601). Also accepted as endDate. | [optional]  |
 
 ### Return type
 
@@ -320,7 +346,7 @@ catch (ApiException e)
 
 <a id="adminauditlogslist"></a>
 # **AdminAuditLogsList**
-> AdminAuditLogsListResponse AdminAuditLogsList (string orgId)
+> AdminAuditLogsListResponse AdminAuditLogsList (string orgId, int? page = null, int? limit = null, string? eventType = null, string? action = null, string? actorId = null, string? targetType = null, string? targetId = null, string? severity = null, string? status = null, string? ipAddress = null, string? search = null, string? traceId = null, DateTime? from = null, DateTime? to = null)
 
 List audit log entries
 
@@ -353,11 +379,25 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminAuditLogsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var page = 1;  // int? |  (optional)  (default to 1)
+            var limit = 25;  // int? |  (optional)  (default to 25)
+            var eventType = "eventType_example";  // string? | Exact event type, for example user.login. (optional) 
+            var action = "action_example";  // string? | The short verb of the event (as GET /audit-logs/actions lists them). (optional) 
+            var actorId = "actorId_example";  // string? | Who acted: a user, API key or agent id. Also accepted as userId. (optional) 
+            var targetType = "targetType_example";  // string? | Kind of the subject of the event. Also accepted as resourceType. (optional) 
+            var targetId = "targetId_example";  // string? | The subject of the event, for example the user of a login.failed entry. (optional) 
+            var severity = "debug";  // string? |  (optional) 
+            var status = "success";  // string? | Result of the event. (optional) 
+            var ipAddress = "ipAddress_example";  // string? |  (optional) 
+            var search = "search_example";  // string? | Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional) 
+            var traceId = "traceId_example";  // string? | Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional) 
+            var from = DateTime.Parse("2013-10-20T19:20:30+01:00");  // DateTime? | Entries at or after this time (ISO 8601). Also accepted as startDate. (optional) 
+            var to = DateTime.Parse("2013-10-20T19:20:30+01:00");  // DateTime? | Entries at or before this time (ISO 8601). Also accepted as endDate. (optional) 
 
             try
             {
                 // List audit log entries
-                AdminAuditLogsListResponse result = apiInstance.AdminAuditLogsList(orgId);
+                AdminAuditLogsListResponse result = apiInstance.AdminAuditLogsList(orgId, page, limit, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -378,7 +418,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // List audit log entries
-    ApiResponse<AdminAuditLogsListResponse> response = apiInstance.AdminAuditLogsListWithHttpInfo(orgId);
+    ApiResponse<AdminAuditLogsListResponse> response = apiInstance.AdminAuditLogsListWithHttpInfo(orgId, page, limit, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -396,6 +436,20 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **page** | **int?** |  | [optional] [default to 1] |
+| **limit** | **int?** |  | [optional] [default to 25] |
+| **eventType** | **string?** | Exact event type, for example user.login. | [optional]  |
+| **action** | **string?** | The short verb of the event (as GET /audit-logs/actions lists them). | [optional]  |
+| **actorId** | **string?** | Who acted: a user, API key or agent id. Also accepted as userId. | [optional]  |
+| **targetType** | **string?** | Kind of the subject of the event. Also accepted as resourceType. | [optional]  |
+| **targetId** | **string?** | The subject of the event, for example the user of a login.failed entry. | [optional]  |
+| **severity** | **string?** |  | [optional]  |
+| **status** | **string?** | Result of the event. | [optional]  |
+| **ipAddress** | **string?** |  | [optional]  |
+| **search** | **string?** | Text in the message, error message, event type, actor id or name, target name, client id or trace ID. | [optional]  |
+| **traceId** | **string?** | Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). | [optional]  |
+| **from** | **DateTime?** | Entries at or after this time (ISO 8601). Also accepted as startDate. | [optional]  |
+| **to** | **DateTime?** | Entries at or before this time (ISO 8601). Also accepted as endDate. | [optional]  |
 
 ### Return type
 
@@ -620,7 +674,7 @@ catch (ApiException e)
 
 <a id="patchadminauditlogsretentionupdate"></a>
 # **PatchAdminAuditLogsRetentionUpdate**
-> AdminAuditLogsRetentionResponse PatchAdminAuditLogsRetentionUpdate (string orgId)
+> AdminAuditLogsRetentionResponse PatchAdminAuditLogsRetentionUpdate (string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest)
 
 Update audit log retention settings
 
@@ -655,11 +709,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminAuditLogsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var putAdminAuditLogsRetentionUpdateRequest = new PutAdminAuditLogsRetentionUpdateRequest(); // PutAdminAuditLogsRetentionUpdateRequest | 
 
             try
             {
                 // Update audit log retention settings
-                AdminAuditLogsRetentionResponse result = apiInstance.PatchAdminAuditLogsRetentionUpdate(orgId);
+                AdminAuditLogsRetentionResponse result = apiInstance.PatchAdminAuditLogsRetentionUpdate(orgId, putAdminAuditLogsRetentionUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -680,7 +735,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update audit log retention settings
-    ApiResponse<AdminAuditLogsRetentionResponse> response = apiInstance.PatchAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+    ApiResponse<AdminAuditLogsRetentionResponse> response = apiInstance.PatchAdminAuditLogsRetentionUpdateWithHttpInfo(orgId, putAdminAuditLogsRetentionUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -698,6 +753,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **putAdminAuditLogsRetentionUpdateRequest** | [**PutAdminAuditLogsRetentionUpdateRequest**](PutAdminAuditLogsRetentionUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -709,7 +765,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -722,7 +778,7 @@ catch (ApiException e)
 
 <a id="putadminauditlogsretentionupdate"></a>
 # **PutAdminAuditLogsRetentionUpdate**
-> AdminAuditLogsRetentionResponse PutAdminAuditLogsRetentionUpdate (string orgId)
+> AdminAuditLogsRetentionResponse PutAdminAuditLogsRetentionUpdate (string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest)
 
 Update audit log retention settings
 
@@ -757,11 +813,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminAuditLogsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var putAdminAuditLogsRetentionUpdateRequest = new PutAdminAuditLogsRetentionUpdateRequest(); // PutAdminAuditLogsRetentionUpdateRequest | 
 
             try
             {
                 // Update audit log retention settings
-                AdminAuditLogsRetentionResponse result = apiInstance.PutAdminAuditLogsRetentionUpdate(orgId);
+                AdminAuditLogsRetentionResponse result = apiInstance.PutAdminAuditLogsRetentionUpdate(orgId, putAdminAuditLogsRetentionUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -782,7 +839,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update audit log retention settings
-    ApiResponse<AdminAuditLogsRetentionResponse> response = apiInstance.PutAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+    ApiResponse<AdminAuditLogsRetentionResponse> response = apiInstance.PutAdminAuditLogsRetentionUpdateWithHttpInfo(orgId, putAdminAuditLogsRetentionUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -800,6 +857,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **putAdminAuditLogsRetentionUpdateRequest** | [**PutAdminAuditLogsRetentionUpdateRequest**](PutAdminAuditLogsRetentionUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -811,7 +869,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

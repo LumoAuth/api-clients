@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -29,7 +29,7 @@ class CreateTaskRequest(BaseModel):
     """ # noqa: E501
     name: Optional[StrictStr] = Field(default=None, description="Optional human-readable task name.")
     type: Optional[StrictStr] = Field(default=None, description="Optional task type for categorization.")
-    parent_task_id: Optional[StrictStr] = Field(default=None, description="Optional parent task id for nested agent chains.")
+    parent_task_id: Optional[StrictStr] = Field(default=None, description="Optional. The task_id of an open task of this organization, for a task that is one step of that task. The new task expires no later than its parent and ends when the parent ends. A chain holds at most 5 tasks.")
     on_behalf_of: Optional[StrictStr] = Field(default=None, description="Optional delegation user email (requires delegation permission).")
     __properties: ClassVar[List[str]] = ["name", "type", "parent_task_id", "on_behalf_of"]
 

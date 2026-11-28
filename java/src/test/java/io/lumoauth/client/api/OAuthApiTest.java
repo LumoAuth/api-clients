@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -20,12 +20,15 @@ import io.lumoauth.client.model.CheckEmailFirstResponse;
 import io.lumoauth.client.model.DeviceAuthorizationResponse;
 import io.lumoauth.client.model.IntrospectResponse;
 import io.lumoauth.client.model.ParResponse;
+import io.lumoauth.client.model.RegisterClientRequest;
 import io.lumoauth.client.model.RegisterClientResponse;
 import io.lumoauth.client.model.RegisteredClientMetadata;
 import io.lumoauth.client.model.RequestMagicLinkRequest;
 import io.lumoauth.client.model.RequestMagicLinkResponse;
+import io.lumoauth.client.model.SubmitLoginJsonRequest;
 import io.lumoauth.client.model.SubmitLoginJsonResponse;
 import io.lumoauth.client.model.TokenResponse;
+import java.net.URI;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -66,7 +69,20 @@ public class OAuthApiTest {
     @Test
     public void backchannelAuthorizeTest() throws ApiException {
         String orgId = null;
-        BackchannelAuthorizeResponse response = api.backchannelAuthorize(orgId);
+        String scope = null;
+        String loginHint = null;
+        String loginHintToken = null;
+        String idTokenHint = null;
+        String bindingMessage = null;
+        String acrValues = null;
+        Integer requestedExpiry = null;
+        String clientNotificationToken = null;
+        String authorizationDetails = null;
+        String clientId = null;
+        String clientSecret = null;
+        String clientAssertionType = null;
+        String clientAssertion = null;
+        BackchannelAuthorizeResponse response = api.backchannelAuthorize(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion);
         // TODO: test validations
     }
 
@@ -88,14 +104,20 @@ public class OAuthApiTest {
     /**
      * Device authorization request (RFC 8628)
      *
-     * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+     * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void deviceAuthorizationTest() throws ApiException {
         String orgId = null;
-        DeviceAuthorizationResponse response = api.deviceAuthorization(orgId);
+        String clientId = null;
+        String clientSecret = null;
+        String clientAssertionType = null;
+        String clientAssertion = null;
+        String scope = null;
+        URI resource = null;
+        DeviceAuthorizationResponse response = api.deviceAuthorization(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource);
         // TODO: test validations
     }
 
@@ -152,7 +174,13 @@ public class OAuthApiTest {
     @Test
     public void introspectTest() throws ApiException {
         String orgId = null;
-        IntrospectResponse response = api.introspect(orgId);
+        String token = null;
+        String tokenTypeHint = null;
+        String clientId = null;
+        String clientSecret = null;
+        String clientAssertionType = null;
+        String clientAssertion = null;
+        IntrospectResponse response = api.introspect(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
         // TODO: test validations
     }
 
@@ -166,7 +194,22 @@ public class OAuthApiTest {
     @Test
     public void parTest() throws ApiException {
         String orgId = null;
-        ParResponse response = api.par(orgId);
+        String responseType = null;
+        URI redirectUri = null;
+        String scope = null;
+        String state = null;
+        String nonce = null;
+        String codeChallenge = null;
+        String codeChallengeMethod = null;
+        String request = null;
+        URI resource = null;
+        String prompt = null;
+        String loginHint = null;
+        String clientId = null;
+        String clientSecret = null;
+        String clientAssertionType = null;
+        String clientAssertion = null;
+        ParResponse response = api.par(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion);
         // TODO: test validations
     }
 
@@ -180,7 +223,8 @@ public class OAuthApiTest {
     @Test
     public void registerClientTest() throws ApiException {
         String orgId = null;
-        RegisterClientResponse response = api.registerClient(orgId);
+        RegisterClientRequest registerClientRequest = null;
+        RegisterClientResponse response = api.registerClient(orgId, registerClientRequest);
         // TODO: test validations
     }
 
@@ -209,7 +253,13 @@ public class OAuthApiTest {
     @Test
     public void revokeTest() throws ApiException {
         String orgId = null;
-        Object response = api.revoke(orgId);
+        String token = null;
+        String tokenTypeHint = null;
+        String clientId = null;
+        String clientSecret = null;
+        String clientAssertionType = null;
+        String clientAssertion = null;
+        Object response = api.revoke(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
         // TODO: test validations
     }
 
@@ -296,7 +346,8 @@ public class OAuthApiTest {
     @Test
     public void submitLoginJsonTest() throws ApiException {
         String orgId = null;
-        SubmitLoginJsonResponse response = api.submitLoginJson(orgId);
+        SubmitLoginJsonRequest submitLoginJsonRequest = null;
+        SubmitLoginJsonResponse response = api.submitLoginJson(orgId, submitLoginJsonRequest);
         // TODO: test validations
     }
 
@@ -324,7 +375,26 @@ public class OAuthApiTest {
     @Test
     public void tokenTest() throws ApiException {
         String orgId = null;
-        TokenResponse response = api.token(orgId);
+        String grantType = null;
+        String code = null;
+        URI redirectUri = null;
+        String codeVerifier = null;
+        String refreshToken = null;
+        String deviceCode = null;
+        String authReqId = null;
+        String scope = null;
+        URI resource = null;
+        String subjectToken = null;
+        String subjectTokenType = null;
+        String actorToken = null;
+        String actorTokenType = null;
+        String requestedTokenType = null;
+        String assertion = null;
+        String clientId = null;
+        String clientSecret = null;
+        String clientAssertionType = null;
+        String clientAssertion = null;
+        TokenResponse response = api.token(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion);
         // TODO: test validations
     }
 

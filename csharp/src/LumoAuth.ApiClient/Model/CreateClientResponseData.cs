@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -34,6 +34,105 @@ namespace LumoAuth.ApiClient.Model
     public partial class CreateClientResponseData : IValidatableObject
     {
         /// <summary>
+        /// Detailed responses only. Format of the access tokens that the client receives.
+        /// </summary>
+        /// <value>Detailed responses only. Format of the access tokens that the client receives.</value>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum AccessTokenFormatEnum
+        {
+            /// <summary>
+            /// Enum Opaque for value: opaque
+            /// </summary>
+            [EnumMember(Value = "opaque")]
+            Opaque = 1,
+
+            /// <summary>
+            /// Enum Jwt for value: jwt
+            /// </summary>
+            [EnumMember(Value = "jwt")]
+            Jwt = 2
+        }
+
+
+        /// <summary>
+        /// Detailed responses only. Format of the access tokens that the client receives.
+        /// </summary>
+        /// <value>Detailed responses only. Format of the access tokens that the client receives.</value>
+        [DataMember(Name = "accessTokenFormat", EmitDefaultValue = false)]
+        public AccessTokenFormatEnum? AccessTokenFormat { get; set; }
+        /// <summary>
+        /// Detailed responses only.
+        /// </summary>
+        /// <value>Detailed responses only.</value>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum TokenEndpointAuthMethodEnum
+        {
+            /// <summary>
+            /// Enum ClientSecretBasic for value: client_secret_basic
+            /// </summary>
+            [EnumMember(Value = "client_secret_basic")]
+            ClientSecretBasic = 1,
+
+            /// <summary>
+            /// Enum PrivateKeyJwt for value: private_key_jwt
+            /// </summary>
+            [EnumMember(Value = "private_key_jwt")]
+            PrivateKeyJwt = 2,
+
+            /// <summary>
+            /// Enum None for value: none
+            /// </summary>
+            [EnumMember(Value = "none")]
+            None = 3,
+
+            /// <summary>
+            /// Enum AttestJwtClientAuth for value: attest_jwt_client_auth
+            /// </summary>
+            [EnumMember(Value = "attest_jwt_client_auth")]
+            AttestJwtClientAuth = 4
+        }
+
+
+        /// <summary>
+        /// Detailed responses only.
+        /// </summary>
+        /// <value>Detailed responses only.</value>
+        [DataMember(Name = "tokenEndpointAuthMethod", EmitDefaultValue = false)]
+        public TokenEndpointAuthMethodEnum? TokenEndpointAuthMethod { get; set; }
+        /// <summary>
+        /// Detailed responses only. FAPI 2.0 security profile.
+        /// </summary>
+        /// <value>Detailed responses only. FAPI 2.0 security profile.</value>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum FapiModeEnum
+        {
+            /// <summary>
+            /// Enum Disabled for value: disabled
+            /// </summary>
+            [EnumMember(Value = "disabled")]
+            Disabled = 1,
+
+            /// <summary>
+            /// Enum Fapi2Baseline for value: fapi2_baseline
+            /// </summary>
+            [EnumMember(Value = "fapi2_baseline")]
+            Fapi2Baseline = 2,
+
+            /// <summary>
+            /// Enum Fapi2Advanced for value: fapi2_advanced
+            /// </summary>
+            [EnumMember(Value = "fapi2_advanced")]
+            Fapi2Advanced = 3
+        }
+
+
+        /// <summary>
+        /// Detailed responses only. FAPI 2.0 security profile.
+        /// </summary>
+        /// <value>Detailed responses only. FAPI 2.0 security profile.</value>
+        [DataMember(Name = "fapiMode", EmitDefaultValue = false)]
+        public FapiModeEnum? FapiMode { get; set; }
+        /// <summary>
         /// Initializes a new instance of the <see cref="CreateClientResponseData" /> class.
         /// </summary>
         [JsonConstructorAttribute]
@@ -53,9 +152,24 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="scopes">Detailed responses only.</param>
         /// <param name="grantTypes">Detailed responses only.</param>
         /// <param name="cibaEnabled">Detailed responses only. Whether the client may use CIBA (backchannel authentication)..</param>
+        /// <param name="allowedOrigins">Detailed responses only. Browser CORS origins (scheme://host[:port])..</param>
+        /// <param name="postLogoutRedirectUris">Detailed responses only. Addresses that the end-session endpoint may return to..</param>
+        /// <param name="frontchannelLogoutUri">Detailed responses only. OIDC Front-Channel Logout address..</param>
+        /// <param name="backchannelLogoutUri">Detailed responses only. OIDC Back-Channel Logout address..</param>
+        /// <param name="accessTokenFormat">Detailed responses only. Format of the access tokens that the client receives..</param>
+        /// <param name="tokenEndpointAuthMethod">Detailed responses only..</param>
+        /// <param name="jwksUri">Detailed responses only. https address of the client&#39;s public keys..</param>
+        /// <param name="jwks">Detailed responses only. The client&#39;s public keys, inline..</param>
+        /// <param name="fapiMode">Detailed responses only. FAPI 2.0 security profile..</param>
+        /// <param name="requirePar">Detailed responses only. The stored switch; a FAPI profile requires PAR whatever it says..</param>
+        /// <param name="dpopBoundAccessTokens">Detailed responses only. The stored switch; a FAPI profile requires DPoP whatever it says..</param>
+        /// <param name="attestationBasedAuthEnabled">Detailed responses only..</param>
+        /// <param name="attesterIssuer">Detailed responses only..</param>
+        /// <param name="attesterJwksUri">Detailed responses only..</param>
+        /// <param name="tokenExchangeEnabled">Detailed responses only. Whether the client may use token exchange (RFC 8693)..</param>
         /// <param name="secret">Plaintext client secret — returned only once, never retrievable again. Absent for a public client.</param>
         /// <param name="note">note.</param>
-        public CreateClientResponseData(int id = default, string clientId = default, string name = default, bool isConfidential = default, bool isPublic = default, bool isActive = default, bool requiresPkce = default, DateTime createdAt = default, List<string> redirectUris = default, List<string> scopes = default, List<string> grantTypes = default, bool cibaEnabled = default, string secret = default, string note = default)
+        public CreateClientResponseData(int id = default, string clientId = default, string name = default, bool isConfidential = default, bool isPublic = default, bool isActive = default, bool requiresPkce = default, DateTime createdAt = default, List<string> redirectUris = default, List<string> scopes = default, List<string> grantTypes = default, bool cibaEnabled = default, List<string> allowedOrigins = default, List<string> postLogoutRedirectUris = default, string frontchannelLogoutUri = default, string backchannelLogoutUri = default, AccessTokenFormatEnum? accessTokenFormat = default, TokenEndpointAuthMethodEnum? tokenEndpointAuthMethod = default, string jwksUri = default, Dictionary<string, Object> jwks = default, FapiModeEnum? fapiMode = default, bool requirePar = default, bool dpopBoundAccessTokens = default, bool attestationBasedAuthEnabled = default, string attesterIssuer = default, string attesterJwksUri = default, bool tokenExchangeEnabled = default, string secret = default, string note = default)
         {
             this.Id = id;
             // to ensure "clientId" is required (not null)
@@ -79,6 +193,21 @@ namespace LumoAuth.ApiClient.Model
             this.Scopes = scopes;
             this.GrantTypes = grantTypes;
             this.CibaEnabled = cibaEnabled;
+            this.AllowedOrigins = allowedOrigins;
+            this.PostLogoutRedirectUris = postLogoutRedirectUris;
+            this.FrontchannelLogoutUri = frontchannelLogoutUri;
+            this.BackchannelLogoutUri = backchannelLogoutUri;
+            this.AccessTokenFormat = accessTokenFormat;
+            this.TokenEndpointAuthMethod = tokenEndpointAuthMethod;
+            this.JwksUri = jwksUri;
+            this.Jwks = jwks;
+            this.FapiMode = fapiMode;
+            this.RequirePar = requirePar;
+            this.DpopBoundAccessTokens = dpopBoundAccessTokens;
+            this.AttestationBasedAuthEnabled = attestationBasedAuthEnabled;
+            this.AttesterIssuer = attesterIssuer;
+            this.AttesterJwksUri = attesterJwksUri;
+            this.TokenExchangeEnabled = tokenExchangeEnabled;
             this.Secret = secret;
             this.Note = note;
         }
@@ -160,6 +289,90 @@ namespace LumoAuth.ApiClient.Model
         public bool CibaEnabled { get; set; }
 
         /// <summary>
+        /// Detailed responses only. Browser CORS origins (scheme://host[:port]).
+        /// </summary>
+        /// <value>Detailed responses only. Browser CORS origins (scheme://host[:port]).</value>
+        [DataMember(Name = "allowedOrigins", EmitDefaultValue = false)]
+        public List<string> AllowedOrigins { get; set; }
+
+        /// <summary>
+        /// Detailed responses only. Addresses that the end-session endpoint may return to.
+        /// </summary>
+        /// <value>Detailed responses only. Addresses that the end-session endpoint may return to.</value>
+        [DataMember(Name = "postLogoutRedirectUris", EmitDefaultValue = false)]
+        public List<string> PostLogoutRedirectUris { get; set; }
+
+        /// <summary>
+        /// Detailed responses only. OIDC Front-Channel Logout address.
+        /// </summary>
+        /// <value>Detailed responses only. OIDC Front-Channel Logout address.</value>
+        [DataMember(Name = "frontchannelLogoutUri", EmitDefaultValue = true)]
+        public string FrontchannelLogoutUri { get; set; }
+
+        /// <summary>
+        /// Detailed responses only. OIDC Back-Channel Logout address.
+        /// </summary>
+        /// <value>Detailed responses only. OIDC Back-Channel Logout address.</value>
+        [DataMember(Name = "backchannelLogoutUri", EmitDefaultValue = true)]
+        public string BackchannelLogoutUri { get; set; }
+
+        /// <summary>
+        /// Detailed responses only. https address of the client&#39;s public keys.
+        /// </summary>
+        /// <value>Detailed responses only. https address of the client&#39;s public keys.</value>
+        [DataMember(Name = "jwksUri", EmitDefaultValue = true)]
+        public string JwksUri { get; set; }
+
+        /// <summary>
+        /// Detailed responses only. The client&#39;s public keys, inline.
+        /// </summary>
+        /// <value>Detailed responses only. The client&#39;s public keys, inline.</value>
+        [DataMember(Name = "jwks", EmitDefaultValue = true)]
+        public Dictionary<string, Object> Jwks { get; set; }
+
+        /// <summary>
+        /// Detailed responses only. The stored switch; a FAPI profile requires PAR whatever it says.
+        /// </summary>
+        /// <value>Detailed responses only. The stored switch; a FAPI profile requires PAR whatever it says.</value>
+        [DataMember(Name = "requirePar", EmitDefaultValue = true)]
+        public bool RequirePar { get; set; }
+
+        /// <summary>
+        /// Detailed responses only. The stored switch; a FAPI profile requires DPoP whatever it says.
+        /// </summary>
+        /// <value>Detailed responses only. The stored switch; a FAPI profile requires DPoP whatever it says.</value>
+        [DataMember(Name = "dpopBoundAccessTokens", EmitDefaultValue = true)]
+        public bool DpopBoundAccessTokens { get; set; }
+
+        /// <summary>
+        /// Detailed responses only.
+        /// </summary>
+        /// <value>Detailed responses only.</value>
+        [DataMember(Name = "attestationBasedAuthEnabled", EmitDefaultValue = true)]
+        public bool AttestationBasedAuthEnabled { get; set; }
+
+        /// <summary>
+        /// Detailed responses only.
+        /// </summary>
+        /// <value>Detailed responses only.</value>
+        [DataMember(Name = "attesterIssuer", EmitDefaultValue = true)]
+        public string AttesterIssuer { get; set; }
+
+        /// <summary>
+        /// Detailed responses only.
+        /// </summary>
+        /// <value>Detailed responses only.</value>
+        [DataMember(Name = "attesterJwksUri", EmitDefaultValue = true)]
+        public string AttesterJwksUri { get; set; }
+
+        /// <summary>
+        /// Detailed responses only. Whether the client may use token exchange (RFC 8693).
+        /// </summary>
+        /// <value>Detailed responses only. Whether the client may use token exchange (RFC 8693).</value>
+        [DataMember(Name = "tokenExchangeEnabled", EmitDefaultValue = true)]
+        public bool TokenExchangeEnabled { get; set; }
+
+        /// <summary>
         /// Plaintext client secret — returned only once, never retrievable again. Absent for a public client
         /// </summary>
         /// <value>Plaintext client secret — returned only once, never retrievable again. Absent for a public client</value>
@@ -195,6 +408,21 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Scopes: ").Append(Scopes).Append("\n");
             sb.Append("  GrantTypes: ").Append(GrantTypes).Append("\n");
             sb.Append("  CibaEnabled: ").Append(CibaEnabled).Append("\n");
+            sb.Append("  AllowedOrigins: ").Append(AllowedOrigins).Append("\n");
+            sb.Append("  PostLogoutRedirectUris: ").Append(PostLogoutRedirectUris).Append("\n");
+            sb.Append("  FrontchannelLogoutUri: ").Append(FrontchannelLogoutUri).Append("\n");
+            sb.Append("  BackchannelLogoutUri: ").Append(BackchannelLogoutUri).Append("\n");
+            sb.Append("  AccessTokenFormat: ").Append(AccessTokenFormat).Append("\n");
+            sb.Append("  TokenEndpointAuthMethod: ").Append(TokenEndpointAuthMethod).Append("\n");
+            sb.Append("  JwksUri: ").Append(JwksUri).Append("\n");
+            sb.Append("  Jwks: ").Append(Jwks).Append("\n");
+            sb.Append("  FapiMode: ").Append(FapiMode).Append("\n");
+            sb.Append("  RequirePar: ").Append(RequirePar).Append("\n");
+            sb.Append("  DpopBoundAccessTokens: ").Append(DpopBoundAccessTokens).Append("\n");
+            sb.Append("  AttestationBasedAuthEnabled: ").Append(AttestationBasedAuthEnabled).Append("\n");
+            sb.Append("  AttesterIssuer: ").Append(AttesterIssuer).Append("\n");
+            sb.Append("  AttesterJwksUri: ").Append(AttesterJwksUri).Append("\n");
+            sb.Append("  TokenExchangeEnabled: ").Append(TokenExchangeEnabled).Append("\n");
             sb.Append("  Secret: ").Append(Secret).Append("\n");
             sb.Append("  Note: ").Append(Note).Append("\n");
             sb.Append("}\n");

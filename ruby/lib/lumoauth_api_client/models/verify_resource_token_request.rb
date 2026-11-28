@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -15,6 +15,9 @@ require 'time'
 
 module LumoAuthApiClient
   class VerifyResourceTokenRequest
+    # Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
+    attr_accessor :resource
+
     # The resource token to validate.
     attr_accessor :resource_token
 
@@ -27,6 +30,7 @@ module LumoAuthApiClient
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'resource' => :'resource',
         :'resource_token' => :'resource_token',
         :'agent' => :'agent',
         :'agent_jkt' => :'agent_jkt'
@@ -46,6 +50,7 @@ module LumoAuthApiClient
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'resource' => :'String',
         :'resource_token' => :'String',
         :'agent' => :'String',
         :'agent_jkt' => :'String'
@@ -74,16 +79,28 @@ module LumoAuthApiClient
         h[k.to_sym] = v
       }
 
+      if attributes.key?(:'resource')
+        self.resource = attributes[:'resource']
+      else
+        self.resource = nil
+      end
+
       if attributes.key?(:'resource_token')
         self.resource_token = attributes[:'resource_token']
+      else
+        self.resource_token = nil
       end
 
       if attributes.key?(:'agent')
         self.agent = attributes[:'agent']
+      else
+        self.agent = nil
       end
 
       if attributes.key?(:'agent_jkt')
         self.agent_jkt = attributes[:'agent_jkt']
+      else
+        self.agent_jkt = nil
       end
     end
 
@@ -92,6 +109,22 @@ module LumoAuthApiClient
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @resource.nil?
+        invalid_properties.push('invalid value for "resource", resource cannot be nil.')
+      end
+
+      if @resource_token.nil?
+        invalid_properties.push('invalid value for "resource_token", resource_token cannot be nil.')
+      end
+
+      if @agent.nil?
+        invalid_properties.push('invalid value for "agent", agent cannot be nil.')
+      end
+
+      if @agent_jkt.nil?
+        invalid_properties.push('invalid value for "agent_jkt", agent_jkt cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -99,7 +132,51 @@ module LumoAuthApiClient
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if @resource.nil?
+      return false if @resource_token.nil?
+      return false if @agent.nil?
+      return false if @agent_jkt.nil?
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] resource Value to be assigned
+    def resource=(resource)
+      if resource.nil?
+        fail ArgumentError, 'resource cannot be nil'
+      end
+
+      @resource = resource
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] resource_token Value to be assigned
+    def resource_token=(resource_token)
+      if resource_token.nil?
+        fail ArgumentError, 'resource_token cannot be nil'
+      end
+
+      @resource_token = resource_token
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] agent Value to be assigned
+    def agent=(agent)
+      if agent.nil?
+        fail ArgumentError, 'agent cannot be nil'
+      end
+
+      @agent = agent
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] agent_jkt Value to be assigned
+    def agent_jkt=(agent_jkt)
+      if agent_jkt.nil?
+        fail ArgumentError, 'agent_jkt cannot be nil'
+      end
+
+      @agent_jkt = agent_jkt
     end
 
     # Checks equality by comparing each attribute.
@@ -107,6 +184,7 @@ module LumoAuthApiClient
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          resource == o.resource &&
           resource_token == o.resource_token &&
           agent == o.agent &&
           agent_jkt == o.agent_jkt
@@ -121,7 +199,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [resource_token, agent, agent_jkt].hash
+      [resource, resource_token, agent, agent_jkt].hash
     end
 
     # Builds the object from hash

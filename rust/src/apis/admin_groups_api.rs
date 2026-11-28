@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -107,10 +107,11 @@ pub enum PutAdminGroupsUpdateError {
 }
 
 
-pub async fn admin_groups_add_members(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<models::AdminGroupsCreateResponse, Error<AdminGroupsAddMembersError>> {
+pub async fn admin_groups_add_members(configuration: &configuration::Configuration, org_id: &str, group_id: &str, admin_groups_add_members_request: models::AdminGroupsAddMembersRequest) -> Result<models::AdminGroupsCreateResponse, Error<AdminGroupsAddMembersError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
+    let p_admin_groups_add_members_request = admin_groups_add_members_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/groups/{groupId}/members", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), groupId=crate::apis::urlencode(p_group_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -129,6 +130,7 @@ pub async fn admin_groups_add_members(configuration: &configuration::Configurati
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_groups_add_members_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -155,11 +157,12 @@ pub async fn admin_groups_add_members(configuration: &configuration::Configurati
     }
 }
 
-/// A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
-pub async fn admin_groups_add_role(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<models::MessageResponse, Error<AdminGroupsAddRoleError>> {
+/// A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+pub async fn admin_groups_add_role(configuration: &configuration::Configuration, org_id: &str, group_id: &str, admin_groups_add_role_request: models::AdminGroupsAddRoleRequest) -> Result<models::MessageResponse, Error<AdminGroupsAddRoleError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
+    let p_admin_groups_add_role_request = admin_groups_add_role_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), groupId=crate::apis::urlencode(p_group_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -178,6 +181,7 @@ pub async fn admin_groups_add_role(configuration: &configuration::Configuration,
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_groups_add_role_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -204,10 +208,11 @@ pub async fn admin_groups_add_role(configuration: &configuration::Configuration,
     }
 }
 
-/// Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
-pub async fn admin_groups_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminGroupsCreateResponse, Error<AdminGroupsCreateError>> {
+/// Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+pub async fn admin_groups_create(configuration: &configuration::Configuration, org_id: &str, admin_groups_create_request: models::AdminGroupsCreateRequest) -> Result<models::AdminGroupsCreateResponse, Error<AdminGroupsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_admin_groups_create_request = admin_groups_create_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/groups", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -226,6 +231,7 @@ pub async fn admin_groups_create(configuration: &configuration::Configuration, o
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_groups_create_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -589,11 +595,12 @@ pub async fn admin_groups_remove_role(configuration: &configuration::Configurati
     }
 }
 
-/// `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
-pub async fn admin_groups_update_roles(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<models::AdminGroupsCreateResponse, Error<AdminGroupsUpdateRolesError>> {
+/// `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+pub async fn admin_groups_update_roles(configuration: &configuration::Configuration, org_id: &str, group_id: &str, admin_groups_update_roles_request: models::AdminGroupsUpdateRolesRequest) -> Result<models::AdminGroupsCreateResponse, Error<AdminGroupsUpdateRolesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
+    let p_admin_groups_update_roles_request = admin_groups_update_roles_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), groupId=crate::apis::urlencode(p_group_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -612,6 +619,7 @@ pub async fn admin_groups_update_roles(configuration: &configuration::Configurat
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_groups_update_roles_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -638,10 +646,11 @@ pub async fn admin_groups_update_roles(configuration: &configuration::Configurat
     }
 }
 
-pub async fn patch_admin_groups_update(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<models::AdminGroupsCreateResponse, Error<PatchAdminGroupsUpdateError>> {
+pub async fn patch_admin_groups_update(configuration: &configuration::Configuration, org_id: &str, group_id: &str, put_admin_groups_update_request: models::PutAdminGroupsUpdateRequest) -> Result<models::AdminGroupsCreateResponse, Error<PatchAdminGroupsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
+    let p_put_admin_groups_update_request = put_admin_groups_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/groups/{groupId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), groupId=crate::apis::urlencode(p_group_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -660,6 +669,7 @@ pub async fn patch_admin_groups_update(configuration: &configuration::Configurat
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_groups_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -686,10 +696,11 @@ pub async fn patch_admin_groups_update(configuration: &configuration::Configurat
     }
 }
 
-pub async fn put_admin_groups_update(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<models::AdminGroupsCreateResponse, Error<PutAdminGroupsUpdateError>> {
+pub async fn put_admin_groups_update(configuration: &configuration::Configuration, org_id: &str, group_id: &str, put_admin_groups_update_request: models::PutAdminGroupsUpdateRequest) -> Result<models::AdminGroupsCreateResponse, Error<PutAdminGroupsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
+    let p_put_admin_groups_update_request = put_admin_groups_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/groups/{groupId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), groupId=crate::apis::urlencode(p_group_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -708,6 +719,7 @@ pub async fn put_admin_groups_update(configuration: &configuration::Configuratio
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_groups_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

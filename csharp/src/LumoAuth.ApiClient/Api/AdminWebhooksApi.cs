@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -36,8 +36,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminWebhooksCreateRequest"></param>
         /// <returns>AdminWebhooksCreateResponse</returns>
-        AdminWebhooksCreateResponse AdminWebhooksCreate(string orgId);
+        AdminWebhooksCreateResponse AdminWebhooksCreate(string orgId, AdminWebhooksCreateRequest adminWebhooksCreateRequest);
 
         /// <summary>
         /// Create a webhook
@@ -47,8 +48,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminWebhooksCreateRequest"></param>
         /// <returns>ApiResponse of AdminWebhooksCreateResponse</returns>
-        ApiResponse<AdminWebhooksCreateResponse> AdminWebhooksCreateWithHttpInfo(string orgId);
+        ApiResponse<AdminWebhooksCreateResponse> AdminWebhooksCreateWithHttpInfo(string orgId, AdminWebhooksCreateRequest adminWebhooksCreateRequest);
         /// <summary>
         /// Delete a webhook
         /// </summary>
@@ -184,7 +186,7 @@ namespace LumoAuth.ApiClient.Api
         /// List webhooks
         /// </summary>
         /// <remarks>
-        /// Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
+        /// Paginated list of the organization&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -195,7 +197,7 @@ namespace LumoAuth.ApiClient.Api
         /// List webhooks
         /// </summary>
         /// <remarks>
-        /// Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
+        /// Paginated list of the organization&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -251,7 +253,7 @@ namespace LumoAuth.ApiClient.Api
         /// Start a webhook tunnel
         /// </summary>
         /// <remarks>
-        /// Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+        /// Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;, with its own signing secret, returned once as &#x60;signing_secret&#x60;. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -262,7 +264,7 @@ namespace LumoAuth.ApiClient.Api
         /// Start a webhook tunnel
         /// </summary>
         /// <remarks>
-        /// Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+        /// Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;, with its own signing secret, returned once as &#x60;signing_secret&#x60;. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -360,8 +362,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <returns>PutAdminWebhooksUpdateResponse</returns>
-        PutAdminWebhooksUpdateResponse PatchAdminWebhooksUpdate(string orgId, string webhookId);
+        PutAdminWebhooksUpdateResponse PatchAdminWebhooksUpdate(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest);
 
         /// <summary>
         /// Partially update a webhook
@@ -372,8 +375,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminWebhooksUpdateResponse</returns>
-        ApiResponse<PutAdminWebhooksUpdateResponse> PatchAdminWebhooksUpdateWithHttpInfo(string orgId, string webhookId);
+        ApiResponse<PutAdminWebhooksUpdateResponse> PatchAdminWebhooksUpdateWithHttpInfo(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest);
         /// <summary>
         /// Update a webhook
         /// </summary>
@@ -383,8 +387,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <returns>PutAdminWebhooksUpdateResponse</returns>
-        PutAdminWebhooksUpdateResponse PutAdminWebhooksUpdate(string orgId, string webhookId);
+        PutAdminWebhooksUpdateResponse PutAdminWebhooksUpdate(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest);
 
         /// <summary>
         /// Update a webhook
@@ -395,8 +400,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminWebhooksUpdateResponse</returns>
-        ApiResponse<PutAdminWebhooksUpdateResponse> PutAdminWebhooksUpdateWithHttpInfo(string orgId, string webhookId);
+        ApiResponse<PutAdminWebhooksUpdateResponse> PutAdminWebhooksUpdateWithHttpInfo(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest);
         #endregion Synchronous Operations
     }
 
@@ -414,9 +420,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminWebhooksCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminWebhooksCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminWebhooksCreateResponse> AdminWebhooksCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminWebhooksCreateResponse> AdminWebhooksCreateAsync(string orgId, AdminWebhooksCreateRequest adminWebhooksCreateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a webhook
@@ -426,9 +433,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminWebhooksCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminWebhooksCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminWebhooksCreateResponse>> AdminWebhooksCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminWebhooksCreateResponse>> AdminWebhooksCreateWithHttpInfoAsync(string orgId, AdminWebhooksCreateRequest adminWebhooksCreateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete a webhook
         /// </summary>
@@ -585,7 +593,7 @@ namespace LumoAuth.ApiClient.Api
         /// List webhooks
         /// </summary>
         /// <remarks>
-        /// Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
+        /// Paginated list of the organization&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -597,7 +605,7 @@ namespace LumoAuth.ApiClient.Api
         /// List webhooks
         /// </summary>
         /// <remarks>
-        /// Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
+        /// Paginated list of the organization&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -658,7 +666,7 @@ namespace LumoAuth.ApiClient.Api
         /// Start a webhook tunnel
         /// </summary>
         /// <remarks>
-        /// Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+        /// Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;, with its own signing secret, returned once as &#x60;signing_secret&#x60;. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -670,7 +678,7 @@ namespace LumoAuth.ApiClient.Api
         /// Start a webhook tunnel
         /// </summary>
         /// <remarks>
-        /// Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+        /// Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;, with its own signing secret, returned once as &#x60;signing_secret&#x60;. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -786,9 +794,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminWebhooksUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminWebhooksUpdateResponse> PatchAdminWebhooksUpdateAsync(string orgId, string webhookId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminWebhooksUpdateResponse> PatchAdminWebhooksUpdateAsync(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Partially update a webhook
@@ -799,9 +808,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminWebhooksUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminWebhooksUpdateResponse>> PatchAdminWebhooksUpdateWithHttpInfoAsync(string orgId, string webhookId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminWebhooksUpdateResponse>> PatchAdminWebhooksUpdateWithHttpInfoAsync(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update a webhook
         /// </summary>
@@ -811,9 +821,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminWebhooksUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminWebhooksUpdateResponse> PutAdminWebhooksUpdateAsync(string orgId, string webhookId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminWebhooksUpdateResponse> PutAdminWebhooksUpdateAsync(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update a webhook
@@ -824,9 +835,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminWebhooksUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminWebhooksUpdateResponse>> PutAdminWebhooksUpdateWithHttpInfoAsync(string orgId, string webhookId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminWebhooksUpdateResponse>> PutAdminWebhooksUpdateWithHttpInfoAsync(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -1045,10 +1057,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminWebhooksCreateRequest"></param>
         /// <returns>AdminWebhooksCreateResponse</returns>
-        public AdminWebhooksCreateResponse AdminWebhooksCreate(string orgId)
+        public AdminWebhooksCreateResponse AdminWebhooksCreate(string orgId, AdminWebhooksCreateRequest adminWebhooksCreateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminWebhooksCreateResponse> localVarResponse = AdminWebhooksCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminWebhooksCreateResponse> localVarResponse = AdminWebhooksCreateWithHttpInfo(orgId, adminWebhooksCreateRequest);
             return localVarResponse.Data;
         }
 
@@ -1057,16 +1070,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminWebhooksCreateRequest"></param>
         /// <returns>ApiResponse of AdminWebhooksCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminWebhooksCreateResponse> AdminWebhooksCreateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminWebhooksCreateResponse> AdminWebhooksCreateWithHttpInfo(string orgId, AdminWebhooksCreateRequest adminWebhooksCreateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminWebhooksApi->AdminWebhooksCreate");
 
+            // verify the required parameter 'adminWebhooksCreateRequest' is set
+            if (adminWebhooksCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminWebhooksCreateRequest' when calling AdminWebhooksApi->AdminWebhooksCreate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1081,6 +1100,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminWebhooksCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1111,11 +1131,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminWebhooksCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminWebhooksCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminWebhooksCreateResponse> AdminWebhooksCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminWebhooksCreateResponse> AdminWebhooksCreateAsync(string orgId, AdminWebhooksCreateRequest adminWebhooksCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminWebhooksCreateResponse> localVarResponse = await AdminWebhooksCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminWebhooksCreateResponse> localVarResponse = await AdminWebhooksCreateWithHttpInfoAsync(orgId, adminWebhooksCreateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1124,18 +1145,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminWebhooksCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminWebhooksCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminWebhooksCreateResponse>> AdminWebhooksCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminWebhooksCreateResponse>> AdminWebhooksCreateWithHttpInfoAsync(string orgId, AdminWebhooksCreateRequest adminWebhooksCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminWebhooksApi->AdminWebhooksCreate");
 
+            // verify the required parameter 'adminWebhooksCreateRequest' is set
+            if (adminWebhooksCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminWebhooksCreateRequest' when calling AdminWebhooksApi->AdminWebhooksCreate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1151,6 +1178,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminWebhooksCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2098,7 +2126,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List webhooks Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
+        /// List webhooks Paginated list of the organization&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2110,7 +2138,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List webhooks Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
+        /// List webhooks Paginated list of the organization&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2164,7 +2192,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List webhooks Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
+        /// List webhooks Paginated list of the organization&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2177,7 +2205,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List webhooks Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
+        /// List webhooks Paginated list of the organization&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2537,7 +2565,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Start a webhook tunnel Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+        /// Start a webhook tunnel Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;, with its own signing secret, returned once as &#x60;signing_secret&#x60;. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2549,7 +2577,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Start a webhook tunnel Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+        /// Start a webhook tunnel Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;, with its own signing secret, returned once as &#x60;signing_secret&#x60;. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2603,7 +2631,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Start a webhook tunnel Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+        /// Start a webhook tunnel Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;, with its own signing secret, returned once as &#x60;signing_secret&#x60;. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2616,7 +2644,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Start a webhook tunnel Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+        /// Start a webhook tunnel Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;, with its own signing secret, returned once as &#x60;signing_secret&#x60;. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3283,10 +3311,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <returns>PutAdminWebhooksUpdateResponse</returns>
-        public PutAdminWebhooksUpdateResponse PatchAdminWebhooksUpdate(string orgId, string webhookId)
+        public PutAdminWebhooksUpdateResponse PatchAdminWebhooksUpdate(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse> localVarResponse = PatchAdminWebhooksUpdateWithHttpInfo(orgId, webhookId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse> localVarResponse = PatchAdminWebhooksUpdateWithHttpInfo(orgId, webhookId, putAdminWebhooksUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -3296,8 +3325,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminWebhooksUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse> PatchAdminWebhooksUpdateWithHttpInfo(string orgId, string webhookId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse> PatchAdminWebhooksUpdateWithHttpInfo(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3307,9 +3337,14 @@ namespace LumoAuth.ApiClient.Api
             if (webhookId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'webhookId' when calling AdminWebhooksApi->PatchAdminWebhooksUpdate");
 
+            // verify the required parameter 'putAdminWebhooksUpdateRequest' is set
+            if (putAdminWebhooksUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminWebhooksUpdateRequest' when calling AdminWebhooksApi->PatchAdminWebhooksUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3325,6 +3360,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("webhookId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(webhookId)); // path parameter
+            localVarRequestOptions.Data = putAdminWebhooksUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3356,11 +3392,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminWebhooksUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminWebhooksUpdateResponse> PatchAdminWebhooksUpdateAsync(string orgId, string webhookId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminWebhooksUpdateResponse> PatchAdminWebhooksUpdateAsync(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse> localVarResponse = await PatchAdminWebhooksUpdateWithHttpInfoAsync(orgId, webhookId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse> localVarResponse = await PatchAdminWebhooksUpdateWithHttpInfoAsync(orgId, webhookId, putAdminWebhooksUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -3370,9 +3407,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminWebhooksUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse>> PatchAdminWebhooksUpdateWithHttpInfoAsync(string orgId, string webhookId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse>> PatchAdminWebhooksUpdateWithHttpInfoAsync(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3382,10 +3420,15 @@ namespace LumoAuth.ApiClient.Api
             if (webhookId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'webhookId' when calling AdminWebhooksApi->PatchAdminWebhooksUpdate");
 
+            // verify the required parameter 'putAdminWebhooksUpdateRequest' is set
+            if (putAdminWebhooksUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminWebhooksUpdateRequest' when calling AdminWebhooksApi->PatchAdminWebhooksUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3402,6 +3445,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("webhookId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(webhookId)); // path parameter
+            localVarRequestOptions.Data = putAdminWebhooksUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3434,10 +3478,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <returns>PutAdminWebhooksUpdateResponse</returns>
-        public PutAdminWebhooksUpdateResponse PutAdminWebhooksUpdate(string orgId, string webhookId)
+        public PutAdminWebhooksUpdateResponse PutAdminWebhooksUpdate(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse> localVarResponse = PutAdminWebhooksUpdateWithHttpInfo(orgId, webhookId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse> localVarResponse = PutAdminWebhooksUpdateWithHttpInfo(orgId, webhookId, putAdminWebhooksUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -3447,8 +3492,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminWebhooksUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse> PutAdminWebhooksUpdateWithHttpInfo(string orgId, string webhookId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse> PutAdminWebhooksUpdateWithHttpInfo(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3458,9 +3504,14 @@ namespace LumoAuth.ApiClient.Api
             if (webhookId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'webhookId' when calling AdminWebhooksApi->PutAdminWebhooksUpdate");
 
+            // verify the required parameter 'putAdminWebhooksUpdateRequest' is set
+            if (putAdminWebhooksUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminWebhooksUpdateRequest' when calling AdminWebhooksApi->PutAdminWebhooksUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3476,6 +3527,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("webhookId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(webhookId)); // path parameter
+            localVarRequestOptions.Data = putAdminWebhooksUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3507,11 +3559,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminWebhooksUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminWebhooksUpdateResponse> PutAdminWebhooksUpdateAsync(string orgId, string webhookId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminWebhooksUpdateResponse> PutAdminWebhooksUpdateAsync(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse> localVarResponse = await PutAdminWebhooksUpdateWithHttpInfoAsync(orgId, webhookId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse> localVarResponse = await PutAdminWebhooksUpdateWithHttpInfoAsync(orgId, webhookId, putAdminWebhooksUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -3521,9 +3574,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="webhookId"></param>
+        /// <param name="putAdminWebhooksUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminWebhooksUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse>> PutAdminWebhooksUpdateWithHttpInfoAsync(string orgId, string webhookId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminWebhooksUpdateResponse>> PutAdminWebhooksUpdateWithHttpInfoAsync(string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3533,10 +3587,15 @@ namespace LumoAuth.ApiClient.Api
             if (webhookId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'webhookId' when calling AdminWebhooksApi->PutAdminWebhooksUpdate");
 
+            // verify the required parameter 'putAdminWebhooksUpdateRequest' is set
+            if (putAdminWebhooksUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminWebhooksUpdateRequest' when calling AdminWebhooksApi->PutAdminWebhooksUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3553,6 +3612,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("webhookId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(webhookId)); // path parameter
+            localVarRequestOptions.Data = putAdminWebhooksUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

@@ -4,7 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**adminAuditLogsActions**](AdminAuditLogsAPI.md#adminauditlogsactions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the tenant
+[**adminAuditLogsActions**](AdminAuditLogsAPI.md#adminauditlogsactions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the organization
 [**adminAuditLogsExport**](AdminAuditLogsAPI.md#adminauditlogsexport) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV (default) or JSON
 [**adminAuditLogsGet**](AdminAuditLogsAPI.md#adminauditlogsget) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get an audit log entry
 [**adminAuditLogsList**](AdminAuditLogsAPI.md#adminauditlogslist) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit log entries
@@ -19,7 +19,7 @@ Method | HTTP request | Description
     open class func adminAuditLogsActions(orgId: String, completion: @escaping (_ data: AdminAuditLogsActionsResponse?, _ error: Error?) -> Void)
 ```
 
-List the distinct audit action types recorded for the tenant
+List the distinct audit action types recorded for the organization
 
 ### Example
 ```swift
@@ -28,7 +28,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// List the distinct audit action types recorded for the tenant
+// List the distinct audit action types recorded for the organization
 AdminAuditLogsAPI.adminAuditLogsActions(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -64,7 +64,7 @@ Name | Type | Description  | Notes
 
 # **adminAuditLogsExport**
 ```swift
-    open class func adminAuditLogsExport(orgId: String, completion: @escaping (_ data: String?, _ error: Error?) -> Void)
+    open class func adminAuditLogsExport(orgId: String, format: Format_adminAuditLogsExport? = nil, eventType: String? = nil, action: String? = nil, actorId: String? = nil, targetType: String? = nil, targetId: String? = nil, severity: Severity_adminAuditLogsExport? = nil, status: Status_adminAuditLogsExport? = nil, ipAddress: String? = nil, search: String? = nil, traceId: String? = nil, from: Date? = nil, to: Date? = nil, completion: @escaping (_ data: String?, _ error: Error?) -> Void)
 ```
 
 Export audit logs as CSV (default) or JSON
@@ -77,9 +77,22 @@ Needs `audit.export` and `audit.view`, as the export on the portal's audit log p
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let format = "format_example" // String | csv (default) or json. (optional) (default to .csv)
+let eventType = "eventType_example" // String | Exact event type, for example user.login. (optional)
+let action = "action_example" // String | The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+let actorId = "actorId_example" // String | Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+let targetType = "targetType_example" // String | Kind of the subject of the event. Also accepted as resourceType. (optional)
+let targetId = "targetId_example" // String | The subject of the event, for example the user of a login.failed entry. (optional)
+let severity = "severity_example" // String |  (optional)
+let status = "status_example" // String | Result of the event. (optional)
+let ipAddress = "ipAddress_example" // String |  (optional)
+let search = "search_example" // String | Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+let traceId = "traceId_example" // String | Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+let from = Date() // Date | Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+let to = Date() // Date | Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
 
 // Export audit logs as CSV (default) or JSON
-AdminAuditLogsAPI.adminAuditLogsExport(orgId: orgId) { (response, error) in
+AdminAuditLogsAPI.adminAuditLogsExport(orgId: orgId, format: format, eventType: eventType, action: action, actorId: actorId, targetType: targetType, targetId: targetId, severity: severity, status: status, ipAddress: ipAddress, search: search, traceId: traceId, from: from, to: to) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -96,6 +109,19 @@ AdminAuditLogsAPI.adminAuditLogsExport(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **format** | **String** | csv (default) or json. | [optional] [default to .csv]
+ **eventType** | **String** | Exact event type, for example user.login. | [optional] 
+ **action** | **String** | The short verb of the event (as GET /audit-logs/actions lists them). | [optional] 
+ **actorId** | **String** | Who acted: a user, API key or agent id. Also accepted as userId. | [optional] 
+ **targetType** | **String** | Kind of the subject of the event. Also accepted as resourceType. | [optional] 
+ **targetId** | **String** | The subject of the event, for example the user of a login.failed entry. | [optional] 
+ **severity** | **String** |  | [optional] 
+ **status** | **String** | Result of the event. | [optional] 
+ **ipAddress** | **String** |  | [optional] 
+ **search** | **String** | Text in the message, error message, event type, actor id or name, target name, client id or trace ID. | [optional] 
+ **traceId** | **String** | Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). | [optional] 
+ **from** | **Date** | Entries at or after this time (ISO 8601). Also accepted as startDate. | [optional] 
+ **to** | **Date** | Entries at or before this time (ISO 8601). Also accepted as endDate. | [optional] 
 
 ### Return type
 
@@ -164,7 +190,7 @@ Name | Type | Description  | Notes
 
 # **adminAuditLogsList**
 ```swift
-    open class func adminAuditLogsList(orgId: String, completion: @escaping (_ data: AdminAuditLogsListResponse?, _ error: Error?) -> Void)
+    open class func adminAuditLogsList(orgId: String, page: Int? = nil, limit: Int? = nil, eventType: String? = nil, action: String? = nil, actorId: String? = nil, targetType: String? = nil, targetId: String? = nil, severity: Severity_adminAuditLogsList? = nil, status: Status_adminAuditLogsList? = nil, ipAddress: String? = nil, search: String? = nil, traceId: String? = nil, from: Date? = nil, to: Date? = nil, completion: @escaping (_ data: AdminAuditLogsListResponse?, _ error: Error?) -> Void)
 ```
 
 List audit log entries
@@ -175,9 +201,23 @@ List audit log entries
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let page = 987 // Int |  (optional) (default to 1)
+let limit = 987 // Int |  (optional) (default to 25)
+let eventType = "eventType_example" // String | Exact event type, for example user.login. (optional)
+let action = "action_example" // String | The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+let actorId = "actorId_example" // String | Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+let targetType = "targetType_example" // String | Kind of the subject of the event. Also accepted as resourceType. (optional)
+let targetId = "targetId_example" // String | The subject of the event, for example the user of a login.failed entry. (optional)
+let severity = "severity_example" // String |  (optional)
+let status = "status_example" // String | Result of the event. (optional)
+let ipAddress = "ipAddress_example" // String |  (optional)
+let search = "search_example" // String | Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+let traceId = "traceId_example" // String | Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+let from = Date() // Date | Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+let to = Date() // Date | Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
 
 // List audit log entries
-AdminAuditLogsAPI.adminAuditLogsList(orgId: orgId) { (response, error) in
+AdminAuditLogsAPI.adminAuditLogsList(orgId: orgId, page: page, limit: limit, eventType: eventType, action: action, actorId: actorId, targetType: targetType, targetId: targetId, severity: severity, status: status, ipAddress: ipAddress, search: search, traceId: traceId, from: from, to: to) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -194,6 +234,20 @@ AdminAuditLogsAPI.adminAuditLogsList(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **page** | **Int** |  | [optional] [default to 1]
+ **limit** | **Int** |  | [optional] [default to 25]
+ **eventType** | **String** | Exact event type, for example user.login. | [optional] 
+ **action** | **String** | The short verb of the event (as GET /audit-logs/actions lists them). | [optional] 
+ **actorId** | **String** | Who acted: a user, API key or agent id. Also accepted as userId. | [optional] 
+ **targetType** | **String** | Kind of the subject of the event. Also accepted as resourceType. | [optional] 
+ **targetId** | **String** | The subject of the event, for example the user of a login.failed entry. | [optional] 
+ **severity** | **String** |  | [optional] 
+ **status** | **String** | Result of the event. | [optional] 
+ **ipAddress** | **String** |  | [optional] 
+ **search** | **String** | Text in the message, error message, event type, actor id or name, target name, client id or trace ID. | [optional] 
+ **traceId** | **String** | Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). | [optional] 
+ **from** | **Date** | Entries at or after this time (ISO 8601). Also accepted as startDate. | [optional] 
+ **to** | **Date** | Entries at or before this time (ISO 8601). Also accepted as endDate. | [optional] 
 
 ### Return type
 
@@ -308,7 +362,7 @@ Name | Type | Description  | Notes
 
 # **patchAdminAuditLogsRetentionUpdate**
 ```swift
-    open class func patchAdminAuditLogsRetentionUpdate(orgId: String, completion: @escaping (_ data: AdminAuditLogsRetentionResponse?, _ error: Error?) -> Void)
+    open class func patchAdminAuditLogsRetentionUpdate(orgId: String, putAdminAuditLogsRetentionUpdateRequest: PutAdminAuditLogsRetentionUpdateRequest, completion: @escaping (_ data: AdminAuditLogsRetentionResponse?, _ error: Error?) -> Void)
 ```
 
 Update audit log retention settings
@@ -321,9 +375,10 @@ Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the port
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let putAdminAuditLogsRetentionUpdateRequest = PutAdminAuditLogsRetentionUpdateRequest(retentionDays: 123) // PutAdminAuditLogsRetentionUpdateRequest | 
 
 // Update audit log retention settings
-AdminAuditLogsAPI.patchAdminAuditLogsRetentionUpdate(orgId: orgId) { (response, error) in
+AdminAuditLogsAPI.patchAdminAuditLogsRetentionUpdate(orgId: orgId, putAdminAuditLogsRetentionUpdateRequest: putAdminAuditLogsRetentionUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -340,6 +395,7 @@ AdminAuditLogsAPI.patchAdminAuditLogsRetentionUpdate(orgId: orgId) { (response, 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **putAdminAuditLogsRetentionUpdateRequest** | [**PutAdminAuditLogsRetentionUpdateRequest**](PutAdminAuditLogsRetentionUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -351,14 +407,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminAuditLogsRetentionUpdate**
 ```swift
-    open class func putAdminAuditLogsRetentionUpdate(orgId: String, completion: @escaping (_ data: AdminAuditLogsRetentionResponse?, _ error: Error?) -> Void)
+    open class func putAdminAuditLogsRetentionUpdate(orgId: String, putAdminAuditLogsRetentionUpdateRequest: PutAdminAuditLogsRetentionUpdateRequest, completion: @escaping (_ data: AdminAuditLogsRetentionResponse?, _ error: Error?) -> Void)
 ```
 
 Update audit log retention settings
@@ -371,9 +427,10 @@ Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the port
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let putAdminAuditLogsRetentionUpdateRequest = PutAdminAuditLogsRetentionUpdateRequest(retentionDays: 123) // PutAdminAuditLogsRetentionUpdateRequest | 
 
 // Update audit log retention settings
-AdminAuditLogsAPI.putAdminAuditLogsRetentionUpdate(orgId: orgId) { (response, error) in
+AdminAuditLogsAPI.putAdminAuditLogsRetentionUpdate(orgId: orgId, putAdminAuditLogsRetentionUpdateRequest: putAdminAuditLogsRetentionUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -390,6 +447,7 @@ AdminAuditLogsAPI.putAdminAuditLogsRetentionUpdate(orgId: orgId) { (response, er
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **putAdminAuditLogsRetentionUpdateRequest** | [**PutAdminAuditLogsRetentionUpdateRequest**](PutAdminAuditLogsRetentionUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -401,7 +459,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -21,7 +21,7 @@ Method | HTTP request | Description
 
 # **abacAttributesCreate**
 ```swift
-    open class func abacAttributesCreate(orgId: String, completion: @escaping (_ data: AbacAttributesCreateResponse?, _ error: Error?) -> Void)
+    open class func abacAttributesCreate(orgId: String, abacAttributesCreateRequest: AbacAttributesCreateRequest, completion: @escaping (_ data: AbacAttributesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Create an attribute definition
@@ -32,9 +32,10 @@ Create an attribute definition
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let abacAttributesCreateRequest = AbacAttributesCreateRequest(name: "name_example", slug: "slug_example", attributeType: "attributeType_example", dataType: "dataType_example", description: "description_example", defaultValue: 123, validationRules: "TODO") // AbacAttributesCreateRequest | 
 
 // Create an attribute definition
-AdminAbacAPI.abacAttributesCreate(orgId: orgId) { (response, error) in
+AdminAbacAPI.abacAttributesCreate(orgId: orgId, abacAttributesCreateRequest: abacAttributesCreateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -51,6 +52,7 @@ AdminAbacAPI.abacAttributesCreate(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **abacAttributesCreateRequest** | [**AbacAttributesCreateRequest**](AbacAttributesCreateRequest.md) |  | 
 
 ### Return type
 
@@ -62,7 +64,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -217,7 +219,7 @@ Name | Type | Description  | Notes
 
 # **abacPoliciesCreate**
 ```swift
-    open class func abacPoliciesCreate(orgId: String, completion: @escaping (_ data: AbacPoliciesCreateResponse?, _ error: Error?) -> Void)
+    open class func abacPoliciesCreate(orgId: String, abacPoliciesCreateRequest: AbacPoliciesCreateRequest, completion: @escaping (_ data: AbacPoliciesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Create an ABAC policy
@@ -228,9 +230,10 @@ Create an ABAC policy
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let abacPoliciesCreateRequest = AbacPoliciesCreateRequest(name: "name_example", slug: "slug_example", description: "description_example", resourceType: "resourceType_example", action: "action_example", effect: "effect_example", priority: 123, conditions: "TODO") // AbacPoliciesCreateRequest | 
 
 // Create an ABAC policy
-AdminAbacAPI.abacPoliciesCreate(orgId: orgId) { (response, error) in
+AdminAbacAPI.abacPoliciesCreate(orgId: orgId, abacPoliciesCreateRequest: abacPoliciesCreateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -247,6 +250,7 @@ AdminAbacAPI.abacPoliciesCreate(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **abacPoliciesCreateRequest** | [**AbacPoliciesCreateRequest**](AbacPoliciesCreateRequest.md) |  | 
 
 ### Return type
 
@@ -258,7 +262,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -465,7 +469,7 @@ Name | Type | Description  | Notes
 
 # **patchAbacAttributesUpdate**
 ```swift
-    open class func patchAbacAttributesUpdate(orgId: String, id: String, completion: @escaping (_ data: PutAbacAttributesUpdateResponse?, _ error: Error?) -> Void)
+    open class func patchAbacAttributesUpdate(orgId: String, id: String, putAbacAttributesUpdateRequest: PutAbacAttributesUpdateRequest, completion: @escaping (_ data: PutAbacAttributesUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Partially update an attribute definition
@@ -477,9 +481,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let id = "id_example" // String | 
+let putAbacAttributesUpdateRequest = PutAbacAttributesUpdateRequest(name: "name_example", description: "description_example", defaultValue: 123, validationRules: "TODO") // PutAbacAttributesUpdateRequest | 
 
 // Partially update an attribute definition
-AdminAbacAPI.patchAbacAttributesUpdate(orgId: orgId, id: id) { (response, error) in
+AdminAbacAPI.patchAbacAttributesUpdate(orgId: orgId, id: id, putAbacAttributesUpdateRequest: putAbacAttributesUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -497,6 +502,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **id** | **String** |  | 
+ **putAbacAttributesUpdateRequest** | [**PutAbacAttributesUpdateRequest**](PutAbacAttributesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -508,14 +514,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAbacPoliciesUpdate**
 ```swift
-    open class func patchAbacPoliciesUpdate(orgId: String, id: String, completion: @escaping (_ data: PutAbacPoliciesUpdateResponse?, _ error: Error?) -> Void)
+    open class func patchAbacPoliciesUpdate(orgId: String, id: String, putAbacPoliciesUpdateRequest: PutAbacPoliciesUpdateRequest, completion: @escaping (_ data: PutAbacPoliciesUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Partially update an ABAC policy
@@ -527,9 +533,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let id = "id_example" // String | 
+let putAbacPoliciesUpdateRequest = PutAbacPoliciesUpdateRequest(name: "name_example", description: "description_example", resourceType: "resourceType_example", action: "action_example", effect: "effect_example", priority: 123, conditions: "TODO") // PutAbacPoliciesUpdateRequest | 
 
 // Partially update an ABAC policy
-AdminAbacAPI.patchAbacPoliciesUpdate(orgId: orgId, id: id) { (response, error) in
+AdminAbacAPI.patchAbacPoliciesUpdate(orgId: orgId, id: id, putAbacPoliciesUpdateRequest: putAbacPoliciesUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -547,6 +554,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **id** | **String** |  | 
+ **putAbacPoliciesUpdateRequest** | [**PutAbacPoliciesUpdateRequest**](PutAbacPoliciesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -558,14 +566,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAbacAttributesUpdate**
 ```swift
-    open class func putAbacAttributesUpdate(orgId: String, id: String, completion: @escaping (_ data: PutAbacAttributesUpdateResponse?, _ error: Error?) -> Void)
+    open class func putAbacAttributesUpdate(orgId: String, id: String, putAbacAttributesUpdateRequest: PutAbacAttributesUpdateRequest, completion: @escaping (_ data: PutAbacAttributesUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update an attribute definition
@@ -577,9 +585,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let id = "id_example" // String | 
+let putAbacAttributesUpdateRequest = PutAbacAttributesUpdateRequest(name: "name_example", description: "description_example", defaultValue: 123, validationRules: "TODO") // PutAbacAttributesUpdateRequest | 
 
 // Update an attribute definition
-AdminAbacAPI.putAbacAttributesUpdate(orgId: orgId, id: id) { (response, error) in
+AdminAbacAPI.putAbacAttributesUpdate(orgId: orgId, id: id, putAbacAttributesUpdateRequest: putAbacAttributesUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -597,6 +606,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **id** | **String** |  | 
+ **putAbacAttributesUpdateRequest** | [**PutAbacAttributesUpdateRequest**](PutAbacAttributesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -608,14 +618,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAbacPoliciesUpdate**
 ```swift
-    open class func putAbacPoliciesUpdate(orgId: String, id: String, completion: @escaping (_ data: PutAbacPoliciesUpdateResponse?, _ error: Error?) -> Void)
+    open class func putAbacPoliciesUpdate(orgId: String, id: String, putAbacPoliciesUpdateRequest: PutAbacPoliciesUpdateRequest, completion: @escaping (_ data: PutAbacPoliciesUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update an ABAC policy
@@ -627,9 +637,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let id = "id_example" // String | 
+let putAbacPoliciesUpdateRequest = PutAbacPoliciesUpdateRequest(name: "name_example", description: "description_example", resourceType: "resourceType_example", action: "action_example", effect: "effect_example", priority: 123, conditions: "TODO") // PutAbacPoliciesUpdateRequest | 
 
 // Update an ABAC policy
-AdminAbacAPI.putAbacPoliciesUpdate(orgId: orgId, id: id) { (response, error) in
+AdminAbacAPI.putAbacPoliciesUpdate(orgId: orgId, id: id, putAbacPoliciesUpdateRequest: putAbacPoliciesUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -647,6 +658,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **id** | **String** |  | 
+ **putAbacPoliciesUpdateRequest** | [**PutAbacPoliciesUpdateRequest**](PutAbacPoliciesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -658,7 +670,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

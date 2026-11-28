@@ -11,12 +11,14 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | [**adminMcpServersGrantsRemove()**](AdminMcpApi.md#adminMcpServersGrantsRemove) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Remove every grant of an agent on an MCP server |
 | [**adminMcpServersGrantsSet()**](AdminMcpApi.md#adminMcpServersGrantsSet) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Set the tools of an MCP server that an agent may call |
 | [**adminMcpServersList()**](AdminMcpApi.md#adminMcpServersList) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers |
+| [**patchAdminMcpServersUpdate()**](AdminMcpApi.md#patchAdminMcpServersUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server |
+| [**putAdminMcpServersUpdate()**](AdminMcpApi.md#putAdminMcpServersUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server (same as PATCH: only the fields that are sent change) |
 
 
 ## `adminMcpServersCreate()`
 
 ```php
-adminMcpServersCreate($orgId): \LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse
+adminMcpServersCreate($orgId, $mcpServerWrite): \LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse
 ```
 
 Register an MCP server
@@ -46,9 +48,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminMcpApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$mcpServerWrite = new \LumoAuth\ApiClient\Model\McpServerWrite(); // \LumoAuth\ApiClient\Model\McpServerWrite
 
 try {
-    $result = $apiInstance->adminMcpServersCreate($orgId);
+    $result = $apiInstance->adminMcpServersCreate($orgId, $mcpServerWrite);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminMcpApi->adminMcpServersCreate: ', $e->getMessage(), PHP_EOL;
@@ -60,6 +63,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **mcpServerWrite** | [**\LumoAuth\ApiClient\Model\McpServerWrite**](../Model/McpServerWrite.md)|  | |
 
 ### Return type
 
@@ -71,7 +75,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -468,6 +472,142 @@ try {
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `patchAdminMcpServersUpdate()`
+
+```php
+patchAdminMcpServersUpdate($orgId, $serverId, $mcpServerWrite): \LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse
+```
+
+Update an MCP server
+
+Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\AdminMcpApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$orgId = 'orgId_example'; // string
+$serverId = 'serverId_example'; // string
+$mcpServerWrite = new \LumoAuth\ApiClient\Model\McpServerWrite(); // \LumoAuth\ApiClient\Model\McpServerWrite
+
+try {
+    $result = $apiInstance->patchAdminMcpServersUpdate($orgId, $serverId, $mcpServerWrite);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AdminMcpApi->patchAdminMcpServersUpdate: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+| **serverId** | **string**|  | |
+| **mcpServerWrite** | [**\LumoAuth\ApiClient\Model\McpServerWrite**](../Model/McpServerWrite.md)|  | |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse**](../Model/AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `putAdminMcpServersUpdate()`
+
+```php
+putAdminMcpServersUpdate($orgId, $serverId, $mcpServerWrite): \LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse
+```
+
+Update an MCP server (same as PATCH: only the fields that are sent change)
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\AdminMcpApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$orgId = 'orgId_example'; // string
+$serverId = 'serverId_example'; // string
+$mcpServerWrite = new \LumoAuth\ApiClient\Model\McpServerWrite(); // \LumoAuth\ApiClient\Model\McpServerWrite
+
+try {
+    $result = $apiInstance->putAdminMcpServersUpdate($orgId, $serverId, $mcpServerWrite);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AdminMcpApi->putAdminMcpServersUpdate: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+| **serverId** | **string**|  | |
+| **mcpServerWrite** | [**\LumoAuth\ApiClient\Model\McpServerWrite**](../Model/McpServerWrite.md)|  | |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse**](../Model/AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

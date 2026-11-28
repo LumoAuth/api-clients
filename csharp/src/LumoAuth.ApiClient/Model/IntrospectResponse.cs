@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -46,7 +46,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="scope">Space-separated scopes..</param>
         /// <param name="clientId">clientId.</param>
         /// <param name="sub">User id, or client_… / agent_… for non-user subjects..</param>
-        /// <param name="username">The user&#39;s email (user-bound tokens only)..</param>
+        /// <param name="username">The user&#39;s e-mail address: only for a user token that carries the email scope (as UserInfo releases the address), opaque or JWT..</param>
         /// <param name="exp">Expiry, Unix seconds..</param>
         /// <param name="iat">Issued-at, Unix seconds..</param>
         /// <param name="nbf">Not-before, Unix seconds (JWT tokens only)..</param>
@@ -111,9 +111,9 @@ namespace LumoAuth.ApiClient.Model
         public string Sub { get; set; }
 
         /// <summary>
-        /// The user&#39;s email (user-bound tokens only).
+        /// The user&#39;s e-mail address: only for a user token that carries the email scope (as UserInfo releases the address), opaque or JWT.
         /// </summary>
-        /// <value>The user&#39;s email (user-bound tokens only).</value>
+        /// <value>The user&#39;s e-mail address: only for a user token that carries the email scope (as UserInfo releases the address), opaque or JWT.</value>
         [DataMember(Name = "username", EmitDefaultValue = false)]
         public string Username { get; set; }
 

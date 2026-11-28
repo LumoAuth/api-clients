@@ -16,11 +16,12 @@ open class AdminWebhooksAPI {
      Create a webhook
      
      - parameter orgId: (path)  
+     - parameter adminWebhooksCreateRequest: (body)  
      - returns: AdminWebhooksCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminWebhooksCreate(orgId: String) async throws -> AdminWebhooksCreateResponse {
-        return try await adminWebhooksCreateWithRequestBuilder(orgId: orgId).execute().body
+    open class func adminWebhooksCreate(orgId: String, adminWebhooksCreateRequest: AdminWebhooksCreateRequest) async throws -> AdminWebhooksCreateResponse {
+        return try await adminWebhooksCreateWithRequestBuilder(orgId: orgId, adminWebhooksCreateRequest: adminWebhooksCreateRequest).execute().body
     }
 
     /**
@@ -34,20 +35,21 @@ open class AdminWebhooksAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter adminWebhooksCreateRequest: (body)  
      - returns: RequestBuilder<AdminWebhooksCreateResponse> 
      */
-    open class func adminWebhooksCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminWebhooksCreateResponse> {
+    open class func adminWebhooksCreateWithRequestBuilder(orgId: String, adminWebhooksCreateRequest: AdminWebhooksCreateRequest) -> RequestBuilder<AdminWebhooksCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/webhooks"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminWebhooksCreateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -373,7 +375,7 @@ open class AdminWebhooksAPI {
     /**
      List webhooks
      - GET /orgs/{orgId}/api/v1/admin/webhooks
-     - Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+     - Paginated list of the organization's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -518,7 +520,7 @@ open class AdminWebhooksAPI {
     /**
      Start a webhook tunnel
      - POST /orgs/{orgId}/api/v1/admin/webhooks/tunnel/start
-     - Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+     - Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -752,11 +754,12 @@ open class AdminWebhooksAPI {
      
      - parameter orgId: (path)  
      - parameter webhookId: (path)  
+     - parameter putAdminWebhooksUpdateRequest: (body)  
      - returns: PutAdminWebhooksUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminWebhooksUpdate(orgId: String, webhookId: String) async throws -> PutAdminWebhooksUpdateResponse {
-        return try await patchAdminWebhooksUpdateWithRequestBuilder(orgId: orgId, webhookId: webhookId).execute().body
+    open class func patchAdminWebhooksUpdate(orgId: String, webhookId: String, putAdminWebhooksUpdateRequest: PutAdminWebhooksUpdateRequest) async throws -> PutAdminWebhooksUpdateResponse {
+        return try await patchAdminWebhooksUpdateWithRequestBuilder(orgId: orgId, webhookId: webhookId, putAdminWebhooksUpdateRequest: putAdminWebhooksUpdateRequest).execute().body
     }
 
     /**
@@ -770,9 +773,10 @@ open class AdminWebhooksAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter webhookId: (path)  
+     - parameter putAdminWebhooksUpdateRequest: (body)  
      - returns: RequestBuilder<PutAdminWebhooksUpdateResponse> 
      */
-    open class func patchAdminWebhooksUpdateWithRequestBuilder(orgId: String, webhookId: String) -> RequestBuilder<PutAdminWebhooksUpdateResponse> {
+    open class func patchAdminWebhooksUpdateWithRequestBuilder(orgId: String, webhookId: String, putAdminWebhooksUpdateRequest: PutAdminWebhooksUpdateRequest) -> RequestBuilder<PutAdminWebhooksUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -781,12 +785,12 @@ open class AdminWebhooksAPI {
         let webhookIdPostEscape = webhookIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{webhookId}", with: webhookIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminWebhooksUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -801,11 +805,12 @@ open class AdminWebhooksAPI {
      
      - parameter orgId: (path)  
      - parameter webhookId: (path)  
+     - parameter putAdminWebhooksUpdateRequest: (body)  
      - returns: PutAdminWebhooksUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminWebhooksUpdate(orgId: String, webhookId: String) async throws -> PutAdminWebhooksUpdateResponse {
-        return try await putAdminWebhooksUpdateWithRequestBuilder(orgId: orgId, webhookId: webhookId).execute().body
+    open class func putAdminWebhooksUpdate(orgId: String, webhookId: String, putAdminWebhooksUpdateRequest: PutAdminWebhooksUpdateRequest) async throws -> PutAdminWebhooksUpdateResponse {
+        return try await putAdminWebhooksUpdateWithRequestBuilder(orgId: orgId, webhookId: webhookId, putAdminWebhooksUpdateRequest: putAdminWebhooksUpdateRequest).execute().body
     }
 
     /**
@@ -820,9 +825,10 @@ open class AdminWebhooksAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter webhookId: (path)  
+     - parameter putAdminWebhooksUpdateRequest: (body)  
      - returns: RequestBuilder<PutAdminWebhooksUpdateResponse> 
      */
-    open class func putAdminWebhooksUpdateWithRequestBuilder(orgId: String, webhookId: String) -> RequestBuilder<PutAdminWebhooksUpdateResponse> {
+    open class func putAdminWebhooksUpdateWithRequestBuilder(orgId: String, webhookId: String, putAdminWebhooksUpdateRequest: PutAdminWebhooksUpdateRequest) -> RequestBuilder<PutAdminWebhooksUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -831,12 +837,12 @@ open class AdminWebhooksAPI {
         let webhookIdPostEscape = webhookIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{webhookId}", with: webhookIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminWebhooksUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

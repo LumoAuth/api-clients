@@ -4,10 +4,10 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**adminPermissionsCreate**](AdminPermissionsApi.md#adminPermissionsCreate) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the tenant |
+| [**adminPermissionsCreate**](AdminPermissionsApi.md#adminPermissionsCreate) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the organization |
 | [**adminPermissionsDelete**](AdminPermissionsApi.md#adminPermissionsDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Delete a custom permission |
 | [**adminPermissionsGet**](AdminPermissionsApi.md#adminPermissionsGet) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Get a single permission |
-| [**adminPermissionsList**](AdminPermissionsApi.md#adminPermissionsList) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the tenant |
+| [**adminPermissionsList**](AdminPermissionsApi.md#adminPermissionsList) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the organization |
 | [**adminPermissionsUpdate**](AdminPermissionsApi.md#adminPermissionsUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Update a permission |
 | [**adminPermissionsUsage**](AdminPermissionsApi.md#adminPermissionsUsage) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId}/usage | Get permission usage (roles assigned to this permission) |
 | [**adminScopesCreate**](AdminPermissionsApi.md#adminScopesCreate) | **POST** /orgs/{orgId}/api/v1/admin/scopes | Create a custom OAuth scope |
@@ -17,9 +17,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminPermissionsCreate"></a>
 # **adminPermissionsCreate**
-> AdminPermissionsCreateResponse adminPermissionsCreate(orgId)
+> AdminPermissionsCreateResponse adminPermissionsCreate(orgId, adminPermissionsCreateRequest)
 
-Create a custom permission for the tenant
+Create a custom permission for the organization
 
 ### Example
 ```java
@@ -48,8 +48,9 @@ public class Example {
 
     AdminPermissionsApi apiInstance = new AdminPermissionsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AdminPermissionsCreateRequest adminPermissionsCreateRequest = new AdminPermissionsCreateRequest(); // AdminPermissionsCreateRequest | 
     try {
-      AdminPermissionsCreateResponse result = apiInstance.adminPermissionsCreate(orgId);
+      AdminPermissionsCreateResponse result = apiInstance.adminPermissionsCreate(orgId, adminPermissionsCreateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminPermissionsApi#adminPermissionsCreate");
@@ -67,6 +68,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **adminPermissionsCreateRequest** | [**AdminPermissionsCreateRequest**](AdminPermissionsCreateRequest.md)|  | |
 
 ### Return type
 
@@ -78,7 +80,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -236,7 +238,7 @@ public class Example {
 # **adminPermissionsList**
 > AdminPermissionsListResponse adminPermissionsList(orgId)
 
-List all available permissions for the tenant
+List all available permissions for the organization
 
 ### Example
 ```java
@@ -305,7 +307,7 @@ public class Example {
 
 <a id="adminPermissionsUpdate"></a>
 # **adminPermissionsUpdate**
-> AdminPermissionsCreateResponse adminPermissionsUpdate(orgId, permissionId)
+> AdminPermissionsCreateResponse adminPermissionsUpdate(orgId, permissionId, adminPermissionsUpdateRequest)
 
 Update a permission
 
@@ -337,8 +339,9 @@ public class Example {
     AdminPermissionsApi apiInstance = new AdminPermissionsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String permissionId = "permissionId_example"; // String | 
+    AdminPermissionsUpdateRequest adminPermissionsUpdateRequest = new AdminPermissionsUpdateRequest(); // AdminPermissionsUpdateRequest | 
     try {
-      AdminPermissionsCreateResponse result = apiInstance.adminPermissionsUpdate(orgId, permissionId);
+      AdminPermissionsCreateResponse result = apiInstance.adminPermissionsUpdate(orgId, permissionId, adminPermissionsUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminPermissionsApi#adminPermissionsUpdate");
@@ -357,6 +360,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **permissionId** | **String**|  | |
+| **adminPermissionsUpdateRequest** | [**AdminPermissionsUpdateRequest**](AdminPermissionsUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -368,7 +372,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -451,7 +455,7 @@ public class Example {
 
 <a id="adminScopesCreate"></a>
 # **adminScopesCreate**
-> AdminScopesCreateResponse adminScopesCreate(orgId)
+> AdminScopesCreateResponse adminScopesCreate(orgId, adminScopesCreateRequest)
 
 Create a custom OAuth scope
 
@@ -482,8 +486,9 @@ public class Example {
 
     AdminPermissionsApi apiInstance = new AdminPermissionsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AdminScopesCreateRequest adminScopesCreateRequest = new AdminScopesCreateRequest(); // AdminScopesCreateRequest | 
     try {
-      AdminScopesCreateResponse result = apiInstance.adminScopesCreate(orgId);
+      AdminScopesCreateResponse result = apiInstance.adminScopesCreate(orgId, adminScopesCreateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminPermissionsApi#adminScopesCreate");
@@ -501,6 +506,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **adminScopesCreateRequest** | [**AdminScopesCreateRequest**](AdminScopesCreateRequest.md)|  | |
 
 ### Return type
 
@@ -512,7 +518,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

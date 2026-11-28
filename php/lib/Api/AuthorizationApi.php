@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -183,15 +183,16 @@ class AuthorizationApi
      * Evaluate an ABAC policy decision for the caller
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckAbacRequest $checkAbacRequest checkAbacRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAbac'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\CheckAbacResponse
      */
-    public function checkAbac($orgId, string $contentType = self::contentTypes['checkAbac'][0])
+    public function checkAbac($orgId, $checkAbacRequest, string $contentType = self::contentTypes['checkAbac'][0])
     {
-        list($response) = $this->checkAbacWithHttpInfo($orgId, $contentType);
+        list($response) = $this->checkAbacWithHttpInfo($orgId, $checkAbacRequest, $contentType);
         return $response;
     }
 
@@ -201,15 +202,16 @@ class AuthorizationApi
      * Evaluate an ABAC policy decision for the caller
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckAbacRequest $checkAbacRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAbac'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\CheckAbacResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function checkAbacWithHttpInfo($orgId, string $contentType = self::contentTypes['checkAbac'][0])
+    public function checkAbacWithHttpInfo($orgId, $checkAbacRequest, string $contentType = self::contentTypes['checkAbac'][0])
     {
-        $request = $this->checkAbacRequest($orgId, $contentType);
+        $request = $this->checkAbacRequest($orgId, $checkAbacRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -286,14 +288,15 @@ class AuthorizationApi
      * Evaluate an ABAC policy decision for the caller
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckAbacRequest $checkAbacRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAbac'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkAbacAsync($orgId, string $contentType = self::contentTypes['checkAbac'][0])
+    public function checkAbacAsync($orgId, $checkAbacRequest, string $contentType = self::contentTypes['checkAbac'][0])
     {
-        return $this->checkAbacAsyncWithHttpInfo($orgId, $contentType)
+        return $this->checkAbacAsyncWithHttpInfo($orgId, $checkAbacRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -307,15 +310,16 @@ class AuthorizationApi
      * Evaluate an ABAC policy decision for the caller
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckAbacRequest $checkAbacRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAbac'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkAbacAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['checkAbac'][0])
+    public function checkAbacAsyncWithHttpInfo($orgId, $checkAbacRequest, string $contentType = self::contentTypes['checkAbac'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\CheckAbacResponse';
-        $request = $this->checkAbacRequest($orgId, $contentType);
+        $request = $this->checkAbacRequest($orgId, $checkAbacRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -357,18 +361,26 @@ class AuthorizationApi
      * Create request for operation 'checkAbac'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckAbacRequest $checkAbacRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAbac'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function checkAbacRequest($orgId, string $contentType = self::contentTypes['checkAbac'][0])
+    public function checkAbacRequest($orgId, $checkAbacRequest, string $contentType = self::contentTypes['checkAbac'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling checkAbac'
+            );
+        }
+
+        // verify the required parameter 'checkAbacRequest' is set
+        if ($checkAbacRequest === null || (is_array($checkAbacRequest) && count($checkAbacRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $checkAbacRequest when calling checkAbac'
             );
         }
 
@@ -399,7 +411,14 @@ class AuthorizationApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($checkAbacRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($checkAbacRequest));
+            } else {
+                $httpBody = $checkAbacRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -455,15 +474,16 @@ class AuthorizationApi
      * Evaluate up to 100 ABAC checks for the caller in one call
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckAbacBulkRequest $checkAbacBulkRequest checkAbacBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAbacBulk'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\CheckAbacBulkResponse
      */
-    public function checkAbacBulk($orgId, string $contentType = self::contentTypes['checkAbacBulk'][0])
+    public function checkAbacBulk($orgId, $checkAbacBulkRequest, string $contentType = self::contentTypes['checkAbacBulk'][0])
     {
-        list($response) = $this->checkAbacBulkWithHttpInfo($orgId, $contentType);
+        list($response) = $this->checkAbacBulkWithHttpInfo($orgId, $checkAbacBulkRequest, $contentType);
         return $response;
     }
 
@@ -473,15 +493,16 @@ class AuthorizationApi
      * Evaluate up to 100 ABAC checks for the caller in one call
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckAbacBulkRequest $checkAbacBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAbacBulk'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\CheckAbacBulkResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function checkAbacBulkWithHttpInfo($orgId, string $contentType = self::contentTypes['checkAbacBulk'][0])
+    public function checkAbacBulkWithHttpInfo($orgId, $checkAbacBulkRequest, string $contentType = self::contentTypes['checkAbacBulk'][0])
     {
-        $request = $this->checkAbacBulkRequest($orgId, $contentType);
+        $request = $this->checkAbacBulkRequest($orgId, $checkAbacBulkRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -558,14 +579,15 @@ class AuthorizationApi
      * Evaluate up to 100 ABAC checks for the caller in one call
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckAbacBulkRequest $checkAbacBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAbacBulk'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkAbacBulkAsync($orgId, string $contentType = self::contentTypes['checkAbacBulk'][0])
+    public function checkAbacBulkAsync($orgId, $checkAbacBulkRequest, string $contentType = self::contentTypes['checkAbacBulk'][0])
     {
-        return $this->checkAbacBulkAsyncWithHttpInfo($orgId, $contentType)
+        return $this->checkAbacBulkAsyncWithHttpInfo($orgId, $checkAbacBulkRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -579,15 +601,16 @@ class AuthorizationApi
      * Evaluate up to 100 ABAC checks for the caller in one call
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckAbacBulkRequest $checkAbacBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAbacBulk'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkAbacBulkAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['checkAbacBulk'][0])
+    public function checkAbacBulkAsyncWithHttpInfo($orgId, $checkAbacBulkRequest, string $contentType = self::contentTypes['checkAbacBulk'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\CheckAbacBulkResponse';
-        $request = $this->checkAbacBulkRequest($orgId, $contentType);
+        $request = $this->checkAbacBulkRequest($orgId, $checkAbacBulkRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -629,18 +652,26 @@ class AuthorizationApi
      * Create request for operation 'checkAbacBulk'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckAbacBulkRequest $checkAbacBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAbacBulk'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function checkAbacBulkRequest($orgId, string $contentType = self::contentTypes['checkAbacBulk'][0])
+    public function checkAbacBulkRequest($orgId, $checkAbacBulkRequest, string $contentType = self::contentTypes['checkAbacBulk'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling checkAbacBulk'
+            );
+        }
+
+        // verify the required parameter 'checkAbacBulkRequest' is set
+        if ($checkAbacBulkRequest === null || (is_array($checkAbacBulkRequest) && count($checkAbacBulkRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $checkAbacBulkRequest when calling checkAbacBulk'
             );
         }
 
@@ -671,7 +702,14 @@ class AuthorizationApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($checkAbacBulkRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($checkAbacBulkRequest));
+            } else {
+                $httpBody = $checkAbacBulkRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -726,15 +764,16 @@ class AuthorizationApi
      *
      * Check whether the subject holds all of the permissions
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAllPermissions'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\CheckAnyPermissionResponse
      */
-    public function checkAllPermissions(string $contentType = self::contentTypes['checkAllPermissions'][0])
+    public function checkAllPermissions($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkAllPermissions'][0])
     {
-        list($response) = $this->checkAllPermissionsWithHttpInfo($contentType);
+        list($response) = $this->checkAllPermissionsWithHttpInfo($checkPermissionsBulkRequest, $contentType);
         return $response;
     }
 
@@ -743,15 +782,16 @@ class AuthorizationApi
      *
      * Check whether the subject holds all of the permissions
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAllPermissions'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\CheckAnyPermissionResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function checkAllPermissionsWithHttpInfo(string $contentType = self::contentTypes['checkAllPermissions'][0])
+    public function checkAllPermissionsWithHttpInfo($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkAllPermissions'][0])
     {
-        $request = $this->checkAllPermissionsRequest($contentType);
+        $request = $this->checkAllPermissionsRequest($checkPermissionsBulkRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -827,14 +867,15 @@ class AuthorizationApi
      *
      * Check whether the subject holds all of the permissions
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAllPermissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkAllPermissionsAsync(string $contentType = self::contentTypes['checkAllPermissions'][0])
+    public function checkAllPermissionsAsync($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkAllPermissions'][0])
     {
-        return $this->checkAllPermissionsAsyncWithHttpInfo($contentType)
+        return $this->checkAllPermissionsAsyncWithHttpInfo($checkPermissionsBulkRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -847,15 +888,16 @@ class AuthorizationApi
      *
      * Check whether the subject holds all of the permissions
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAllPermissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkAllPermissionsAsyncWithHttpInfo(string $contentType = self::contentTypes['checkAllPermissions'][0])
+    public function checkAllPermissionsAsyncWithHttpInfo($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkAllPermissions'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\CheckAnyPermissionResponse';
-        $request = $this->checkAllPermissionsRequest($contentType);
+        $request = $this->checkAllPermissionsRequest($checkPermissionsBulkRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -896,13 +938,21 @@ class AuthorizationApi
     /**
      * Create request for operation 'checkAllPermissions'
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAllPermissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function checkAllPermissionsRequest(string $contentType = self::contentTypes['checkAllPermissions'][0])
+    public function checkAllPermissionsRequest($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkAllPermissions'][0])
     {
+
+        // verify the required parameter 'checkPermissionsBulkRequest' is set
+        if ($checkPermissionsBulkRequest === null || (is_array($checkPermissionsBulkRequest) && count($checkPermissionsBulkRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $checkPermissionsBulkRequest when calling checkAllPermissions'
+            );
+        }
 
 
         $resourcePath = '/api/v1/authz/check-all';
@@ -923,7 +973,14 @@ class AuthorizationApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($checkPermissionsBulkRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($checkPermissionsBulkRequest));
+            } else {
+                $httpBody = $checkPermissionsBulkRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -983,15 +1040,16 @@ class AuthorizationApi
      *
      * Check whether the subject holds any of the permissions
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAnyPermission'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\CheckAnyPermissionResponse
      */
-    public function checkAnyPermission(string $contentType = self::contentTypes['checkAnyPermission'][0])
+    public function checkAnyPermission($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkAnyPermission'][0])
     {
-        list($response) = $this->checkAnyPermissionWithHttpInfo($contentType);
+        list($response) = $this->checkAnyPermissionWithHttpInfo($checkPermissionsBulkRequest, $contentType);
         return $response;
     }
 
@@ -1000,15 +1058,16 @@ class AuthorizationApi
      *
      * Check whether the subject holds any of the permissions
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAnyPermission'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\CheckAnyPermissionResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function checkAnyPermissionWithHttpInfo(string $contentType = self::contentTypes['checkAnyPermission'][0])
+    public function checkAnyPermissionWithHttpInfo($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkAnyPermission'][0])
     {
-        $request = $this->checkAnyPermissionRequest($contentType);
+        $request = $this->checkAnyPermissionRequest($checkPermissionsBulkRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1084,14 +1143,15 @@ class AuthorizationApi
      *
      * Check whether the subject holds any of the permissions
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAnyPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkAnyPermissionAsync(string $contentType = self::contentTypes['checkAnyPermission'][0])
+    public function checkAnyPermissionAsync($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkAnyPermission'][0])
     {
-        return $this->checkAnyPermissionAsyncWithHttpInfo($contentType)
+        return $this->checkAnyPermissionAsyncWithHttpInfo($checkPermissionsBulkRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1104,15 +1164,16 @@ class AuthorizationApi
      *
      * Check whether the subject holds any of the permissions
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAnyPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkAnyPermissionAsyncWithHttpInfo(string $contentType = self::contentTypes['checkAnyPermission'][0])
+    public function checkAnyPermissionAsyncWithHttpInfo($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkAnyPermission'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\CheckAnyPermissionResponse';
-        $request = $this->checkAnyPermissionRequest($contentType);
+        $request = $this->checkAnyPermissionRequest($checkPermissionsBulkRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1153,13 +1214,21 @@ class AuthorizationApi
     /**
      * Create request for operation 'checkAnyPermission'
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkAnyPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function checkAnyPermissionRequest(string $contentType = self::contentTypes['checkAnyPermission'][0])
+    public function checkAnyPermissionRequest($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkAnyPermission'][0])
     {
+
+        // verify the required parameter 'checkPermissionsBulkRequest' is set
+        if ($checkPermissionsBulkRequest === null || (is_array($checkPermissionsBulkRequest) && count($checkPermissionsBulkRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $checkPermissionsBulkRequest when calling checkAnyPermission'
+            );
+        }
 
 
         $resourcePath = '/api/v1/authz/check-any';
@@ -1180,7 +1249,14 @@ class AuthorizationApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($checkPermissionsBulkRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($checkPermissionsBulkRequest));
+            } else {
+                $httpBody = $checkPermissionsBulkRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -1240,15 +1316,16 @@ class AuthorizationApi
      *
      * Check one permission
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionRequest $checkPermissionRequest checkPermissionRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkPermission'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\CheckPermissionResponse
      */
-    public function checkPermission(string $contentType = self::contentTypes['checkPermission'][0])
+    public function checkPermission($checkPermissionRequest, string $contentType = self::contentTypes['checkPermission'][0])
     {
-        list($response) = $this->checkPermissionWithHttpInfo($contentType);
+        list($response) = $this->checkPermissionWithHttpInfo($checkPermissionRequest, $contentType);
         return $response;
     }
 
@@ -1257,15 +1334,16 @@ class AuthorizationApi
      *
      * Check one permission
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionRequest $checkPermissionRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkPermission'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\CheckPermissionResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function checkPermissionWithHttpInfo(string $contentType = self::contentTypes['checkPermission'][0])
+    public function checkPermissionWithHttpInfo($checkPermissionRequest, string $contentType = self::contentTypes['checkPermission'][0])
     {
-        $request = $this->checkPermissionRequest($contentType);
+        $request = $this->checkPermissionRequest($checkPermissionRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1341,14 +1419,15 @@ class AuthorizationApi
      *
      * Check one permission
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionRequest $checkPermissionRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkPermissionAsync(string $contentType = self::contentTypes['checkPermission'][0])
+    public function checkPermissionAsync($checkPermissionRequest, string $contentType = self::contentTypes['checkPermission'][0])
     {
-        return $this->checkPermissionAsyncWithHttpInfo($contentType)
+        return $this->checkPermissionAsyncWithHttpInfo($checkPermissionRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1361,15 +1440,16 @@ class AuthorizationApi
      *
      * Check one permission
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionRequest $checkPermissionRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkPermissionAsyncWithHttpInfo(string $contentType = self::contentTypes['checkPermission'][0])
+    public function checkPermissionAsyncWithHttpInfo($checkPermissionRequest, string $contentType = self::contentTypes['checkPermission'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\CheckPermissionResponse';
-        $request = $this->checkPermissionRequest($contentType);
+        $request = $this->checkPermissionRequest($checkPermissionRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1410,13 +1490,21 @@ class AuthorizationApi
     /**
      * Create request for operation 'checkPermission'
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionRequest $checkPermissionRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function checkPermissionRequest(string $contentType = self::contentTypes['checkPermission'][0])
+    public function checkPermissionRequest($checkPermissionRequest, string $contentType = self::contentTypes['checkPermission'][0])
     {
+
+        // verify the required parameter 'checkPermissionRequest' is set
+        if ($checkPermissionRequest === null || (is_array($checkPermissionRequest) && count($checkPermissionRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $checkPermissionRequest when calling checkPermission'
+            );
+        }
 
 
         $resourcePath = '/api/v1/authz/check';
@@ -1437,7 +1525,14 @@ class AuthorizationApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($checkPermissionRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($checkPermissionRequest));
+            } else {
+                $httpBody = $checkPermissionRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -1497,15 +1592,16 @@ class AuthorizationApi
      *
      * Check up to 100 permissions in one call
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkPermissionsBulk'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\CheckPermissionsBulkResponse
      */
-    public function checkPermissionsBulk(string $contentType = self::contentTypes['checkPermissionsBulk'][0])
+    public function checkPermissionsBulk($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkPermissionsBulk'][0])
     {
-        list($response) = $this->checkPermissionsBulkWithHttpInfo($contentType);
+        list($response) = $this->checkPermissionsBulkWithHttpInfo($checkPermissionsBulkRequest, $contentType);
         return $response;
     }
 
@@ -1514,15 +1610,16 @@ class AuthorizationApi
      *
      * Check up to 100 permissions in one call
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkPermissionsBulk'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\CheckPermissionsBulkResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function checkPermissionsBulkWithHttpInfo(string $contentType = self::contentTypes['checkPermissionsBulk'][0])
+    public function checkPermissionsBulkWithHttpInfo($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkPermissionsBulk'][0])
     {
-        $request = $this->checkPermissionsBulkRequest($contentType);
+        $request = $this->checkPermissionsBulkRequest($checkPermissionsBulkRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1598,14 +1695,15 @@ class AuthorizationApi
      *
      * Check up to 100 permissions in one call
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkPermissionsBulk'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkPermissionsBulkAsync(string $contentType = self::contentTypes['checkPermissionsBulk'][0])
+    public function checkPermissionsBulkAsync($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkPermissionsBulk'][0])
     {
-        return $this->checkPermissionsBulkAsyncWithHttpInfo($contentType)
+        return $this->checkPermissionsBulkAsyncWithHttpInfo($checkPermissionsBulkRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1618,15 +1716,16 @@ class AuthorizationApi
      *
      * Check up to 100 permissions in one call
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkPermissionsBulk'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkPermissionsBulkAsyncWithHttpInfo(string $contentType = self::contentTypes['checkPermissionsBulk'][0])
+    public function checkPermissionsBulkAsyncWithHttpInfo($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkPermissionsBulk'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\CheckPermissionsBulkResponse';
-        $request = $this->checkPermissionsBulkRequest($contentType);
+        $request = $this->checkPermissionsBulkRequest($checkPermissionsBulkRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1667,13 +1766,21 @@ class AuthorizationApi
     /**
      * Create request for operation 'checkPermissionsBulk'
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest $checkPermissionsBulkRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkPermissionsBulk'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function checkPermissionsBulkRequest(string $contentType = self::contentTypes['checkPermissionsBulk'][0])
+    public function checkPermissionsBulkRequest($checkPermissionsBulkRequest, string $contentType = self::contentTypes['checkPermissionsBulk'][0])
     {
+
+        // verify the required parameter 'checkPermissionsBulkRequest' is set
+        if ($checkPermissionsBulkRequest === null || (is_array($checkPermissionsBulkRequest) && count($checkPermissionsBulkRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $checkPermissionsBulkRequest when calling checkPermissionsBulk'
+            );
+        }
 
 
         $resourcePath = '/api/v1/authz/check-bulk';
@@ -1694,7 +1801,14 @@ class AuthorizationApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($checkPermissionsBulkRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($checkPermissionsBulkRequest));
+            } else {
+                $httpBody = $checkPermissionsBulkRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -1754,15 +1868,16 @@ class AuthorizationApi
      *
      * Zanzibar relationship check
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckRelationRequest $checkRelationRequest checkRelationRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkRelation'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\CheckRelationResponse
      */
-    public function checkRelation(string $contentType = self::contentTypes['checkRelation'][0])
+    public function checkRelation($checkRelationRequest, string $contentType = self::contentTypes['checkRelation'][0])
     {
-        list($response) = $this->checkRelationWithHttpInfo($contentType);
+        list($response) = $this->checkRelationWithHttpInfo($checkRelationRequest, $contentType);
         return $response;
     }
 
@@ -1771,15 +1886,16 @@ class AuthorizationApi
      *
      * Zanzibar relationship check
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckRelationRequest $checkRelationRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkRelation'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\CheckRelationResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function checkRelationWithHttpInfo(string $contentType = self::contentTypes['checkRelation'][0])
+    public function checkRelationWithHttpInfo($checkRelationRequest, string $contentType = self::contentTypes['checkRelation'][0])
     {
-        $request = $this->checkRelationRequest($contentType);
+        $request = $this->checkRelationRequest($checkRelationRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1855,14 +1971,15 @@ class AuthorizationApi
      *
      * Zanzibar relationship check
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckRelationRequest $checkRelationRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkRelation'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkRelationAsync(string $contentType = self::contentTypes['checkRelation'][0])
+    public function checkRelationAsync($checkRelationRequest, string $contentType = self::contentTypes['checkRelation'][0])
     {
-        return $this->checkRelationAsyncWithHttpInfo($contentType)
+        return $this->checkRelationAsyncWithHttpInfo($checkRelationRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1875,15 +1992,16 @@ class AuthorizationApi
      *
      * Zanzibar relationship check
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckRelationRequest $checkRelationRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkRelation'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkRelationAsyncWithHttpInfo(string $contentType = self::contentTypes['checkRelation'][0])
+    public function checkRelationAsyncWithHttpInfo($checkRelationRequest, string $contentType = self::contentTypes['checkRelation'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\CheckRelationResponse';
-        $request = $this->checkRelationRequest($contentType);
+        $request = $this->checkRelationRequest($checkRelationRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1924,13 +2042,21 @@ class AuthorizationApi
     /**
      * Create request for operation 'checkRelation'
      *
+     * @param  \LumoAuth\ApiClient\Model\CheckRelationRequest $checkRelationRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkRelation'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function checkRelationRequest(string $contentType = self::contentTypes['checkRelation'][0])
+    public function checkRelationRequest($checkRelationRequest, string $contentType = self::contentTypes['checkRelation'][0])
     {
+
+        // verify the required parameter 'checkRelationRequest' is set
+        if ($checkRelationRequest === null || (is_array($checkRelationRequest) && count($checkRelationRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $checkRelationRequest when calling checkRelation'
+            );
+        }
 
 
         $resourcePath = '/api/v1/authz/zanzibar/check';
@@ -1951,7 +2077,14 @@ class AuthorizationApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($checkRelationRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($checkRelationRequest));
+            } else {
+                $httpBody = $checkRelationRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -2012,15 +2145,16 @@ class AuthorizationApi
      * Zanzibar relationship check
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckRelationScopedRequest $checkRelationScopedRequest checkRelationScopedRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkRelationScoped'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\CheckRelationScopedResponse
      */
-    public function checkRelationScoped($orgId, string $contentType = self::contentTypes['checkRelationScoped'][0])
+    public function checkRelationScoped($orgId, $checkRelationScopedRequest, string $contentType = self::contentTypes['checkRelationScoped'][0])
     {
-        list($response) = $this->checkRelationScopedWithHttpInfo($orgId, $contentType);
+        list($response) = $this->checkRelationScopedWithHttpInfo($orgId, $checkRelationScopedRequest, $contentType);
         return $response;
     }
 
@@ -2030,15 +2164,16 @@ class AuthorizationApi
      * Zanzibar relationship check
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckRelationScopedRequest $checkRelationScopedRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkRelationScoped'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\CheckRelationScopedResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function checkRelationScopedWithHttpInfo($orgId, string $contentType = self::contentTypes['checkRelationScoped'][0])
+    public function checkRelationScopedWithHttpInfo($orgId, $checkRelationScopedRequest, string $contentType = self::contentTypes['checkRelationScoped'][0])
     {
-        $request = $this->checkRelationScopedRequest($orgId, $contentType);
+        $request = $this->checkRelationScopedRequest($orgId, $checkRelationScopedRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2115,14 +2250,15 @@ class AuthorizationApi
      * Zanzibar relationship check
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckRelationScopedRequest $checkRelationScopedRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkRelationScoped'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkRelationScopedAsync($orgId, string $contentType = self::contentTypes['checkRelationScoped'][0])
+    public function checkRelationScopedAsync($orgId, $checkRelationScopedRequest, string $contentType = self::contentTypes['checkRelationScoped'][0])
     {
-        return $this->checkRelationScopedAsyncWithHttpInfo($orgId, $contentType)
+        return $this->checkRelationScopedAsyncWithHttpInfo($orgId, $checkRelationScopedRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2136,15 +2272,16 @@ class AuthorizationApi
      * Zanzibar relationship check
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckRelationScopedRequest $checkRelationScopedRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkRelationScoped'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function checkRelationScopedAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['checkRelationScoped'][0])
+    public function checkRelationScopedAsyncWithHttpInfo($orgId, $checkRelationScopedRequest, string $contentType = self::contentTypes['checkRelationScoped'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\CheckRelationScopedResponse';
-        $request = $this->checkRelationScopedRequest($orgId, $contentType);
+        $request = $this->checkRelationScopedRequest($orgId, $checkRelationScopedRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2186,18 +2323,26 @@ class AuthorizationApi
      * Create request for operation 'checkRelationScoped'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CheckRelationScopedRequest $checkRelationScopedRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkRelationScoped'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function checkRelationScopedRequest($orgId, string $contentType = self::contentTypes['checkRelationScoped'][0])
+    public function checkRelationScopedRequest($orgId, $checkRelationScopedRequest, string $contentType = self::contentTypes['checkRelationScoped'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling checkRelationScoped'
+            );
+        }
+
+        // verify the required parameter 'checkRelationScopedRequest' is set
+        if ($checkRelationScopedRequest === null || (is_array($checkRelationScopedRequest) && count($checkRelationScopedRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $checkRelationScopedRequest when calling checkRelationScoped'
             );
         }
 
@@ -2228,7 +2373,14 @@ class AuthorizationApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($checkRelationScopedRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($checkRelationScopedRequest));
+            } else {
+                $httpBody = $checkRelationScopedRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -2288,15 +2440,16 @@ class AuthorizationApi
      *
      * AuthZEN 1.0 access evaluation
      *
+     * @param  \LumoAuth\ApiClient\Model\EvaluateRequest $evaluateRequest AuthZEN Authorization API 1.0 evaluation request. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['evaluate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AuthZenDecision
      */
-    public function evaluate(string $contentType = self::contentTypes['evaluate'][0])
+    public function evaluate($evaluateRequest, string $contentType = self::contentTypes['evaluate'][0])
     {
-        list($response) = $this->evaluateWithHttpInfo($contentType);
+        list($response) = $this->evaluateWithHttpInfo($evaluateRequest, $contentType);
         return $response;
     }
 
@@ -2305,15 +2458,16 @@ class AuthorizationApi
      *
      * AuthZEN 1.0 access evaluation
      *
+     * @param  \LumoAuth\ApiClient\Model\EvaluateRequest $evaluateRequest AuthZEN Authorization API 1.0 evaluation request. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['evaluate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AuthZenDecision, HTTP status code, HTTP response headers (array of strings)
      */
-    public function evaluateWithHttpInfo(string $contentType = self::contentTypes['evaluate'][0])
+    public function evaluateWithHttpInfo($evaluateRequest, string $contentType = self::contentTypes['evaluate'][0])
     {
-        $request = $this->evaluateRequest($contentType);
+        $request = $this->evaluateRequest($evaluateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2389,14 +2543,15 @@ class AuthorizationApi
      *
      * AuthZEN 1.0 access evaluation
      *
+     * @param  \LumoAuth\ApiClient\Model\EvaluateRequest $evaluateRequest AuthZEN Authorization API 1.0 evaluation request. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['evaluate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function evaluateAsync(string $contentType = self::contentTypes['evaluate'][0])
+    public function evaluateAsync($evaluateRequest, string $contentType = self::contentTypes['evaluate'][0])
     {
-        return $this->evaluateAsyncWithHttpInfo($contentType)
+        return $this->evaluateAsyncWithHttpInfo($evaluateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2409,15 +2564,16 @@ class AuthorizationApi
      *
      * AuthZEN 1.0 access evaluation
      *
+     * @param  \LumoAuth\ApiClient\Model\EvaluateRequest $evaluateRequest AuthZEN Authorization API 1.0 evaluation request. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['evaluate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function evaluateAsyncWithHttpInfo(string $contentType = self::contentTypes['evaluate'][0])
+    public function evaluateAsyncWithHttpInfo($evaluateRequest, string $contentType = self::contentTypes['evaluate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AuthZenDecision';
-        $request = $this->evaluateRequest($contentType);
+        $request = $this->evaluateRequest($evaluateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2458,13 +2614,21 @@ class AuthorizationApi
     /**
      * Create request for operation 'evaluate'
      *
+     * @param  \LumoAuth\ApiClient\Model\EvaluateRequest $evaluateRequest AuthZEN Authorization API 1.0 evaluation request. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['evaluate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function evaluateRequest(string $contentType = self::contentTypes['evaluate'][0])
+    public function evaluateRequest($evaluateRequest, string $contentType = self::contentTypes['evaluate'][0])
     {
+
+        // verify the required parameter 'evaluateRequest' is set
+        if ($evaluateRequest === null || (is_array($evaluateRequest) && count($evaluateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $evaluateRequest when calling evaluate'
+            );
+        }
 
 
         $resourcePath = '/api/v1/authz/v1/evaluation';
@@ -2485,7 +2649,14 @@ class AuthorizationApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($evaluateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($evaluateRequest));
+            } else {
+                $httpBody = $evaluateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -2545,15 +2716,16 @@ class AuthorizationApi
      *
      * AuthZEN 1.0 boxcarred access evaluations
      *
+     * @param  \LumoAuth\ApiClient\Model\EvaluateBatchRequest $evaluateBatchRequest AuthZEN Authorization API 1.0 batch evaluation request. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['evaluateBatch'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\EvaluateBatchResponse
      */
-    public function evaluateBatch(string $contentType = self::contentTypes['evaluateBatch'][0])
+    public function evaluateBatch($evaluateBatchRequest, string $contentType = self::contentTypes['evaluateBatch'][0])
     {
-        list($response) = $this->evaluateBatchWithHttpInfo($contentType);
+        list($response) = $this->evaluateBatchWithHttpInfo($evaluateBatchRequest, $contentType);
         return $response;
     }
 
@@ -2562,15 +2734,16 @@ class AuthorizationApi
      *
      * AuthZEN 1.0 boxcarred access evaluations
      *
+     * @param  \LumoAuth\ApiClient\Model\EvaluateBatchRequest $evaluateBatchRequest AuthZEN Authorization API 1.0 batch evaluation request. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['evaluateBatch'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\EvaluateBatchResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function evaluateBatchWithHttpInfo(string $contentType = self::contentTypes['evaluateBatch'][0])
+    public function evaluateBatchWithHttpInfo($evaluateBatchRequest, string $contentType = self::contentTypes['evaluateBatch'][0])
     {
-        $request = $this->evaluateBatchRequest($contentType);
+        $request = $this->evaluateBatchRequest($evaluateBatchRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2646,14 +2819,15 @@ class AuthorizationApi
      *
      * AuthZEN 1.0 boxcarred access evaluations
      *
+     * @param  \LumoAuth\ApiClient\Model\EvaluateBatchRequest $evaluateBatchRequest AuthZEN Authorization API 1.0 batch evaluation request. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['evaluateBatch'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function evaluateBatchAsync(string $contentType = self::contentTypes['evaluateBatch'][0])
+    public function evaluateBatchAsync($evaluateBatchRequest, string $contentType = self::contentTypes['evaluateBatch'][0])
     {
-        return $this->evaluateBatchAsyncWithHttpInfo($contentType)
+        return $this->evaluateBatchAsyncWithHttpInfo($evaluateBatchRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2666,15 +2840,16 @@ class AuthorizationApi
      *
      * AuthZEN 1.0 boxcarred access evaluations
      *
+     * @param  \LumoAuth\ApiClient\Model\EvaluateBatchRequest $evaluateBatchRequest AuthZEN Authorization API 1.0 batch evaluation request. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['evaluateBatch'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function evaluateBatchAsyncWithHttpInfo(string $contentType = self::contentTypes['evaluateBatch'][0])
+    public function evaluateBatchAsyncWithHttpInfo($evaluateBatchRequest, string $contentType = self::contentTypes['evaluateBatch'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\EvaluateBatchResponse';
-        $request = $this->evaluateBatchRequest($contentType);
+        $request = $this->evaluateBatchRequest($evaluateBatchRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2715,13 +2890,21 @@ class AuthorizationApi
     /**
      * Create request for operation 'evaluateBatch'
      *
+     * @param  \LumoAuth\ApiClient\Model\EvaluateBatchRequest $evaluateBatchRequest AuthZEN Authorization API 1.0 batch evaluation request. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['evaluateBatch'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function evaluateBatchRequest(string $contentType = self::contentTypes['evaluateBatch'][0])
+    public function evaluateBatchRequest($evaluateBatchRequest, string $contentType = self::contentTypes['evaluateBatch'][0])
     {
+
+        // verify the required parameter 'evaluateBatchRequest' is set
+        if ($evaluateBatchRequest === null || (is_array($evaluateBatchRequest) && count($evaluateBatchRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $evaluateBatchRequest when calling evaluateBatch'
+            );
+        }
 
 
         $resourcePath = '/api/v1/authz/v1/evaluations';
@@ -2742,7 +2925,14 @@ class AuthorizationApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($evaluateBatchRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($evaluateBatchRequest));
+            } else {
+                $httpBody = $evaluateBatchRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -4506,15 +4696,16 @@ class AuthorizationApi
      * @param  string $resourceType resourceType (required)
      * @param  string $resourceId resourceId (required)
      * @param  string $attributeSlug attributeSlug (required)
+     * @param  \LumoAuth\ApiClient\Model\SetResourceAttributeRequest $setResourceAttributeRequest setResourceAttributeRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setResourceAttribute'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\SetResourceAttributeResponse
      */
-    public function setResourceAttribute($orgId, $resourceType, $resourceId, $attributeSlug, string $contentType = self::contentTypes['setResourceAttribute'][0])
+    public function setResourceAttribute($orgId, $resourceType, $resourceId, $attributeSlug, $setResourceAttributeRequest, string $contentType = self::contentTypes['setResourceAttribute'][0])
     {
-        list($response) = $this->setResourceAttributeWithHttpInfo($orgId, $resourceType, $resourceId, $attributeSlug, $contentType);
+        list($response) = $this->setResourceAttributeWithHttpInfo($orgId, $resourceType, $resourceId, $attributeSlug, $setResourceAttributeRequest, $contentType);
         return $response;
     }
 
@@ -4527,15 +4718,16 @@ class AuthorizationApi
      * @param  string $resourceType (required)
      * @param  string $resourceId (required)
      * @param  string $attributeSlug (required)
+     * @param  \LumoAuth\ApiClient\Model\SetResourceAttributeRequest $setResourceAttributeRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setResourceAttribute'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\SetResourceAttributeResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function setResourceAttributeWithHttpInfo($orgId, $resourceType, $resourceId, $attributeSlug, string $contentType = self::contentTypes['setResourceAttribute'][0])
+    public function setResourceAttributeWithHttpInfo($orgId, $resourceType, $resourceId, $attributeSlug, $setResourceAttributeRequest, string $contentType = self::contentTypes['setResourceAttribute'][0])
     {
-        $request = $this->setResourceAttributeRequest($orgId, $resourceType, $resourceId, $attributeSlug, $contentType);
+        $request = $this->setResourceAttributeRequest($orgId, $resourceType, $resourceId, $attributeSlug, $setResourceAttributeRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -4615,14 +4807,15 @@ class AuthorizationApi
      * @param  string $resourceType (required)
      * @param  string $resourceId (required)
      * @param  string $attributeSlug (required)
+     * @param  \LumoAuth\ApiClient\Model\SetResourceAttributeRequest $setResourceAttributeRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setResourceAttribute'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function setResourceAttributeAsync($orgId, $resourceType, $resourceId, $attributeSlug, string $contentType = self::contentTypes['setResourceAttribute'][0])
+    public function setResourceAttributeAsync($orgId, $resourceType, $resourceId, $attributeSlug, $setResourceAttributeRequest, string $contentType = self::contentTypes['setResourceAttribute'][0])
     {
-        return $this->setResourceAttributeAsyncWithHttpInfo($orgId, $resourceType, $resourceId, $attributeSlug, $contentType)
+        return $this->setResourceAttributeAsyncWithHttpInfo($orgId, $resourceType, $resourceId, $attributeSlug, $setResourceAttributeRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4639,15 +4832,16 @@ class AuthorizationApi
      * @param  string $resourceType (required)
      * @param  string $resourceId (required)
      * @param  string $attributeSlug (required)
+     * @param  \LumoAuth\ApiClient\Model\SetResourceAttributeRequest $setResourceAttributeRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setResourceAttribute'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function setResourceAttributeAsyncWithHttpInfo($orgId, $resourceType, $resourceId, $attributeSlug, string $contentType = self::contentTypes['setResourceAttribute'][0])
+    public function setResourceAttributeAsyncWithHttpInfo($orgId, $resourceType, $resourceId, $attributeSlug, $setResourceAttributeRequest, string $contentType = self::contentTypes['setResourceAttribute'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\SetResourceAttributeResponse';
-        $request = $this->setResourceAttributeRequest($orgId, $resourceType, $resourceId, $attributeSlug, $contentType);
+        $request = $this->setResourceAttributeRequest($orgId, $resourceType, $resourceId, $attributeSlug, $setResourceAttributeRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -4692,12 +4886,13 @@ class AuthorizationApi
      * @param  string $resourceType (required)
      * @param  string $resourceId (required)
      * @param  string $attributeSlug (required)
+     * @param  \LumoAuth\ApiClient\Model\SetResourceAttributeRequest $setResourceAttributeRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setResourceAttribute'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function setResourceAttributeRequest($orgId, $resourceType, $resourceId, $attributeSlug, string $contentType = self::contentTypes['setResourceAttribute'][0])
+    public function setResourceAttributeRequest($orgId, $resourceType, $resourceId, $attributeSlug, $setResourceAttributeRequest, string $contentType = self::contentTypes['setResourceAttribute'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -4725,6 +4920,13 @@ class AuthorizationApi
         if ($attributeSlug === null || (is_array($attributeSlug) && count($attributeSlug) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $attributeSlug when calling setResourceAttribute'
+            );
+        }
+
+        // verify the required parameter 'setResourceAttributeRequest' is set
+        if ($setResourceAttributeRequest === null || (is_array($setResourceAttributeRequest) && count($setResourceAttributeRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $setResourceAttributeRequest when calling setResourceAttribute'
             );
         }
 
@@ -4779,7 +4981,14 @@ class AuthorizationApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($setResourceAttributeRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($setResourceAttributeRequest));
+            } else {
+                $httpBody = $setResourceAttributeRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -4837,15 +5046,16 @@ class AuthorizationApi
      * @param  string $orgId orgId (required)
      * @param  string $userId userId (required)
      * @param  string $attributeSlug attributeSlug (required)
+     * @param  \LumoAuth\ApiClient\Model\SetResourceAttributeRequest $setResourceAttributeRequest setResourceAttributeRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserAttribute'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\SetUserAttributeResponse
      */
-    public function setUserAttribute($orgId, $userId, $attributeSlug, string $contentType = self::contentTypes['setUserAttribute'][0])
+    public function setUserAttribute($orgId, $userId, $attributeSlug, $setResourceAttributeRequest, string $contentType = self::contentTypes['setUserAttribute'][0])
     {
-        list($response) = $this->setUserAttributeWithHttpInfo($orgId, $userId, $attributeSlug, $contentType);
+        list($response) = $this->setUserAttributeWithHttpInfo($orgId, $userId, $attributeSlug, $setResourceAttributeRequest, $contentType);
         return $response;
     }
 
@@ -4857,15 +5067,16 @@ class AuthorizationApi
      * @param  string $orgId (required)
      * @param  string $userId (required)
      * @param  string $attributeSlug (required)
+     * @param  \LumoAuth\ApiClient\Model\SetResourceAttributeRequest $setResourceAttributeRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserAttribute'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\SetUserAttributeResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function setUserAttributeWithHttpInfo($orgId, $userId, $attributeSlug, string $contentType = self::contentTypes['setUserAttribute'][0])
+    public function setUserAttributeWithHttpInfo($orgId, $userId, $attributeSlug, $setResourceAttributeRequest, string $contentType = self::contentTypes['setUserAttribute'][0])
     {
-        $request = $this->setUserAttributeRequest($orgId, $userId, $attributeSlug, $contentType);
+        $request = $this->setUserAttributeRequest($orgId, $userId, $attributeSlug, $setResourceAttributeRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -4944,14 +5155,15 @@ class AuthorizationApi
      * @param  string $orgId (required)
      * @param  string $userId (required)
      * @param  string $attributeSlug (required)
+     * @param  \LumoAuth\ApiClient\Model\SetResourceAttributeRequest $setResourceAttributeRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserAttribute'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function setUserAttributeAsync($orgId, $userId, $attributeSlug, string $contentType = self::contentTypes['setUserAttribute'][0])
+    public function setUserAttributeAsync($orgId, $userId, $attributeSlug, $setResourceAttributeRequest, string $contentType = self::contentTypes['setUserAttribute'][0])
     {
-        return $this->setUserAttributeAsyncWithHttpInfo($orgId, $userId, $attributeSlug, $contentType)
+        return $this->setUserAttributeAsyncWithHttpInfo($orgId, $userId, $attributeSlug, $setResourceAttributeRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4967,15 +5179,16 @@ class AuthorizationApi
      * @param  string $orgId (required)
      * @param  string $userId (required)
      * @param  string $attributeSlug (required)
+     * @param  \LumoAuth\ApiClient\Model\SetResourceAttributeRequest $setResourceAttributeRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserAttribute'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function setUserAttributeAsyncWithHttpInfo($orgId, $userId, $attributeSlug, string $contentType = self::contentTypes['setUserAttribute'][0])
+    public function setUserAttributeAsyncWithHttpInfo($orgId, $userId, $attributeSlug, $setResourceAttributeRequest, string $contentType = self::contentTypes['setUserAttribute'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\SetUserAttributeResponse';
-        $request = $this->setUserAttributeRequest($orgId, $userId, $attributeSlug, $contentType);
+        $request = $this->setUserAttributeRequest($orgId, $userId, $attributeSlug, $setResourceAttributeRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -5019,12 +5232,13 @@ class AuthorizationApi
      * @param  string $orgId (required)
      * @param  string $userId (required)
      * @param  string $attributeSlug (required)
+     * @param  \LumoAuth\ApiClient\Model\SetResourceAttributeRequest $setResourceAttributeRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserAttribute'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function setUserAttributeRequest($orgId, $userId, $attributeSlug, string $contentType = self::contentTypes['setUserAttribute'][0])
+    public function setUserAttributeRequest($orgId, $userId, $attributeSlug, $setResourceAttributeRequest, string $contentType = self::contentTypes['setUserAttribute'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -5045,6 +5259,13 @@ class AuthorizationApi
         if ($attributeSlug === null || (is_array($attributeSlug) && count($attributeSlug) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $attributeSlug when calling setUserAttribute'
+            );
+        }
+
+        // verify the required parameter 'setResourceAttributeRequest' is set
+        if ($setResourceAttributeRequest === null || (is_array($setResourceAttributeRequest) && count($setResourceAttributeRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $setResourceAttributeRequest when calling setUserAttribute'
             );
         }
 
@@ -5091,7 +5312,14 @@ class AuthorizationApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($setResourceAttributeRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($setResourceAttributeRequest));
+            } else {
+                $httpBody = $setResourceAttributeRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

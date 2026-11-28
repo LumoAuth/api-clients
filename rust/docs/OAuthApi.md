@@ -59,7 +59,7 @@ No authorization required
 
 ## backchannel_authorize
 
-> models::BackchannelAuthorizeResponse backchannel_authorize(org_id)
+> models::BackchannelAuthorizeResponse backchannel_authorize(org_id, scope, login_hint, login_hint_token, id_token_hint, binding_message, acr_values, requested_expiry, client_notification_token, authorization_details, client_id, client_secret, client_assertion_type, client_assertion)
 CIBA backchannel authentication request
 
 OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
@@ -70,6 +70,19 @@ OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Clas
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**scope** | **String** |  | [required] |
+**login_hint** | Option<**String**> |  |  |
+**login_hint_token** | Option<**String**> |  |  |
+**id_token_hint** | Option<**String**> |  |  |
+**binding_message** | Option<**String**> |  |  |
+**acr_values** | Option<**String**> |  |  |
+**requested_expiry** | Option<**i32**> | Seconds. An application's request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. |  |
+**client_notification_token** | Option<**String**> |  |  |
+**authorization_details** | Option<**String**> |  |  |
+**client_id** | Option<**String**> | Required for a public client; a confidential client may authenticate with HTTP Basic instead. |  |
+**client_secret** | Option<**String**> | client_secret_post |  |
+**client_assertion_type** | Option<**String**> |  |  |
+**client_assertion** | Option<**String**> | private_key_jwt (RFC 7523) |  |
 
 ### Return type
 
@@ -81,7 +94,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -120,10 +133,10 @@ No authorization required
 
 ## device_authorization
 
-> models::DeviceAuthorizationResponse device_authorization(org_id)
+> models::DeviceAuthorizationResponse device_authorization(org_id, client_id, client_secret, client_assertion_type, client_assertion, scope, resource)
 Device authorization request (RFC 8628)
 
-Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
 
 ### Parameters
 
@@ -131,6 +144,12 @@ Starts the device authorization grant for a client registered for urn:ietf:param
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**client_id** | Option<**String**> | Required for a public client; a confidential client may authenticate with HTTP Basic instead. |  |
+**client_secret** | Option<**String**> | client_secret_post |  |
+**client_assertion_type** | Option<**String**> |  |  |
+**client_assertion** | Option<**String**> | private_key_jwt (RFC 7523) |  |
+**scope** | Option<**String**> | Space-separated scopes. |  |
+**resource** | Option<**String**> | RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client's audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. |  |
 
 ### Return type
 
@@ -142,7 +161,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -241,7 +260,7 @@ No authorization required
 
 ## introspect
 
-> models::IntrospectResponse introspect(org_id)
+> models::IntrospectResponse introspect(org_id, token, token_type_hint, client_id, client_secret, client_assertion_type, client_assertion)
 Token introspection (RFC 7662)
 
 Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
@@ -252,6 +271,12 @@ Resource servers query the active state and meta-information of an access or ref
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**token** | **String** |  | [required] |
+**token_type_hint** | Option<**String**> |  |  |
+**client_id** | Option<**String**> | The calling client, with client_secret (client_secret_post), or an agent's id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). |  |
+**client_secret** | Option<**String**> | client_secret_post |  |
+**client_assertion_type** | Option<**String**> |  |  |
+**client_assertion** | Option<**String**> | private_key_jwt (RFC 7523) |  |
 
 ### Return type
 
@@ -263,7 +288,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -271,7 +296,7 @@ Name | Type | Description  | Required | Notes
 
 ## par
 
-> models::ParResponse par(org_id)
+> models::ParResponse par(org_id, response_type, redirect_uri, scope, state, nonce, code_challenge, code_challenge_method, request, resource, prompt, login_hint, client_id, client_secret, client_assertion_type, client_assertion)
 Pushed authorization request (RFC 9126)
 
 Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
@@ -282,6 +307,21 @@ Stores the authorization request parameters server-side and returns a request_ur
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**response_type** | Option<**String**> |  |  |
+**redirect_uri** | Option<**String**> |  |  |
+**scope** | Option<**String**> |  |  |
+**state** | Option<**String**> |  |  |
+**nonce** | Option<**String**> |  |  |
+**code_challenge** | Option<**String**> |  |  |
+**code_challenge_method** | Option<**String**> |  |  |
+**request** | Option<**String**> | A signed request object (JAR, RFC 9101). |  |
+**resource** | Option<**String**> |  |  |
+**prompt** | Option<**String**> |  |  |
+**login_hint** | Option<**String**> |  |  |
+**client_id** | Option<**String**> | Required for a public client; a confidential client may authenticate with HTTP Basic instead. |  |
+**client_secret** | Option<**String**> | client_secret_post |  |
+**client_assertion_type** | Option<**String**> |  |  |
+**client_assertion** | Option<**String**> | private_key_jwt (RFC 7523) |  |
 
 ### Return type
 
@@ -293,7 +333,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -301,7 +341,7 @@ Name | Type | Description  | Required | Notes
 
 ## register_client
 
-> models::RegisterClientResponse register_client(org_id)
+> models::RegisterClientResponse register_client(org_id, register_client_request)
 Dynamic client registration (RFC 7591 / OIDC DCR)
 
 Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization's signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
@@ -312,6 +352,7 @@ Registers an OAuth client from a JSON metadata document. Authenticated with an i
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**register_client_request** | [**RegisterClientRequest**](RegisterClientRequest.md) | RFC 7591 client metadata. | [required] |
 
 ### Return type
 
@@ -323,7 +364,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -362,7 +403,7 @@ No authorization required
 
 ## revoke
 
-> serde_json::Value revoke(org_id)
+> serde_json::Value revoke(org_id, token, token_type_hint, client_id, client_secret, client_assertion_type, client_assertion)
 Token revocation (RFC 7009)
 
 Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
@@ -373,6 +414,12 @@ Revokes an access or refresh token (revoking a refresh token also revokes the ac
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**token** | **String** |  | [required] |
+**token_type_hint** | Option<**String**> |  |  |
+**client_id** | Option<**String**> | Required for a public client; a confidential client may authenticate with HTTP Basic instead. |  |
+**client_secret** | Option<**String**> | client_secret_post |  |
+**client_assertion_type** | Option<**String**> |  |  |
+**client_assertion** | Option<**String**> | private_key_jwt (RFC 7523) |  |
 
 ### Return type
 
@@ -384,7 +431,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -545,7 +592,7 @@ No authorization required
 
 ## submit_login_json
 
-> models::SubmitLoginJsonResponse submit_login_json(org_id)
+> models::SubmitLoginJsonResponse submit_login_json(org_id, submit_login_json_request)
 Programmatic (JSON) login for the authorization flow
 
 Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
@@ -556,6 +603,7 @@ Establishes the end-user browser session from JSON credentials so a following /o
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**submit_login_json_request** | [**SubmitLoginJsonRequest**](SubmitLoginJsonRequest.md) |  | [required] |
 
 ### Return type
 
@@ -567,7 +615,7 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -605,7 +653,7 @@ No authorization required
 
 ## token
 
-> models::TokenResponse token(org_id)
+> models::TokenResponse token(org_id, grant_type, code, redirect_uri, code_verifier, refresh_token, device_code, auth_req_id, scope, resource, subject_token, subject_token_type, actor_token, actor_token_type, requested_token_type, assertion, client_id, client_secret, client_assertion_type, client_assertion)
 OAuth 2.1 token endpoint
 
 Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
@@ -616,6 +664,25 @@ Issues tokens for authorization_code, refresh_token, client_credentials, urn:iet
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**grant_type** | **String** |  | [required] |
+**code** | Option<**String**> |  |  |
+**redirect_uri** | Option<**String**> |  |  |
+**code_verifier** | Option<**String**> |  |  |
+**refresh_token** | Option<**String**> |  |  |
+**device_code** | Option<**String**> |  |  |
+**auth_req_id** | Option<**String**> | CIBA |  |
+**scope** | Option<**String**> |  |  |
+**resource** | Option<**String**> |  |  |
+**subject_token** | Option<**String**> | Token exchange (RFC 8693) |  |
+**subject_token_type** | Option<**String**> |  |  |
+**actor_token** | Option<**String**> |  |  |
+**actor_token_type** | Option<**String**> |  |  |
+**requested_token_type** | Option<**String**> |  |  |
+**assertion** | Option<**String**> | JWT bearer / ID-JAG grant |  |
+**client_id** | Option<**String**> | Required for a public client; a confidential client may authenticate with HTTP Basic instead. |  |
+**client_secret** | Option<**String**> | client_secret_post |  |
+**client_assertion_type** | Option<**String**> |  |  |
+**client_assertion** | Option<**String**> | private_key_jwt (RFC 7523) |  |
 
 ### Return type
 
@@ -627,7 +694,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

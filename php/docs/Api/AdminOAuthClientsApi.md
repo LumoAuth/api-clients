@@ -158,7 +158,7 @@ try {
 ## `createClient()`
 
 ```php
-createClient($orgId): \LumoAuth\ApiClient\Model\CreateClientResponse
+createClient($orgId, $oAuthClientWrite): \LumoAuth\ApiClient\Model\CreateClientResponse
 ```
 
 Create an OAuth client
@@ -186,9 +186,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminOAuthClientsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$oAuthClientWrite = new \LumoAuth\ApiClient\Model\OAuthClientWrite(); // \LumoAuth\ApiClient\Model\OAuthClientWrite
 
 try {
-    $result = $apiInstance->createClient($orgId);
+    $result = $apiInstance->createClient($orgId, $oAuthClientWrite);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminOAuthClientsApi->createClient: ', $e->getMessage(), PHP_EOL;
@@ -200,6 +201,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **oAuthClientWrite** | [**\LumoAuth\ApiClient\Model\OAuthClientWrite**](../Model/OAuthClientWrite.md)|  | |
 
 ### Return type
 
@@ -211,7 +213,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -682,7 +684,7 @@ try {
 ## `patchClient()`
 
 ```php
-patchClient($orgId, $clientId): \LumoAuth\ApiClient\Model\UpdateClientResponse
+patchClient($orgId, $clientId, $oAuthClientWrite): \LumoAuth\ApiClient\Model\UpdateClientResponse
 ```
 
 Update an OAuth client
@@ -713,9 +715,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminOAuthClientsApi(
 );
 $orgId = 'orgId_example'; // string
 $clientId = 'clientId_example'; // string
+$oAuthClientWrite = new \LumoAuth\ApiClient\Model\OAuthClientWrite(); // \LumoAuth\ApiClient\Model\OAuthClientWrite
 
 try {
-    $result = $apiInstance->patchClient($orgId, $clientId);
+    $result = $apiInstance->patchClient($orgId, $clientId, $oAuthClientWrite);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminOAuthClientsApi->patchClient: ', $e->getMessage(), PHP_EOL;
@@ -728,6 +731,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **clientId** | **string**|  | |
+| **oAuthClientWrite** | [**\LumoAuth\ApiClient\Model\OAuthClientWrite**](../Model/OAuthClientWrite.md)|  | |
 
 ### Return type
 
@@ -739,7 +743,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -885,7 +889,7 @@ try {
 ## `setClientScopes()`
 
 ```php
-setClientScopes($orgId, $clientId): \LumoAuth\ApiClient\Model\SetClientScopesResponse
+setClientScopes($orgId, $clientId, $setClientScopesRequest): \LumoAuth\ApiClient\Model\SetClientScopesResponse
 ```
 
 Replace the scopes granted to an OAuth client
@@ -916,9 +920,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminOAuthClientsApi(
 );
 $orgId = 'orgId_example'; // string
 $clientId = 'clientId_example'; // string
+$setClientScopesRequest = new \LumoAuth\ApiClient\Model\SetClientScopesRequest(); // \LumoAuth\ApiClient\Model\SetClientScopesRequest
 
 try {
-    $result = $apiInstance->setClientScopes($orgId, $clientId);
+    $result = $apiInstance->setClientScopes($orgId, $clientId, $setClientScopesRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminOAuthClientsApi->setClientScopes: ', $e->getMessage(), PHP_EOL;
@@ -931,6 +936,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **clientId** | **string**|  | |
+| **setClientScopesRequest** | [**\LumoAuth\ApiClient\Model\SetClientScopesRequest**](../Model/SetClientScopesRequest.md)|  | |
 
 ### Return type
 
@@ -942,7 +948,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -952,7 +958,7 @@ try {
 ## `updateClient()`
 
 ```php
-updateClient($orgId, $clientId): \LumoAuth\ApiClient\Model\UpdateClientResponse
+updateClient($orgId, $clientId, $oAuthClientWrite): \LumoAuth\ApiClient\Model\UpdateClientResponse
 ```
 
 Update an OAuth client (same as PATCH: only the fields that are sent change)
@@ -983,9 +989,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminOAuthClientsApi(
 );
 $orgId = 'orgId_example'; // string
 $clientId = 'clientId_example'; // string
+$oAuthClientWrite = new \LumoAuth\ApiClient\Model\OAuthClientWrite(); // \LumoAuth\ApiClient\Model\OAuthClientWrite
 
 try {
-    $result = $apiInstance->updateClient($orgId, $clientId);
+    $result = $apiInstance->updateClient($orgId, $clientId, $oAuthClientWrite);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminOAuthClientsApi->updateClient: ', $e->getMessage(), PHP_EOL;
@@ -998,6 +1005,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **clientId** | **string**|  | |
+| **oAuthClientWrite** | [**\LumoAuth\ApiClient\Model\OAuthClientWrite**](../Model/OAuthClientWrite.md)|  | |
 
 ### Return type
 
@@ -1009,7 +1017,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

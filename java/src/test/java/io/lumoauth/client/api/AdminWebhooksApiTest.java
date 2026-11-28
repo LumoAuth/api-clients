@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -14,6 +14,7 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminWebhooksCreateRequest;
 import io.lumoauth.client.model.AdminWebhooksCreateResponse;
 import io.lumoauth.client.model.AdminWebhooksDeliveriesListResponse;
 import io.lumoauth.client.model.AdminWebhooksDeliveryReplayResponse;
@@ -27,6 +28,7 @@ import io.lumoauth.client.model.AdminWebhooksTunnelStartResponse;
 import io.lumoauth.client.model.AdminWebhooksWebhooksDisableResponse;
 import io.lumoauth.client.model.AdminWebhooksWebhooksEnableResponse;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAdminWebhooksUpdateRequest;
 import io.lumoauth.client.model.PutAdminWebhooksUpdateResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -54,7 +56,8 @@ public class AdminWebhooksApiTest {
     @Test
     public void adminWebhooksCreateTest() throws ApiException {
         String orgId = null;
-        AdminWebhooksCreateResponse response = api.adminWebhooksCreate(orgId);
+        AdminWebhooksCreateRequest adminWebhooksCreateRequest = null;
+        AdminWebhooksCreateResponse response = api.adminWebhooksCreate(orgId, adminWebhooksCreateRequest);
         // TODO: test validations
     }
 
@@ -146,7 +149,7 @@ public class AdminWebhooksApiTest {
     /**
      * List webhooks
      *
-     * Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
+     * Paginated list of the organization&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
      *
      * @throws ApiException if the Api call fails
      */
@@ -190,7 +193,7 @@ public class AdminWebhooksApiTest {
     /**
      * Start a webhook tunnel
      *
-     * Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+     * Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;, with its own signing secret, returned once as &#x60;signing_secret&#x60;. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
      *
      * @throws ApiException if the Api call fails
      */
@@ -266,7 +269,8 @@ public class AdminWebhooksApiTest {
     public void patchAdminWebhooksUpdateTest() throws ApiException {
         String orgId = null;
         String webhookId = null;
-        PutAdminWebhooksUpdateResponse response = api.patchAdminWebhooksUpdate(orgId, webhookId);
+        PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest = null;
+        PutAdminWebhooksUpdateResponse response = api.patchAdminWebhooksUpdate(orgId, webhookId, putAdminWebhooksUpdateRequest);
         // TODO: test validations
     }
 
@@ -281,7 +285,8 @@ public class AdminWebhooksApiTest {
     public void putAdminWebhooksUpdateTest() throws ApiException {
         String orgId = null;
         String webhookId = null;
-        PutAdminWebhooksUpdateResponse response = api.putAdminWebhooksUpdate(orgId, webhookId);
+        PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest = null;
+        PutAdminWebhooksUpdateResponse response = api.putAdminWebhooksUpdate(orgId, webhookId, putAdminWebhooksUpdateRequest);
         // TODO: test validations
     }
 

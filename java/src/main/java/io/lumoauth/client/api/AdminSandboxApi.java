@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -153,7 +153,7 @@ public class AdminSandboxApi {
     }
 
     /**
-     * Destroy a sandbox tenant
+     * Destroy a sandbox organization
      * 
      * @param orgId  (required)
      * @param sandboxSlug  (required)
@@ -173,7 +173,7 @@ public class AdminSandboxApi {
     }
 
     /**
-     * Destroy a sandbox tenant
+     * Destroy a sandbox organization
      * 
      * @param orgId  (required)
      * @param sandboxSlug  (required)
@@ -194,7 +194,7 @@ public class AdminSandboxApi {
     }
 
     /**
-     * Destroy a sandbox tenant (asynchronously)
+     * Destroy a sandbox organization (asynchronously)
      * 
      * @param orgId  (required)
      * @param sandboxSlug  (required)
@@ -286,7 +286,7 @@ public class AdminSandboxApi {
     }
 
     /**
-     * List the caller&#39;s sandbox tenants
+     * List the caller&#39;s sandbox organizations
      * 
      * @param orgId  (required)
      * @return AdminSandboxListResponse
@@ -304,7 +304,7 @@ public class AdminSandboxApi {
     }
 
     /**
-     * List the caller&#39;s sandbox tenants
+     * List the caller&#39;s sandbox organizations
      * 
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminSandboxListResponse&gt;
@@ -323,7 +323,7 @@ public class AdminSandboxApi {
     }
 
     /**
-     * List the caller&#39;s sandbox tenants (asynchronously)
+     * List the caller&#39;s sandbox organizations (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -418,7 +418,7 @@ public class AdminSandboxApi {
     }
 
     /**
-     * Spawn a sandbox tenant
+     * Spawn a sandbox organization
      * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
      * @param orgId  (required)
      * @param adminSandboxSpawnRequest  (optional)
@@ -440,7 +440,7 @@ public class AdminSandboxApi {
     }
 
     /**
-     * Spawn a sandbox tenant
+     * Spawn a sandbox organization
      * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
      * @param orgId  (required)
      * @param adminSandboxSpawnRequest  (optional)
@@ -463,7 +463,7 @@ public class AdminSandboxApi {
     }
 
     /**
-     * Spawn a sandbox tenant (asynchronously)
+     * Spawn a sandbox organization (asynchronously)
      * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
      * @param orgId  (required)
      * @param adminSandboxSpawnRequest  (optional)

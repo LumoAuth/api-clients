@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -40,6 +40,8 @@ import type { ListClientsResponse } from '../models';
 // @ts-ignore
 import type { MessageResponse } from '../models';
 // @ts-ignore
+import type { OAuthClientWrite } from '../models';
+// @ts-ignore
 import type { PatchAdminClientsUpdateBrandingResponse } from '../models';
 // @ts-ignore
 import type { PutAdminClientsUpdateBrandingRequest } from '../models';
@@ -47,6 +49,8 @@ import type { PutAdminClientsUpdateBrandingRequest } from '../models';
 import type { PutAdminClientsUpdateBrandingResponse } from '../models';
 // @ts-ignore
 import type { RotateClientSecretResponse } from '../models';
+// @ts-ignore
+import type { SetClientScopesRequest } from '../models';
 // @ts-ignore
 import type { SetClientScopesResponse } from '../models';
 // @ts-ignore
@@ -153,12 +157,15 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
          * 
          * @summary Create an OAuth client
          * @param {string} orgId 
+         * @param {OAuthClientWrite} oAuthClientWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createClient: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createClient: async (orgId: string, oAuthClientWrite: OAuthClientWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('createClient', 'orgId', orgId)
+            // verify required parameter 'oAuthClientWrite' is not null or undefined
+            assertParamExists('createClient', 'oAuthClientWrite', oAuthClientWrite)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/clients`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -181,9 +188,12 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(oAuthClientWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -510,14 +520,17 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
          * @summary Update an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
+         * @param {OAuthClientWrite} oAuthClientWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchClient: async (orgId: string, clientId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchClient: async (orgId: string, clientId: string, oAuthClientWrite: OAuthClientWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchClient', 'orgId', orgId)
             // verify required parameter 'clientId' is not null or undefined
             assertParamExists('patchClient', 'clientId', clientId)
+            // verify required parameter 'oAuthClientWrite' is not null or undefined
+            assertParamExists('patchClient', 'oAuthClientWrite', oAuthClientWrite)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/clients/{clientId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"clientId"}}`, encodeURIComponent(String(clientId)));
@@ -541,9 +554,12 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(oAuthClientWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -649,14 +665,17 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
          * @summary Replace the scopes granted to an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
+         * @param {SetClientScopesRequest} setClientScopesRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setClientScopes: async (orgId: string, clientId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        setClientScopes: async (orgId: string, clientId: string, setClientScopesRequest: SetClientScopesRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('setClientScopes', 'orgId', orgId)
             // verify required parameter 'clientId' is not null or undefined
             assertParamExists('setClientScopes', 'clientId', clientId)
+            // verify required parameter 'setClientScopesRequest' is not null or undefined
+            assertParamExists('setClientScopes', 'setClientScopesRequest', setClientScopesRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"clientId"}}`, encodeURIComponent(String(clientId)));
@@ -680,9 +699,12 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(setClientScopesRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -694,14 +716,17 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
          * @summary Update an OAuth client (same as PATCH: only the fields that are sent change)
          * @param {string} orgId 
          * @param {string} clientId 
+         * @param {OAuthClientWrite} oAuthClientWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateClient: async (orgId: string, clientId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateClient: async (orgId: string, clientId: string, oAuthClientWrite: OAuthClientWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('updateClient', 'orgId', orgId)
             // verify required parameter 'clientId' is not null or undefined
             assertParamExists('updateClient', 'clientId', clientId)
+            // verify required parameter 'oAuthClientWrite' is not null or undefined
+            assertParamExists('updateClient', 'oAuthClientWrite', oAuthClientWrite)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/clients/{clientId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"clientId"}}`, encodeURIComponent(String(clientId)));
@@ -725,9 +750,12 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(oAuthClientWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -776,11 +804,12 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Create an OAuth client
          * @param {string} orgId 
+         * @param {OAuthClientWrite} oAuthClientWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createClient(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateClientResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createClient(orgId, options);
+        async createClient(orgId: string, oAuthClientWrite: OAuthClientWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateClientResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createClient(orgId, oAuthClientWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.createClient']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -888,11 +917,12 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
          * @summary Update an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
+         * @param {OAuthClientWrite} oAuthClientWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchClient(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateClientResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchClient(orgId, clientId, options);
+        async patchClient(orgId: string, clientId: string, oAuthClientWrite: OAuthClientWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateClientResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchClient(orgId, clientId, oAuthClientWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.patchClient']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -931,11 +961,12 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
          * @summary Replace the scopes granted to an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
+         * @param {SetClientScopesRequest} setClientScopesRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async setClientScopes(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetClientScopesResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.setClientScopes(orgId, clientId, options);
+        async setClientScopes(orgId: string, clientId: string, setClientScopesRequest: SetClientScopesRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetClientScopesResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.setClientScopes(orgId, clientId, setClientScopesRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.setClientScopes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -945,11 +976,12 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
          * @summary Update an OAuth client (same as PATCH: only the fields that are sent change)
          * @param {string} orgId 
          * @param {string} clientId 
+         * @param {OAuthClientWrite} oAuthClientWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateClient(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateClientResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateClient(orgId, clientId, options);
+        async updateClient(orgId: string, clientId: string, oAuthClientWrite: OAuthClientWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateClientResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateClient(orgId, clientId, oAuthClientWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.updateClient']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -992,7 +1024,7 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
          * @throws {RequiredError}
          */
         createClient(requestParameters: AdminOAuthClientsApiCreateClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreateClientResponse> {
-            return localVarFp.createClient(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.createClient(requestParameters.orgId, requestParameters.oAuthClientWrite, options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes a registered client and revokes its tokens. A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. A client that registered itself (an external client from a Client ID Metadata Document, or a connection to the LumoAuth MCP server) is never deleted (409): disable it to refuse it in the organization.
@@ -1072,7 +1104,7 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
          * @throws {RequiredError}
          */
         patchClient(requestParameters: AdminOAuthClientsApiPatchClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse> {
-            return localVarFp.patchClient(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchClient(requestParameters.orgId, requestParameters.clientId, requestParameters.oAuthClientWrite, options).then((request) => request(axios, basePath));
         },
         /**
          * Needs `branding.edit` and `clients.edit`, as the Branding tab of the application in the portal does.
@@ -1102,7 +1134,7 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
          * @throws {RequiredError}
          */
         setClientScopes(requestParameters: AdminOAuthClientsApiSetClientScopesRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetClientScopesResponse> {
-            return localVarFp.setClientScopes(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
+            return localVarFp.setClientScopes(requestParameters.orgId, requestParameters.clientId, requestParameters.setClientScopesRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
@@ -1112,7 +1144,7 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
          * @throws {RequiredError}
          */
         updateClient(requestParameters: AdminOAuthClientsApiUpdateClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse> {
-            return localVarFp.updateClient(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
+            return localVarFp.updateClient(requestParameters.orgId, requestParameters.clientId, requestParameters.oAuthClientWrite, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1329,6 +1361,13 @@ export interface AdminOAuthClientsApiCreateClientRequest {
      * @memberof AdminOAuthClientsApiCreateClient
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {OAuthClientWrite}
+     * @memberof AdminOAuthClientsApiCreateClient
+     */
+    readonly oAuthClientWrite: OAuthClientWrite
 }
 
 /**
@@ -1497,6 +1536,13 @@ export interface AdminOAuthClientsApiPatchClientRequest {
      * @memberof AdminOAuthClientsApiPatchClient
      */
     readonly clientId: string
+
+    /**
+     * 
+     * @type {OAuthClientWrite}
+     * @memberof AdminOAuthClientsApiPatchClient
+     */
+    readonly oAuthClientWrite: OAuthClientWrite
 }
 
 /**
@@ -1567,6 +1613,13 @@ export interface AdminOAuthClientsApiSetClientScopesRequest {
      * @memberof AdminOAuthClientsApiSetClientScopes
      */
     readonly clientId: string
+
+    /**
+     * 
+     * @type {SetClientScopesRequest}
+     * @memberof AdminOAuthClientsApiSetClientScopes
+     */
+    readonly setClientScopesRequest: SetClientScopesRequest
 }
 
 /**
@@ -1588,6 +1641,13 @@ export interface AdminOAuthClientsApiUpdateClientRequest {
      * @memberof AdminOAuthClientsApiUpdateClient
      */
     readonly clientId: string
+
+    /**
+     * 
+     * @type {OAuthClientWrite}
+     * @memberof AdminOAuthClientsApiUpdateClient
+     */
+    readonly oAuthClientWrite: OAuthClientWrite
 }
 
 /**
@@ -1630,7 +1690,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
      * @memberof AdminOAuthClientsApi
      */
     public createClient(requestParameters: AdminOAuthClientsApiCreateClientRequest, options?: RawAxiosRequestConfig) {
-        return AdminOAuthClientsApiFp(this.configuration).createClient(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminOAuthClientsApiFp(this.configuration).createClient(requestParameters.orgId, requestParameters.oAuthClientWrite, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1726,7 +1786,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
      * @memberof AdminOAuthClientsApi
      */
     public patchClient(requestParameters: AdminOAuthClientsApiPatchClientRequest, options?: RawAxiosRequestConfig) {
-        return AdminOAuthClientsApiFp(this.configuration).patchClient(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(this.axios, this.basePath));
+        return AdminOAuthClientsApiFp(this.configuration).patchClient(requestParameters.orgId, requestParameters.clientId, requestParameters.oAuthClientWrite, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1762,7 +1822,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
      * @memberof AdminOAuthClientsApi
      */
     public setClientScopes(requestParameters: AdminOAuthClientsApiSetClientScopesRequest, options?: RawAxiosRequestConfig) {
-        return AdminOAuthClientsApiFp(this.configuration).setClientScopes(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(this.axios, this.basePath));
+        return AdminOAuthClientsApiFp(this.configuration).setClientScopes(requestParameters.orgId, requestParameters.clientId, requestParameters.setClientScopesRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1774,7 +1834,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
      * @memberof AdminOAuthClientsApi
      */
     public updateClient(requestParameters: AdminOAuthClientsApiUpdateClientRequest, options?: RawAxiosRequestConfig) {
-        return AdminOAuthClientsApiFp(this.configuration).updateClient(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(this.axios, this.basePath));
+        return AdminOAuthClientsApiFp(this.configuration).updateClient(requestParameters.orgId, requestParameters.clientId, requestParameters.oAuthClientWrite, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

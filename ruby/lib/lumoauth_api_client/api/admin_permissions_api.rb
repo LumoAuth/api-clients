@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -19,26 +19,32 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Create a custom permission for the tenant
+    # Create a custom permission for the organization
     # @param org_id [String] 
+    # @param admin_permissions_create_request [AdminPermissionsCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminPermissionsCreateResponse]
-    def admin_permissions_create(org_id, opts = {})
-      data, _status_code, _headers = admin_permissions_create_with_http_info(org_id, opts)
+    def admin_permissions_create(org_id, admin_permissions_create_request, opts = {})
+      data, _status_code, _headers = admin_permissions_create_with_http_info(org_id, admin_permissions_create_request, opts)
       data
     end
 
-    # Create a custom permission for the tenant
+    # Create a custom permission for the organization
     # @param org_id [String] 
+    # @param admin_permissions_create_request [AdminPermissionsCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminPermissionsCreateResponse, Integer, Hash)>] AdminPermissionsCreateResponse data, response status code and response headers
-    def admin_permissions_create_with_http_info(org_id, opts = {})
+    def admin_permissions_create_with_http_info(org_id, admin_permissions_create_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminPermissionsApi.admin_permissions_create ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminPermissionsApi.admin_permissions_create"
+      end
+      # verify the required parameter 'admin_permissions_create_request' is set
+      if @api_client.config.client_side_validation && admin_permissions_create_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_permissions_create_request' when calling AdminPermissionsApi.admin_permissions_create"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/permissions'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -50,12 +56,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_permissions_create_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminPermissionsCreateResponse'
@@ -214,7 +225,7 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List all available permissions for the tenant
+    # List all available permissions for the organization
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminPermissionsListResponse]
@@ -223,7 +234,7 @@ module LumoAuthApiClient
       data
     end
 
-    # List all available permissions for the tenant
+    # List all available permissions for the organization
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminPermissionsListResponse, Integer, Hash)>] AdminPermissionsListResponse data, response status code and response headers
@@ -278,19 +289,21 @@ module LumoAuthApiClient
     # Update a permission
     # @param org_id [String] 
     # @param permission_id [String] 
+    # @param admin_permissions_update_request [AdminPermissionsUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminPermissionsCreateResponse]
-    def admin_permissions_update(org_id, permission_id, opts = {})
-      data, _status_code, _headers = admin_permissions_update_with_http_info(org_id, permission_id, opts)
+    def admin_permissions_update(org_id, permission_id, admin_permissions_update_request, opts = {})
+      data, _status_code, _headers = admin_permissions_update_with_http_info(org_id, permission_id, admin_permissions_update_request, opts)
       data
     end
 
     # Update a permission
     # @param org_id [String] 
     # @param permission_id [String] 
+    # @param admin_permissions_update_request [AdminPermissionsUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminPermissionsCreateResponse, Integer, Hash)>] AdminPermissionsCreateResponse data, response status code and response headers
-    def admin_permissions_update_with_http_info(org_id, permission_id, opts = {})
+    def admin_permissions_update_with_http_info(org_id, permission_id, admin_permissions_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminPermissionsApi.admin_permissions_update ...'
       end
@@ -302,6 +315,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && permission_id.nil?
         fail ArgumentError, "Missing the required parameter 'permission_id' when calling AdminPermissionsApi.admin_permissions_update"
       end
+      # verify the required parameter 'admin_permissions_update_request' is set
+      if @api_client.config.client_side_validation && admin_permissions_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_permissions_update_request' when calling AdminPermissionsApi.admin_permissions_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/permissions/{permissionId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'permissionId' + '}', CGI.escape(permission_id.to_s))
 
@@ -312,12 +329,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_permissions_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminPermissionsCreateResponse'
@@ -411,24 +433,30 @@ module LumoAuthApiClient
 
     # Create a custom OAuth scope
     # @param org_id [String] 
+    # @param admin_scopes_create_request [AdminScopesCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminScopesCreateResponse]
-    def admin_scopes_create(org_id, opts = {})
-      data, _status_code, _headers = admin_scopes_create_with_http_info(org_id, opts)
+    def admin_scopes_create(org_id, admin_scopes_create_request, opts = {})
+      data, _status_code, _headers = admin_scopes_create_with_http_info(org_id, admin_scopes_create_request, opts)
       data
     end
 
     # Create a custom OAuth scope
     # @param org_id [String] 
+    # @param admin_scopes_create_request [AdminScopesCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminScopesCreateResponse, Integer, Hash)>] AdminScopesCreateResponse data, response status code and response headers
-    def admin_scopes_create_with_http_info(org_id, opts = {})
+    def admin_scopes_create_with_http_info(org_id, admin_scopes_create_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminPermissionsApi.admin_scopes_create ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminPermissionsApi.admin_scopes_create"
+      end
+      # verify the required parameter 'admin_scopes_create_request' is set
+      if @api_client.config.client_side_validation && admin_scopes_create_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_scopes_create_request' when calling AdminPermissionsApi.admin_scopes_create"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/scopes'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -440,12 +468,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_scopes_create_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminScopesCreateResponse'

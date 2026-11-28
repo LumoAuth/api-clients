@@ -250,7 +250,7 @@ end
 
 ## admin_email_templates_preview
 
-> <AdminEmailTemplatesPreviewResponse> admin_email_templates_preview(org_id, type)
+> <AdminEmailTemplatesPreviewResponse> admin_email_templates_preview(org_id, type, opts)
 
 Render an email template with sample data
 
@@ -273,10 +273,13 @@ end
 api_instance = LumoAuthApiClient::AdminEmailApi.new
 org_id = 'org_id_example' # String | 
 type = 'type_example' # String | 
+opts = {
+  admin_email_templates_preview_request: LumoAuthApiClient::AdminEmailTemplatesPreviewRequest.new # AdminEmailTemplatesPreviewRequest | 
+}
 
 begin
   # Render an email template with sample data
-  result = api_instance.admin_email_templates_preview(org_id, type)
+  result = api_instance.admin_email_templates_preview(org_id, type, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_preview: #{e}"
@@ -287,12 +290,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminEmailTemplatesPreviewResponse>, Integer, Hash)> admin_email_templates_preview_with_http_info(org_id, type)
+> <Array(<AdminEmailTemplatesPreviewResponse>, Integer, Hash)> admin_email_templates_preview_with_http_info(org_id, type, opts)
 
 ```ruby
 begin
   # Render an email template with sample data
-  data, status_code, headers = api_instance.admin_email_templates_preview_with_http_info(org_id, type)
+  data, status_code, headers = api_instance.admin_email_templates_preview_with_http_info(org_id, type, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminEmailTemplatesPreviewResponse>
@@ -307,6 +310,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **type** | **String** |  |  |
+| **admin_email_templates_preview_request** | [**AdminEmailTemplatesPreviewRequest**](AdminEmailTemplatesPreviewRequest.md) |  | [optional] |
 
 ### Return type
 
@@ -318,13 +322,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## admin_email_templates_upsert
 
-> <EmailTemplate> admin_email_templates_upsert(org_id, type)
+> <EmailTemplate> admin_email_templates_upsert(org_id, type, admin_email_templates_upsert_request)
 
 Create or replace the custom email template for a type
 
@@ -349,10 +353,11 @@ end
 api_instance = LumoAuthApiClient::AdminEmailApi.new
 org_id = 'org_id_example' # String | 
 type = 'type_example' # String | 
+admin_email_templates_upsert_request = LumoAuthApiClient::AdminEmailTemplatesUpsertRequest.new({subject: 'subject_example', body_html: 'body_html_example'}) # AdminEmailTemplatesUpsertRequest | 
 
 begin
   # Create or replace the custom email template for a type
-  result = api_instance.admin_email_templates_upsert(org_id, type)
+  result = api_instance.admin_email_templates_upsert(org_id, type, admin_email_templates_upsert_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_upsert: #{e}"
@@ -363,12 +368,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<EmailTemplate>, Integer, Hash)> admin_email_templates_upsert_with_http_info(org_id, type)
+> <Array(<EmailTemplate>, Integer, Hash)> admin_email_templates_upsert_with_http_info(org_id, type, admin_email_templates_upsert_request)
 
 ```ruby
 begin
   # Create or replace the custom email template for a type
-  data, status_code, headers = api_instance.admin_email_templates_upsert_with_http_info(org_id, type)
+  data, status_code, headers = api_instance.admin_email_templates_upsert_with_http_info(org_id, type, admin_email_templates_upsert_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <EmailTemplate>
@@ -383,6 +388,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **type** | **String** |  |  |
+| **admin_email_templates_upsert_request** | [**AdminEmailTemplatesUpsertRequest**](AdminEmailTemplatesUpsertRequest.md) |  |  |
 
 ### Return type
 
@@ -394,7 +400,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 

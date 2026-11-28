@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -53,6 +53,8 @@ import type { GetCurrentAgentResponse } from '../models';
 import type { PollAgentEnrollmentRequest } from '../models';
 // @ts-ignore
 import type { PollAgentEnrollmentResponse } from '../models';
+// @ts-ignore
+import type { RegisterAgentRequest } from '../models';
 // @ts-ignore
 import type { RegisterAgentResponse } from '../models';
 // @ts-ignore
@@ -476,12 +478,15 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * 
          * @summary Register (or re-register) an agent
          * @param {string} orgId 
+         * @param {RegisterAgentRequest} registerAgentRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerAgent: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        registerAgent: async (orgId: string, registerAgentRequest: RegisterAgentRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('registerAgent', 'orgId', orgId)
+            // verify required parameter 'registerAgentRequest' is not null or undefined
+            assertParamExists('registerAgent', 'registerAgentRequest', registerAgentRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/agents/register`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -504,9 +509,12 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(registerAgentRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -785,11 +793,12 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Register (or re-register) an agent
          * @param {string} orgId 
+         * @param {RegisterAgentRequest} registerAgentRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async registerAgent(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterAgentResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.registerAgent(orgId, options);
+        async registerAgent(orgId: string, registerAgentRequest: RegisterAgentRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterAgentResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.registerAgent(orgId, registerAgentRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.registerAgent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -942,7 +951,7 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
          * @throws {RequiredError}
          */
         registerAgent(requestParameters: AgentsApiRegisterAgentRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisterAgentResponse> {
-            return localVarFp.registerAgent(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.registerAgent(requestParameters.orgId, requestParameters.registerAgentRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds the reported tokens and cost to the agent\'s budget windows (current UTC hour, day and month). LumoAuth does not see model calls, so token and cost limits apply only to usage that is reported here or through the Admin API. The report adds no API call and is accepted even when the budget is spent. Agent credentials only; portal test tokens are refused. Rate limited per agent.
@@ -1314,6 +1323,13 @@ export interface AgentsApiRegisterAgentRequest {
      * @memberof AgentsApiRegisterAgent
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {RegisterAgentRequest}
+     * @memberof AgentsApiRegisterAgent
+     */
+    readonly registerAgentRequest: RegisterAgentRequest
 }
 
 /**
@@ -1501,7 +1517,7 @@ export class AgentsApi extends BaseAPI implements AgentsApiInterface {
      * @memberof AgentsApi
      */
     public registerAgent(requestParameters: AgentsApiRegisterAgentRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).registerAgent(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AgentsApiFp(this.configuration).registerAgent(requestParameters.orgId, requestParameters.registerAgentRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

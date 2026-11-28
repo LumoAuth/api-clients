@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -52,7 +52,7 @@ import io.lumoauth.client.JSON;
 /**
  * AuditLogEntry
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T09:17:26.252888759-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-28T17:25:42.087818540Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AuditLogEntry {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -123,6 +123,11 @@ public class AuditLogEntry {
   @SerializedName(SERIALIZED_NAME_IP_ADDRESS)
   @javax.annotation.Nullable
   private String ipAddress;
+
+  public static final String SERIALIZED_NAME_TRACE_ID = "traceId";
+  @SerializedName(SERIALIZED_NAME_TRACE_ID)
+  @javax.annotation.Nullable
+  private String traceId;
 
   public static final String SERIALIZED_NAME_EVENT_TIME = "eventTime";
   @SerializedName(SERIALIZED_NAME_EVENT_TIME)
@@ -463,6 +468,25 @@ public class AuditLogEntry {
   }
 
 
+  public AuditLogEntry traceId(@javax.annotation.Nullable String traceId) {
+    this.traceId = traceId;
+    return this;
+  }
+
+  /**
+   * W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none
+   * @return traceId
+   */
+  @javax.annotation.Nullable
+  public String getTraceId() {
+    return traceId;
+  }
+
+  public void setTraceId(@javax.annotation.Nullable String traceId) {
+    this.traceId = traceId;
+  }
+
+
   public AuditLogEntry eventTime(@javax.annotation.Nullable OffsetDateTime eventTime) {
     this.eventTime = eventTime;
     return this;
@@ -793,6 +817,7 @@ public class AuditLogEntry {
         Objects.equals(this.targetId, auditLogEntry.targetId) &&
         Objects.equals(this.targetName, auditLogEntry.targetName) &&
         Objects.equals(this.ipAddress, auditLogEntry.ipAddress) &&
+        Objects.equals(this.traceId, auditLogEntry.traceId) &&
         Objects.equals(this.eventTime, auditLogEntry.eventTime) &&
         Objects.equals(this.durationMs, auditLogEntry.durationMs) &&
         Objects.equals(this.initiatedBy, auditLogEntry.initiatedBy) &&
@@ -815,7 +840,7 @@ public class AuditLogEntry {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, createdAt, eventType, action, severity, message, actorId, actorName, actorType, authMethod, targetType, targetId, targetName, ipAddress, eventTime, durationMs, initiatedBy, clientId, userAgent, geoLocation, sessionId, requestId, status, statusReason, oldValue, newValue, changes, context);
+    return Objects.hash(id, createdAt, eventType, action, severity, message, actorId, actorName, actorType, authMethod, targetType, targetId, targetName, ipAddress, traceId, eventTime, durationMs, initiatedBy, clientId, userAgent, geoLocation, sessionId, requestId, status, statusReason, oldValue, newValue, changes, context);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -843,6 +868,7 @@ public class AuditLogEntry {
     sb.append("    targetId: ").append(toIndentedString(targetId)).append("\n");
     sb.append("    targetName: ").append(toIndentedString(targetName)).append("\n");
     sb.append("    ipAddress: ").append(toIndentedString(ipAddress)).append("\n");
+    sb.append("    traceId: ").append(toIndentedString(traceId)).append("\n");
     sb.append("    eventTime: ").append(toIndentedString(eventTime)).append("\n");
     sb.append("    durationMs: ").append(toIndentedString(durationMs)).append("\n");
     sb.append("    initiatedBy: ").append(toIndentedString(initiatedBy)).append("\n");
@@ -878,7 +904,7 @@ public class AuditLogEntry {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("id", "createdAt", "eventType", "action", "severity", "message", "actorId", "actorName", "actorType", "authMethod", "targetType", "targetId", "targetName", "ipAddress", "eventTime", "durationMs", "initiatedBy", "clientId", "userAgent", "geoLocation", "sessionId", "requestId", "status", "statusReason", "oldValue", "newValue", "changes", "context"));
+    openapiFields = new HashSet<String>(Arrays.asList("id", "createdAt", "eventType", "action", "severity", "message", "actorId", "actorName", "actorType", "authMethod", "targetType", "targetId", "targetName", "ipAddress", "traceId", "eventTime", "durationMs", "initiatedBy", "clientId", "userAgent", "geoLocation", "sessionId", "requestId", "status", "statusReason", "oldValue", "newValue", "changes", "context"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("id", "createdAt"));
@@ -947,6 +973,9 @@ public class AuditLogEntry {
       }
       if ((jsonObj.get("ipAddress") != null && !jsonObj.get("ipAddress").isJsonNull()) && !jsonObj.get("ipAddress").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ipAddress` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ipAddress").toString()));
+      }
+      if ((jsonObj.get("traceId") != null && !jsonObj.get("traceId").isJsonNull()) && !jsonObj.get("traceId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `traceId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("traceId").toString()));
       }
       if ((jsonObj.get("initiatedBy") != null && !jsonObj.get("initiatedBy").isJsonNull()) && !jsonObj.get("initiatedBy").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `initiatedBy` to be a primitive type in the JSON string but got `%s`", jsonObj.get("initiatedBy").toString()));

@@ -7,7 +7,10 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**adminAnalyticsDashboard**](#adminanalyticsdashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics|
 |[**adminAnalyticsLogins**](#adminanalyticslogins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics|
 |[**adminAnalyticsUsers**](#adminanalyticsusers) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics|
-|[**adminOrganizationGet**](#adminorganizationget) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile|
+|[**adminInitialAccessTokensCreate**](#admininitialaccesstokenscreate) | **POST** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | Create an initial access token for dynamic client registration|
+|[**adminInitialAccessTokensDelete**](#admininitialaccesstokensdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId} | Delete an initial access token of dynamic client registration|
+|[**adminInitialAccessTokensList**](#admininitialaccesstokenslist) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | List the initial access tokens of dynamic client registration|
+|[**adminOrganizationGet**](#adminorganizationget) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization profile|
 |[**adminSettingsAll**](#adminsettingsall) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined)|
 |[**adminSettingsAuthGet**](#adminsettingsauthget) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings|
 |[**adminSettingsAuthenticationGet**](#adminsettingsauthenticationget) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth)|
@@ -16,8 +19,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**adminSettingsGeneralGet**](#adminsettingsgeneralget) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings|
 |[**adminSettingsScimGet**](#adminsettingsscimget) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings|
 |[**adminSettingsSecurityGet**](#adminsettingssecurityget) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings|
-|[**adminTenantGet**](#admintenantget) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile|
-|[**patchAdminOrganizationUpdate**](#patchadminorganizationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings|
+|[**adminTenantGet**](#admintenantget) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization profile|
+|[**patchAdminOrganizationUpdate**](#patchadminorganizationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update the organization\&#39;s name and settings|
 |[**patchAdminSettingsAuthUpdate**](#patchadminsettingsauthupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings|
 |[**patchAdminSettingsAuthenticationUpdate**](#patchadminsettingsauthenticationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)|
 |[**patchAdminSettingsBrandingUpdate**](#patchadminsettingsbrandingupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings|
@@ -25,8 +28,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**patchAdminSettingsGeneralUpdate**](#patchadminsettingsgeneralupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings|
 |[**patchAdminSettingsScimUpdate**](#patchadminsettingsscimupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings|
 |[**patchAdminSettingsSecurityUpdate**](#patchadminsettingssecurityupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings|
-|[**patchAdminTenantUpdate**](#patchadmintenantupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings|
-|[**putAdminOrganizationUpdate**](#putadminorganizationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings|
+|[**patchAdminTenantUpdate**](#patchadmintenantupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update the organization\&#39;s name and settings|
+|[**putAdminOrganizationUpdate**](#putadminorganizationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update the organization\&#39;s name and settings|
 |[**putAdminSettingsAuthUpdate**](#putadminsettingsauthupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings|
 |[**putAdminSettingsAuthenticationUpdate**](#putadminsettingsauthenticationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)|
 |[**putAdminSettingsBrandingUpdate**](#putadminsettingsbrandingupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings|
@@ -34,7 +37,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**putAdminSettingsGeneralUpdate**](#putadminsettingsgeneralupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings|
 |[**putAdminSettingsScimUpdate**](#putadminsettingsscimupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings|
 |[**putAdminSettingsSecurityUpdate**](#putadminsettingssecurityupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings|
-|[**putAdminTenantUpdate**](#putadmintenantupdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings|
+|[**putAdminTenantUpdate**](#putadmintenantupdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update the organization\&#39;s name and settings|
 
 # **adminAnalyticsDashboard**
 > AdminAnalyticsDashboardResponse adminAnalyticsDashboard()
@@ -189,6 +192,163 @@ const { status, data } = await apiInstance.adminAnalyticsUsers(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Daily registrations and user breakdowns |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminInitialAccessTokensCreate**
+> AdminInitialAccessTokensCreateResponse adminInitialAccessTokensCreate()
+
+Generates a token and adds it to the organization\'s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+
+### Example
+
+```typescript
+import {
+    AdminSettingsApi,
+    Configuration
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminSettingsApi(configuration);
+
+let orgId: string; // (default to undefined)
+
+const { status, data } = await apiInstance.adminInitialAccessTokensCreate(
+    orgId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminInitialAccessTokensCreateResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**201** | Token created |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminInitialAccessTokensDelete**
+> MessageResponse adminInitialAccessTokensDelete()
+
+The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+
+### Example
+
+```typescript
+import {
+    AdminSettingsApi,
+    Configuration
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminSettingsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let tokenId: string; // (default to undefined)
+
+const { status, data } = await apiInstance.adminInitialAccessTokensDelete(
+    orgId,
+    tokenId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | [**string**] |  | defaults to undefined|
+| **tokenId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**MessageResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Deleted |  -  |
+|**404** | No token with this id |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminInitialAccessTokensList**
+> AdminInitialAccessTokensListResponse adminInitialAccessTokensList()
+
+Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+
+### Example
+
+```typescript
+import {
+    AdminSettingsApi,
+    Configuration
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminSettingsApi(configuration);
+
+let orgId: string; // (default to undefined)
+
+const { status, data } = await apiInstance.adminInitialAccessTokensList(
+    orgId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminInitialAccessTokensListResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Tokens |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -695,7 +855,7 @@ const { status, data } = await apiInstance.adminTenantGet(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminOrganizationUpdate**
-> PutAdminTenantUpdateResponse patchAdminOrganizationUpdate()
+> PutAdminTenantUpdateResponse patchAdminOrganizationUpdate(putAdminTenantUpdateRequest)
 
 
 ### Example
@@ -703,16 +863,19 @@ const { status, data } = await apiInstance.adminTenantGet(
 ```typescript
 import {
     AdminSettingsApi,
-    Configuration
+    Configuration,
+    PutAdminTenantUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest; //
 
 const { status, data } = await apiInstance.patchAdminOrganizationUpdate(
-    orgId
+    orgId,
+    putAdminTenantUpdateRequest
 );
 ```
 
@@ -720,6 +883,7 @@ const { status, data } = await apiInstance.patchAdminOrganizationUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminTenantUpdateRequest** | **PutAdminTenantUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -733,7 +897,7 @@ const { status, data } = await apiInstance.patchAdminOrganizationUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -746,24 +910,28 @@ const { status, data } = await apiInstance.patchAdminOrganizationUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsAuthUpdate**
-> PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthUpdate()
+> PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthUpdate(authenticationSettings)
 
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 
 ```typescript
 import {
     AdminSettingsApi,
-    Configuration
+    Configuration,
+    AuthenticationSettings
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let authenticationSettings: AuthenticationSettings; //
 
 const { status, data } = await apiInstance.patchAdminSettingsAuthUpdate(
-    orgId
+    orgId,
+    authenticationSettings
 );
 ```
 
@@ -771,6 +939,7 @@ const { status, data } = await apiInstance.patchAdminSettingsAuthUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **authenticationSettings** | **AuthenticationSettings**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -784,7 +953,7 @@ const { status, data } = await apiInstance.patchAdminSettingsAuthUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -797,24 +966,28 @@ const { status, data } = await apiInstance.patchAdminSettingsAuthUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsAuthenticationUpdate**
-> PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthenticationUpdate()
+> PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthenticationUpdate(authenticationSettings)
 
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 
 ```typescript
 import {
     AdminSettingsApi,
-    Configuration
+    Configuration,
+    AuthenticationSettings
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let authenticationSettings: AuthenticationSettings; //
 
 const { status, data } = await apiInstance.patchAdminSettingsAuthenticationUpdate(
-    orgId
+    orgId,
+    authenticationSettings
 );
 ```
 
@@ -822,6 +995,7 @@ const { status, data } = await apiInstance.patchAdminSettingsAuthenticationUpdat
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **authenticationSettings** | **AuthenticationSettings**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -835,7 +1009,7 @@ const { status, data } = await apiInstance.patchAdminSettingsAuthenticationUpdat
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -848,7 +1022,7 @@ const { status, data } = await apiInstance.patchAdminSettingsAuthenticationUpdat
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsBrandingUpdate**
-> PutAdminSettingsBrandingUpdateResponse patchAdminSettingsBrandingUpdate()
+> PutAdminSettingsBrandingUpdateResponse patchAdminSettingsBrandingUpdate(brandingSettings)
 
 Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
 
@@ -857,16 +1031,19 @@ Changes the login page settings that are live on the hosted pages. Values go thr
 ```typescript
 import {
     AdminSettingsApi,
-    Configuration
+    Configuration,
+    BrandingSettings
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let brandingSettings: BrandingSettings; //
 
 const { status, data } = await apiInstance.patchAdminSettingsBrandingUpdate(
-    orgId
+    orgId,
+    brandingSettings
 );
 ```
 
@@ -874,6 +1051,7 @@ const { status, data } = await apiInstance.patchAdminSettingsBrandingUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **brandingSettings** | **BrandingSettings**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -887,7 +1065,7 @@ const { status, data } = await apiInstance.patchAdminSettingsBrandingUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1014,7 +1192,7 @@ const { status, data } = await apiInstance.patchAdminSettingsGeneralUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsScimUpdate**
-> PutAdminSettingsScimUpdateResponse patchAdminSettingsScimUpdate()
+> PutAdminSettingsScimUpdateResponse patchAdminSettingsScimUpdate(scimSettings)
 
 
 ### Example
@@ -1022,16 +1200,19 @@ const { status, data } = await apiInstance.patchAdminSettingsGeneralUpdate(
 ```typescript
 import {
     AdminSettingsApi,
-    Configuration
+    Configuration,
+    ScimSettings
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let scimSettings: ScimSettings; //
 
 const { status, data } = await apiInstance.patchAdminSettingsScimUpdate(
-    orgId
+    orgId,
+    scimSettings
 );
 ```
 
@@ -1039,6 +1220,7 @@ const { status, data } = await apiInstance.patchAdminSettingsScimUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **scimSettings** | **ScimSettings**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -1052,7 +1234,7 @@ const { status, data } = await apiInstance.patchAdminSettingsScimUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1064,7 +1246,7 @@ const { status, data } = await apiInstance.patchAdminSettingsScimUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsSecurityUpdate**
-> PutAdminSettingsSecurityUpdateResponse patchAdminSettingsSecurityUpdate()
+> PutAdminSettingsSecurityUpdateResponse patchAdminSettingsSecurityUpdate(putAdminSettingsSecurityUpdateRequest)
 
 
 ### Example
@@ -1072,16 +1254,19 @@ const { status, data } = await apiInstance.patchAdminSettingsScimUpdate(
 ```typescript
 import {
     AdminSettingsApi,
-    Configuration
+    Configuration,
+    PutAdminSettingsSecurityUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let putAdminSettingsSecurityUpdateRequest: PutAdminSettingsSecurityUpdateRequest; //Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
 
 const { status, data } = await apiInstance.patchAdminSettingsSecurityUpdate(
-    orgId
+    orgId,
+    putAdminSettingsSecurityUpdateRequest
 );
 ```
 
@@ -1089,6 +1274,7 @@ const { status, data } = await apiInstance.patchAdminSettingsSecurityUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminSettingsSecurityUpdateRequest** | **PutAdminSettingsSecurityUpdateRequest**| Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -1102,7 +1288,7 @@ const { status, data } = await apiInstance.patchAdminSettingsSecurityUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1114,7 +1300,7 @@ const { status, data } = await apiInstance.patchAdminSettingsSecurityUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminTenantUpdate**
-> PutAdminTenantUpdateResponse patchAdminTenantUpdate()
+> PutAdminTenantUpdateResponse patchAdminTenantUpdate(putAdminTenantUpdateRequest)
 
 
 ### Example
@@ -1122,16 +1308,19 @@ const { status, data } = await apiInstance.patchAdminSettingsSecurityUpdate(
 ```typescript
 import {
     AdminSettingsApi,
-    Configuration
+    Configuration,
+    PutAdminTenantUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest; //
 
 const { status, data } = await apiInstance.patchAdminTenantUpdate(
-    orgId
+    orgId,
+    putAdminTenantUpdateRequest
 );
 ```
 
@@ -1139,6 +1328,7 @@ const { status, data } = await apiInstance.patchAdminTenantUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminTenantUpdateRequest** | **PutAdminTenantUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -1152,7 +1342,7 @@ const { status, data } = await apiInstance.patchAdminTenantUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1165,7 +1355,7 @@ const { status, data } = await apiInstance.patchAdminTenantUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminOrganizationUpdate**
-> PutAdminTenantUpdateResponse putAdminOrganizationUpdate()
+> PutAdminTenantUpdateResponse putAdminOrganizationUpdate(putAdminTenantUpdateRequest)
 
 
 ### Example
@@ -1173,16 +1363,19 @@ const { status, data } = await apiInstance.patchAdminTenantUpdate(
 ```typescript
 import {
     AdminSettingsApi,
-    Configuration
+    Configuration,
+    PutAdminTenantUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest; //
 
 const { status, data } = await apiInstance.putAdminOrganizationUpdate(
-    orgId
+    orgId,
+    putAdminTenantUpdateRequest
 );
 ```
 
@@ -1190,6 +1383,7 @@ const { status, data } = await apiInstance.putAdminOrganizationUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminTenantUpdateRequest** | **PutAdminTenantUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -1203,7 +1397,7 @@ const { status, data } = await apiInstance.putAdminOrganizationUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1216,24 +1410,28 @@ const { status, data } = await apiInstance.putAdminOrganizationUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsAuthUpdate**
-> PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthUpdate()
+> PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthUpdate(authenticationSettings)
 
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 
 ```typescript
 import {
     AdminSettingsApi,
-    Configuration
+    Configuration,
+    AuthenticationSettings
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let authenticationSettings: AuthenticationSettings; //
 
 const { status, data } = await apiInstance.putAdminSettingsAuthUpdate(
-    orgId
+    orgId,
+    authenticationSettings
 );
 ```
 
@@ -1241,6 +1439,7 @@ const { status, data } = await apiInstance.putAdminSettingsAuthUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **authenticationSettings** | **AuthenticationSettings**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -1254,7 +1453,7 @@ const { status, data } = await apiInstance.putAdminSettingsAuthUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1267,24 +1466,28 @@ const { status, data } = await apiInstance.putAdminSettingsAuthUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsAuthenticationUpdate**
-> PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthenticationUpdate()
+> PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthenticationUpdate(authenticationSettings)
 
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 
 ```typescript
 import {
     AdminSettingsApi,
-    Configuration
+    Configuration,
+    AuthenticationSettings
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let authenticationSettings: AuthenticationSettings; //
 
 const { status, data } = await apiInstance.putAdminSettingsAuthenticationUpdate(
-    orgId
+    orgId,
+    authenticationSettings
 );
 ```
 
@@ -1292,6 +1495,7 @@ const { status, data } = await apiInstance.putAdminSettingsAuthenticationUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **authenticationSettings** | **AuthenticationSettings**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -1305,7 +1509,7 @@ const { status, data } = await apiInstance.putAdminSettingsAuthenticationUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1318,7 +1522,7 @@ const { status, data } = await apiInstance.putAdminSettingsAuthenticationUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsBrandingUpdate**
-> PutAdminSettingsBrandingUpdateResponse putAdminSettingsBrandingUpdate()
+> PutAdminSettingsBrandingUpdateResponse putAdminSettingsBrandingUpdate(brandingSettings)
 
 Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
 
@@ -1327,16 +1531,19 @@ Changes the login page settings that are live on the hosted pages. Values go thr
 ```typescript
 import {
     AdminSettingsApi,
-    Configuration
+    Configuration,
+    BrandingSettings
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let brandingSettings: BrandingSettings; //
 
 const { status, data } = await apiInstance.putAdminSettingsBrandingUpdate(
-    orgId
+    orgId,
+    brandingSettings
 );
 ```
 
@@ -1344,6 +1551,7 @@ const { status, data } = await apiInstance.putAdminSettingsBrandingUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **brandingSettings** | **BrandingSettings**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -1357,7 +1565,7 @@ const { status, data } = await apiInstance.putAdminSettingsBrandingUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1484,7 +1692,7 @@ const { status, data } = await apiInstance.putAdminSettingsGeneralUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsScimUpdate**
-> PutAdminSettingsScimUpdateResponse putAdminSettingsScimUpdate()
+> PutAdminSettingsScimUpdateResponse putAdminSettingsScimUpdate(scimSettings)
 
 
 ### Example
@@ -1492,16 +1700,19 @@ const { status, data } = await apiInstance.putAdminSettingsGeneralUpdate(
 ```typescript
 import {
     AdminSettingsApi,
-    Configuration
+    Configuration,
+    ScimSettings
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let scimSettings: ScimSettings; //
 
 const { status, data } = await apiInstance.putAdminSettingsScimUpdate(
-    orgId
+    orgId,
+    scimSettings
 );
 ```
 
@@ -1509,6 +1720,7 @@ const { status, data } = await apiInstance.putAdminSettingsScimUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **scimSettings** | **ScimSettings**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -1522,7 +1734,7 @@ const { status, data } = await apiInstance.putAdminSettingsScimUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1534,7 +1746,7 @@ const { status, data } = await apiInstance.putAdminSettingsScimUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsSecurityUpdate**
-> PutAdminSettingsSecurityUpdateResponse putAdminSettingsSecurityUpdate()
+> PutAdminSettingsSecurityUpdateResponse putAdminSettingsSecurityUpdate(putAdminSettingsSecurityUpdateRequest)
 
 
 ### Example
@@ -1542,16 +1754,19 @@ const { status, data } = await apiInstance.putAdminSettingsScimUpdate(
 ```typescript
 import {
     AdminSettingsApi,
-    Configuration
+    Configuration,
+    PutAdminSettingsSecurityUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let putAdminSettingsSecurityUpdateRequest: PutAdminSettingsSecurityUpdateRequest; //Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
 
 const { status, data } = await apiInstance.putAdminSettingsSecurityUpdate(
-    orgId
+    orgId,
+    putAdminSettingsSecurityUpdateRequest
 );
 ```
 
@@ -1559,6 +1774,7 @@ const { status, data } = await apiInstance.putAdminSettingsSecurityUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminSettingsSecurityUpdateRequest** | **PutAdminSettingsSecurityUpdateRequest**| Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -1572,7 +1788,7 @@ const { status, data } = await apiInstance.putAdminSettingsSecurityUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1584,7 +1800,7 @@ const { status, data } = await apiInstance.putAdminSettingsSecurityUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminTenantUpdate**
-> PutAdminTenantUpdateResponse putAdminTenantUpdate()
+> PutAdminTenantUpdateResponse putAdminTenantUpdate(putAdminTenantUpdateRequest)
 
 
 ### Example
@@ -1592,16 +1808,19 @@ const { status, data } = await apiInstance.putAdminSettingsSecurityUpdate(
 ```typescript
 import {
     AdminSettingsApi,
-    Configuration
+    Configuration,
+    PutAdminTenantUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest; //
 
 const { status, data } = await apiInstance.putAdminTenantUpdate(
-    orgId
+    orgId,
+    putAdminTenantUpdateRequest
 );
 ```
 
@@ -1609,6 +1828,7 @@ const { status, data } = await apiInstance.putAdminTenantUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminTenantUpdateRequest** | **PutAdminTenantUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -1622,7 +1842,7 @@ const { status, data } = await apiInstance.putAdminTenantUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

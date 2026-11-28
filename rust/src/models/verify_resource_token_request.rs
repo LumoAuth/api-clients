@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -13,23 +13,27 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct VerifyResourceTokenRequest {
+    /// Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
+    #[serde(rename = "resource")]
+    pub resource: String,
     /// The resource token to validate.
-    #[serde(rename = "resource_token", skip_serializing_if = "Option::is_none")]
-    pub resource_token: Option<String>,
+    #[serde(rename = "resource_token")]
+    pub resource_token: String,
     /// Agent identifier the token must be bound to.
-    #[serde(rename = "agent", skip_serializing_if = "Option::is_none")]
-    pub agent: Option<String>,
+    #[serde(rename = "agent")]
+    pub agent: String,
     /// JWK thumbprint of the agent key.
-    #[serde(rename = "agent_jkt", skip_serializing_if = "Option::is_none")]
-    pub agent_jkt: Option<String>,
+    #[serde(rename = "agent_jkt")]
+    pub agent_jkt: String,
 }
 
 impl VerifyResourceTokenRequest {
-    pub fn new() -> VerifyResourceTokenRequest {
+    pub fn new(resource: String, resource_token: String, agent: String, agent_jkt: String) -> VerifyResourceTokenRequest {
         VerifyResourceTokenRequest {
-            resource_token: None,
-            agent: None,
-            agent_jkt: None,
+            resource,
+            resource_token,
+            agent,
+            agent_jkt,
         }
     }
 }

@@ -174,7 +174,7 @@ Name | Type | Description  | Notes
 
 # **adminEmailTemplatesPreview**
 ```swift
-    open class func adminEmailTemplatesPreview(orgId: String, type: String, completion: @escaping (_ data: AdminEmailTemplatesPreviewResponse?, _ error: Error?) -> Void)
+    open class func adminEmailTemplatesPreview(orgId: String, type: String, adminEmailTemplatesPreviewRequest: AdminEmailTemplatesPreviewRequest? = nil, completion: @escaping (_ data: AdminEmailTemplatesPreviewResponse?, _ error: Error?) -> Void)
 ```
 
 Render an email template with sample data
@@ -186,9 +186,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let type = "type_example" // String | 
+let adminEmailTemplatesPreviewRequest = AdminEmailTemplatesPreviewRequest(subject: "subject_example", bodyHtml: "bodyHtml_example") // AdminEmailTemplatesPreviewRequest |  (optional)
 
 // Render an email template with sample data
-AdminEmailAPI.adminEmailTemplatesPreview(orgId: orgId, type: type) { (response, error) in
+AdminEmailAPI.adminEmailTemplatesPreview(orgId: orgId, type: type, adminEmailTemplatesPreviewRequest: adminEmailTemplatesPreviewRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -206,6 +207,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **type** | **String** |  | 
+ **adminEmailTemplatesPreviewRequest** | [**AdminEmailTemplatesPreviewRequest**](AdminEmailTemplatesPreviewRequest.md) |  | [optional] 
 
 ### Return type
 
@@ -217,14 +219,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminEmailTemplatesUpsert**
 ```swift
-    open class func adminEmailTemplatesUpsert(orgId: String, type: String, completion: @escaping (_ data: EmailTemplate?, _ error: Error?) -> Void)
+    open class func adminEmailTemplatesUpsert(orgId: String, type: String, adminEmailTemplatesUpsertRequest: AdminEmailTemplatesUpsertRequest, completion: @escaping (_ data: EmailTemplate?, _ error: Error?) -> Void)
 ```
 
 Create or replace the custom email template for a type
@@ -238,9 +240,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let type = "type_example" // String | 
+let adminEmailTemplatesUpsertRequest = AdminEmailTemplatesUpsertRequest(subject: "subject_example", bodyHtml: "bodyHtml_example") // AdminEmailTemplatesUpsertRequest | 
 
 // Create or replace the custom email template for a type
-AdminEmailAPI.adminEmailTemplatesUpsert(orgId: orgId, type: type) { (response, error) in
+AdminEmailAPI.adminEmailTemplatesUpsert(orgId: orgId, type: type, adminEmailTemplatesUpsertRequest: adminEmailTemplatesUpsertRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -258,6 +261,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **type** | **String** |  | 
+ **adminEmailTemplatesUpsertRequest** | [**AdminEmailTemplatesUpsertRequest**](AdminEmailTemplatesUpsertRequest.md) |  | 
 
 ### Return type
 
@@ -269,7 +273,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

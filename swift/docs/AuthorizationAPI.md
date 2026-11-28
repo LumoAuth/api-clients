@@ -26,7 +26,7 @@ Method | HTTP request | Description
 
 # **checkAbac**
 ```swift
-    open class func checkAbac(orgId: String, completion: @escaping (_ data: CheckAbacResponse?, _ error: Error?) -> Void)
+    open class func checkAbac(orgId: String, checkAbacRequest: CheckAbacRequest, completion: @escaping (_ data: CheckAbacResponse?, _ error: Error?) -> Void)
 ```
 
 Evaluate an ABAC policy decision for the caller
@@ -39,9 +39,10 @@ POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   reso
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let checkAbacRequest = CheckAbacRequest(resourceType: "resourceType_example", action: "action_example", resourceId: "resourceId_example", environment: "TODO") // CheckAbacRequest | 
 
 // Evaluate an ABAC policy decision for the caller
-AuthorizationAPI.checkAbac(orgId: orgId) { (response, error) in
+AuthorizationAPI.checkAbac(orgId: orgId, checkAbacRequest: checkAbacRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -58,6 +59,7 @@ AuthorizationAPI.checkAbac(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **checkAbacRequest** | [**CheckAbacRequest**](CheckAbacRequest.md) |  | 
 
 ### Return type
 
@@ -69,14 +71,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **checkAbacBulk**
 ```swift
-    open class func checkAbacBulk(orgId: String, completion: @escaping (_ data: CheckAbacBulkResponse?, _ error: Error?) -> Void)
+    open class func checkAbacBulk(orgId: String, checkAbacBulkRequest: CheckAbacBulkRequest, completion: @escaping (_ data: CheckAbacBulkResponse?, _ error: Error?) -> Void)
 ```
 
 Evaluate up to 100 ABAC checks for the caller in one call
@@ -89,9 +91,10 @@ POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, act
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let checkAbacBulkRequest = CheckAbacBulkRequest(checks: ["TODO"], environment: "TODO") // CheckAbacBulkRequest | 
 
 // Evaluate up to 100 ABAC checks for the caller in one call
-AuthorizationAPI.checkAbacBulk(orgId: orgId) { (response, error) in
+AuthorizationAPI.checkAbacBulk(orgId: orgId, checkAbacBulkRequest: checkAbacBulkRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -108,6 +111,7 @@ AuthorizationAPI.checkAbacBulk(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **checkAbacBulkRequest** | [**CheckAbacBulkRequest**](CheckAbacBulkRequest.md) |  | 
 
 ### Return type
 
@@ -119,14 +123,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **checkAllPermissions**
 ```swift
-    open class func checkAllPermissions(completion: @escaping (_ data: CheckAnyPermissionResponse?, _ error: Error?) -> Void)
+    open class func checkAllPermissions(checkPermissionsBulkRequest: CheckPermissionsBulkRequest, completion: @escaping (_ data: CheckAnyPermissionResponse?, _ error: Error?) -> Void)
 ```
 
 Check whether the subject holds all of the permissions
@@ -138,9 +142,10 @@ POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"do
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import LumoAuthAPIClient
 
+let checkPermissionsBulkRequest = CheckPermissionsBulkRequest(permissions: ["permissions_example"], context: "TODO", subject: "TODO") // CheckPermissionsBulkRequest | 
 
 // Check whether the subject holds all of the permissions
-AuthorizationAPI.checkAllPermissions() { (response, error) in
+AuthorizationAPI.checkAllPermissions(checkPermissionsBulkRequest: checkPermissionsBulkRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -153,7 +158,10 @@ AuthorizationAPI.checkAllPermissions() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **checkPermissionsBulkRequest** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  | 
 
 ### Return type
 
@@ -165,14 +173,14 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **checkAnyPermission**
 ```swift
-    open class func checkAnyPermission(completion: @escaping (_ data: CheckAnyPermissionResponse?, _ error: Error?) -> Void)
+    open class func checkAnyPermission(checkPermissionsBulkRequest: CheckPermissionsBulkRequest, completion: @escaping (_ data: CheckAnyPermissionResponse?, _ error: Error?) -> Void)
 ```
 
 Check whether the subject holds any of the permissions
@@ -184,9 +192,10 @@ POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"do
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import LumoAuthAPIClient
 
+let checkPermissionsBulkRequest = CheckPermissionsBulkRequest(permissions: ["permissions_example"], context: "TODO", subject: "TODO") // CheckPermissionsBulkRequest | 
 
 // Check whether the subject holds any of the permissions
-AuthorizationAPI.checkAnyPermission() { (response, error) in
+AuthorizationAPI.checkAnyPermission(checkPermissionsBulkRequest: checkPermissionsBulkRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -199,7 +208,10 @@ AuthorizationAPI.checkAnyPermission() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **checkPermissionsBulkRequest** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  | 
 
 ### Return type
 
@@ -211,14 +223,14 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **checkPermission**
 ```swift
-    open class func checkPermission(completion: @escaping (_ data: CheckPermissionResponse?, _ error: Error?) -> Void)
+    open class func checkPermission(checkPermissionRequest: CheckPermissionRequest, completion: @escaping (_ data: CheckPermissionResponse?, _ error: Error?) -> Void)
 ```
 
 Check one permission
@@ -230,9 +242,10 @@ POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"contex
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import LumoAuthAPIClient
 
+let checkPermissionRequest = CheckPermissionRequest(permission: "permission_example", context: "TODO", subject: "TODO") // CheckPermissionRequest | 
 
 // Check one permission
-AuthorizationAPI.checkPermission() { (response, error) in
+AuthorizationAPI.checkPermission(checkPermissionRequest: checkPermissionRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -245,7 +258,10 @@ AuthorizationAPI.checkPermission() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **checkPermissionRequest** | [**CheckPermissionRequest**](CheckPermissionRequest.md) |  | 
 
 ### Return type
 
@@ -257,14 +273,14 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **checkPermissionsBulk**
 ```swift
-    open class func checkPermissionsBulk(completion: @escaping (_ data: CheckPermissionsBulkResponse?, _ error: Error?) -> Void)
+    open class func checkPermissionsBulk(checkPermissionsBulkRequest: CheckPermissionsBulkRequest, completion: @escaping (_ data: CheckPermissionsBulkResponse?, _ error: Error?) -> Void)
 ```
 
 Check up to 100 permissions in one call
@@ -276,9 +292,10 @@ POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"d
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import LumoAuthAPIClient
 
+let checkPermissionsBulkRequest = CheckPermissionsBulkRequest(permissions: ["permissions_example"], context: "TODO", subject: "TODO") // CheckPermissionsBulkRequest | 
 
 // Check up to 100 permissions in one call
-AuthorizationAPI.checkPermissionsBulk() { (response, error) in
+AuthorizationAPI.checkPermissionsBulk(checkPermissionsBulkRequest: checkPermissionsBulkRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -291,7 +308,10 @@ AuthorizationAPI.checkPermissionsBulk() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **checkPermissionsBulkRequest** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  | 
 
 ### Return type
 
@@ -303,14 +323,14 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **checkRelation**
 ```swift
-    open class func checkRelation(completion: @escaping (_ data: CheckRelationResponse?, _ error: Error?) -> Void)
+    open class func checkRelation(checkRelationRequest: CheckRelationRequest, completion: @escaping (_ data: CheckRelationResponse?, _ error: Error?) -> Void)
 ```
 
 Zanzibar relationship check
@@ -322,9 +342,10 @@ POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"re
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import LumoAuthAPIClient
 
+let checkRelationRequest = CheckRelationRequest(object: "object_example", relation: "relation_example", subject: "subject_example") // CheckRelationRequest | 
 
 // Zanzibar relationship check
-AuthorizationAPI.checkRelation() { (response, error) in
+AuthorizationAPI.checkRelation(checkRelationRequest: checkRelationRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -337,7 +358,10 @@ AuthorizationAPI.checkRelation() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **checkRelationRequest** | [**CheckRelationRequest**](CheckRelationRequest.md) |  | 
 
 ### Return type
 
@@ -349,14 +373,14 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **checkRelationScoped**
 ```swift
-    open class func checkRelationScoped(orgId: String, completion: @escaping (_ data: CheckRelationScopedResponse?, _ error: Error?) -> Void)
+    open class func checkRelationScoped(orgId: String, checkRelationScopedRequest: CheckRelationScopedRequest, completion: @escaping (_ data: CheckRelationScopedResponse?, _ error: Error?) -> Void)
 ```
 
 Zanzibar relationship check
@@ -367,9 +391,10 @@ Zanzibar relationship check
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let checkRelationScopedRequest = CheckRelationScopedRequest(object: "object_example", relation: "relation_example", user: "user_example") // CheckRelationScopedRequest | 
 
 // Zanzibar relationship check
-AuthorizationAPI.checkRelationScoped(orgId: orgId) { (response, error) in
+AuthorizationAPI.checkRelationScoped(orgId: orgId, checkRelationScopedRequest: checkRelationScopedRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -386,6 +411,7 @@ AuthorizationAPI.checkRelationScoped(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **checkRelationScopedRequest** | [**CheckRelationScopedRequest**](CheckRelationScopedRequest.md) |  | 
 
 ### Return type
 
@@ -397,14 +423,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **evaluate**
 ```swift
-    open class func evaluate(completion: @escaping (_ data: AuthZenDecision?, _ error: Error?) -> Void)
+    open class func evaluate(evaluateRequest: EvaluateRequest, completion: @escaping (_ data: AuthZenDecision?, _ error: Error?) -> Void)
 ```
 
 AuthZEN 1.0 access evaluation
@@ -416,9 +442,10 @@ POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"a
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import LumoAuthAPIClient
 
+let evaluateRequest = EvaluateRequest(subject: "TODO", action: "TODO", resource: "TODO", context: "TODO") // EvaluateRequest | AuthZEN Authorization API 1.0 evaluation request.
 
 // AuthZEN 1.0 access evaluation
-AuthorizationAPI.evaluate() { (response, error) in
+AuthorizationAPI.evaluate(evaluateRequest: evaluateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -431,7 +458,10 @@ AuthorizationAPI.evaluate() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **evaluateRequest** | [**EvaluateRequest**](EvaluateRequest.md) | AuthZEN Authorization API 1.0 evaluation request. | 
 
 ### Return type
 
@@ -443,14 +473,14 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **evaluateBatch**
 ```swift
-    open class func evaluateBatch(completion: @escaping (_ data: EvaluateBatchResponse?, _ error: Error?) -> Void)
+    open class func evaluateBatch(evaluateBatchRequest: EvaluateBatchRequest, completion: @escaping (_ data: EvaluateBatchResponse?, _ error: Error?) -> Void)
 ```
 
 AuthZEN 1.0 boxcarred access evaluations
@@ -462,9 +492,10 @@ POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional 
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import LumoAuthAPIClient
 
+let evaluateBatchRequest = EvaluateBatchRequest(subject: "TODO", action: "TODO", resource: "TODO", context: "TODO", evaluations: ["TODO"]) // EvaluateBatchRequest | AuthZEN Authorization API 1.0 batch evaluation request.
 
 // AuthZEN 1.0 boxcarred access evaluations
-AuthorizationAPI.evaluateBatch() { (response, error) in
+AuthorizationAPI.evaluateBatch(evaluateBatchRequest: evaluateBatchRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -477,7 +508,10 @@ AuthorizationAPI.evaluateBatch() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **evaluateBatchRequest** | [**EvaluateBatchRequest**](EvaluateBatchRequest.md) | AuthZEN Authorization API 1.0 batch evaluation request. | 
 
 ### Return type
 
@@ -489,7 +523,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -800,7 +834,7 @@ This endpoint does not need any parameter.
 
 # **setResourceAttribute**
 ```swift
-    open class func setResourceAttribute(orgId: String, resourceType: String, resourceId: String, attributeSlug: String, completion: @escaping (_ data: SetResourceAttributeResponse?, _ error: Error?) -> Void)
+    open class func setResourceAttribute(orgId: String, resourceType: String, resourceId: String, attributeSlug: String, setResourceAttributeRequest: SetResourceAttributeRequest, completion: @escaping (_ data: SetResourceAttributeResponse?, _ error: Error?) -> Void)
 ```
 
 Set a resource attribute
@@ -816,9 +850,10 @@ let orgId = "orgId_example" // String |
 let resourceType = "resourceType_example" // String | 
 let resourceId = "resourceId_example" // String | 
 let attributeSlug = "attributeSlug_example" // String | 
+let setResourceAttributeRequest = SetResourceAttributeRequest(value: 123) // SetResourceAttributeRequest | 
 
 // Set a resource attribute
-AuthorizationAPI.setResourceAttribute(orgId: orgId, resourceType: resourceType, resourceId: resourceId, attributeSlug: attributeSlug) { (response, error) in
+AuthorizationAPI.setResourceAttribute(orgId: orgId, resourceType: resourceType, resourceId: resourceId, attributeSlug: attributeSlug, setResourceAttributeRequest: setResourceAttributeRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -838,6 +873,7 @@ Name | Type | Description  | Notes
  **resourceType** | **String** |  | 
  **resourceId** | **String** |  | 
  **attributeSlug** | **String** |  | 
+ **setResourceAttributeRequest** | [**SetResourceAttributeRequest**](SetResourceAttributeRequest.md) |  | 
 
 ### Return type
 
@@ -849,14 +885,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **setUserAttribute**
 ```swift
-    open class func setUserAttribute(orgId: String, userId: String, attributeSlug: String, completion: @escaping (_ data: SetUserAttributeResponse?, _ error: Error?) -> Void)
+    open class func setUserAttribute(orgId: String, userId: String, attributeSlug: String, setResourceAttributeRequest: SetResourceAttributeRequest, completion: @escaping (_ data: SetUserAttributeResponse?, _ error: Error?) -> Void)
 ```
 
 Set a user attribute
@@ -871,9 +907,10 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
 let attributeSlug = "attributeSlug_example" // String | 
+let setResourceAttributeRequest = SetResourceAttributeRequest(value: 123) // SetResourceAttributeRequest | 
 
 // Set a user attribute
-AuthorizationAPI.setUserAttribute(orgId: orgId, userId: userId, attributeSlug: attributeSlug) { (response, error) in
+AuthorizationAPI.setUserAttribute(orgId: orgId, userId: userId, attributeSlug: attributeSlug, setResourceAttributeRequest: setResourceAttributeRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -892,6 +929,7 @@ Name | Type | Description  | Notes
  **orgId** | **String** |  | 
  **userId** | **String** |  | 
  **attributeSlug** | **String** |  | 
+ **setResourceAttributeRequest** | [**SetResourceAttributeRequest**](SetResourceAttributeRequest.md) |  | 
 
 ### Return type
 
@@ -903,7 +941,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

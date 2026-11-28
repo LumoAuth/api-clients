@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -29,7 +29,7 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// Destroy a sandbox tenant
+        /// Destroy a sandbox organization
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -38,7 +38,7 @@ namespace LumoAuth.ApiClient.Api
         MessageResponse AdminSandboxDestroy(string orgId, string sandboxSlug);
 
         /// <summary>
-        /// Destroy a sandbox tenant
+        /// Destroy a sandbox organization
         /// </summary>
         /// <remarks>
         /// 
@@ -49,7 +49,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of MessageResponse</returns>
         ApiResponse<MessageResponse> AdminSandboxDestroyWithHttpInfo(string orgId, string sandboxSlug);
         /// <summary>
-        /// List the caller&#39;s sandbox tenants
+        /// List the caller&#39;s sandbox organizations
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -57,7 +57,7 @@ namespace LumoAuth.ApiClient.Api
         AdminSandboxListResponse AdminSandboxList(string orgId);
 
         /// <summary>
-        /// List the caller&#39;s sandbox tenants
+        /// List the caller&#39;s sandbox organizations
         /// </summary>
         /// <remarks>
         /// 
@@ -67,7 +67,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of AdminSandboxListResponse</returns>
         ApiResponse<AdminSandboxListResponse> AdminSandboxListWithHttpInfo(string orgId);
         /// <summary>
-        /// Spawn a sandbox tenant
+        /// Spawn a sandbox organization
         /// </summary>
         /// <remarks>
         /// Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
@@ -79,7 +79,7 @@ namespace LumoAuth.ApiClient.Api
         AdminSandboxSpawnResponse AdminSandboxSpawn(string orgId, AdminSandboxSpawnRequest? adminSandboxSpawnRequest = default);
 
         /// <summary>
-        /// Spawn a sandbox tenant
+        /// Spawn a sandbox organization
         /// </summary>
         /// <remarks>
         /// Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
@@ -99,7 +99,7 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// Destroy a sandbox tenant
+        /// Destroy a sandbox organization
         /// </summary>
         /// <remarks>
         /// 
@@ -112,7 +112,7 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task<MessageResponse> AdminSandboxDestroyAsync(string orgId, string sandboxSlug, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Destroy a sandbox tenant
+        /// Destroy a sandbox organization
         /// </summary>
         /// <remarks>
         /// 
@@ -124,7 +124,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (MessageResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminSandboxDestroyWithHttpInfoAsync(string orgId, string sandboxSlug, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// List the caller&#39;s sandbox tenants
+        /// List the caller&#39;s sandbox organizations
         /// </summary>
         /// <remarks>
         /// 
@@ -136,7 +136,7 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task<AdminSandboxListResponse> AdminSandboxListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List the caller&#39;s sandbox tenants
+        /// List the caller&#39;s sandbox organizations
         /// </summary>
         /// <remarks>
         /// 
@@ -147,7 +147,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (AdminSandboxListResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AdminSandboxListResponse>> AdminSandboxListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Spawn a sandbox tenant
+        /// Spawn a sandbox organization
         /// </summary>
         /// <remarks>
         /// Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
@@ -160,7 +160,7 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task<AdminSandboxSpawnResponse> AdminSandboxSpawnAsync(string orgId, AdminSandboxSpawnRequest? adminSandboxSpawnRequest = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Spawn a sandbox tenant
+        /// Spawn a sandbox organization
         /// </summary>
         /// <remarks>
         /// Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
@@ -385,7 +385,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Destroy a sandbox tenant 
+        /// Destroy a sandbox organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -398,7 +398,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Destroy a sandbox tenant 
+        /// Destroy a sandbox organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -458,7 +458,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Destroy a sandbox tenant 
+        /// Destroy a sandbox organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -472,7 +472,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Destroy a sandbox tenant 
+        /// Destroy a sandbox organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -536,7 +536,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the caller&#39;s sandbox tenants 
+        /// List the caller&#39;s sandbox organizations 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -548,7 +548,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the caller&#39;s sandbox tenants 
+        /// List the caller&#39;s sandbox organizations 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -602,7 +602,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the caller&#39;s sandbox tenants 
+        /// List the caller&#39;s sandbox organizations 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -615,7 +615,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the caller&#39;s sandbox tenants 
+        /// List the caller&#39;s sandbox organizations 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -673,7 +673,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Spawn a sandbox tenant Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
+        /// Spawn a sandbox organization Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -686,7 +686,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Spawn a sandbox tenant Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
+        /// Spawn a sandbox organization Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -743,7 +743,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Spawn a sandbox tenant Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
+        /// Spawn a sandbox organization Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -757,7 +757,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Spawn a sandbox tenant Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
+        /// Spawn a sandbox organization Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

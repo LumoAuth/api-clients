@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -70,7 +70,7 @@ export const WellKnownApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
+         * Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
          * @summary JSON Web Key Set (RFC 7517)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -195,7 +195,7 @@ export const WellKnownApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
+         * Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
          * @summary JSON Web Key Set (RFC 7517)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -254,7 +254,7 @@ export const WellKnownApiFactory = function (configuration?: Configuration, base
             return localVarFp.getAuthorizationServerMetadata(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
+         * Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
          * @summary JSON Web Key Set (RFC 7517)
          * @param {WellKnownApiGetJwksRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -303,7 +303,7 @@ export interface WellKnownApiInterface {
     getAuthorizationServerMetadata(requestParameters: WellKnownApiGetAuthorizationServerMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthorizationServerMetadata>;
 
     /**
-     * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
+     * Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
      * @summary JSON Web Key Set (RFC 7517)
      * @param {WellKnownApiGetJwksRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -410,7 +410,7 @@ export class WellKnownApi extends BaseAPI implements WellKnownApiInterface {
     }
 
     /**
-     * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
+     * Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
      * @summary JSON Web Key Set (RFC 7517)
      * @param {WellKnownApiGetJwksRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

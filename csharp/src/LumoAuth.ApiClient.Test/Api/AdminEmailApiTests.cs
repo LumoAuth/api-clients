@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -105,7 +105,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string type = null;
-            //var response = instance.AdminEmailTemplatesPreview(orgId, type);
+            //AdminEmailTemplatesPreviewRequest? adminEmailTemplatesPreviewRequest = null;
+            //var response = instance.AdminEmailTemplatesPreview(orgId, type, adminEmailTemplatesPreviewRequest);
             //Assert.IsType<AdminEmailTemplatesPreviewResponse>(response);
         }
 
@@ -118,7 +119,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string type = null;
-            //var response = instance.AdminEmailTemplatesUpsert(orgId, type);
+            //AdminEmailTemplatesUpsertRequest adminEmailTemplatesUpsertRequest = null;
+            //var response = instance.AdminEmailTemplatesUpsert(orgId, type, adminEmailTemplatesUpsertRequest);
             //Assert.IsType<EmailTemplate>(response);
         }
 

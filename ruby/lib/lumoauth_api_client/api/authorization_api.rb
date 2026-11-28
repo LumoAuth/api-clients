@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -22,25 +22,31 @@ module LumoAuthApiClient
     # Evaluate an ABAC policy decision for the caller
     # POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
     # @param org_id [String] 
+    # @param check_abac_request [CheckAbacRequest] 
     # @param [Hash] opts the optional parameters
     # @return [CheckAbacResponse]
-    def check_abac(org_id, opts = {})
-      data, _status_code, _headers = check_abac_with_http_info(org_id, opts)
+    def check_abac(org_id, check_abac_request, opts = {})
+      data, _status_code, _headers = check_abac_with_http_info(org_id, check_abac_request, opts)
       data
     end
 
     # Evaluate an ABAC policy decision for the caller
     # POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
     # @param org_id [String] 
+    # @param check_abac_request [CheckAbacRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(CheckAbacResponse, Integer, Hash)>] CheckAbacResponse data, response status code and response headers
-    def check_abac_with_http_info(org_id, opts = {})
+    def check_abac_with_http_info(org_id, check_abac_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AuthorizationApi.check_abac ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AuthorizationApi.check_abac"
+      end
+      # verify the required parameter 'check_abac_request' is set
+      if @api_client.config.client_side_validation && check_abac_request.nil?
+        fail ArgumentError, "Missing the required parameter 'check_abac_request' when calling AuthorizationApi.check_abac"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/check'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -52,12 +58,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(check_abac_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CheckAbacResponse'
@@ -85,25 +96,31 @@ module LumoAuthApiClient
     # Evaluate up to 100 ABAC checks for the caller in one call
     # POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
     # @param org_id [String] 
+    # @param check_abac_bulk_request [CheckAbacBulkRequest] 
     # @param [Hash] opts the optional parameters
     # @return [CheckAbacBulkResponse]
-    def check_abac_bulk(org_id, opts = {})
-      data, _status_code, _headers = check_abac_bulk_with_http_info(org_id, opts)
+    def check_abac_bulk(org_id, check_abac_bulk_request, opts = {})
+      data, _status_code, _headers = check_abac_bulk_with_http_info(org_id, check_abac_bulk_request, opts)
       data
     end
 
     # Evaluate up to 100 ABAC checks for the caller in one call
     # POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
     # @param org_id [String] 
+    # @param check_abac_bulk_request [CheckAbacBulkRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(CheckAbacBulkResponse, Integer, Hash)>] CheckAbacBulkResponse data, response status code and response headers
-    def check_abac_bulk_with_http_info(org_id, opts = {})
+    def check_abac_bulk_with_http_info(org_id, check_abac_bulk_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AuthorizationApi.check_abac_bulk ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AuthorizationApi.check_abac_bulk"
+      end
+      # verify the required parameter 'check_abac_bulk_request' is set
+      if @api_client.config.client_side_validation && check_abac_bulk_request.nil?
+        fail ArgumentError, "Missing the required parameter 'check_abac_bulk_request' when calling AuthorizationApi.check_abac_bulk"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/check-bulk'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -115,12 +132,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(check_abac_bulk_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CheckAbacBulkResponse'
@@ -147,20 +169,26 @@ module LumoAuthApiClient
 
     # Check whether the subject holds all of the permissions
     # POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
+    # @param check_permissions_bulk_request [CheckPermissionsBulkRequest] 
     # @param [Hash] opts the optional parameters
     # @return [CheckAnyPermissionResponse]
-    def check_all_permissions(opts = {})
-      data, _status_code, _headers = check_all_permissions_with_http_info(opts)
+    def check_all_permissions(check_permissions_bulk_request, opts = {})
+      data, _status_code, _headers = check_all_permissions_with_http_info(check_permissions_bulk_request, opts)
       data
     end
 
     # Check whether the subject holds all of the permissions
     # POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+    # @param check_permissions_bulk_request [CheckPermissionsBulkRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(CheckAnyPermissionResponse, Integer, Hash)>] CheckAnyPermissionResponse data, response status code and response headers
-    def check_all_permissions_with_http_info(opts = {})
+    def check_all_permissions_with_http_info(check_permissions_bulk_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AuthorizationApi.check_all_permissions ...'
+      end
+      # verify the required parameter 'check_permissions_bulk_request' is set
+      if @api_client.config.client_side_validation && check_permissions_bulk_request.nil?
+        fail ArgumentError, "Missing the required parameter 'check_permissions_bulk_request' when calling AuthorizationApi.check_all_permissions"
       end
       # resource path
       local_var_path = '/api/v1/authz/check-all'
@@ -172,12 +200,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(check_permissions_bulk_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CheckAnyPermissionResponse'
@@ -204,20 +237,26 @@ module LumoAuthApiClient
 
     # Check whether the subject holds any of the permissions
     # POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
+    # @param check_permissions_bulk_request [CheckPermissionsBulkRequest] 
     # @param [Hash] opts the optional parameters
     # @return [CheckAnyPermissionResponse]
-    def check_any_permission(opts = {})
-      data, _status_code, _headers = check_any_permission_with_http_info(opts)
+    def check_any_permission(check_permissions_bulk_request, opts = {})
+      data, _status_code, _headers = check_any_permission_with_http_info(check_permissions_bulk_request, opts)
       data
     end
 
     # Check whether the subject holds any of the permissions
     # POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+    # @param check_permissions_bulk_request [CheckPermissionsBulkRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(CheckAnyPermissionResponse, Integer, Hash)>] CheckAnyPermissionResponse data, response status code and response headers
-    def check_any_permission_with_http_info(opts = {})
+    def check_any_permission_with_http_info(check_permissions_bulk_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AuthorizationApi.check_any_permission ...'
+      end
+      # verify the required parameter 'check_permissions_bulk_request' is set
+      if @api_client.config.client_side_validation && check_permissions_bulk_request.nil?
+        fail ArgumentError, "Missing the required parameter 'check_permissions_bulk_request' when calling AuthorizationApi.check_any_permission"
       end
       # resource path
       local_var_path = '/api/v1/authz/check-any'
@@ -229,12 +268,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(check_permissions_bulk_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CheckAnyPermissionResponse'
@@ -261,20 +305,26 @@ module LumoAuthApiClient
 
     # Check one permission
     # POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"resource_id\": \"doc-123\"},        // read: resource_id + defined environment attribute slugs   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
+    # @param check_permission_request [CheckPermissionRequest] 
     # @param [Hash] opts the optional parameters
     # @return [CheckPermissionResponse]
-    def check_permission(opts = {})
-      data, _status_code, _headers = check_permission_with_http_info(opts)
+    def check_permission(check_permission_request, opts = {})
+      data, _status_code, _headers = check_permission_with_http_info(check_permission_request, opts)
       data
     end
 
     # Check one permission
     # POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},        // read: resource_id + defined environment attribute slugs   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
+    # @param check_permission_request [CheckPermissionRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(CheckPermissionResponse, Integer, Hash)>] CheckPermissionResponse data, response status code and response headers
-    def check_permission_with_http_info(opts = {})
+    def check_permission_with_http_info(check_permission_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AuthorizationApi.check_permission ...'
+      end
+      # verify the required parameter 'check_permission_request' is set
+      if @api_client.config.client_side_validation && check_permission_request.nil?
+        fail ArgumentError, "Missing the required parameter 'check_permission_request' when calling AuthorizationApi.check_permission"
       end
       # resource path
       local_var_path = '/api/v1/authz/check'
@@ -286,12 +336,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(check_permission_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CheckPermissionResponse'
@@ -318,20 +373,26 @@ module LumoAuthApiClient
 
     # Check up to 100 permissions in one call
     # POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
+    # @param check_permissions_bulk_request [CheckPermissionsBulkRequest] 
     # @param [Hash] opts the optional parameters
     # @return [CheckPermissionsBulkResponse]
-    def check_permissions_bulk(opts = {})
-      data, _status_code, _headers = check_permissions_bulk_with_http_info(opts)
+    def check_permissions_bulk(check_permissions_bulk_request, opts = {})
+      data, _status_code, _headers = check_permissions_bulk_with_http_info(check_permissions_bulk_request, opts)
       data
     end
 
     # Check up to 100 permissions in one call
     # POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+    # @param check_permissions_bulk_request [CheckPermissionsBulkRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(CheckPermissionsBulkResponse, Integer, Hash)>] CheckPermissionsBulkResponse data, response status code and response headers
-    def check_permissions_bulk_with_http_info(opts = {})
+    def check_permissions_bulk_with_http_info(check_permissions_bulk_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AuthorizationApi.check_permissions_bulk ...'
+      end
+      # verify the required parameter 'check_permissions_bulk_request' is set
+      if @api_client.config.client_side_validation && check_permissions_bulk_request.nil?
+        fail ArgumentError, "Missing the required parameter 'check_permissions_bulk_request' when calling AuthorizationApi.check_permissions_bulk"
       end
       # resource path
       local_var_path = '/api/v1/authz/check-bulk'
@@ -343,12 +404,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(check_permissions_bulk_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CheckPermissionsBulkResponse'
@@ -375,20 +441,26 @@ module LumoAuthApiClient
 
     # Zanzibar relationship check
     # POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
+    # @param check_relation_request [CheckRelationRequest] 
     # @param [Hash] opts the optional parameters
     # @return [CheckRelationResponse]
-    def check_relation(opts = {})
-      data, _status_code, _headers = check_relation_with_http_info(opts)
+    def check_relation(check_relation_request, opts = {})
+      data, _status_code, _headers = check_relation_with_http_info(check_relation_request, opts)
       data
     end
 
     # Zanzibar relationship check
     # POST /api/v1/authz/zanzibar/check Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot;,   \&quot;subject\&quot;: \&quot;user:456\&quot; }
+    # @param check_relation_request [CheckRelationRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(CheckRelationResponse, Integer, Hash)>] CheckRelationResponse data, response status code and response headers
-    def check_relation_with_http_info(opts = {})
+    def check_relation_with_http_info(check_relation_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AuthorizationApi.check_relation ...'
+      end
+      # verify the required parameter 'check_relation_request' is set
+      if @api_client.config.client_side_validation && check_relation_request.nil?
+        fail ArgumentError, "Missing the required parameter 'check_relation_request' when calling AuthorizationApi.check_relation"
       end
       # resource path
       local_var_path = '/api/v1/authz/zanzibar/check'
@@ -400,12 +472,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(check_relation_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CheckRelationResponse'
@@ -432,24 +509,30 @@ module LumoAuthApiClient
 
     # Zanzibar relationship check
     # @param org_id [String] 
+    # @param check_relation_scoped_request [CheckRelationScopedRequest] 
     # @param [Hash] opts the optional parameters
     # @return [CheckRelationScopedResponse]
-    def check_relation_scoped(org_id, opts = {})
-      data, _status_code, _headers = check_relation_scoped_with_http_info(org_id, opts)
+    def check_relation_scoped(org_id, check_relation_scoped_request, opts = {})
+      data, _status_code, _headers = check_relation_scoped_with_http_info(org_id, check_relation_scoped_request, opts)
       data
     end
 
     # Zanzibar relationship check
     # @param org_id [String] 
+    # @param check_relation_scoped_request [CheckRelationScopedRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(CheckRelationScopedResponse, Integer, Hash)>] CheckRelationScopedResponse data, response status code and response headers
-    def check_relation_scoped_with_http_info(org_id, opts = {})
+    def check_relation_scoped_with_http_info(org_id, check_relation_scoped_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AuthorizationApi.check_relation_scoped ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AuthorizationApi.check_relation_scoped"
+      end
+      # verify the required parameter 'check_relation_scoped_request' is set
+      if @api_client.config.client_side_validation && check_relation_scoped_request.nil?
+        fail ArgumentError, "Missing the required parameter 'check_relation_scoped_request' when calling AuthorizationApi.check_relation_scoped"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/zanzibar/check'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -461,12 +544,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(check_relation_scoped_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CheckRelationScopedResponse'
@@ -493,20 +581,26 @@ module LumoAuthApiClient
 
     # AuthZEN 1.0 access evaluation
     # POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
+    # @param evaluate_request [EvaluateRequest] AuthZEN Authorization API 1.0 evaluation request.
     # @param [Hash] opts the optional parameters
     # @return [AuthZenDecision]
-    def evaluate(opts = {})
-      data, _status_code, _headers = evaluate_with_http_info(opts)
+    def evaluate(evaluate_request, opts = {})
+      data, _status_code, _headers = evaluate_with_http_info(evaluate_request, opts)
       data
     end
 
     # AuthZEN 1.0 access evaluation
     # POST /api/v1/authz/v1/evaluation Body: {   \&quot;subject\&quot;:  {\&quot;type\&quot;: \&quot;user\&quot;|\&quot;agent\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;action\&quot;:   {\&quot;name\&quot;: \&quot;...\&quot;},   \&quot;resource\&quot;: {\&quot;type\&quot;: \&quot;...\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;context\&quot;:  {...} } Response: {\&quot;decision\&quot;: true|false, \&quot;context\&quot;: {...}?}
+    # @param evaluate_request [EvaluateRequest] AuthZEN Authorization API 1.0 evaluation request.
     # @param [Hash] opts the optional parameters
     # @return [Array<(AuthZenDecision, Integer, Hash)>] AuthZenDecision data, response status code and response headers
-    def evaluate_with_http_info(opts = {})
+    def evaluate_with_http_info(evaluate_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AuthorizationApi.evaluate ...'
+      end
+      # verify the required parameter 'evaluate_request' is set
+      if @api_client.config.client_side_validation && evaluate_request.nil?
+        fail ArgumentError, "Missing the required parameter 'evaluate_request' when calling AuthorizationApi.evaluate"
       end
       # resource path
       local_var_path = '/api/v1/authz/v1/evaluation'
@@ -518,12 +612,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(evaluate_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AuthZenDecision'
@@ -550,20 +649,26 @@ module LumoAuthApiClient
 
     # AuthZEN 1.0 boxcarred access evaluations
     # POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
+    # @param evaluate_batch_request [EvaluateBatchRequest] AuthZEN Authorization API 1.0 batch evaluation request.
     # @param [Hash] opts the optional parameters
     # @return [EvaluateBatchResponse]
-    def evaluate_batch(opts = {})
-      data, _status_code, _headers = evaluate_batch_with_http_info(opts)
+    def evaluate_batch(evaluate_batch_request, opts = {})
+      data, _status_code, _headers = evaluate_batch_with_http_info(evaluate_batch_request, opts)
       data
     end
 
     # AuthZEN 1.0 boxcarred access evaluations
     # POST /api/v1/authz/v1/evaluations Body: {   \&quot;subject\&quot;:  {...}?,   // optional defaults, overridden per item   \&quot;action\&quot;:   {...}?,   \&quot;resource\&quot;: {...}?,   \&quot;context\&quot;:  {...}?,   \&quot;evaluations\&quot;: [{...}, ...] } Response: {\&quot;evaluations\&quot;: [{\&quot;decision\&quot;: ...}, ...]} preserving order.
+    # @param evaluate_batch_request [EvaluateBatchRequest] AuthZEN Authorization API 1.0 batch evaluation request.
     # @param [Hash] opts the optional parameters
     # @return [Array<(EvaluateBatchResponse, Integer, Hash)>] EvaluateBatchResponse data, response status code and response headers
-    def evaluate_batch_with_http_info(opts = {})
+    def evaluate_batch_with_http_info(evaluate_batch_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AuthorizationApi.evaluate_batch ...'
+      end
+      # verify the required parameter 'evaluate_batch_request' is set
+      if @api_client.config.client_side_validation && evaluate_batch_request.nil?
+        fail ArgumentError, "Missing the required parameter 'evaluate_batch_request' when calling AuthorizationApi.evaluate_batch"
       end
       # resource path
       local_var_path = '/api/v1/authz/v1/evaluations'
@@ -575,12 +680,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(evaluate_batch_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'EvaluateBatchResponse'
@@ -1018,10 +1128,11 @@ module LumoAuthApiClient
     # @param resource_type [String] 
     # @param resource_id [String] 
     # @param attribute_slug [String] 
+    # @param set_resource_attribute_request [SetResourceAttributeRequest] 
     # @param [Hash] opts the optional parameters
     # @return [SetResourceAttributeResponse]
-    def set_resource_attribute(org_id, resource_type, resource_id, attribute_slug, opts = {})
-      data, _status_code, _headers = set_resource_attribute_with_http_info(org_id, resource_type, resource_id, attribute_slug, opts)
+    def set_resource_attribute(org_id, resource_type, resource_id, attribute_slug, set_resource_attribute_request, opts = {})
+      data, _status_code, _headers = set_resource_attribute_with_http_info(org_id, resource_type, resource_id, attribute_slug, set_resource_attribute_request, opts)
       data
     end
 
@@ -1031,9 +1142,10 @@ module LumoAuthApiClient
     # @param resource_type [String] 
     # @param resource_id [String] 
     # @param attribute_slug [String] 
+    # @param set_resource_attribute_request [SetResourceAttributeRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(SetResourceAttributeResponse, Integer, Hash)>] SetResourceAttributeResponse data, response status code and response headers
-    def set_resource_attribute_with_http_info(org_id, resource_type, resource_id, attribute_slug, opts = {})
+    def set_resource_attribute_with_http_info(org_id, resource_type, resource_id, attribute_slug, set_resource_attribute_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AuthorizationApi.set_resource_attribute ...'
       end
@@ -1053,6 +1165,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && attribute_slug.nil?
         fail ArgumentError, "Missing the required parameter 'attribute_slug' when calling AuthorizationApi.set_resource_attribute"
       end
+      # verify the required parameter 'set_resource_attribute_request' is set
+      if @api_client.config.client_side_validation && set_resource_attribute_request.nil?
+        fail ArgumentError, "Missing the required parameter 'set_resource_attribute_request' when calling AuthorizationApi.set_resource_attribute"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'resourceType' + '}', CGI.escape(resource_type.to_s)).sub('{' + 'resourceId' + '}', CGI.escape(resource_id.to_s)).sub('{' + 'attributeSlug' + '}', CGI.escape(attribute_slug.to_s))
 
@@ -1063,12 +1179,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(set_resource_attribute_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'SetResourceAttributeResponse'
@@ -1098,10 +1219,11 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param user_id [String] 
     # @param attribute_slug [String] 
+    # @param set_resource_attribute_request [SetResourceAttributeRequest] 
     # @param [Hash] opts the optional parameters
     # @return [SetUserAttributeResponse]
-    def set_user_attribute(org_id, user_id, attribute_slug, opts = {})
-      data, _status_code, _headers = set_user_attribute_with_http_info(org_id, user_id, attribute_slug, opts)
+    def set_user_attribute(org_id, user_id, attribute_slug, set_resource_attribute_request, opts = {})
+      data, _status_code, _headers = set_user_attribute_with_http_info(org_id, user_id, attribute_slug, set_resource_attribute_request, opts)
       data
     end
 
@@ -1110,9 +1232,10 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param user_id [String] 
     # @param attribute_slug [String] 
+    # @param set_resource_attribute_request [SetResourceAttributeRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(SetUserAttributeResponse, Integer, Hash)>] SetUserAttributeResponse data, response status code and response headers
-    def set_user_attribute_with_http_info(org_id, user_id, attribute_slug, opts = {})
+    def set_user_attribute_with_http_info(org_id, user_id, attribute_slug, set_resource_attribute_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AuthorizationApi.set_user_attribute ...'
       end
@@ -1128,6 +1251,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && attribute_slug.nil?
         fail ArgumentError, "Missing the required parameter 'attribute_slug' when calling AuthorizationApi.set_user_attribute"
       end
+      # verify the required parameter 'set_resource_attribute_request' is set
+      if @api_client.config.client_side_validation && set_resource_attribute_request.nil?
+        fail ArgumentError, "Missing the required parameter 'set_resource_attribute_request' when calling AuthorizationApi.set_user_attribute"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s)).sub('{' + 'attributeSlug' + '}', CGI.escape(attribute_slug.to_s))
 
@@ -1138,12 +1265,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(set_resource_attribute_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'SetUserAttributeResponse'

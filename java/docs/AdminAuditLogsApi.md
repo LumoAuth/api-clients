@@ -4,7 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**adminAuditLogsActions**](AdminAuditLogsApi.md#adminAuditLogsActions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the tenant |
+| [**adminAuditLogsActions**](AdminAuditLogsApi.md#adminAuditLogsActions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the organization |
 | [**adminAuditLogsExport**](AdminAuditLogsApi.md#adminAuditLogsExport) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV (default) or JSON |
 | [**adminAuditLogsGet**](AdminAuditLogsApi.md#adminAuditLogsGet) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get an audit log entry |
 | [**adminAuditLogsList**](AdminAuditLogsApi.md#adminAuditLogsList) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit log entries |
@@ -18,7 +18,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 # **adminAuditLogsActions**
 > AdminAuditLogsActionsResponse adminAuditLogsActions(orgId)
 
-List the distinct audit action types recorded for the tenant
+List the distinct audit action types recorded for the organization
 
 ### Example
 ```java
@@ -87,7 +87,7 @@ public class Example {
 
 <a id="adminAuditLogsExport"></a>
 # **adminAuditLogsExport**
-> String adminAuditLogsExport(orgId)
+> String adminAuditLogsExport(orgId, format, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to)
 
 Export audit logs as CSV (default) or JSON
 
@@ -120,8 +120,21 @@ public class Example {
 
     AdminAuditLogsApi apiInstance = new AdminAuditLogsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String format = "csv"; // String | csv (default) or json.
+    String eventType = "eventType_example"; // String | Exact event type, for example user.login.
+    String action = "action_example"; // String | The short verb of the event (as GET /audit-logs/actions lists them).
+    String actorId = "actorId_example"; // String | Who acted: a user, API key or agent id. Also accepted as userId.
+    String targetType = "targetType_example"; // String | Kind of the subject of the event. Also accepted as resourceType.
+    String targetId = "targetId_example"; // String | The subject of the event, for example the user of a login.failed entry.
+    String severity = "debug"; // String | 
+    String status = "success"; // String | Result of the event.
+    String ipAddress = "ipAddress_example"; // String | 
+    String search = "search_example"; // String | Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+    String traceId = "traceId_example"; // String | Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+    OffsetDateTime from = OffsetDateTime.now(); // OffsetDateTime | Entries at or after this time (ISO 8601). Also accepted as startDate.
+    OffsetDateTime to = OffsetDateTime.now(); // OffsetDateTime | Entries at or before this time (ISO 8601). Also accepted as endDate.
     try {
-      String result = apiInstance.adminAuditLogsExport(orgId);
+      String result = apiInstance.adminAuditLogsExport(orgId, format, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAuditLogsApi#adminAuditLogsExport");
@@ -139,6 +152,19 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **format** | **String**| csv (default) or json. | [optional] [default to csv] [enum: csv, json] |
+| **eventType** | **String**| Exact event type, for example user.login. | [optional] |
+| **action** | **String**| The short verb of the event (as GET /audit-logs/actions lists them). | [optional] |
+| **actorId** | **String**| Who acted: a user, API key or agent id. Also accepted as userId. | [optional] |
+| **targetType** | **String**| Kind of the subject of the event. Also accepted as resourceType. | [optional] |
+| **targetId** | **String**| The subject of the event, for example the user of a login.failed entry. | [optional] |
+| **severity** | **String**|  | [optional] [enum: debug, info, notice, warning, error, critical] |
+| **status** | **String**| Result of the event. | [optional] [enum: success, failure, pending, partial] |
+| **ipAddress** | **String**|  | [optional] |
+| **search** | **String**| Text in the message, error message, event type, actor id or name, target name, client id or trace ID. | [optional] |
+| **traceId** | **String**| Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). | [optional] |
+| **from** | **OffsetDateTime**| Entries at or after this time (ISO 8601). Also accepted as startDate. | [optional] |
+| **to** | **OffsetDateTime**| Entries at or before this time (ISO 8601). Also accepted as endDate. | [optional] |
 
 ### Return type
 
@@ -234,7 +260,7 @@ public class Example {
 
 <a id="adminAuditLogsList"></a>
 # **adminAuditLogsList**
-> AdminAuditLogsListResponse adminAuditLogsList(orgId)
+> AdminAuditLogsListResponse adminAuditLogsList(orgId, page, limit, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to)
 
 List audit log entries
 
@@ -265,8 +291,22 @@ public class Example {
 
     AdminAuditLogsApi apiInstance = new AdminAuditLogsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    Integer page = 1; // Integer | 
+    Integer limit = 25; // Integer | 
+    String eventType = "eventType_example"; // String | Exact event type, for example user.login.
+    String action = "action_example"; // String | The short verb of the event (as GET /audit-logs/actions lists them).
+    String actorId = "actorId_example"; // String | Who acted: a user, API key or agent id. Also accepted as userId.
+    String targetType = "targetType_example"; // String | Kind of the subject of the event. Also accepted as resourceType.
+    String targetId = "targetId_example"; // String | The subject of the event, for example the user of a login.failed entry.
+    String severity = "debug"; // String | 
+    String status = "success"; // String | Result of the event.
+    String ipAddress = "ipAddress_example"; // String | 
+    String search = "search_example"; // String | Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+    String traceId = "traceId_example"; // String | Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+    OffsetDateTime from = OffsetDateTime.now(); // OffsetDateTime | Entries at or after this time (ISO 8601). Also accepted as startDate.
+    OffsetDateTime to = OffsetDateTime.now(); // OffsetDateTime | Entries at or before this time (ISO 8601). Also accepted as endDate.
     try {
-      AdminAuditLogsListResponse result = apiInstance.adminAuditLogsList(orgId);
+      AdminAuditLogsListResponse result = apiInstance.adminAuditLogsList(orgId, page, limit, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAuditLogsApi#adminAuditLogsList");
@@ -284,6 +324,20 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **page** | **Integer**|  | [optional] [default to 1] |
+| **limit** | **Integer**|  | [optional] [default to 25] |
+| **eventType** | **String**| Exact event type, for example user.login. | [optional] |
+| **action** | **String**| The short verb of the event (as GET /audit-logs/actions lists them). | [optional] |
+| **actorId** | **String**| Who acted: a user, API key or agent id. Also accepted as userId. | [optional] |
+| **targetType** | **String**| Kind of the subject of the event. Also accepted as resourceType. | [optional] |
+| **targetId** | **String**| The subject of the event, for example the user of a login.failed entry. | [optional] |
+| **severity** | **String**|  | [optional] [enum: debug, info, notice, warning, error, critical] |
+| **status** | **String**| Result of the event. | [optional] [enum: success, failure, pending, partial] |
+| **ipAddress** | **String**|  | [optional] |
+| **search** | **String**| Text in the message, error message, event type, actor id or name, target name, client id or trace ID. | [optional] |
+| **traceId** | **String**| Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). | [optional] |
+| **from** | **OffsetDateTime**| Entries at or after this time (ISO 8601). Also accepted as startDate. | [optional] |
+| **to** | **OffsetDateTime**| Entries at or before this time (ISO 8601). Also accepted as endDate. | [optional] |
 
 ### Return type
 
@@ -447,7 +501,7 @@ public class Example {
 
 <a id="patchAdminAuditLogsRetentionUpdate"></a>
 # **patchAdminAuditLogsRetentionUpdate**
-> AdminAuditLogsRetentionResponse patchAdminAuditLogsRetentionUpdate(orgId)
+> AdminAuditLogsRetentionResponse patchAdminAuditLogsRetentionUpdate(orgId, putAdminAuditLogsRetentionUpdateRequest)
 
 Update audit log retention settings
 
@@ -480,8 +534,9 @@ public class Example {
 
     AdminAuditLogsApi apiInstance = new AdminAuditLogsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest = new PutAdminAuditLogsRetentionUpdateRequest(); // PutAdminAuditLogsRetentionUpdateRequest | 
     try {
-      AdminAuditLogsRetentionResponse result = apiInstance.patchAdminAuditLogsRetentionUpdate(orgId);
+      AdminAuditLogsRetentionResponse result = apiInstance.patchAdminAuditLogsRetentionUpdate(orgId, putAdminAuditLogsRetentionUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAuditLogsApi#patchAdminAuditLogsRetentionUpdate");
@@ -499,6 +554,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **putAdminAuditLogsRetentionUpdateRequest** | [**PutAdminAuditLogsRetentionUpdateRequest**](PutAdminAuditLogsRetentionUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -510,7 +566,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -520,7 +576,7 @@ public class Example {
 
 <a id="putAdminAuditLogsRetentionUpdate"></a>
 # **putAdminAuditLogsRetentionUpdate**
-> AdminAuditLogsRetentionResponse putAdminAuditLogsRetentionUpdate(orgId)
+> AdminAuditLogsRetentionResponse putAdminAuditLogsRetentionUpdate(orgId, putAdminAuditLogsRetentionUpdateRequest)
 
 Update audit log retention settings
 
@@ -553,8 +609,9 @@ public class Example {
 
     AdminAuditLogsApi apiInstance = new AdminAuditLogsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest = new PutAdminAuditLogsRetentionUpdateRequest(); // PutAdminAuditLogsRetentionUpdateRequest | 
     try {
-      AdminAuditLogsRetentionResponse result = apiInstance.putAdminAuditLogsRetentionUpdate(orgId);
+      AdminAuditLogsRetentionResponse result = apiInstance.putAdminAuditLogsRetentionUpdate(orgId, putAdminAuditLogsRetentionUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAuditLogsApi#putAdminAuditLogsRetentionUpdate");
@@ -572,6 +629,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **putAdminAuditLogsRetentionUpdateRequest** | [**PutAdminAuditLogsRetentionUpdateRequest**](PutAdminAuditLogsRetentionUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -583,7 +641,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

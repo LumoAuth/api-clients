@@ -11,7 +11,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**admin_groups_get**](AdminGroupsApi.md#admin_groups_get) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Get a single group by ID or slug |
 | [**admin_groups_get_members**](AdminGroupsApi.md#admin_groups_get_members) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members |
 | [**admin_groups_groups_get_roles**](AdminGroupsApi.md#admin_groups_groups_get_roles) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles |
-| [**admin_groups_list**](AdminGroupsApi.md#admin_groups_list) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant |
+| [**admin_groups_list**](AdminGroupsApi.md#admin_groups_list) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the organization |
 | [**admin_groups_remove_member**](AdminGroupsApi.md#admin_groups_remove_member) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group |
 | [**admin_groups_remove_role**](AdminGroupsApi.md#admin_groups_remove_role) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group |
 | [**admin_groups_update_roles**](AdminGroupsApi.md#admin_groups_update_roles) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles) |
@@ -21,7 +21,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 ## admin_groups_add_members
 
-> <AdminGroupsCreateResponse> admin_groups_add_members(org_id, group_id)
+> <AdminGroupsCreateResponse> admin_groups_add_members(org_id, group_id, admin_groups_add_members_request)
 
 Add member(s) to group
 
@@ -44,10 +44,11 @@ end
 api_instance = LumoAuthApiClient::AdminGroupsApi.new
 org_id = 'org_id_example' # String | 
 group_id = 'group_id_example' # String | 
+admin_groups_add_members_request = LumoAuthApiClient::AdminGroupsAddMembersRequest.new # AdminGroupsAddMembersRequest | 
 
 begin
   # Add member(s) to group
-  result = api_instance.admin_groups_add_members(org_id, group_id)
+  result = api_instance.admin_groups_add_members(org_id, group_id, admin_groups_add_members_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_add_members: #{e}"
@@ -58,12 +59,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> admin_groups_add_members_with_http_info(org_id, group_id)
+> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> admin_groups_add_members_with_http_info(org_id, group_id, admin_groups_add_members_request)
 
 ```ruby
 begin
   # Add member(s) to group
-  data, status_code, headers = api_instance.admin_groups_add_members_with_http_info(org_id, group_id)
+  data, status_code, headers = api_instance.admin_groups_add_members_with_http_info(org_id, group_id, admin_groups_add_members_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminGroupsCreateResponse>
@@ -78,6 +79,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **group_id** | **String** |  |  |
+| **admin_groups_add_members_request** | [**AdminGroupsAddMembersRequest**](AdminGroupsAddMembersRequest.md) |  |  |
 
 ### Return type
 
@@ -89,17 +91,17 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## admin_groups_add_role
 
-> <MessageResponse> admin_groups_add_role(org_id, group_id)
+> <MessageResponse> admin_groups_add_role(org_id, group_id, admin_groups_add_role_request)
 
 Add a single role to a group
 
-A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 ### Examples
 
@@ -120,10 +122,11 @@ end
 api_instance = LumoAuthApiClient::AdminGroupsApi.new
 org_id = 'org_id_example' # String | 
 group_id = 'group_id_example' # String | 
+admin_groups_add_role_request = LumoAuthApiClient::AdminGroupsAddRoleRequest.new({role_id: 37}) # AdminGroupsAddRoleRequest | 
 
 begin
   # Add a single role to a group
-  result = api_instance.admin_groups_add_role(org_id, group_id)
+  result = api_instance.admin_groups_add_role(org_id, group_id, admin_groups_add_role_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_add_role: #{e}"
@@ -134,12 +137,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<MessageResponse>, Integer, Hash)> admin_groups_add_role_with_http_info(org_id, group_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_groups_add_role_with_http_info(org_id, group_id, admin_groups_add_role_request)
 
 ```ruby
 begin
   # Add a single role to a group
-  data, status_code, headers = api_instance.admin_groups_add_role_with_http_info(org_id, group_id)
+  data, status_code, headers = api_instance.admin_groups_add_role_with_http_info(org_id, group_id, admin_groups_add_role_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <MessageResponse>
@@ -154,6 +157,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **group_id** | **String** |  |  |
+| **admin_groups_add_role_request** | [**AdminGroupsAddRoleRequest**](AdminGroupsAddRoleRequest.md) |  |  |
 
 ### Return type
 
@@ -165,17 +169,17 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## admin_groups_create
 
-> <AdminGroupsCreateResponse> admin_groups_create(org_id)
+> <AdminGroupsCreateResponse> admin_groups_create(org_id, admin_groups_create_request)
 
 Create a new group
 
-Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 ### Examples
 
@@ -195,10 +199,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminGroupsApi.new
 org_id = 'org_id_example' # String | 
+admin_groups_create_request = LumoAuthApiClient::AdminGroupsCreateRequest.new({name: 'name_example'}) # AdminGroupsCreateRequest | 
 
 begin
   # Create a new group
-  result = api_instance.admin_groups_create(org_id)
+  result = api_instance.admin_groups_create(org_id, admin_groups_create_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_create: #{e}"
@@ -209,12 +214,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> admin_groups_create_with_http_info(org_id)
+> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> admin_groups_create_with_http_info(org_id, admin_groups_create_request)
 
 ```ruby
 begin
   # Create a new group
-  data, status_code, headers = api_instance.admin_groups_create_with_http_info(org_id)
+  data, status_code, headers = api_instance.admin_groups_create_with_http_info(org_id, admin_groups_create_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminGroupsCreateResponse>
@@ -228,6 +233,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **admin_groups_create_request** | [**AdminGroupsCreateRequest**](AdminGroupsCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -239,7 +245,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -543,7 +549,7 @@ end
 
 > <AdminGroupsListResponse> admin_groups_list(org_id)
 
-List all groups in the tenant
+List all groups in the organization
 
 ### Examples
 
@@ -565,7 +571,7 @@ api_instance = LumoAuthApiClient::AdminGroupsApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # List all groups in the tenant
+  # List all groups in the organization
   result = api_instance.admin_groups_list(org_id)
   p result
 rescue LumoAuthApiClient::ApiError => e
@@ -581,7 +587,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # List all groups in the tenant
+  # List all groups in the organization
   data, status_code, headers = api_instance.admin_groups_list_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
@@ -765,11 +771,11 @@ end
 
 ## admin_groups_update_roles
 
-> <AdminGroupsCreateResponse> admin_groups_update_roles(org_id, group_id)
+> <AdminGroupsCreateResponse> admin_groups_update_roles(org_id, group_id, admin_groups_update_roles_request)
 
 Update group roles (replaces all existing roles)
 
-`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
 ### Examples
 
@@ -790,10 +796,11 @@ end
 api_instance = LumoAuthApiClient::AdminGroupsApi.new
 org_id = 'org_id_example' # String | 
 group_id = 'group_id_example' # String | 
+admin_groups_update_roles_request = LumoAuthApiClient::AdminGroupsUpdateRolesRequest.new({roles: ['roles_example']}) # AdminGroupsUpdateRolesRequest | 
 
 begin
   # Update group roles (replaces all existing roles)
-  result = api_instance.admin_groups_update_roles(org_id, group_id)
+  result = api_instance.admin_groups_update_roles(org_id, group_id, admin_groups_update_roles_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_update_roles: #{e}"
@@ -804,12 +811,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> admin_groups_update_roles_with_http_info(org_id, group_id)
+> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> admin_groups_update_roles_with_http_info(org_id, group_id, admin_groups_update_roles_request)
 
 ```ruby
 begin
   # Update group roles (replaces all existing roles)
-  data, status_code, headers = api_instance.admin_groups_update_roles_with_http_info(org_id, group_id)
+  data, status_code, headers = api_instance.admin_groups_update_roles_with_http_info(org_id, group_id, admin_groups_update_roles_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminGroupsCreateResponse>
@@ -824,6 +831,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **group_id** | **String** |  |  |
+| **admin_groups_update_roles_request** | [**AdminGroupsUpdateRolesRequest**](AdminGroupsUpdateRolesRequest.md) |  |  |
 
 ### Return type
 
@@ -835,13 +843,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## patch_admin_groups_update
 
-> <AdminGroupsCreateResponse> patch_admin_groups_update(org_id, group_id)
+> <AdminGroupsCreateResponse> patch_admin_groups_update(org_id, group_id, put_admin_groups_update_request)
 
 Update an existing group
 
@@ -864,10 +872,11 @@ end
 api_instance = LumoAuthApiClient::AdminGroupsApi.new
 org_id = 'org_id_example' # String | 
 group_id = 'group_id_example' # String | 
+put_admin_groups_update_request = LumoAuthApiClient::PutAdminGroupsUpdateRequest.new # PutAdminGroupsUpdateRequest | 
 
 begin
   # Update an existing group
-  result = api_instance.patch_admin_groups_update(org_id, group_id)
+  result = api_instance.patch_admin_groups_update(org_id, group_id, put_admin_groups_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->patch_admin_groups_update: #{e}"
@@ -878,12 +887,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> patch_admin_groups_update_with_http_info(org_id, group_id)
+> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> patch_admin_groups_update_with_http_info(org_id, group_id, put_admin_groups_update_request)
 
 ```ruby
 begin
   # Update an existing group
-  data, status_code, headers = api_instance.patch_admin_groups_update_with_http_info(org_id, group_id)
+  data, status_code, headers = api_instance.patch_admin_groups_update_with_http_info(org_id, group_id, put_admin_groups_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminGroupsCreateResponse>
@@ -898,6 +907,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **group_id** | **String** |  |  |
+| **put_admin_groups_update_request** | [**PutAdminGroupsUpdateRequest**](PutAdminGroupsUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -909,13 +919,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## put_admin_groups_update
 
-> <AdminGroupsCreateResponse> put_admin_groups_update(org_id, group_id)
+> <AdminGroupsCreateResponse> put_admin_groups_update(org_id, group_id, put_admin_groups_update_request)
 
 Update an existing group
 
@@ -938,10 +948,11 @@ end
 api_instance = LumoAuthApiClient::AdminGroupsApi.new
 org_id = 'org_id_example' # String | 
 group_id = 'group_id_example' # String | 
+put_admin_groups_update_request = LumoAuthApiClient::PutAdminGroupsUpdateRequest.new # PutAdminGroupsUpdateRequest | 
 
 begin
   # Update an existing group
-  result = api_instance.put_admin_groups_update(org_id, group_id)
+  result = api_instance.put_admin_groups_update(org_id, group_id, put_admin_groups_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->put_admin_groups_update: #{e}"
@@ -952,12 +963,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> put_admin_groups_update_with_http_info(org_id, group_id)
+> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> put_admin_groups_update_with_http_info(org_id, group_id, put_admin_groups_update_request)
 
 ```ruby
 begin
   # Update an existing group
-  data, status_code, headers = api_instance.put_admin_groups_update_with_http_info(org_id, group_id)
+  data, status_code, headers = api_instance.put_admin_groups_update_with_http_info(org_id, group_id, put_admin_groups_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminGroupsCreateResponse>
@@ -972,6 +983,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **group_id** | **String** |  |  |
+| **put_admin_groups_update_request** | [**PutAdminGroupsUpdateRequest**](PutAdminGroupsUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -983,6 +995,6 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 

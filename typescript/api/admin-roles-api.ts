@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -22,6 +22,12 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AdminRolesAddPermissionsRequest } from '../models';
+// @ts-ignore
+import type { AdminRolesAddUserRequest } from '../models';
+// @ts-ignore
+import type { AdminRolesCreateRequest } from '../models';
+// @ts-ignore
 import type { AdminRolesCreateResponse } from '../models';
 // @ts-ignore
 import type { AdminRolesGetPermissionsResponse } from '../models';
@@ -32,7 +38,11 @@ import type { AdminRolesGetUsersResponse } from '../models';
 // @ts-ignore
 import type { AdminRolesListResponse } from '../models';
 // @ts-ignore
+import type { AdminRolesUpdatePermissionsRequest } from '../models';
+// @ts-ignore
 import type { MessageResponse } from '../models';
+// @ts-ignore
+import type { PutAdminOrgRolesUpdateRequest } from '../models';
 /**
  * AdminRolesApi - axios parameter creator
  * @export
@@ -40,18 +50,21 @@ import type { MessageResponse } from '../models';
 export const AdminRolesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+         * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization\'s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
          * @summary Add permission(s) to a role
          * @param {string} orgId 
          * @param {string} roleId 
+         * @param {AdminRolesAddPermissionsRequest} adminRolesAddPermissionsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesAddPermissions: async (orgId: string, roleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminRolesAddPermissions: async (orgId: string, roleId: string, adminRolesAddPermissionsRequest: AdminRolesAddPermissionsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminRolesAddPermissions', 'orgId', orgId)
             // verify required parameter 'roleId' is not null or undefined
             assertParamExists('adminRolesAddPermissions', 'roleId', roleId)
+            // verify required parameter 'adminRolesAddPermissionsRequest' is not null or undefined
+            assertParamExists('adminRolesAddPermissions', 'adminRolesAddPermissionsRequest', adminRolesAddPermissionsRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"roleId"}}`, encodeURIComponent(String(roleId)));
@@ -75,9 +88,12 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminRolesAddPermissionsRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -89,14 +105,17 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
          * @summary Assign a user to a role
          * @param {string} orgId 
          * @param {string} roleId 
+         * @param {AdminRolesAddUserRequest} adminRolesAddUserRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesAddUser: async (orgId: string, roleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminRolesAddUser: async (orgId: string, roleId: string, adminRolesAddUserRequest: AdminRolesAddUserRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminRolesAddUser', 'orgId', orgId)
             // verify required parameter 'roleId' is not null or undefined
             assertParamExists('adminRolesAddUser', 'roleId', roleId)
+            // verify required parameter 'adminRolesAddUserRequest' is not null or undefined
+            assertParamExists('adminRolesAddUser', 'adminRolesAddUserRequest', adminRolesAddUserRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/roles/{roleId}/users`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"roleId"}}`, encodeURIComponent(String(roleId)));
@@ -120,9 +139,12 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminRolesAddUserRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -130,15 +152,18 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+         * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization\'s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
          * @summary Create a new role
          * @param {string} orgId 
+         * @param {AdminRolesCreateRequest} adminRolesCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesCreate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminRolesCreate: async (orgId: string, adminRolesCreateRequest: AdminRolesCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminRolesCreate', 'orgId', orgId)
+            // verify required parameter 'adminRolesCreateRequest' is not null or undefined
+            assertParamExists('adminRolesCreate', 'adminRolesCreateRequest', adminRolesCreateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/roles`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -161,9 +186,12 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminRolesCreateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -352,7 +380,7 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary List all roles in the tenant
+         * @summary List all roles in the organization
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -490,18 +518,21 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+         * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization\'s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
          * @summary Update role permissions (replaces all)
          * @param {string} orgId 
          * @param {string} roleId 
+         * @param {AdminRolesUpdatePermissionsRequest} adminRolesUpdatePermissionsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesUpdatePermissions: async (orgId: string, roleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminRolesUpdatePermissions: async (orgId: string, roleId: string, adminRolesUpdatePermissionsRequest: AdminRolesUpdatePermissionsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminRolesUpdatePermissions', 'orgId', orgId)
             // verify required parameter 'roleId' is not null or undefined
             assertParamExists('adminRolesUpdatePermissions', 'roleId', roleId)
+            // verify required parameter 'adminRolesUpdatePermissionsRequest' is not null or undefined
+            assertParamExists('adminRolesUpdatePermissions', 'adminRolesUpdatePermissionsRequest', adminRolesUpdatePermissionsRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"roleId"}}`, encodeURIComponent(String(roleId)));
@@ -525,9 +556,12 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminRolesUpdatePermissionsRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -539,14 +573,17 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
          * @summary Update an existing role
          * @param {string} orgId 
          * @param {string} roleId 
+         * @param {PutAdminOrgRolesUpdateRequest} putAdminOrgRolesUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminRolesUpdate: async (orgId: string, roleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminRolesUpdate: async (orgId: string, roleId: string, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminRolesUpdate', 'orgId', orgId)
             // verify required parameter 'roleId' is not null or undefined
             assertParamExists('patchAdminRolesUpdate', 'roleId', roleId)
+            // verify required parameter 'putAdminOrgRolesUpdateRequest' is not null or undefined
+            assertParamExists('patchAdminRolesUpdate', 'putAdminOrgRolesUpdateRequest', putAdminOrgRolesUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/roles/{roleId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"roleId"}}`, encodeURIComponent(String(roleId)));
@@ -570,9 +607,12 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminOrgRolesUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -584,14 +624,17 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
          * @summary Update an existing role
          * @param {string} orgId 
          * @param {string} roleId 
+         * @param {PutAdminOrgRolesUpdateRequest} putAdminOrgRolesUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminRolesUpdate: async (orgId: string, roleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminRolesUpdate: async (orgId: string, roleId: string, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminRolesUpdate', 'orgId', orgId)
             // verify required parameter 'roleId' is not null or undefined
             assertParamExists('putAdminRolesUpdate', 'roleId', roleId)
+            // verify required parameter 'putAdminOrgRolesUpdateRequest' is not null or undefined
+            assertParamExists('putAdminRolesUpdate', 'putAdminOrgRolesUpdateRequest', putAdminOrgRolesUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/roles/{roleId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"roleId"}}`, encodeURIComponent(String(roleId)));
@@ -615,9 +658,12 @@ export const AdminRolesApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminOrgRolesUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -635,15 +681,16 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AdminRolesApiAxiosParamCreator(configuration)
     return {
         /**
-         * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+         * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization\'s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
          * @summary Add permission(s) to a role
          * @param {string} orgId 
          * @param {string} roleId 
+         * @param {AdminRolesAddPermissionsRequest} adminRolesAddPermissionsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesAddPermissions(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesAddPermissions(orgId, roleId, options);
+        async adminRolesAddPermissions(orgId: string, roleId: string, adminRolesAddPermissionsRequest: AdminRolesAddPermissionsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesAddPermissions(orgId, roleId, adminRolesAddPermissionsRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesAddPermissions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -653,24 +700,26 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @summary Assign a user to a role
          * @param {string} orgId 
          * @param {string} roleId 
+         * @param {AdminRolesAddUserRequest} adminRolesAddUserRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesAddUser(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesAddUser(orgId, roleId, options);
+        async adminRolesAddUser(orgId: string, roleId: string, adminRolesAddUserRequest: AdminRolesAddUserRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesAddUser(orgId, roleId, adminRolesAddUserRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesAddUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+         * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization\'s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
          * @summary Create a new role
          * @param {string} orgId 
+         * @param {AdminRolesCreateRequest} adminRolesCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesCreate(orgId, options);
+        async adminRolesCreate(orgId: string, adminRolesCreateRequest: AdminRolesCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesCreate(orgId, adminRolesCreateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesCreate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -733,7 +782,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List all roles in the tenant
+         * @summary List all roles in the organization
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -775,15 +824,16 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+         * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization\'s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
          * @summary Update role permissions (replaces all)
          * @param {string} orgId 
          * @param {string} roleId 
+         * @param {AdminRolesUpdatePermissionsRequest} adminRolesUpdatePermissionsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesUpdatePermissions(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesUpdatePermissions(orgId, roleId, options);
+        async adminRolesUpdatePermissions(orgId: string, roleId: string, adminRolesUpdatePermissionsRequest: AdminRolesUpdatePermissionsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesUpdatePermissions(orgId, roleId, adminRolesUpdatePermissionsRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesUpdatePermissions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -793,11 +843,12 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @summary Update an existing role
          * @param {string} orgId 
          * @param {string} roleId 
+         * @param {PutAdminOrgRolesUpdateRequest} putAdminOrgRolesUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminRolesUpdate(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminRolesUpdate(orgId, roleId, options);
+        async patchAdminRolesUpdate(orgId: string, roleId: string, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminRolesUpdate(orgId, roleId, putAdminOrgRolesUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.patchAdminRolesUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -807,11 +858,12 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @summary Update an existing role
          * @param {string} orgId 
          * @param {string} roleId 
+         * @param {PutAdminOrgRolesUpdateRequest} putAdminOrgRolesUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminRolesUpdate(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminRolesUpdate(orgId, roleId, options);
+        async putAdminRolesUpdate(orgId: string, roleId: string, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminRolesUpdate(orgId, roleId, putAdminOrgRolesUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.putAdminRolesUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -827,14 +879,14 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
     const localVarFp = AdminRolesApiFp(configuration)
     return {
         /**
-         * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+         * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization\'s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
          * @summary Add permission(s) to a role
          * @param {AdminRolesApiAdminRolesAddPermissionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         adminRolesAddPermissions(requestParameters: AdminRolesApiAdminRolesAddPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
-            return localVarFp.adminRolesAddPermissions(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminRolesAddPermissions(requestParameters.orgId, requestParameters.roleId, requestParameters.adminRolesAddPermissionsRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -844,17 +896,17 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         adminRolesAddUser(requestParameters: AdminRolesApiAdminRolesAddUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
-            return localVarFp.adminRolesAddUser(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminRolesAddUser(requestParameters.orgId, requestParameters.roleId, requestParameters.adminRolesAddUserRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+         * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization\'s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
          * @summary Create a new role
          * @param {AdminRolesApiAdminRolesCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         adminRolesCreate(requestParameters: AdminRolesApiAdminRolesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesCreateResponse> {
-            return localVarFp.adminRolesCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminRolesCreate(requestParameters.orgId, requestParameters.adminRolesCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -898,7 +950,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
-         * @summary List all roles in the tenant
+         * @summary List all roles in the organization
          * @param {AdminRolesApiAdminRolesListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -927,14 +979,14 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
             return localVarFp.adminRolesRemoveUser(requestParameters.orgId, requestParameters.roleId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+         * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization\'s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
          * @summary Update role permissions (replaces all)
          * @param {AdminRolesApiAdminRolesUpdatePermissionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         adminRolesUpdatePermissions(requestParameters: AdminRolesApiAdminRolesUpdatePermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesCreateResponse> {
-            return localVarFp.adminRolesUpdatePermissions(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminRolesUpdatePermissions(requestParameters.orgId, requestParameters.roleId, requestParameters.adminRolesUpdatePermissionsRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -944,7 +996,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         patchAdminRolesUpdate(requestParameters: AdminRolesApiPatchAdminRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesCreateResponse> {
-            return localVarFp.patchAdminRolesUpdate(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminRolesUpdate(requestParameters.orgId, requestParameters.roleId, requestParameters.putAdminOrgRolesUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -954,7 +1006,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         putAdminRolesUpdate(requestParameters: AdminRolesApiPutAdminRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesCreateResponse> {
-            return localVarFp.putAdminRolesUpdate(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminRolesUpdate(requestParameters.orgId, requestParameters.roleId, requestParameters.putAdminOrgRolesUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -966,7 +1018,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
  */
 export interface AdminRolesApiInterface {
     /**
-     * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+     * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization\'s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
      * @summary Add permission(s) to a role
      * @param {AdminRolesApiAdminRolesAddPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -986,7 +1038,7 @@ export interface AdminRolesApiInterface {
     adminRolesAddUser(requestParameters: AdminRolesApiAdminRolesAddUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
-     * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+     * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization\'s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
      * @summary Create a new role
      * @param {AdminRolesApiAdminRolesCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1037,7 +1089,7 @@ export interface AdminRolesApiInterface {
 
     /**
      * 
-     * @summary List all roles in the tenant
+     * @summary List all roles in the organization
      * @param {AdminRolesApiAdminRolesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1066,7 +1118,7 @@ export interface AdminRolesApiInterface {
     adminRolesRemoveUser(requestParameters: AdminRolesApiAdminRolesRemoveUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
-     * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+     * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization\'s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
      * @summary Update role permissions (replaces all)
      * @param {AdminRolesApiAdminRolesUpdatePermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1116,6 +1168,13 @@ export interface AdminRolesApiAdminRolesAddPermissionsRequest {
      * @memberof AdminRolesApiAdminRolesAddPermissions
      */
     readonly roleId: string
+
+    /**
+     * 
+     * @type {AdminRolesAddPermissionsRequest}
+     * @memberof AdminRolesApiAdminRolesAddPermissions
+     */
+    readonly adminRolesAddPermissionsRequest: AdminRolesAddPermissionsRequest
 }
 
 /**
@@ -1137,6 +1196,13 @@ export interface AdminRolesApiAdminRolesAddUserRequest {
      * @memberof AdminRolesApiAdminRolesAddUser
      */
     readonly roleId: string
+
+    /**
+     * 
+     * @type {AdminRolesAddUserRequest}
+     * @memberof AdminRolesApiAdminRolesAddUser
+     */
+    readonly adminRolesAddUserRequest: AdminRolesAddUserRequest
 }
 
 /**
@@ -1151,6 +1217,13 @@ export interface AdminRolesApiAdminRolesCreateRequest {
      * @memberof AdminRolesApiAdminRolesCreate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {AdminRolesCreateRequest}
+     * @memberof AdminRolesApiAdminRolesCreate
+     */
+    readonly adminRolesCreateRequest: AdminRolesCreateRequest
 }
 
 /**
@@ -1326,6 +1399,13 @@ export interface AdminRolesApiAdminRolesUpdatePermissionsRequest {
      * @memberof AdminRolesApiAdminRolesUpdatePermissions
      */
     readonly roleId: string
+
+    /**
+     * 
+     * @type {AdminRolesUpdatePermissionsRequest}
+     * @memberof AdminRolesApiAdminRolesUpdatePermissions
+     */
+    readonly adminRolesUpdatePermissionsRequest: AdminRolesUpdatePermissionsRequest
 }
 
 /**
@@ -1347,6 +1427,13 @@ export interface AdminRolesApiPatchAdminRolesUpdateRequest {
      * @memberof AdminRolesApiPatchAdminRolesUpdate
      */
     readonly roleId: string
+
+    /**
+     * 
+     * @type {PutAdminOrgRolesUpdateRequest}
+     * @memberof AdminRolesApiPatchAdminRolesUpdate
+     */
+    readonly putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest
 }
 
 /**
@@ -1368,6 +1455,13 @@ export interface AdminRolesApiPutAdminRolesUpdateRequest {
      * @memberof AdminRolesApiPutAdminRolesUpdate
      */
     readonly roleId: string
+
+    /**
+     * 
+     * @type {PutAdminOrgRolesUpdateRequest}
+     * @memberof AdminRolesApiPutAdminRolesUpdate
+     */
+    readonly putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest
 }
 
 /**
@@ -1378,7 +1472,7 @@ export interface AdminRolesApiPutAdminRolesUpdateRequest {
  */
 export class AdminRolesApi extends BaseAPI implements AdminRolesApiInterface {
     /**
-     * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+     * Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization\'s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
      * @summary Add permission(s) to a role
      * @param {AdminRolesApiAdminRolesAddPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1386,7 +1480,7 @@ export class AdminRolesApi extends BaseAPI implements AdminRolesApiInterface {
      * @memberof AdminRolesApi
      */
     public adminRolesAddPermissions(requestParameters: AdminRolesApiAdminRolesAddPermissionsRequest, options?: RawAxiosRequestConfig) {
-        return AdminRolesApiFp(this.configuration).adminRolesAddPermissions(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(this.axios, this.basePath));
+        return AdminRolesApiFp(this.configuration).adminRolesAddPermissions(requestParameters.orgId, requestParameters.roleId, requestParameters.adminRolesAddPermissionsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1398,11 +1492,11 @@ export class AdminRolesApi extends BaseAPI implements AdminRolesApiInterface {
      * @memberof AdminRolesApi
      */
     public adminRolesAddUser(requestParameters: AdminRolesApiAdminRolesAddUserRequest, options?: RawAxiosRequestConfig) {
-        return AdminRolesApiFp(this.configuration).adminRolesAddUser(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(this.axios, this.basePath));
+        return AdminRolesApiFp(this.configuration).adminRolesAddUser(requestParameters.orgId, requestParameters.roleId, requestParameters.adminRolesAddUserRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+     * Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization\'s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
      * @summary Create a new role
      * @param {AdminRolesApiAdminRolesCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1410,7 +1504,7 @@ export class AdminRolesApi extends BaseAPI implements AdminRolesApiInterface {
      * @memberof AdminRolesApi
      */
     public adminRolesCreate(requestParameters: AdminRolesApiAdminRolesCreateRequest, options?: RawAxiosRequestConfig) {
-        return AdminRolesApiFp(this.configuration).adminRolesCreate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminRolesApiFp(this.configuration).adminRolesCreate(requestParameters.orgId, requestParameters.adminRolesCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1463,7 +1557,7 @@ export class AdminRolesApi extends BaseAPI implements AdminRolesApiInterface {
 
     /**
      * 
-     * @summary List all roles in the tenant
+     * @summary List all roles in the organization
      * @param {AdminRolesApiAdminRolesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1498,7 +1592,7 @@ export class AdminRolesApi extends BaseAPI implements AdminRolesApiInterface {
     }
 
     /**
-     * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+     * Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization\'s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
      * @summary Update role permissions (replaces all)
      * @param {AdminRolesApiAdminRolesUpdatePermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1506,7 +1600,7 @@ export class AdminRolesApi extends BaseAPI implements AdminRolesApiInterface {
      * @memberof AdminRolesApi
      */
     public adminRolesUpdatePermissions(requestParameters: AdminRolesApiAdminRolesUpdatePermissionsRequest, options?: RawAxiosRequestConfig) {
-        return AdminRolesApiFp(this.configuration).adminRolesUpdatePermissions(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(this.axios, this.basePath));
+        return AdminRolesApiFp(this.configuration).adminRolesUpdatePermissions(requestParameters.orgId, requestParameters.roleId, requestParameters.adminRolesUpdatePermissionsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1518,7 +1612,7 @@ export class AdminRolesApi extends BaseAPI implements AdminRolesApiInterface {
      * @memberof AdminRolesApi
      */
     public patchAdminRolesUpdate(requestParameters: AdminRolesApiPatchAdminRolesUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminRolesApiFp(this.configuration).patchAdminRolesUpdate(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(this.axios, this.basePath));
+        return AdminRolesApiFp(this.configuration).patchAdminRolesUpdate(requestParameters.orgId, requestParameters.roleId, requestParameters.putAdminOrgRolesUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1530,7 +1624,7 @@ export class AdminRolesApi extends BaseAPI implements AdminRolesApiInterface {
      * @memberof AdminRolesApi
      */
     public putAdminRolesUpdate(requestParameters: AdminRolesApiPutAdminRolesUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminRolesApiFp(this.configuration).putAdminRolesUpdate(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(this.axios, this.basePath));
+        return AdminRolesApiFp(this.configuration).putAdminRolesUpdate(requestParameters.orgId, requestParameters.roleId, requestParameters.putAdminOrgRolesUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

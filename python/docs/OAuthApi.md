@@ -98,7 +98,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **backchannel_authorize**
-> BackchannelAuthorizeResponse backchannel_authorize(org_id)
+> BackchannelAuthorizeResponse backchannel_authorize(org_id, scope, login_hint=login_hint, login_hint_token=login_hint_token, id_token_hint=id_token_hint, binding_message=binding_message, acr_values=acr_values, requested_expiry=requested_expiry, client_notification_token=client_notification_token, authorization_details=authorization_details, client_id=client_id, client_secret=client_secret, client_assertion_type=client_assertion_type, client_assertion=client_assertion)
 
 CIBA backchannel authentication request
 
@@ -136,10 +136,23 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.OAuthApi(api_client)
     org_id = 'org_id_example' # str | 
+    scope = 'scope_example' # str | 
+    login_hint = 'login_hint_example' # str |  (optional)
+    login_hint_token = 'login_hint_token_example' # str |  (optional)
+    id_token_hint = 'id_token_hint_example' # str |  (optional)
+    binding_message = 'binding_message_example' # str |  (optional)
+    acr_values = 'acr_values_example' # str |  (optional)
+    requested_expiry = 56 # int | Seconds. An application's request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. (optional)
+    client_notification_token = 'client_notification_token_example' # str |  (optional)
+    authorization_details = 'authorization_details_example' # str |  (optional)
+    client_id = 'client_id_example' # str | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+    client_secret = 'client_secret_example' # str | client_secret_post (optional)
+    client_assertion_type = 'client_assertion_type_example' # str |  (optional)
+    client_assertion = 'client_assertion_example' # str | private_key_jwt (RFC 7523) (optional)
 
     try:
         # CIBA backchannel authentication request
-        api_response = api_instance.backchannel_authorize(org_id)
+        api_response = api_instance.backchannel_authorize(org_id, scope, login_hint=login_hint, login_hint_token=login_hint_token, id_token_hint=id_token_hint, binding_message=binding_message, acr_values=acr_values, requested_expiry=requested_expiry, client_notification_token=client_notification_token, authorization_details=authorization_details, client_id=client_id, client_secret=client_secret, client_assertion_type=client_assertion_type, client_assertion=client_assertion)
         print("The response of OAuthApi->backchannel_authorize:\n")
         pprint(api_response)
     except Exception as e:
@@ -154,6 +167,19 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **scope** | **str**|  | 
+ **login_hint** | **str**|  | [optional] 
+ **login_hint_token** | **str**|  | [optional] 
+ **id_token_hint** | **str**|  | [optional] 
+ **binding_message** | **str**|  | [optional] 
+ **acr_values** | **str**|  | [optional] 
+ **requested_expiry** | **int**| Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. | [optional] 
+ **client_notification_token** | **str**|  | [optional] 
+ **authorization_details** | **str**|  | [optional] 
+ **client_id** | **str**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] 
+ **client_secret** | **str**| client_secret_post | [optional] 
+ **client_assertion_type** | **str**|  | [optional] 
+ **client_assertion** | **str**| private_key_jwt (RFC 7523) | [optional] 
 
 ### Return type
 
@@ -165,7 +191,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
@@ -173,9 +199,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Authentication request accepted (CIBA Core §7.3). The hint is never confirmed: an unknown user yields an unstored auth_req_id of the same shape. interval is present for poll and ping delivery modes (always for agent-initiated requests). |  -  |
-**400** | invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. |  -  |
-**401** | invalid_client — client authentication failed. |  -  |
-**403** | unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. |  -  |
+**400** | invalid_request (also for more than one client authentication method; an agent&#39;s Bearer / DPoP credential next to the application&#39;s credentials is not a second one), unauthorized_client (CIBA not enabled for the client or plan, or agent_id named but not authenticated by that agent), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details (CIBA Core §13). |  -  |
+**401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. |  * WWW-Authenticate -  <br>  |
+**403** | access_denied. |  -  |
 **429** | too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -256,11 +282,11 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **device_authorization**
-> DeviceAuthorizationResponse device_authorization(org_id)
+> DeviceAuthorizationResponse device_authorization(org_id, client_id=client_id, client_secret=client_secret, client_assertion_type=client_assertion_type, client_assertion=client_assertion, scope=scope, resource=resource)
 
 Device authorization request (RFC 8628)
 
-Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
 
 ### Example
 
@@ -294,10 +320,16 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.OAuthApi(api_client)
     org_id = 'org_id_example' # str | 
+    client_id = 'client_id_example' # str | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+    client_secret = 'client_secret_example' # str | client_secret_post (optional)
+    client_assertion_type = 'client_assertion_type_example' # str |  (optional)
+    client_assertion = 'client_assertion_example' # str | private_key_jwt (RFC 7523) (optional)
+    scope = 'scope_example' # str | Space-separated scopes. (optional)
+    resource = 'resource_example' # str | RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client's audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. (optional)
 
     try:
         # Device authorization request (RFC 8628)
-        api_response = api_instance.device_authorization(org_id)
+        api_response = api_instance.device_authorization(org_id, client_id=client_id, client_secret=client_secret, client_assertion_type=client_assertion_type, client_assertion=client_assertion, scope=scope, resource=resource)
         print("The response of OAuthApi->device_authorization:\n")
         pprint(api_response)
     except Exception as e:
@@ -312,6 +344,12 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **client_id** | **str**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] 
+ **client_secret** | **str**| client_secret_post | [optional] 
+ **client_assertion_type** | **str**|  | [optional] 
+ **client_assertion** | **str**| private_key_jwt (RFC 7523) | [optional] 
+ **scope** | **str**| Space-separated scopes. | [optional] 
+ **resource** | **str**| RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. | [optional] 
 
 ### Return type
 
@@ -323,7 +361,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
@@ -331,8 +369,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Device authorization response (RFC 8628 §3.2). |  -  |
-**400** | invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. |  -  |
-**401** | invalid_client — a confidential client failed to authenticate. |  -  |
+**400** | invalid_request (more than one client authentication method in the request), unauthorized_client (the client may not use the device grant), invalid_scope, or invalid_target (a resource that is malformed or not registered for the client). |  -  |
+**401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. Also for a missing client_id: a public client sends its client_id, a confidential client authenticates (by HTTP Basic it needs no client_id in the body). |  * WWW-Authenticate -  <br>  |
 **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -564,7 +602,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **introspect**
-> IntrospectResponse introspect(org_id)
+> IntrospectResponse introspect(org_id, token, token_type_hint=token_type_hint, client_id=client_id, client_secret=client_secret, client_assertion_type=client_assertion_type, client_assertion=client_assertion)
 
 Token introspection (RFC 7662)
 
@@ -602,10 +640,16 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.OAuthApi(api_client)
     org_id = 'org_id_example' # str | 
+    token = 'token_example' # str | 
+    token_type_hint = 'token_type_hint_example' # str |  (optional)
+    client_id = 'client_id_example' # str | The calling client, with client_secret (client_secret_post), or an agent's id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). (optional)
+    client_secret = 'client_secret_example' # str | client_secret_post (optional)
+    client_assertion_type = 'client_assertion_type_example' # str |  (optional)
+    client_assertion = 'client_assertion_example' # str | private_key_jwt (RFC 7523) (optional)
 
     try:
         # Token introspection (RFC 7662)
-        api_response = api_instance.introspect(org_id)
+        api_response = api_instance.introspect(org_id, token, token_type_hint=token_type_hint, client_id=client_id, client_secret=client_secret, client_assertion_type=client_assertion_type, client_assertion=client_assertion)
         print("The response of OAuthApi->introspect:\n")
         pprint(api_response)
     except Exception as e:
@@ -620,6 +664,12 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **token** | **str**|  | 
+ **token_type_hint** | **str**|  | [optional] 
+ **client_id** | **str**| The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). | [optional] 
+ **client_secret** | **str**| client_secret_post | [optional] 
+ **client_assertion_type** | **str**|  | [optional] 
+ **client_assertion** | **str**| private_key_jwt (RFC 7523) | [optional] 
 
 ### Return type
 
@@ -631,22 +681,22 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. |  -  |
-**400** | invalid_request — token parameter missing. |  -  |
-**401** | invalid_client — client authentication failed. |  -  |
+**200** | Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for a user token that carries the email scope (opaque and JWT alike); iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. |  -  |
+**400** | invalid_request: token parameter missing, or more than one client authentication method in the request (RFC 6749 §2.3). |  -  |
+**401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client cannot introspect. |  * WWW-Authenticate -  <br>  |
 **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **par**
-> ParResponse par(org_id)
+> ParResponse par(org_id, response_type=response_type, redirect_uri=redirect_uri, scope=scope, state=state, nonce=nonce, code_challenge=code_challenge, code_challenge_method=code_challenge_method, request=request, resource=resource, prompt=prompt, login_hint=login_hint, client_id=client_id, client_secret=client_secret, client_assertion_type=client_assertion_type, client_assertion=client_assertion)
 
 Pushed authorization request (RFC 9126)
 
@@ -684,10 +734,25 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.OAuthApi(api_client)
     org_id = 'org_id_example' # str | 
+    response_type = 'response_type_example' # str |  (optional)
+    redirect_uri = 'redirect_uri_example' # str |  (optional)
+    scope = 'scope_example' # str |  (optional)
+    state = 'state_example' # str |  (optional)
+    nonce = 'nonce_example' # str |  (optional)
+    code_challenge = 'code_challenge_example' # str |  (optional)
+    code_challenge_method = 'code_challenge_method_example' # str |  (optional)
+    request = 'request_example' # str | A signed request object (JAR, RFC 9101). (optional)
+    resource = 'resource_example' # str |  (optional)
+    prompt = 'prompt_example' # str |  (optional)
+    login_hint = 'login_hint_example' # str |  (optional)
+    client_id = 'client_id_example' # str | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+    client_secret = 'client_secret_example' # str | client_secret_post (optional)
+    client_assertion_type = 'client_assertion_type_example' # str |  (optional)
+    client_assertion = 'client_assertion_example' # str | private_key_jwt (RFC 7523) (optional)
 
     try:
         # Pushed authorization request (RFC 9126)
-        api_response = api_instance.par(org_id)
+        api_response = api_instance.par(org_id, response_type=response_type, redirect_uri=redirect_uri, scope=scope, state=state, nonce=nonce, code_challenge=code_challenge, code_challenge_method=code_challenge_method, request=request, resource=resource, prompt=prompt, login_hint=login_hint, client_id=client_id, client_secret=client_secret, client_assertion_type=client_assertion_type, client_assertion=client_assertion)
         print("The response of OAuthApi->par:\n")
         pprint(api_response)
     except Exception as e:
@@ -702,6 +767,21 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **response_type** | **str**|  | [optional] 
+ **redirect_uri** | **str**|  | [optional] 
+ **scope** | **str**|  | [optional] 
+ **state** | **str**|  | [optional] 
+ **nonce** | **str**|  | [optional] 
+ **code_challenge** | **str**|  | [optional] 
+ **code_challenge_method** | **str**|  | [optional] 
+ **request** | **str**| A signed request object (JAR, RFC 9101). | [optional] 
+ **resource** | **str**|  | [optional] 
+ **prompt** | **str**|  | [optional] 
+ **login_hint** | **str**|  | [optional] 
+ **client_id** | **str**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] 
+ **client_secret** | **str**| client_secret_post | [optional] 
+ **client_assertion_type** | **str**|  | [optional] 
+ **client_assertion** | **str**| private_key_jwt (RFC 7523) | [optional] 
 
 ### Return type
 
@@ -713,7 +793,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
@@ -721,14 +801,14 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Pushed authorization request created (RFC 9126 §2.2). |  -  |
-**400** | invalid_request / invalid_target / invalid_request_object, or the organization is unknown. |  -  |
-**401** | invalid_client — client authentication failed. |  -  |
+**400** | invalid_request (also for more than one client authentication method) / invalid_target / invalid_request_object, or the organization is unknown. |  -  |
+**401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. |  * WWW-Authenticate -  <br>  |
 **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **register_client**
-> RegisterClientResponse register_client(org_id)
+> RegisterClientResponse register_client(org_id, register_client_request)
 
 Dynamic client registration (RFC 7591 / OIDC DCR)
 
@@ -741,6 +821,7 @@ Registers an OAuth client from a JSON metadata document. Authenticated with an i
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.register_client_request import RegisterClientRequest
 from lumoauth_api_client.models.register_client_response import RegisterClientResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -772,10 +853,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.OAuthApi(api_client)
     org_id = 'org_id_example' # str | 
+    register_client_request = lumoauth_api_client.RegisterClientRequest() # RegisterClientRequest | RFC 7591 client metadata.
 
     try:
         # Dynamic client registration (RFC 7591 / OIDC DCR)
-        api_response = api_instance.register_client(org_id)
+        api_response = api_instance.register_client(org_id, register_client_request)
         print("The response of OAuthApi->register_client:\n")
         pprint(api_response)
     except Exception as e:
@@ -790,6 +872,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **register_client_request** | [**RegisterClientRequest**](RegisterClientRequest.md)| RFC 7591 client metadata. | 
 
 ### Return type
 
@@ -801,7 +884,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -810,7 +893,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | Client registered (OIDC Dynamic Client Registration §3.2). client_secret / client_secret_expires_at only for confidential clients; registration_access_token and registration_client_uri when a registration access token was issued; the remaining optional members echo registered metadata and are omitted when empty or at their default. Sent with Cache-Control: no-store. |  -  |
 **400** | invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. |  -  |
-**401** | access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). |  -  |
+**401** | invalid_token: the initial access token is missing or not valid (RFC 7591 §3, RFC 6750 §3.1). WWW-Authenticate: Bearer realm&#x3D;\&quot;Client Registration\&quot;, with error&#x3D;\&quot;invalid_token\&quot; when a token was sent. |  * WWW-Authenticate -  <br>  |
 **403** | access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. |  -  |
 **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
@@ -892,7 +975,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **revoke**
-> object revoke(org_id)
+> object revoke(org_id, token, token_type_hint=token_type_hint, client_id=client_id, client_secret=client_secret, client_assertion_type=client_assertion_type, client_assertion=client_assertion)
 
 Token revocation (RFC 7009)
 
@@ -929,10 +1012,16 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.OAuthApi(api_client)
     org_id = 'org_id_example' # str | 
+    token = 'token_example' # str | 
+    token_type_hint = 'token_type_hint_example' # str |  (optional)
+    client_id = 'client_id_example' # str | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+    client_secret = 'client_secret_example' # str | client_secret_post (optional)
+    client_assertion_type = 'client_assertion_type_example' # str |  (optional)
+    client_assertion = 'client_assertion_example' # str | private_key_jwt (RFC 7523) (optional)
 
     try:
         # Token revocation (RFC 7009)
-        api_response = api_instance.revoke(org_id)
+        api_response = api_instance.revoke(org_id, token, token_type_hint=token_type_hint, client_id=client_id, client_secret=client_secret, client_assertion_type=client_assertion_type, client_assertion=client_assertion)
         print("The response of OAuthApi->revoke:\n")
         pprint(api_response)
     except Exception as e:
@@ -947,6 +1036,12 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **token** | **str**|  | 
+ **token_type_hint** | **str**|  | [optional] 
+ **client_id** | **str**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] 
+ **client_secret** | **str**| client_secret_post | [optional] 
+ **client_assertion_type** | **str**|  | [optional] 
+ **client_assertion** | **str**| private_key_jwt (RFC 7523) | [optional] 
 
 ### Return type
 
@@ -958,16 +1053,16 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). |  -  |
-**400** | invalid_request (token parameter missing) or unsupported_token_type. |  -  |
-**401** | invalid_client — client authentication failed. |  -  |
+**200** | The token of the calling client was revoked, or the token is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an empty JSON object. |  -  |
+**400** | invalid_request (token parameter missing, or more than one client authentication method in the request, RFC 6749 §2.3), unsupported_token_type, or invalid_grant: a live token that was issued to another client or agent is not revoked (RFC 7009 §2.1). |  -  |
+**401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client revokes its own tokens with its client_id. |  * WWW-Authenticate -  <br>  |
 **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1314,7 +1409,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_login_json**
-> SubmitLoginJsonResponse submit_login_json(org_id)
+> SubmitLoginJsonResponse submit_login_json(org_id, submit_login_json_request)
 
 Programmatic (JSON) login for the authorization flow
 
@@ -1325,6 +1420,7 @@ Establishes the end-user browser session from JSON credentials so a following /o
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.submit_login_json_request import SubmitLoginJsonRequest
 from lumoauth_api_client.models.submit_login_json_response import SubmitLoginJsonResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1341,10 +1437,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.OAuthApi(api_client)
     org_id = 'org_id_example' # str | 
+    submit_login_json_request = lumoauth_api_client.SubmitLoginJsonRequest() # SubmitLoginJsonRequest | 
 
     try:
         # Programmatic (JSON) login for the authorization flow
-        api_response = api_instance.submit_login_json(org_id)
+        api_response = api_instance.submit_login_json(org_id, submit_login_json_request)
         print("The response of OAuthApi->submit_login_json:\n")
         pprint(api_response)
     except Exception as e:
@@ -1359,6 +1456,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **submit_login_json_request** | [**SubmitLoginJsonRequest**](SubmitLoginJsonRequest.md)|  | 
 
 ### Return type
 
@@ -1370,7 +1468,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1456,7 +1554,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **token**
-> TokenResponse token(org_id)
+> TokenResponse token(org_id, grant_type, code=code, redirect_uri=redirect_uri, code_verifier=code_verifier, refresh_token=refresh_token, device_code=device_code, auth_req_id=auth_req_id, scope=scope, resource=resource, subject_token=subject_token, subject_token_type=subject_token_type, actor_token=actor_token, actor_token_type=actor_token_type, requested_token_type=requested_token_type, assertion=assertion, client_id=client_id, client_secret=client_secret, client_assertion_type=client_assertion_type, client_assertion=client_assertion)
 
 OAuth 2.1 token endpoint
 
@@ -1494,10 +1592,29 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.OAuthApi(api_client)
     org_id = 'org_id_example' # str | 
+    grant_type = 'grant_type_example' # str | 
+    code = 'code_example' # str |  (optional)
+    redirect_uri = 'redirect_uri_example' # str |  (optional)
+    code_verifier = 'code_verifier_example' # str |  (optional)
+    refresh_token = 'refresh_token_example' # str |  (optional)
+    device_code = 'device_code_example' # str |  (optional)
+    auth_req_id = 'auth_req_id_example' # str | CIBA (optional)
+    scope = 'scope_example' # str |  (optional)
+    resource = 'resource_example' # str |  (optional)
+    subject_token = 'subject_token_example' # str | Token exchange (RFC 8693) (optional)
+    subject_token_type = 'subject_token_type_example' # str |  (optional)
+    actor_token = 'actor_token_example' # str |  (optional)
+    actor_token_type = 'actor_token_type_example' # str |  (optional)
+    requested_token_type = 'requested_token_type_example' # str |  (optional)
+    assertion = 'assertion_example' # str | JWT bearer / ID-JAG grant (optional)
+    client_id = 'client_id_example' # str | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+    client_secret = 'client_secret_example' # str | client_secret_post (optional)
+    client_assertion_type = 'client_assertion_type_example' # str |  (optional)
+    client_assertion = 'client_assertion_example' # str | private_key_jwt (RFC 7523) (optional)
 
     try:
         # OAuth 2.1 token endpoint
-        api_response = api_instance.token(org_id)
+        api_response = api_instance.token(org_id, grant_type, code=code, redirect_uri=redirect_uri, code_verifier=code_verifier, refresh_token=refresh_token, device_code=device_code, auth_req_id=auth_req_id, scope=scope, resource=resource, subject_token=subject_token, subject_token_type=subject_token_type, actor_token=actor_token, actor_token_type=actor_token_type, requested_token_type=requested_token_type, assertion=assertion, client_id=client_id, client_secret=client_secret, client_assertion_type=client_assertion_type, client_assertion=client_assertion)
         print("The response of OAuthApi->token:\n")
         pprint(api_response)
     except Exception as e:
@@ -1512,6 +1629,25 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **grant_type** | **str**|  | 
+ **code** | **str**|  | [optional] 
+ **redirect_uri** | **str**|  | [optional] 
+ **code_verifier** | **str**|  | [optional] 
+ **refresh_token** | **str**|  | [optional] 
+ **device_code** | **str**|  | [optional] 
+ **auth_req_id** | **str**| CIBA | [optional] 
+ **scope** | **str**|  | [optional] 
+ **resource** | **str**|  | [optional] 
+ **subject_token** | **str**| Token exchange (RFC 8693) | [optional] 
+ **subject_token_type** | **str**|  | [optional] 
+ **actor_token** | **str**|  | [optional] 
+ **actor_token_type** | **str**|  | [optional] 
+ **requested_token_type** | **str**|  | [optional] 
+ **assertion** | **str**| JWT bearer / ID-JAG grant | [optional] 
+ **client_id** | **str**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] 
+ **client_secret** | **str**| client_secret_post | [optional] 
+ **client_assertion_type** | **str**|  | [optional] 
+ **client_assertion** | **str**| private_key_jwt (RFC 7523) | [optional] 
 
 ### Return type
 
@@ -1523,7 +1659,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1531,9 +1667,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. |  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  |
-**400** | invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). |  -  |
-**401** | invalid_client — client authentication failed. |  -  |
-**403** | plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. |  -  |
+**400** | invalid_request (also for more than one client authentication method) / invalid_grant / unauthorized_client (the client may not use this grant) / unsupported_grant_type / invalid_scope / invalid_target / access_denied (an agent refused by a conditional access policy or not allowed to act for users; a user who denied a device or CIBA request): every token endpoint error but invalid_client is 400 (RFC 6749 §5.2). |  -  |
+**401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client authenticates by sending its client_id. |  * WWW-Authenticate -  <br>  |
+**403** | plan_limit_reached (a LumoAuth extension): the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. |  -  |
 **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

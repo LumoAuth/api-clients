@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -33,6 +33,8 @@ import type { AdminAuditLogsListResponse } from '../models';
 import type { AdminAuditLogsRetentionResponse } from '../models';
 // @ts-ignore
 import type { AdminAuditLogsStatsResponse } from '../models';
+// @ts-ignore
+import type { PutAdminAuditLogsRetentionUpdateRequest } from '../models';
 /**
  * AdminAuditLogsApi - axios parameter creator
  * @export
@@ -41,7 +43,7 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
     return {
         /**
          * 
-         * @summary List the distinct audit action types recorded for the tenant
+         * @summary List the distinct audit action types recorded for the organization
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -84,10 +86,23 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
          * Needs `audit.export` and `audit.view`, as the export on the portal\'s audit log page does.
          * @summary Export audit logs as CSV (default) or JSON
          * @param {string} orgId 
+         * @param {AdminAuditLogsExportFormat} [format] csv (default) or json.
+         * @param {string} [eventType] Exact event type, for example user.login.
+         * @param {string} [action] The short verb of the event (as GET /audit-logs/actions lists them).
+         * @param {string} [actorId] Who acted: a user, API key or agent id. Also accepted as userId.
+         * @param {string} [targetType] Kind of the subject of the event. Also accepted as resourceType.
+         * @param {string} [targetId] The subject of the event, for example the user of a login.failed entry.
+         * @param {AdminAuditLogsExportSeverity} [severity] 
+         * @param {AdminAuditLogsExportStatus} [status] Result of the event.
+         * @param {string} [ipAddress] 
+         * @param {string} [search] Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+         * @param {string} [traceId] Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+         * @param {string} [from] Entries at or after this time (ISO 8601). Also accepted as startDate.
+         * @param {string} [to] Entries at or before this time (ISO 8601). Also accepted as endDate.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAuditLogsExport: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminAuditLogsExport: async (orgId: string, format?: AdminAuditLogsExportFormat, eventType?: string, action?: string, actorId?: string, targetType?: string, targetId?: string, severity?: AdminAuditLogsExportSeverity, status?: AdminAuditLogsExportStatus, ipAddress?: string, search?: string, traceId?: string, from?: string, to?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminAuditLogsExport', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/audit-logs/export`
@@ -109,6 +124,62 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
             // authentication BearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (format !== undefined) {
+                localVarQueryParameter['format'] = format;
+            }
+
+            if (eventType !== undefined) {
+                localVarQueryParameter['eventType'] = eventType;
+            }
+
+            if (action !== undefined) {
+                localVarQueryParameter['action'] = action;
+            }
+
+            if (actorId !== undefined) {
+                localVarQueryParameter['actorId'] = actorId;
+            }
+
+            if (targetType !== undefined) {
+                localVarQueryParameter['targetType'] = targetType;
+            }
+
+            if (targetId !== undefined) {
+                localVarQueryParameter['targetId'] = targetId;
+            }
+
+            if (severity !== undefined) {
+                localVarQueryParameter['severity'] = severity;
+            }
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (ipAddress !== undefined) {
+                localVarQueryParameter['ipAddress'] = ipAddress;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (traceId !== undefined) {
+                localVarQueryParameter['traceId'] = traceId;
+            }
+
+            if (from !== undefined) {
+                localVarQueryParameter['from'] = (from as any instanceof Date) ?
+                    (from as any).toISOString() :
+                    from;
+            }
+
+            if (to !== undefined) {
+                localVarQueryParameter['to'] = (to as any instanceof Date) ?
+                    (to as any).toISOString() :
+                    to;
+            }
 
 
     
@@ -170,10 +241,24 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
          * 
          * @summary List audit log entries
          * @param {string} orgId 
+         * @param {number} [page] 
+         * @param {number} [limit] 
+         * @param {string} [eventType] Exact event type, for example user.login.
+         * @param {string} [action] The short verb of the event (as GET /audit-logs/actions lists them).
+         * @param {string} [actorId] Who acted: a user, API key or agent id. Also accepted as userId.
+         * @param {string} [targetType] Kind of the subject of the event. Also accepted as resourceType.
+         * @param {string} [targetId] The subject of the event, for example the user of a login.failed entry.
+         * @param {AdminAuditLogsListSeverity} [severity] 
+         * @param {AdminAuditLogsListStatus} [status] Result of the event.
+         * @param {string} [ipAddress] 
+         * @param {string} [search] Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+         * @param {string} [traceId] Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+         * @param {string} [from] Entries at or after this time (ISO 8601). Also accepted as startDate.
+         * @param {string} [to] Entries at or before this time (ISO 8601). Also accepted as endDate.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAuditLogsList: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminAuditLogsList: async (orgId: string, page?: number, limit?: number, eventType?: string, action?: string, actorId?: string, targetType?: string, targetId?: string, severity?: AdminAuditLogsListSeverity, status?: AdminAuditLogsListStatus, ipAddress?: string, search?: string, traceId?: string, from?: string, to?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminAuditLogsList', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/audit-logs`
@@ -195,6 +280,66 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
             // authentication BearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (eventType !== undefined) {
+                localVarQueryParameter['eventType'] = eventType;
+            }
+
+            if (action !== undefined) {
+                localVarQueryParameter['action'] = action;
+            }
+
+            if (actorId !== undefined) {
+                localVarQueryParameter['actorId'] = actorId;
+            }
+
+            if (targetType !== undefined) {
+                localVarQueryParameter['targetType'] = targetType;
+            }
+
+            if (targetId !== undefined) {
+                localVarQueryParameter['targetId'] = targetId;
+            }
+
+            if (severity !== undefined) {
+                localVarQueryParameter['severity'] = severity;
+            }
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (ipAddress !== undefined) {
+                localVarQueryParameter['ipAddress'] = ipAddress;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (traceId !== undefined) {
+                localVarQueryParameter['traceId'] = traceId;
+            }
+
+            if (from !== undefined) {
+                localVarQueryParameter['from'] = (from as any instanceof Date) ?
+                    (from as any).toISOString() :
+                    from;
+            }
+
+            if (to !== undefined) {
+                localVarQueryParameter['to'] = (to as any instanceof Date) ?
+                    (to as any).toISOString() :
+                    to;
+            }
 
 
     
@@ -293,12 +438,15 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
          * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
          * @summary Update audit log retention settings
          * @param {string} orgId 
+         * @param {PutAdminAuditLogsRetentionUpdateRequest} putAdminAuditLogsRetentionUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminAuditLogsRetentionUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminAuditLogsRetentionUpdate: async (orgId: string, putAdminAuditLogsRetentionUpdateRequest: PutAdminAuditLogsRetentionUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminAuditLogsRetentionUpdate', 'orgId', orgId)
+            // verify required parameter 'putAdminAuditLogsRetentionUpdateRequest' is not null or undefined
+            assertParamExists('patchAdminAuditLogsRetentionUpdate', 'putAdminAuditLogsRetentionUpdateRequest', putAdminAuditLogsRetentionUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/audit-logs/retention`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -321,9 +469,12 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminAuditLogsRetentionUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -334,12 +485,15 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
          * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
          * @summary Update audit log retention settings
          * @param {string} orgId 
+         * @param {PutAdminAuditLogsRetentionUpdateRequest} putAdminAuditLogsRetentionUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminAuditLogsRetentionUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminAuditLogsRetentionUpdate: async (orgId: string, putAdminAuditLogsRetentionUpdateRequest: PutAdminAuditLogsRetentionUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminAuditLogsRetentionUpdate', 'orgId', orgId)
+            // verify required parameter 'putAdminAuditLogsRetentionUpdateRequest' is not null or undefined
+            assertParamExists('putAdminAuditLogsRetentionUpdate', 'putAdminAuditLogsRetentionUpdateRequest', putAdminAuditLogsRetentionUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/audit-logs/retention`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -362,9 +516,12 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminAuditLogsRetentionUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -383,7 +540,7 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary List the distinct audit action types recorded for the tenant
+         * @summary List the distinct audit action types recorded for the organization
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -398,11 +555,24 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
          * Needs `audit.export` and `audit.view`, as the export on the portal\'s audit log page does.
          * @summary Export audit logs as CSV (default) or JSON
          * @param {string} orgId 
+         * @param {AdminAuditLogsExportFormat} [format] csv (default) or json.
+         * @param {string} [eventType] Exact event type, for example user.login.
+         * @param {string} [action] The short verb of the event (as GET /audit-logs/actions lists them).
+         * @param {string} [actorId] Who acted: a user, API key or agent id. Also accepted as userId.
+         * @param {string} [targetType] Kind of the subject of the event. Also accepted as resourceType.
+         * @param {string} [targetId] The subject of the event, for example the user of a login.failed entry.
+         * @param {AdminAuditLogsExportSeverity} [severity] 
+         * @param {AdminAuditLogsExportStatus} [status] Result of the event.
+         * @param {string} [ipAddress] 
+         * @param {string} [search] Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+         * @param {string} [traceId] Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+         * @param {string} [from] Entries at or after this time (ISO 8601). Also accepted as startDate.
+         * @param {string} [to] Entries at or before this time (ISO 8601). Also accepted as endDate.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAuditLogsExport(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAuditLogsExport(orgId, options);
+        async adminAuditLogsExport(orgId: string, format?: AdminAuditLogsExportFormat, eventType?: string, action?: string, actorId?: string, targetType?: string, targetId?: string, severity?: AdminAuditLogsExportSeverity, status?: AdminAuditLogsExportStatus, ipAddress?: string, search?: string, traceId?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAuditLogsExport(orgId, format, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAuditLogsApi.adminAuditLogsExport']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -425,11 +595,25 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
          * 
          * @summary List audit log entries
          * @param {string} orgId 
+         * @param {number} [page] 
+         * @param {number} [limit] 
+         * @param {string} [eventType] Exact event type, for example user.login.
+         * @param {string} [action] The short verb of the event (as GET /audit-logs/actions lists them).
+         * @param {string} [actorId] Who acted: a user, API key or agent id. Also accepted as userId.
+         * @param {string} [targetType] Kind of the subject of the event. Also accepted as resourceType.
+         * @param {string} [targetId] The subject of the event, for example the user of a login.failed entry.
+         * @param {AdminAuditLogsListSeverity} [severity] 
+         * @param {AdminAuditLogsListStatus} [status] Result of the event.
+         * @param {string} [ipAddress] 
+         * @param {string} [search] Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+         * @param {string} [traceId] Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+         * @param {string} [from] Entries at or after this time (ISO 8601). Also accepted as startDate.
+         * @param {string} [to] Entries at or before this time (ISO 8601). Also accepted as endDate.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAuditLogsList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAuditLogsListResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAuditLogsList(orgId, options);
+        async adminAuditLogsList(orgId: string, page?: number, limit?: number, eventType?: string, action?: string, actorId?: string, targetType?: string, targetId?: string, severity?: AdminAuditLogsListSeverity, status?: AdminAuditLogsListStatus, ipAddress?: string, search?: string, traceId?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAuditLogsListResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAuditLogsList(orgId, page, limit, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAuditLogsApi.adminAuditLogsList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -464,11 +648,12 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
          * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
          * @summary Update audit log retention settings
          * @param {string} orgId 
+         * @param {PutAdminAuditLogsRetentionUpdateRequest} putAdminAuditLogsRetentionUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminAuditLogsRetentionUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAuditLogsRetentionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminAuditLogsRetentionUpdate(orgId, options);
+        async patchAdminAuditLogsRetentionUpdate(orgId: string, putAdminAuditLogsRetentionUpdateRequest: PutAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAuditLogsRetentionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminAuditLogsRetentionUpdate(orgId, putAdminAuditLogsRetentionUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAuditLogsApi.patchAdminAuditLogsRetentionUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -477,11 +662,12 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
          * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
          * @summary Update audit log retention settings
          * @param {string} orgId 
+         * @param {PutAdminAuditLogsRetentionUpdateRequest} putAdminAuditLogsRetentionUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminAuditLogsRetentionUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAuditLogsRetentionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminAuditLogsRetentionUpdate(orgId, options);
+        async putAdminAuditLogsRetentionUpdate(orgId: string, putAdminAuditLogsRetentionUpdateRequest: PutAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAuditLogsRetentionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminAuditLogsRetentionUpdate(orgId, putAdminAuditLogsRetentionUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAuditLogsApi.putAdminAuditLogsRetentionUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -498,7 +684,7 @@ export const AdminAuditLogsApiFactory = function (configuration?: Configuration,
     return {
         /**
          * 
-         * @summary List the distinct audit action types recorded for the tenant
+         * @summary List the distinct audit action types recorded for the organization
          * @param {AdminAuditLogsApiAdminAuditLogsActionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -514,7 +700,7 @@ export const AdminAuditLogsApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         adminAuditLogsExport(requestParameters: AdminAuditLogsApiAdminAuditLogsExportRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.adminAuditLogsExport(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminAuditLogsExport(requestParameters.orgId, requestParameters.format, requestParameters.eventType, requestParameters.action, requestParameters.actorId, requestParameters.targetType, requestParameters.targetId, requestParameters.severity, requestParameters.status, requestParameters.ipAddress, requestParameters.search, requestParameters.traceId, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -534,7 +720,7 @@ export const AdminAuditLogsApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         adminAuditLogsList(requestParameters: AdminAuditLogsApiAdminAuditLogsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsListResponse> {
-            return localVarFp.adminAuditLogsList(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminAuditLogsList(requestParameters.orgId, requestParameters.page, requestParameters.limit, requestParameters.eventType, requestParameters.action, requestParameters.actorId, requestParameters.targetType, requestParameters.targetId, requestParameters.severity, requestParameters.status, requestParameters.ipAddress, requestParameters.search, requestParameters.traceId, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -564,7 +750,7 @@ export const AdminAuditLogsApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         patchAdminAuditLogsRetentionUpdate(requestParameters: AdminAuditLogsApiPatchAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsRetentionResponse> {
-            return localVarFp.patchAdminAuditLogsRetentionUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminAuditLogsRetentionUpdate(requestParameters.orgId, requestParameters.putAdminAuditLogsRetentionUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
@@ -574,7 +760,7 @@ export const AdminAuditLogsApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         putAdminAuditLogsRetentionUpdate(requestParameters: AdminAuditLogsApiPutAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsRetentionResponse> {
-            return localVarFp.putAdminAuditLogsRetentionUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminAuditLogsRetentionUpdate(requestParameters.orgId, requestParameters.putAdminAuditLogsRetentionUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -587,7 +773,7 @@ export const AdminAuditLogsApiFactory = function (configuration?: Configuration,
 export interface AdminAuditLogsApiInterface {
     /**
      * 
-     * @summary List the distinct audit action types recorded for the tenant
+     * @summary List the distinct audit action types recorded for the organization
      * @param {AdminAuditLogsApiAdminAuditLogsActionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -693,6 +879,97 @@ export interface AdminAuditLogsApiAdminAuditLogsExportRequest {
      * @memberof AdminAuditLogsApiAdminAuditLogsExport
      */
     readonly orgId: string
+
+    /**
+     * csv (default) or json.
+     * @type {'csv' | 'json'}
+     * @memberof AdminAuditLogsApiAdminAuditLogsExport
+     */
+    readonly format?: AdminAuditLogsExportFormat
+
+    /**
+     * Exact event type, for example user.login.
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsExport
+     */
+    readonly eventType?: string
+
+    /**
+     * The short verb of the event (as GET /audit-logs/actions lists them).
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsExport
+     */
+    readonly action?: string
+
+    /**
+     * Who acted: a user, API key or agent id. Also accepted as userId.
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsExport
+     */
+    readonly actorId?: string
+
+    /**
+     * Kind of the subject of the event. Also accepted as resourceType.
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsExport
+     */
+    readonly targetType?: string
+
+    /**
+     * The subject of the event, for example the user of a login.failed entry.
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsExport
+     */
+    readonly targetId?: string
+
+    /**
+     * 
+     * @type {'debug' | 'info' | 'notice' | 'warning' | 'error' | 'critical'}
+     * @memberof AdminAuditLogsApiAdminAuditLogsExport
+     */
+    readonly severity?: AdminAuditLogsExportSeverity
+
+    /**
+     * Result of the event.
+     * @type {'success' | 'failure' | 'pending' | 'partial'}
+     * @memberof AdminAuditLogsApiAdminAuditLogsExport
+     */
+    readonly status?: AdminAuditLogsExportStatus
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsExport
+     */
+    readonly ipAddress?: string
+
+    /**
+     * Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsExport
+     */
+    readonly search?: string
+
+    /**
+     * Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsExport
+     */
+    readonly traceId?: string
+
+    /**
+     * Entries at or after this time (ISO 8601). Also accepted as startDate.
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsExport
+     */
+    readonly from?: string
+
+    /**
+     * Entries at or before this time (ISO 8601). Also accepted as endDate.
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsExport
+     */
+    readonly to?: string
 }
 
 /**
@@ -728,6 +1005,104 @@ export interface AdminAuditLogsApiAdminAuditLogsListRequest {
      * @memberof AdminAuditLogsApiAdminAuditLogsList
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminAuditLogsApiAdminAuditLogsList
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminAuditLogsApiAdminAuditLogsList
+     */
+    readonly limit?: number
+
+    /**
+     * Exact event type, for example user.login.
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsList
+     */
+    readonly eventType?: string
+
+    /**
+     * The short verb of the event (as GET /audit-logs/actions lists them).
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsList
+     */
+    readonly action?: string
+
+    /**
+     * Who acted: a user, API key or agent id. Also accepted as userId.
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsList
+     */
+    readonly actorId?: string
+
+    /**
+     * Kind of the subject of the event. Also accepted as resourceType.
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsList
+     */
+    readonly targetType?: string
+
+    /**
+     * The subject of the event, for example the user of a login.failed entry.
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsList
+     */
+    readonly targetId?: string
+
+    /**
+     * 
+     * @type {'debug' | 'info' | 'notice' | 'warning' | 'error' | 'critical'}
+     * @memberof AdminAuditLogsApiAdminAuditLogsList
+     */
+    readonly severity?: AdminAuditLogsListSeverity
+
+    /**
+     * Result of the event.
+     * @type {'success' | 'failure' | 'pending' | 'partial'}
+     * @memberof AdminAuditLogsApiAdminAuditLogsList
+     */
+    readonly status?: AdminAuditLogsListStatus
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsList
+     */
+    readonly ipAddress?: string
+
+    /**
+     * Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsList
+     */
+    readonly search?: string
+
+    /**
+     * Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsList
+     */
+    readonly traceId?: string
+
+    /**
+     * Entries at or after this time (ISO 8601). Also accepted as startDate.
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsList
+     */
+    readonly from?: string
+
+    /**
+     * Entries at or before this time (ISO 8601). Also accepted as endDate.
+     * @type {string}
+     * @memberof AdminAuditLogsApiAdminAuditLogsList
+     */
+    readonly to?: string
 }
 
 /**
@@ -770,6 +1145,13 @@ export interface AdminAuditLogsApiPatchAdminAuditLogsRetentionUpdateRequest {
      * @memberof AdminAuditLogsApiPatchAdminAuditLogsRetentionUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {PutAdminAuditLogsRetentionUpdateRequest}
+     * @memberof AdminAuditLogsApiPatchAdminAuditLogsRetentionUpdate
+     */
+    readonly putAdminAuditLogsRetentionUpdateRequest: PutAdminAuditLogsRetentionUpdateRequest
 }
 
 /**
@@ -784,6 +1166,13 @@ export interface AdminAuditLogsApiPutAdminAuditLogsRetentionUpdateRequest {
      * @memberof AdminAuditLogsApiPutAdminAuditLogsRetentionUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {PutAdminAuditLogsRetentionUpdateRequest}
+     * @memberof AdminAuditLogsApiPutAdminAuditLogsRetentionUpdate
+     */
+    readonly putAdminAuditLogsRetentionUpdateRequest: PutAdminAuditLogsRetentionUpdateRequest
 }
 
 /**
@@ -795,7 +1184,7 @@ export interface AdminAuditLogsApiPutAdminAuditLogsRetentionUpdateRequest {
 export class AdminAuditLogsApi extends BaseAPI implements AdminAuditLogsApiInterface {
     /**
      * 
-     * @summary List the distinct audit action types recorded for the tenant
+     * @summary List the distinct audit action types recorded for the organization
      * @param {AdminAuditLogsApiAdminAuditLogsActionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -814,7 +1203,7 @@ export class AdminAuditLogsApi extends BaseAPI implements AdminAuditLogsApiInter
      * @memberof AdminAuditLogsApi
      */
     public adminAuditLogsExport(requestParameters: AdminAuditLogsApiAdminAuditLogsExportRequest, options?: RawAxiosRequestConfig) {
-        return AdminAuditLogsApiFp(this.configuration).adminAuditLogsExport(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminAuditLogsApiFp(this.configuration).adminAuditLogsExport(requestParameters.orgId, requestParameters.format, requestParameters.eventType, requestParameters.action, requestParameters.actorId, requestParameters.targetType, requestParameters.targetId, requestParameters.severity, requestParameters.status, requestParameters.ipAddress, requestParameters.search, requestParameters.traceId, requestParameters.from, requestParameters.to, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -838,7 +1227,7 @@ export class AdminAuditLogsApi extends BaseAPI implements AdminAuditLogsApiInter
      * @memberof AdminAuditLogsApi
      */
     public adminAuditLogsList(requestParameters: AdminAuditLogsApiAdminAuditLogsListRequest, options?: RawAxiosRequestConfig) {
-        return AdminAuditLogsApiFp(this.configuration).adminAuditLogsList(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminAuditLogsApiFp(this.configuration).adminAuditLogsList(requestParameters.orgId, requestParameters.page, requestParameters.limit, requestParameters.eventType, requestParameters.action, requestParameters.actorId, requestParameters.targetType, requestParameters.targetId, requestParameters.severity, requestParameters.status, requestParameters.ipAddress, requestParameters.search, requestParameters.traceId, requestParameters.from, requestParameters.to, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -874,7 +1263,7 @@ export class AdminAuditLogsApi extends BaseAPI implements AdminAuditLogsApiInter
      * @memberof AdminAuditLogsApi
      */
     public patchAdminAuditLogsRetentionUpdate(requestParameters: AdminAuditLogsApiPatchAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminAuditLogsApiFp(this.configuration).patchAdminAuditLogsRetentionUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminAuditLogsApiFp(this.configuration).patchAdminAuditLogsRetentionUpdate(requestParameters.orgId, requestParameters.putAdminAuditLogsRetentionUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -886,7 +1275,59 @@ export class AdminAuditLogsApi extends BaseAPI implements AdminAuditLogsApiInter
      * @memberof AdminAuditLogsApi
      */
     public putAdminAuditLogsRetentionUpdate(requestParameters: AdminAuditLogsApiPutAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminAuditLogsApiFp(this.configuration).putAdminAuditLogsRetentionUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminAuditLogsApiFp(this.configuration).putAdminAuditLogsRetentionUpdate(requestParameters.orgId, requestParameters.putAdminAuditLogsRetentionUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
+/**
+  * @export
+  * @enum {string}
+  */
+export enum AdminAuditLogsExportFormat {
+    CSV = 'csv',
+    JSON = 'json'
+}
+/**
+  * @export
+  * @enum {string}
+  */
+export enum AdminAuditLogsExportSeverity {
+    DEBUG = 'debug',
+    INFO = 'info',
+    NOTICE = 'notice',
+    WARNING = 'warning',
+    ERROR = 'error',
+    CRITICAL = 'critical'
+}
+/**
+  * @export
+  * @enum {string}
+  */
+export enum AdminAuditLogsExportStatus {
+    SUCCESS = 'success',
+    FAILURE = 'failure',
+    PENDING = 'pending',
+    PARTIAL = 'partial'
+}
+/**
+  * @export
+  * @enum {string}
+  */
+export enum AdminAuditLogsListSeverity {
+    DEBUG = 'debug',
+    INFO = 'info',
+    NOTICE = 'notice',
+    WARNING = 'warning',
+    ERROR = 'error',
+    CRITICAL = 'critical'
+}
+/**
+  * @export
+  * @enum {string}
+  */
+export enum AdminAuditLogsListStatus {
+    SUCCESS = 'success',
+    FAILURE = 'failure',
+    PENDING = 'pending',
+    PARTIAL = 'partial'
+}

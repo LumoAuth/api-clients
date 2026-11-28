@@ -40,7 +40,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 ## `addUserGroup()`
 
 ```php
-addUserGroup($orgId, $userId): \LumoAuth\ApiClient\Model\AddUserGroupResponse
+addUserGroup($orgId, $userId, $addUserGroupRequest): \LumoAuth\ApiClient\Model\AddUserGroupResponse
 ```
 
 Add a user to a group
@@ -69,9 +69,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminUsersApi(
 );
 $orgId = 'orgId_example'; // string
 $userId = 'userId_example'; // string
+$addUserGroupRequest = new \LumoAuth\ApiClient\Model\AddUserGroupRequest(); // \LumoAuth\ApiClient\Model\AddUserGroupRequest
 
 try {
-    $result = $apiInstance->addUserGroup($orgId, $userId);
+    $result = $apiInstance->addUserGroup($orgId, $userId, $addUserGroupRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminUsersApi->addUserGroup: ', $e->getMessage(), PHP_EOL;
@@ -84,6 +85,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **userId** | **string**|  | |
+| **addUserGroupRequest** | [**\LumoAuth\ApiClient\Model\AddUserGroupRequest**](../Model/AddUserGroupRequest.md)|  | |
 
 ### Return type
 
@@ -95,7 +97,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -105,12 +107,12 @@ try {
 ## `addUserPermission()`
 
 ```php
-addUserPermission($orgId, $userId): \LumoAuth\ApiClient\Model\AddUserPermissionResponse
+addUserPermission($orgId, $userId, $addUserPermissionRequest): \LumoAuth\ApiClient\Model\AddUserPermissionResponse
 ```
 
 Assign a permission to a user
 
-Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization's own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
 ### Example
 
@@ -136,9 +138,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminUsersApi(
 );
 $orgId = 'orgId_example'; // string
 $userId = 'userId_example'; // string
+$addUserPermissionRequest = new \LumoAuth\ApiClient\Model\AddUserPermissionRequest(); // \LumoAuth\ApiClient\Model\AddUserPermissionRequest
 
 try {
-    $result = $apiInstance->addUserPermission($orgId, $userId);
+    $result = $apiInstance->addUserPermission($orgId, $userId, $addUserPermissionRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminUsersApi->addUserPermission: ', $e->getMessage(), PHP_EOL;
@@ -151,6 +154,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **userId** | **string**|  | |
+| **addUserPermissionRequest** | [**\LumoAuth\ApiClient\Model\AddUserPermissionRequest**](../Model/AddUserPermissionRequest.md)|  | |
 
 ### Return type
 
@@ -162,7 +166,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -172,7 +176,7 @@ try {
 ## `addUserRole()`
 
 ```php
-addUserRole($orgId, $userId): \LumoAuth\ApiClient\Model\AddUserRoleResponse
+addUserRole($orgId, $userId, $addUserRoleRequest): \LumoAuth\ApiClient\Model\AddUserRoleResponse
 ```
 
 Assign a role to a user
@@ -201,9 +205,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminUsersApi(
 );
 $orgId = 'orgId_example'; // string
 $userId = 'userId_example'; // string
+$addUserRoleRequest = new \LumoAuth\ApiClient\Model\AddUserRoleRequest(); // \LumoAuth\ApiClient\Model\AddUserRoleRequest
 
 try {
-    $result = $apiInstance->addUserRole($orgId, $userId);
+    $result = $apiInstance->addUserRole($orgId, $userId, $addUserRoleRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminUsersApi->addUserRole: ', $e->getMessage(), PHP_EOL;
@@ -216,6 +221,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **userId** | **string**|  | |
+| **addUserRoleRequest** | [**\LumoAuth\ApiClient\Model\AddUserRoleRequest**](../Model/AddUserRoleRequest.md)|  | |
 
 ### Return type
 
@@ -227,7 +233,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -708,7 +714,7 @@ try {
 ## `createUser()`
 
 ```php
-createUser($orgId): \LumoAuth\ApiClient\Model\CreateUserResponse
+createUser($orgId, $createUserRequest): \LumoAuth\ApiClient\Model\CreateUserResponse
 ```
 
 Create a user
@@ -736,9 +742,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminUsersApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$createUserRequest = new \LumoAuth\ApiClient\Model\CreateUserRequest(); // \LumoAuth\ApiClient\Model\CreateUserRequest
 
 try {
-    $result = $apiInstance->createUser($orgId);
+    $result = $apiInstance->createUser($orgId, $createUserRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminUsersApi->createUser: ', $e->getMessage(), PHP_EOL;
@@ -750,6 +757,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **createUserRequest** | [**\LumoAuth\ApiClient\Model\CreateUserRequest**](../Model/CreateUserRequest.md)|  | |
 
 ### Return type
 
@@ -761,7 +769,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1248,7 +1256,7 @@ try {
 ## `patchUser()`
 
 ```php
-patchUser($orgId, $userId): \LumoAuth\ApiClient\Model\UpdateUserResponse
+patchUser($orgId, $userId, $updateUserRequest): \LumoAuth\ApiClient\Model\UpdateUserResponse
 ```
 
 Update a user
@@ -1279,9 +1287,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminUsersApi(
 );
 $orgId = 'orgId_example'; // string
 $userId = 'userId_example'; // string
+$updateUserRequest = new \LumoAuth\ApiClient\Model\UpdateUserRequest(); // \LumoAuth\ApiClient\Model\UpdateUserRequest | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
 
 try {
-    $result = $apiInstance->patchUser($orgId, $userId);
+    $result = $apiInstance->patchUser($orgId, $userId, $updateUserRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminUsersApi->patchUser: ', $e->getMessage(), PHP_EOL;
@@ -1294,6 +1303,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **userId** | **string**|  | |
+| **updateUserRequest** | [**\LumoAuth\ApiClient\Model\UpdateUserRequest**](../Model/UpdateUserRequest.md)| Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. | |
 
 ### Return type
 
@@ -1305,7 +1315,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1647,7 +1657,7 @@ try {
 ## `setUserPassword()`
 
 ```php
-setUserPassword($orgId, $userId): \LumoAuth\ApiClient\Model\SetUserPasswordPostResponse
+setUserPassword($orgId, $userId, $setUserPasswordPostRequest): \LumoAuth\ApiClient\Model\SetUserPasswordPostResponse
 ```
 
 Set a user's password
@@ -1678,9 +1688,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminUsersApi(
 );
 $orgId = 'orgId_example'; // string
 $userId = 'userId_example'; // string
+$setUserPasswordPostRequest = new \LumoAuth\ApiClient\Model\SetUserPasswordPostRequest(); // \LumoAuth\ApiClient\Model\SetUserPasswordPostRequest
 
 try {
-    $result = $apiInstance->setUserPassword($orgId, $userId);
+    $result = $apiInstance->setUserPassword($orgId, $userId, $setUserPasswordPostRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminUsersApi->setUserPassword: ', $e->getMessage(), PHP_EOL;
@@ -1693,6 +1704,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **userId** | **string**|  | |
+| **setUserPasswordPostRequest** | [**\LumoAuth\ApiClient\Model\SetUserPasswordPostRequest**](../Model/SetUserPasswordPostRequest.md)|  | |
 
 ### Return type
 
@@ -1704,7 +1716,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1714,7 +1726,7 @@ try {
 ## `setUserPasswordPost()`
 
 ```php
-setUserPasswordPost($orgId, $userId): \LumoAuth\ApiClient\Model\SetUserPasswordPostResponse
+setUserPasswordPost($orgId, $userId, $setUserPasswordPostRequest): \LumoAuth\ApiClient\Model\SetUserPasswordPostResponse
 ```
 
 Set a user's password
@@ -1745,9 +1757,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminUsersApi(
 );
 $orgId = 'orgId_example'; // string
 $userId = 'userId_example'; // string
+$setUserPasswordPostRequest = new \LumoAuth\ApiClient\Model\SetUserPasswordPostRequest(); // \LumoAuth\ApiClient\Model\SetUserPasswordPostRequest
 
 try {
-    $result = $apiInstance->setUserPasswordPost($orgId, $userId);
+    $result = $apiInstance->setUserPasswordPost($orgId, $userId, $setUserPasswordPostRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminUsersApi->setUserPasswordPost: ', $e->getMessage(), PHP_EOL;
@@ -1760,6 +1773,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **userId** | **string**|  | |
+| **setUserPasswordPostRequest** | [**\LumoAuth\ApiClient\Model\SetUserPasswordPostRequest**](../Model/SetUserPasswordPostRequest.md)|  | |
 
 ### Return type
 
@@ -1771,7 +1785,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1911,7 +1925,7 @@ try {
 ## `updateUser()`
 
 ```php
-updateUser($orgId, $userId): \LumoAuth\ApiClient\Model\UpdateUserResponse
+updateUser($orgId, $userId, $updateUserRequest): \LumoAuth\ApiClient\Model\UpdateUserResponse
 ```
 
 Update a user
@@ -1942,9 +1956,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminUsersApi(
 );
 $orgId = 'orgId_example'; // string
 $userId = 'userId_example'; // string
+$updateUserRequest = new \LumoAuth\ApiClient\Model\UpdateUserRequest(); // \LumoAuth\ApiClient\Model\UpdateUserRequest | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
 
 try {
-    $result = $apiInstance->updateUser($orgId, $userId);
+    $result = $apiInstance->updateUser($orgId, $userId, $updateUserRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminUsersApi->updateUser: ', $e->getMessage(), PHP_EOL;
@@ -1957,6 +1972,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **userId** | **string**|  | |
+| **updateUserRequest** | [**\LumoAuth\ApiClient\Model\UpdateUserRequest**](../Model/UpdateUserRequest.md)| Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. | |
 
 ### Return type
 
@@ -1968,7 +1984,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1978,7 +1994,7 @@ try {
 ## `updateUserGroups()`
 
 ```php
-updateUserGroups($orgId, $userId): \LumoAuth\ApiClient\Model\UpdateUserGroupsResponse
+updateUserGroups($orgId, $userId, $updateUserGroupsRequest): \LumoAuth\ApiClient\Model\UpdateUserGroupsResponse
 ```
 
 Replace a user's groups
@@ -2007,9 +2023,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminUsersApi(
 );
 $orgId = 'orgId_example'; // string
 $userId = 'userId_example'; // string
+$updateUserGroupsRequest = new \LumoAuth\ApiClient\Model\UpdateUserGroupsRequest(); // \LumoAuth\ApiClient\Model\UpdateUserGroupsRequest
 
 try {
-    $result = $apiInstance->updateUserGroups($orgId, $userId);
+    $result = $apiInstance->updateUserGroups($orgId, $userId, $updateUserGroupsRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminUsersApi->updateUserGroups: ', $e->getMessage(), PHP_EOL;
@@ -2022,6 +2039,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **userId** | **string**|  | |
+| **updateUserGroupsRequest** | [**\LumoAuth\ApiClient\Model\UpdateUserGroupsRequest**](../Model/UpdateUserGroupsRequest.md)|  | |
 
 ### Return type
 
@@ -2033,7 +2051,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -2043,7 +2061,7 @@ try {
 ## `updateUserRoles()`
 
 ```php
-updateUserRoles($orgId, $userId): \LumoAuth\ApiClient\Model\UpdateUserRolesResponse
+updateUserRoles($orgId, $userId, $adminGroupsUpdateRolesRequest): \LumoAuth\ApiClient\Model\UpdateUserRolesResponse
 ```
 
 Replace a user's roles
@@ -2072,9 +2090,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminUsersApi(
 );
 $orgId = 'orgId_example'; // string
 $userId = 'userId_example'; // string
+$adminGroupsUpdateRolesRequest = new \LumoAuth\ApiClient\Model\AdminGroupsUpdateRolesRequest(); // \LumoAuth\ApiClient\Model\AdminGroupsUpdateRolesRequest
 
 try {
-    $result = $apiInstance->updateUserRoles($orgId, $userId);
+    $result = $apiInstance->updateUserRoles($orgId, $userId, $adminGroupsUpdateRolesRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminUsersApi->updateUserRoles: ', $e->getMessage(), PHP_EOL;
@@ -2087,6 +2106,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **userId** | **string**|  | |
+| **adminGroupsUpdateRolesRequest** | [**\LumoAuth\ApiClient\Model\AdminGroupsUpdateRolesRequest**](../Model/AdminGroupsUpdateRolesRequest.md)|  | |
 
 ### Return type
 
@@ -2098,7 +2118,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

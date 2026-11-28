@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -14,12 +14,17 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminGroupsAddMembersRequest;
+import io.lumoauth.client.model.AdminGroupsAddRoleRequest;
+import io.lumoauth.client.model.AdminGroupsCreateRequest;
 import io.lumoauth.client.model.AdminGroupsCreateResponse;
 import io.lumoauth.client.model.AdminGroupsGetMembersResponse;
 import io.lumoauth.client.model.AdminGroupsGetResponse;
 import io.lumoauth.client.model.AdminGroupsGroupsGetRolesResponse;
 import io.lumoauth.client.model.AdminGroupsListResponse;
+import io.lumoauth.client.model.AdminGroupsUpdateRolesRequest;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAdminGroupsUpdateRequest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -45,14 +50,15 @@ public class AdminGroupsApiTest {
     public void adminGroupsAddMembersTest() throws ApiException {
         String orgId = null;
         String groupId = null;
-        AdminGroupsCreateResponse response = api.adminGroupsAddMembers(orgId, groupId);
+        AdminGroupsAddMembersRequest adminGroupsAddMembersRequest = null;
+        AdminGroupsCreateResponse response = api.adminGroupsAddMembers(orgId, groupId, adminGroupsAddMembersRequest);
         // TODO: test validations
     }
 
     /**
      * Add a single role to a group
      *
-     * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+     * A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
      *
      * @throws ApiException if the Api call fails
      */
@@ -60,21 +66,23 @@ public class AdminGroupsApiTest {
     public void adminGroupsAddRoleTest() throws ApiException {
         String orgId = null;
         String groupId = null;
-        MessageResponse response = api.adminGroupsAddRole(orgId, groupId);
+        AdminGroupsAddRoleRequest adminGroupsAddRoleRequest = null;
+        MessageResponse response = api.adminGroupsAddRole(orgId, groupId, adminGroupsAddRoleRequest);
         // TODO: test validations
     }
 
     /**
      * Create a new group
      *
-     * Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+     * Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminGroupsCreateTest() throws ApiException {
         String orgId = null;
-        AdminGroupsCreateResponse response = api.adminGroupsCreate(orgId);
+        AdminGroupsCreateRequest adminGroupsCreateRequest = null;
+        AdminGroupsCreateResponse response = api.adminGroupsCreate(orgId, adminGroupsCreateRequest);
         // TODO: test validations
     }
 
@@ -131,7 +139,7 @@ public class AdminGroupsApiTest {
     }
 
     /**
-     * List all groups in the tenant
+     * List all groups in the organization
      *
      * @throws ApiException if the Api call fails
      */
@@ -173,7 +181,7 @@ public class AdminGroupsApiTest {
     /**
      * Update group roles (replaces all existing roles)
      *
-     * &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+     * &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
      *
      * @throws ApiException if the Api call fails
      */
@@ -181,7 +189,8 @@ public class AdminGroupsApiTest {
     public void adminGroupsUpdateRolesTest() throws ApiException {
         String orgId = null;
         String groupId = null;
-        AdminGroupsCreateResponse response = api.adminGroupsUpdateRoles(orgId, groupId);
+        AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest = null;
+        AdminGroupsCreateResponse response = api.adminGroupsUpdateRoles(orgId, groupId, adminGroupsUpdateRolesRequest);
         // TODO: test validations
     }
 
@@ -194,7 +203,8 @@ public class AdminGroupsApiTest {
     public void patchAdminGroupsUpdateTest() throws ApiException {
         String orgId = null;
         String groupId = null;
-        AdminGroupsCreateResponse response = api.patchAdminGroupsUpdate(orgId, groupId);
+        PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest = null;
+        AdminGroupsCreateResponse response = api.patchAdminGroupsUpdate(orgId, groupId, putAdminGroupsUpdateRequest);
         // TODO: test validations
     }
 
@@ -207,7 +217,8 @@ public class AdminGroupsApiTest {
     public void putAdminGroupsUpdateTest() throws ApiException {
         String orgId = null;
         String groupId = null;
-        AdminGroupsCreateResponse response = api.putAdminGroupsUpdate(orgId, groupId);
+        PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest = null;
+        AdminGroupsCreateResponse response = api.putAdminGroupsUpdate(orgId, groupId, putAdminGroupsUpdateRequest);
         // TODO: test validations
     }
 

@@ -4,10 +4,10 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AdminPermissionsCreate**](AdminPermissionsAPI.md#AdminPermissionsCreate) | **Post** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the tenant
+[**AdminPermissionsCreate**](AdminPermissionsAPI.md#AdminPermissionsCreate) | **Post** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the organization
 [**AdminPermissionsDelete**](AdminPermissionsAPI.md#AdminPermissionsDelete) | **Delete** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Delete a custom permission
 [**AdminPermissionsGet**](AdminPermissionsAPI.md#AdminPermissionsGet) | **Get** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Get a single permission
-[**AdminPermissionsList**](AdminPermissionsAPI.md#AdminPermissionsList) | **Get** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the tenant
+[**AdminPermissionsList**](AdminPermissionsAPI.md#AdminPermissionsList) | **Get** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the organization
 [**AdminPermissionsUpdate**](AdminPermissionsAPI.md#AdminPermissionsUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Update a permission
 [**AdminPermissionsUsage**](AdminPermissionsAPI.md#AdminPermissionsUsage) | **Get** /orgs/{orgId}/api/v1/admin/permissions/{permissionId}/usage | Get permission usage (roles assigned to this permission)
 [**AdminScopesCreate**](AdminPermissionsAPI.md#AdminScopesCreate) | **Post** /orgs/{orgId}/api/v1/admin/scopes | Create a custom OAuth scope
@@ -18,9 +18,9 @@ Method | HTTP request | Description
 
 ## AdminPermissionsCreate
 
-> AdminPermissionsCreateResponse AdminPermissionsCreate(ctx, orgId).Execute()
+> AdminPermissionsCreateResponse AdminPermissionsCreate(ctx, orgId).AdminPermissionsCreateRequest(adminPermissionsCreateRequest).Execute()
 
-Create a custom permission for the tenant
+Create a custom permission for the organization
 
 ### Example
 
@@ -36,10 +36,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	adminPermissionsCreateRequest := *openapiclient.NewAdminPermissionsCreateRequest("Name_example", "Slug_example") // AdminPermissionsCreateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminPermissionsAPI.AdminPermissionsCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminPermissionsAPI.AdminPermissionsCreate(context.Background(), orgId).AdminPermissionsCreateRequest(adminPermissionsCreateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminPermissionsAPI.AdminPermissionsCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -65,6 +66,7 @@ Other parameters are passed through a pointer to a apiAdminPermissionsCreateRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **adminPermissionsCreateRequest** | [**AdminPermissionsCreateRequest**](AdminPermissionsCreateRequest.md) |  | 
 
 ### Return type
 
@@ -76,7 +78,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -230,7 +232,7 @@ Name | Type | Description  | Notes
 
 > AdminPermissionsListResponse AdminPermissionsList(ctx, orgId).Execute()
 
-List all available permissions for the tenant
+List all available permissions for the organization
 
 ### Example
 
@@ -296,7 +298,7 @@ Name | Type | Description  | Notes
 
 ## AdminPermissionsUpdate
 
-> AdminPermissionsCreateResponse AdminPermissionsUpdate(ctx, orgId, permissionId).Execute()
+> AdminPermissionsCreateResponse AdminPermissionsUpdate(ctx, orgId, permissionId).AdminPermissionsUpdateRequest(adminPermissionsUpdateRequest).Execute()
 
 Update a permission
 
@@ -315,10 +317,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	permissionId := "permissionId_example" // string | 
+	adminPermissionsUpdateRequest := *openapiclient.NewAdminPermissionsUpdateRequest() // AdminPermissionsUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminPermissionsAPI.AdminPermissionsUpdate(context.Background(), orgId, permissionId).Execute()
+	resp, r, err := apiClient.AdminPermissionsAPI.AdminPermissionsUpdate(context.Background(), orgId, permissionId).AdminPermissionsUpdateRequest(adminPermissionsUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminPermissionsAPI.AdminPermissionsUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -346,6 +349,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **adminPermissionsUpdateRequest** | [**AdminPermissionsUpdateRequest**](AdminPermissionsUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -357,7 +361,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -438,7 +442,7 @@ Name | Type | Description  | Notes
 
 ## AdminScopesCreate
 
-> AdminScopesCreateResponse AdminScopesCreate(ctx, orgId).Execute()
+> AdminScopesCreateResponse AdminScopesCreate(ctx, orgId).AdminScopesCreateRequest(adminScopesCreateRequest).Execute()
 
 Create a custom OAuth scope
 
@@ -456,10 +460,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	adminScopesCreateRequest := *openapiclient.NewAdminScopesCreateRequest("Name_example", "Description_example") // AdminScopesCreateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminPermissionsAPI.AdminScopesCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminPermissionsAPI.AdminScopesCreate(context.Background(), orgId).AdminScopesCreateRequest(adminScopesCreateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminPermissionsAPI.AdminScopesCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -485,6 +490,7 @@ Other parameters are passed through a pointer to a apiAdminScopesCreateRequest s
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **adminScopesCreateRequest** | [**AdminScopesCreateRequest**](AdminScopesCreateRequest.md) |  | 
 
 ### Return type
 
@@ -496,7 +502,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

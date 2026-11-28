@@ -826,7 +826,7 @@ end
 
 api_instance = LumoAuthApiClient::AAuthApi.new
 org_id = 'org_id_example' # String | 
-issue_resource_token_request = LumoAuthApiClient::IssueResourceTokenRequest.new # IssueResourceTokenRequest | 
+issue_resource_token_request = LumoAuthApiClient::IssueResourceTokenRequest.new({resource: 'resource_example', agent: 'agent_example', agent_jkt: 'agent_jkt_example'}) # IssueResourceTokenRequest | 
 
 begin
   # Resource Token Endpoint (Section 6)
@@ -966,7 +966,7 @@ end
 
 api_instance = LumoAuthApiClient::AAuthApi.new
 org_id = 'org_id_example' # String | 
-verify_auth_token_request = LumoAuthApiClient::VerifyAuthTokenRequest.new # VerifyAuthTokenRequest | 
+verify_auth_token_request = LumoAuthApiClient::VerifyAuthTokenRequest.new({auth_token: 'auth_token_example', resource: 'resource_example'}) # VerifyAuthTokenRequest | 
 
 begin
   # Auth Token Verification endpoint.
@@ -1037,7 +1037,7 @@ end
 
 api_instance = LumoAuthApiClient::AAuthApi.new
 org_id = 'org_id_example' # String | 
-verify_resource_token_request = LumoAuthApiClient::VerifyResourceTokenRequest.new # VerifyResourceTokenRequest | 
+verify_resource_token_request = LumoAuthApiClient::VerifyResourceTokenRequest.new({resource: 'resource_example', resource_token: 'resource_token_example', agent: 'agent_example', agent_jkt: 'agent_jkt_example'}) # VerifyResourceTokenRequest | 
 
 begin
   # Resource Token Verification (for resources to validate their own tokens).

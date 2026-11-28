@@ -5,8 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**agent** | **str** | Agent identifier the resource token is bound to. | [optional] 
-**agent_jkt** | **str** | JWK thumbprint of the agent key (PoP binding). | [optional] 
+**resource** | **str** | Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource. | 
+**agent** | **str** | Agent identifier the resource token is bound to. | 
+**agent_jkt** | **str** | JWK thumbprint of the agent key (PoP binding). | 
 **scope** | **str** | Optional space-delimited requested scopes. | [optional] 
 **auth_request_url** | **str** | Optional auth request URL to embed in the token. | [optional] 
 **auth_server** | **str** | Optional auth server URL for the aud claim; defaults to this issuer. | [optional] 

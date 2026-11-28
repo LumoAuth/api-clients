@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -36,35 +36,69 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="VerifyResourceTokenRequest" /> class.
         /// </summary>
-        /// <param name="resourceToken">The resource token to validate..</param>
-        /// <param name="agent">Agent identifier the token must be bound to..</param>
-        /// <param name="agentJkt">JWK thumbprint of the agent key..</param>
-        public VerifyResourceTokenRequest(string resourceToken = default, string agent = default, string agentJkt = default)
+        [JsonConstructorAttribute]
+        protected VerifyResourceTokenRequest() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VerifyResourceTokenRequest" /> class.
+        /// </summary>
+        /// <param name="resource">Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource. (required).</param>
+        /// <param name="resourceToken">The resource token to validate. (required).</param>
+        /// <param name="agent">Agent identifier the token must be bound to. (required).</param>
+        /// <param name="agentJkt">JWK thumbprint of the agent key. (required).</param>
+        public VerifyResourceTokenRequest(string resource = default, string resourceToken = default, string agent = default, string agentJkt = default)
         {
+            // to ensure "resource" is required (not null)
+            if (resource == null)
+            {
+                throw new ArgumentNullException("resource is a required property for VerifyResourceTokenRequest and cannot be null");
+            }
+            this.Resource = resource;
+            // to ensure "resourceToken" is required (not null)
+            if (resourceToken == null)
+            {
+                throw new ArgumentNullException("resourceToken is a required property for VerifyResourceTokenRequest and cannot be null");
+            }
             this.ResourceToken = resourceToken;
+            // to ensure "agent" is required (not null)
+            if (agent == null)
+            {
+                throw new ArgumentNullException("agent is a required property for VerifyResourceTokenRequest and cannot be null");
+            }
             this.Agent = agent;
+            // to ensure "agentJkt" is required (not null)
+            if (agentJkt == null)
+            {
+                throw new ArgumentNullException("agentJkt is a required property for VerifyResourceTokenRequest and cannot be null");
+            }
             this.AgentJkt = agentJkt;
         }
+
+        /// <summary>
+        /// Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
+        /// </summary>
+        /// <value>Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource.</value>
+        [DataMember(Name = "resource", IsRequired = true, EmitDefaultValue = true)]
+        public string Resource { get; set; }
 
         /// <summary>
         /// The resource token to validate.
         /// </summary>
         /// <value>The resource token to validate.</value>
-        [DataMember(Name = "resource_token", EmitDefaultValue = false)]
+        [DataMember(Name = "resource_token", IsRequired = true, EmitDefaultValue = true)]
         public string ResourceToken { get; set; }
 
         /// <summary>
         /// Agent identifier the token must be bound to.
         /// </summary>
         /// <value>Agent identifier the token must be bound to.</value>
-        [DataMember(Name = "agent", EmitDefaultValue = false)]
+        [DataMember(Name = "agent", IsRequired = true, EmitDefaultValue = true)]
         public string Agent { get; set; }
 
         /// <summary>
         /// JWK thumbprint of the agent key.
         /// </summary>
         /// <value>JWK thumbprint of the agent key.</value>
-        [DataMember(Name = "agent_jkt", EmitDefaultValue = false)]
+        [DataMember(Name = "agent_jkt", IsRequired = true, EmitDefaultValue = true)]
         public string AgentJkt { get; set; }
 
         /// <summary>
@@ -75,6 +109,7 @@ namespace LumoAuth.ApiClient.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class VerifyResourceTokenRequest {\n");
+            sb.Append("  Resource: ").Append(Resource).Append("\n");
             sb.Append("  ResourceToken: ").Append(ResourceToken).Append("\n");
             sb.Append("  Agent: ").Append(Agent).Append("\n");
             sb.Append("  AgentJkt: ").Append(AgentJkt).Append("\n");

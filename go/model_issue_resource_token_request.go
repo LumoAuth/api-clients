@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -13,6 +13,8 @@ package lumoauthclient
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the IssueResourceTokenRequest type satisfies the MappedNullable interface at compile time
@@ -20,10 +22,12 @@ var _ MappedNullable = &IssueResourceTokenRequest{}
 
 // IssueResourceTokenRequest struct for IssueResourceTokenRequest
 type IssueResourceTokenRequest struct {
+	// Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
+	Resource string `json:"resource"`
 	// Agent identifier the resource token is bound to.
-	Agent *string `json:"agent,omitempty"`
+	Agent string `json:"agent"`
 	// JWK thumbprint of the agent key (PoP binding).
-	AgentJkt *string `json:"agent_jkt,omitempty"`
+	AgentJkt string `json:"agent_jkt"`
 	// Optional space-delimited requested scopes.
 	Scope *string `json:"scope,omitempty"`
 	// Optional auth request URL to embed in the token.
@@ -32,12 +36,17 @@ type IssueResourceTokenRequest struct {
 	AuthServer *string `json:"auth_server,omitempty"`
 }
 
+type _IssueResourceTokenRequest IssueResourceTokenRequest
+
 // NewIssueResourceTokenRequest instantiates a new IssueResourceTokenRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewIssueResourceTokenRequest() *IssueResourceTokenRequest {
+func NewIssueResourceTokenRequest(resource string, agent string, agentJkt string) *IssueResourceTokenRequest {
 	this := IssueResourceTokenRequest{}
+	this.Resource = resource
+	this.Agent = agent
+	this.AgentJkt = agentJkt
 	return &this
 }
 
@@ -49,68 +58,76 @@ func NewIssueResourceTokenRequestWithDefaults() *IssueResourceTokenRequest {
 	return &this
 }
 
-// GetAgent returns the Agent field value if set, zero value otherwise.
-func (o *IssueResourceTokenRequest) GetAgent() string {
-	if o == nil || IsNil(o.Agent) {
+// GetResource returns the Resource field value
+func (o *IssueResourceTokenRequest) GetResource() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Agent
+
+	return o.Resource
 }
 
-// GetAgentOk returns a tuple with the Agent field value if set, nil otherwise
+// GetResourceOk returns a tuple with the Resource field value
+// and a boolean to check if the value has been set.
+func (o *IssueResourceTokenRequest) GetResourceOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Resource, true
+}
+
+// SetResource sets field value
+func (o *IssueResourceTokenRequest) SetResource(v string) {
+	o.Resource = v
+}
+
+// GetAgent returns the Agent field value
+func (o *IssueResourceTokenRequest) GetAgent() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Agent
+}
+
+// GetAgentOk returns a tuple with the Agent field value
 // and a boolean to check if the value has been set.
 func (o *IssueResourceTokenRequest) GetAgentOk() (*string, bool) {
-	if o == nil || IsNil(o.Agent) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Agent, true
+	return &o.Agent, true
 }
 
-// HasAgent returns a boolean if a field has been set.
-func (o *IssueResourceTokenRequest) HasAgent() bool {
-	if o != nil && !IsNil(o.Agent) {
-		return true
-	}
-
-	return false
-}
-
-// SetAgent gets a reference to the given string and assigns it to the Agent field.
+// SetAgent sets field value
 func (o *IssueResourceTokenRequest) SetAgent(v string) {
-	o.Agent = &v
+	o.Agent = v
 }
 
-// GetAgentJkt returns the AgentJkt field value if set, zero value otherwise.
+// GetAgentJkt returns the AgentJkt field value
 func (o *IssueResourceTokenRequest) GetAgentJkt() string {
-	if o == nil || IsNil(o.AgentJkt) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.AgentJkt
+
+	return o.AgentJkt
 }
 
-// GetAgentJktOk returns a tuple with the AgentJkt field value if set, nil otherwise
+// GetAgentJktOk returns a tuple with the AgentJkt field value
 // and a boolean to check if the value has been set.
 func (o *IssueResourceTokenRequest) GetAgentJktOk() (*string, bool) {
-	if o == nil || IsNil(o.AgentJkt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.AgentJkt, true
+	return &o.AgentJkt, true
 }
 
-// HasAgentJkt returns a boolean if a field has been set.
-func (o *IssueResourceTokenRequest) HasAgentJkt() bool {
-	if o != nil && !IsNil(o.AgentJkt) {
-		return true
-	}
-
-	return false
-}
-
-// SetAgentJkt gets a reference to the given string and assigns it to the AgentJkt field.
+// SetAgentJkt sets field value
 func (o *IssueResourceTokenRequest) SetAgentJkt(v string) {
-	o.AgentJkt = &v
+	o.AgentJkt = v
 }
 
 // GetScope returns the Scope field value if set, zero value otherwise.
@@ -219,12 +236,9 @@ func (o IssueResourceTokenRequest) MarshalJSON() ([]byte, error) {
 
 func (o IssueResourceTokenRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Agent) {
-		toSerialize["agent"] = o.Agent
-	}
-	if !IsNil(o.AgentJkt) {
-		toSerialize["agent_jkt"] = o.AgentJkt
-	}
+	toSerialize["resource"] = o.Resource
+	toSerialize["agent"] = o.Agent
+	toSerialize["agent_jkt"] = o.AgentJkt
 	if !IsNil(o.Scope) {
 		toSerialize["scope"] = o.Scope
 	}
@@ -235,6 +249,45 @@ func (o IssueResourceTokenRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["auth_server"] = o.AuthServer
 	}
 	return toSerialize, nil
+}
+
+func (o *IssueResourceTokenRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"resource",
+		"agent",
+		"agent_jkt",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varIssueResourceTokenRequest := _IssueResourceTokenRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varIssueResourceTokenRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = IssueResourceTokenRequest(varIssueResourceTokenRequest)
+
+	return err
 }
 
 type NullableIssueResourceTokenRequest struct {

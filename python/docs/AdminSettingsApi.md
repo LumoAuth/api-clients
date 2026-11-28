@@ -7,7 +7,10 @@ Method | HTTP request | Description
 [**admin_analytics_dashboard**](AdminSettingsApi.md#admin_analytics_dashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics
 [**admin_analytics_logins**](AdminSettingsApi.md#admin_analytics_logins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics
 [**admin_analytics_users**](AdminSettingsApi.md#admin_analytics_users) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics
-[**admin_organization_get**](AdminSettingsApi.md#admin_organization_get) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile
+[**admin_initial_access_tokens_create**](AdminSettingsApi.md#admin_initial_access_tokens_create) | **POST** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | Create an initial access token for dynamic client registration
+[**admin_initial_access_tokens_delete**](AdminSettingsApi.md#admin_initial_access_tokens_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId} | Delete an initial access token of dynamic client registration
+[**admin_initial_access_tokens_list**](AdminSettingsApi.md#admin_initial_access_tokens_list) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | List the initial access tokens of dynamic client registration
+[**admin_organization_get**](AdminSettingsApi.md#admin_organization_get) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization profile
 [**admin_settings_all**](AdminSettingsApi.md#admin_settings_all) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined)
 [**admin_settings_auth_get**](AdminSettingsApi.md#admin_settings_auth_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings
 [**admin_settings_authentication_get**](AdminSettingsApi.md#admin_settings_authentication_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth)
@@ -16,8 +19,8 @@ Method | HTTP request | Description
 [**admin_settings_general_get**](AdminSettingsApi.md#admin_settings_general_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings
 [**admin_settings_scim_get**](AdminSettingsApi.md#admin_settings_scim_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings
 [**admin_settings_security_get**](AdminSettingsApi.md#admin_settings_security_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings
-[**admin_tenant_get**](AdminSettingsApi.md#admin_tenant_get) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile
-[**patch_admin_organization_update**](AdminSettingsApi.md#patch_admin_organization_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
+[**admin_tenant_get**](AdminSettingsApi.md#admin_tenant_get) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization profile
+[**patch_admin_organization_update**](AdminSettingsApi.md#patch_admin_organization_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update the organization&#39;s name and settings
 [**patch_admin_settings_auth_update**](AdminSettingsApi.md#patch_admin_settings_auth_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 [**patch_admin_settings_authentication_update**](AdminSettingsApi.md#patch_admin_settings_authentication_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 [**patch_admin_settings_branding_update**](AdminSettingsApi.md#patch_admin_settings_branding_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -25,8 +28,8 @@ Method | HTTP request | Description
 [**patch_admin_settings_general_update**](AdminSettingsApi.md#patch_admin_settings_general_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 [**patch_admin_settings_scim_update**](AdminSettingsApi.md#patch_admin_settings_scim_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 [**patch_admin_settings_security_update**](AdminSettingsApi.md#patch_admin_settings_security_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-[**patch_admin_tenant_update**](AdminSettingsApi.md#patch_admin_tenant_update) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
-[**put_admin_organization_update**](AdminSettingsApi.md#put_admin_organization_update) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
+[**patch_admin_tenant_update**](AdminSettingsApi.md#patch_admin_tenant_update) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update the organization&#39;s name and settings
+[**put_admin_organization_update**](AdminSettingsApi.md#put_admin_organization_update) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update the organization&#39;s name and settings
 [**put_admin_settings_auth_update**](AdminSettingsApi.md#put_admin_settings_auth_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 [**put_admin_settings_authentication_update**](AdminSettingsApi.md#put_admin_settings_authentication_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 [**put_admin_settings_branding_update**](AdminSettingsApi.md#put_admin_settings_branding_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -34,7 +37,7 @@ Method | HTTP request | Description
 [**put_admin_settings_general_update**](AdminSettingsApi.md#put_admin_settings_general_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 [**put_admin_settings_scim_update**](AdminSettingsApi.md#put_admin_settings_scim_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 [**put_admin_settings_security_update**](AdminSettingsApi.md#put_admin_settings_security_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-[**put_admin_tenant_update**](AdminSettingsApi.md#put_admin_tenant_update) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
+[**put_admin_tenant_update**](AdminSettingsApi.md#put_admin_tenant_update) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update the organization&#39;s name and settings
 
 
 # **admin_analytics_dashboard**
@@ -290,10 +293,268 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **admin_initial_access_tokens_create**
+> AdminInitialAccessTokensCreateResponse admin_initial_access_tokens_create(org_id)
+
+Create an initial access token for dynamic client registration
+
+Generates a token and adds it to the organization's list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
+
+```python
+import lumoauth_api_client
+from lumoauth_api_client.models.admin_initial_access_tokens_create_response import AdminInitialAccessTokensCreateResponse
+from lumoauth_api_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.lumoauth.dev
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lumoauth_api_client.Configuration(
+    host = "https://app.lumoauth.dev"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = lumoauth_api_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with lumoauth_api_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
+    org_id = 'org_id_example' # str | 
+
+    try:
+        # Create an initial access token for dynamic client registration
+        api_response = api_instance.admin_initial_access_tokens_create(org_id)
+        print("The response of AdminSettingsApi->admin_initial_access_tokens_create:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminSettingsApi->admin_initial_access_tokens_create: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**|  | 
+
+### Return type
+
+[**AdminInitialAccessTokensCreateResponse**](AdminInitialAccessTokensCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Token created |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **admin_initial_access_tokens_delete**
+> MessageResponse admin_initial_access_tokens_delete(org_id, token_id)
+
+Delete an initial access token of dynamic client registration
+
+The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
+
+```python
+import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
+from lumoauth_api_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.lumoauth.dev
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lumoauth_api_client.Configuration(
+    host = "https://app.lumoauth.dev"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = lumoauth_api_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with lumoauth_api_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
+    org_id = 'org_id_example' # str | 
+    token_id = 'token_id_example' # str | 
+
+    try:
+        # Delete an initial access token of dynamic client registration
+        api_response = api_instance.admin_initial_access_tokens_delete(org_id, token_id)
+        print("The response of AdminSettingsApi->admin_initial_access_tokens_delete:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminSettingsApi->admin_initial_access_tokens_delete: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**|  | 
+ **token_id** | **str**|  | 
+
+### Return type
+
+[**MessageResponse**](MessageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Deleted |  -  |
+**404** | No token with this id |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **admin_initial_access_tokens_list**
+> AdminInitialAccessTokensListResponse admin_initial_access_tokens_list(org_id)
+
+List the initial access tokens of dynamic client registration
+
+Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
+
+```python
+import lumoauth_api_client
+from lumoauth_api_client.models.admin_initial_access_tokens_list_response import AdminInitialAccessTokensListResponse
+from lumoauth_api_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.lumoauth.dev
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lumoauth_api_client.Configuration(
+    host = "https://app.lumoauth.dev"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = lumoauth_api_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with lumoauth_api_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
+    org_id = 'org_id_example' # str | 
+
+    try:
+        # List the initial access tokens of dynamic client registration
+        api_response = api_instance.admin_initial_access_tokens_list(org_id)
+        print("The response of AdminSettingsApi->admin_initial_access_tokens_list:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminSettingsApi->admin_initial_access_tokens_list: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**|  | 
+
+### Return type
+
+[**AdminInitialAccessTokensListResponse**](AdminInitialAccessTokensListResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Tokens |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **admin_organization_get**
 > AdminTenantGetResponse admin_organization_get(org_id)
 
-Get organization (tenant) profile
+Get organization profile
 
 ### Example
 
@@ -335,7 +596,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Get organization (tenant) profile
+        # Get organization profile
         api_response = api_instance.admin_organization_get(org_id)
         print("The response of AdminSettingsApi->admin_organization_get:\n")
         pprint(api_response)
@@ -1044,7 +1305,7 @@ Name | Type | Description  | Notes
 # **admin_tenant_get**
 > AdminTenantGetResponse admin_tenant_get(org_id)
 
-Get organization (tenant) profile
+Get organization profile
 
 ### Example
 
@@ -1086,7 +1347,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Get organization (tenant) profile
+        # Get organization profile
         api_response = api_instance.admin_tenant_get(org_id)
         print("The response of AdminSettingsApi->admin_tenant_get:\n")
         pprint(api_response)
@@ -1125,9 +1386,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_organization_update**
-> PutAdminTenantUpdateResponse patch_admin_organization_update(org_id)
+> PutAdminTenantUpdateResponse patch_admin_organization_update(org_id, put_admin_tenant_update_request)
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Example
 
@@ -1136,6 +1397,7 @@ Update organization (tenant) name and settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_tenant_update_request import PutAdminTenantUpdateRequest
 from lumoauth_api_client.models.put_admin_tenant_update_response import PutAdminTenantUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1167,10 +1429,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    put_admin_tenant_update_request = lumoauth_api_client.PutAdminTenantUpdateRequest() # PutAdminTenantUpdateRequest | 
 
     try:
-        # Update organization (tenant) name and settings
-        api_response = api_instance.patch_admin_organization_update(org_id)
+        # Update the organization's name and settings
+        api_response = api_instance.patch_admin_organization_update(org_id, put_admin_tenant_update_request)
         print("The response of AdminSettingsApi->patch_admin_organization_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1185,6 +1448,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **put_admin_tenant_update_request** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -1196,7 +1460,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1209,9 +1473,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_settings_auth_update**
-> PutAdminSettingsAuthenticationUpdateResponse patch_admin_settings_auth_update(org_id)
+> PutAdminSettingsAuthenticationUpdateResponse patch_admin_settings_auth_update(org_id, authentication_settings)
 
 Update authentication settings
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 
@@ -1220,6 +1486,7 @@ Update authentication settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.authentication_settings import AuthenticationSettings
 from lumoauth_api_client.models.put_admin_settings_authentication_update_response import PutAdminSettingsAuthenticationUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1251,10 +1518,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    authentication_settings = lumoauth_api_client.AuthenticationSettings() # AuthenticationSettings | 
 
     try:
         # Update authentication settings
-        api_response = api_instance.patch_admin_settings_auth_update(org_id)
+        api_response = api_instance.patch_admin_settings_auth_update(org_id, authentication_settings)
         print("The response of AdminSettingsApi->patch_admin_settings_auth_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1269,6 +1537,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **authentication_settings** | [**AuthenticationSettings**](AuthenticationSettings.md)|  | 
 
 ### Return type
 
@@ -1280,7 +1549,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1293,9 +1562,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_settings_authentication_update**
-> PutAdminSettingsAuthenticationUpdateResponse patch_admin_settings_authentication_update(org_id)
+> PutAdminSettingsAuthenticationUpdateResponse patch_admin_settings_authentication_update(org_id, authentication_settings)
 
 Update authentication settings (alias for settings/auth)
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 
@@ -1304,6 +1575,7 @@ Update authentication settings (alias for settings/auth)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.authentication_settings import AuthenticationSettings
 from lumoauth_api_client.models.put_admin_settings_authentication_update_response import PutAdminSettingsAuthenticationUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1335,10 +1607,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    authentication_settings = lumoauth_api_client.AuthenticationSettings() # AuthenticationSettings | 
 
     try:
         # Update authentication settings (alias for settings/auth)
-        api_response = api_instance.patch_admin_settings_authentication_update(org_id)
+        api_response = api_instance.patch_admin_settings_authentication_update(org_id, authentication_settings)
         print("The response of AdminSettingsApi->patch_admin_settings_authentication_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1353,6 +1626,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **authentication_settings** | [**AuthenticationSettings**](AuthenticationSettings.md)|  | 
 
 ### Return type
 
@@ -1364,7 +1638,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1377,7 +1651,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_settings_branding_update**
-> PutAdminSettingsBrandingUpdateResponse patch_admin_settings_branding_update(org_id)
+> PutAdminSettingsBrandingUpdateResponse patch_admin_settings_branding_update(org_id, branding_settings)
 
 Update branding/login page settings
 
@@ -1390,6 +1664,7 @@ Changes the login page settings that are live on the hosted pages. Values go thr
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.branding_settings import BrandingSettings
 from lumoauth_api_client.models.put_admin_settings_branding_update_response import PutAdminSettingsBrandingUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1421,10 +1696,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    branding_settings = lumoauth_api_client.BrandingSettings() # BrandingSettings | 
 
     try:
         # Update branding/login page settings
-        api_response = api_instance.patch_admin_settings_branding_update(org_id)
+        api_response = api_instance.patch_admin_settings_branding_update(org_id, branding_settings)
         print("The response of AdminSettingsApi->patch_admin_settings_branding_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1439,6 +1715,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **branding_settings** | [**BrandingSettings**](BrandingSettings.md)|  | 
 
 ### Return type
 
@@ -1450,7 +1727,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1643,7 +1920,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_settings_scim_update**
-> PutAdminSettingsScimUpdateResponse patch_admin_settings_scim_update(org_id)
+> PutAdminSettingsScimUpdateResponse patch_admin_settings_scim_update(org_id, scim_settings)
 
 Update SCIM settings
 
@@ -1655,6 +1932,7 @@ Update SCIM settings
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.put_admin_settings_scim_update_response import PutAdminSettingsScimUpdateResponse
+from lumoauth_api_client.models.scim_settings import ScimSettings
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1685,10 +1963,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    scim_settings = lumoauth_api_client.ScimSettings() # ScimSettings | 
 
     try:
         # Update SCIM settings
-        api_response = api_instance.patch_admin_settings_scim_update(org_id)
+        api_response = api_instance.patch_admin_settings_scim_update(org_id, scim_settings)
         print("The response of AdminSettingsApi->patch_admin_settings_scim_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1703,6 +1982,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **scim_settings** | [**ScimSettings**](ScimSettings.md)|  | 
 
 ### Return type
 
@@ -1714,7 +1994,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1726,7 +2006,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_settings_security_update**
-> PutAdminSettingsSecurityUpdateResponse patch_admin_settings_security_update(org_id)
+> PutAdminSettingsSecurityUpdateResponse patch_admin_settings_security_update(org_id, put_admin_settings_security_update_request)
 
 Update security settings
 
@@ -1737,6 +2017,7 @@ Update security settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_security_update_request import PutAdminSettingsSecurityUpdateRequest
 from lumoauth_api_client.models.put_admin_settings_security_update_response import PutAdminSettingsSecurityUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1768,10 +2049,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    put_admin_settings_security_update_request = lumoauth_api_client.PutAdminSettingsSecurityUpdateRequest() # PutAdminSettingsSecurityUpdateRequest | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
 
     try:
         # Update security settings
-        api_response = api_instance.patch_admin_settings_security_update(org_id)
+        api_response = api_instance.patch_admin_settings_security_update(org_id, put_admin_settings_security_update_request)
         print("The response of AdminSettingsApi->patch_admin_settings_security_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1786,6 +2068,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **put_admin_settings_security_update_request** | [**PutAdminSettingsSecurityUpdateRequest**](PutAdminSettingsSecurityUpdateRequest.md)| Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. | 
 
 ### Return type
 
@@ -1797,7 +2080,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1809,9 +2092,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_tenant_update**
-> PutAdminTenantUpdateResponse patch_admin_tenant_update(org_id)
+> PutAdminTenantUpdateResponse patch_admin_tenant_update(org_id, put_admin_tenant_update_request)
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Example
 
@@ -1820,6 +2103,7 @@ Update organization (tenant) name and settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_tenant_update_request import PutAdminTenantUpdateRequest
 from lumoauth_api_client.models.put_admin_tenant_update_response import PutAdminTenantUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1851,10 +2135,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    put_admin_tenant_update_request = lumoauth_api_client.PutAdminTenantUpdateRequest() # PutAdminTenantUpdateRequest | 
 
     try:
-        # Update organization (tenant) name and settings
-        api_response = api_instance.patch_admin_tenant_update(org_id)
+        # Update the organization's name and settings
+        api_response = api_instance.patch_admin_tenant_update(org_id, put_admin_tenant_update_request)
         print("The response of AdminSettingsApi->patch_admin_tenant_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1869,6 +2154,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **put_admin_tenant_update_request** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -1880,7 +2166,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1893,9 +2179,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_organization_update**
-> PutAdminTenantUpdateResponse put_admin_organization_update(org_id)
+> PutAdminTenantUpdateResponse put_admin_organization_update(org_id, put_admin_tenant_update_request)
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Example
 
@@ -1904,6 +2190,7 @@ Update organization (tenant) name and settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_tenant_update_request import PutAdminTenantUpdateRequest
 from lumoauth_api_client.models.put_admin_tenant_update_response import PutAdminTenantUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1935,10 +2222,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    put_admin_tenant_update_request = lumoauth_api_client.PutAdminTenantUpdateRequest() # PutAdminTenantUpdateRequest | 
 
     try:
-        # Update organization (tenant) name and settings
-        api_response = api_instance.put_admin_organization_update(org_id)
+        # Update the organization's name and settings
+        api_response = api_instance.put_admin_organization_update(org_id, put_admin_tenant_update_request)
         print("The response of AdminSettingsApi->put_admin_organization_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1953,6 +2241,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **put_admin_tenant_update_request** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -1964,7 +2253,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1977,9 +2266,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_settings_auth_update**
-> PutAdminSettingsAuthenticationUpdateResponse put_admin_settings_auth_update(org_id)
+> PutAdminSettingsAuthenticationUpdateResponse put_admin_settings_auth_update(org_id, authentication_settings)
 
 Update authentication settings
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 
@@ -1988,6 +2279,7 @@ Update authentication settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.authentication_settings import AuthenticationSettings
 from lumoauth_api_client.models.put_admin_settings_authentication_update_response import PutAdminSettingsAuthenticationUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -2019,10 +2311,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    authentication_settings = lumoauth_api_client.AuthenticationSettings() # AuthenticationSettings | 
 
     try:
         # Update authentication settings
-        api_response = api_instance.put_admin_settings_auth_update(org_id)
+        api_response = api_instance.put_admin_settings_auth_update(org_id, authentication_settings)
         print("The response of AdminSettingsApi->put_admin_settings_auth_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -2037,6 +2330,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **authentication_settings** | [**AuthenticationSettings**](AuthenticationSettings.md)|  | 
 
 ### Return type
 
@@ -2048,7 +2342,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2061,9 +2355,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_settings_authentication_update**
-> PutAdminSettingsAuthenticationUpdateResponse put_admin_settings_authentication_update(org_id)
+> PutAdminSettingsAuthenticationUpdateResponse put_admin_settings_authentication_update(org_id, authentication_settings)
 
 Update authentication settings (alias for settings/auth)
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 
@@ -2072,6 +2368,7 @@ Update authentication settings (alias for settings/auth)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.authentication_settings import AuthenticationSettings
 from lumoauth_api_client.models.put_admin_settings_authentication_update_response import PutAdminSettingsAuthenticationUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -2103,10 +2400,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    authentication_settings = lumoauth_api_client.AuthenticationSettings() # AuthenticationSettings | 
 
     try:
         # Update authentication settings (alias for settings/auth)
-        api_response = api_instance.put_admin_settings_authentication_update(org_id)
+        api_response = api_instance.put_admin_settings_authentication_update(org_id, authentication_settings)
         print("The response of AdminSettingsApi->put_admin_settings_authentication_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -2121,6 +2419,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **authentication_settings** | [**AuthenticationSettings**](AuthenticationSettings.md)|  | 
 
 ### Return type
 
@@ -2132,7 +2431,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2145,7 +2444,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_settings_branding_update**
-> PutAdminSettingsBrandingUpdateResponse put_admin_settings_branding_update(org_id)
+> PutAdminSettingsBrandingUpdateResponse put_admin_settings_branding_update(org_id, branding_settings)
 
 Update branding/login page settings
 
@@ -2158,6 +2457,7 @@ Changes the login page settings that are live on the hosted pages. Values go thr
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.branding_settings import BrandingSettings
 from lumoauth_api_client.models.put_admin_settings_branding_update_response import PutAdminSettingsBrandingUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -2189,10 +2489,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    branding_settings = lumoauth_api_client.BrandingSettings() # BrandingSettings | 
 
     try:
         # Update branding/login page settings
-        api_response = api_instance.put_admin_settings_branding_update(org_id)
+        api_response = api_instance.put_admin_settings_branding_update(org_id, branding_settings)
         print("The response of AdminSettingsApi->put_admin_settings_branding_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -2207,6 +2508,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **branding_settings** | [**BrandingSettings**](BrandingSettings.md)|  | 
 
 ### Return type
 
@@ -2218,7 +2520,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2411,7 +2713,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_settings_scim_update**
-> PutAdminSettingsScimUpdateResponse put_admin_settings_scim_update(org_id)
+> PutAdminSettingsScimUpdateResponse put_admin_settings_scim_update(org_id, scim_settings)
 
 Update SCIM settings
 
@@ -2423,6 +2725,7 @@ Update SCIM settings
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.put_admin_settings_scim_update_response import PutAdminSettingsScimUpdateResponse
+from lumoauth_api_client.models.scim_settings import ScimSettings
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -2453,10 +2756,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    scim_settings = lumoauth_api_client.ScimSettings() # ScimSettings | 
 
     try:
         # Update SCIM settings
-        api_response = api_instance.put_admin_settings_scim_update(org_id)
+        api_response = api_instance.put_admin_settings_scim_update(org_id, scim_settings)
         print("The response of AdminSettingsApi->put_admin_settings_scim_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -2471,6 +2775,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **scim_settings** | [**ScimSettings**](ScimSettings.md)|  | 
 
 ### Return type
 
@@ -2482,7 +2787,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2494,7 +2799,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_settings_security_update**
-> PutAdminSettingsSecurityUpdateResponse put_admin_settings_security_update(org_id)
+> PutAdminSettingsSecurityUpdateResponse put_admin_settings_security_update(org_id, put_admin_settings_security_update_request)
 
 Update security settings
 
@@ -2505,6 +2810,7 @@ Update security settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_security_update_request import PutAdminSettingsSecurityUpdateRequest
 from lumoauth_api_client.models.put_admin_settings_security_update_response import PutAdminSettingsSecurityUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -2536,10 +2842,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    put_admin_settings_security_update_request = lumoauth_api_client.PutAdminSettingsSecurityUpdateRequest() # PutAdminSettingsSecurityUpdateRequest | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
 
     try:
         # Update security settings
-        api_response = api_instance.put_admin_settings_security_update(org_id)
+        api_response = api_instance.put_admin_settings_security_update(org_id, put_admin_settings_security_update_request)
         print("The response of AdminSettingsApi->put_admin_settings_security_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -2554,6 +2861,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **put_admin_settings_security_update_request** | [**PutAdminSettingsSecurityUpdateRequest**](PutAdminSettingsSecurityUpdateRequest.md)| Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. | 
 
 ### Return type
 
@@ -2565,7 +2873,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2577,9 +2885,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_tenant_update**
-> PutAdminTenantUpdateResponse put_admin_tenant_update(org_id)
+> PutAdminTenantUpdateResponse put_admin_tenant_update(org_id, put_admin_tenant_update_request)
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Example
 
@@ -2588,6 +2896,7 @@ Update organization (tenant) name and settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_tenant_update_request import PutAdminTenantUpdateRequest
 from lumoauth_api_client.models.put_admin_tenant_update_response import PutAdminTenantUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -2619,10 +2928,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    put_admin_tenant_update_request = lumoauth_api_client.PutAdminTenantUpdateRequest() # PutAdminTenantUpdateRequest | 
 
     try:
-        # Update organization (tenant) name and settings
-        api_response = api_instance.put_admin_tenant_update(org_id)
+        # Update the organization's name and settings
+        api_response = api_instance.put_admin_tenant_update(org_id, put_admin_tenant_update_request)
         print("The response of AdminSettingsApi->put_admin_tenant_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -2637,6 +2947,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **put_admin_tenant_update_request** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -2648,7 +2959,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

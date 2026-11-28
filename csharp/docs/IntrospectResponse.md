@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **Scope** | **string** | Space-separated scopes. | [optional] 
 **ClientId** | **string** |  | [optional] 
 **Sub** | **string** | User id, or client_… / agent_… for non-user subjects. | [optional] 
-**Username** | **string** | The user&#39;s email (user-bound tokens only). | [optional] 
+**Username** | **string** | The user&#39;s e-mail address: only for a user token that carries the email scope (as UserInfo releases the address), opaque or JWT. | [optional] 
 **Exp** | **int** | Expiry, Unix seconds. | [optional] 
 **Iat** | **int** | Issued-at, Unix seconds. | [optional] 
 **Nbf** | **int** | Not-before, Unix seconds (JWT tokens only). | [optional] 

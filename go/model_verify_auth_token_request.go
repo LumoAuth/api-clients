@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -13,6 +13,8 @@ package lumoauthclient
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the VerifyAuthTokenRequest type satisfies the MappedNullable interface at compile time
@@ -21,17 +23,21 @@ var _ MappedNullable = &VerifyAuthTokenRequest{}
 // VerifyAuthTokenRequest struct for VerifyAuthTokenRequest
 type VerifyAuthTokenRequest struct {
 	// The auth token presented by the agent.
-	AuthToken *string `json:"auth_token,omitempty"`
-	// Resource identifier; defaults to the authenticated resource.
-	Resource *string `json:"resource,omitempty"`
+	AuthToken string `json:"auth_token"`
+	// Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
+	Resource string `json:"resource"`
 }
+
+type _VerifyAuthTokenRequest VerifyAuthTokenRequest
 
 // NewVerifyAuthTokenRequest instantiates a new VerifyAuthTokenRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewVerifyAuthTokenRequest() *VerifyAuthTokenRequest {
+func NewVerifyAuthTokenRequest(authToken string, resource string) *VerifyAuthTokenRequest {
 	this := VerifyAuthTokenRequest{}
+	this.AuthToken = authToken
+	this.Resource = resource
 	return &this
 }
 
@@ -43,68 +49,52 @@ func NewVerifyAuthTokenRequestWithDefaults() *VerifyAuthTokenRequest {
 	return &this
 }
 
-// GetAuthToken returns the AuthToken field value if set, zero value otherwise.
+// GetAuthToken returns the AuthToken field value
 func (o *VerifyAuthTokenRequest) GetAuthToken() string {
-	if o == nil || IsNil(o.AuthToken) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.AuthToken
+
+	return o.AuthToken
 }
 
-// GetAuthTokenOk returns a tuple with the AuthToken field value if set, nil otherwise
+// GetAuthTokenOk returns a tuple with the AuthToken field value
 // and a boolean to check if the value has been set.
 func (o *VerifyAuthTokenRequest) GetAuthTokenOk() (*string, bool) {
-	if o == nil || IsNil(o.AuthToken) {
+	if o == nil {
 		return nil, false
 	}
-	return o.AuthToken, true
+	return &o.AuthToken, true
 }
 
-// HasAuthToken returns a boolean if a field has been set.
-func (o *VerifyAuthTokenRequest) HasAuthToken() bool {
-	if o != nil && !IsNil(o.AuthToken) {
-		return true
-	}
-
-	return false
-}
-
-// SetAuthToken gets a reference to the given string and assigns it to the AuthToken field.
+// SetAuthToken sets field value
 func (o *VerifyAuthTokenRequest) SetAuthToken(v string) {
-	o.AuthToken = &v
+	o.AuthToken = v
 }
 
-// GetResource returns the Resource field value if set, zero value otherwise.
+// GetResource returns the Resource field value
 func (o *VerifyAuthTokenRequest) GetResource() string {
-	if o == nil || IsNil(o.Resource) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Resource
+
+	return o.Resource
 }
 
-// GetResourceOk returns a tuple with the Resource field value if set, nil otherwise
+// GetResourceOk returns a tuple with the Resource field value
 // and a boolean to check if the value has been set.
 func (o *VerifyAuthTokenRequest) GetResourceOk() (*string, bool) {
-	if o == nil || IsNil(o.Resource) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Resource, true
+	return &o.Resource, true
 }
 
-// HasResource returns a boolean if a field has been set.
-func (o *VerifyAuthTokenRequest) HasResource() bool {
-	if o != nil && !IsNil(o.Resource) {
-		return true
-	}
-
-	return false
-}
-
-// SetResource gets a reference to the given string and assigns it to the Resource field.
+// SetResource sets field value
 func (o *VerifyAuthTokenRequest) SetResource(v string) {
-	o.Resource = &v
+	o.Resource = v
 }
 
 func (o VerifyAuthTokenRequest) MarshalJSON() ([]byte, error) {
@@ -117,13 +107,47 @@ func (o VerifyAuthTokenRequest) MarshalJSON() ([]byte, error) {
 
 func (o VerifyAuthTokenRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.AuthToken) {
-		toSerialize["auth_token"] = o.AuthToken
-	}
-	if !IsNil(o.Resource) {
-		toSerialize["resource"] = o.Resource
-	}
+	toSerialize["auth_token"] = o.AuthToken
+	toSerialize["resource"] = o.Resource
 	return toSerialize, nil
+}
+
+func (o *VerifyAuthTokenRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"auth_token",
+		"resource",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varVerifyAuthTokenRequest := _VerifyAuthTokenRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varVerifyAuthTokenRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = VerifyAuthTokenRequest(varVerifyAuthTokenRequest)
+
+	return err
 }
 
 type NullableVerifyAuthTokenRequest struct {

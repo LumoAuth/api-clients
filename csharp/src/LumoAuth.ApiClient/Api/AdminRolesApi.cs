@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -32,33 +32,36 @@ namespace LumoAuth.ApiClient.Api
         /// Add permission(s) to a role
         /// </summary>
         /// <remarks>
-        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a built-in permission that the caller does not hold is 403 (the organization&#39;s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddPermissionsRequest"></param>
         /// <returns>MessageResponse</returns>
-        MessageResponse AdminRolesAddPermissions(string orgId, string roleId);
+        MessageResponse AdminRolesAddPermissions(string orgId, string roleId, AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest);
 
         /// <summary>
         /// Add permission(s) to a role
         /// </summary>
         /// <remarks>
-        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a built-in permission that the caller does not hold is 403 (the organization&#39;s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddPermissionsRequest"></param>
         /// <returns>ApiResponse of MessageResponse</returns>
-        ApiResponse<MessageResponse> AdminRolesAddPermissionsWithHttpInfo(string orgId, string roleId);
+        ApiResponse<MessageResponse> AdminRolesAddPermissionsWithHttpInfo(string orgId, string roleId, AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest);
         /// <summary>
         /// Assign a user to a role
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddUserRequest"></param>
         /// <returns>MessageResponse</returns>
-        MessageResponse AdminRolesAddUser(string orgId, string roleId);
+        MessageResponse AdminRolesAddUser(string orgId, string roleId, AdminRolesAddUserRequest adminRolesAddUserRequest);
 
         /// <summary>
         /// Assign a user to a role
@@ -69,29 +72,32 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddUserRequest"></param>
         /// <returns>ApiResponse of MessageResponse</returns>
-        ApiResponse<MessageResponse> AdminRolesAddUserWithHttpInfo(string orgId, string roleId);
+        ApiResponse<MessageResponse> AdminRolesAddUserWithHttpInfo(string orgId, string roleId, AdminRolesAddUserRequest adminRolesAddUserRequest);
         /// <summary>
         /// Create a new role
         /// </summary>
         /// <remarks>
-        /// Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+        /// Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every built-in permission must be one that the caller holds (the organization&#39;s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminRolesCreateRequest"></param>
         /// <returns>AdminRolesCreateResponse</returns>
-        AdminRolesCreateResponse AdminRolesCreate(string orgId);
+        AdminRolesCreateResponse AdminRolesCreate(string orgId, AdminRolesCreateRequest adminRolesCreateRequest);
 
         /// <summary>
         /// Create a new role
         /// </summary>
         /// <remarks>
-        /// Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+        /// Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every built-in permission must be one that the caller holds (the organization&#39;s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminRolesCreateRequest"></param>
         /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
-        ApiResponse<AdminRolesCreateResponse> AdminRolesCreateWithHttpInfo(string orgId);
+        ApiResponse<AdminRolesCreateResponse> AdminRolesCreateWithHttpInfo(string orgId, AdminRolesCreateRequest adminRolesCreateRequest);
         /// <summary>
         /// Delete a role
         /// </summary>
@@ -173,7 +179,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of AdminRolesGetUsersResponse</returns>
         ApiResponse<AdminRolesGetUsersResponse> AdminRolesGetUsersWithHttpInfo(string orgId, string roleId);
         /// <summary>
-        /// List all roles in the tenant
+        /// List all roles in the organization
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -181,7 +187,7 @@ namespace LumoAuth.ApiClient.Api
         AdminRolesListResponse AdminRolesList(string orgId);
 
         /// <summary>
-        /// List all roles in the tenant
+        /// List all roles in the organization
         /// </summary>
         /// <remarks>
         /// 
@@ -241,33 +247,36 @@ namespace LumoAuth.ApiClient.Api
         /// Update role permissions (replaces all)
         /// </summary>
         /// <remarks>
-        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization&#39;s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesUpdatePermissionsRequest"></param>
         /// <returns>AdminRolesCreateResponse</returns>
-        AdminRolesCreateResponse AdminRolesUpdatePermissions(string orgId, string roleId);
+        AdminRolesCreateResponse AdminRolesUpdatePermissions(string orgId, string roleId, AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest);
 
         /// <summary>
         /// Update role permissions (replaces all)
         /// </summary>
         /// <remarks>
-        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization&#39;s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesUpdatePermissionsRequest"></param>
         /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
-        ApiResponse<AdminRolesCreateResponse> AdminRolesUpdatePermissionsWithHttpInfo(string orgId, string roleId);
+        ApiResponse<AdminRolesCreateResponse> AdminRolesUpdatePermissionsWithHttpInfo(string orgId, string roleId, AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest);
         /// <summary>
         /// Update an existing role
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>AdminRolesCreateResponse</returns>
-        AdminRolesCreateResponse PatchAdminRolesUpdate(string orgId, string roleId);
+        AdminRolesCreateResponse PatchAdminRolesUpdate(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest);
 
         /// <summary>
         /// Update an existing role
@@ -278,16 +287,18 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
-        ApiResponse<AdminRolesCreateResponse> PatchAdminRolesUpdateWithHttpInfo(string orgId, string roleId);
+        ApiResponse<AdminRolesCreateResponse> PatchAdminRolesUpdateWithHttpInfo(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest);
         /// <summary>
         /// Update an existing role
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>AdminRolesCreateResponse</returns>
-        AdminRolesCreateResponse PutAdminRolesUpdate(string orgId, string roleId);
+        AdminRolesCreateResponse PutAdminRolesUpdate(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest);
 
         /// <summary>
         /// Update an existing role
@@ -298,8 +309,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
-        ApiResponse<AdminRolesCreateResponse> PutAdminRolesUpdateWithHttpInfo(string orgId, string roleId);
+        ApiResponse<AdminRolesCreateResponse> PutAdminRolesUpdateWithHttpInfo(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest);
         #endregion Synchronous Operations
     }
 
@@ -313,27 +325,29 @@ namespace LumoAuth.ApiClient.Api
         /// Add permission(s) to a role
         /// </summary>
         /// <remarks>
-        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a built-in permission that the caller does not hold is 403 (the organization&#39;s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddPermissionsRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MessageResponse</returns>
-        System.Threading.Tasks.Task<MessageResponse> AdminRolesAddPermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<MessageResponse> AdminRolesAddPermissionsAsync(string orgId, string roleId, AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add permission(s) to a role
         /// </summary>
         /// <remarks>
-        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a built-in permission that the caller does not hold is 403 (the organization&#39;s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddPermissionsRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MessageResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminRolesAddPermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminRolesAddPermissionsWithHttpInfoAsync(string orgId, string roleId, AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Assign a user to a role
         /// </summary>
@@ -343,9 +357,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddUserRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MessageResponse</returns>
-        System.Threading.Tasks.Task<MessageResponse> AdminRolesAddUserAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<MessageResponse> AdminRolesAddUserAsync(string orgId, string roleId, AdminRolesAddUserRequest adminRolesAddUserRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Assign a user to a role
@@ -356,32 +371,35 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddUserRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MessageResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminRolesAddUserWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminRolesAddUserWithHttpInfoAsync(string orgId, string roleId, AdminRolesAddUserRequest adminRolesAddUserRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Create a new role
         /// </summary>
         /// <remarks>
-        /// Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+        /// Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every built-in permission must be one that the caller holds (the organization&#39;s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminRolesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminRolesCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminRolesCreateResponse> AdminRolesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminRolesCreateResponse> AdminRolesCreateAsync(string orgId, AdminRolesCreateRequest adminRolesCreateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a new role
         /// </summary>
         /// <remarks>
-        /// Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+        /// Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every built-in permission must be one that the caller holds (the organization&#39;s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminRolesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminRolesCreateResponse>> AdminRolesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminRolesCreateResponse>> AdminRolesCreateWithHttpInfoAsync(string orgId, AdminRolesCreateRequest adminRolesCreateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete a role
         /// </summary>
@@ -483,7 +501,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (AdminRolesGetUsersResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AdminRolesGetUsersResponse>> AdminRolesGetUsersWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// List all roles in the tenant
+        /// List all roles in the organization
         /// </summary>
         /// <remarks>
         /// 
@@ -495,7 +513,7 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task<AdminRolesListResponse> AdminRolesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List all roles in the tenant
+        /// List all roles in the organization
         /// </summary>
         /// <remarks>
         /// 
@@ -563,27 +581,29 @@ namespace LumoAuth.ApiClient.Api
         /// Update role permissions (replaces all)
         /// </summary>
         /// <remarks>
-        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization&#39;s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesUpdatePermissionsRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminRolesCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminRolesCreateResponse> AdminRolesUpdatePermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminRolesCreateResponse> AdminRolesUpdatePermissionsAsync(string orgId, string roleId, AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update role permissions (replaces all)
         /// </summary>
         /// <remarks>
-        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization&#39;s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesUpdatePermissionsRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminRolesCreateResponse>> AdminRolesUpdatePermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminRolesCreateResponse>> AdminRolesUpdatePermissionsWithHttpInfoAsync(string orgId, string roleId, AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update an existing role
         /// </summary>
@@ -593,9 +613,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminRolesCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminRolesCreateResponse> PatchAdminRolesUpdateAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminRolesCreateResponse> PatchAdminRolesUpdateAsync(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update an existing role
@@ -606,9 +627,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminRolesCreateResponse>> PatchAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminRolesCreateResponse>> PatchAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update an existing role
         /// </summary>
@@ -618,9 +640,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminRolesCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminRolesCreateResponse> PutAdminRolesUpdateAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminRolesCreateResponse> PutAdminRolesUpdateAsync(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update an existing role
@@ -631,9 +654,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminRolesCreateResponse>> PutAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminRolesCreateResponse>> PutAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -848,26 +872,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Add permission(s) to a role Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Add permission(s) to a role Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a built-in permission that the caller does not hold is 403 (the organization&#39;s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddPermissionsRequest"></param>
         /// <returns>MessageResponse</returns>
-        public MessageResponse AdminRolesAddPermissions(string orgId, string roleId)
+        public MessageResponse AdminRolesAddPermissions(string orgId, string roleId, AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminRolesAddPermissionsWithHttpInfo(orgId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminRolesAddPermissionsWithHttpInfo(orgId, roleId, adminRolesAddPermissionsRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Add permission(s) to a role Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Add permission(s) to a role Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a built-in permission that the caller does not hold is 403 (the organization&#39;s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddPermissionsRequest"></param>
         /// <returns>ApiResponse of MessageResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminRolesAddPermissionsWithHttpInfo(string orgId, string roleId)
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminRolesAddPermissionsWithHttpInfo(string orgId, string roleId, AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -877,9 +903,14 @@ namespace LumoAuth.ApiClient.Api
             if (roleId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'roleId' when calling AdminRolesApi->AdminRolesAddPermissions");
 
+            // verify the required parameter 'adminRolesAddPermissionsRequest' is set
+            if (adminRolesAddPermissionsRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminRolesAddPermissionsRequest' when calling AdminRolesApi->AdminRolesAddPermissions");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -895,6 +926,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("roleId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(roleId)); // path parameter
+            localVarRequestOptions.Data = adminRolesAddPermissionsRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -921,28 +953,30 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Add permission(s) to a role Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Add permission(s) to a role Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a built-in permission that the caller does not hold is 403 (the organization&#39;s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddPermissionsRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MessageResponse</returns>
-        public async System.Threading.Tasks.Task<MessageResponse> AdminRolesAddPermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<MessageResponse> AdminRolesAddPermissionsAsync(string orgId, string roleId, AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminRolesAddPermissionsWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminRolesAddPermissionsWithHttpInfoAsync(orgId, roleId, adminRolesAddPermissionsRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Add permission(s) to a role Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Add permission(s) to a role Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a built-in permission that the caller does not hold is 403 (the organization&#39;s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddPermissionsRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MessageResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminRolesAddPermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminRolesAddPermissionsWithHttpInfoAsync(string orgId, string roleId, AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -952,10 +986,15 @@ namespace LumoAuth.ApiClient.Api
             if (roleId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'roleId' when calling AdminRolesApi->AdminRolesAddPermissions");
 
+            // verify the required parameter 'adminRolesAddPermissionsRequest' is set
+            if (adminRolesAddPermissionsRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminRolesAddPermissionsRequest' when calling AdminRolesApi->AdminRolesAddPermissions");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -972,6 +1011,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("roleId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(roleId)); // path parameter
+            localVarRequestOptions.Data = adminRolesAddPermissionsRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1004,10 +1044,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddUserRequest"></param>
         /// <returns>MessageResponse</returns>
-        public MessageResponse AdminRolesAddUser(string orgId, string roleId)
+        public MessageResponse AdminRolesAddUser(string orgId, string roleId, AdminRolesAddUserRequest adminRolesAddUserRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminRolesAddUserWithHttpInfo(orgId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminRolesAddUserWithHttpInfo(orgId, roleId, adminRolesAddUserRequest);
             return localVarResponse.Data;
         }
 
@@ -1017,8 +1058,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddUserRequest"></param>
         /// <returns>ApiResponse of MessageResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminRolesAddUserWithHttpInfo(string orgId, string roleId)
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminRolesAddUserWithHttpInfo(string orgId, string roleId, AdminRolesAddUserRequest adminRolesAddUserRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1028,9 +1070,14 @@ namespace LumoAuth.ApiClient.Api
             if (roleId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'roleId' when calling AdminRolesApi->AdminRolesAddUser");
 
+            // verify the required parameter 'adminRolesAddUserRequest' is set
+            if (adminRolesAddUserRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminRolesAddUserRequest' when calling AdminRolesApi->AdminRolesAddUser");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1046,6 +1093,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("roleId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(roleId)); // path parameter
+            localVarRequestOptions.Data = adminRolesAddUserRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1077,11 +1125,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddUserRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MessageResponse</returns>
-        public async System.Threading.Tasks.Task<MessageResponse> AdminRolesAddUserAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<MessageResponse> AdminRolesAddUserAsync(string orgId, string roleId, AdminRolesAddUserRequest adminRolesAddUserRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminRolesAddUserWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminRolesAddUserWithHttpInfoAsync(orgId, roleId, adminRolesAddUserRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1091,9 +1140,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesAddUserRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MessageResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminRolesAddUserWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminRolesAddUserWithHttpInfoAsync(string orgId, string roleId, AdminRolesAddUserRequest adminRolesAddUserRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1103,10 +1153,15 @@ namespace LumoAuth.ApiClient.Api
             if (roleId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'roleId' when calling AdminRolesApi->AdminRolesAddUser");
 
+            // verify the required parameter 'adminRolesAddUserRequest' is set
+            if (adminRolesAddUserRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminRolesAddUserRequest' when calling AdminRolesApi->AdminRolesAddUser");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1123,6 +1178,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("roleId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(roleId)); // path parameter
+            localVarRequestOptions.Data = adminRolesAddUserRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1150,32 +1206,39 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new role Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+        /// Create a new role Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every built-in permission must be one that the caller holds (the organization&#39;s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminRolesCreateRequest"></param>
         /// <returns>AdminRolesCreateResponse</returns>
-        public AdminRolesCreateResponse AdminRolesCreate(string orgId)
+        public AdminRolesCreateResponse AdminRolesCreate(string orgId, AdminRolesCreateRequest adminRolesCreateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = AdminRolesCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = AdminRolesCreateWithHttpInfo(orgId, adminRolesCreateRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a new role Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+        /// Create a new role Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every built-in permission must be one that the caller holds (the organization&#39;s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminRolesCreateRequest"></param>
         /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> AdminRolesCreateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> AdminRolesCreateWithHttpInfo(string orgId, AdminRolesCreateRequest adminRolesCreateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminRolesApi->AdminRolesCreate");
 
+            // verify the required parameter 'adminRolesCreateRequest' is set
+            if (adminRolesCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminRolesCreateRequest' when calling AdminRolesApi->AdminRolesCreate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1190,6 +1253,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminRolesCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1216,35 +1280,42 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new role Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+        /// Create a new role Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every built-in permission must be one that the caller holds (the organization&#39;s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminRolesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminRolesCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminRolesCreateResponse> AdminRolesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminRolesCreateResponse> AdminRolesCreateAsync(string orgId, AdminRolesCreateRequest adminRolesCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = await AdminRolesCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = await AdminRolesCreateWithHttpInfoAsync(orgId, adminRolesCreateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a new role Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+        /// Create a new role Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every built-in permission must be one that the caller holds (the organization&#39;s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminRolesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse>> AdminRolesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse>> AdminRolesCreateWithHttpInfoAsync(string orgId, AdminRolesCreateRequest adminRolesCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminRolesApi->AdminRolesCreate");
 
+            // verify the required parameter 'adminRolesCreateRequest' is set
+            if (adminRolesCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminRolesCreateRequest' when calling AdminRolesApi->AdminRolesCreate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1260,6 +1331,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminRolesCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1891,7 +1963,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all roles in the tenant 
+        /// List all roles in the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1903,7 +1975,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all roles in the tenant 
+        /// List all roles in the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1957,7 +2029,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all roles in the tenant 
+        /// List all roles in the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1970,7 +2042,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all roles in the tenant 
+        /// List all roles in the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2358,26 +2430,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update role permissions (replaces all) Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Update role permissions (replaces all) Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization&#39;s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesUpdatePermissionsRequest"></param>
         /// <returns>AdminRolesCreateResponse</returns>
-        public AdminRolesCreateResponse AdminRolesUpdatePermissions(string orgId, string roleId)
+        public AdminRolesCreateResponse AdminRolesUpdatePermissions(string orgId, string roleId, AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = AdminRolesUpdatePermissionsWithHttpInfo(orgId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = AdminRolesUpdatePermissionsWithHttpInfo(orgId, roleId, adminRolesUpdatePermissionsRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update role permissions (replaces all) Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Update role permissions (replaces all) Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization&#39;s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesUpdatePermissionsRequest"></param>
         /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> AdminRolesUpdatePermissionsWithHttpInfo(string orgId, string roleId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> AdminRolesUpdatePermissionsWithHttpInfo(string orgId, string roleId, AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2387,9 +2461,14 @@ namespace LumoAuth.ApiClient.Api
             if (roleId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'roleId' when calling AdminRolesApi->AdminRolesUpdatePermissions");
 
+            // verify the required parameter 'adminRolesUpdatePermissionsRequest' is set
+            if (adminRolesUpdatePermissionsRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminRolesUpdatePermissionsRequest' when calling AdminRolesApi->AdminRolesUpdatePermissions");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2405,6 +2484,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("roleId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(roleId)); // path parameter
+            localVarRequestOptions.Data = adminRolesUpdatePermissionsRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2431,28 +2511,30 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update role permissions (replaces all) Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Update role permissions (replaces all) Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization&#39;s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesUpdatePermissionsRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminRolesCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminRolesCreateResponse> AdminRolesUpdatePermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminRolesCreateResponse> AdminRolesUpdatePermissionsAsync(string orgId, string roleId, AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = await AdminRolesUpdatePermissionsWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = await AdminRolesUpdatePermissionsWithHttpInfoAsync(orgId, roleId, adminRolesUpdatePermissionsRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update role permissions (replaces all) Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+        /// Update role permissions (replaces all) Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization&#39;s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="adminRolesUpdatePermissionsRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse>> AdminRolesUpdatePermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse>> AdminRolesUpdatePermissionsWithHttpInfoAsync(string orgId, string roleId, AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2462,10 +2544,15 @@ namespace LumoAuth.ApiClient.Api
             if (roleId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'roleId' when calling AdminRolesApi->AdminRolesUpdatePermissions");
 
+            // verify the required parameter 'adminRolesUpdatePermissionsRequest' is set
+            if (adminRolesUpdatePermissionsRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminRolesUpdatePermissionsRequest' when calling AdminRolesApi->AdminRolesUpdatePermissions");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2482,6 +2569,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("roleId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(roleId)); // path parameter
+            localVarRequestOptions.Data = adminRolesUpdatePermissionsRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2514,10 +2602,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>AdminRolesCreateResponse</returns>
-        public AdminRolesCreateResponse PatchAdminRolesUpdate(string orgId, string roleId)
+        public AdminRolesCreateResponse PatchAdminRolesUpdate(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = PatchAdminRolesUpdateWithHttpInfo(orgId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = PatchAdminRolesUpdateWithHttpInfo(orgId, roleId, putAdminOrgRolesUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -2527,8 +2616,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> PatchAdminRolesUpdateWithHttpInfo(string orgId, string roleId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> PatchAdminRolesUpdateWithHttpInfo(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2538,9 +2628,14 @@ namespace LumoAuth.ApiClient.Api
             if (roleId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'roleId' when calling AdminRolesApi->PatchAdminRolesUpdate");
 
+            // verify the required parameter 'putAdminOrgRolesUpdateRequest' is set
+            if (putAdminOrgRolesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrgRolesUpdateRequest' when calling AdminRolesApi->PatchAdminRolesUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2556,6 +2651,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("roleId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(roleId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrgRolesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2587,11 +2683,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminRolesCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminRolesCreateResponse> PatchAdminRolesUpdateAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminRolesCreateResponse> PatchAdminRolesUpdateAsync(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = await PatchAdminRolesUpdateWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = await PatchAdminRolesUpdateWithHttpInfoAsync(orgId, roleId, putAdminOrgRolesUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2601,9 +2698,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse>> PatchAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse>> PatchAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2613,10 +2711,15 @@ namespace LumoAuth.ApiClient.Api
             if (roleId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'roleId' when calling AdminRolesApi->PatchAdminRolesUpdate");
 
+            // verify the required parameter 'putAdminOrgRolesUpdateRequest' is set
+            if (putAdminOrgRolesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrgRolesUpdateRequest' when calling AdminRolesApi->PatchAdminRolesUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2633,6 +2736,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("roleId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(roleId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrgRolesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2665,10 +2769,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>AdminRolesCreateResponse</returns>
-        public AdminRolesCreateResponse PutAdminRolesUpdate(string orgId, string roleId)
+        public AdminRolesCreateResponse PutAdminRolesUpdate(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = PutAdminRolesUpdateWithHttpInfo(orgId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = PutAdminRolesUpdateWithHttpInfo(orgId, roleId, putAdminOrgRolesUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -2678,8 +2783,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> PutAdminRolesUpdateWithHttpInfo(string orgId, string roleId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> PutAdminRolesUpdateWithHttpInfo(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2689,9 +2795,14 @@ namespace LumoAuth.ApiClient.Api
             if (roleId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'roleId' when calling AdminRolesApi->PutAdminRolesUpdate");
 
+            // verify the required parameter 'putAdminOrgRolesUpdateRequest' is set
+            if (putAdminOrgRolesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrgRolesUpdateRequest' when calling AdminRolesApi->PutAdminRolesUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2707,6 +2818,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("roleId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(roleId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrgRolesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2738,11 +2850,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminRolesCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminRolesCreateResponse> PutAdminRolesUpdateAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminRolesCreateResponse> PutAdminRolesUpdateAsync(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = await PutAdminRolesUpdateWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = await PutAdminRolesUpdateWithHttpInfoAsync(orgId, roleId, putAdminOrgRolesUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2752,9 +2865,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse>> PutAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse>> PutAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2764,10 +2878,15 @@ namespace LumoAuth.ApiClient.Api
             if (roleId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'roleId' when calling AdminRolesApi->PutAdminRolesUpdate");
 
+            // verify the required parameter 'putAdminOrgRolesUpdateRequest' is set
+            if (putAdminOrgRolesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrgRolesUpdateRequest' when calling AdminRolesApi->PutAdminRolesUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2784,6 +2903,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("roleId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(roleId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrgRolesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -36,11 +36,26 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="VerifyAuthTokenRequest" /> class.
         /// </summary>
-        /// <param name="authToken">The auth token presented by the agent..</param>
-        /// <param name="resource">Resource identifier; defaults to the authenticated resource..</param>
+        [JsonConstructorAttribute]
+        protected VerifyAuthTokenRequest() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VerifyAuthTokenRequest" /> class.
+        /// </summary>
+        /// <param name="authToken">The auth token presented by the agent. (required).</param>
+        /// <param name="resource">Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource. (required).</param>
         public VerifyAuthTokenRequest(string authToken = default, string resource = default)
         {
+            // to ensure "authToken" is required (not null)
+            if (authToken == null)
+            {
+                throw new ArgumentNullException("authToken is a required property for VerifyAuthTokenRequest and cannot be null");
+            }
             this.AuthToken = authToken;
+            // to ensure "resource" is required (not null)
+            if (resource == null)
+            {
+                throw new ArgumentNullException("resource is a required property for VerifyAuthTokenRequest and cannot be null");
+            }
             this.Resource = resource;
         }
 
@@ -48,14 +63,14 @@ namespace LumoAuth.ApiClient.Model
         /// The auth token presented by the agent.
         /// </summary>
         /// <value>The auth token presented by the agent.</value>
-        [DataMember(Name = "auth_token", EmitDefaultValue = false)]
+        [DataMember(Name = "auth_token", IsRequired = true, EmitDefaultValue = true)]
         public string AuthToken { get; set; }
 
         /// <summary>
-        /// Resource identifier; defaults to the authenticated resource.
+        /// Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
         /// </summary>
-        /// <value>Resource identifier; defaults to the authenticated resource.</value>
-        [DataMember(Name = "resource", EmitDefaultValue = false)]
+        /// <value>Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource.</value>
+        [DataMember(Name = "resource", IsRequired = true, EmitDefaultValue = true)]
         public string Resource { get; set; }
 
         /// <summary>

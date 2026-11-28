@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -30,7 +30,7 @@ type IntrospectResponse struct {
 	ClientId NullableString `json:"client_id,omitempty"`
 	// User id, or client_… / agent_… for non-user subjects.
 	Sub *string `json:"sub,omitempty"`
-	// The user's email (user-bound tokens only).
+	// The user's e-mail address: only for a user token that carries the email scope (as UserInfo releases the address), opaque or JWT.
 	Username *string `json:"username,omitempty"`
 	// Expiry, Unix seconds.
 	Exp *int32 `json:"exp,omitempty"`

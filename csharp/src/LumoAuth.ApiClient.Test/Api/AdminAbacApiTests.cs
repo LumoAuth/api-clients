@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -62,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.AbacAttributesCreate(orgId);
+            //AbacAttributesCreateRequest abacAttributesCreateRequest = null;
+            //var response = instance.AbacAttributesCreate(orgId, abacAttributesCreateRequest);
             //Assert.IsType<AbacAttributesCreateResponse>(response);
         }
 
@@ -112,7 +113,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.AbacPoliciesCreate(orgId);
+            //AbacPoliciesCreateRequest abacPoliciesCreateRequest = null;
+            //var response = instance.AbacPoliciesCreate(orgId, abacPoliciesCreateRequest);
             //Assert.IsType<AbacPoliciesCreateResponse>(response);
         }
 
@@ -177,7 +179,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string id = null;
-            //var response = instance.PatchAbacAttributesUpdate(orgId, id);
+            //PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest = null;
+            //var response = instance.PatchAbacAttributesUpdate(orgId, id, putAbacAttributesUpdateRequest);
             //Assert.IsType<PutAbacAttributesUpdateResponse>(response);
         }
 
@@ -190,7 +193,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string id = null;
-            //var response = instance.PatchAbacPoliciesUpdate(orgId, id);
+            //PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest = null;
+            //var response = instance.PatchAbacPoliciesUpdate(orgId, id, putAbacPoliciesUpdateRequest);
             //Assert.IsType<PutAbacPoliciesUpdateResponse>(response);
         }
 
@@ -203,7 +207,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string id = null;
-            //var response = instance.PutAbacAttributesUpdate(orgId, id);
+            //PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest = null;
+            //var response = instance.PutAbacAttributesUpdate(orgId, id, putAbacAttributesUpdateRequest);
             //Assert.IsType<PutAbacAttributesUpdateResponse>(response);
         }
 
@@ -216,7 +221,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string id = null;
-            //var response = instance.PutAbacPoliciesUpdate(orgId, id);
+            //PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest = null;
+            //var response = instance.PutAbacPoliciesUpdate(orgId, id, putAbacPoliciesUpdateRequest);
             //Assert.IsType<PutAbacPoliciesUpdateResponse>(response);
         }
     }

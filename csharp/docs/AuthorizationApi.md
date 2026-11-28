@@ -25,7 +25,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="checkabac"></a>
 # **CheckAbac**
-> CheckAbacResponse CheckAbac (string orgId)
+> CheckAbacResponse CheckAbac (string orgId, CheckAbacRequest checkAbacRequest)
 
 Evaluate an ABAC policy decision for the caller
 
@@ -56,11 +56,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AuthorizationApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var checkAbacRequest = new CheckAbacRequest(); // CheckAbacRequest | 
 
             try
             {
                 // Evaluate an ABAC policy decision for the caller
-                CheckAbacResponse result = apiInstance.CheckAbac(orgId);
+                CheckAbacResponse result = apiInstance.CheckAbac(orgId, checkAbacRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -81,7 +82,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Evaluate an ABAC policy decision for the caller
-    ApiResponse<CheckAbacResponse> response = apiInstance.CheckAbacWithHttpInfo(orgId);
+    ApiResponse<CheckAbacResponse> response = apiInstance.CheckAbacWithHttpInfo(orgId, checkAbacRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -99,6 +100,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **checkAbacRequest** | [**CheckAbacRequest**](CheckAbacRequest.md) |  |  |
 
 ### Return type
 
@@ -110,7 +112,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -123,7 +125,7 @@ catch (ApiException e)
 
 <a id="checkabacbulk"></a>
 # **CheckAbacBulk**
-> CheckAbacBulkResponse CheckAbacBulk (string orgId)
+> CheckAbacBulkResponse CheckAbacBulk (string orgId, CheckAbacBulkRequest checkAbacBulkRequest)
 
 Evaluate up to 100 ABAC checks for the caller in one call
 
@@ -154,11 +156,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AuthorizationApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var checkAbacBulkRequest = new CheckAbacBulkRequest(); // CheckAbacBulkRequest | 
 
             try
             {
                 // Evaluate up to 100 ABAC checks for the caller in one call
-                CheckAbacBulkResponse result = apiInstance.CheckAbacBulk(orgId);
+                CheckAbacBulkResponse result = apiInstance.CheckAbacBulk(orgId, checkAbacBulkRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -179,7 +182,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Evaluate up to 100 ABAC checks for the caller in one call
-    ApiResponse<CheckAbacBulkResponse> response = apiInstance.CheckAbacBulkWithHttpInfo(orgId);
+    ApiResponse<CheckAbacBulkResponse> response = apiInstance.CheckAbacBulkWithHttpInfo(orgId, checkAbacBulkRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -197,6 +200,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **checkAbacBulkRequest** | [**CheckAbacBulkRequest**](CheckAbacBulkRequest.md) |  |  |
 
 ### Return type
 
@@ -208,7 +212,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -221,7 +225,7 @@ catch (ApiException e)
 
 <a id="checkallpermissions"></a>
 # **CheckAllPermissions**
-> CheckAnyPermissionResponse CheckAllPermissions ()
+> CheckAnyPermissionResponse CheckAllPermissions (CheckPermissionsBulkRequest checkPermissionsBulkRequest)
 
 Check whether the subject holds all of the permissions
 
@@ -255,11 +259,12 @@ namespace Example
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AuthorizationApi(httpClient, config, httpClientHandler);
+            var checkPermissionsBulkRequest = new CheckPermissionsBulkRequest(); // CheckPermissionsBulkRequest | 
 
             try
             {
                 // Check whether the subject holds all of the permissions
-                CheckAnyPermissionResponse result = apiInstance.CheckAllPermissions();
+                CheckAnyPermissionResponse result = apiInstance.CheckAllPermissions(checkPermissionsBulkRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -280,7 +285,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Check whether the subject holds all of the permissions
-    ApiResponse<CheckAnyPermissionResponse> response = apiInstance.CheckAllPermissionsWithHttpInfo();
+    ApiResponse<CheckAnyPermissionResponse> response = apiInstance.CheckAllPermissionsWithHttpInfo(checkPermissionsBulkRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -294,7 +299,11 @@ catch (ApiException e)
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **checkPermissionsBulkRequest** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  |  |
+
 ### Return type
 
 [**CheckAnyPermissionResponse**](CheckAnyPermissionResponse.md)
@@ -305,7 +314,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -318,7 +327,7 @@ This endpoint does not need any parameter.
 
 <a id="checkanypermission"></a>
 # **CheckAnyPermission**
-> CheckAnyPermissionResponse CheckAnyPermission ()
+> CheckAnyPermissionResponse CheckAnyPermission (CheckPermissionsBulkRequest checkPermissionsBulkRequest)
 
 Check whether the subject holds any of the permissions
 
@@ -352,11 +361,12 @@ namespace Example
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AuthorizationApi(httpClient, config, httpClientHandler);
+            var checkPermissionsBulkRequest = new CheckPermissionsBulkRequest(); // CheckPermissionsBulkRequest | 
 
             try
             {
                 // Check whether the subject holds any of the permissions
-                CheckAnyPermissionResponse result = apiInstance.CheckAnyPermission();
+                CheckAnyPermissionResponse result = apiInstance.CheckAnyPermission(checkPermissionsBulkRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -377,7 +387,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Check whether the subject holds any of the permissions
-    ApiResponse<CheckAnyPermissionResponse> response = apiInstance.CheckAnyPermissionWithHttpInfo();
+    ApiResponse<CheckAnyPermissionResponse> response = apiInstance.CheckAnyPermissionWithHttpInfo(checkPermissionsBulkRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -391,7 +401,11 @@ catch (ApiException e)
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **checkPermissionsBulkRequest** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  |  |
+
 ### Return type
 
 [**CheckAnyPermissionResponse**](CheckAnyPermissionResponse.md)
@@ -402,7 +416,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -415,7 +429,7 @@ This endpoint does not need any parameter.
 
 <a id="checkpermission"></a>
 # **CheckPermission**
-> CheckPermissionResponse CheckPermission ()
+> CheckPermissionResponse CheckPermission (CheckPermissionRequest checkPermissionRequest)
 
 Check one permission
 
@@ -449,11 +463,12 @@ namespace Example
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AuthorizationApi(httpClient, config, httpClientHandler);
+            var checkPermissionRequest = new CheckPermissionRequest(); // CheckPermissionRequest | 
 
             try
             {
                 // Check one permission
-                CheckPermissionResponse result = apiInstance.CheckPermission();
+                CheckPermissionResponse result = apiInstance.CheckPermission(checkPermissionRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -474,7 +489,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Check one permission
-    ApiResponse<CheckPermissionResponse> response = apiInstance.CheckPermissionWithHttpInfo();
+    ApiResponse<CheckPermissionResponse> response = apiInstance.CheckPermissionWithHttpInfo(checkPermissionRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -488,7 +503,11 @@ catch (ApiException e)
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **checkPermissionRequest** | [**CheckPermissionRequest**](CheckPermissionRequest.md) |  |  |
+
 ### Return type
 
 [**CheckPermissionResponse**](CheckPermissionResponse.md)
@@ -499,7 +518,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -512,7 +531,7 @@ This endpoint does not need any parameter.
 
 <a id="checkpermissionsbulk"></a>
 # **CheckPermissionsBulk**
-> CheckPermissionsBulkResponse CheckPermissionsBulk ()
+> CheckPermissionsBulkResponse CheckPermissionsBulk (CheckPermissionsBulkRequest checkPermissionsBulkRequest)
 
 Check up to 100 permissions in one call
 
@@ -546,11 +565,12 @@ namespace Example
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AuthorizationApi(httpClient, config, httpClientHandler);
+            var checkPermissionsBulkRequest = new CheckPermissionsBulkRequest(); // CheckPermissionsBulkRequest | 
 
             try
             {
                 // Check up to 100 permissions in one call
-                CheckPermissionsBulkResponse result = apiInstance.CheckPermissionsBulk();
+                CheckPermissionsBulkResponse result = apiInstance.CheckPermissionsBulk(checkPermissionsBulkRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -571,7 +591,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Check up to 100 permissions in one call
-    ApiResponse<CheckPermissionsBulkResponse> response = apiInstance.CheckPermissionsBulkWithHttpInfo();
+    ApiResponse<CheckPermissionsBulkResponse> response = apiInstance.CheckPermissionsBulkWithHttpInfo(checkPermissionsBulkRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -585,7 +605,11 @@ catch (ApiException e)
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **checkPermissionsBulkRequest** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  |  |
+
 ### Return type
 
 [**CheckPermissionsBulkResponse**](CheckPermissionsBulkResponse.md)
@@ -596,7 +620,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -609,7 +633,7 @@ This endpoint does not need any parameter.
 
 <a id="checkrelation"></a>
 # **CheckRelation**
-> CheckRelationResponse CheckRelation ()
+> CheckRelationResponse CheckRelation (CheckRelationRequest checkRelationRequest)
 
 Zanzibar relationship check
 
@@ -643,11 +667,12 @@ namespace Example
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AuthorizationApi(httpClient, config, httpClientHandler);
+            var checkRelationRequest = new CheckRelationRequest(); // CheckRelationRequest | 
 
             try
             {
                 // Zanzibar relationship check
-                CheckRelationResponse result = apiInstance.CheckRelation();
+                CheckRelationResponse result = apiInstance.CheckRelation(checkRelationRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -668,7 +693,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Zanzibar relationship check
-    ApiResponse<CheckRelationResponse> response = apiInstance.CheckRelationWithHttpInfo();
+    ApiResponse<CheckRelationResponse> response = apiInstance.CheckRelationWithHttpInfo(checkRelationRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -682,7 +707,11 @@ catch (ApiException e)
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **checkRelationRequest** | [**CheckRelationRequest**](CheckRelationRequest.md) |  |  |
+
 ### Return type
 
 [**CheckRelationResponse**](CheckRelationResponse.md)
@@ -693,7 +722,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -706,7 +735,7 @@ This endpoint does not need any parameter.
 
 <a id="checkrelationscoped"></a>
 # **CheckRelationScoped**
-> CheckRelationScopedResponse CheckRelationScoped (string orgId)
+> CheckRelationScopedResponse CheckRelationScoped (string orgId, CheckRelationScopedRequest checkRelationScopedRequest)
 
 Zanzibar relationship check
 
@@ -739,11 +768,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AuthorizationApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var checkRelationScopedRequest = new CheckRelationScopedRequest(); // CheckRelationScopedRequest | 
 
             try
             {
                 // Zanzibar relationship check
-                CheckRelationScopedResponse result = apiInstance.CheckRelationScoped(orgId);
+                CheckRelationScopedResponse result = apiInstance.CheckRelationScoped(orgId, checkRelationScopedRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -764,7 +794,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Zanzibar relationship check
-    ApiResponse<CheckRelationScopedResponse> response = apiInstance.CheckRelationScopedWithHttpInfo(orgId);
+    ApiResponse<CheckRelationScopedResponse> response = apiInstance.CheckRelationScopedWithHttpInfo(orgId, checkRelationScopedRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -782,6 +812,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **checkRelationScopedRequest** | [**CheckRelationScopedRequest**](CheckRelationScopedRequest.md) |  |  |
 
 ### Return type
 
@@ -793,7 +824,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -806,7 +837,7 @@ catch (ApiException e)
 
 <a id="evaluate"></a>
 # **Evaluate**
-> AuthZenDecision Evaluate ()
+> AuthZenDecision Evaluate (EvaluateRequest evaluateRequest)
 
 AuthZEN 1.0 access evaluation
 
@@ -840,11 +871,12 @@ namespace Example
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AuthorizationApi(httpClient, config, httpClientHandler);
+            var evaluateRequest = new EvaluateRequest(); // EvaluateRequest | AuthZEN Authorization API 1.0 evaluation request.
 
             try
             {
                 // AuthZEN 1.0 access evaluation
-                AuthZenDecision result = apiInstance.Evaluate();
+                AuthZenDecision result = apiInstance.Evaluate(evaluateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -865,7 +897,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // AuthZEN 1.0 access evaluation
-    ApiResponse<AuthZenDecision> response = apiInstance.EvaluateWithHttpInfo();
+    ApiResponse<AuthZenDecision> response = apiInstance.EvaluateWithHttpInfo(evaluateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -879,7 +911,11 @@ catch (ApiException e)
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **evaluateRequest** | [**EvaluateRequest**](EvaluateRequest.md) | AuthZEN Authorization API 1.0 evaluation request. |  |
+
 ### Return type
 
 [**AuthZenDecision**](AuthZenDecision.md)
@@ -890,7 +926,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -903,7 +939,7 @@ This endpoint does not need any parameter.
 
 <a id="evaluatebatch"></a>
 # **EvaluateBatch**
-> EvaluateBatchResponse EvaluateBatch ()
+> EvaluateBatchResponse EvaluateBatch (EvaluateBatchRequest evaluateBatchRequest)
 
 AuthZEN 1.0 boxcarred access evaluations
 
@@ -937,11 +973,12 @@ namespace Example
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AuthorizationApi(httpClient, config, httpClientHandler);
+            var evaluateBatchRequest = new EvaluateBatchRequest(); // EvaluateBatchRequest | AuthZEN Authorization API 1.0 batch evaluation request.
 
             try
             {
                 // AuthZEN 1.0 boxcarred access evaluations
-                EvaluateBatchResponse result = apiInstance.EvaluateBatch();
+                EvaluateBatchResponse result = apiInstance.EvaluateBatch(evaluateBatchRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -962,7 +999,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // AuthZEN 1.0 boxcarred access evaluations
-    ApiResponse<EvaluateBatchResponse> response = apiInstance.EvaluateBatchWithHttpInfo();
+    ApiResponse<EvaluateBatchResponse> response = apiInstance.EvaluateBatchWithHttpInfo(evaluateBatchRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -976,7 +1013,11 @@ catch (ApiException e)
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **evaluateBatchRequest** | [**EvaluateBatchRequest**](EvaluateBatchRequest.md) | AuthZEN Authorization API 1.0 batch evaluation request. |  |
+
 ### Return type
 
 [**EvaluateBatchResponse**](EvaluateBatchResponse.md)
@@ -987,7 +1028,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1302,7 +1343,7 @@ catch (ApiException e)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Built-in identity attributes plus trait_&lt;key&gt; entries and tenant-defined custom attributes |  -  |
+| **200** | Built-in identity attributes plus trait_&lt;key&gt; entries and custom attributes that the organization defined |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1504,7 +1545,7 @@ catch (ApiException e)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Definitions (tenant-defined and global) |  -  |
+| **200** | Definitions (the organization&#39;s own and the built-in ones) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1607,7 +1648,7 @@ This endpoint does not need any parameter.
 
 <a id="setresourceattribute"></a>
 # **SetResourceAttribute**
-> SetResourceAttributeResponse SetResourceAttribute (string orgId, string resourceType, string resourceId, string attributeSlug)
+> SetResourceAttributeResponse SetResourceAttribute (string orgId, string resourceType, string resourceId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest)
 
 Set a resource attribute
 
@@ -1641,11 +1682,12 @@ namespace Example
             var resourceType = "resourceType_example";  // string | 
             var resourceId = "resourceId_example";  // string | 
             var attributeSlug = "attributeSlug_example";  // string | 
+            var setResourceAttributeRequest = new SetResourceAttributeRequest(); // SetResourceAttributeRequest | 
 
             try
             {
                 // Set a resource attribute
-                SetResourceAttributeResponse result = apiInstance.SetResourceAttribute(orgId, resourceType, resourceId, attributeSlug);
+                SetResourceAttributeResponse result = apiInstance.SetResourceAttribute(orgId, resourceType, resourceId, attributeSlug, setResourceAttributeRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1666,7 +1708,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Set a resource attribute
-    ApiResponse<SetResourceAttributeResponse> response = apiInstance.SetResourceAttributeWithHttpInfo(orgId, resourceType, resourceId, attributeSlug);
+    ApiResponse<SetResourceAttributeResponse> response = apiInstance.SetResourceAttributeWithHttpInfo(orgId, resourceType, resourceId, attributeSlug, setResourceAttributeRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1687,6 +1729,7 @@ catch (ApiException e)
 | **resourceType** | **string** |  |  |
 | **resourceId** | **string** |  |  |
 | **attributeSlug** | **string** |  |  |
+| **setResourceAttributeRequest** | [**SetResourceAttributeRequest**](SetResourceAttributeRequest.md) |  |  |
 
 ### Return type
 
@@ -1698,7 +1741,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1712,7 +1755,7 @@ catch (ApiException e)
 
 <a id="setuserattribute"></a>
 # **SetUserAttribute**
-> SetUserAttributeResponse SetUserAttribute (string orgId, string userId, string attributeSlug)
+> SetUserAttributeResponse SetUserAttribute (string orgId, string userId, string attributeSlug, SetResourceAttributeRequest setResourceAttributeRequest)
 
 Set a user attribute
 
@@ -1745,11 +1788,12 @@ namespace Example
             var orgId = "orgId_example";  // string | 
             var userId = "userId_example";  // string | 
             var attributeSlug = "attributeSlug_example";  // string | 
+            var setResourceAttributeRequest = new SetResourceAttributeRequest(); // SetResourceAttributeRequest | 
 
             try
             {
                 // Set a user attribute
-                SetUserAttributeResponse result = apiInstance.SetUserAttribute(orgId, userId, attributeSlug);
+                SetUserAttributeResponse result = apiInstance.SetUserAttribute(orgId, userId, attributeSlug, setResourceAttributeRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1770,7 +1814,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Set a user attribute
-    ApiResponse<SetUserAttributeResponse> response = apiInstance.SetUserAttributeWithHttpInfo(orgId, userId, attributeSlug);
+    ApiResponse<SetUserAttributeResponse> response = apiInstance.SetUserAttributeWithHttpInfo(orgId, userId, attributeSlug, setResourceAttributeRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1790,6 +1834,7 @@ catch (ApiException e)
 | **orgId** | **string** |  |  |
 | **userId** | **string** |  |  |
 | **attributeSlug** | **string** |  |  |
+| **setResourceAttributeRequest** | [**SetResourceAttributeRequest**](SetResourceAttributeRequest.md) |  |  |
 
 ### Return type
 
@@ -1801,7 +1846,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
